@@ -21,23 +21,32 @@
     <link href="css/cssAdmin.css" rel="stylesheet">
 </head>
 <body>
-<div class="top"></div>
-    <div class="search-container">
-        <form action="/action_page.php">
-         <input type="text" placeholder="Search" name="search">
-          <button type="submit"><i class="fa fa-search"></i>
-              <img id="searchButton" src="img/magnifying-glass.png">
-          </button>
-        </form>
+    <div class="top">
+        <button class="btn">
+            <img id="notif" src="img/notif.png">
+        </button>
+
+        <button class="btn">
+            <img id="settings" src="img/settings.png">
+        </button>
     </div>
 
-    <form action="">
-        <button class="button4" type="button">
-            Generate Report
-        </button>
-    </form>
+    <div class="second">
+        <div class="search-container">
+            <form action="/action_page.php">
+             <input type="text" placeholder="Search" name="search">
+            <button type="submit"><i class="fa fa-search"></i>
+                <img id="searchButton" src="img/magnifying-glass.png">
+             </button>
+            </form>
+        </div>
 
-    <button class="btn"><i class="fa fa-home"></i></button>
-</div>
+        <form action="">
+            <button class="button4" type="button">
+               Generate Report
+             </button>
+         </form>
+
+    </div>
 </body>
 </html>

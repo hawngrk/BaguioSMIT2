@@ -1058,3 +1058,24 @@ input[type=text] {
 .button4 {border-radius: 12px;}
 
 .button4:hover {background-color: #e7e7e7;}
+
+.btn{
+  float: right;
+  border: none;
+  color: white;
+  padding: 12px 16px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+#notif {
+  display: inline-block;
+  width: 20px;
+  height: auto;
+}
+
+#settings {
+  display: inline-block;
+  width: 20px;
+  height: auto;
+}
