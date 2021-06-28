@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Add User-Patient</title>
+</head>
+<body>
+<p> Basic Information </p>
+<form>
+  <div class="basicInfoForms">
+    <label for="lastName"> Last Name </label>
+    <input type="text" class="formControl" id="inputLastName">
+  </div>
+  <div class="basicInfoForms">
+    <label for="firstName"> First Name </label>
+    <input type="text" class="formControl" id="inputFirstName">
+  </div>
+  <div class="basicInfoForms">
+    <label for="middleName"> Middle Name </label>
+    <input type="text" class="formControl" id="inputMiddleName">
+  </div>
+  <div class="basicInfoForms">
+    <label for="suffix"> Suffix Name </label>
+    <select class="formControl" id="inputSuffix">
+      <option> Sr </option>
+      <option> Jr </option>
+      <option> I </option>
+      <option> II </option>
+      <option> III </option>
+    </select>
+  </div>
+  <div class="basicInfoForms">
+    <label for="role"> Role </label>
+    <select class="formControl" id="inputRole">
+      <option> City Hall Employee </option>
+      <option> Vaccination Personnel </option>
+    </select>
+  </div>
+  <div class="basicInfoForms">
+    <label for="contactNumber"> Contact Number </label>
+    <input type="text" class="formControl" id="inputContactNumber">
+  </div>
+  <button type="submit" class="formControl"> Add </button>
+</form>
+<br>
+<br>
+<p> Here are the patients credentials </p>
+<form>
+  <div class="credentials">
+    <label for="userName"> Username </label>
+    <input type="text" readonly class="formControl" id="usrNm" value="@usernameExample">
+  </div>
+  <div class="credentials">
+    <label for="password"> Password </label>
+    <input type="text" readonly class="formControl" id="psswrd" value="passwordExample">
+  </div>
+  <button type="submit" class="formControl"> Add </button>
+</form>
+</body>
+</html>
