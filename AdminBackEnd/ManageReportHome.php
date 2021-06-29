@@ -91,3 +91,5 @@ include ("../AdminbackEnd/sessionHandling.php"); ?>
 </div>
 
 </body>
+
+<?php include '../includes/footer.php'?>
