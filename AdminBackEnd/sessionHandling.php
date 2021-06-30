@@ -2,7 +2,7 @@
 /***
  * @Author Hudson Kit P. Natividad
  * Date Created: June 28, 2021
- * Description: allow session to start when credentials needed are enetered correctly.
+ * Description: allow session to start when credentials needed are entered correctly.
  */
 
 //initial session handling subject to change - Natividad Hudson Kit P.

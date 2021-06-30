@@ -17,7 +17,7 @@ include("../includes/database.php");
 
 //$report = [];
 //while($stmt -> fetch()) {
-//    $report = new report(); // insert the varables needed
-//    $report->set_reportID($); // insert the varibles needed
+//    $report = new report(); // insert the variables needed
+//    $report->set_reportID($); // insert the variables needed
 //    $report[] = $report;
 //}
