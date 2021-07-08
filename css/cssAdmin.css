@@ -1048,13 +1048,14 @@ input[type=text] {
 
 .button4 {
   display: inline-block;
-  background-color: white;
-  color: black;
-  border: 2px solid #e7e7e7;
+  float: right;
+  background-color: ghostwhite;
+  border: 2px solid black;
   width: 10%;
-  height: auto;
+  height: 40px;
+  color: black!important;
+  margin-right: 10px;
 }
-
 .button4 {border-radius: 12px;}
 
 .button4:hover {background-color: #e7e7e7;}
