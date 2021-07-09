@@ -101,4 +101,5 @@
       <extension name="zmq" enabled="false" />
     </extensions>
   </component>
+  <component name="PhpProjectSharedConfiguration" php_language_level="8.0" />
 </project>
