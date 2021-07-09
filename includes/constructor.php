@@ -5,16 +5,14 @@
     class employeeAccounts{
         private $empUsername;
         private $empPassword;
-        private $empAccountId;
         private $empAccountType;
         private $empPicture;
 
 
-        public function __construct($empUser, $empPass, $empAccId, $empAccType, $empPic)
+        public function __construct($empUser, $empPass, $empAccType, $empPic)
         {
             $this->empUsername = $empUser;
             $this->empPassword = $empPass;
-            $this->empAccountId = $empAccId;
             $this->empAccountType = $empAccType;
             $this->empPicture = "data:image;base64," . base64_encode($empPic);
         }
@@ -27,11 +25,6 @@
         public function getEmpUsername()
         {
             return $this->empUsername;
-        }
-
-        public function getEmpAccountId()
-        {
-            return $this->empAccountId;
         }
 
         public function getEmpAccountType()

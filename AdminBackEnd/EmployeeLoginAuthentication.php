@@ -1,16 +1,16 @@
 <?php
 
     include("../includes/constructor.php");
-    include("../includes/login.html");
+    include("../Admin/login.html");
     include("../includes/database.php");
 
     $empAccounts = [];
 
-    $query = "SELECT employee_username, employee_password FROM employee_account";
+    $query = "SELECT employee_username, employee_password, employee_account_type, employee_picture FROM employee_account";
     $result = $database->query($query);
 
     while($row = $result->fetch_assoc()) {
-    $accounts[] = new Account($row['employee_username'], $row['employee_password']);
+    $accounts[] = new employeeAccounts($row['employee_username'], $row['employee_password'], $row['employee_account_type'], $row['employee_picture']);
     }
 
     if(isset($_POST['loginButton'])) {
@@ -23,7 +23,7 @@
 
             if ($empUser == $credUser && $empPass == $credPass) {
                 session_start();
-                header("Location: index.php");
+                header("Location: index.html");
                 $_SESSION['username'] = $empUser;
             }
         }
