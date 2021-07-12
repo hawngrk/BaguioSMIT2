@@ -1,36 +1,37 @@
 <?php
 
-    include("../includes/constructor.php");
-    include("../Admin/login.html");
-    include("../includes/database.php");
+include("../includes/constructor.php");
+include("../Admin/login.html");
+include("../includes/database.php");
 
-    $empAccounts = [];
+$data = "SELECT employee_username, employee_password, employee_account_type, employee_picture FROM employee_account";
 
-    $query = "SELECT employee_username, employee_password, employee_account_type, employee_picture FROM employee_account";
-    $result = $database->query($query);
+$accounts = [];
 
-    while($row = $result->fetch_assoc()) {
-    $accounts[] = new employeeAccounts($row['employee_username'], $row['employee_password'], $row['employee_account_type'], $row['employee_picture']);
-    }
+$result = $database->query($data);
 
-    if(isset($_POST['loginButton'])) {
-        $empUser = $_POST['user'];
-        $empPass = $_POST['password'];
+while($row = $result->fetch_assoc()) {
+    $accounts[] = new employeeAccounts($row['employee_username'], $row['employee_password'], $row['employee_account_type'], $row['employee_picture']) ;
+}
 
-        foreach ($accounts as $cred) {
-            $credUser = $cred->getUser();
-            $credPass = $cred->getPassword();
+if(isset($_POST['loginButton'])){
+    $username = $_POST["username"];
+    $password = $_POST["password"];
 
-            if ($empUser == $credUser && $empPass == $credPass) {
-                session_start();
-                header("Location: index.html");
-                $_SESSION['username'] = $empUser;
-            }
+    foreach ($accounts as $accs){
+        $accInfo = $accs->getEmpUsername();
+        $passInfo = $accs->getEmpPassword();
+
+        if ($accInfo == $username && $passInfo == $password) {
+            session_start();
+            header("Location: ../Admin/index.html");
+            $_SESSION['username'] = $username;
         }
-
-        echo "<script>alert('Username or Password incorrect!')</script>";
-        echo "<script>location.href='login.php'</script>";
     }
 
-        ?>
+    echo "<script>alert('Username or Password incorrect!')</script>";
+    echo "<script>location.href='EmployeeLoginAuthentication.php'</script>";
+}
+
+?>
 

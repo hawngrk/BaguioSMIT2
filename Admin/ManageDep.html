@@ -33,7 +33,6 @@
 
 <div id="DeployModal" class="modal">
     <div class="modal-content">
-        <span id = "close" class="close">&times;</span>
         <div class="AddDeployment-PopUp">
             <h3>Add Deployment</h3>>
             <label for="district">Select Health District: </label>
@@ -81,10 +80,19 @@
         </div>
 
         <button id = "cancel1"> Cancel </button>
-        <button id = 'save1'> Save Changes</button>
+        <button id = 'next'> Next</button>
     </div>
 </div>
 
+<div id="DeployModalConf" class="modal">
+    <div class="modal-content">
+        <div class="AddDeploymentConf-PopUp">
+            <h3> Are you sure to add this deployment? </h3>
+            <button id = "no"> No </button>
+            <button id = 'yes'> Yes </button>
+        </div>
+    </div>
+</div>
 
 <button id = "addHealthDBtn" type="button" class="button btn-primary">
     Add Health District
@@ -93,7 +101,6 @@
 <div id="HealthDModal1" class="modal">
     <div class="modal-content">
         <h5 class="modal-title" id="add-VaccineTitle">Add Health District</h5>
-        <span id = "close1" class="close">&times;</span>
         <div class="AddHealthD-PopUp">
             <input type="checkbox" id="D1" name="D1" value="Bike">
             <label for="D1"> District 1</label><br>
@@ -114,18 +121,34 @@
 <script>
     var modal1 = document.getElementById("DeployModal");
     var modal2 = document.getElementById("HealthDModal1");
-    var addDeptButt = document.getElementById("addDepBtn");
+    var modal3 = document.getElementById("DeployModalConf");
+    var addDepButt = document.getElementById("addDepBtn");
     var addHealthD = document.getElementById("addHealthDBtn");
     var cancel1 = document.getElementById("cancel1");
     var cancel2 = document.getElementById("cancel2");
     var add = document.getElementById("add");
+    var next = document.getElementById("next");
+    var no = document.getElementById("no");
+    var yes = document.getElementById("yes");
 
-    addDeptButt.onclick = function (){
+    addDepButt.onclick = function (){
         modal1.style.display = "block";
     }
 
     cancel1.onclick = function (){
         modal1.style.display = "none";
+    }
+
+    next.onclick = function(){
+        modal3.style.display = "block";
+    }
+
+    no.onclick = function(){
+        modal3.style.display = "none";
+    }
+
+    yes.onclick = function(){
+        //enter code to add deployment here
     }
 
     addHealthD.onclick = function(){
@@ -136,16 +159,16 @@
         modal2.style.display = "none";
     }
 
+    add.onclick = function(){
+        //Enter code to add health district
+    }
     window.onclick = function(event){
-        if(event.target == modal1 || event.target == modal2){
+        if(event.target == modal1 || event.target == modal2 || event.target == modal3){
             modal1.style.display = "none";
             modal2.style.display = "none";
+            modal3.style.display = "none";
         }
     }
-
-
-
-
 
 </script>
 
