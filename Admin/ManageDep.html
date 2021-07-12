@@ -11,6 +11,10 @@
             src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" rel="stylesheet">
+
+    <link href="../css/cssAdmin.css" rel="stylesheet">
+    <title>Manage Vaccine</title>
+
 </head>
 <body>
 
@@ -74,32 +78,76 @@
                 <option value="bat3">bat3</option>
                 <option value="bat4">bat4</option>
             </select>
-
-
         </div>
 
-        <button id = "cancel"> Cancel </button>
-        <button id = 'save'> Save Changes</button>
+        <button id = "cancel1"> Cancel </button>
+        <button id = 'save1'> Save Changes</button>
     </div>
 </div>
+
+
+<button id = "addHealthDBtn" type="button" class="button btn-primary">
+    Add Health District
+</button>
+
+<div id="HealthDModal1" class="modal">
+    <div class="modal-content">
+        <h5 class="modal-title" id="add-VaccineTitle">Add Health District</h5>
+        <span id = "close1" class="close">&times;</span>
+        <div class="AddHealthD-PopUp">
+            <input type="checkbox" id="D1" name="D1" value="Bike">
+            <label for="D1"> District 1</label><br>
+            <input type="checkbox" id="D2" name="D2" value="Car">
+            <label for="D2"> District 2</label><br>
+            <input type="checkbox" id="D3" name="vehicle3" value="Boat">
+            <label for="D3"> District 3</label><br>
+        </div>
+        <button id = "cancel2"> Cancel </button>
+        <button id = 'add'> Add</button>
+    </div>
+</div>
+
+
 
 </body>
 
 <script>
     var modal1 = document.getElementById("DeployModal");
+    var modal2 = document.getElementById("HealthDModal1");
     var addDeptButt = document.getElementById("addDepBtn");
+    var addHealthD = document.getElementById("addHealthDBtn");
+    var cancel1 = document.getElementById("cancel1");
+    var cancel2 = document.getElementById("cancel2");
+    var add = document.getElementById("add");
 
     addDeptButt.onclick = function (){
         modal1.style.display = "block";
     }
 
+    cancel1.onclick = function (){
+        modal1.style.display = "none";
+    }
+
+    addHealthD.onclick = function(){
+        modal2.style.display ="block";
+    }
+
+    cancel2.onclick = function(){
+        modal2.style.display = "none";
+    }
+
     window.onclick = function(event){
-        if(event.target == modal1){
+        if(event.target == modal1 || event.target == modal2){
             modal1.style.display = "none";
+            modal2.style.display = "none";
         }
     }
 
 
+
+
+
 </script>
+
 </html>
 
