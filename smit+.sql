@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Jul 09, 2021 at 02:54 PM
+-- Generation Time: Jul 12, 2021 at 03:08 PM
 -- Server version: 5.7.31
 -- PHP Version: 7.3.21
 
@@ -67,7 +67,7 @@ CREATE TABLE IF NOT EXISTS `employee_account` (
   `employee_username` varchar(255) NOT NULL,
   `employee_password` varchar(255) NOT NULL,
   `employee_account_type` varchar(255) NOT NULL,
-  `employee_picture` blob NOT NULL,
+  `employee_picture` blob,
   PRIMARY KEY (`employee_account_id`),
   UNIQUE KEY `employee_id` (`employee_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -128,7 +128,18 @@ CREATE TABLE IF NOT EXISTS `patient` (
   `date_of_second_dosage` date NOT NULL,
   `vaccination_status` varchar(255) NOT NULL,
   PRIMARY KEY (`patient_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `patient`
+--
+
+INSERT INTO `patient` (`patient_id`, `patient_full_name`, `date_of_first_dosage`, `date_of_second_dosage`, `vaccination_status`) VALUES
+(1, 'Theodore Evelyn Mosby', '2021-07-20', '2021-08-03', 'Not Vaccinated'),
+(2, 'Marshall Ericksen', '2021-07-12', '2021-07-26', 'Completed 1st dose'),
+(3, 'Lili Aldrin', '2021-06-28', '2021-07-12', 'Completed 2nd dose'),
+(4, 'Robin Scherbatsky ', '2021-07-01', '2021-07-15', 'Completed 1st dose'),
+(5, 'Barney Stinson', '2021-07-24', '2021-08-07', 'Not vaccinated');
 
 -- --------------------------------------------------------
 
@@ -138,15 +149,22 @@ CREATE TABLE IF NOT EXISTS `patient` (
 
 DROP TABLE IF EXISTS `patient_account`;
 CREATE TABLE IF NOT EXISTS `patient_account` (
-  `patient_account_id` int(255) NOT NULL AUTO_INCREMENT,
-  `patient_id` int(255) NOT NULL,
+  `patient_account_id` int(11) NOT NULL AUTO_INCREMENT,
+  `patient_id` int(11) NOT NULL,
   `patient_username` varchar(255) NOT NULL,
   `patient_password` varchar(255) NOT NULL,
-  `patient_picture` blob NOT NULL,
+  `patient_picture` blob,
   `patient_email` varchar(255) NOT NULL,
   PRIMARY KEY (`patient_account_id`),
   UNIQUE KEY `patient_id` (`patient_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `patient_account`
+--
+
+INSERT INTO `patient_account` (`patient_account_id`, `patient_id`, `patient_username`, `patient_password`, `patient_picture`, `patient_email`) VALUES
+(1, 1, 'TedMosby', 'iGetVaxAndFreeDonat', NULL, 'theodoremosby@gmail.com');
 
 -- --------------------------------------------------------
 
@@ -156,20 +174,33 @@ CREATE TABLE IF NOT EXISTS `patient_account` (
 
 DROP TABLE IF EXISTS `patient_details`;
 CREATE TABLE IF NOT EXISTS `patient_details` (
-  `patient_details_id` int(255) NOT NULL,
+  `patient_details_id` int(11) NOT NULL,
   `patient_first_name` varchar(255) NOT NULL,
   `patient_last_name` varchar(255) NOT NULL,
-  `patient_middle_name` varchar(255) NOT NULL,
-  `patient_suffix` varchar(255) NOT NULL,
-  `patient_category` varchar(255) NOT NULL,
-  `patient_address` varchar(255) NOT NULL,
+  `patient_middle_name` varchar(255) DEFAULT NULL,
+  `patient_suffix` varchar(255) DEFAULT NULL,
+  `patient_priority_group` varchar(255) NOT NULL,
+  `patient_category_id` varchar(255) NOT NULL,
+  `patient_category_number` int(11) NOT NULL,
+  `patient_house_address` varchar(255) NOT NULL,
+  `patient_barangay_address` varchar(255) NOT NULL,
+  `patient_CM_address` varchar(255) NOT NULL,
+  `patient_province` varchar(255) NOT NULL,
+  `patient_region` varchar(255) NOT NULL,
   `patient_birthdate` date NOT NULL,
   `patient_age` int(11) NOT NULL,
   `patient_gender` varchar(255) NOT NULL,
-  `patient_contact_number` int(255) NOT NULL,
+  `patient_contact_number` char(11) NOT NULL,
   `patient_occupation` varchar(255) NOT NULL,
   UNIQUE KEY `patient_id_patient_first_name` (`patient_details_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `patient_details`
+--
+
+INSERT INTO `patient_details` (`patient_details_id`, `patient_first_name`, `patient_last_name`, `patient_middle_name`, `patient_suffix`, `patient_priority_group`, `patient_category_id`, `patient_category_number`, `patient_house_address`, `patient_barangay_address`, `patient_CM_address`, `patient_province`, `patient_region`, `patient_birthdate`, `patient_age`, `patient_gender`, `patient_contact_number`, `patient_occupation`) VALUES
+(1, 'Theodore', 'Mosby', 'Evelyn', NULL, 'A1: Health Care Workers', 'Other ID', 2191057, '75-B Lot 4 Block 5', 'San Luis Village', 'Baguio City', 'Benguet', 'Cordillera Administrative Region', '1999-04-01', 21, 'Male', '09216357642', 'Nurse');
 
 -- --------------------------------------------------------
 
