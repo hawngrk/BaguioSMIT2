@@ -42,6 +42,7 @@
     </div>
     <!--<button type="submit" class="formControl"> Add </button>-->
 </form>
+
 <?php
 echo " <button type='submit' name='addPersonnel' form='personnelForm' >Add Patient</button>";
 if (isset($_POST['addPersonnel'])) {

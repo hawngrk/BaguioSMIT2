@@ -24,31 +24,8 @@
 
 </head>
 <body>
-<button type="button" class="button4 btn-primary" data-toggle="modal" data-target="#upload-File">
-    Upload File
-</button>
 
-<!--
-<div class="modal fade" id="uploadFile" tabindex="-1" role="dialog" aria-labelledby="upload-File" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="upload-FileTitle">Upload File</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-primary">Save Changes</button>
-                <button type="button" class="btn btn-secondary">Close</button>
-            </div>
-        </div>
-    </div>
-</div> -->
+<!--Search-->
 <div class="search-container">
     <form action="/action_page.php">
         <input type="text" placeholder="Search" name="search">
@@ -58,15 +35,26 @@
     </form>
 </div>
 
+
+<!--Button for Uploading File-->
+<button type="button" class="button4 btn-primary" data-toggle="modal" data-target="#upload-File">
+    Upload File
+</button>
+
+
+
+<!--Button for Adding Personnel Details-->
 <button id = "addUserBtn" type="button" class="button4 btn-primary">
     Add User
 </button>
 
-<div id="myModal" class="modal">
+<!--Modal for adding personnel-->
+<div id="personnelModal" class="modal">
     <div class="modal-content">
         <span id = "close" class="close">&times;</span>
         <div class="AddPersonnel-PopUp">
-            <h3>Basic Information</h3>>
+            <h3>Add USER-Personnel</h3>
+            <h4> Basic Information</h4>
             <input class="col-xs-12" type="input" name="lastName" placeholder="Last Name">
             <input class="col-xs-12" type="input" name="firstName" placeholder="First Name">
             <input class="col-xs-12" type="input" name="middleName" placeholder="Middle Name">
@@ -89,16 +77,36 @@
         </div>
 
         <button id = "cancel"> Cancel </button>
-        <button id = 'save'> Save Changes</button>
+        <button id = 'Add'> Add </button>
 
     </div>
 </div>
+
+<div id="addButtonModal" class="modal">
+    <div class="modal-content">
+        <span id = "close2" class="close">&times;</span>
+        <h5> Here are the patients credentials. </h5>
+        <input class="col-xs-12" type="input" name="username" placeholder="Username" disabled>
+        <input class="col-xs-12" type="input" name="password" placeholder="Password" disabled>
+    </div>
+        <button id = 'add2'> Add </button>
+</div>
+
+<div id="notifyModal" class="modal">
+    <div class="modal-body">
+        <img src="../img/checkmark.png">
+    </div>
+    <button id = 'exit'> Close </button>
+</div>
+
 <script>
-    var modal = document.getElementById("myModal");
+    var modal = document.getElementById("personnelModal");
+    var addModal = document.getElementById("addButtonModal");
     var addUserbtn = document.getElementById("addUserBtn");
     var span = document.getElementById("close");
+    var span2 = document.getElementById("close2");
     var cancel = document.getElementById("cancel");
-    var save = document.getElementById("save");
+    var add = document.getElementById("Add");
 
     addUserbtn.onclick = function (){
         modal.style.display = "block";
@@ -106,6 +114,10 @@
 
     span.onclick = function (){
         modal.style.display = "none";
+    }
+
+    span2.onclick = function (){
+        addModal.style.display = "none";
     }
 
     cancel.onclick = function (){
@@ -118,8 +130,11 @@
         }
     }
 
-    save.onclick = function (){
-        alert("Changes has been saved!");
+    add.onclick = function (){
+        modal.style.display = "none";
+        addModal.style.display = "block";
     }
+
 </script>
 </body>
+</html>

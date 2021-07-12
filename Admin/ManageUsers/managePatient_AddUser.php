@@ -150,6 +150,7 @@
         <input type="text" class="others" name="others" id="others">
     </div>
 </form>
+
 <?php
 echo " <button type='submit' name='addPatient' form='patientForm' >Add Patient</button>";
 if (isset($_POST['addPatient'])) {
