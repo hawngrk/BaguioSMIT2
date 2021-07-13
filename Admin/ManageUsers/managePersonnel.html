@@ -52,7 +52,7 @@
 <div id="personnelModal" class="modal">
     <div class="modal-content">
         <span id = "close" class="close">&times;</span>
-        <div class="AddPersonnel-PopUp">
+        <div class="AddNewVaccine-PopUp">
             <h3>Add USER-Personnel</h3>
             <h4> Basic Information</h4>
             <input class="col-xs-12" type="input" name="lastName" placeholder="Last Name">
@@ -82,6 +82,7 @@
     </div>
 </div>
 
+<!--Modal for personnel credentials-->
 <div id="addButtonModal" class="modal">
     <div class="modal-content">
         <span id = "close2" class="close">&times;</span>
@@ -89,50 +90,66 @@
         <input class="col-xs-12" type="input" name="username" placeholder="Username" disabled>
         <input class="col-xs-12" type="input" name="password" placeholder="Password" disabled>
     </div>
-        <button id = 'add2'> Add </button>
+        <button id = 'Add2'> Add </button>
 </div>
 
+<!--Modal for successful notification-->
 <div id="notifyModal" class="modal">
     <div class="modal-body">
+        <span id = "close3" class="close">&times;</span>
         <img src="../img/checkmark.png">
+        <h5> User Personnel successfully added.</h5>
     </div>
+    <!--instead of close change to Done-->
     <button id = 'exit'> Close </button>
 </div>
 
 <script>
     var modal = document.getElementById("personnelModal");
     var addModal = document.getElementById("addButtonModal");
+    var notifyModal = document.getElementById("notifyModal");
     var addUserbtn = document.getElementById("addUserBtn");
     var span = document.getElementById("close");
     var span2 = document.getElementById("close2");
+    var span3 = document.getElementById("close3");
     var cancel = document.getElementById("cancel");
+    var exit = document.getElementById('exit')
     var add = document.getElementById("Add");
+    var add2 = document.getElementById("Add2");
 
+    // add button for Add User
     addUserbtn.onclick = function (){
         modal.style.display = "block";
     }
 
-    span.onclick = function (){
+    // add button after input of personnel basic info
+    add.onclick = function (){
         modal.style.display = "none";
+        addModal.style.display = "block";
     }
 
-    span2.onclick = function (){
+    add2.onclick = function (){
+        modal.style.display = "none";
         addModal.style.display = "none";
+        notifyModal.style.display="block";
+    }
+
+    span,span2,span3,exit.onclick = function (){
+        modal.style.display = "none";
+        addModal.style.display = "none";
+        notifyModal.style.display="none"
     }
 
     cancel.onclick = function (){
         modal.style.display = "none";
+        addModal.style.display = "none";
+        notifyModal.style.display="none"
     }
 
     window.onclick = function (event){
         if(event.target == modal){
             modal.style.display = "none";
         }
-    }
-
-    add.onclick = function (){
-        modal.style.display = "none";
-        addModal.style.display = "block";
     }
 
 </script>
