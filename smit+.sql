@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Jul 12, 2021 at 03:08 PM
+-- Generation Time: Jul 13, 2021 at 02:58 PM
 -- Server version: 5.7.31
 -- PHP Version: 7.3.21
 
@@ -34,7 +34,19 @@ CREATE TABLE IF NOT EXISTS `barangay` (
   `barangay_name` varchar(255) NOT NULL,
   PRIMARY KEY (`barangay_id`),
   KEY `health_district_id` (`health_district_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `barangay`
+--
+
+INSERT INTO `barangay` (`barangay_id`, `health_district_id`, `barangay_name`) VALUES
+(1, 8, 'San Luis Village'),
+(2, 8, 'San Rogue Village'),
+(3, 8, 'Irisan'),
+(4, 15, 'Upper Dagsian'),
+(5, 15, 'Lower Dagsian'),
+(6, 15, 'Scout Barrio');
 
 -- --------------------------------------------------------
 
@@ -47,12 +59,24 @@ CREATE TABLE IF NOT EXISTS `employee` (
   `employee_id` int(11) NOT NULL AUTO_INCREMENT,
   `employee_first_name` varchar(255) NOT NULL,
   `employee_last_name` varchar(255) NOT NULL,
-  `employee_middle_name` varchar(255) NOT NULL,
-  `employee_suffix` varchar(255) NOT NULL,
+  `employee_middle_name` varchar(255) DEFAULT NULL,
+  `employee_suffix` varchar(255) DEFAULT NULL,
   `employee_role` varchar(255) NOT NULL,
-  `employee_contact_number` int(11) NOT NULL,
+  `employee_contact_number` char(11) NOT NULL,
   PRIMARY KEY (`employee_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `employee`
+--
+
+INSERT INTO `employee` (`employee_id`, `employee_first_name`, `employee_last_name`, `employee_middle_name`, `employee_suffix`, `employee_role`, `employee_contact_number`) VALUES
+(1, 'Chandler', 'Bing', 'Muriel', NULL, 'Transponster', '09217532942'),
+(2, 'Monica', 'Bing', 'Geller', NULL, 'Transponster', '09217532942'),
+(3, 'Ross', 'Geller', NULL, NULL, 'Transponster', '09217532942'),
+(4, 'Joseph', 'Tribbiani', 'Francis', 'Jr.', 'Transponster', '09217532942'),
+(5, 'Rachel', 'Geller', 'Green', NULL, 'Transponster', '09217532942'),
+(6, 'Phoebe', 'Buffay', NULL, NULL, 'Transponster', '09217532942');
 
 -- --------------------------------------------------------
 
@@ -70,7 +94,19 @@ CREATE TABLE IF NOT EXISTS `employee_account` (
   `employee_picture` blob,
   PRIMARY KEY (`employee_account_id`),
   UNIQUE KEY `employee_id` (`employee_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `employee_account`
+--
+
+INSERT INTO `employee_account` (`employee_account_id`, `employee_id`, `employee_username`, `employee_password`, `employee_account_type`, `employee_picture`) VALUES
+(1, 1, 'CMBing', 'WriteFromYourFullSizedAorticPump', 'Admin', NULL),
+(2, 2, 'Harmonica', 'YourLittleHarmonicaIsHammered', 'Client', NULL),
+(3, 3, 'SandwichGuy', 'WeWereOnABreak', 'Client', NULL),
+(4, 4, 'KenAdams', 'OhGodSomeGirlAteMonica', 'Client', NULL),
+(5, 5, 'RachGreen', '', 'WentBackpackingThroughWesternEurope', NULL),
+(6, 6, 'ReginaPhalange', 'OhMyEyesMyEyes', 'Client', NULL);
 
 -- --------------------------------------------------------
 
@@ -80,10 +116,33 @@ CREATE TABLE IF NOT EXISTS `employee_account` (
 
 DROP TABLE IF EXISTS `health_district`;
 CREATE TABLE IF NOT EXISTS `health_district` (
-  `health_disctrict_id` int(255) NOT NULL AUTO_INCREMENT,
+  `health_disctrict_id` int(11) NOT NULL AUTO_INCREMENT,
   `health_district_name` varchar(255) NOT NULL,
+  `hd_contanct_number` char(11) NOT NULL,
   PRIMARY KEY (`health_disctrict_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `health_district`
+--
+
+INSERT INTO `health_district` (`health_disctrict_id`, `health_district_name`, `hd_contanct_number`) VALUES
+(1, 'Asin Health Center', '6204798'),
+(2, 'Atab health Center', '4209087'),
+(3, 'Atok Trail Health Center', '6205395'),
+(4, 'Aurora Hill Health Center', '09088117675'),
+(5, 'Campo Filipino Health Center', '4420031'),
+(6, 'City Camp Health Center', '09150522277'),
+(7, 'Engineers Hill Health Center', '09562802014'),
+(8, 'Irisan Health Center', '09562802014'),
+(9, 'Loakan Health Center', '09562802014'),
+(10, 'Lucban Health Center', '09492527664'),
+(11, 'Mines View Health Center', '6658702'),
+(12, 'Pacdal Health Center', '6658104'),
+(13, 'Pinsao Health Center', '6657805'),
+(14, 'Quezon Hill Health Center', '65205469'),
+(15, 'Quirino Center', '09350692877'),
+(16, 'Scount Barrio Center', '09262163933');
 
 -- --------------------------------------------------------
 
@@ -157,14 +216,18 @@ CREATE TABLE IF NOT EXISTS `patient_account` (
   `patient_email` varchar(255) NOT NULL,
   PRIMARY KEY (`patient_account_id`),
   UNIQUE KEY `patient_id` (`patient_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `patient_account`
 --
 
 INSERT INTO `patient_account` (`patient_account_id`, `patient_id`, `patient_username`, `patient_password`, `patient_picture`, `patient_email`) VALUES
-(1, 1, 'TedMosby', 'iGetVaxAndFreeDonat', NULL, 'theodoremosby@gmail.com');
+(1, 1, 'TedMosby', 'iGetVaxAndFreeDonat', NULL, 'theodoremosby@gmail.com'),
+(2, 2, 'EricksenM', 'iGetVaxAndGetDiscount', NULL, 'theodoremosby@gmail.com'),
+(3, 3, 'LilAldrin', 'iGetVaxAndGetEcoBag', NULL, 'theodoremosby@gmail.com'),
+(4, 4, 'RobinSparkles', 'iGetVaxAndGotErectileDysfunction', NULL, 'theodoremosby@gmail.com'),
+(5, 5, 'SwarleyB', 'iGetVaxAndStillGotCovid', NULL, 'theodoremosby@gmail.com');
 
 -- --------------------------------------------------------
 
