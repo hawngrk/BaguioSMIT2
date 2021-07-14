@@ -1,14 +1,191 @@
+<!---/***
+* @Author Krisha Mar M. Macatulad
+* Date Created: July 14, 2021
+* Description: Main page of Manage Users - Patient
+*/
+---->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title> Patient </title>
+  <meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport">
+  <script crossorigin="anonymous" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+          src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+  <script crossorigin="anonymous" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+          src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script crossorigin="anonymous" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+          src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" rel="stylesheet">
+
+  <!-- Custom styles for this template-->
+  <link href="../css/cssAdmin.css" rel="stylesheet">
+  <title>Patient</title>
+
 </head>
 <body>
-<div class="buttonContainer">
-  <button type ='file'>Upload File</button>
-  <button type='button' onclick="window.location.href='managePatient_AddUser.html'">+ Add User</button>
+
+<!--Search-->
+<div class="search-container">
+  <form action="/action_page.php">
+    <input type="text" placeholder="Search" name="search">
+    <button type="submit"><i class="fa fa-search"></i>
+      <img id="searchButton" src="../img/magnifying-glass.png">
+    </button>
+  </form>
 </div>
+
+
+<!--Button for Uploading File-->
+<button id="uploadFile" type="button" class="button4 btn-primary" data-toggle="modal" data-target="#upload-File">
+  Upload File
+</button>
+
+<!--Modal for uploading patient csv-->
+<!--To include uploading files limited to csv file only-->
+<div id="uploadFileModal" class="modal">
+  <div class="modal-content">
+    <span id = "close" class="close">&times;</span>
+    <div id="uploadingFile">
+      <h3> Upload File/s </h3>
+      <p>Upload a list of patients (.csv) <br> or </p>
+      <input type="file" class="form-control" id="fileUpload" multiple/>
+      <button id="browse" type="button" class="'button4 btn-primary"> Browse </button>
+    </div>
+
+    <div id="listFile">
+      <!--temporary uploading-->
+      <h6> Uploaded Files </h6>
+      <p> prereg_09-19-2021_validates.csv</p>
+      <p> prereg_09-21-2021_validates.csv</p>
+    </div>
+
+  </div>
+
+</div>
+
+<!--Button for Adding Patient Details-->
+<button id = "addPatientBtn" type="button" class="button4 btn-primary">
+  Add User
+</button>
+
+<!--Modal for Adding patient -->
+<div id="patientModal" class="modal">
+  <div class="modal-content">
+    <span id = "exit1" class="close">&times;</span>
+    <div class="AddNewVaccine-PopUp">
+      <h3>Add USER-Patient</h3>
+      <h4> Basic Information</h4>
+      <input class="col-xs-12" type="input" name="lastName" placeholder="Last Name">
+      <input class="col-xs-12" type="input" name="firstName" placeholder="First Name">
+      <input class="col-xs-12" type="input" name="middleName" placeholder="Middle Name">
+      <label for="suffix"> Suffix Name </label>
+      <select class="formControl" id="suffix">
+        <option> Sr </option>
+        <option> Jr </option>
+        <option> I </option>
+        <option> II </option>
+        <option> III </option>
+      </select>
+
+      <label for="category"> Category </label>
+      <select class="formControl" id="category">
+        <option> A1 </option>
+        <option> A2 </option>
+        <option> A3 </option>
+        <option> A4 </option>
+        <option> A5 </option>
+      </select>
+
+      <h4> Address </h4>
+      <input class="col-xs-12" type="input" name="street" placeholder="Street Name">
+      <input class="col-xs-12" type="input" name="city" placeholder="City/Town">
+      <input class="col-xs-12" type="input" name="state" placeholder="State/Province">
+      <input class="col-xs-12" type="input" name="zip" placeholder="Postal/Zip Code">
+
+      <label for="date"> Birthdate </label>
+      <input type="date" id="date" name="date">
+
+      <label for="gender"> Gender </label>
+      <select class="formControl" id="gender">
+        <option> Male </option>
+        <option> Female </option>
+      </select>
+
+      <input class="col-xs-12" type="input" name="contactNum" placeholder="Contact Number">
+      <input class="col-xs-12" type="input" name="occupation" placeholder="Occupation">
+
+    </div>
+    <button id = "next"> Next </button>
+  </div>
+</div>
+
+<!--Modal for Patient's medical records-->
+<div id="medicalRecModal" class="modal">
+  <div class="modal-content">
+    <div class="AddNewVaccine-PopUp">
+      <span id = "exit2" class="close">&times;</span>
+      <h3>Add USER-Patient</h3>
+      <h4> Medical Background</h4>
+      <h5> Allergy: </h5>
+      <p> *Check the following allergies if the person has a certain allergy </p>
+      <br>
+      <h5> Comorbidities </h5>
+    </div>
+
+    <div>
+      <button id = "next2"> Next </button>
+    </div>
+
+  </div>
+
+
+</div>
+
+<script>
+  var exit = document.getElementById("close");
+  var exit1 = document.getElementById("exit1");
+  var exit2 = document.getElementById("exit2");
+
+  //buttons
+  var uploadFileBtn = document.getElementById("uploadFile");
+  var addPatientBtn = document.getElementById("addPatientBtn");
+  var next = document.getElementById("next");
+
+  // modals
+  var uploadFileModal = document.getElementById("uploadFileModal");
+  var patientModal = document.getElementById("patientModal");
+  var medicalRecModal = document.getElementById("medicalRecModal");
+
+
+  uploadFileBtn.onclick = function (){
+    uploadFileModal.style.display = "block";
+  }
+
+  addPatientBtn.onclick = function (){
+    patientModal.style.display = "block";
+  }
+
+  next.onclick = function () {
+    patientModal.style.display = "none";
+    medicalRecModal.style.display = "block"
+
+  }
+  s
+  exit.onclick = function () {
+    uploadFileModal.style.display = "none";
+  }
+
+  exit1.onclick = function () {
+    patientModal.style.display = "none";
+  }
+
+  exit2.onclick = function () {
+    patientModal.style.display = "none";
+    medicalRecModal.style.display = "none";
+  }
+
+</script>
 
 </body>
 </html>

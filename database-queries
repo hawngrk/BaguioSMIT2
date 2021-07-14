@@ -1,0 +1,73 @@
+--NOTE: Insert 5 data in patient_account
+INSERT INTO `patient_account` (`patient_account_id`, `patient_id`, `patient_username`, `patient_password`, `patient_picture`, `patient_email`) 
+(NULL, '1', 'TedMosby', 'iGetVaxAndFreeDonat', NULL, 'theodoremosby@gmail.com'),
+(NULL, '2', 'EricksenM', 'iGetVaxAndGetDiscount', NULL, 'theodoremosby@gmail.com'),
+(NULL, '3', 'LilAldrin', 'iGetVaxAndGetEcoBag', NULL, 'theodoremosby@gmail.com'),
+(NULL, '4', 'RobinSparkles', 'iGetVaxAndGotErectileDysfunction', NULL, 'theodoremosby@gmail.com'),
+(NULL, '5', 'SwarleyB', 'iGetVaxAndStillGotCovid', NULL, 'theodoremosby@gmail.com')
+
+
+--NOTE: Insert 5 data in patient table
+INSERT INTO `patient` (`patient_id`, `patient_full_name`, `date_of_first_dosage`, `date_of_second_dosage`, `vaccination_status`) 
+VALUES (NULL, 'Theodore Evelyn Mosby', '2021-07-20', '2021-08-03', 'Not Vaccinated'), 
+(NULL, 'Marshall Ericksen', '2021-07-12', '2021-07-26', 'Completed 1st dose'), 
+(NULL, 'Lili Aldrin', '2021-06-28', '2021-07-12', 'Completed 2nd dose'), 
+(NULL, 'Robin Scherbatsky ', '2021-07-01', '2021-07-15', 'Completed 1st dose'), 
+(NULL, 'Barney Stinson', '2021-07-24', '2021-08-07', 'Not vaccinated')
+
+
+--NOTE: Insert 5 data in patient_details table
+INSERT INTO `patient_details` (`patient_details_id`, `patient_first_name`, `patient_last_name`, `patient_middle_name`, `patient_suffix`, `patient_priority_group`, `patient_category_id`, `patient_category_number`, `patient_house_address`, `patient_barangay_address`, `patient_CM_address`, `patient_province`, `patient_region`, `patient_birthdate`, `patient_age`, `patient_gender`, `patient_contact_number`, `patient_occupation`) 
+
+VALUES ('1', 'Theodore', 'Mosby', 'Evelyn', NULL, 'A1: Health Care Workers', 'Other ID', '2191057', '75-B Lot 4 Block 5', 'San Luis Village', 'Baguio City', 'Benguet', 'Cordillera Administrative Region', '1999-04-01', '21', 'Male', '09216357642', 'Nurse'),
+('2', 'Theodore', 'Mosby', 'Evelyn', NULL, 'A1: Health Care Workers', 'Other ID', '2191057', '75-B Lot 4 Block 5', 'San Luis Village', 'Baguio City', 'Benguet', 'Cordillera Administrative Region', '1999-04-01', '21', 'Male', '09216357642', 'Nurse'),
+('3', 'Theodore', 'Mosby', 'Evelyn', NULL, 'A1: Health Care Workers', 'Other ID', '2191057', '75-B Lot 4 Block 5', 'San Luis Village', 'Baguio City', 'Benguet', 'Cordillera Administrative Region', '1999-04-01', '21', 'Male', '09216357642', 'Nurse'),
+('4', 'Theodore', 'Mosby', 'Evelyn', NULL, 'A1: Health Care Workers', 'Other ID', '2191057', '75-B Lot 4 Block 5', 'San Luis Village', 'Baguio City', 'Benguet', 'Cordillera Administrative Region', '1999-04-01', '21', 'Male', '09216357642', 'Nurse'),
+('5', 'Theodore', 'Mosby', 'Evelyn', NULL, 'A1: Health Care Workers', 'Other ID', '2191057', '75-B Lot 4 Block 5', 'San Luis Village', 'Baguio City', 'Benguet', 'Cordillera Administrative Region', '1999-04-01', '21', 'Male', '09216357642', 'Nurse')
+
+--NOTE: 15 data for health_district table
+INSERT INTO `health_district` (`health_disctrict_id`, `health_district_name`, `hd_contanct_number`) 
+VALUES (NULL, 'Asin Health Center', '6204798'),
+(NULL, 'Atab health Center', '4209087'),
+(NULL, 'Atok Trail Health Center', '6205395'),
+(NULL, 'Aurora Hill Health Center', '09088117675'),
+(NULL, 'Campo Filipino Health Center', '4420031'),
+(NULL, 'City Camp Health Center', '09150522277'),
+(NULL, 'Engineers Hill Health Center', '09562802014'),
+(NULL, 'Irisan Health Center', '09562802014'),
+(NULL, 'Loakan Health Center', '09562802014'),
+(NULL, 'Lucban Health Center', '09492527664'),
+(NULL, 'Mines View Health Center', '6658702'),
+(NULL, 'Pacdal Health Center', '6658104'),
+(NULL, 'Pinsao Health Center', '6657805'),
+(NULL, 'Quezon Hill Health Center', '65205469'),
+(NULL, 'Quirino Center', '09350692877'),
+(NULL, 'Scount Barrio Center', '09262163933')
+
+--NOTE: 6 data for barangay 
+INSERT INTO `barangay` (`barangay_id`, `health_district_id`, `barangay_name`) 
+VALUES (NULL, '8', 'San Luis Village'),
+(NULL, '8', 'San Rogue Village'),
+(NULL, '8', 'Irisan'),
+(NULL, '15', 'Upper Dagsian'),
+(NULL, '15', 'Lower Dagsian'),
+(NULL, '15', 'Scout Barrio')
+
+--NOTE: 6 data for employee
+INSERT INTO `employee` (`employee_id`, `employee_first_name`, `employee_last_name`, `employee_middle_name`, `employee_suffix`, `employee_role`, `employee_contact_number`) 
+VALUES (NULL, 'Chandler', 'Bing', 'Muriel', NULL, 'Transponster', '09217532942'),
+(NULL, 'Monica', 'Bing', 'Geller', NULL, 'Transponster', '09217532942'),
+(NULL, 'Ross', 'Geller', NULL, NULL, 'Transponster', '09217532942'),
+(NULL, 'Joseph', 'Tribbiani', 'Francis', 'Jr'., 'Transponster', '09217532942'),
+(NULL, 'Rachel', 'Geller', 'Green', NULL, 'Transponster', '09217532942'),
+(NULL, 'Phoebe', 'Buffay', NULL, NULL, 'Transponster', '09217532942')
+
+
+--NOTE: 6 data for employee_account
+INSERT INTO `employee_account` (`employee_account_id`, `employee_id`, `employee_username`, `employee_password`, `employee_account_type`, `employee_picture`) 
+VALUES (NULL, '1', 'CMBing', 'WriteFromYourFullSizedAorticPump', 'Admin', NULL),
+(NULL, '2', 'Harmonica', 'YourLittleHarmonicaIsHammered', 'Client', NULL),
+(NULL, '3', 'SandwichGuy', 'WeWereOnABreak', 'Client', NULL),
+(NULL, '4', 'KenAdams', 'YepThatsOneNakedHooker', 'Client', NULL),
+(NULL, '5', 'RachGreen', '', 'WentBackpackingThroughWesternEurope', 'Client',NULL),
+(NULL, '6', 'ReginaPhalange', 'ThisIsHowILookedWhenImTurnedOn', 'Client', NULL)

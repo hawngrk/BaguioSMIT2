@@ -3,26 +3,188 @@
 <head>
     <meta charset="UTF-8">
     <title>Manage Deployment</title>
+    <script crossorigin="anonymous" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script crossorigin="anonymous" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+            src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script crossorigin="anonymous" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" rel="stylesheet">
+
+    <link href="../css/cssAdmin.css" rel="stylesheet">
+    <title>Manage Vaccine</title>
+
 </head>
 <body>
-    <div id="Deployment-forms">
-        <div id="listPatient">
-            <h1> List Patient View</h1>
+
+<div class="search-container">
+    <form action="/action_page.php">
+        <input type="text" placeholder="Search" name="search">
+        <button type="submit"><i class="fa fa-search"></i>
+            <img id="searchButton" src="../img/magnifying-glass.png">
+        </button>
+    </form>
+</div>
+
+<button id = "addDepBtn" type="button" class="button btn-primary">
+    Add Deployment
+</button>
+
+<div id="DeployModal" class="modal">
+    <div class="modal-content">
+        <span id = "close1" class="close">&times;</span>
+        <div class="AddDeployment-PopUp">
+            <h3>Add Deployment</h3>>
+            <label for="district">Select Health District: </label>
+            <select name="district" id="district">
+                <option value="d1">District 1</option>
+                <option value="d2">District 2</option>
+                <option value="d3">District 3</option>
+                <option value="d4">District 4</option>
+            </select>
+
+            <label for="PatientCateg">Category of patients: </label>
+            <select name="PatientCateg" id="PatientCateg">
+                <option value="A1">A1</option>
+                <option value="A2">A2</option>
+                <option value="A3">A3</option>
+                <option value="A4">A4</option>
+            </select>
+
+            <label for="date">Date: </label>
+            <input type="date" id="date" name="date">
+
+            <label for="VaccineBr">Select Vaccine Brand: </label>
+            <select name="VaccineB" id="VaccineBr">
+                <option value="V1">V1</option>
+                <option value="V2">V2</option>
+                <option value="V3">V3</option>
+                <option value="V4">V4</option>
+            </select>
+
+            <label for="VaccineLot">Select Vaccine Lot: </label>
+            <select name="VaccineLot" id="VaccineLot">
+                <option value="VL1">VL1</option>
+                <option value="VL2">VL2</option>
+                <option value="VL3">VL3</option>
+                <option value="VL4">VL4</option>
+            </select>
+
+            <label for="VaccineBat">Select Vaccine Lot: </label>
+            <select name="VaccineLot" id="VaccineBat">
+                <option value="bat1">bat1</option>
+                <option value="bat2">bat2</option>
+                <option value="bat3">bat3</option>
+                <option value="bat4">bat4</option>
+            </select>
         </div>
 
-        <div id="DeployementList">
-            <input type="text" id="SearchVal" name="SearchVal">
-            <input type="submit" value="Search">
-        </div>
-
-        <form action="AddHealthD.html">
-            <input type="submit" value="Add Health District" />
-        </form>
-
-        <form action="AddDeployment.html">
-            <input type="submit" value="Add Deployment" />
-        </form>
+        <button id = "cancel1"> Cancel </button>
+        <button id = 'next'> Next</button>
     </div>
+</div>
+
+<div id="DeployModalConf" class="modal">
+    <div class="modal-content">
+        <span id = "close3" class="close">&times;</span>
+        <div class="AddDeploymentConf-PopUp">
+            <h3> Are you sure to add this deployment? </h3>
+            <button id = "no"> No </button>
+            <button id = 'yes'> Yes </button>
+        </div>
+    </div>
+</div>
+
+<button id = "addHealthDBtn" type="button" class="button btn-primary">
+    Add Health District
+</button>
+
+<div id="HealthDModal1" class="modal">
+    <div class="modal-content">
+        <span id = "close2" class="close">&times;</span>
+        <h5 class="modal-title" id="add-VaccineTitle">Add Health District</h5>
+        <div class="AddHealthD-PopUp">
+            <input type="checkbox" id="D1" name="D1" value="Bike">
+            <label for="D1"> District 1</label><br>
+            <input type="checkbox" id="D2" name="D2" value="Car">
+            <label for="D2"> District 2</label><br>
+            <input type="checkbox" id="D3" name="vehicle3" value="Boat">
+            <label for="D3"> District 3</label><br>
+        </div>
+        <button id = "cancel2"> Cancel </button>
+        <button id = 'add'> Add</button>
+    </div>
+</div>
 </body>
+
+<script>
+    var modal1 = document.getElementById("DeployModal");
+    var modal2 = document.getElementById("HealthDModal1");
+    var modal3 = document.getElementById("DeployModalConf");
+    var addDepButt = document.getElementById("addDepBtn");
+    var addHealthD = document.getElementById("addHealthDBtn");
+    var cancel1 = document.getElementById("cancel1");
+    var cancel2 = document.getElementById("cancel2");
+    var add = document.getElementById("add");
+    var next = document.getElementById("next");
+    var no = document.getElementById("no");
+    var yes = document.getElementById("yes");
+    var close1 = document.getElementById("close1")
+    var close2 = document.getElementById("close2")
+    var close3 = document.getElementById("close3")
+
+    addDepButt.onclick = function (){
+        modal1.style.display = "block";
+    }
+
+    cancel1.onclick = function (){
+        modal1.style.display = "none";
+    }
+
+    next.onclick = function(){
+        modal3.style.display = "block";
+    }
+
+    no.onclick = function(){
+        modal3.style.display = "none";
+    }
+
+    yes.onclick = function(){
+        //enter code to add deployment here
+    }
+
+    addHealthD.onclick = function(){
+        modal2.style.display ="block";
+    }
+
+    cancel2.onclick = function(){
+        modal2.style.display = "none";
+    }
+
+    add.onclick = function(){
+        //Enter code to add health district
+    }
+
+    window.onclick = function(event){
+        if(event.target == modal1 || event.target == modal2 || event.target == modal3){
+            modal1.style.display = "none";
+            modal2.style.display = "none";
+            modal3.style.display = "none";
+        }
+    }
+
+    close1.onclick = function(){
+        modal1.style.display = "none";
+    }
+    close2.onclick = function(){
+        modal2.style.display = "none";
+    }
+    close3.onclick = function(){
+        modal3.style.display = "none";
+    }
+
+</script>
+
 </html>
 

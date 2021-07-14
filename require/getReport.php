@@ -1,5 +1,6 @@
 <?php
 include("../includes/database.php");
+include("../includes/constructor.php");
 
 /***
  * @Author Hudson Kit P. Natividad
@@ -7,17 +8,21 @@ include("../includes/database.php");
  * Description: returns the Report content from the Database
  */
 
-//insert query
-//$query = '';
-//$stmt = $database->stmt_init();
-//$stmt -> prepare($query);
-//insert variables
-//$stmt -> bind_result();
-//$stmt -> execute();
+$query = "SELECT report_id, patient_id, report_details, vaccine_symptoms_reported, COVID19_symptoms_reported, date_reported, report_verified FROM report";
+$reports = [];
 
-//$report = [];
-//while($stmt -> fetch()) {
-//    $report = new report(); // insert the variables needed
-//    $report->set_reportID($); // insert the variables needed
-//    $report[] = $report;
-//}
+$stmt = $database->stmt_init();
+$stmt->prepare($query);
+$stmt->execute();
+$stmt->bind_result($reportId, $reportPatientId, $reportDetails, $vaccineSymptomsReported, $covSymptomsReported, $dateReported, $reportStatus);
+
+while ($stmt->fetch()){
+    $report = new patientInfo($reportId, $reportPatientId, $reportDetails, $vaccineSymptomsReported, $covSymptomsReported, $dateReported, $reportStatus);
+    $reports[] = $report;
+
+}
+
+$stmt->close();
+
+?>
+

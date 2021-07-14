@@ -5,16 +5,14 @@
     class employeeAccounts{
         private $empUsername;
         private $empPassword;
-        private $empAccountId;
         private $empAccountType;
         private $empPicture;
 
 
-        public function __construct($empUser, $empPass, $empAccId, $empAccType, $empPic)
+        public function __construct($empUser, $empPass, $empAccType, $empPic)
         {
             $this->empUsername = $empUser;
             $this->empPassword = $empPass;
-            $this->empAccountId = $empAccId;
             $this->empAccountType = $empAccType;
             $this->empPicture = "data:image;base64," . base64_encode($empPic);
         }
@@ -27,11 +25,6 @@
         public function getEmpUsername()
         {
             return $this->empUsername;
-        }
-
-        public function getEmpAccountId()
-        {
-            return $this->empAccountId;
         }
 
         public function getEmpAccountType()
@@ -190,6 +183,71 @@ class patientInfo{
     }
 }
 ?>
+
+<?php
+
+class reports{
+    private $reportId;
+    private $reportPatientId;
+    private $reportType;
+    private $reportDetails;
+    private $vaccineSymptomsReported;
+    private $covid19SymptomsReported;
+    private $dateReported;
+    private $reportStatus;
+
+    public function __construct($repId, $repPatId, $repType, $repDetails, $vaccSymRep, $covSymRep,$dateRep, $repStat)
+    {
+        $this->reportId = $repId;
+        $this->reportPatientId = $repPatId;
+        $this->reportType = $repType;
+        $this->reportDetails = $repDetails;
+        $this->vaccineSymptomsReported = $vaccSymRep;
+        $this->covid19SymptomsReported = $covSymRep;
+        $this->dateReported = $dateRep;
+        $this->reportStatus = $repStat;
+    }
+
+    public function getReportId()
+    {
+        return $this->reportId;
+    }
+
+    public function getReportPatientId()
+    {
+        return $this->reportPatientId;
+    }
+
+    public function getReportType()
+    {
+        return $this->reportType;
+    }
+
+    public function getReportDetails()
+    {
+        return $this->reportDetails;
+    }
+
+    public function getCovid19SymptomsReported()
+    {
+        return $this->covid19SymptomsReported;
+    }
+
+    public function getDateReported()
+    {
+        return $this->dateReported;
+    }
+
+    public function getReportStatus()
+    {
+        return $this->reportStatus;
+    }
+
+    public function getVaccineSymptomsReported()
+    {
+        return $this->vaccineSymptomsReported;
+    }
+}
 
 
 

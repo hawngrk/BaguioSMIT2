@@ -1,13 +1,207 @@
+<!---/***
+* @Author Krisha Mar M. Macatulad
+* Date Created: July 9, 2021
+* Description: Main page of Manage Users
+*/
+---->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title> Personnel </title>
+    <meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport">
+    <script crossorigin="anonymous" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script crossorigin="anonymous" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+            src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script crossorigin="anonymous" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="../../css/cssAdmin.css" rel="stylesheet">
+    <title>Personnel</title>
+
 </head>
 <body>
-<div class="buttonContainer">
-    <button type ='file'>Upload File</button>
-    <button type='button' onclick="window.location.href='managePersonnel_AddUser.html'">+ Add User</button>
+
+<!--Search-->
+<div class="search-container">
+    <form action="/action_page.php">
+        <input type="text" placeholder="Search" name="search">
+        <button type="submit"><i class="fa fa-search"></i>
+            <img id="searchButton" src="../img/magnifying-glass.png">
+        </button>
+    </form>
 </div>
+
+
+<!--Button for Uploading File-->
+<!--To include uploading files limited to csv file only-->
+<button id="uploadFile" type="button" class="button4 btn-primary" data-toggle="modal" data-target="#upload-File">
+    Upload File
+</button>
+
+<!--Modal for adding personnel-->
+<div id="uploadFileModal" class="modal">
+    <div class="modal-content">
+        <span id = "close" class="close">&times;</span>
+        <div id="uploadingFile">
+            <h3> Upload File/s </h3>
+            <p>Upload a list of patients (.csv) <br> or </p>
+            <input type="file" class="form-control" id="fileUpload" multiple/>
+            <button id="browse" type="button" class="'button4 btn-primary"> Browse </button>
+        </div>
+
+        <div id="listFile">
+            <!--temporary uploading-->
+            <h6> Uploaded Files </h6>
+            <p> prereg_09-19-2021_validates.csv</p>
+            <p> prereg_09-21-2021_validates.csv</p>
+        </div>
+
+    </div>
+
+</div>
+
+<!--Button for Adding Personnel Details-->
+<button id = "addUserBtn" type="button" class="button4 btn-primary">
+    Add User
+</button>
+
+<!--Modal for adding personnel-->
+<div id="personnelModal" class="modal">
+    <div class="modal-content">
+        <span id = "close1" class="close">&times;</span>
+        <div class="AddNewVaccine-PopUp">
+            <h3>Add USER-Personnel</h3>
+            <h4> Basic Information</h4>
+            <input class="col-xs-12" type="input" name="lastName" placeholder="Last Name">
+            <input class="col-xs-12" type="input" name="firstName" placeholder="First Name">
+            <input class="col-xs-12" type="input" name="middleName" placeholder="Middle Name">
+            <label for="suffix"> Suffix Name </label>
+            <select class="formControl" id="suffix">
+                <option> Sr </option>
+                <option> Jr </option>
+                <option> I </option>
+                <option> II </option>
+                <option> III </option>
+            </select>
+
+            <label for="role"> Role </label>
+            <select class="formControl" id="role">
+                <option> City Hall Employee </option>
+                <option> Vaccination Personnel </option>
+            </select>
+            <input class="col-xs-12" type="input" name="contactNumber" placeholder="Contact Number">
+
+        </div>
+
+        <button id = "cancel"> Cancel </button>
+        <button id = 'Add'> Add </button>
+
+    </div>
+</div>
+
+<!--Modal for personnel credentials-->
+<div id="addButtonModal" class="modal">
+    <div class="modal-content">
+        <span id = "close2" class="close">&times;</span>
+        <h5> Here are the patients credentials. </h5>
+        <input class="col-xs-12" type="input" name="username" placeholder="Username" disabled>
+        <input class="col-xs-12" type="input" name="password" placeholder="Password" disabled>
+        <button id = 'Add2'> Add </button>
+    </div>
+
+</div>
+
+<!--Modal for successful notification-->
+<div id="notifyModal" class="modal">
+    <div class="modal-content">
+        <span id = "close3" class="close">&times;</span>
+        <br>
+        <img src="../img/checkmark.png">
+        <p> User Personnel successfully added. </p>
+        <button id = 'exit'> Close </button>
+    </div>
+    <!--instead of close change to Done-->
+
+</div>
+
+<script>
+    var modal = document.getElementById("personnelModal");
+    var addModal = document.getElementById("addButtonModal");
+    var notifyModal = document.getElementById("notifyModal");
+    var uploadFileModal = document.getElementById("uploadFileModal")
+    var addUserBtn = document.getElementById("addUserBtn");
+    var uploadFileBtn = document.getElementById("uploadFile")
+    var span = document.getElementById("close");
+    var span1 = document.getElementById("close1");
+    var span2 = document.getElementById("close2");
+    var span3 = document.getElementById("close3");
+    var cancel = document.getElementById("cancel");
+    var exit = document.getElementById('exit')
+    var add = document.getElementById("Add");
+    var add2 = document.getElementById("Add2");
+
+    //upload file button
+    uploadFileBtn.onclick = function (){
+        uploadFileModal.style.display = "block";
+    }
+    // add button for Add User
+    addUserBtn.onclick = function (){
+        modal.style.display = "block";
+    }
+
+    // add button after input of personnel basic info
+    add.onclick = function (){
+        modal.style.display = "none";
+        addModal.style.display = "block";
+    }
+
+    add2.onclick = function (){
+        modal.style.display = "none";
+        addModal.style.display = "none";
+        notifyModal.style.display="block";
+    }
+
+    span.onclick = function () {
+        uploadFileModal.style.display = "none";
+    }
+
+    span1.onclick = function () {
+        modal.style.display = "none";
+    }
+
+    span2.onclick = function (){
+        modal.style.display = "none";
+        addModal.style.display ="none";
+    }
+
+    span3.onclick = function (){
+        modal.style.display = "none";
+        addModal.style.display ="none";
+        notifyModal.style.display = "none";
+    }
+
+    exit.onclick = function (){
+        modal.style.display = "none";
+        addModal.style.display ="none";
+        notifyModal.style.display = "none";
+    }
+
+    cancel.onclick = function (){
+        modal.style.display = "none";
+        addModal.style.display = "none";
+        notifyModal.style.display="none"
+    }
+
+    window.onclick = function (event){
+        if(event.target == modal){
+            modal.style.display = "none";
+        }
+    }
+
+</script>
 </body>
 </html>
