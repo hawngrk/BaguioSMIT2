@@ -184,6 +184,71 @@ class patientInfo{
 }
 ?>
 
+<?php
+
+class reports{
+    private $reportId;
+    private $reportPatientId;
+    private $reportType;
+    private $reportDetails;
+    private $vaccineSymptomsReported;
+    private $covid19SymptomsReported;
+    private $dateReported;
+    private $reportStatus;
+
+    public function __construct($repId, $repPatId, $repType, $repDetails, $vaccSymRep, $covSymRep,$dateRep, $repStat)
+    {
+        $this->reportId = $repId;
+        $this->reportPatientId = $repPatId;
+        $this->reportType = $repType;
+        $this->reportDetails = $repDetails;
+        $this->vaccineSymptomsReported = $vaccSymRep;
+        $this->covid19SymptomsReported = $covSymRep;
+        $this->dateReported = $dateRep;
+        $this->reportStatus = $repStat;
+    }
+
+    public function getReportId()
+    {
+        return $this->reportId;
+    }
+
+    public function getReportPatientId()
+    {
+        return $this->reportPatientId;
+    }
+
+    public function getReportType()
+    {
+        return $this->reportType;
+    }
+
+    public function getReportDetails()
+    {
+        return $this->reportDetails;
+    }
+
+    public function getCovid19SymptomsReported()
+    {
+        return $this->covid19SymptomsReported;
+    }
+
+    public function getDateReported()
+    {
+        return $this->dateReported;
+    }
+
+    public function getReportStatus()
+    {
+        return $this->reportStatus;
+    }
+
+    public function getVaccineSymptomsReported()
+    {
+        return $this->vaccineSymptomsReported;
+    }
+}
+
 
 
 
