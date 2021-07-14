@@ -37,6 +37,7 @@
 
 
 <!--Button for Uploading File-->
+<!--To include uploading files limited to csv file only-->
 <button id="uploadFile" type="button" class="button4 btn-primary" data-toggle="modal" data-target="#upload-File">
     Upload File
 </button>
@@ -48,7 +49,7 @@
         <div id="uploadingFile">
             <h3> Upload File/s </h3>
             <p>Upload a list of patients (.csv) <br> or </p>
-            <input type="file" class="form-control" id="fileUpload"/>
+            <input type="file" class="form-control" id="fileUpload" multiple/>
             <button id="browse" type="button" class="'button4 btn-primary"> Browse </button>
         </div>
 
@@ -117,6 +118,7 @@
 <div id="notifyModal" class="modal">
     <div class="modal-content">
         <span id = "close3" class="close">&times;</span>
+        <br>
         <img src="../img/checkmark.png">
         <p> User Personnel successfully added. </p>
     </div>
