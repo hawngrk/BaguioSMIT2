@@ -94,12 +94,16 @@ include ("../AdminbackEnd/sessionHandling.php"); ?>
             <tbody>
             <?php
             require 'require/getReport.php';
-           // foreach ($albums as $alb) {
-              //  $albumid = $alb->get_albumid(); //replace this part based on the column name mentioned above in chronological order - NATIVIDAD HUDSON
-              //  $albumimg = $alb->get_albumimg(); //replace this part based on the column name mentioned above in chronological order - NATIVIDAD HUDSON
-              //  $albumname = $alb->get_albumname(); //replace this part based on the column name mentioned above in chronological order - NATIVIDAD HUDSON
-             //   $artistname = $alb->get_artistname(); //replace this part based on the column name mentioned above in chronological order - NATIVIDAD HUDSON
-             //   $releaseddate = $alb->get_releaseddate(); //replace this part based on the column name mentioned above in chronological order - NATIVIDAD HUDSON
+
+            foreach ($reports as $rep) {
+                $reportId = $rep->getReportId(); //replace this part based on the column name mentioned above in chronological order - NATIVIDAD HUDSON
+                $reportType = $rep->getReportType(); //replace this part based on the column name mentioned above in chronological order - NATIVIDAD HUDSON
+                $reportDetails = $rep->getReportDetails(); //replace this part based on the column name mentioned above in chronological order - NATIVIDAD HUDSON
+                $vaccineSymptomsReported = $rep->getVaccineSymptomsReported(); //replace this part based on the column name mentioned above in chronological order - NATIVIDAD HUDSON
+                $covid19SymptomsReported = $rep->getCovid19SymptomsReported(); //replace this part based on the column name mentioned above in chronological order - NATIVIDAD HUDSON
+                $dateReported = $rep->getDateReported();
+                $reportStatus = $rep->getReportStatus();
+
 
 
         //        echo "<tr '>

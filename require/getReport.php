@@ -14,15 +14,13 @@ $reports = [];
 $stmt = $database->stmt_init();
 $stmt->prepare($query);
 $stmt->execute();
-$stmt->bind_result($reportId, $reportPatientId, $reportDetails, $vaccineSymptomsReported, $covSymptomsReported, $dateReported, $reportStatus);
+$stmt->bind_result($reportId, $reportPatientId, $reportType, $reportDetails, $vaccineSymptomsReported, $covSymptomsReported, $dateReported, $reportStatus);
 
 while ($stmt->fetch()){
-    $report = new patientInfo($reportId, $reportPatientId, $reportDetails, $vaccineSymptomsReported, $covSymptomsReported, $dateReported, $reportStatus);
+    $report = new reports($reportId, $reportPatientId, $reportType, $reportDetails, $vaccineSymptomsReported, $covSymptomsReported, $dateReported, $reportStatus);
     $reports[] = $report;
 
 }
-
 $stmt->close();
-
 ?>
 
