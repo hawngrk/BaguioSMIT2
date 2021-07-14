@@ -6,17 +6,14 @@
 ---->
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport">
-    <script crossorigin="anonymous" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-            src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-    <script crossorigin="anonymous" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-            src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script crossorigin="anonymous" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-            src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-    <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" rel="stylesheet">
+    <script crossorigin="anonymous" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script crossorigin="anonymous" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script crossorigin="anonymous" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" rel="stylesheet">
 
 
     <!-- Custom styles for this template-->
@@ -24,102 +21,225 @@
     <title>Manage Vaccine</title>
 
 </head>
+
 <body>
 
-<button type="button" class="button4 btn-primary" data-toggle="modal" data-target="#add-Vaccine">
+    <button type="button" class="button4 btn-primary" data-toggle="modal" data-target="#add-Vaccine">
     Add Vaccine
 </button>
 
-<div class="modal fade" id="addVaccine" tabindex="-1" role="dialog" aria-labelledby="add-Vaccine" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="add-VaccineTitle">Add Vaccine</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+    <div class="modal fade" id="addVaccine" tabindex="-1" role="dialog" aria-labelledby="add-Vaccine" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="add-VaccineTitle">Add Vaccine</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
-            </div>
-            <div class="modal-body">
+                </div>
+                <div class="modal-body">
 
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-primary">Save Changes</button>
-                <button type="button" class="btn btn-secondary">Close</button>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary">Save Changes</button>
+                    <button type="button" class="btn btn-secondary">Close</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-<div class="search-container">
-    <form action="/action_page.php">
-        <input type="text" placeholder="Search" name="search">
-        <button type="submit"><i class="fa fa-search"></i>
+    <div class="search-container">
+        <form action="/action_page.php">
+            <input type="text" placeholder="Search" name="search">
+            <button type="submit"><i class="fa fa-search"></i>
             <img id="searchButton" src="../img/magnifying-glass.png">
         </button>
-    </form>
-</div>
+        </form>
+    </div>
 
-<button id = "addNewVaccineBtn" type="button" class="button4 btn-primary">
+    <button id="addNewVaccineBtn" type="button" class="button4 btn-primary">
     Add New Vaccine
 </button>
 
-<div id="myModal" class="modal">
-    <div class="modal-content">
-        <span id = "close" class="close">&times;</span>
-        <div class="AddNewVaccine-PopUp">
-            <h3>Vaccine Details</h3>>
-            <input class="col-xs-12" type="input" name="vaccineName" placeholder="Vaccine Name">
-            <input class="col-xs-12" type="input" name="vaccineManufacturer" placeholder="Vaccine Manufacturer">
-            <input class="col-xs-12" type="input" name="vaccineDescription" placeholder="Vaccine Description">
+    <div id="myModal" class="modal">
+        <div class="modal-content container">
+            <h2 id="headerAddNewVaccine">Add New Vaccine<span id="close" class="close">&times;</span></h2>
+            <div class="AddNewVaccine-PopUp">
+                <h4 class="addNewVaccineH3">Vaccine Details</h4>
+                <input class="vaccineName col-lg-12" type="input" name="vaccineName" placeholder="Vaccine Name">
+                <input class="vaccineManufacturer col-lg-12" type="input" name="vaccineManufacturer" placeholder="Vaccine Manufacturer">
+                <input class="vaccineDescription col-lg-12" type="input" name="vaccineDescription" placeholder="Vaccine Description">
 
-            <h3>Vaccine Characteristics</h3>>
-            <input class="col-xs-12" type="input" name="vaccineType" placeholder="Vaccine Type">
-            <input class="col-xs-12" type="input" name="vaccineEfficacy" placeholder="Vaccine Efficacy">
-            <input class="col-xs-12" type="input" name="vaccineType" placeholder="Dosage Required">
-            <input class="col-xs-12" type="input" name="vaccineType" placeholder="Dosage Interval">
+                <h4 class="addNewVaccineH3">Vaccine Characteristics</h4>
+                <!-- <input class="col-xs-12" type="input" name="vaccineType" placeholder="Vaccine Type"> -->
+                <select class="form-select col-lg-12 vaccineType">
+                    <option selected disabled>Vaccine Type</option>
+                    <option value="1">Inactivated Vaccine</option>
+                    <option value="2">Live-attenuated Vaccine</option>
+                    <option value="3">Viral vector Vaccine</option>
+                </select>
 
-            <h3> Storage and Handling</h3>>
-            <input class="col-xs-12" type="input" name="vaccineEfficacy" placeholder="Minimum Temperature">
-            <input class="col-xs-12" type="input" name="vaccineType" placeholder="Maximum Temperature">
-            <input class="col-xs-12" type="input" name="vaccineType" placeholder="Life Span">
+
+                <!--- <input class="col-xs-12" type="input" name="vaccineEfficacy" placeholder="Vaccine Efficacy"> 
+                   <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Vaccine Efficacy
+                </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="#">90%</a>
+                        <a class="dropdown-item" href="#">70%</a>
+                        <a class="dropdown-item" href="#">50%</a>
+                    </div>
+                </div>
+                -->
+
+                <select class="form-select col-lg-12 vaccineEfficacy">
+                    <option selected disabled>Vaccine Efficacy</option>
+                    <option value="1">90%</option>
+                    <option value="1">70%</option>
+                    <option value="1">50%</option>
+                </select>
+
+                <input class="col-lg-12 dosageRequired" type="input" name="vaccineType" placeholder="Dosage Required">
+                <input class="col-lg-12 dosageInterval" type="input" name="vaccineType" placeholder="Dosage Interval">
+
+                <h4 class="addNewVaccineH3"> Storage and Handling</h4>
+                <input class="col-lg-12 minimumTemperature" type="input" name="vaccineEfficacy" placeholder="Minimum Temperature">
+                <input class="col-lg-12 maximumTemperature" type="input" name="vaccineType" placeholder="Maximum Temperature">
+                <input class="col-lg-12 lifeSpan" type="input" name="vaccineType" placeholder="Life Span">
+            </div>
+            <div>
+                <button id="cancelBtn"> Cancel </button>
+                <button id="addBtn"> Add</button>
+            </div>
         </div>
-
-        <button id = "cancel"> Cancel </button>
-        <button id = 'save'> Save Changes</button>
-
     </div>
-</div>
 
-<script>
-    var modal = document.getElementById("myModal");
-    var addNewVaccinebtn = document.getElementById("addNewVaccineBtn");
-    var span = document.getElementById("close");
-    var cancel = document.getElementById("cancel");
-    var save = document.getElementById("save");
+    <table class="table table-row table-hover">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Vaccine Lot ID</th>
+                <th scope="col">Vaccine Name</th>
+                <th scope="col">Date Received</th>
+                <th scope="col">Date Expiration</th>
+                <th scope="col">Batch Quantity</th>
+                <th scope="col">Bottle Quantity</th>
+                <th scope="col">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="table-row" data-href="www.google.com">
+                <th scope="row">1</th>
+                <td>SINOVMARCH01</td>
+                <td>SINOVAC</td>
+                <td>DECEMBEr 17, 2020</td>
+                <td>DECEMBEr 17, 2021</td>
+                <td>500</td>
+                <td>2020</td>
+            </tr>
+        </tbody>
+    </table>
 
-    addNewVaccinebtn.onclick = function (){
-        modal.style.display = "block";
-    }
+    <script>
+        var modal = document.getElementById("myModal");
+        var addNewVaccinebtn = document.getElementById("addNewVaccineBtn");
+        var span = document.getElementById("close");
+        var cancel = document.getElementById("cancel");
+        var save = document.getElementById("save");
 
-    span.onclick = function (){
-        modal.style.display = "none";
-    }
+        addNewVaccinebtn.onclick = function() {
+            modal.style.display = "block";
+        }
 
-    cancel.onclick = function (){
-        modal.style.display = "none";
-    }
-
-    window.onclick = function (event){
-        if(event.target == modal){
+        span.onclick = function() {
             modal.style.display = "none";
         }
-    }
 
-    save.onclick = function (){
-        alert("changes has been saved!");
-    }
-</script>
+        cancel.onclick = function() {
+            modal.style.display = "none";
+        }
 
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+
+        save.onclick = function() {
+            alert("changes has been saved!");
+        }
+    </script>
+
+    <script>
+        $(document).ready(function($) {
+            $(".table-row").click(function() {
+                window.document.location = $(this).data("href");
+            });
+        });
+    </script>
 </body>
+
 </html>
+
+<style>
+    .selectpicker {
+        width: 150px;
+        height: 40px;
+    }
+    
+    .addNewVaccineH3 {
+        color: black;
+    }
+    /* Modal Content/Box */
+    
+    .modal-content {
+        background-color: #fefefe;
+        margin: 20% auto;
+        /* 15% from the top and centered */
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%;
+        /* Could be more or less, depending on screen size */
+    }
+    /* The Close Button */
+    
+    .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+    }
+    
+    .close:hover,
+    .close:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+    }
+    
+    #cancelBtn,
+    #addBtn {
+        float: right;
+        margin-right: 1 rem;
+    }
+    
+    .vaccineDescription {
+        height: 2in;
+        width: 5in;
+    }
+    
+    .vaccineName,
+    .vaccineManufacturer,
+    .vaccineType,
+    .vaccineEfficacy,
+    .dosageRequired,
+    .dosageInterval,
+    .minimumTemperature,
+    .maximumTemperature,
+    .lifeSpan {
+        width: 5in;
+        height: auto;
+    }
+</style>
