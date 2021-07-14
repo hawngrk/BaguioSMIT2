@@ -27,12 +27,13 @@
     </form>
 </div>
 
-<button id = "addDepBtnaddDepBtn" type="button" class="button btn-primary">
+<button id = "addDepBtn" type="button" class="button btn-primary">
     Add Deployment
 </button>
 
 <div id="DeployModal" class="modal">
     <div class="modal-content">
+        <span id = "close1" class="close">&times;</span>
         <div class="AddDeployment-PopUp">
             <h3>Add Deployment</h3>>
             <label for="district">Select Health District: </label>
@@ -86,6 +87,7 @@
 
 <div id="DeployModalConf" class="modal">
     <div class="modal-content">
+        <span id = "close3" class="close">&times;</span>
         <div class="AddDeploymentConf-PopUp">
             <h3> Are you sure to add this deployment? </h3>
             <button id = "no"> No </button>
@@ -100,6 +102,7 @@
 
 <div id="HealthDModal1" class="modal">
     <div class="modal-content">
+        <span id = "close2" class="close">&times;</span>
         <h5 class="modal-title" id="add-VaccineTitle">Add Health District</h5>
         <div class="AddHealthD-PopUp">
             <input type="checkbox" id="D1" name="D1" value="Bike">
@@ -113,9 +116,6 @@
         <button id = 'add'> Add</button>
     </div>
 </div>
-
-
-
 </body>
 
 <script>
@@ -130,6 +130,9 @@
     var next = document.getElementById("next");
     var no = document.getElementById("no");
     var yes = document.getElementById("yes");
+    var close1 = document.getElementById("close1")
+    var close2 = document.getElementById("close2")
+    var close3 = document.getElementById("close3")
 
     addDepButt.onclick = function (){
         modal1.style.display = "block";
@@ -162,12 +165,23 @@
     add.onclick = function(){
         //Enter code to add health district
     }
+
     window.onclick = function(event){
         if(event.target == modal1 || event.target == modal2 || event.target == modal3){
             modal1.style.display = "none";
             modal2.style.display = "none";
             modal3.style.display = "none";
         }
+    }
+
+    close1.onclick = function(){
+        modal1.style.display = "none";
+    }
+    close2.onclick = function(){
+        modal2.style.display = "none";
+    }
+    close3.onclick = function(){
+        modal3.style.display = "none";
     }
 
 </script>
