@@ -147,9 +147,14 @@ a.article:hover {
     color: #fff !important;
 }
 
+.btnTop {
+    border: none;
+    background: whitesmoke;
+}
+
 
 /* ---------------------------------------------------
-    CONTENT STYLE
+    CONTENT STYLE                                     
 ----------------------------------------------------- */
 
 #content {
@@ -190,16 +195,65 @@ a.article:hover {
     color: black;
 }
 
+.buttonTop {
+    display: block;
+    float: right;
+    background: ghostwhite;
+    border: 2px solid black;
+    width: 15%;
+    height: 40px;
+    color: black!important;
+    margin-right: 10px;
+}
+
+.buttonTop {
+    border-radius: 12px;
+}
+
+.buttonTop:hover {
+    background: #e7e7e7;
+}
+
+.buttonTop:visited {
+    background: white;
+}
+
+input[type=text] {
+    margin-top: 8px;
+    font-size: 17px;
+    border: whitesmoke;
+    background: whitesmoke;
+    width: 60%;
+    height: auto;
+}
+
+.search-container button {
+    display: inline-block;
+    padding: 6px 5px;
+    margin-top: 8px;
+    margin-right: 5px;
+    background: whitesmoke;
+    font-size: 17px;
+    border: none;
+    cursor: pointer;
+    width: 5%;
+    height: auto;
+}
+
+.search-container button:hover {
+    background: rgb(165, 165, 165);
+}
+
 
 /* Modal Content/Box */
 
 .modal-content {
     background-color: #fefefe;
-    margin: 20% auto;
+    margin: 5% auto;
     /* 15% from the top and centered */
-    padding: 20px;
+    padding: 5px;
     border: 1px solid #888;
-    width: 80%;
+    width: 50%;
     /* Could be more or less, depending on screen size */
 }
 
