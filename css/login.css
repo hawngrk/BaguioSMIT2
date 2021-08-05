@@ -1,0 +1,94 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #A8C9D7;
+}
+
+.loginRow {
+    display: flex;
+}
+
+.loginColumn {
+    flex: 50%;
+    padding: 5px;
+}
+
+.form-button {
+    text-align: left;
+}
+
+.form-link {
+    text-align: right;
+}
+
+.form-link:visited {
+    color: teal;
+}
+
+.form-link:active {
+    color: teal;
+}
+
+.form-link:hover {
+    color: white;
+}
+
+.logInToText {
+    color: white;
+    padding-left: 10%;
+    padding-left: 52.5%;
+    margin-top: 5%;
+}
+
+#login-box {
+    margin-left: 35%;
+    padding-bottom: 7%;
+    border-radius: 12px;
+    border: none;
+    margin-top: 10px;
+    min-width: 131%;
+    border: 1px solid #9C9C9C;
+    background-color: #fff;
+}
+
+#username {
+    margin-top: 4%;
+}
+
+.logo {
+    width: 60%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#backdrop {
+    width: 60%;
+    height: auto;
+}
+
+.loginImg {
+    margin-left: 30%;
+    border-radius: 12px;
+    margin-top: 1.5%;
+}
+
+.buttonLogin {
+    border-radius: 7px;
+    padding-top: 2%;
+    padding-bottom: 2%;
+    border: 1px solid gray;
+    width: 100%;
+    color: #fff;
+    background: #124F88;
+    margin-bottom: 8%;
+}
+
+.buttonLogin:hover {
+    background: lightslategray;
+}
+
+#topBar {
+    width: 100%;
+    background: white;
+}

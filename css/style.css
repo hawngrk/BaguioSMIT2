@@ -152,6 +152,10 @@ a.article:hover {
     background: whitesmoke;
 }
 
+.btnBell {
+    margin-left: -85%;
+}
+
 
 /* ---------------------------------------------------
     CONTENT STYLE                                     
@@ -183,17 +187,8 @@ a.article:hover {
 
 
 /* ---------------------------------------------------
-    MANAGE VACCINE
+    COMMON CSS 
 ----------------------------------------------------- */
-
-.selectpicker {
-    width: 150px;
-    height: 40px;
-}
-
-.addNewVaccineH3 {
-    color: black;
-}
 
 .buttonTop {
     display: block;
@@ -218,15 +213,6 @@ a.article:hover {
     background: white;
 }
 
-input[type=text] {
-    margin-top: 8px;
-    font-size: 17px;
-    border: whitesmoke;
-    background: whitesmoke;
-    width: 60%;
-    height: auto;
-}
-
 .search-container button {
     display: inline-block;
     padding: 6px 5px;
@@ -242,6 +228,24 @@ input[type=text] {
 
 .search-container button:hover {
     background: rgb(165, 165, 165);
+}
+
+input[type=text] {
+    margin-top: 8px;
+    font-size: 17px;
+    border: whitesmoke;
+    background: whitesmoke;
+    width: 60%;
+    height: auto;
+}
+
+.selectpicker {
+    width: 150px;
+    height: 40px;
+}
+
+.addNewVaccineH3 {
+    color: black;
 }
 
 
@@ -296,4 +300,76 @@ input[type=text] {
 .lifeSpan {
     width: 5in;
     height: auto;
+}
+
+
+/* ---------------------------------------------------
+    MANAGE REPORT
+----------------------------------------------------- */
+
+input[type=text1] {
+    margin-top: 8px;
+    font-size: 17px;
+    border: whitesmoke;
+    background: whitesmoke;
+    width: 75%;
+    height: auto;
+}
+
+#reviewReportBtn {
+    background: #DCF4FF;
+    border: 1px solid black;
+    width: 60%;
+    height: 40px;
+    color: #000!important;
+    margin-right: 10px;
+    border-radius: 12px;
+    font-size: 90%;
+}
+
+.CounterReportContainer {
+    margin-top: 10%;
+}
+
+.counter-box {
+    display: block;
+    background: #f6f6f6;
+    padding: 40px 20px 37px;
+    text-align: center
+}
+
+.counter-box p {
+    margin: 5px 0 0;
+    padding: 0;
+    color: #909090;
+    font-size: 18px;
+    font-weight: 500
+}
+
+.counter-box i {
+    font-size: 60px;
+    margin: 0 0 15px;
+    color: #d2d2d2
+}
+
+.counter {
+    display: block;
+    font-size: 32px;
+    font-weight: 700;
+    color: #666;
+    line-height: 28px
+}
+
+.counter-box.colored {
+    background: #3acf87
+}
+
+.counter-box.colored p,
+.counter-box.colored i,
+.counter-box.colored .counter {
+    color: #fff
+}
+
+.tableReport {
+    width: 80%!important;
 }

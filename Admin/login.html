@@ -1,40 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
-/***
-* @Author Dominic Austin Sicat, Hudson Kit Natividad
-* Date Created: June 27, 2021
-* Description: Login HTML Elements for receiving credentials from the users
-*/
+
+<!---
+Author Dominic Austin Sicat, Hudson Kit Natividad
+Date Created: June 27, 2021
+Description: Login HTML Elements for receiving credentials from the users
+-->
+
 <head>
-<meta charset="UTF-8">
-<title>Baguio SMIT+ | Login</title>
-<meta charset="UTF-8">
-<meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport">
-<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<link href="css/LoginCSS.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Baguio SMIT+ | Login</title>
+
+    <!--Bootstrap-->
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" rel="stylesheet">
+    <!--JS-->
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <!--CSS-->
+    <link href="../css/login.css" rel="stylesheet">
 </head>
 
 <body>
-<div id="login">
-    <h3 class="text-center text-white pt-5">Login to Baguio Vaccination SMIT+ System</h3>
-    <div class="container">
-        <div id="login-row" class="row justify-content-center align-items-center">
-            <div id="login-column" class="col-md-6">
+    <!-- Top Nav Bar-->
+    <div id="topBar">
+        <strong>Thursday, January 12, 2021 | 6:32 PM</strong>
+    </div>
+
+    <!-- Log In -->
+    <div class="loginow">
+        <h3 class="logInToText pt-5">Login to Baguio Vaccination SMIT+ System</h3>
+        <div class="loginRow">
+            <div class="col-md-6 loginColumn">
                 <div id="login-box" class="col-md-12">
                     <form id="login-form" class="form" action="EmployeeLoginAuthentication.php" method="post">
-                        <h3 class="text-center text-info"></h3>
+                        <img src="../img/SMIT+.png" class="logo" alt="">
                         <div class="form-group">
-                            <label for="username" class="text-info">Username:</label><br>
-                            <input type="text" name="username" id="username" class="form-control">
+                            <input type="text" name="username" id="username" class="form-control" placeholder="Username">
                         </div>
                         <div class="form-group">
-                            <label for="password" class="text-info">Password:</label><br>
-                            <input type="password" name="password" id="password" class="form-control">
+                            <input type="password" name="password" id="password" placeholder="Password" class="form-control">
                         </div>
                         <div class="form-button">
-                            <button name ="loginButton" class="btn btn-info btn-md">Login</button>
+                            <button name="loginButton" class="buttonLogin">Login</button>
                         </div>
                         <div class="form-link">
                             <a href="resetPW.html" id="forgot_pswd">Forget password?</a>
@@ -42,7 +54,11 @@
                     </form>
                 </div>
             </div>
+            <div>
+                <img id="backdrop" src="../img/backdrop.jpeg" class="loginColumn loginImg" alt="">
+            </div>
         </div>
     </div>
-</div>
 </body>
+
+</html>
