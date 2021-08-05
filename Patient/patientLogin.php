@@ -1,3 +1,11 @@
+
+<?php
+    session_start();
+    if(isset($_SESSION['userlogin'])) {
+        header("Location: patientDashboard.php");
+    }
+?>
+
 <!DOCTYPE html>
 
 <html>
@@ -37,11 +45,10 @@
                         url: 'processes/processLogin.php',
                         data: {username: username, password: password},
                         success: function(data) {
-                            alert(data);
                             if($.trim(data) === "1") {
-                                setTimeout('window.location.href = "patientDashboard.php"', 2000);
+                                setTimeout('window.location.href = "patientDashboard.php"', 1000);
                             } else {
-
+                                alert(data)
                             }
                         },
                         error: function(data) {
