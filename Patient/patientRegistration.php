@@ -1,6 +1,6 @@
 
 <?php
-    include("../includes/database.php");
+    require_once("configure.php");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -23,10 +23,11 @@
                 <input type="text" name="contact" id="contact" placeholder="Enter contact number" required><br>
                 <input type="email" name="email" id="email" placeholder="Enter email address"><br>
                 <input type="password" name="password" id="password" placeholder="Enter password" minlength="8" required><br>    
-                <label for="readT&C"><input type="radio" name="readT&C" value="" required> I have read the <a>Terms & Conditions</a> </label><br>
+                <label for="readT&C"><input type="radio" name="readT&C" value="" required> I have read the </label><a href="" onclick="">Terms & Conditions</a><br>
+                
                 <input type="submit" name="register" id="register" value="Register">
             </div>
-            <div class="terms-and-conditions" hidden>
+            <div class="terms-and-conditions-form" hidden>
                 <!-- Appears when the user interacts with the anchor tag  -->
             </div>
         </form>
@@ -57,16 +58,17 @@
                             Swal.fire({
                             'title': 'Successful',
                             'text' : data,
-                            // 'text' : 'Account was successfully registered',
+                            //'text' : 'Account was successfully registered',
                             'type' : 'success'
-                            })
+                            });
+                            setTimeout('window.location.href = "patientLogin.php"', 1000);
                         },
                         error: function(data){
                             Swal.fire({
                             'title': 'Registration Error',
                             'text' : 'There was an error during the registration',
                             'type' : 'error'
-                            })
+                            });
                         }
                     });
 
