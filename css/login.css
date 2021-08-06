@@ -35,20 +35,29 @@ body {
 
 .logInToText {
     color: white;
-    padding-left: 10%;
-    padding-left: 52.5%;
-    margin-top: 5%;
+    margin-top: 3%;
+    text-align: center;
 }
 
 #login-box {
-    margin-left: 35%;
-    padding-bottom: 7%;
+    margin-left: 4%;
     border-radius: 12px;
-    border: none;
-    margin-top: 10px;
-    min-width: 131%;
+    width: 32%;
     border: 1px solid #9C9C9C;
     background-color: #fff;
+}
+
+#login-form {
+    /* margin-left: 4%; */
+    border-radius: 12px;
+    width: 32%;
+    border: 1px solid #9C9C9C;
+    background-color: #fff;
+    height: 100%;
+    margin-top: 3%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 #username {
@@ -63,25 +72,31 @@ body {
 }
 
 #backdrop {
-    width: 60%;
-    height: auto;
+    /* width: 45%; */
+    height: 55%;
+    padding-top: 6%;
+    /* margin-left: 4%; */
+    margin-top: 1%;
+    border-radius: 15px;
 }
 
-.loginImg {
-    margin-left: 30%;
-    border-radius: 12px;
-    margin-top: 1.5%;
+#backdrop2 {
+    height: auto;
+    width: 10%;
+    margin-left: 2%;
+    margin-bottom: 0;
+    padding-bottom: 0;
 }
 
 .buttonLogin {
     border-radius: 7px;
+    margin-left: 15%;
     padding-top: 2%;
-    padding-bottom: 2%;
     border: 1px solid gray;
-    width: 100%;
+    width: 70%;
     color: #fff;
     background: #124F88;
-    margin-bottom: 8%;
+    margin-bottom: 5%;
 }
 
 .buttonLogin:hover {
@@ -90,5 +105,36 @@ body {
 
 #topBar {
     width: 100%;
+    margin-bottom: 0%;
+    padding-bottom: 0%;
     background: white;
+}
+
+.input-group-lg {
+    width: 80%;
+}
+
+.input-group-lg {
+    margin-left: 10%;
+    margin-top: 3%;
+    margin-bottom: 3%;
+}
+
+#backdrop2 {
+    width: 40%;
+}
+
+#forgot_pswd {
+    margin-right: 38%;
+}
+
+footer {
+    bottom: 0;
+    padding: 0;
+    color: white;
+    background-color: #04628A;
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    font-size: 1rem;
 }

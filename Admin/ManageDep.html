@@ -1,246 +1,361 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <title>Manage Deployment</title>
-    <script crossorigin="anonymous" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    <!-- <meta charset="UTF-8"> -->
+    <!-- <title>Manage Deployment</title> -->
+    <!-- <script crossorigin="anonymous" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
             src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script crossorigin="anonymous" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
             src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script crossorigin="anonymous" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
             src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" rel="stylesheet">
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" rel="stylesheet"> -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <link href="../css/cssAdmin.css" rel="stylesheet">
-    <title>Manage Vaccine</title>
+    <!-- Title -->
+    <title>SMIT+ | Manage Deployment</title>
+
+    <!-- Our Custom CSS -->
+    <link href="../../css/style.css" rel="stylesheet">
+    <!-- <link href="../css/cssAdmin.css" rel="stylesheet"> -->
+
+    <!-- Bootstrap-->
+    <script crossorigin="anonymous" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script crossorigin="anonymous" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script crossorigin="anonymous" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" rel="stylesheet">
+    <!-- Font Awesome JS -->
+    <script src="https://kit.fontawesome.com/fcdb0fe9f3.js" crossorigin="anonymous"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
 </head>
+
 <body>
+    <div class="wrapper">
+        <!-- Sidebar  -->
+        <nav id="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-brand-icon">
+                    <img style="width:150px;" src="../../img/SMIT+.png" alt="Baguio Logo">
+                </div>
+            </div>
 
-<div class="search-container">
-    <form action="/action_page.php">
-        <input type="text" placeholder="Search" name="search">
-        <button type="submit"><i class="fa fa-search"></i>
-            <img id="searchButton" src="../img/magnifying-glass.png">
-        </button>
-    </form>
-</div>
+            <ul class="list-unstyled components">
+                <p id="mainmenu">Main Menu</p>
+                <li class="active">
+                    <a href="#"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+                </li>
+                <li>
+                    <a href="#"><i class="fas fa-syringe"></i> Manage Vaccine</a>
+                </li>
+                <li>
+                    <a href="#ManageUsersSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fas fa-users"></i> Manage Users</a>
+                    <ul class="collapse list-unstyled" id="ManageUsersSubmenu">
+                        <li>
+                            <a href="#">Personnel</a>
+                        </li>
+                        <li>
+                            <a href="#">Patients</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#"><i class="fas fa-truck"></i> Manage Deployment</a>
+                </li>
+                <li>
+                    <a href="#"><i class="fas fa-sticky-note"></i> Reports</a>
+                </li>
+                <li>
+                    <a href="#"><i class="fas fa-question"></i> About</a>
+                </li>
+            </ul>
 
-<button id = "addDepBtn" type="button" class="button4 btn-primary">
-    Add Deployment
-</button>
+            <ul class="list-unstyled CTAs">
+                <button type="button" class="btn btn-info">
+                <span>Sign Out</span>
+            </button>
+            </ul>
+        </nav>
 
-<div id="DeployModal" class="modal">
-    <div class="modal-content">
-        <span id = "close1" class="close">&times;</span>
-        <div class="AddDeployment-PopUp">
-            <h3>Add Deployment</h3>
-            <div class="form-group">
-                <label for="district">Select Health District: </label>
-                <select name="district" id="district">
+        <!-- Top Nav Bar  -->
+        <div id="content">
+
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <div class="container-fluid">
+
+                    <button type="button" id="sidebarCollapse" class="btn btn-info">
+                    <i class="fas fa-align-left"></i>
+                    <span>Menu</span>
+                    </button>
+
+                    <button class="btnTop">
+                        <i class="fas fa-bell"></i>
+                    </button>
+
+                    <button class="btnTop btnBell">
+                        <i class="fas fa-cog"></i>
+                    </button>
+                </div>
+            </nav>
+
+            <!-- Page Content  -->
+
+            <button id="addDepBtn" type="button" class="buttonTop">
+                Add Deployment
+            </button>
+
+            <div id="DeployModal" class="modal">
+                <div class="modal-content">
+                    <span id="close1" class="close">&times;</span>
+                    <div class="AddDeployment-PopUp">
+                        <h3>Add Deployment</h3>
+                        <div class="form-group">
+                            <label for="district">Select Health District: </label>
+                            <select name="district" id="district">
                     <option value="d1">District 1</option>
                     <option value="d2">District 2</option>
                     <option value="d3">District 3</option>
                     <option value="d4">District 4</option>
                 </select>
-            </div>
+                        </div>
 
-            <div class="form-group">
-                <label for="PatientCateg">Category of patients: </label>
-                <select name="PatientCateg" id="PatientCateg">
+                        <div class="form-group">
+                            <label for="PatientCateg">Category of patients: </label>
+                            <select name="PatientCateg" id="PatientCateg">
                     <option value="A1">A1</option>
                     <option value="A2">A2</option>
                     <option value="A3">A3</option>
                     <option value="A4">A4</option>
                 </select>
-            </div>
+                        </div>
 
-            <div class="form-group">
-                <label for="date">Date: </label>
-                <input type="date" id="date" name="date">
-            </div>
+                        <div class="form-group">
+                            <label for="date">Date: </label>
+                            <input type="date" id="date" name="date">
+                        </div>
 
-            <div class="form-group">
-                <label for="VaccineBr">Select Vaccine Brand: </label>
-                <select name="VaccineB" id="VaccineBr">
+                        <div class="form-group">
+                            <label for="VaccineBr">Select Vaccine Brand: </label>
+                            <select name="VaccineB" id="VaccineBr">
                     <option value="V1">V1</option>
                     <option value="V2">V2</option>
                     <option value="V3">V3</option>
                     <option value="V4">V4</option>
                 </select>
-            </div>
+                        </div>
 
-            <div class="form-group">
-                <label for="VaccineLot">Select Vaccine Lot: </label>
-                <select name="VaccineLot" id="VaccineLot">
+                        <div class="form-group">
+                            <label for="VaccineLot">Select Vaccine Lot: </label>
+                            <select name="VaccineLot" id="VaccineLot">
                     <option value="VL1">VL1</option>
                     <option value="VL2">VL2</option>
                     <option value="VL3">VL3</option>
                     <option value="VL4">VL4</option>
                 </select>
-            </div>
+                        </div>
 
-            <div class="form-group">
-                <label for="VaccineBat">Select Vaccine Lot: </label>
-                <select name="VaccineLot" id="VaccineBat">
+                        <div class="form-group">
+                            <label for="VaccineBat">Select Vaccine Lot: </label>
+                            <select name="VaccineLot" id="VaccineBat">
                     <option value="bat1">bat1</option>
                     <option value="bat2">bat2</option>
                     <option value="bat3">bat3</option>
                     <option value="bat4">bat4</option>
                 </select>
+                        </div>
+
+                    </div>
+
+                    <button id="cancel1" type="button" class="button5 btn-primary"> Cancel </button>
+                    <button id='add1' type="button" class="button5 btn-primary"> Add</button>
+                </div>
             </div>
 
+
+            <div id="DeployModalConf" class="modal">
+                <div class="modal-content">
+                    <span id="close3" class="close">&times;</span>
+                    <div class="AddDeploymentConf-PopUp">
+                        <h3> Are you sure to add this deployment? </h3>
+                        <button id="no1" type="button" class="button5 btn-primary"> No </button>
+                        <button id="yes1" type="button" class="button5 btn-primary"> Yes </button>
+                    </div>
+                </div>
+            </div>
+
+            <button id="addHealthDBtn" type="button" class="buttonTop">
+             Add Health District
+            </button>
+
+            <div id="HealthDModal" class="modal">
+                <div class="modal-content">
+                    <span id="close2" class="close">&times;</span>
+                    <h5 class="modal-title" id="add-VaccineTitle">Add Health District</h5>
+                    <div class="AddHealthD-PopUp">
+                        <input type="checkbox" id="D1" name="D1" value="Bike">
+                        <label for="D1"> District 1</label><br>
+                        <input type="checkbox" id="D2" name="D2" value="Car">
+                        <label for="D2"> District 2</label><br>
+                        <input type="checkbox" id="D3" name="vehicle3" value="Boat">
+                        <label for="D3"> District 3</label><br>
+                    </div>
+                    <button id="cancel2" type="button" class="button5 btn-primary"> Cancel </button>
+                    <button id='add2' type="button" class="button5 btn-primary"> Add</button>
+                </div>
+            </div>
+
+            <div id="HealthDModalConf" class="modal">
+                <div class="modal-content">
+                    <span id="close4" class="close">&times;</span>
+                    <div class="AddDeploymentConf-PopUp">
+                        <h3> Are you sure to add this Health District? </h3>
+                        <button id="no2" type="button" class="button5 btn-primary"> No </button>
+                        <button id='yes2' type="button" class="button5 btn-primary"> Yes </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- <div class="row">
+                <div class="column column1">
+                    <table class="table">
+                        <thead>
+                            <th>List Patients View</th>
+                        </thead>
+                    </table>
+                </div>
+                <div class="column column2">
+                    <table class="table table-condensed table-striped table-hover table-bordered" id="tableDeploy">
+                        <thead>
+                            <th>Vaccine ID</th>
+                            <th>Brand/s</th>
+                            <th>Location</th>
+                            <th>Date</th>
+                            <th>Action</th>
+                        </thead>
+                    </table>
+                </div>
+            </div> -->
+
+            <!-- Search Container-->
+            <div class="search-container">
+                <form action="/action_page.php">
+                    <input type="text" placeholder="Search" name="search">
+                    <button type="submit"><i class="fa fa-search"></i></button>
+                </form>
+            </div>
+
+            <table class="table table-row table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Vaccine ID</th>
+                        <th scope="col">Vaccine Name</th>
+                        <th scope="col">Brand</th>
+                        <th scope="col">Location</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="table-row" data-href="www.google.com">
+                        <th scope="row">1</th>
+                        <td>SINOVAC001</td>
+                        <td>SINOVAC</td>
+                        <td>SINOVAC MANUFACTURER</td>
+                        <td>COVAX Facility</td>
+                        <td>DECEMBEr 17, 2021</td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
+        <script type="text/javascript">
+            $(document).ready(function() {
+                $('#sidebarCollapse').on('click', function() {
+                    $('#sidebar').toggleClass('active');
+                });
+            });
+        </script>
+        <script>
+            var modal1 = document.getElementById("DeployModal");
+            var modal2 = document.getElementById("HealthDModal");
+            var modal3 = document.getElementById("DeployModalConf");
+            var modal4 = document.getElementById("HealthDModalConf");
+            var addDepButt = document.getElementById("addDepBtn");
+            var addHealthD = document.getElementById("addHealthDBtn");
+            var cancel1 = document.getElementById("cancel1");
+            var cancel2 = document.getElementById("cancel2");
+            var add1 = document.getElementById("add1");
+            var add2 = document.getElementById("add2");
+            var no1 = document.getElementById("no1");
+            var yes1 = document.getElementById("yes1");
+            var no2 = document.getElementById("no2");
+            var yes = document.getElementById("yes2");
+            var close1 = document.getElementById("close1")
+            var close2 = document.getElementById("close2")
+            var close3 = document.getElementById("close3")
+            var close4 = document.getElementById("close4")
 
-        <button id = "cancel1" type="button" class="button5 btn-primary"> Cancel </button>
-        <button id = 'add1' type="button" class="button5 btn-primary"> Add</button>
-    </div>
-</div>
+            addDepButt.onclick = function() {
+                modal1.style.display = "block";
+            }
 
+            cancel1.onclick = function() {
+                modal1.style.display = "none";
+            }
 
-<div id="DeployModalConf" class="modal">
-    <div class="modal-content">
-        <span id = "close3" class="close">&times;</span>
-        <div class="AddDeploymentConf-PopUp">
-            <h3> Are you sure to add this deployment? </h3>
-            <button id = "no1" type="button" class="button5 btn-primary"> No </button>
-            <button id = "yes1" type="button" class="button5 btn-primary"> Yes </button>
-        </div>
-    </div>
-</div>
+            add1.onclick = function() {
+                modal3.style.display = "block";
+            }
 
-<button id = "addHealthDBtn" type="button" class="button4 btn-primary">
-    Add Health District
-</button>
+            no1.onclick = function() {
+                modal3.style.display = "none";
+            }
 
-<div id="HealthDModal" class="modal">
-    <div class="modal-content">
-        <span id = "close2" class="close">&times;</span>
-        <h5 class="modal-title" id="add-VaccineTitle">Add Health District</h5>
-        <div class="AddHealthD-PopUp">
-            <input type="checkbox" id="D1" name="D1" value="Bike">
-            <label for="D1"> District 1</label><br>
-            <input type="checkbox" id="D2" name="D2" value="Car">
-            <label for="D2"> District 2</label><br>
-            <input type="checkbox" id="D3" name="vehicle3" value="Boat">
-            <label for="D3"> District 3</label><br>
-        </div>
-        <button id = "cancel2" type="button" class="button5 btn-primary"> Cancel </button>
-        <button id = 'add2' type="button" class="button5 btn-primary"> Add</button>
-    </div>
-</div>
+            yes1.onclick = function() {
+                //enter code to add deployment here
+            }
 
-<div id="HealthDModalConf" class="modal">
-    <div class="modal-content">
-        <span id = "close4" class="close">&times;</span>
-        <div class="AddDeploymentConf-PopUp">
-            <h3> Are you sure to add this Health District? </h3>
-            <button id = "no2" type="button" class="button5 btn-primary"> No </button>
-            <button id = 'yes2' type="button" class="button5 btn-primary"> Yes </button>
-        </div>
-    </div>
-</div>
+            addHealthD.onclick = function() {
+                modal2.style.display = "block";
+            }
 
-<div class="row">
-    <div class="column column1">
-        <table class="table">
-            <thead>
-            <th>List Patients View</th>
-            </thead>
-        </table>
-    </div>
-    <div class="column column2">
-        <table class="table table-condensed table-striped table-hover table-bordered" id="tableDeploy">
-            <thead>
-            <th>Vaccine ID</th>
-            <th>Brand/s</th>
-            <th>Location</th>
-            <th>Date</th>
-            <th>Action</th>
-            </thead>
-        </table>
-    </div>
-</div>
+            cancel2.onclick = function() {
+                modal2.style.display = "none";
+            }
+
+            add2.onclick = function() {
+                modal4.style.display = "block";
+            }
+
+            no2.onclick = function() {
+                modal4.style.display = "none";
+            }
+
+            window.onclick = function(event) {
+                if (event.target == modal1 || event.target == modal2) {
+                    modal1.style.display = "none";
+                    modal2.style.display = "none";
+                }
+            }
+
+            close1.onclick = function() {
+                modal1.style.display = "none";
+            }
+            close2.onclick = function() {
+                modal2.style.display = "none";
+            }
+            close3.onclick = function() {
+                modal3.style.display = "none";
+            }
+            close4.onclick = function() {
+                modal4.style.display = "none";
+            }
+        </script>
 </body>
-
-
-
-<script>
-    var modal1 = document.getElementById("DeployModal");
-    var modal2 = document.getElementById("HealthDModal");
-    var modal3 = document.getElementById("DeployModalConf");
-    var modal4 = document.getElementById("HealthDModalConf");
-    var addDepButt = document.getElementById("addDepBtn");
-    var addHealthD = document.getElementById("addHealthDBtn");
-    var cancel1 = document.getElementById("cancel1");
-    var cancel2 = document.getElementById("cancel2");
-    var add1 = document.getElementById("add1");
-    var add2 = document.getElementById("add2");
-    var no1 = document.getElementById("no1");
-    var yes1 = document.getElementById("yes1");
-    var no2 = document.getElementById("no2");
-    var yes = document.getElementById("yes2");
-    var close1 = document.getElementById("close1")
-    var close2 = document.getElementById("close2")
-    var close3 = document.getElementById("close3")
-    var close4 = document.getElementById("close4")
-
-    addDepButt.onclick = function (){
-        modal1.style.display = "block";
-    }
-
-    cancel1.onclick = function (){
-        modal1.style.display = "none";
-    }
-
-    add1.onclick = function(){
-        modal3.style.display = "block";
-    }
-
-    no1.onclick = function(){
-        modal3.style.display = "none";
-    }
-
-    yes1.onclick = function(){
-        //enter code to add deployment here
-    }
-
-    addHealthD.onclick = function(){
-        modal2.style.display ="block";
-    }
-
-    cancel2.onclick = function(){
-        modal2.style.display = "none";
-    }
-
-    add2.onclick = function(){
-        modal4.style.display = "block";
-    }
-
-    no2.onclick = function (){
-        modal4.style.display = "none";
-    }
-
-    window.onclick = function(event){
-        if(event.target == modal1 || event.target == modal2){
-            modal1.style.display = "none";
-            modal2.style.display = "none";
-        }
-    }
-
-    close1.onclick = function(){
-        modal1.style.display = "none";
-    }
-    close2.onclick = function(){
-        modal2.style.display = "none";
-    }
-    close3.onclick = function(){
-        modal3.style.display = "none";
-    }
-    close4.onclick = function(){
-        modal4.style.display = "none";
-    }
-
-</script>
 
 </html>

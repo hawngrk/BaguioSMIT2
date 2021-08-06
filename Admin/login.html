@@ -34,31 +34,43 @@ Description: Login HTML Elements for receiving credentials from the users
     <!-- Log In -->
     <div class="loginow">
         <h3 class="logInToText pt-5">Login to Baguio Vaccination SMIT+ System</h3>
-        <div class="loginRow">
-            <div class="col-md-6 loginColumn">
-                <div id="login-box" class="col-md-12">
-                    <form id="login-form" class="form" action="EmployeeLoginAuthentication.php" method="post">
-                        <img src="../img/SMIT+.png" class="logo" alt="">
-                        <div class="form-group">
+        <!-- <div class="loginRow"> -->
+        <form id="login-form" class="form" action="EmployeeLoginAuthentication.php" method="post">
+            <img src="../img/SMIT+.png" class="logo" alt="">
+            <!-- <div class="form-group">
                             <input type="text" name="username" id="username" class="form-control" placeholder="Username">
                         </div>
                         <div class="form-group">
                             <input type="password" name="password" id="password" placeholder="Password" class="form-control">
-                        </div>
-                        <div class="form-button">
-                            <button name="loginButton" class="buttonLogin">Login</button>
-                        </div>
-                        <div class="form-link">
-                            <a href="resetPW.html" id="forgot_pswd">Forget password?</a>
-                        </div>
-                    </form>
+                        </div> -->
+            <div class="input-group input-group-lg">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="inputGroup-sizing-lg">Username</span>
                 </div>
+                <input type="text" class="form-control" aria-label="Large" aria-describedby="inputGroup-sizing-sm">
             </div>
-            <div>
-                <img id="backdrop" src="../img/backdrop.jpeg" class="loginColumn loginImg" alt="">
+            <div class="input-group input-group-lg">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="inputGroup-sizing-lg">Password</span>
+                </div>
+                <input type="text" class="form-control" aria-label="Large" aria-describedby="inputGroup-sizing-sm">
             </div>
-        </div>
+            <div class="form-button">
+                <button name="loginButton" class="buttonLogin">Login</button>
+            </div>
+            <div class="form-link">
+                <a href="resetPW.html" id="forgot_pswd">Forget password?</a>
+            </div>
+        </form>
+        <!-- <div id="backdrop2"><img id="backdrop" src="../img/backdrop.jpeg" class="loginColumn loginImg" alt=""></div> -->
+        <!-- </div> -->
     </div>
+    <footer>
+        <div>
+            © 2021 Copyright:
+            <a href="https://baguiosmit+.com/">BaguioSmit+.com</a>
+        </div>
+    </footer>
 </body>
 
 </html>

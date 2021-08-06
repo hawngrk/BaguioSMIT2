@@ -91,8 +91,14 @@ a:focus {
 }
 
 #sidebar ul li a:hover {
-    color: #fff;
+    color: #fff !important;
     background: #043D55;
+}
+
+#sidebar ul li a:visited {
+    color: #fff !important;
+    background: #04628A;
+    ;
 }
 
 #sidebar ul li.active>a,
@@ -103,11 +109,6 @@ a[aria-expanded="true"] {
 
 a[data-toggle="collapse"] {
     position: relative;
-}
-
-#sidebar ul li a:visited {
-    color: #fff;
-    background: #043D55;
 }
 
 .dropdown-toggle::after {
