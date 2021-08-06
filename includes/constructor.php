@@ -193,10 +193,11 @@ class reports{
     private $reportDetails;
     private $vaccineSymptomsReported;
     private $covid19SymptomsReported;
+    private $lastOut;
     private $dateReported;
     private $reportStatus;
 
-    public function __construct($repId, $repPatId, $repType, $repDetails, $vaccSymRep, $covSymRep,$dateRep, $repStat)
+    public function __construct($repId, $repPatId, $repType, $repDetails, $vaccSymRep, $covSymRep,$dateLastOut, $dateRep, $repStat)
     {
         $this->reportId = $repId;
         $this->reportPatientId = $repPatId;
@@ -204,6 +205,7 @@ class reports{
         $this->reportDetails = $repDetails;
         $this->vaccineSymptomsReported = $vaccSymRep;
         $this->covid19SymptomsReported = $covSymRep;
+        $this->lastOut = $dateLastOut;
         $this->dateReported = $dateRep;
         $this->reportStatus = $repStat;
     }
@@ -247,7 +249,172 @@ class reports{
     {
         return $this->vaccineSymptomsReported;
     }
+
+    public function getLastOut()
+    {
+        return $this->lastOut;
+    }
 }
+?>
+
+<?php
+
+
+class vaccine
+{
+    private $vaccId;
+    private $vaccName;
+    private $vaccType;
+    private $vaccEfficacy;
+    private $vaccLifeSpan;
+
+    public function __construct($vaccineId, $vaccineName, $vaccineType, $vaccineEfficacy, $vaccineLifeSpan)
+    {
+        $this->vaccId = $vaccineId;
+        $this->vaccName = $vaccineName;
+        $this->vaccType = $vaccineType;
+        $this->vaccEfficacy = $vaccineEfficacy;
+        $this->vaccLifeSpan = $vaccineLifeSpan;
+    }
+
+    public function getVaccId()
+    {
+        return $this->vaccId;
+    }
+
+    public function getVaccName()
+    {
+        return $this->vaccName;
+    }
+
+    public function getVaccType()
+    {
+        return $this->vaccType;
+    }
+
+    public function getVaccEfficacy()
+    {
+        return $this->vaccEfficacy;
+    }
+
+    public function getVaccLifeSpan()
+    {
+        return $this->vaccLifeSpan;
+    }
+}
+
+?>
+
+<?php
+class vaccineLot
+{
+    private $vaccLotId;
+    private $vaccLotVaccId;
+    private $vaccEmpAccId;
+    private $vaccBatchQty;
+    private $dateVaccAdded;
+
+    public function __construct($vaccineLotId, $vaccineLotVaccineId, $vaccineEmployeeAccId, $vaccineBatchQty, $dateVaccineAdded)
+    {
+        $this->vaccLotId = $vaccineLotId;
+        $this->vaccLotVaccId = $vaccineLotVaccineId;
+        $this->vaccEmpAccId = $vaccineEmployeeAccId;
+        $this->vaccBatchQty = $vaccineBatchQty;
+        $this->dateVaccAdded = $dateVaccineAdded;
+    }
+
+
+    public function getVaccLotId()
+    {
+        return $this->vaccLotId;
+    }
+
+    public function getVaccLotVaccId()
+    {
+        return $this->vaccLotVaccId;
+    }
+
+    public function getVaccEmpAccId()
+    {
+        return $this->vaccEmpAccId;
+    }
+
+    public function getVaccBatchQty()
+    {
+        return $this->vaccBatchQty;
+    }
+
+    public function getDateVaccAdded()
+    {
+        return $this->dateVaccAdded;
+    }
+}
+?>
+
+<?php
+
+class vaccineBatch
+{
+    private $vaccBatchId;
+    private $vaccBatchLotId;
+    private $vaccBatchVaccId;
+    private $vaccQty;
+    private $dateStored;
+    private $dateManu;
+    private $dateExp;
+
+    public function __construct($vaccineBatchId, $vaccineBatchLotId, $vaccineBatchVaccineId, $vaccineQuantity, $dateStored, $dateManufactured, $dateOfExpiration)
+    {
+        $this->vaccBatchId = $vaccineBatchId;
+        $this->vaccBatchLotId = $vaccineBatchLotId;
+        $this->vaccBatchVaccId = $vaccineBatchVaccineId;
+        $this->vaccQty = $vaccineQuantity;
+        $this->dateStored = $dateStored;
+        $this->dateManu = $dateManufactured;
+        $this->dateExp = $dateOfExpiration;
+    }
+
+    public function getVaccBatchId()
+    {
+        return $this->vaccBatchId;
+    }
+
+    public function getVaccBatchLotId()
+    {
+        return $this->vaccBatchLotId;
+    }
+
+    public function getVaccBatchVaccId()
+    {
+        return $this->vaccBatchVaccId;
+    }
+
+    public function getDateStored()
+    {
+        return $this->dateStored;
+    }
+
+    public function getDateManu()
+    {
+        return $this->dateManu;
+    }
+
+    public function getVaccQty()
+    {
+        return $this->vaccQty;
+    }
+
+    public function getDateExp()
+    {
+        return $this->dateExp;
+    }
+}
+?>
+
+
+
+
+
 
 
 
