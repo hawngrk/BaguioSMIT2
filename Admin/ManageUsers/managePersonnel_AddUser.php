@@ -27,6 +27,7 @@
             <option> I </option>
             <option> II </option>
             <option> III </option>
+            <option> None </option>
         </select>
     </div>
     <div class="basicInfoForms">
@@ -46,22 +47,33 @@
 <?php
 echo " <button type='submit' name='addPersonnel' form='personnelForm' >Add Patient</button>";
 if (isset($_POST['addPersonnel'])) {
-    include './includes/database.php';
+    include '../../includes/database.php';
     $lastName = $_POST['lastName'];
     $firstName = $_POST['firstName'];
     $middleName = $_POST['middleName'];
     $suffix = $_POST['suffix'];
+    if ($suffix == 'None') {
+        $suffix = "";
+    }
     $role = $_POST['role'];
     $contactNumber =$_POST['contactNumber'];
 
-    $query = "INSERT INTO employee (employee_fisrt_name, employee_last_name, employee_middle_name, employee_suffix, employee_role, employee_contact_number)  VALUE ('$lastName', '$firstName', '$middleName', '$suffix', '$role', '$contactNumber');";
-
-    $stmt = $database->stmt_init();
-    $stmt->prepare($query);
-    $stmt->execute();
-    $stmt->close();
+    $query1 = "INSERT INTO employee (employee_first_name, employee_last_name, employee_middle_name, employee_suffix, employee_role, employee_contact_number)  VALUE ('$lastName', '$firstName', '$middleName', '$suffix', '$role', '$contactNumber');";
+    $database->query($query1);
 
     $username = str_replace(' ', '', $firstName);
+    $password = str_replace(' ', '', $lastName);
+
+    $getQuery = "SELECT employee_id FROM employee WHERE employee_contact_number='$contactNumber'";
+    $dbase= $database->stmt_init();
+    $dbase ->prepare($getQuery);
+    $dbase ->execute();
+    $dbase ->bind_result($employeeid);
+    $dbase ->fetch();
+    $dbase ->close();
+
+    $query2 = "INSERT INTO employee_account (employee_id, employee_username, employee_password, employee_account_type) VALUE ('$employeeid', '$username', '$password', 'Client');";
+    $database->query($query2);
 }
 ?>
 <br>
