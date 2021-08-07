@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <title>Baguio SMIT+ | Login</title>
+    <title>Registration</title>
 
     <!--Bootstrap-->
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
@@ -24,23 +24,34 @@
 
     <!-- Log In -->
     <div class="loginow">
-        <h3 class="logInToText pt-5">Login to Baguio SMIT+</h3>
+        <h3 class="logInToText pt-5">Registration</h3>
         <form id="login-form" class="form" action="EmployeeLoginAuthentication.php" method="post">
             <img src="../img/SMIT+.png" class="logo" alt="">
             <div class="form-group">
-                <input type="username" name="username" id="username" class="form-control" placeholder="Username" required>
+                <input type="text" name="lName" placeholder="Last Name" class="form-control formInpt" required>
+                <input type="text" name="fName" placeholder="First Name" class="form-control formInpt" required>
+                <input type="text" name="mName" placeholder="Middile Initial" class="form-control formInpt" required>
             </div>
             <div class="form-group">
-                <input type="password" name="password" id="password" placeholder="Password" class="form-control" required>
+                <input type="date" name="password" placeholder="Birthday" class="form-control formInpt" required>
+            </div>
+            <div class="form-group">
+                <input type="text" name="password" placeholder="Complete Address" class="form-control formInpt" required>
+            </div>
+            <div class="form-group">
+                <input type="tel" name="contactNumber" placeholder="+63XXXXXXXXX" class="form-control formInpt" pattern="+63[0-9]{10}" required>
+            </div>
+            <div class="form-group">
+                <input type="text" name="username" placeholder="Username" class="form-control formInpt" required>
+            </div>
+            <div class="form-group">
+                <input type="password" name="password" placeholder="Password" class="form-control formInpt" required>
             </div>
             <div class="form-button">
-                <button name="loginButton" class="buttonLogin">Login</button>
+                <button name="loginButton" class="buttonLogin">Continue</button>
             </div>
-            <div class="form-button">
-                <button name="registerButton" class="buttonRegister">Resgister</button>
-            </div>
-            <div class="form-link">
-                <a href="resetPW.html" id="forgot_pswd">Forget password?</a>
+            <div class="terms">
+                <p>I have read and accept the<a href="#" id="forgot_pswd"> Terms & Condition</a></p>
             </div>
         </form>
     </div>
@@ -72,6 +83,10 @@
     
     #forgot_pswd {
         color: #9C9C9C;
+    }
+    
+    .terms {
+        text-align: center;
     }
     
     .form-link {
@@ -111,15 +126,17 @@
         border: 1px solid #9C9C9C;
         background-color: #fff;
         height: 100%;
-        margin-top: 3%;
+        margin-top: 1%;
         display: block;
         margin-left: auto;
         margin-right: auto;
-        padding-bottom: 2%;
+        padding-bottom: 1%;
+        margin-bottom: 5%;
     }
     
     #username,
-    #password {
+    #password,
+    .formInpt {
         margin-top: 4%;
         width: 90%;
         padding-bottom: 2%;
@@ -136,8 +153,7 @@
         margin-right: auto;
     }
     
-    .buttonLogin,
-    .buttonRegister {
+    .buttonLogin {
         border-radius: 7px;
         padding-top: 2%;
         padding-bottom: 2%;
@@ -145,7 +161,7 @@
         width: 70%;
         color: #fff;
         background: #124F88;
-        margin-bottom: 5%;
+        margin-bottom: 4%;
         display: block;
         margin-left: auto;
         margin-right: auto;
