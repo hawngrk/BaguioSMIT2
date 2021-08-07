@@ -1,6 +1,6 @@
 <?php
-    include("../includes/database.php");
-    include("../includes/constructor.php");
+    include_once("../includes/database.php");
+    include_once("../includes/constructor.php");
 
     $query = "SELECT * FROM patient";
     $patients = [];
@@ -12,10 +12,8 @@
 
     while ($stmt->fetch()){
         $patient = new patientInfo($patientId, $patientFullName, $patientFirstDosage, $patientSecondDosage, $patientVaccinationStatus);
-        $patients[] = $patients;
+        $patients[] = $patient;
 
     }
 
-    $stmt->close();
 
-    ?>
