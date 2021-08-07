@@ -1,6 +1,6 @@
 <?php
-include("../includes/database.php");
-include("../includes/constructor.php");
+include_once("../includes/database.php");
+include_once("../includes/constructor.php");
 
 /***
  * @Author Hudson Kit P. Natividad
@@ -8,19 +8,18 @@ include("../includes/constructor.php");
  * Description: returns the Report content from the Database
  */
 
-$query = "SELECT report_id, patient_id, report_details, vaccine_symptoms_reported, COVID19_symptoms_reported, date_reported, report_verified FROM report";
+$query = "SELECT * FROM report";
 $reports = [];
 
 $stmt = $database->stmt_init();
 $stmt->prepare($query);
 $stmt->execute();
-$stmt->bind_result($reportId, $reportPatientId, $reportType, $reportDetails, $vaccineSymptomsReported, $covSymptomsReported, $dateReported, $reportStatus);
+$stmt->bind_result($reportId, $reportPatientId, $reportType, $reportDetails, $vaccineSymptomsReported, $covSymptomsReported, $dateLastOut, $dateReported, $reportStatus);
 
 while ($stmt->fetch()){
-    $report = new reports($reportId, $reportPatientId, $reportType, $reportDetails, $vaccineSymptomsReported, $covSymptomsReported, $dateReported, $reportStatus);
+    $report = new reports($reportId, $reportPatientId, $reportType, $reportDetails, $vaccineSymptomsReported, $covSymptomsReported, $dateLastOut, $dateReported, $reportStatus);
     $reports[] = $report;
 
 }
-$stmt->close();
-?>
+
 

@@ -325,7 +325,7 @@ input[type=text1] {
     color: #000!important;
     margin-right: 10px;
     border-radius: 12px;
-    font-size: 90%;
+    font-size: 85%;
 }
 
 .CounterReportContainer {
@@ -373,4 +373,14 @@ input[type=text1] {
 
 .tableReport {
     width: 80%!important;
+}
+
+.counterColumn{
+    float: right;
+    width: 20%;
+}
+
+.counterRow{
+    margin-left: 15%;
+    width: 85%;
 }
