@@ -102,10 +102,9 @@ include_once("../includes/database.php") ?>
         </nav>
 
         <!-- Page Content  -->
-        <button type="button" class="buttonTop" data-toggle="modal" data-target="#exampleModalLong">
-            Generate Report
-        </button>
+        <button type="button" class="buttonTop" id="generateReportBtn">Generate Report</button>
 
+        <!--
         <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog"
              aria-labelledby="exampleModalLongTitle" aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -126,7 +125,7 @@ include_once("../includes/database.php") ?>
                 </div>
             </div>
         </div>
-
+        -->
         <!--Search Input and Button-->
         <div class="search-container">
             <form action="/action_page.php">
@@ -199,7 +198,7 @@ include_once("../includes/database.php") ?>
         </div>
 
         <!--Table Part-->
-        <table class="table table-row table-hover tableReport">
+        <table class="table table-row table-hover tableReport" id="reportsTable">
             <thead>
             <tr>
                 <th scope="col">#</th>
@@ -237,6 +236,10 @@ include_once("../includes/database.php") ?>
 </tr>";
             }
             ?>
+
+            <div id="generateReportOptions">
+
+            </div>
 
             <div id="viewReportModal" class="modal">
                 <div class='modal-content container'>
@@ -301,6 +304,42 @@ include_once("../includes/database.php") ?>
                     data: {"report": repId},
                     success: function (result) {
                         document.getElementById("viewReportModal").innerHTML = result;
+                    }
+                })
+            })
+        });
+
+        $(document).ready(function () {
+            $("#generateReportBtn").click(function () {
+                $.ajax({
+                    url: 'manageReportViewProcessor.php',
+                    type: 'POST',
+                    data: {"generate": 1},
+                    success: function (result) {
+                        document.getElementById("reportsTable").innerHTML = result;
+                    }
+                });
+
+                $.ajax({
+                    url: 'manageReportViewProcessor.php',
+                    type: 'POST',
+                    data: {"options": 1},
+                    success: function (result) {
+                        document.getElementById("generateReportOptions").innerHTML = result;
+                    }
+                });
+            })
+        });
+
+        $(document).ready(function () {
+            $("#cancelGenerateReportBtn").click(function () {
+                console.log('passed');
+                $.ajax({
+                    url: 'manageReportViewProcessor.php',
+                    type: 'POST',
+                    data: {"cancel": 1},
+                    success: function (result) {
+                        document.getElementById("reportsTable").innerHTML = result;
                     }
                 })
             })

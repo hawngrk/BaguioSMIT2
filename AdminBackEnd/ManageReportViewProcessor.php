@@ -95,3 +95,92 @@ if (isset($_POST['report'])) {
     </div>
     ";
 }
+
+if (isset($_POST['generate'])) {
+    echo "
+      <thead>
+            <tr>
+                <th scope='col'>Select All/Clear</th>
+                <th scope='col'>#</th>
+                <th scope='col'>Report ID</th>
+                <th scope='col'>Name of Reporter</th>
+                <th scope='col'>Date Reported</th>
+                <th scope='col'>Report Verified</th>
+                <th scope='col'>Action</th>
+            </tr>
+            </thead>
+            ";
+
+            require_once '../require/getReport.php';
+            require_once '../require/getPatient.php';
+
+            $count = 0;
+            foreach ($reports as $rep) {
+                $count++;
+                $reportId = $rep->getReportId();
+                $patientId = $rep->getReportPatientId();
+                $dateReported = $rep->getDateReported();
+                $status = $rep->getReportStatus();
+
+                foreach ($patients as $pat) {
+                    if ($patientId == $pat->getPatientId()) {
+                        $reporter = $pat->getPatientFullName();
+                    }
+                }
+                echo "<tr>
+                <td><input type='checkbox'></td>
+                <td>$count</td>
+                <td>$reportId</td>
+                <td>$reporter</td>
+                <td>$dateReported</td>
+                <td>$status</td>
+                <td><button class='viewReportBtn' type='submit' value='$reportId'>Review Report</button></td>
+                </tr>";
+            }
+}
+
+if (isset($_POST['cancel'])) {
+    echo "
+    <thead>
+            <tr>
+                <th scope='col'>#</th>
+                <th scope='col'>Report ID</th>
+                <th scope='col'>Name of Reporter</th>
+                <th scope='col'>Date Reported</th>
+                <th scope='col'>Report Verified</th>
+                <th scope='col'>Action</th>
+            </tr>
+            </thead> ";
+
+            require_once '../require/getReport.php';
+            require_once '../require/getPatient.php';
+
+            $count = 0;
+            foreach ($reports as $rep) {
+                $count++;
+                $reportId = $rep->getReportId();
+                $patientId = $rep->getReportPatientId();
+                $dateReported = $rep->getDateReported();
+                $status = $rep->getReportStatus();
+
+                foreach ($patients as $pat) {
+                    if ($patientId == $pat->getPatientId()) {
+                        $reporter = $pat->getPatientFullName();
+                    }
+                }
+                echo "<tr>
+                <td>$count</td>
+                <td>$reportId</td>
+                <td>$reporter</td>
+                <td>$dateReported</td>
+                <td>$status</td>
+                <td><button class='viewReportBtn' type='submit' value='$reportId'>Review Report</button></td>
+</tr>";
+            }
+}
+
+if (isset($_POST['options'])) {
+    echo "
+    <button type='button' class='buttonTop' id='downloadGenerateReportBtn'>Download Files</button>
+    <button type='button' class='buttonTop' id=\"cancelGenerateReportBtn\">Cancel</button>";
+}
