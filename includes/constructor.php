@@ -312,15 +312,15 @@ class vaccineLot
     private $vaccLotVaccId;
     private $vaccEmpAccId;
     private $vaccBatchQty;
-    private $dateVaccAdded;
+    private $dateVaccStored;
 
-    public function __construct($vaccineLotId, $vaccineLotVaccineId, $vaccineEmployeeAccId, $vaccineBatchQty, $dateVaccineAdded)
+    public function __construct($vaccineLotId, $vaccineLotVaccineId, $vaccineEmployeeAccId, $vaccineBatchQty, $dateVaccineStored)
     {
         $this->vaccLotId = $vaccineLotId;
         $this->vaccLotVaccId = $vaccineLotVaccineId;
         $this->vaccEmpAccId = $vaccineEmployeeAccId;
         $this->vaccBatchQty = $vaccineBatchQty;
-        $this->dateVaccAdded = $dateVaccineAdded;
+        $this->dateVaccStored = $dateVaccineStored;
     }
 
 
@@ -344,9 +344,9 @@ class vaccineLot
         return $this->vaccBatchQty;
     }
 
-    public function getDateVaccAdded()
+    public function getDateVaccStored()
     {
-        return $this->dateVaccAdded;
+        return $this->dateVaccStored;
     }
 }
 ?>
@@ -359,17 +359,15 @@ class vaccineBatch
     private $vaccBatchLotId;
     private $vaccBatchVaccId;
     private $vaccQty;
-    private $dateStored;
     private $dateManu;
     private $dateExp;
 
-    public function __construct($vaccineBatchId, $vaccineBatchLotId, $vaccineBatchVaccineId, $vaccineQuantity, $dateStored, $dateManufactured, $dateOfExpiration)
+    public function __construct($vaccineBatchId, $vaccineBatchLotId, $vaccineBatchVaccineId, $vaccineQuantity, $dateManufactured, $dateOfExpiration)
     {
         $this->vaccBatchId = $vaccineBatchId;
         $this->vaccBatchLotId = $vaccineBatchLotId;
         $this->vaccBatchVaccId = $vaccineBatchVaccineId;
         $this->vaccQty = $vaccineQuantity;
-        $this->dateStored = $dateStored;
         $this->dateManu = $dateManufactured;
         $this->dateExp = $dateOfExpiration;
     }
@@ -387,11 +385,6 @@ class vaccineBatch
     public function getVaccBatchVaccId()
     {
         return $this->vaccBatchVaccId;
-    }
-
-    public function getDateStored()
-    {
-        return $this->dateStored;
     }
 
     public function getDateManu()
