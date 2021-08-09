@@ -16,7 +16,7 @@
 <body>
     <!--Navigation Bar-->
     <nav class="navbar navbar-expand-lg">
-        <a class="navbar-brand" href="#">Baguio SMIT+ Patient Module</a>
+      <img src="../img/SMIT+.png" class="logo" alt="">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
             </button>
@@ -50,28 +50,33 @@
     <div class="bodyWrapper">
         <div>
             <h1 class="helpheader">Report Symptoms</h1>
+            <p class="headerWrapper"><i>**(Please understand that upon filling up this form,
+                you are allowing us to process and use the data. As
+                well as providing us true information and not just a made up one.
+                Providing false information is punishable by law.)
+            </i></p>
             <hr>
         </div>
-        <div class="reportWrapper">
+        <div class="reportWrapper reportWrapperbg">
             <form>
-                <h3>1. Date the last time you went out</h3>
-                <input type="date" name="date" id="date">
+                <h5>1. Date the last time you went out</h5>
+                <input type="date" class="dateBtn" name="date" id="date">
                 <hr>
-                <h3>2. Select the vaccine side effect/s that applies:</h3>
-                <input type="radio" id="chills" name="side_effect" value="Chills">   <label for="chills">Chills</label><br>
-                <input type="radio" id="fever" name="side_effect" value="Fever">   <label for="fever">Fever</label><br>
-                <input type="radio" id="headache" name="side_effect" value="Headache">   <label for="headache">Headache</label><br>
-                <input type="radio" id="musclePain" name="side_effect" value="MusclePain">   <label for="musclePain">Muscle Pain</label><br>
-                <input type="radio" id="nausea" name="side_effect" value="nausea">   <label for="nausea">Nausea</label><br>
-                <input type="radio" id="tiredness" name="side_effect" value="tiredness">   <label for="nausea">Tiredness</label><br>
-                <input type="radio" id="otherSide" name="side_effect" value="Please specify here">   <label for="otherSide"> <input type="text" id="otherSide" name="side_effect" value="Please specify here"></label><br>
+                <h5>2. Select the vaccine side effect/s that applies:</h5>
+                <input type="radio" id="chills" class="radioBtn" name="side_effect" value="Chills">   <label for="chills">Chills</label><br>
+                <input type="radio" id="fever" class="radioBtn" name="side_effect" value="Fever">   <label for="fever">Fever</label><br>
+                <input type="radio" id="headache" class="radioBtn" name="side_effect" value="Headache">   <label for="headache">Headache</label><br>
+                <input type="radio" id="musclePain" class="radioBtn" name="side_effect" value="MusclePain">   <label for="musclePain">Muscle Pain</label><br>
+                <input type="radio" id="nausea" class="radioBtn" name="side_effect" value="nausea">   <label for="nausea">Nausea</label><br>
+                <input type="radio" id="tiredness" class="radioBtn" name="side_effect" value="tiredness">   <label for="nausea">Tiredness</label><br>
+                <input type="radio" id="otherSide" class="radioBtn" name="side_effect" value="Please specify here">   <label for="otherSide"> <input type="text" id="otherSide" name="side_effect" value="Please specify here"></label><br>
                 <hr>
-                <h3>3.Select the COVID-19 symtom/s that applies</h3>
-                <input type="radio" id="cough" name="side_effect" value="radio"> <label for="cough">Cough</label><br>
-                <input type="radio" id="fever" name="side_effect" value="fever"> <label for="fever">Fever</label><br>
-                <input type="radio" id="diff" name="side_effect" value="diff"> <label for="diff">Difficulty Breathing or Shortness of Breath</label><br>
-                <input type="radio" id="ache" name="side_effect" value="ache"> <label for="ache">Muscle or Body Ache</label><br>
-                <input type="radio" id="head" name="side_effect" value="head"> <label for="head">Headache</label><br>
+                <h5>3.Select the COVID-19 symtom/s that applies</h5>
+                <input type="radio" id="cough" class="radioBtn" name="side_effect" value="radio"> <label for="cough">Cough</label><br>
+                <input type="radio" id="fever" class="radioBtn" name="side_effect" value="fever"> <label for="fever">Fever</label><br>
+                <input type="radio" id="diff" class="radioBtn" name="side_effect" value="diff"> <label for="diff">Difficulty Breathing or Shortness of Breath</label><br>
+                <input type="radio" id="ache" class="radioBtn" name="side_effect" value="ache"> <label for="ache">Muscle or Body Ache</label><br>
+                <input type="radio" id="head" class="radioBtn" name="side_effect" value="head"> <label for="head">Headache</label><br>
             </form>
         </div>
     </div>
@@ -125,7 +130,18 @@
     }
     
     .reportWrapper {
-        width: 90%;
+        width: 85%;
+        margin: auto;
+        padding: 5%;
+    }
+
+    .reportWrapperbg {
+        padding-top: 3%!important;
+        background: rgb(209, 221, 245);
+    }
+
+    .headerWrapper {
+        width: 85%;
         margin: auto;
         padding: 0%;
     }
@@ -133,5 +149,15 @@
     .bodyWrapper {
         width: 90%;
         margin: auto;
+    }
+    .radioBtn, .dateBtn{
+        margin-left: 3%;
+    }
+
+    
+    .logo {
+        width: 8%;
+        padding: 0%;
+        margin: 0%;
     }
 </style>
