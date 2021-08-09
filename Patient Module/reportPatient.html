@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>SMIT+ | Report</title>
+
+    <!--Bootstrap-->
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" rel="stylesheet">
+</head>
+
+<body>
+    <!--Navigation Bar-->
+    <nav class="navbar navbar-expand-lg">
+        <a class="navbar-brand" href="#">Baguio SMIT+ Patient Module</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+        <div class="collapse navbar-collapse" id="navbarText">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Report</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Settings</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Infographics</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Help</a>
+                </li>
+            </ul>
+            <button class="signoutBtn" type="submit">Sign Out</button>
+            <form class="form-inline">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                <button class=" searchBtn" type="submit">Search</button>
+            </form>
+        </div>
+    </nav>
+
+    <!--Page Content-->
+    <div class="bodyWrapper">
+        <div>
+            <h1 class="helpheader">Report Symptoms</h1>
+            <hr>
+        </div>
+        <div class="reportWrapper">
+            <form>
+                <h3>1. Date the last time you went out</h3>
+                <input type="date" name="date" id="date">
+                <hr>
+                <h3>2. Select the vaccine side effect/s that applies:</h3>
+                <input type="radio" id="chills" name="side_effect" value="Chills">   <label for="chills">Chills</label><br>
+                <input type="radio" id="fever" name="side_effect" value="Fever">   <label for="fever">Fever</label><br>
+                <input type="radio" id="headache" name="side_effect" value="Headache">   <label for="headache">Headache</label><br>
+                <input type="radio" id="musclePain" name="side_effect" value="MusclePain">   <label for="musclePain">Muscle Pain</label><br>
+                <input type="radio" id="nausea" name="side_effect" value="nausea">   <label for="nausea">Nausea</label><br>
+                <input type="radio" id="tiredness" name="side_effect" value="tiredness">   <label for="nausea">Tiredness</label><br>
+                <input type="radio" id="otherSide" name="side_effect" value="Please specify here">   <label for="otherSide"> <input type="text" id="otherSide" name="side_effect" value="Please specify here"></label><br>
+                <hr>
+                <h3>3.Select the COVID-19 symtom/s that applies</h3>
+                <input type="radio" id="cough" name="side_effect" value="radio"> <label for="cough">Cough</label><br>
+                <input type="radio" id="fever" name="side_effect" value="fever"> <label for="fever">Fever</label><br>
+                <input type="radio" id="diff" name="side_effect" value="diff"> <label for="diff">Difficulty Breathing or Shortness of Breath</label><br>
+                <input type="radio" id="ache" name="side_effect" value="ache"> <label for="ache">Muscle or Body Ache</label><br>
+                <input type="radio" id="head" name="side_effect" value="head"> <label for="head">Headache</label><br>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>
+
+<style>
+    .navbar {
+        background: #2f70bb;
+    }
+    
+    .nav-link,
+    .navbar-brand {
+        color: white !important;
+        font-family: 'Alata';
+    }
+    
+    .navbar-brand {
+        font-family: 'Alata';
+        font-size: 22px;
+    }
+    
+    .searchBtn,
+    .signoutBtn {
+        border: solid white;
+        border-radius: 12px;
+        background: white;
+    }
+    
+    .signoutBtn {
+        margin-right: 1%;
+    }
+    
+    .helpheader {
+        margin-top: 1%;
+        margin-left: 2%;
+    }
+    
+    .helpBtn {
+        border: solid gray 3px;
+        border-radius: 12px;
+        width: 18%;
+        height: auto;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 1%;
+        display: block;
+        font-size: 2rem;
+        text-align: left;
+    }
+    
+    .reportWrapper {
+        width: 90%;
+        margin: auto;
+        padding: 0%;
+    }
+    
+    .bodyWrapper {
+        width: 90%;
+        margin: auto;
+    }
+</style>

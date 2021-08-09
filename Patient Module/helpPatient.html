@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>SMIT+ | Help</title>
+
+    <!--Bootstrap-->
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" rel="stylesheet">
+
+    <!-- Font Awesome JS -->
+    <script src="https://kit.fontawesome.com/fcdb0fe9f3.js" crossorigin="anonymous"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <!--Navigation Bar-->
+    <nav class="navbar navbar-expand-lg">
+        <a class="navbar-brand" href="#">Baguio SMIT+ Patient Module</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+        <div class="collapse navbar-collapse" id="navbarText">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Report</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Settings</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Infographics</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Help</a>
+                </li>
+            </ul>
+            <button class="signoutBtn" type="submit">Sign Out</button>
+            <form class="form-inline">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                <button class=" searchBtn" type="submit">Search</button>
+            </form>
+        </div>
+    </nav>
+
+    <!-- Page Content-->
+    <div class="reportWrapper">
+    <div>
+        <h1 class="helpheader">Help</h1>
+        <hr>
+    </div>
+    <div>
+        <div class="row">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title"><i class="fas fa-question"></i> Ask a question</h5>
+                            <p class="card-text">Contact one of our representatives to cater your problem.</p>
+                            <a href="#" class="btn btn-primary">Ask now</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title"><i class="fas fa-unlock-alt"></i> Forgot Credentials</h5>
+                            <p class="card-text">Know how to reset your password.</p>
+                            <a href="#" class="btn btn-primary">Reset Password</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title"><i class="fas fa-id-card"></i> Contact LGU</h5>
+                            <p class="card-text">Get in touch with your Local Government</p>
+                            <a href="#" class="btn btn-primary">Contact</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title"><i class="fas fa-eye"></i> View Vaccination Schedule</h5>
+                            <p class="card-text">Get in touch with your Local Government</p>
+                            <a href="#" class="btn btn-primary">View</a>
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </div>
+</body>
+
+</html>
+<style>
+    .navbar {
+        background: #2f70bb;
+    }
+    
+    .nav-link,
+    .navbar-brand {
+        color: white !important;
+        font-family: 'Alata';
+    }
+    
+    .navbar-brand {
+        font-family: 'Alata';
+        font-size: 22px;
+    }
+    
+    .searchBtn,
+    .signoutBtn {
+        border: solid white;
+        border-radius: 12px;
+        background: white;
+    }
+    
+    .signoutBtn {
+        margin-right: 1%;
+    }
+    
+    .helpheader {
+        margin-top: 1%;
+        margin-left: 2%;
+    }
+    
+    .helpBtn {
+        border: solid gray 3px;
+        border-radius: 12px;
+        width: 18%;
+        height: auto;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 1%;
+        display: block;
+        font-size: 2rem;
+        text-align: left;
+    }
+
+    .reportWrapper {
+        width: 90%;
+        margin: auto;
+        padding: 0%;
+    }
+</style>
