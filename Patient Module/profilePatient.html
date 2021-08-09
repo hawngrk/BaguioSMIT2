@@ -53,25 +53,21 @@
             <hr>
         </div>
         <div class="reportWrapper">
-            <img src="" alt="">
+            <img src="../img/displ.png" id="profPic" alt="">
             <hr>
 
             <form class="prof" action="">
-                <h4>Name</h4>
-                <input type="text" id="nameProf" value="HUDSON KIT P. NATIVIDAD"> <label for="nameProf"></label>
-
-                <h4>Age</h4>
-                <input type="text" id="ageProf" value="21 years old"><label for="ageProf"></label>
-
-                <h4>Address</h4>
-                <input type="text" id="addProf" value="100 Montebello St. Bakakeng Sur, Baguio City, 2600"><label for="addProf"></label>
+                <h4 class="h4Prof">Name</h4> <input type="text" id="nameProf" value="HUDSON KIT P. NATIVIDAD"> <label for="nameProf" readonly></label>
+                <br>
+                <h4 class="h4Prof">Age</h4><input type="text" id="ageProf" value="21 years old"><label for="ageProf" readonly></label>
+                <br>
+                <h4 class="h4Prof">Address</h4><input type="text" id="addProf" value="100 Montebello St. Bakakeng Sur, Baguio City, 2600" readonly><label for="addProf"></label>
                 <hr>
-                <h4>Vaccine Brand</h4>
-                <input type="text" id="vaccBrand" value="SINOVAC"><br>
+                <h4 class="h4Prof">Vaccine Brand</h4>
+                <input type="text" id="vaccBrand" value="SINOVAC" readonly><br>
                 <input type="checkbox" id="dose1"><strong> 1st Dose</strong> February 21, 2021</label><br>
-                <input type="checkbox" id="dose2"><label for="dose2"><strong> 2nd Dose</strong> March 21, 2021</label>
+                <input type="checkbox" id="dose2"><label id="dose22" for="dose2"><strong> 2nd Dose</strong> March 21, 2021</label>
             </form>
-
         </div>
     </div>
 </body>
@@ -123,7 +119,51 @@
     
     .prof {
         display: block;
+        margin-left:29%;
+        margin-right: auto;
+    }
+
+    #nameProf, #ageProf, #addProf, #vaccBrand {
+        width: 49%;
+        text-align: center;
+        border: none;
+        font-size: 1.5rem;
+    }
+
+
+    .h4Prof{
+        display: inline;
+    }
+
+    #nameProf{
+        font-weight: 500;
+    }
+    #addProf {
+        width: 49%!important;
+        font-size: 1rem;
+    }
+
+    #ageProf{
+        width: 19%!important;
+        font-size: 1.2rem!important;
+    }
+
+    #vaccBrand {
+        width: 19%!important;
+        font-weight: 400;
+    }
+
+    #dose22{
+        margin-left: 0.7%;
+    }
+
+    #profPic {
+        display: block;
         margin-left: auto;
         margin-right: auto;
+        border-radius: 50%;
+        object-fit: cover;
+        height: 300px;
+        width: 300px;
     }
 </style>

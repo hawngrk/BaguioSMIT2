@@ -52,16 +52,50 @@
     </nav>
 
     <!-- Page Content-->
+    <div class="reportWrapper">
     <div>
         <h1 class="helpheader">Help</h1>
         <hr>
     </div>
     <div>
-        <button class="helpBtn" type="submit"><i class="fas fa-question"></i> Ask a question</button>
-        <button class="helpBtn" type="submit"><i class="fas fa-unlock-alt"></i> Forgot Credentials</button>
-        <button class="helpBtn" type="submit"><i class="fas fa-id-card"></i> Contact LGU</button>
-        <button class="helpBtn" type="submit"><i class="fas fa-eye"></i> View Vaccination Schedue</button>
-        <button class="helpBtn" type="submit"><i class="fas fa-bars"></i> Others</button>
+        <div class="row">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title"><i class="fas fa-question"></i> Ask a question</h5>
+                            <p class="card-text">Contact one of our representatives to cater your problem.</p>
+                            <a href="#" class="btn btn-primary">Ask now</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title"><i class="fas fa-unlock-alt"></i> Forgot Credentials</h5>
+                            <p class="card-text">Know how to reset your password.</p>
+                            <a href="#" class="btn btn-primary">Reset Password</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title"><i class="fas fa-id-card"></i> Contact LGU</h5>
+                            <p class="card-text">Get in touch with your Local Government</p>
+                            <a href="#" class="btn btn-primary">Contact</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title"><i class="fas fa-eye"></i> View Vaccination Schedule</h5>
+                            <p class="card-text">Get in touch with your Local Government</p>
+                            <a href="#" class="btn btn-primary">View</a>
+                        </div>
+                    </div>
+                </div>
+        </div>
     </div>
 </body>
 
@@ -109,5 +143,11 @@
         display: block;
         font-size: 2rem;
         text-align: left;
+    }
+
+    .reportWrapper {
+        width: 90%;
+        margin: auto;
+        padding: 0%;
     }
 </style>
