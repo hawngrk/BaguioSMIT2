@@ -55,10 +55,10 @@ include_once("../includes/database.php") ?>
                             class="fas fa-users"></i> Manage Users</a>
                 <ul class="collapse list-unstyled" id="ManageUsersSubmenu">
                     <li>
-                        <a href="#">Personnel</a>
+                        <a href="ManageUsers/ManagePersonnelHome.php">Personnel</a>
                     </li>
                     <li>
-                        <a href="#">Patients</a>
+                        <a href="ManageUsers/ManagePatientHome.php">Patients</a>
                     </li>
                 </ul>
             </li>
