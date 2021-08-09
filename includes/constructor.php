@@ -185,6 +185,142 @@ class patientInfo{
 ?>
 
 <?php
+class patientDetails{
+    private $patientDeetPatId;
+    private $patientFName;
+    private $patientLName;
+    private $patientMName;
+    private $patientSuffix;
+    private $priorityGroup;
+    private $categoryId;
+    private $categoryNum;
+    private $houseAdd;
+    private $brgy;
+    private $city;
+    private $province;
+    private $region;
+    private $birthdate;
+    private $age;
+    private $gender;
+    private $contact;
+    private $occupation;
+
+
+    public function __construct($patientDetailPatientId, $patFirstName, $patLastName, $patMiddleName,$patientSuffix, $priorityGroup, $categoryId, $categoryNumber, $houseAddress, $barangay, $city, $province, $region, $birthdate, $age, $gender, $contact, $occupation)
+    {
+        $this->patientDeetPatId = $patientDetailPatientId;
+        $this->patientFName = $patFirstName;
+        $this->patientLName = $patLastName;
+        $this->patientMName = $patMiddleName;
+        $this->patientSuffix = $patientSuffix;
+        $this->priorityGroup = $priorityGroup;
+        $this->categoryId = $categoryId;
+        $this->categoryNum = $categoryNumber;
+        $this->houseAdd = $houseAddress;
+        $this->brgy = $barangay;
+        $this->city = $city;
+        $this->province = $province;
+        $this->region = $region;
+        $this->birthdate = $birthdate;
+        $this->age = $age;
+        $this->gender = $gender;
+        $this->contact = $contact;
+        $this->occupation = $occupation;
+    }
+
+    public function getPatientDeetPatId()
+    {
+        return $this->patientDeetPatId;
+    }
+
+    public function getPatientFName()
+    {
+        return $this->patientFName;
+    }
+
+    public function getPatientLName()
+    {
+        return $this->patientLName;
+    }
+
+    public function getPatientMName()
+    {
+        return $this->patientMName;
+    }
+
+    public function getPatientSuffix()
+    {
+        return $this->patientSuffix;
+    }
+
+    public function getPriorityGroup()
+    {
+        return $this->priorityGroup;
+    }
+
+    public function getCategoryId()
+    {
+        return $this->categoryId;
+    }
+
+    public function getCategoryNum()
+    {
+        return $this->categoryNum;
+    }
+
+    public function getHouseAdd()
+    {
+        return $this->houseAdd;
+    }
+
+    public function getBrgy()
+    {
+        return $this->brgy;
+    }
+
+    public function getCity()
+    {
+        return $this->city;
+    }
+
+    public function getProvince()
+    {
+        return $this->province;
+    }
+
+    public function getRegion()
+    {
+        return $this->region;
+    }
+
+    public function getBirthdate()
+    {
+        return $this->birthdate;
+    }
+
+    public function getGender()
+    {
+        return $this->gender;
+    }
+
+    public function getAge()
+    {
+        return $this->age;
+    }
+
+    public function getContact()
+    {
+        return $this->contact;
+    }
+
+    public function getOccupation()
+    {
+        return $this->occupation;
+    }
+}
+?>
+
+<?php
 
 class reports{
     private $reportId;
