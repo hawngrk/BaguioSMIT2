@@ -93,56 +93,99 @@ include_once("../includes/database.php") ?>
         </nav>
 
         <!-- Page Content  -->
-        <button id="addVaccine" type="button" class="buttonTop">Add Vaccine</button>
+        <button id="addVaccineBtn" type="button" class="buttonTop">Add Vaccine</button>
 
-        <div id="modal2" class="modal">
-            <div class="modal-content container">
-                <h2 id="headerAddNewVaccine">Add Vaccine<span id="close2" class="close">&times;</span></h2>
+        <form id='addVaccineForm' method="post" enctype="multipart/form-data">
+            <div id="vaccineModal" class="modal">
+                <div class="modal-content container">
+                    <h2 id="headerAddVaccine"> Add Vaccine <span id="addVaccineClose" class="close">&times;</span></h2>
+                    <div class="AddVaccine-PopUp">
+                        <label for="selectedVaccine"> Select a Vaccine: </label>
+                        <select class="form-select col-lg-12 vaccineType" id="selectedVaccine" name="selectedVaccine">
+                            <?php
+                            include '../includes/database.php';
+                            $getVaccinesQuery = "SELECT vaccine_name FROM vaccine";
+                            $stmt = $database->stmt_init();
+                            $stmt->prepare($getVaccinesQuery);
+                            $stmt->execute();
+                            $stmt->bind_result($vaccine);
+                            $listVaccines = [];
+                            while ($stmt->fetch()) {
+                                $listVaccines[] = $vaccine;
+                            }
+                            foreach ($listVaccines as $vac) {
+                                echo "<option>$vac</option>";
+                            }
+                            ?>
+                        </select>
+                        <label for="batchNo"> Batch Quantity Received </label>
+                        <input type="number" id="batchNo" name="batchNo" min="1" max="15" value="1">
+                        <label for="dateStored">Date Stored</label>
+                        <input type='date' id="dateStored" name="dateStored">
+                        <div id="selectedVaccineInfo"></div>
+                        <div id="vaccineBatch"></div>
+                        <div>
+                            <button id="cancelBtnVaccine">Cancel</button>
+                            <?php
+                            echo " <button type='submit' id='addBtnVaccine' name='addBtnVaccine' form='addVaccineForm'> Add </button>";
+                            ?>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
-
+        </form>
 
         <button id="addNewVaccineBtn" type="button" class="buttonTop">Add New Vaccine</button>
 
-        <div id="myModal" class="modal">
-            <div class="modal-content container">
-                <h2 id="headerAddNewVaccine">Add New Vaccine<span id="close" class="close">&times;</span></h2>
-                <div class="AddNewVaccine-PopUp">
-                    <h4 class="addNewVaccineH3">Vaccine Details</h4>
-                    <input class="vaccineName col-lg-12" type="input" name="vaccineName" placeholder="Vaccine Name">
-                    <input class="vaccineManufacturer col-lg-12" type="input" name="vaccineManufacturer" placeholder="Vaccine Manufacturer">
-                    <input class="vaccineDescription col-lg-12" type="input" name="vaccineDescription" placeholder="Vaccine Description">
-                    <h4 class="addNewVaccineH3">Vaccine Characteristics</h4>
-                    <!-- <input class="col-xs-12" type="input" name="vaccineType" placeholder="Vaccine Type"> -->
-                    <select class="form-select col-lg-12 vaccineType">
-                        <option selected disabled>Vaccine Type</option>
-                        <option value="1">Inactivated Vaccine</option>
-                        <option value="2">Live-attenuated Vaccine</option>
-                        <option value="3">Viral vector Vaccine</option>
-                    </select>
+        <form id='newVaccineForm' method="post" enctype="multipart/form-data">
+            <div id="newVaccineModal" class="modal">
+                <div class="modal-content container">
+                    <h2 id="headerAddNewVaccine">Add New Vaccine<span id="newVaccineClose" class="close">&times;</span>
+                    </h2>
+                    <div class="AddNewVaccine-PopUp">
+                        <h4 class="addNewVaccineH3">Vaccine Details</h4>
+                        <input class="vaccineName col-lg-12" type="input" name="vaccineName" placeholder="Vaccine Name">
+                        <input class="vaccineManufacturer col-lg-12" type="input" name="vaccineManufacturer"
+                               placeholder="Vaccine Manufacturer">
+                        <input class="vaccineDescription col-lg-12" type="input" name="vaccineDescription"
+                               placeholder="Vaccine Description">
+                        <h4 class="addNewVaccineH3">Vaccine Characteristics</h4>
+                        <!-- <input class="col-xs-12" type="input" name="vaccineType" placeholder="Vaccine Type"> -->
+                        <select class="form-select col-lg-12 vaccineType" name="vaccineType">
+                            <option selected disabled>Vaccine Type</option>
+                            <option>Inactivated Vaccine</option>
+                            <option>Live-attenuated Vaccine</option>
+                            <option>Viral vector Vaccine</option>
+                        </select>
 
+                        <select class="form-select col-lg-12 vaccineEfficacy" name="vaccineEfficacy">
+                            <option selected disabled>Vaccine Efficacy</option>
+                            <option>90%</option>
+                            <option>70%</option>
+                            <option>50%</option>
+                        </select>
 
-                    <select class="form-select col-lg-12 vaccineEfficacy">
-                        <option selected disabled>Vaccine Efficacy</option>
-                        <option value="1">90%</option>
-                        <option value="1">70%</option>
-                        <option value="1">50%</option>
-                    </select>
+                        <input class="col-lg-12 dosageRequired" type="input" name="dosage"
+                               placeholder="Dosage Required">
+                        <input class="col-lg-12 dosageInterval" type="input" name="interval"
+                               placeholder="Dosage Interval">
 
-                    <input class="col-lg-12 dosageRequired" type="input" name="vaccineType" placeholder="Dosage Required">
-                    <input class="col-lg-12 dosageInterval" type="input" name="vaccineType" placeholder="Dosage Interval">
-
-                    <h4 class="addNewVaccineH3"> Storage and Handling</h4>
-                    <input class="col-lg-12 minimumTemperature" type="input" name="vaccineEfficacy" placeholder="Minimum Temperature">
-                    <input class="col-lg-12 maximumTemperature" type="input" name="vaccineType" placeholder="Maximum Temperature">
-                    <input class="col-lg-12 lifeSpan" type="input" name="vaccineType" placeholder="Life Span">
-                </div>
-                <div>
-                    <button id="cancelBtn"> Cancel </button>
-                    <button id="addBtn"> Add</button>
+                        <h4 class="addNewVaccineH3"> Storage and Handling</h4>
+                        <input class="col-lg-12 minimumTemperature" type="input" name="minTemp"
+                               placeholder="Minimum Temperature">
+                        <input class="col-lg-12 maximumTemperature" type="input" name="maxTemp"
+                               placeholder="Maximum Temperature">
+                        <input class="col-lg-12 lifeSpan" type="input" name="lifeSpan" placeholder="Life Span">
+                    </div>
+                    <div>
+                        <button id="cancelBtnNewVaccine"> Cancel</button>
+                        <?php
+                        echo " <button type='submit' id='addBtnNewVaccine' name='addBtnNewVaccine' form='newVaccineForm'> Add </button>";
+                        ?>
+                    </div>
                 </div>
             </div>
-        </div>
+        </form>
 
         <div class="search-container">
             <form action="/action_page.php">
@@ -213,12 +256,83 @@ include_once("../includes/database.php") ?>
         </table>
     </div>
 
+    <?php
+    if (isset($_POST['addBtnVaccine'])) {
+        include '../includes/database.php';
+        $selectedVaccine = $_POST['selectedVaccine'];
+        $batchNo = $_POST['batchNo'];
+        $dateStored = $_POST['dateStored'];
+        $batchVacQty = $_POST['batchVacQty'];
+        $batchDateManu = $_POST['batchDateManu'];
+        $batchDateExp = $_POST['batchDateExp'];
+
+        $getVacIdQuery = "SELECT vaccine_id FROM vaccine WHERE vaccine_name='$selectedVaccine'";
+        $dbase = $database->stmt_init();
+        $dbase->prepare($getVacIdQuery);
+        $dbase->execute();
+        $dbase->bind_result($vaccineid);
+        $dbase->fetch();
+        $dbase->close();
+
+        $query1 = "INSERT INTO vaccine_lot (vaccine_id, employee_account_id, vaccine_batch_quantity, date_stored) VALUE ('$vaccineid', 1, '$batchNo', '$dateStored');";
+        $database->query($query1);
+
+        $getVacLotIdQuery = "SELECT vaccine_lot_id FROM vaccine_lot ORDER BY  vaccine_lot_id DESC LIMIT 1";
+        $dbase = $database->stmt_init();
+        $dbase->prepare($getVacLotIdQuery);
+        $dbase->execute();
+        $dbase->bind_result($vaccineLotId);
+        $dbase->fetch();
+        $dbase->close();
+
+        $count = 0;
+        while ($count < $batchNo) {
+            $query2 = "INSERT INTO vaccine_batch (vaccine_lot_id, vaccine_id, vaccine_quantity, date_manufactured, date_of_expiration) VALUE ('$vaccineLotId', '$vaccineid', '$batchVacQty[$count]', '$batchDateManu[$count]', '$batchDateExp[$count]');";
+            $database->query($query2);
+            $count++;
+        }
+    }
+    ?>
+
+    <?php
+    if (isset($_POST['addBtnNewVaccine'])) {
+        include '../includes/database.php';
+        $vaccineName = $_POST['vaccineName'];
+        $vaccineManufacturer = $_POST['vaccineManufacturer'];
+        $vaccineDescription = $_POST['vaccineDescription'];
+        $vaccineType = $_POST['vaccineType'];
+        $vaccineEfficacy = (int)$_POST['vaccineEfficacy'];
+        $dosage = $_POST['dosage'];
+        $interval = $_POST['interval'];
+        $minTemp = $_POST['minTemp'];
+        $maxTemp = $_POST['maxTemp'];
+        $lifeSpan = $_POST['lifeSpan'];
+
+
+        $query1 = "INSERT INTO vaccine (vaccine_name, vaccine_type, vaccine_efficacy, vaccine_lifespan_in_months) VALUE ('$vaccineName', '$vaccineType', '$vaccineEfficacy', '$lifeSpan');";
+        $database->query($query1);
+
+        $getQuery = "SELECT vaccine_id FROM vaccine WHERE vaccine_name='$vaccineName'";
+        $dbase = $database->stmt_init();
+        $dbase->prepare($getQuery);
+        $dbase->execute();
+        $dbase->bind_result($vaccineid);
+        $dbase->fetch();
+        $dbase->close();
+
+        $query2 = "INSERT INTO vaccine_information (vaccine_id, vaccine_manufacturer, vaccine_description, vaccine_dosage_required, vaccine_dosage_interval, vaccine_minimum_temperature, vaccine_maximum_temperature) VALUE ('$vaccineid', '$vaccineManufacturer', '$vaccineDescription', '$dosage', '$interval', '$minTemp', '$maxTemp');";
+        $database->query($query2);
+    }
+    ?>
+
     <!-- jQuery CDN - Slim version (=without AJAX) -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <!-- Popper.JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
     <!-- Bootstrap JS -->
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+    <!-- AJAX -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
     <script type="text/javascript">
         $(document).ready(function() {
@@ -229,44 +343,75 @@ include_once("../includes/database.php") ?>
     </script>
 
     <script>
-        var modal = document.getElementById("myModal");
-        var addNewVaccinebtn = document.getElementById("addNewVaccineBtn");
-        var span = document.getElementById("close");
-        var cancel = document.getElementById("cancel");
-        var save = document.getElementById("save");
-        var modal2 = document.getElementById("modal2");
-        var addVaccine = document.getElementById("addVaccine");
-        var span2 = document.getElementById("close2");
+        // Add Vaccine
+        var addVaccineModal = document.getElementById("vaccineModal");
+        var addVaccineBtn = document.getElementById("addVaccineBtn");
+        var addVaccineClose = document.getElementById("addVaccineClose");
+        var cancelAddVaccine = document.getElementById("cancelBtnVaccine");
 
-        addNewVaccinebtn.onclick = function() {
-            modal.style.display = "block";
+        addVaccineBtn.onclick = function () {
+            addVaccineModal.style.display = "block";
         }
 
-        addVaccine.onclick = function() {
-            modal2.style.display = "block";
+        addVaccineClose.onclick = function () {
+            addVaccineModal.style.display = "none";
         }
 
-        span2.onclick = function() {
-            modal2.style.display = "none";
+        cancelAddVaccine.onclick = function () {
+            addVaccineModal.style.display = "none";
         }
 
-        span.onclick = function() {
-            modal.style.display = "none";
+        // Add New Vaccine
+        var newVaccineModal = document.getElementById("newVaccineModal");
+        var addNewVaccineBtn = document.getElementById("addNewVaccineBtn");
+        var newVaccineClose = document.getElementById("newVaccineClose");
+        var cancelNewVaccine = document.getElementById("cancelBtnNewVaccine");
+
+        addNewVaccineBtn.onclick = function () {
+            newVaccineModal.style.display = "block";
         }
 
-        cancel.onclick = function() {
-            modal.style.display = "none";
+        newVaccineClose.onclick = function () {
+            newVaccineModal.style.display = "none";
         }
 
-        window.onclick = function(event) {
-            if (event.target == modal) {
-                modal.style.display = "none";
+        cancelNewVaccine.onclick = function () {
+            newVaccineModal.style.display = "none";
+        }
+
+        window.onclick = function (event) {
+            if (event.target == newVaccineModal) {
+                newVaccineModal.style.display = "none";
             }
         }
+        $(document).ready(function () {
+            $('#selectedVaccine').change(function () {
+                var option = $(this).find('option:selected');
+                var vac = option.text();
 
-        save.onclick = function() {
-            alert("changes has been saved!");
-        }
+                $.ajax({
+                    url: 'ManageVaccineInputProcessor.php',
+                    type: 'POST',
+                    data: {"vaccine": vac},
+                    success: function (result) {
+                        document.getElementById("selectedVaccineInfo").innerHTML = result;
+                    }
+                })
+            })
+        });
+        $(document).ready(function () {
+            $('#batchNo').on('keyup change click', function () {
+                var batch = $('#batchNo').val();
+                $.ajax({
+                    url: 'ManageVaccineInputProcessor.php',
+                    type: 'POST',
+                    data: {"batch": batch},
+                    success: function (result) {
+                        document.getElementById("vaccineBatch").innerHTML = result;
+                    }
+                })
+            })
+        });
     </script>
 
     <script>
@@ -276,9 +421,5 @@ include_once("../includes/database.php") ?>
             });
         });
     </script>
-
 </body>
-
 </html>
-
-

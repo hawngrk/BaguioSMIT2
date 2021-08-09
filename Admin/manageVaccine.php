@@ -275,6 +275,7 @@
             $count++;
         }
     }
+    echo "alert('Vaccine Lot Added!');"
     ?>
 
     <?php
@@ -306,6 +307,7 @@
         $query2 = "INSERT INTO vaccine_information (vaccine_id, vaccine_manufacturer, vaccine_description, vaccine_dosage_required, vaccine_dosage_interval, vaccine_minimum_temperature, vaccine_maximum_temperature) VALUE ('$vaccineid', '$vaccineManufacturer', '$vaccineDescription', '$dosage', '$interval', '$minTemp', '$maxTemp');";
         $database->query($query2);
     }
+    echo "alert('New Vaccine Added!');"
     ?>
 
     <!-- jQuery CDN - Slim version (=without AJAX) -->
@@ -320,6 +322,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"
             integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm"
             crossorigin="anonymous"></script>
+    <!-- AJAX -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
     <script type="text/javascript">
@@ -387,7 +390,6 @@
                 })
             })
         });
-
         $(document).ready(function () {
             $('#batchNo').on('keyup change click', function () {
                 var batch = $('#batchNo').val();
