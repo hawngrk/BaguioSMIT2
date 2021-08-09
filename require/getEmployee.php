@@ -1,6 +1,6 @@
 <?php
-    include("../includes/database.php");
-    include("../includes/constructor.php");
+    include("../../includes/database.php");
+    include("../../includes/constructor.php");
 
     $query = "SELECT * FROM employee";
     $employees = [];
@@ -11,6 +11,6 @@
     $stmt->execute();
 
     while ($stmt->fetch()){
-        $patient = new patientInfo($employeeId, $employeeLastName, $employeeFirstName, $employeeMiddleName, $employeeSuffix, $employeeRole, $employeeContactNumber);
-        $employees[] = $employees;
+        $employee = new employeeInfo($employeeId, $employeeLastName, $employeeFirstName, $employeeMiddleName, $employeeSuffix, $employeeRole, $employeeContactNumber);
+        $employees[] = $employee;
     }

@@ -422,4 +422,3 @@ include_once("../includes/database.php") ?>
         });
     </script>
 </body>
-</html>
