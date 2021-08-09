@@ -98,7 +98,7 @@ a:focus {
 #sidebar ul li a:visited {
     color: #fff !important;
     background: #04628A;
-    ;
+;
 }
 
 #sidebar ul li.active>a,
@@ -159,7 +159,7 @@ a.article:hover {
 
 
 /* ---------------------------------------------------
-    CONTENT STYLE                                     
+    CONTENT STYLE
 ----------------------------------------------------- */
 
 #content {
@@ -188,7 +188,7 @@ a.article:hover {
 
 
 /* ---------------------------------------------------
-    COMMON CSS 
+    COMMON CSS
 ----------------------------------------------------- */
 
 .buttonTop {
@@ -252,16 +252,14 @@ input[type=text] {
 
 /* Modal Content/Box */
 
-.modal-content {
+.content-modal{
     background-color: #fefefe;
     margin: 5% auto;
     /* 15% from the top and centered */
-    padding: 5px;
     border: 1px solid #888;
     width: 50%;
-    /* Could be more or less, depending on screen size */
+    /*Could be more or less, depending on screen size */
 }
-
 
 /* The Close Button */
 
@@ -383,4 +381,36 @@ input[type=text1] {
 .counterRow{
     margin-left: 15%;
     width: 85%;
+}
+
+/* Modal Header */
+.modal-header{
+    color: #fafafa;
+    background-color: #04628A;
+}
+
+
+
+/*Text Inputs*/
+input[type=text3],select {
+    width: 95%;
+    padding: 12px;
+    margin: 8px;
+    display: inline-block;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+}
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    padding: 12px 16px;
+    z-index: 1;
 }
