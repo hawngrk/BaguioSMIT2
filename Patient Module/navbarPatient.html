@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<header>
+    <!--Bootstrap-->
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" rel="stylesheet">
+</header>
+
+<body>
+    <nav class="navbar navbar-expand-lg">
+        <!-- <a class="navbar-brand" href="#">Baguio SMIT+ Patient Module</a> -->
+
+        <!-- Toggler/collapsibe Button -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+        <div class="collapse navbar-collapse" id="collapsibleNavbar">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Report</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Settings</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Infographics</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Help</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">About</a>
+                </li>
+            </ul>
+            <button class="signoutBtn" type="submit">Sign Out</button>
+            <form class="form-inline">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                <button class=" searchBtn" type="submit">Search</button>
+            </form>
+        </div>
+    </nav>
+</body>
+
+</html>
+<style>
+    .navbar {
+        background: #2f70bb;
+    }
+    
+    .nav-link,
+    .navbar-brand {
+        color: white !important;
+        font-family: 'Arial';
+    }
+    
+    .navbar-brand {
+        font-family: 'Arial';
+        font-size: 22px;
+    }
+    
+    .searchBtn,
+    .signoutBtn {
+        border: solid white;
+        border-radius: 12px;
+        background: white;
+    }
+    
+    .signoutBtn {
+        margin-right: 1%;
+    }
+</style>
