@@ -28,9 +28,7 @@ if(isset($_POST)){
             $result = $stmtinsert->execute([$patientId, $username, $password, $picture, $email]);
             if($result) {
                 echo 'Successfully registered.';
-            } else {
-                die(header("Account was not registered"));
-            }
+            } 
         } else {
             throw new Exception(header('HTTP/1.0 400 Patient does not exist'));
         }             
@@ -38,6 +36,6 @@ if(isset($_POST)){
         echo $e->getMessage();
     }
     catch (PDOException $e) {
-        die(header('HTTP/1.0 500 Server error'));
+        die(header('HTTP/1.0 500 Database Server error'));
     } 
 }

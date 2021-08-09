@@ -8,6 +8,13 @@
         unset($_SESSION);
         header("location: patientLogin.php");
     }
+
+    $account = $_SESSION['userlogin'];
+    
+    //Preview account
+    echo '<pre>';
+    echo($account['patient_id']);
+    echo '</pre>';
 ?>
 
 <h1>Welcome User</h1>

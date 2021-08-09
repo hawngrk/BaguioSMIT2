@@ -25,7 +25,7 @@
                 <input type="password" name="password" id="password" placeholder="Enter password" minlength="8" required><br>    
                 <label for="readT&C"><input type="radio" name="readT&C" value="" required> I have read the </label><a href="" onclick="">Terms & Conditions</a><br>
                 
-                <input type="submit" name="register" id="register" value="Register">
+                <button type="button" name="register" id="register">Register</button>
             </div>
             <div class="terms-and-conditions-form" hidden>
                 <!-- Appears when the user interacts with the anchor tag  -->
@@ -72,7 +72,13 @@
                         }
                     });
 
-                } else {
+                }
+                else {
+                    Swal.fire({
+                            'title': 'Error',
+                            'text' : 'Registration form is empty',
+                            'type' : 'error'
+                    }); 
                 }
             });
         });

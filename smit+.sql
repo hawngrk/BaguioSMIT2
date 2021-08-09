@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Jul 15, 2021 at 01:10 PM
+-- Generation Time: Aug 09, 2021 at 03:20 PM
 -- Server version: 5.7.31
 -- PHP Version: 7.3.21
 
@@ -170,7 +170,7 @@ CREATE TABLE IF NOT EXISTS `medical_background` (
   `immunodeficiency` tinyint(1) NOT NULL,
   `cancer` tinyint(1) NOT NULL,
   `other_commorbidity` varchar(255) DEFAULT NULL,
-  KEY `patient_id` (`patient_id`)
+  UNIQUE KEY `patient_id` (`patient_id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -194,8 +194,8 @@ DROP TABLE IF EXISTS `patient`;
 CREATE TABLE IF NOT EXISTS `patient` (
   `patient_id` int(255) NOT NULL AUTO_INCREMENT,
   `patient_full_name` varchar(255) NOT NULL,
-  `date_of_first_dosage` date NOT NULL,
-  `date_of_second_dosage` date NOT NULL,
+  `date_of_first_dosage` date DEFAULT NULL,
+  `date_of_second_dosage` date DEFAULT NULL,
   `vaccination_status` varchar(255) NOT NULL,
   PRIMARY KEY (`patient_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
@@ -226,7 +226,9 @@ CREATE TABLE IF NOT EXISTS `patient_account` (
   `patient_picture` blob,
   `patient_email` varchar(255) NOT NULL,
   PRIMARY KEY (`patient_account_id`),
-  UNIQUE KEY `patient_id` (`patient_id`)
+  UNIQUE KEY `patient_id` (`patient_id`),
+  UNIQUE KEY `patient_username` (`patient_username`),
+  UNIQUE KEY `patient_email` (`patient_email`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 --
@@ -235,10 +237,10 @@ CREATE TABLE IF NOT EXISTS `patient_account` (
 
 INSERT INTO `patient_account` (`patient_account_id`, `patient_id`, `patient_username`, `patient_password`, `patient_picture`, `patient_email`) VALUES
 (1, 1, 'TedMosby', 'iGetVaxAndFreeDonat', NULL, 'theodoremosby@gmail.com'),
-(2, 2, 'EricksenM', 'iGetVaxAndGetDiscount', NULL, 'theodoremosby@gmail.com'),
-(3, 3, 'LilAldrin', 'iGetVaxAndGetEcoBag', NULL, 'theodoremosby@gmail.com'),
-(4, 4, 'RobinSparkles', 'iGetVaxAndGotErectileDysfunction', NULL, 'theodoremosby@gmail.com'),
-(5, 5, 'SwarleyB', 'iGetVaxAndStillGotCovid', NULL, 'theodoremosby@gmail.com');
+(2, 2, 'EricksenM', 'iGetVaxAndGetDiscount', NULL, 'MEricksen@gmail.com'),
+(3, 3, 'LilAldrin', 'iGetVaxAndGetEcoBag', NULL, 'lilyaldrinericksen@gmail.com'),
+(4, 4, 'RobinSparkles', 'iGetVaxAndGotErectileDysfunction', NULL, 'scherbatsky_robin@gmail.com'),
+(5, 5, 'SwarleyB', 'iGetVaxAndStillGotCovid', NULL, 'swarleybarney@gmail.com');
 
 -- --------------------------------------------------------
 
@@ -322,22 +324,22 @@ CREATE TABLE IF NOT EXISTS `report` (
   `vaccine_symptoms_reported` varchar(255) NOT NULL,
   `COVID19_symptoms_reported` varchar(255) NOT NULL,
   `date_last_out` date NOT NULL,
-  `date_reported` date NOT NULL,
+  `date_reported` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `report_status` char(20) NOT NULL,
   PRIMARY KEY (`report_id`),
-  UNIQUE KEY `patient_id` (`patient_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+  KEY `patient_id` (`patient_id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `report`
 --
 
 INSERT INTO `report` (`report_id`, `patient_id`, `report_type`, `report_details`, `vaccine_symptoms_reported`, `COVID19_symptoms_reported`, `date_last_out`, `date_reported`, `report_status`) VALUES
-(1, 1, 'Smit+ App', 'I\'m currently experiencing other side effects after vaccination, specifically vomiting and diarrhea. ', 'Fever, Headache, Tiredness, Vomiting, Diarrhea', 'Vomiting, Diarrhea', '2021-07-13', '2021-07-14', 'Verified'),
-(2, 2, 'SMS', 'I\'m experiencing bothering symptoms, such as diarrhea, vomiting and headaches.', '', '', '2021-07-10', '2021-07-13', 'Pending'),
-(3, 3, 'Smit+ App', '...', 'sick', 'sick', '2021-07-13', '2021-07-14', 'Invalidated'),
-(4, 4, 'Smit+ App', 'Ako ay nilalagnat, parang pagod palagi, at walang pang lasa', '', 'Fever, Tiredness, Loss of taste', '2021-07-13', '2021-07-14', 'Verified'),
-(5, 5, 'SMS', 'After vaccination, I noticed that I feel some side effects, such as tiredness, headache, lost of taste', '', '', '2021-07-13', '2021-07-14', 'Pending');
+(1, 1, 'Smit+ App', 'I\'m currently experiencing other side effects after vaccination, specifically vomiting and diarrhea. ', 'Fever, Headache, Tiredness, Vomiting, Diarrhea', 'Vomiting, Diarrhea', '2021-07-13', '2021-07-13 16:00:00', 'Verified'),
+(2, 2, 'SMS', 'I\'m experiencing bothering symptoms, such as diarrhea, vomiting and headaches.', '', '', '2021-07-10', '2021-07-12 16:00:00', 'Pending'),
+(3, 3, 'Smit+ App', '...', 'sick', 'sick', '2021-07-13', '2021-07-13 16:00:00', 'Invalidated'),
+(4, 4, 'Smit+ App', 'Ako ay nilalagnat, parang pagod palagi, at walang pang lasa', '', 'Fever, Tiredness, Loss of taste', '2021-07-13', '2021-07-13 16:00:00', 'Verified'),
+(5, 5, 'SMS', 'After vaccination, I noticed that I feel some side effects, such as tiredness, headache, lost of taste', '', '', '2021-07-13', '2021-07-13 16:00:00', 'Pending');
 
 -- --------------------------------------------------------
 
@@ -411,18 +413,22 @@ CREATE TABLE IF NOT EXISTS `vaccine_batch` (
   PRIMARY KEY (`vaccine_batch_id`),
   KEY `vaccine_lot_id` (`vaccine_lot_id`),
   KEY `vaccine_id` (`vaccine_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `vaccine_batch`
 --
 
 INSERT INTO `vaccine_batch` (`vaccine_batch_id`, `vaccine_lot_id`, `vaccine_id`, `vaccine_quantity`, `date_stored`, `date_manufactured`, `date_of_expiration`) VALUES
-(1, 1, 5, 5000, '2021-07-14', '2021-06-01', '2022-06-01'),
-(2, 2, 3, 5000, '2021-07-14', '2021-06-01', '2022-06-01'),
-(3, 3, 3, 5000, '2021-07-14', '2021-06-01', '2022-06-01'),
-(4, 4, 2, 5000, '2021-07-14', '2021-06-01', '2022-06-01'),
-(5, 5, 5, 5000, '2021-07-14', '2021-06-01', '2022-06-01');
+(1, 3, 5, 5000, '2021-07-14', '2021-06-01', '2022-06-01'),
+(2, 3, 5, 5000, '2021-07-14', '2021-06-01', '2022-06-01'),
+(3, 3, 5, 5000, '2021-07-14', '2021-06-01', '2022-06-01'),
+(4, 3, 5, 5000, '2021-07-14', '2021-06-01', '2022-06-01'),
+(5, 3, 5, 5000, '2021-07-14', '2021-06-01', '2022-06-01'),
+(6, 1, 2, 1000, '2021-08-04', '2021-08-01', '2022-08-04'),
+(7, 2, 1, 2000, '2021-08-01', '2021-07-01', '2022-08-01'),
+(8, 4, 3, 1000, '2021-08-01', '2021-06-21', '2022-06-15'),
+(9, 5, 4, 5000, '2021-07-01', '2021-06-09', '2022-06-10');
 
 -- --------------------------------------------------------
 
@@ -502,11 +508,11 @@ CREATE TABLE IF NOT EXISTS `vaccine_lot` (
 --
 
 INSERT INTO `vaccine_lot` (`vaccine_lot_id`, `vaccine_id`, `employee_account_id`, `vaccine_batch_quantity`, `date_vaccine_added`) VALUES
-(1, 2, 1, 100, '2021-07-14 15:33:41'),
-(2, 1, 4, 6000, '2021-07-14 15:33:41'),
-(3, 5, 1, 100000, '2021-07-14 15:33:41'),
-(4, 2, 4, 900, '2021-07-14 15:33:41'),
-(5, 4, 4, 500, '2021-07-14 15:33:41');
+(1, 2, 1, 1, '2021-07-14 15:33:41'),
+(2, 1, 4, 1, '2021-07-14 15:33:41'),
+(3, 5, 1, 5, '2021-07-14 15:33:41'),
+(4, 3, 4, 1, '2021-07-14 15:33:41'),
+(5, 4, 4, 1, '2021-07-14 15:33:41');
 
 --
 -- Constraints for dumped tables
@@ -528,7 +534,7 @@ ALTER TABLE `employee_account`
 -- Constraints for table `medical_background`
 --
 ALTER TABLE `medical_background`
-  ADD CONSTRAINT `medical_background_ibfk_1` FOREIGN KEY (`patient_id`) REFERENCES `patient` (`patient_id`);
+  ADD CONSTRAINT `medical_background_ibfk_1` FOREIGN KEY (`patient_id`) REFERENCES `patient` (`patient_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `patient_account`
