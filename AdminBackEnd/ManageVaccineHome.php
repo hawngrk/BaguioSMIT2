@@ -36,11 +36,11 @@ include_once("../includes/database.php") ?>
 
         <ul class="list-unstyled components">
             <p id="mainmenu">Main Menu</p>
-            <li class="active">
+            <li>
                 <a href="#"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
             </li>
             <li>
-                <a href="#"><i class="fas fa-syringe"></i> Manage Vaccine</a>
+                <a href="ManageVaccineHome.php" class="active"><i class="fas fa-syringe"></i> Manage Vaccine</a>
             </li>
             <li>
                 <a href="#ManageUsersSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fas fa-users"></i> Manage Users</a>
@@ -57,7 +57,7 @@ include_once("../includes/database.php") ?>
                 <a href="#"><i class="fas fa-truck"></i> Manage Deployment</a>
             </li>
             <li>
-                <a href="#"><i class="fas fa-sticky-note"></i> Reports</a>
+                <a href="ManageReportHome.php"><i class="fas fa-sticky-note"></i> Reports</a>
             </li>
             <li>
                 <a href="#"><i class="fas fa-question"></i> About</a>
