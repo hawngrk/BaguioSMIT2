@@ -432,11 +432,6 @@ label1{
     border-radius: 12px;
 }
 
-/* Modal Footer */
-.modal-footer{
-    border: none;
-}
-
 img{
     display: block;
     margin-left: auto;
@@ -460,12 +455,28 @@ img{
     background-color: #04628A;
 }
 
+.modal-body{
+    overflow-y: auto;
+    height: 500px;
+}
 
-
+/* Modal Footer */
+.modal-footer{
+    border: none;
+}
 /*Text Inputs*/
-input[type=text3],select {
+input[type=text3],select{
     width: 95%;
     padding: 12px;
+    margin: 8px;
+    display: inline-block;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+}
+
+input[type=text4]{
+    width: 20%;
+    padding: 7px;
     margin: 8px;
     display: inline-block;
     border: 2px solid #ccc;
