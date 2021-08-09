@@ -1,11 +1,5 @@
 <?php
 
-/***
- * @Author Hudson Kit P. Natividad
- * Date Created: June 28, 2021
- * Description: Main page of Manage Reports
- */
-
 //include ("../AdminbackEnd/sessionHandling.php");
 include_once("../includes/database.php") ?>
 
@@ -244,19 +238,8 @@ include_once("../includes/database.php") ?>
 
             <div id="myModal" class="modal">
                 <div class="modal-content container">
-                    <?php
-                    $name = "<script>document.writeln(reporterName);</script>";
+                   <h2 id='headerAddNewVaccine'>Review Report <span id='close' class='close'>&times;</span></h2>
 
-//                    $query = "SELECT patient_full_name, patien_id FROM patient WHERE patient_full_name = $name";
-//
-//                    $stmt = $database->stmt_init();
-//                    $stmt->prepare($query);
-//                    $stmt->execute();
-//                    $stmt->bind_result($fullName, $id);
-//                    $stmt->fetch();
-
-                    echo"<h2 id='headerAddNewVaccine'>Review Report - $name <span id='close' class='close'>&times;</span></h2>"
-                    ?>
                     <div class="AddNewVaccine-PopUp">
                         <h4 class="addNewVaccineH3">Vaccine Details</h4>
                         <input class="vaccineName col-lg-12" type="input" name="vaccineName" placeholder="Vaccine Name">
@@ -293,7 +276,6 @@ include_once("../includes/database.php") ?>
                     </div>
                 </div>
             </div>
-            </tbody>
         </table>
     </div>
 
@@ -317,7 +299,6 @@ include_once("../includes/database.php") ?>
     <script>
         var modal = document.getElementById("myModal");
         var reviewReport = document.getElementById("reviewReportBtn");
-        var reporterName = document.getElementById("reviewReportBtn").value;
         var span = document.getElementById("close");
         var cancel = document.getElementById("cancel");
         var save = document.getElementById("save");
@@ -344,14 +325,6 @@ include_once("../includes/database.php") ?>
             alert("changes has been saved!");
         }
     </script>
-
-<!--    <script>-->
-<!--        $(document).ready(function($) {-->
-<!--            $(".table-row").click(function() {-->
-<!--                window.document.location = $(this).data("href");-->
-<!--            });-->
-<!--        });-->
-<!--    </script>-->
 
 </body>
 
