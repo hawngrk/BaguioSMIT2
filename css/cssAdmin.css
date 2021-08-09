@@ -68,7 +68,7 @@ input[type=text] {
     height: auto;
 }
 
-.modal {
+.modal{
     display: none;
     /* Hidden by default */
     position: fixed;
@@ -96,7 +96,6 @@ input[type=text] {
     background-color: #fefefe;
     margin: 15% auto;
     /* 15% from the top and centered */
-    padding: 20px;
     border: 1px solid #888;
     width: 50%;
     /* Could be more or less, depending on screen size */
@@ -121,18 +120,30 @@ input[type=text] {
 
 /* Modal Header */
 .modal-header{
-    padding: 10px;
     color: #fafafa;
     background-color: #04628A;
 }
 
+/* Modal Footer */
+.modal-footer{
+   border: none;
+}
+
 /*Text Inputs*/
-input[type=text],select{
+input[type=text],select {
     width: 95%;
     padding: 12px;
     margin: 8px;
     display: inline-block;
     border: 2px solid #ccc;
     border-radius: 8px;
-    box-sizing: border-box;
+}
+
+input[type=input],select {
+    width: 95%;
+    padding: 12px;
+    margin: 8px;
+    display: inline-block;
+    border: 2px solid #ccc;
+    border-radius: 8px;
 }
