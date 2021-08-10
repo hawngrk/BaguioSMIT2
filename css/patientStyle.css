@@ -169,7 +169,7 @@
 /*Home Patient*/
 
 #myPlot {
-    width: 100%;
+    max-width: 100%;
 }
 
 
@@ -177,8 +177,9 @@
 
 .counters1 {
     width: 90%;
-    margin-left: auto;
-    margin-right: auto;
+    display: flex!important;
+    margin-left: auto!important;
+    margin-right: auto!important;
 }
 
 #counters {
@@ -190,7 +191,7 @@
     display: block;
     background: #f6f6f6;
     padding: 40px 20px 37px;
-    text-align: center
+    text-align: center;
 }
 
 .counter-box p {
@@ -250,9 +251,9 @@
 .counterNational {
     border: 2px solid gray;
     border-radius: 12px;
-    margin-top: 4%;
-    margin-left: 10%;
+    margin-top: 7%;
     margin-bottom: 15%;
+    padding: 2%;
 }
 
 .secondrow {
@@ -275,7 +276,9 @@
 .counter-title {
     font-size: 12px;
     letter-spacing: 2px;
-    text-transform: uppercase
+    text-transform: uppercase;
+    margin-bottom: 0%;
+    padding-bottom: 0%;
 }
 
 .counter-icon {
@@ -302,4 +305,8 @@
 
 .counter-subheadline span {
     float: right
+}
+
+html {
+    scroll-behavior: smooth;
 }
