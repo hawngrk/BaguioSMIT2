@@ -9,7 +9,8 @@ include_once("../includes/database.php") ?>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <!-- Title -->
 <title>SMIT+ | Manage Vaccine</title>
-
+<!--Favicon-->
+<link rel="icon" href="../img/FaviSMIT+.png" type="image/jpg">
 <!-- Our Custom CSS -->
 <link href="../css/style.css" rel="stylesheet">
 
