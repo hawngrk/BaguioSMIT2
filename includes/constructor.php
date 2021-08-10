@@ -540,6 +540,137 @@ class vaccineBatch
 }
 ?>
 
+<?php
+
+class vaccinationDrive
+{
+    private $driveId;
+    private $healthDistId;
+    private $vaccLocation;
+    private $vaccDate;
+
+    public function __construct($driveId, $healthDistrictId, $vaccinationLocation, $vaccinationDate)
+    {
+        $this->driveId = $driveId;
+        $this->healthDistId = $healthDistrictId;
+        $this->vaccLocation = $vaccinationLocation;
+        $this->vaccDate = $vaccinationDate;
+
+    }
+
+    public function getDriveId()
+    {
+        return $this->driveId;
+    }
+
+    public function getHealthDistId()
+    {
+        return $this->healthDistId;
+    }
+
+    public function getVaccLocation()
+    {
+        return $this->vaccLocation;
+    }
+
+    public function getVaccDate()
+    {
+        return $this->vaccDate;
+    }
+}
+
+?>
+
+<?php
+class vaccineDeployment
+{
+    private $deploymentDriveId;
+    private $deploymentVaccId;
+
+
+    public function __construct($deploymentDriveId, $deploymentVaccineId)
+    {
+        $this->deploymentDriveId = $deploymentDriveId;
+        $this->deploymentVaccId = $deploymentVaccineId;
+
+
+    }
+
+    public function getDeploymentDriveId()
+    {
+        return $this->deploymentDriveId;
+    }
+
+    public function getDeploymentVaccId()
+    {
+        return $this->deploymentVaccId;
+    }
+}
+
+?>
+
+<?php
+class healthDistrict
+{
+    private $healthDistrictId;
+    private $healthDistrictName;
+
+
+    public function __construct($healthDistId, $healthDistName)
+    {
+        $this->healthDistrictId = $healthDistId;
+        $this->healthDistrictName = $healthDistName;
+
+
+    }
+
+    public function getHealthDistrictId()
+    {
+        return $this->healthDistrictId;
+    }
+
+    public function getHealthDistrictName()
+    {
+        return $this->healthDistrictName;
+    }
+
+}
+
+?>
+
+<?php
+class patientDrive
+{
+    private $patientDrivePatientId;
+    private $patientDriveDriveId;
+    private $patientDriveBatchId;
+
+    public function __construct($patient, $drive, $batch)
+    {
+        $this->patientDrivePatientId = $patient;
+        $this->patientDriveDriveId = $drive;
+        $this->patientDriveBatchId = $batch;
+
+    }
+
+    public function getPatientDrivePatientId()
+    {
+        return $this->patientDrivePatientId;
+    }
+
+    public function getPatientDriveDriveId()
+    {
+        return $this->patientDriveDriveId;
+    }
+
+    public function getPatientDriveBatchId()
+    {
+        return $this->patientDriveBatchId;
+    }
+
+}
+
+?>
 
 
 

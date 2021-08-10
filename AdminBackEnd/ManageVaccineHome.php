@@ -54,7 +54,7 @@ include_once("../includes/database.php") ?>
                 </ul>
             </li>
             <li>
-                <a href="#"><i class="fas fa-truck"></i> Manage Deployment</a>
+                <a href="ManageDeployment.php"><i class="fas fa-truck"></i> Manage Deployment</a>
             </li>
             <li>
                 <a href="ManageReportHome.php"><i class="fas fa-sticky-note"></i> Reports</a>

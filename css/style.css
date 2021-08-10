@@ -506,6 +506,38 @@ input[type=text4]{
     z-index: 1;
 }
 
+.listPatientColumn{
+    float: left;
+    border: solid gray 1px;
+    border-radius: 5px;
+    width: 25%;
+    margin-right: 2%;
+}
+
+.listPatientRow{
+    width: 100%;
+}
+
+.listPatientBox{
+    display: block;
+    background: #f6f6f6;
+    padding: 40px 20px 37px;
+    text-align: center
+}
+
+.row1{
+
+}
+
+.row2{
+    height:80%
+}
+
+.table{
+    width:auto!important;
+}
+
+
 .modal {
     display: none;
     /* Hidden by default */
