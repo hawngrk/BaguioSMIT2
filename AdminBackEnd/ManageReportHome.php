@@ -279,6 +279,12 @@ include_once("../includes/database.php") ?>
         var viewReportBtn = document.getElementsByClassName("viewReportBtn")
         var viewReportClose = document.getElementById("viewReportClose");
 
+        $.ajax({
+            url: 'your_script.php',
+            type: 'POST',
+            data: {var1: viewReportBtn.value}
+        });
+
         for (i = 0; i < viewReportBtn.length; i++) {
             viewReportBtn[i].onclick = function () {
                 viewReportModal.style.display = "block";
