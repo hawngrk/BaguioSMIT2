@@ -187,9 +187,14 @@
 
         <div id="DeployModalConf" class="modal">
             <div class="content-modal">
-                <span id="close3" class="close">&times;</span>
-                <div class="AddDeploymentConf-PopUp">
+                <div class="modal-header">
+                    <h4 class="modal-title">Add Deployment</h4>
+                    <span id="close3" class="close">&times;</span>
+                </div>
+                <div class="modal-body">
                     <h3> Are you sure to add this deployment? </h3>
+                </div>
+                <div class="modal-footer">
                     <button id="no1" type="button" class="button5"> No </button>
                     <button id="yes1" type="button" class="button5"> Yes </button>
                 </div>
@@ -227,13 +232,48 @@
                         </select>
                     </div>
 
-                    <div class="AddHealthD-PopUp">
-                        <input type="checkbox" id="D1" name="D1" value="Bike">
-                        <label for="D1"> District 1</label><br>
-                        <input type="checkbox" id="D2" name="D2" value="Car">
-                        <label for="D2"> District 2</label><br>
-                        <input type="checkbox" id="D3" name="vehicle3" value="Boat">
-                        <label for="D3"> District 3</label><br>
+                    <div class="AddHealthD-option">
+                        <div class="row">
+                            <ul>
+                                <li>
+                                    <input type="checkbox" id="D1" name="D1" value="D1">
+                                    <label for="D1"> District 1</label><br>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="D2" name="D2" value="D2">
+                                    <label for="D2"> District 2</label><br>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="D3" name="D3" value="D3">
+                                    <label for="D3"> District 3</label><br>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="D3" name="D3" value="D3">
+                                    <label for="D3"> District 3</label><br>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="D3" name="D3" value="D3">
+                                    <label for="D3"> District 3</label><br>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="D3" name="D3" value="D3">
+                                    <label for="D3"> District 3</label><br>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="D3" name="D3" value="D3">
+                                    <label for="D3"> District 3</label><br>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="D3" name="D3" value="D3">
+                                    <label for="D3"> District 3</label><br>
+                                </li>
+
+
+
+                            </ul>
+
+                        </div>
+
                     </div>
                     <div class="modal-footer">
                     <button id="cancel2" type="button" class="button5"> Cancel </button>
@@ -244,10 +284,16 @@
         </div>
 
         <div id="HealthDModalConf" class="modal">
-            <div class="modal-content">
-                <span id="close4" class="close">&times;</span>
-                <div class="AddDeploymentConf-PopUp">
+            <div class="content-modal">
+                <div class="modal-header">
+                    <h4 class="modal-title">Add Health District</h4>
+                    <span id="close4" class="close">&times;</span>
+                </div>
+
+                <div class="modal-body">
                     <h3> Are you sure to add this Health District? </h3>
+                </div>
+                <div class="modal-footer">
                     <button id="no2" type="button" class="button5"> No </button>
                     <button id='yes2' type="button" class="button5"> Yes </button>
                 </div>
@@ -344,10 +390,12 @@
         }
 
         add1.onclick = function() {
+            modal1.style.display = "none";
             modal3.style.display = "block";
         }
 
         no1.onclick = function() {
+            modal1.style.display = "block";
             modal3.style.display = "none";
         }
 
@@ -364,10 +412,12 @@
         }
 
         add2.onclick = function() {
+            modal2.style.display = "none";
             modal4.style.display = "block";
         }
 
         no2.onclick = function() {
+            modal2.style.display = "block";
             modal4.style.display = "none";
         }
 
