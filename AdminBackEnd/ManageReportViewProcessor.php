@@ -252,7 +252,7 @@ if (isset($_POST['report'])) {
     }
     echo "
     <div class='modal-content container'>
-    <h2 id='headerReviewReport'>REVIEW REPORT - $patientName<span id='viewReportClose' class='close'>&times;</span></h2>
+    <h2 id='headerReviewReport'>REVIEW REPORT - $patientName<span id='viewReportClose' class='close' onclick='closeViewReport'>&times;</span></h2>
     <div class='ReviewRerport-PopUp'>
     <div id='repInfo'>
     <h4 class='reviewReportH3'>Report Information</h4>
