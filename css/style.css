@@ -315,7 +315,7 @@ input[type=text1] {
     height: auto;
 }
 
-#reviewReportBtn {
+.viewReportBtn {
     background: #DCF4FF;
     border: 1px solid black;
     width: 60%;

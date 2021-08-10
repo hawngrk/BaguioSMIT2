@@ -1,6 +1,6 @@
 <?php
-    include_once("../../includes/database.php");
-    include_once("../../includes/constructor.php");
+    include_once("../includes/database.php");
+    include_once("../includes/constructor.php");
 
 $query = "SELECT * FROM patient_details";
 $patient_details = [];

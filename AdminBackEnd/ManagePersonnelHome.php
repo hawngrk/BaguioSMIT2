@@ -1,7 +1,7 @@
 <?php
 
 //include ("../AdminbackEnd/sessionHandling.php");
-include_once("../../includes/database.php") ?>
+include_once("../includes/database.php") ?>
 
 <head>
     <meta charset="utf-8">
@@ -11,7 +11,7 @@ include_once("../../includes/database.php") ?>
     <title>SMIT+ | Manage Personnel</title>
     <!-- Our Custom CSS-->
     <!-- <link href="../../css/cssAdmin.css" rel="stylesheet"> -->
-    <link href="../../css/style.css" rel="stylesheet">
+    <link href="../css/style.css" rel="stylesheet">
 
     <!-- Bootstrap-->
     <script crossorigin="anonymous" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
@@ -31,7 +31,7 @@ include_once("../../includes/database.php") ?>
     <nav id="sidebar">
         <div class="sidebar-header">
             <div class="sidebar-brand-icon">
-                <img style="width:150px;" src="../../img/SMIT+.png" alt="Baguio Logo">
+                <img style="width:150px;" src="../img/SMIT+.png" alt="Baguio Logo">
             </div>
         </div>
 
@@ -41,7 +41,7 @@ include_once("../../includes/database.php") ?>
                 <a href="#"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
             </li>
             <li>
-                <a href="../ManageVaccineHome.php"><i class="fas fa-syringe"></i> Manage Vaccine</a>
+                <a href="ManageVaccineHome.php"><i class="fas fa-syringe"></i> Manage Vaccine</a>
             </li>
             <li>
                 <a href="#ManageUsersSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fas fa-users"></i> Manage Users</a>
@@ -58,7 +58,7 @@ include_once("../../includes/database.php") ?>
                 <a href="#"><i class="fas fa-truck"></i> Manage Deployment</a>
             </li>
             <li>
-                <a href="../ManageReportHome.php"><i class="fas fa-sticky-note"></i> Reports</a>
+                <a href="ManageReportHome.php"><i class="fas fa-sticky-note"></i> Reports</a>
             </li>
             <li>
                 <a href="#"><i class="fas fa-question"></i> About</a>
@@ -194,7 +194,7 @@ include_once("../../includes/database.php") ?>
                 <div class="modal-content">
                     <span id="close3" class="close">&times;</span>
                     <br>
-                    <img src="../../img/checkmark.png">
+                    <img src="../img/checkmark.png">
                     <p>
                     <center> User Personnel successfully added. </center>
                     </p>
@@ -226,7 +226,7 @@ include_once("../../includes/database.php") ?>
             </thead>
 
             <?php
-            require_once '../../require/getEmployee.php';
+            require_once '../require/getEmployee.php';
 
             $count = 0;
             foreach ($employees as $emp) {

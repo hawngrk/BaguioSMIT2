@@ -55,10 +55,10 @@ include_once("../includes/database.php") ?>
                             class="fas fa-users"></i> Manage Users</a>
                 <ul class="collapse list-unstyled" id="ManageUsersSubmenu">
                     <li>
-                        <a href="ManageUsers/ManagePersonnelHome.php">Personnel</a>
+                        <a href="ManagePersonnelHome.php">Personnel</a>
                     </li>
                     <li>
-                        <a href="ManageUsers/ManagePatientHome.php">Patients</a>
+                        <a href="ManagePatientHome.php">Patients</a>
                     </li>
                 </ul>
             </li>
@@ -232,7 +232,7 @@ include_once("../includes/database.php") ?>
                 <td>$reporter</td>
                 <td>$dateReported</td>
                 <td>$status</td>
-                <td><button class='viewReportBtn' type='submit' value='$reportId'>Review Report</button></td>
+                <td><button  class='viewReportBtn' type='submit' value='$reportId'>Review Report</button></td>
 </tr>";
             }
             ?>

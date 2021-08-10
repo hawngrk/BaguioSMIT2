@@ -1,6 +1,6 @@
 <?php
-    include("../../includes/database.php");
-    include("../../includes/constructor.php");
+    include("../includes/database.php");
+    include("../includes/constructor.php");
 
     $query = "SELECT * FROM employee";
     $employees = [];
