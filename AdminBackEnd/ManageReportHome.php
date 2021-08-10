@@ -9,7 +9,8 @@ include_once("../includes/database.php") ?>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
     <title>SMIT+ | Manage Reports</title>
-
+    <!--Favicon-->
+    <link rel="icon" href="../img/FaviSMIT+.png" type="image/jpg">
     <!-- Our Custom CSS -->
     <link href="../css/style.css" rel="stylesheet">
 
