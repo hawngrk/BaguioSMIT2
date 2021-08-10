@@ -6,43 +6,58 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <title>SMIT+ | Report</title>
-
+    <title>SMIT+ | Profile</title>
+    <!--Custom CSS-->
+    <link rel="stylesheet" href="../css/patientStyle.css">
     <!--Bootstrap-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <!-- Font Awesome JS -->
+    <script src="https://kit.fontawesome.com/fcdb0fe9f3.js" crossorigin="anonymous"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
+
 </head>
 
 <body>
-    <!--Navigation Bar-->
-    <nav class="navbar navbar-expand-lg">
-        <a class="navbar-brand" href="#">Baguio SMIT+ Patient Module</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-              <span class="navbar-toggler-icon"></span>
-            </button>
-        <div class="collapse navbar-collapse" id="navbarText">
+    <nav class="navbar navbar-expand-md">
+        <img src="../img/faviSMIT+ copy.png" class="logoImg" alt="">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+            <span><i class="fas fa-bars"></i></span>
+        </button>
+        <div class="collapse navbar-collapse" id="collapsibleNavbar">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="#"><i class="fas fa-home"></i> Home <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Report</a>
+                    <a class="nav-link" href="#"><i class="fas fa-user-circle"></i> Profile</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Settings</a>
+                    <a class="nav-link" href="#"><i class="fas fa-file"></i> Report</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Infographics</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Help</a>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-cog"></i> Settings
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#"><i class="fas fa-file-image"></i> Infographics</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#"><i class="fas fa-question-circle"></i> Help</a>
+                        <a class="dropdown-item" href="#"><i class="fas fa-info-circle"></i> About</a>
+                    </div>
                 </li>
             </ul>
-            <button class="signoutBtn" type="submit">Sign Out</button>
             <form class="form-inline">
                 <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                <button class=" searchBtn" type="submit">Search</button>
+                <button class="btn btn-outline-light" type="submit">Search</button>
             </form>
+            <button class="signoutBtn" type="submit"><i class="fas fa-sign-out-alt"></i></button>
         </div>
     </nav>
 
@@ -73,97 +88,3 @@
 </body>
 
 </html>
-
-<style>
-    .navbar {
-        background: #2f70bb;
-    }
-    
-    .nav-link,
-    .navbar-brand {
-        color: white !important;
-        font-family: 'Alata';
-    }
-    
-    .navbar-brand {
-        font-family: 'Alata';
-        font-size: 22px;
-    }
-    
-    .searchBtn,
-    .signoutBtn {
-        border: solid white;
-        border-radius: 12px;
-        background: white;
-    }
-    
-    .signoutBtn {
-        margin-right: 1%;
-    }
-    
-    .helpheader {
-        margin-top: 1%;
-        margin-left: 2%;
-    }
-    
-    .reportWrapper {
-        width: 90%;
-        margin: auto;
-        padding: 0%;
-    }
-    
-    .bodyWrapper {
-        width: 90%;
-        margin: auto;
-    }
-    
-    .prof {
-        display: block;
-        margin-left:29%;
-        margin-right: auto;
-    }
-
-    #nameProf, #ageProf, #addProf, #vaccBrand {
-        width: 49%;
-        text-align: center;
-        border: none;
-        font-size: 1.5rem;
-    }
-
-
-    .h4Prof{
-        display: inline;
-    }
-
-    #nameProf{
-        font-weight: 500;
-    }
-    #addProf {
-        width: 49%!important;
-        font-size: 1rem;
-    }
-
-    #ageProf{
-        width: 19%!important;
-        font-size: 1.2rem!important;
-    }
-
-    #vaccBrand {
-        width: 19%!important;
-        font-weight: 400;
-    }
-
-    #dose22{
-        margin-left: 0.7%;
-    }
-
-    #profPic {
-        display: block;
-        margin-left: auto;
-        margin-right: auto;
-        border-radius: 50%;
-        object-fit: cover;
-        height: 300px;
-        width: 300px;
-    }
-</style>

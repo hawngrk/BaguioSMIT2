@@ -6,43 +6,58 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <title>SMIT+ | Home</title>
-
+    <title>NavTemplate</title>
+    <!--Custom CSS-->
+    <link rel="stylesheet" href="../css/patientStyle.css">
     <!--Bootstrap-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <!-- Font Awesome JS -->
+    <script src="https://kit.fontawesome.com/fcdb0fe9f3.js" crossorigin="anonymous"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
+
 </head>
 
 <body>
-    <!--Navigation Bar-->
-    <nav class="navbar navbar-expand-lg">
-        <a class="navbar-brand" href="#">Baguio SMIT+ Patient Module</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-              <span class="navbar-toggler-icon"></span>
-            </button>
-        <div class="collapse navbar-collapse" id="navbarText">
+    <nav class="navbar navbar-expand-md">
+        <img src="../img/faviSMIT+ copy.png" class="logoImg" alt="">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+            <span><i class="fas fa-bars"></i></span>
+        </button>
+        <div class="collapse navbar-collapse" id="collapsibleNavbar">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="#"><i class="fas fa-home"></i> Home <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Report</a>
+                    <a class="nav-link" href="#"><i class="fas fa-user-circle"></i> Profile</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Settings</a>
+                    <a class="nav-link" href="#"><i class="fas fa-file"></i> Report</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Infographics</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Help</a>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-cog"></i> Settings
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#"><i class="fas fa-file-image"></i> Infographics</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#"><i class="fas fa-question-circle"></i> Help</a>
+                        <a class="dropdown-item" href="#"><i class="fas fa-info-circle"></i> About</a>
+                    </div>
                 </li>
             </ul>
-            <button class="signoutBtn" type="submit">Sign Out</button>
             <form class="form-inline">
                 <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                <button class=" searchBtn" type="submit">Search</button>
+                <button class="btn btn-outline-light" type="submit">Search</button>
             </form>
+            <button class="signoutBtn" type="submit"><i class="fas fa-sign-out-alt"></i></button>
         </div>
     </nav>
 
@@ -133,162 +148,3 @@
 </script>
 
 </html>
-<style>
-    #myPlot {
-        width: 100%;
-    }
-    
-    .navbar {
-        background: #2f70bb;
-    }
-    
-    .nav-link,
-    .navbar-brand {
-        color: white !important;
-        font-family: 'Alata';
-    }
-    
-    .navbar-brand {
-        font-family: 'Alata';
-        font-size: 22px;
-    }
-    
-    .searchBtn,
-    .signoutBtn {
-        border: solid white;
-        border-radius: 12px;
-        background: white;
-    }
-    
-    .signoutBtn {
-        margin-right: 1%;
-    }
-    /* Counters CSS*/
-    
-    .counters1 {
-        width: 90%;
-        margin-left: auto;
-        margin-right: auto;
-    }
-    
-    #counters {
-        margin-top: 0.5%;
-        margin-bottom: 1%;
-    }
-    
-    .counter-box {
-        display: block;
-        background: #f6f6f6;
-        padding: 40px 20px 37px;
-        text-align: center
-    }
-    
-    .counter-box p {
-        margin: 5px 0 0;
-        padding: 0;
-        color: #909090;
-        font-size: 18px;
-        font-weight: 500
-    }
-    
-    .counter-box i {
-        font-size: 60px;
-        margin: 0 0 15px;
-        color: #d2d2d2
-    }
-    
-    .counter {
-        display: block;
-        font-size: 32px;
-        font-weight: 700;
-        line-height: 28px
-    }
-    
-    .counter-box.colored {
-        background: #3acf87
-    }
-    
-    .counter-box.colored p,
-    .counter-box.colored i,
-    .counter-box.colored .counter {
-        color: #fff
-    }
-    
-    .box1 {
-        background: hsl(0, 46%, 47%);
-        color: white!important;
-    }
-    
-    .box2 {
-        background: #3acf87;
-        color: white!important;
-    }
-    
-    .box3 {
-        background: #000;
-        color: white!important;
-    }
-    
-    .box4 {
-        background: orange;
-        color: white!important;
-    }
-    /*Counter National*/
-    
-    .counterNational {
-        border: 2px solid gray;
-        border-radius: 12px;
-        margin-top: 4%;
-        margin-left: 10%;
-        margin-bottom: 15%;
-    }
-    
-    .secondrow {
-        display: flex;
-    }
-    
-    .counter-section i {
-        margin: 0 0 10px
-    }
-    
-    .counter-section span.counter {
-        font-size: 40px;
-        color: #000;
-        line-height: 60px;
-        display: block;
-        font-family: "Oswald", sans-serif;
-        letter-spacing: 2px
-    }
-    
-    .counter-title {
-        font-size: 12px;
-        letter-spacing: 2px;
-        text-transform: uppercase
-    }
-    
-    .counter-icon {
-        top: 25px;
-        position: relative
-    }
-    
-    .counter-style2 .counter-title {
-        letter-spacing: 0.55px;
-        float: left
-    }
-    
-    .counter-style2 span.counter {
-        letter-spacing: 0.55px;
-        float: left;
-        margin-right: 10px
-    }
-    
-    .counter-style2 i {
-        float: right;
-        line-height: 26px;
-        margin: 0 10px 0 0
-    }
-    
-    .counter-subheadline span {
-        float: right
-    }
-</style>
