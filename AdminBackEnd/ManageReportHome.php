@@ -103,37 +103,30 @@ include_once("../includes/database.php") ?>
         </nav>
 
         <!-- Page Content  -->
-        <button type="button" class="buttonTop" id="generateReportBtn">Generate Report</button>
+        <button type="button" class="buttonTop" id="generateReportBtn" onclick="generateReport()">Generate Report</button>
 
-        <!--
-        <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog"
-             aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLongTitle">Generate Report</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        ...
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save Changes</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        -->
         <!--Search Input and Button-->
         <div class="search-container">
-            <form action="/action_page.php">
-                <input type="text1" placeholder="Search" name="search">
-                <button type="submit"><i class="fa fa-search"></i>
-                </button>
-            </form>
+            <input type="text1" id="searchReport" name="searchReport" placeholder="Search" onkeyup="searchReport()"">
+            <button type="submit" id="searchReportBtn" name="searchReportBtn" onclick="searchReport()"><i class="fa fa-search"></i></button>
+        </div>
+
+        <div>
+            <select class="form-select col-lg-12 vaccineType" id="sortReports" name="sortReports" onchange="sortReport(this)">
+                <option>Name Asc</option>
+                <option>Name Desc</option>
+                <option>Date Asc</option>
+                <option>Date Desc</option>
+            </select>
+        </div>
+
+        <div>
+            <select class="form-select col-lg-12 vaccineType" id="filterReports" name="filterReports" onchange="filterReport(this)">
+                <option selected>All</option>
+                <option>Unverified</option>
+                <option>Verified</option>
+                <option>Invalidated</option>
+            </select>
         </div>
 
         <div class="counterColumn">
@@ -233,7 +226,7 @@ include_once("../includes/database.php") ?>
                 <td>$reporter</td>
                 <td>$dateReported</td>
                 <td>$status</td>
-                <td><button  class='viewReportBtn' type='submit' value='$reportId'>Review Report</button></td>
+                <td><button  class='viewReportBtn' type='submit' value='$reportId' onclick='viewReport($reportId)'>Review Report</button></td>
 </tr>";
             }
             ?>
@@ -277,20 +270,7 @@ include_once("../includes/database.php") ?>
 
     <script>
         var viewReportModal = document.getElementById("viewReportModal");
-        var viewReportBtn = document.getElementsByClassName("viewReportBtn")
         var viewReportClose = document.getElementById("viewReportClose");
-
-        $.ajax({
-            url: 'your_script.php',
-            type: 'POST',
-            data: {var1: viewReportBtn.value}
-        });
-
-        for (i = 0; i < viewReportBtn.length; i++) {
-            viewReportBtn[i].onclick = function () {
-                viewReportModal.style.display = "block";
-            }
-        }
 
         viewReportClose.onclick = function () {
             viewReportModal.style.display = "none";
@@ -302,55 +282,96 @@ include_once("../includes/database.php") ?>
             }
         }
 
-        $(document).ready(function () {
-            $(".viewReportBtn").click(function () {
-                var repId = $(this).attr("value");
+        function searchReport() {
+            var textSearch = document.getElementById("searchReport").value;
+            if (textSearch === "") {
                 $.ajax({
-                    url: 'manageReportViewProcessor.php',
+                    url: 'ManageReportViewProcessor.php',
                     type: 'POST',
-                    data: {"report": repId},
-                    success: function (result) {
-                        document.getElementById("viewReportModal").innerHTML = result;
-                    }
-                })
-            })
-        });
-
-        $(document).ready(function () {
-            $("#generateReportBtn").click(function () {
-                $.ajax({
-                    url: 'manageReportViewProcessor.php',
-                    type: 'POST',
-                    data: {"generate": 1},
+                    data: {"cancel": textSearch},
                     success: function (result) {
                         document.getElementById("reportsTable").innerHTML = result;
                     }
                 });
-
+            } else {
                 $.ajax({
-                    url: 'manageReportViewProcessor.php',
+                    url: 'ManageReportViewProcessor.php',
                     type: 'POST',
-                    data: {"options": 1},
-                    success: function (result) {
-                        document.getElementById("generateReportOptions").innerHTML = result;
-                    }
-                });
-            })
-        });
-
-        $(document).ready(function () {
-            $("#cancelGenerateReportBtn").click(function () {
-                console.log('passed');
-                $.ajax({
-                    url: 'manageReportViewProcessor.php',
-                    type: 'POST',
-                    data: {"cancel": 1},
+                    data: {"search": textSearch},
                     success: function (result) {
                         document.getElementById("reportsTable").innerHTML = result;
                     }
-                })
+                });
+            }
+        }
+
+        function sortReport(sort) {
+            var selectedSort = sort.value;
+            $.ajax({
+                url: 'ManageReportViewProcessor.php',
+                type: 'POST',
+                data: {"sort": selectedSort},
+                success: function (result) {
+                    document.getElementById("reportsTable").innerHTML = result;
+                }
             })
-        });
+        }
+
+        function filterReport(filter) {
+            var selectedFilter = filter.value;
+            $.ajax({
+                url: 'ManageReportViewProcessor.php',
+                type: 'POST',
+                data: {"filter": selectedFilter},
+                success: function (result) {
+                    document.getElementById("reportsTable").innerHTML = result;
+                }
+            })
+        }
+
+        function generateReport() {
+            $.ajax({
+                url: 'manageReportViewProcessor.php',
+                type: 'POST',
+                data: {"generate": 1},
+                success: function (result) {
+                    document.getElementById("reportsTable").innerHTML = result;
+                }
+            });
+
+            $.ajax({
+                url: 'manageReportViewProcessor.php',
+                type: 'POST',
+                data: {"options": 1},
+                success: function (result) {
+                    document.getElementById("generateReportOptions").innerHTML = result;
+                }
+            });
+        }
+
+        function cancelGenerateReport() {
+            $.ajax({
+                url: 'manageReportViewProcessor.php',
+                type: 'POST',
+                data: {"cancel": 1},
+                success: function (result) {
+                    document.getElementById("reportsTable").innerHTML = result;
+                    document.getElementById("generateReportOptions").innerHTML = "";
+                }
+            });
+        }
+
+        function viewReport(reportId) {
+            $.ajax({
+                url: 'manageReportViewProcessor.php',
+                type: 'POST',
+                data: {"report": reportId},
+                success: function (result) {
+                    document.getElementById("viewReportModal").innerHTML = result;
+                }
+            })
+            viewReportModal.style.display = "block";
+        }
     </script>
 </body>
 
