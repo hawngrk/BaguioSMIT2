@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <title>NavTemplate</title>
+    <title>SMIT+ | Home</title>
     <!--Custom CSS-->
     <link rel="stylesheet" href="../css/patientStyle.css">
     <!--Bootstrap-->
@@ -62,60 +62,54 @@
     </nav>
 
     <!--Page Content-->
-    <div>
-        <h1 style="margin-top: 1%; margin-left: 1%;">Hi, Kit. Stay Safe and wear your Mask.</h1>
+    <div class="reportWrapper">
+        <h1 class="helpheader">Hi, Kit. Stay Safe and wear your Mask.</h1>
+        <hr>
+
+        <h3 class="helpheader">Baguio COVID Toll</h3>
+        <div id="counters">
+            <div class="row counters1">
+                <div class="four col-md-3">
+                    <div class="counter-box box1">
+                        </i> <span class="counter">2147</span>
+                        <p class="box1">Active Cases</p>
+                    </div>
+                </div>
+                <div class="four col-md-3">
+                    <div class="counter-box box2"><span class="counter">3275</span>
+                        <p class="box2">Recovered</p>
+                    </div>
+                </div>
+                <div class="four col-md-3">
+                    <div class="counter-box box3"><span class="counter">289</span>
+                        <p class="box3">Death Toll</p>
+                    </div>
+                </div>
+                <div class="four col-md-3">
+                    <div class="counter-box box4"><span class="counter">1563</span>
+                        <p class="box4">Under Monitoring</p>
+                    </div>
+                </div>
+            </div>
+            <hr>
+        </div>
+        <div class="secondrow">
+            <div id="myPlot"></div>
+
+            <div class="counterNational">
+                <h3>National COVID Toll</h3>
+                <div class="row">
+                    <div class="col-md-3 col-sm-6 bottom-margin text-center counter-section box11 "><span id="anim-number-pizza" class="counter-number"></span> <span class="timer counter alt-font appear" data-to="980" data-speed="7000">2800</span>
+                        <p class="counter-title">Active Cases</p>
+                    </div>
+                    <div class="col-md-3 col-sm-6 bottom-margin text-center counter-section box22"><span class="timer counter alt-font appear" data-to="980" data-speed="7000">980</span> <span class="counter-title">Recovered</span> </div>
+                    <div class="col-md-3 col-sm-6 bottom-margin-small text-center counter-section box33"><span class="timer counter alt-font appear" data-to="810" data-speed="7000">810</span> <span class="counter-title">Death</span> </div>
+                    <div class="col-md-3 col-sm-6 text-center counter-section box44"><span class="timer counter alt-font appear" data-to="600" data-speed="7000">600</span> <span class="counter-title">Monitoring</span> </div>
+                </div>
+            </div>
+        </div>
         <hr>
     </div>
-    <h3 style="margin-left:2%;">Baguio COVID Toll</h3>
-    <div id="counters">
-        <div class="row counters1">
-            <div class="four col-md-3">
-                <div class="counter-box box1">
-                    </i> <span class="counter">2147</span>
-                    <p class="box1">Active Cases</p>
-                </div>
-            </div>
-            <div class="four col-md-3">
-                <div class="counter-box box2"><span class="counter">3275</span>
-                    <p class="box2">Recovered</p>
-                </div>
-            </div>
-            <div class="four col-md-3">
-                <div class="counter-box box3"><span class="counter">289</span>
-                    <p class="box3">Death Toll</p>
-                </div>
-            </div>
-            <div class="four col-md-3">
-                <div class="counter-box box4"><span class="counter">1563</span>
-                    <p class="box4">Under Monitoring</p>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="secondrow">
-        <div id="myPlot" style="width: 100%; max-width: 700px; margin-left: 8%; "></div>
-
-        <div class="counterNational">
-            <h3>National COVID Toll</h3>
-            <div class="row">
-                <!-- counter -->
-                <div class="col-md-3 col-sm-6 bottom-margin text-center counter-section box11 "><span id="anim-number-pizza" class="counter-number"></span> <span class="timer counter alt-font appear" data-to="980" data-speed="7000">2800</span>
-                    <p class="counter-title">Active Cases</p>
-                </div>
-                <!-- end counter -->
-                <!-- counter -->
-                <div class="col-md-3 col-sm-6 bottom-margin text-center counter-section box22"><span class="timer counter alt-font appear" data-to="980" data-speed="7000">980</span> <span class="counter-title">Recovered/span> </div>
-                <!-- end counter -->
-                <!-- counter -->
-                <div class="col-md-3 col-sm-6 bottom-margin-small text-center counter-section box33"><span class="timer counter alt-font appear" data-to="810" data-speed="7000">810</span> <span class="counter-title">Death</span> </div>
-                <!-- end counter -->
-                <!-- counter -->
-                <div class="col-md-3 col-sm-6 text-center counter-section box44"><span class="timer counter alt-font appear" data-to="600" data-speed="7000">600</span> <span class="counter-title">Monitoring</span> </div>
-                <!-- end counter -->
-            </div>
-        </div>
-    </div>
-    <hr>
 </body>
 <!--Plot Scipts -->
 <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
@@ -134,13 +128,13 @@
     var layout = {
         xaxis: {
             range: [40, 160],
-            title: "Square Meters"
+            title: "Cases"
         },
         yaxis: {
             range: [5, 16],
-            title: "Price in Millions"
+            title: "Date"
         },
-        title: "House Prices vs. Size"
+        title: "COVID Cases"
     };
 
     // Display using Plotly
