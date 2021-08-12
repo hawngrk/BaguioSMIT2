@@ -10,7 +10,7 @@
     <title>SMIT+ | About</title>
 
     <!-- Our Custom CSS -->
-    <link href="../css/style.css" rel="stylesheet">
+    <link href="../css/personnelStyle.css" rel="stylesheet">
     <!-- <link href="../css/cssAdmin.css" rel="stylesheet"> -->
 
     <!-- Bootstrap-->
@@ -31,36 +31,28 @@
         <nav id="sidebar">
             <div class="sidebar-header">
                 <div class="sidebar-brand-icon">
-                    <img style="width:150px;" src="../../img/SMIT+.png" alt="Baguio Logo">
+                    <img style="width:150px;" src="../img/SMIT+.png" alt="Baguio Logo">
                 </div>
             </div>
 
             <ul class="list-unstyled components">
                 <p id="mainmenu">Main Menu</p>
-                <li class="active">
+                <li>
                     <a href="#"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
                 </li>
                 <li>
                     <a href="#"><i class="fas fa-syringe"></i> Manage Vaccine</a>
                 </li>
                 <li>
-                    <a href="#ManageUsersSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fas fa-users"></i> Manage Users</a>
-                    <ul class="collapse list-unstyled" id="ManageUsersSubmenu">
-                        <li>
-                            <a href="#">Personnel</a>
-                        </li>
-                        <li>
-                            <a href="#">Patients</a>
-                        </li>
-                    </ul>
+                    <a href="#"><i class="fas fa-users"></i> Manage Patient</a>
                 </li>
                 <li>
-                    <a href="#"><i class="fas fa-truck"></i> Manage Deployment</a>
+                    <a href="#"><i class="fas fa-truck"></i> View Deployment</a>
                 </li>
                 <li>
                     <a href="#"><i class="fas fa-sticky-note"></i> Reports</a>
                 </li>
-                <li>
+                <li class="active">
                     <a href="#"><i class="fas fa-question"></i> About</a>
                 </li>
             </ul>
@@ -94,14 +86,6 @@
             </nav>
 
             <!-- Page Content  -->
-            <!-- Search Container-->
-            <div class="search-container">
-                <form action="/action_page.php">
-                    <input type="text" placeholder="Search" name="search">
-                    <button type="submit"><i class="fa fa-search"></i></button>
-                </form>
-            </div>
-
             <h5 style="text-align: justify;">SMIT+ started as an idea for a group of students as a requirement for their IT Project. Considering the circumstance the members opted for a project idea that will help the government in fighting the pandemic situation. As the Department of
                 Health transition to the next phase of fighting COVID-19, the group goes along with it and came up with Monitoring, Tracking the Vaccination Process and stocks. <br> <br>Baguio City is the chosen case study place and as the project progresses
                 it will be presented to other LGU. Aiming to fight and Stop this pandemic through technology.
@@ -122,9 +106,5 @@
             });
         </script>
 </body>
-
-<style>
-
-</style>
 
 </html>
