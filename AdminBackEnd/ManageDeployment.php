@@ -297,7 +297,7 @@ include_once("../includes/database.php") ?>
             </form>
         </div>
 
-        <table class="table table-row table-hover">
+        <table class="table tableDep table-row table-hover">
             <thead>
             <tr>
                 <th scope="col">#</th>

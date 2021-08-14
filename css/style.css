@@ -549,10 +549,9 @@ input[type=text4] {
     height:80%
 }
 
-.table{
-    width:auto!important;
+.tableDep{
+    width: auto!important;
 }
-
 
 .modal {
     display: none;
