@@ -10,6 +10,7 @@ if (isset($_POST['id'])) {
     require_once '../require/getVaccineLot.php';
     require_once '../require/getVaccineBatch.php';
     require_once '../require/getVaccineDeployment.php';
+    require_once '../require/getPatient.php';
 
     foreach ($vaccination_drive as $vd) {
         if ($vd->getDriveId() == $driverId) {
@@ -33,12 +34,25 @@ if (isset($_POST['id'])) {
     }
 
     $batches = [];
+    $patientList =[];
     foreach ($patientDrives as $pd) {
         if ($pd->getPatientDriveDriveId() == $driverId) {
             $batches[] = $pd->getPatientDriveBatchId();
             $patientId = $pd->getPatientDrivePatientId();
+            $patientList[] = $patientId;
         }
     }
+
+    $patientListName =[];
+    foreach ($patients as $p){
+        foreach ($patientList as $pl){
+        if($pl == $p->getPatientId()) {
+            $name = $p-> getPatientFullName();
+            $patientListName[] = $name;
+            }
+        }
+    }
+
 
     foreach ($patient_details as $patD) {
         $p = $patD->getPatientDeetPatId();
@@ -86,5 +100,11 @@ if (isset($_POST['id'])) {
     <p><b>Date:</b></p>
     <center><p>$date</p></center>
     
-    <button>View More</button>";
+    <p><b>List Of Patients:</b></p>";
+
+    foreach ($patientListName as $pln) {
+        echo "<center><p >$pln</p ></center >";
+    }
+
+    echo "<button>View More</button>";
 }

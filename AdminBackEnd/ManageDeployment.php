@@ -110,7 +110,7 @@ include_once("../includes/database.php") ?>
         <div class="listPatientColumn">
             <div class="four listPatientRow">
                 <div class="listPatient-box colored">
-                    <p>List Patients View</p>
+                    <center><p>Deployment Summary</p></center>
                 </div>
             </div>
             <div class="four listPatientRow row2">
