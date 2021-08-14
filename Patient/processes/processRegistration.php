@@ -17,18 +17,25 @@ if(isset($_POST)){
     
     $searchPatient = "SELECT * FROM patient_details WHERE patient_first_name = ? AND patient_last_name = ? AND patient_contact_number = ?";
 
+    $searchUsername = "SELECT * FROM patient_account WHERE patient_username = ?";
+
     try {
-        $stmselect= $database->prepare($searchPatient);
+        $stmselect = $database->prepare($searchPatient);
         $query = $stmselect->execute([$firstname, $lastname, 
         $contactnumber]);
-        $patient = $stmselect->fetch(PDO::FETCH_ASSOC);
         if ($stmselect->rowCount() > 0) {
-            $patientId = $patient["patient_id"];
-            $stmtinsert = $database->prepare($sql);
-            $result = $stmtinsert->execute([$patientId, $username, $password, $picture, $email]);
-            if($result) {
-                echo 'Successfully registered.';
-            } 
+            $checkUsername = $database->prepare($searchUsername);
+            $verify = $checkUsername->execute([$username]);
+            if(!$checkUsername->rowCount() > 0) {
+                $patientId = $patient["patient_id"];
+                $stmtinsert = $database->prepare($sql);
+                $result = $stmtinsert->execute([$patientId, $username, $password, $picture, $email]);
+                if($result) {
+                    echo 'Successfully registered.';
+                } 
+            } else {
+                throw new Exception(header('HTTP/1.0 400 Username is already taken'));
+            }
         } else {
             throw new Exception(header('HTTP/1.0 400 Patient does not exist'));
         }             
