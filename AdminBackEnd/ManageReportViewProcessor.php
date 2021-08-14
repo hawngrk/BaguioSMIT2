@@ -14,7 +14,7 @@ if (isset($_POST['search'])) {
             </tr>
             </thead>
             ";
-    $querySearch = "SELECT report.report_id, patient.patient_full_name, report.date_reported, report.report_status FROM ((report INNER JOIN patient ON report.report_id = patient.patient_id) INNER JOIN patient_details ON patient.patient_id = patient_details.patient_id) WHERE (report.report_id LIKE '$search%' OR patient_details.patient_last_name LIKE '$search%' OR patient_details.patient_first_name LIKE '$search%' OR patient_details.patient_middle_name LIKE '$search%');";
+    $querySearch = "SELECT report.report_id, patient.patient_full_name, report.date_reported, report.report_status FROM report JOIN patient ON report.report_id = patient.patient_id JOIN patient_details ON patient.patient_id = patient_details.patient_id WHERE report.report_id LIKE '$search%' OR patient_details.patient_last_name LIKE '$search%' OR patient_details.patient_first_name LIKE '$search%' OR patient_details.patient_middle_name LIKE '$search%';";
     $stmt = $database->stmt_init();
     $stmt->prepare($querySearch);
     $stmt->execute();
@@ -50,13 +50,13 @@ if (isset($_POST['sort'])) {
             ";
 
     if ($sort == 'Name Asc') {
-        $querySort = "SELECT report.report_id, patient.patient_full_name, report.date_reported, report.report_status FROM ((report INNER JOIN patient ON report.report_id = patient.patient_id) INNER JOIN patient_details ON patient.patient_id = patient_details.patient_id) ORDER BY (patient_details.patient_last_name) ASC;";
+        $querySort = "SELECT report.report_id, patient.patient_full_name, report.date_reported, report.report_status FROM report JOIN patient ON report.report_id = patient.patient_id JOIN patient_details ON patient.patient_id = patient_details.patient_id ORDER BY patient_details.patient_last_name ASC;";
     } else if ($sort == 'Name Desc') {
-        $querySort = "SELECT report.report_id, patient.patient_full_name, report.date_reported, report.report_status FROM ((report INNER JOIN patient ON report.report_id = patient.patient_id) INNER JOIN patient_details ON patient.patient_id = patient_details.patient_id) ORDER BY (patient_details.patient_last_name) DESC;";
+        $querySort = "SELECT report.report_id, patient.patient_full_name, report.date_reported, report.report_status FROM report JOIN patient ON report.report_id = patient.patient_id JOIN patient_details ON patient.patient_id = patient_details.patient_id ORDER BY patient_details.patient_last_name DESC;";
     } else if ($sort == 'Date Asc') {
-        $querySort = "SELECT report.report_id, patient.patient_full_name, report.date_reported, report.report_status FROM ((report INNER JOIN patient ON report.report_id = patient.patient_id) INNER JOIN patient_details ON patient.patient_id = patient_details.patient_id) ORDER BY (report.date_reported) ASC;";
+        $querySort = "SELECT report.report_id, patient.patient_full_name, report.date_reported, report.report_status FROM report JOIN patient ON report.report_id = patient.patient_id JOIN patient_details ON patient.patient_id = patient_details.patient_id ORDER BY report.date_reported ASC;";
     } else if ($sort == 'Date Desc') {
-        $querySort = "SELECT report.report_id, patient.patient_full_name, report.date_reported, report.report_status FROM ((report INNER JOIN patient ON report.report_id = patient.patient_id) INNER JOIN patient_details ON patient.patient_id = patient_details.patient_id) ORDER BY (report.date_reported) DESC;";
+        $querySort = "SELECT report.report_id, patient.patient_full_name, report.date_reported, report.report_status FROM report JOIN patient ON report.report_id = patient.patient_id JOIN patient_details ON patient.patient_id = patient_details.patient_id ORDER BY report.date_reported DESC;";
     }
     $stmt = $database->stmt_init();
     $stmt->prepare($querySort);
@@ -93,15 +93,15 @@ if (isset($_POST['filter'])) {
             ";
 
     if ($sort == 'All') {
-        $querySort = "SELECT report.report_id, patient.patient_full_name, report.date_reported, report.report_status FROM ((report INNER JOIN patient ON report.report_id = patient.patient_id) INNER JOIN patient_details ON patient.patient_id = patient_details.patient_id);";
+        $querySort = "SELECT report.report_id, patient.patient_full_name, report.date_reported, report.report_status FROM report JOIN patient ON report.report_id = patient.patient_id JOIN patient_details ON patient.patient_id = patient_details.patient_id;";
     } else if ($sort == 'Unverified') {
-        $querySort = "SELECT report.report_id, patient.patient_full_name, report.date_reported, report.report_status FROM ((report INNER JOIN patient ON report.report_id = patient.patient_id) INNER JOIN patient_details ON patient.patient_id = patient_details.patient_id) WHERE (report.report_status = 'Unverified');";
+        $querySort = "SELECT report.report_id, patient.patient_full_name, report.date_reported, report.report_status FROM report JOIN patient ON report.report_id = patient.patient_id JOIN patient_details ON patient.patient_id = patient_details.patient_id WHERE report.report_status = 'Unverified';";
     } else if ($sort == 'Verified') {
         print_r('passed verified');
-        $querySort = "SELECT report.report_id, patient.patient_full_name, report.date_reported, report.report_status FROM ((report INNER JOIN patient ON report.report_id = patient.patient_id) INNER JOIN patient_details ON patient.patient_id = patient_details.patient_id) WHERE (report.report_status = 'Verified');";
+        $querySort = "SELECT report.report_id, patient.patient_full_name, report.date_reported, report.report_status FROM report JOIN patient ON report.report_id = patient.patient_id JOIN patient_details ON patient.patient_id = patient_details.patient_id WHERE report.report_status = 'Verified';";
     } else if ($sort == 'Invalidated') {
         print_r('passed invalidated');
-        $querySort = "SELECT report.report_id, patient.patient_full_name, report.date_reported, report.report_status FROM ((report INNER JOIN patient ON report.report_id = patient.patient_id) INNER JOIN patient_details ON patient.patient_id = patient_details.patient_id) WHERE (report.report_status = 'Invalidated');";
+        $querySort = "SELECT report.report_id, patient.patient_full_name, report.date_reported, report.report_status FROM report JOIN patient ON report.report_id = patient.patient_id JOIN patient_details ON patient.patient_id = patient_details.patient_id WHERE report.report_status = 'Invalidated';";
     }
     $stmt = $database->stmt_init();
     $stmt->prepare($querySort);
@@ -252,7 +252,7 @@ if (isset($_POST['report'])) {
     }
     echo "
     <div class='modal-content container'>
-    <h2 id='headerReviewReport'>REVIEW REPORT - $patientName<span id='viewReportClose' class='close' onclick='closeViewReport'>&times;</span></h2>
+    <h2 id='headerReviewReport'>REVIEW REPORT - $patientName<span id='viewReportClose' class='close' onclick='closeViewReport()'>&times;</span></h2>
     <div class='ReviewRerport-PopUp'>
     <div id='repInfo'>
     <h4 class='reviewReportH3'>Report Information</h4>

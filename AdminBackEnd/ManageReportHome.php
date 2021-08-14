@@ -107,7 +107,7 @@ include_once("../includes/database.php") ?>
 
         <!--Search Input and Button-->
         <div class="search-container">
-            <input type="text1" id="searchReport" name="searchReport" placeholder="Search" onkeyup="searchReport()"">
+            <input type="text" id="searchReport" name="searchReport" placeholder="Search" onkeyup="searchReport()">
             <button type="submit" id="searchReportBtn" name="searchReportBtn" onclick="searchReport()"><i class="fa fa-search"></i></button>
         </div>
 
@@ -269,19 +269,6 @@ include_once("../includes/database.php") ?>
     </script>
 
     <script>
-        var viewReportModal = document.getElementById("viewReportModal");
-        var viewReportClose = document.getElementById("viewReportClose");
-
-        viewReportClose.onclick = function () {
-            viewReportModal.style.display = "none";
-        }
-
-        window.onclick = function (event) {
-            if (event.target == viewReportModal) {
-                viewReportModal.style.display = "none";
-            }
-        }
-
         function searchReport() {
             var textSearch = document.getElementById("searchReport").value;
             if (textSearch === "") {
@@ -361,6 +348,14 @@ include_once("../includes/database.php") ?>
             });
         }
 
+        var viewReportModal = document.getElementById("viewReportModal");
+
+        window.onclick = function (event) {
+            if (event.target == viewReportModal) {
+                viewReportModal.style.display = "none";
+            }
+        }
+
         function viewReport(reportId) {
             $.ajax({
                 url: 'manageReportViewProcessor.php',
@@ -371,6 +366,10 @@ include_once("../includes/database.php") ?>
                 }
             })
             viewReportModal.style.display = "block";
+        }
+
+        function closeViewReport() {
+            viewReportModal.style.display = "none";
         }
     </script>
 </body>

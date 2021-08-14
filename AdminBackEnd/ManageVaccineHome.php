@@ -94,6 +94,7 @@ include_once("../includes/database.php") ?>
         </nav>
 
         <!-- Page Content  -->
+
         <button id="addVaccineBtn" type="button" class="buttonTop">Add Vaccine</button>
 
         <form id='addVaccineForm' method="post" enctype="multipart/form-data">
@@ -102,7 +103,7 @@ include_once("../includes/database.php") ?>
                     <h2 id="headerAddVaccine"> Add Vaccine <span id="addVaccineClose" class="close">&times;</span></h2>
                     <div class="AddVaccine-PopUp">
                         <label for="selectedVaccine"> Select a Vaccine: </label>
-                        <select class="form-select col-lg-12 vaccineType" id="selectedVaccine" name="selectedVaccine">
+                        <select class="form-select col-lg-12 vaccineType" id="selectedVaccine" name="selectedVaccine" onchange="updateVaccineInfo(this)">
                             <?php
                             include '../includes/database.php';
                             $getVaccinesQuery = "SELECT vaccine_name FROM vaccine";
@@ -120,7 +121,7 @@ include_once("../includes/database.php") ?>
                             ?>
                         </select>
                         <label for="batchNo"> Batch Quantity Received </label>
-                        <input type="number" id="batchNo" name="batchNo" min="1" max="15" value="1">
+                        <input type="number" id="batchNo" name="batchNo" min="1" max="15" value="1" onkeyup="updateBatchList(this)" onclick="updateBatchList(this)">
                         <label for="dateStored">Date Stored</label>
                         <input type='date' id="dateStored" name="dateStored">
                         <div id="selectedVaccineInfo"></div>
@@ -189,13 +190,11 @@ include_once("../includes/database.php") ?>
         </form>
 
         <div class="search-container">
-            <form action="/action_page.php">
-                <input type="text" placeholder="Search" name="search">
-                <button type="submit"><i class="fa fa-search"></i></button>
-            </form>
+            <input type="text" id="searchVaccine" name="searchVaccine" placeholder="Search" onkeyup="searchVaccine()">
+            <button type="submit" id="searchVaccineBtn" name="searchVaccineBtn" onclick="searchVaccine()"><i class="fa fa-search"></i></button>
         </div>
 
-        <table class="table table-row table-hover">
+        <table class="table table-row table-hover" id="vaccineTable">
             <thead>
             <tr>
                 <th scope="col">#</th>
@@ -217,7 +216,7 @@ include_once("../includes/database.php") ?>
             $count = 0;
             foreach ($vaccineLots as $vl) {
                 $count++;
-                $vaccineLotId = $vl->getVaccLotId(); //replace this part based on the column name mentioned above in chronological order - NATIVIDAD HUDSON
+                $vaccineLotId = $vl->getVaccLotId();
                 $vaccLotVaccId = $vl->getVaccLotVaccId();
                 $dateStored = $vl->getDateVaccStored();
                 $batchQty = $vl->getVaccBatchQty();
@@ -278,7 +277,7 @@ include_once("../includes/database.php") ?>
         $query1 = "INSERT INTO vaccine_lot (vaccine_id, employee_account_id, vaccine_batch_quantity, date_stored) VALUE ('$vaccineid', 1, '$batchNo', '$dateStored');";
         $database->query($query1);
 
-        $getVacLotIdQuery = "SELECT vaccine_lot_id FROM vaccine_lot ORDER BY  vaccine_lot_id DESC LIMIT 1";
+        $getVacLotIdQuery = "SELECT vaccine_lot_id FROM vaccine_lot ORDER BY vaccine_lot_id DESC LIMIT 1";
         $dbase = $database->stmt_init();
         $dbase->prepare($getVacLotIdQuery);
         $dbase->execute();
@@ -344,6 +343,31 @@ include_once("../includes/database.php") ?>
     </script>
 
     <script>
+        function searchVaccine() {
+            var textSearch = document.getElementById("searchVaccine").value;
+            if (textSearch === "") {
+                console.log('blank');
+                $.ajax({
+                    url: 'ManageVaccineProcessor.php',
+                    type: 'POST',
+                    data: {"cancel": textSearch},
+                    success: function (result) {
+                        document.getElementById("vaccineTable").innerHTML = result;
+                    }
+                });
+            } else {
+                console.log('typed');
+                $.ajax({
+                    url: 'ManageVaccineProcessor.php',
+                    type: 'POST',
+                    data: {"search": textSearch},
+                    success: function (result) {
+                        document.getElementById("vaccineTable").innerHTML = result;
+                    }
+                });
+            }
+        }
+
         // Add Vaccine
         var addVaccineModal = document.getElementById("vaccineModal");
         var addVaccineBtn = document.getElementById("addVaccineBtn");
@@ -381,38 +405,34 @@ include_once("../includes/database.php") ?>
         }
 
         window.onclick = function (event) {
-            if (event.target == newVaccineModal) {
+            if (event.target === newVaccineModal) {
                 newVaccineModal.style.display = "none";
+            } else if (event.target === addVaccineModal) {
+                addVaccineModal.style.display = "none";
             }
         }
-        $(document).ready(function () {
-            $('#selectedVaccine').change(function () {
-                var option = $(this).find('option:selected');
-                var vac = option.text();
 
-                $.ajax({
-                    url: 'ManageVaccineInputProcessor.php',
-                    type: 'POST',
-                    data: {"vaccine": vac},
-                    success: function (result) {
-                        document.getElementById("selectedVaccineInfo").innerHTML = result;
-                    }
-                })
-            })
-        });
-        $(document).ready(function () {
-            $('#batchNo').on('keyup change click', function () {
-                var batch = $('#batchNo').val();
-                $.ajax({
-                    url: 'ManageVaccineInputProcessor.php',
-                    type: 'POST',
-                    data: {"batch": batch},
-                    success: function (result) {
-                        document.getElementById("vaccineBatch").innerHTML = result;
-                    }
-                })
-            })
-        });
+        function updateVaccineInfo(vaccine) {
+            $.ajax({
+                url: 'ManageVaccineProcessor.php',
+                type: 'POST',
+                data: {"vaccine": vaccine.value},
+                success: function (result) {
+                    document.getElementById("selectedVaccineInfo").innerHTML = result;
+                }
+            });
+        }
+
+        function updateBatchList(batch) {
+            $.ajax({
+                url: 'ManageVaccineProcessor.php',
+                type: 'POST',
+                data: {"batch": batch.value},
+                success: function (result) {
+                    document.getElementById("vaccineBatch").innerHTML = result;
+                }
+            });
+        }
     </script>
 
     <script>

@@ -46,26 +46,26 @@
 
         
         //Creating an array for the covid-19 side effects
-        $covidSymptoms = array("{$fever},", "{$dryCough},", "{$fatigue},", "{$aches},", "{$runnyNose},", "{$soreThroat},", "{$shortnessOfBreath},", "{$diarrhea},", "{$headache},", "{$loss}");
+        $covidSymptoms = array("{$fever}", "{$dryCough}", "{$fatigue}", "{$aches}", "{$runnyNose}", "{$soreThroat}", "{$shortnessOfBreath}", "{$diarrhea}", "{$headache}", "{$loss}");
         
         //Serialize array of vaccine side effects and covidSymptoms
-        $reportSideEffects = serialize($vaccineSideEffects);
-        $reportSymptoms = serialize($covidSymptoms);
+        $reportSideEffects = implode(",", $vaccineSideEffects);
+        $reportSymptoms = implode(",", $covidSymptoms);
 
         //Testing variable display
-        echo  "{$dateOut}<br>";
-        echo "{$patientId}<br>";
-        echo "{$description}<br>";
+        // echo  "{$dateOut}<br>";
+        // echo "{$patientId}<br>";
+        // echo "{$description}<br>";
 
-        for($x = 0; $x < count($vaccineSideEffects); $x++) {
-            echo $vaccineSideEffects[$x];
-            echo "<br>";
-        }
+        // for($x = 0; $x < count($vaccineSideEffects); $x++) {
+        //     echo $vaccineSideEffects[$x];
+        //     echo "<br>";
+        // }
 
-        for($x = 0; $x < count($covidSymptoms); $x++) {
-            echo $covidSymptoms[$x];
-            echo "<br>";
-        }
+        // for($x = 0; $x < count($covidSymptoms); $x++) {
+        //     echo $covidSymptoms[$x];
+        //     echo "<br>";
+        // }
      
         $sql = "INSERT INTO report (patient_id, report_type, report_details, vaccine_symptoms_reported, COVID19_symptoms_reported, date_last_out, report_status) VALUES(?,?,?,?,?,?,?)";
 
