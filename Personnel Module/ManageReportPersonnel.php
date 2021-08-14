@@ -1,6 +1,4 @@
 <?php
-
-//include ("../AdminbackEnd/sessionHandling.php");
 include_once("../includes/database.php") ?>
 
 <head>
@@ -9,10 +7,10 @@ include_once("../includes/database.php") ?>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
     <title>SMIT+ | Manage Reports</title>
-    <!--Favicon-->
-    <link rel="icon" href="../img/FaviSMIT+.png" type="image/jpg">
+
     <!-- Our Custom CSS -->
     <link href="../css/style.css" rel="stylesheet">
+    <link href="../css/personnelStyle.css" rel="stylesheet">
 
     <!-- Bootstrap-->
     <script crossorigin="anonymous" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
@@ -49,25 +47,16 @@ include_once("../includes/database.php") ?>
                 <a href="#"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
             </li>
             <li>
-                <a href="ManageVaccineHome.php"><i class="fas fa-syringe"></i> Manage Vaccine</a>
+                <a href="#"><i class="fas fa-syringe"></i> Manage Vaccine</a>
             </li>
             <li>
-                <a href="#ManageUsersSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i
-                            class="fas fa-users"></i> Manage Users</a>
-                <ul class="collapse list-unstyled" id="ManageUsersSubmenu">
-                    <li>
-                        <a href="ManagePersonnelHome.php">Personnel</a>
-                    </li>
-                    <li>
-                        <a href="ManagePatientHome.php">Patients</a>
-                    </li>
-                </ul>
+                <a href="#"><i class="fas fa-users"></i> Manage Patient</a>
             </li>
             <li>
-                <a href="ManageDeployment.php"><i class="fas fa-truck"></i> Manage Deployment</a>
+                <a href="#"><i class="fas fa-truck"></i> View Deployment</a>
             </li>
-            <li>
-                <a href="ManageReportHome.php" class="active"><i class="fas fa-sticky-note"></i> Reports</a>
+            <li class="active">
+                <a href="#"><i class="fas fa-sticky-note"></i> Reports</a>
             </li>
             <li>
                 <a href="#"><i class="fas fa-question"></i> About</a>
@@ -101,7 +90,6 @@ include_once("../includes/database.php") ?>
                 </button>
             </div>
         </nav>
-
         <!-- Page Content  -->
         <button type="button" class="buttonTop" id="generateReportBtn" onclick="generateReport()">Generate Report
         </button>
@@ -230,7 +218,7 @@ include_once("../includes/database.php") ?>
                 <td>$reporter</td>
                 <td>$dateReported</td>
                 <td>$status</td>
-                <td><button class='viewReportBtn' type='submit' value='$reportId' onclick='viewReport($reportId)'>Review Report</button></td></tr>";
+                <td><button class='viewReportBtn' type='button' value='$reportId' onclick='viewReport($reportId)'>Review Report</button></td></tr>";
             }
             ?>
 
@@ -277,7 +265,7 @@ include_once("../includes/database.php") ?>
         var textSearch = document.getElementById("searchReport").value;
         if (textSearch === "") {
             $.ajax({
-                url: 'ManageReportViewProcessor.php',
+                url: '../PersonnelBackEnd/ManageReportPersonnelProcessor.php',
                 type: 'POST',
                 data: {"cancel": textSearch},
                 success: function (result) {
@@ -286,7 +274,7 @@ include_once("../includes/database.php") ?>
             });
         } else {
             $.ajax({
-                url: 'ManageReportViewProcessor.php',
+                url: '../PersonnelBackEnd/ManageReportPersonnelProcessor.php',
                 type: 'POST',
                 data: {"search": textSearch},
                 success: function (result) {
@@ -299,7 +287,7 @@ include_once("../includes/database.php") ?>
     function sortReport(sort) {
         var selectedSort = sort.value;
         $.ajax({
-            url: 'ManageReportViewProcessor.php',
+            url: '../PersonnelBackEnd/ManageReportPersonnelProcessor.php',
             type: 'POST',
             data: {"sort": selectedSort},
             success: function (result) {
@@ -311,7 +299,7 @@ include_once("../includes/database.php") ?>
     function filterReport(filter) {
         var selectedFilter = filter.value;
         $.ajax({
-            url: 'ManageReportViewProcessor.php',
+            url: '../PersonnelBackEnd/ManageReportPersonnelProcessor.php',
             type: 'POST',
             data: {"filter": selectedFilter},
             success: function (result) {
@@ -322,7 +310,7 @@ include_once("../includes/database.php") ?>
 
     function generateReport() {
         $.ajax({
-            url: 'manageReportViewProcessor.php',
+            url: '../PersonnelBackEnd/ManageReportPersonnelProcessor.php',
             type: 'POST',
             data: {"generate": 1},
             success: function (result) {
@@ -331,7 +319,7 @@ include_once("../includes/database.php") ?>
         });
 
         $.ajax({
-            url: 'manageReportViewProcessor.php',
+            url: '../PersonnelBackEnd/ManageReportPersonnelProcessor.php',
             type: 'POST',
             data: {"options": 1},
             success: function (result) {
@@ -342,7 +330,7 @@ include_once("../includes/database.php") ?>
 
     function cancelGenerateReport() {
         $.ajax({
-            url: 'manageReportViewProcessor.php',
+            url: '../PersonnelBackEnd/ManageReportPersonnelProcessor.php',
             type: 'POST',
             data: {"cancel": 1},
             success: function (result) {
@@ -363,7 +351,7 @@ include_once("../includes/database.php") ?>
     function viewReport(reportId) {
         console.log('ok');
         $.ajax({
-            url: 'manageReportViewProcessor.php',
+            url: '../PersonnelBackEnd/ManageReportPersonnelProcessor.php',
             type: 'POST',
             data: {"report": reportId},
             success: function (result) {
@@ -378,5 +366,3 @@ include_once("../includes/database.php") ?>
     }
 </script>
 </body>
-
-

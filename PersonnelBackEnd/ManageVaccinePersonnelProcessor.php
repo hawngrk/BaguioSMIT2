@@ -7,7 +7,7 @@ require_once '../require/getVaccineLot.php';
 if (isset($_POST['search'])) {
     include("../includes/database.php");
     $search = $_POST['search'];
-    $querySearch = "SELECT vaccine_lot.vaccine_lot_id, vaccine.vaccine_name, vaccine_lot.date_stored, vaccine_batch.date_of_expiration, vaccine_lot.vaccine_batch_quantity, SUM(vaccine_batch.vaccine_quantity) FROM vaccine_lot JOIN vaccine ON vaccine_lot.vaccine_id = vaccine.vaccine_id JOIN vaccine_batch ON vaccine_lot.vaccine_lot_id = vaccine_batch.vaccine_lot_id WHERE vaccine_lot.vaccine_lot_id LIKE '$search%' OR vaccine.vaccine_name LIKE '$search%' GROUP BY vaccine_lot.vaccine_lot_id;";
+    $querySearch = "SELECT vaccine_lot.vaccine_lot_id, vaccine.vaccine_name, vaccine_lot.date_stored, vaccine_batch.date_of_expiration, vaccine_lot.vaccine_batch_quantity, SUM(vaccine_batch.vaccine_quantity) FROM vaccine_lot LEFT JOIN vaccine ON vaccine_lot.vaccine_id = vaccine.vaccine_id LEFT JOIN vaccine_batch ON vaccine_lot.vaccine_lot_id = vaccine_batch.vaccine_lot_id WHERE vaccine_lot.vaccine_lot_id LIKE '$search%' OR vaccine.vaccine_name LIKE '$search%' GROUP BY vaccine_lot.vaccine_lot_id;";
     echo "
      <thead>
             <tr>
@@ -125,4 +125,3 @@ if (isset($_POST['batch'])) {
     }
     echo "</table>";
 }
-

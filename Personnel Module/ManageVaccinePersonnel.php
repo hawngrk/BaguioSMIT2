@@ -1,18 +1,15 @@
 <?php
-
-//include ("../AdminbackEnd/sessionHandling.php");
 include_once("../includes/database.php") ?>
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <!-- Title -->
-    <title>SMIT+ | Manage Vaccine</title>
-    <!--Favicon-->
-    <link rel="icon" href="../img/FaviSMIT+.png" type="image/jpg">
+
+    <title>SMIT+ Personnel | Vaccine</title>
+
     <!-- Our Custom CSS -->
-    <link href="../css/style.css" rel="stylesheet">
+    <link href="../css/personnelStyle.css" rel="stylesheet">
 
     <!-- Bootstrap-->
     <script crossorigin="anonymous" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
@@ -48,26 +45,17 @@ include_once("../includes/database.php") ?>
             <li>
                 <a href="#"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
             </li>
-            <li>
-                <a href="ManageVaccineHome.php" class="active"><i class="fas fa-syringe"></i> Manage Vaccine</a>
+            <li class="active">
+                <a href="#"><i class="fas fa-syringe"></i> Manage Vaccine</a>
             </li>
             <li>
-                <a href="#ManageUsersSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i
-                            class="fas fa-users"></i> Manage Users</a>
-                <ul class="collapse list-unstyled" id="ManageUsersSubmenu">
-                    <li>
-                        <a href="ManagePersonnelHome.php">Personnel</a>
-                    </li>
-                    <li>
-                        <a href="ManagePatientHome.php">Patients</a>
-                    </li>
-                </ul>
+                <a href="#"><i class="fas fa-users"></i> Manage Patient</a>
             </li>
             <li>
-                <a href="ManageDeployment.php"><i class="fas fa-truck"></i> Manage Deployment</a>
+                <a href="#"><i class="fas fa-truck"></i> View Deployment</a>
             </li>
             <li>
-                <a href="ManageReportHome.php"><i class="fas fa-sticky-note"></i> Reports</a>
+                <a href="#"><i class="fas fa-sticky-note"></i> Reports</a>
             </li>
             <li>
                 <a href="#"><i class="fas fa-question"></i> About</a>
@@ -75,19 +63,19 @@ include_once("../includes/database.php") ?>
         </ul>
 
         <ul class="list-unstyled CTAs">
-            <button type="button" class="btn btn-info">
+            <button type="button" class="btn btn-info signOutPersonnel">
                 <span>Sign Out</span>
             </button>
         </ul>
     </nav>
 
-    <!-- Top Nav Bar  -->
+    <!---Top Nav Bar-->
     <div id="content">
 
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container-fluid">
 
-                <button type="button" id="sidebarCollapse" class="btn btn-info">
+                <button type="button" id="sidebarCollapse" class="btn btn-info menuPersonnel">
                     <i class="fas fa-align-left"></i>
                     <span>Menu</span>
                 </button>
@@ -102,8 +90,7 @@ include_once("../includes/database.php") ?>
             </div>
         </nav>
 
-        <!-- Page Content  -->
-
+        <!---Page Content-->
         <button id="addVaccineBtn" type="button" class="buttonTop">Add Vaccine</button>
 
         <form id='addVaccineForm' method="post" enctype="multipart/form-data">
@@ -112,8 +99,7 @@ include_once("../includes/database.php") ?>
                     <h2 id="headerAddVaccine"> Add Vaccine <span id="addVaccineClose" class="close">&times;</span></h2>
                     <div class="AddVaccine-PopUp">
                         <label for="selectedVaccine"> Select a Vaccine: </label>
-                        <select class="form-select col-lg-12 vaccineType" id="selectedVaccine" name="selectedVaccine"
-                                onchange="updateVaccineInfo(this)">
+                        <select class="form-select col-lg-12 vaccineType" id="selectedVaccine" name="selectedVaccine" onchange="updateVaccineInfo(this)">
                             <?php
                             include '../includes/database.php';
                             $getVaccinesQuery = "SELECT vaccine_name FROM vaccine";
@@ -131,8 +117,7 @@ include_once("../includes/database.php") ?>
                             ?>
                         </select>
                         <label for="batchNo"> Batch Quantity Received </label>
-                        <input type="number" id="batchNo" name="batchNo" min="1" max="15" value="1"
-                               onkeyup="updateBatchList(this)" onclick="updateBatchList(this)">
+                        <input type="number" id="batchNo" name="batchNo" min="1" max="15" value="1" onkeyup="updateBatchList(this)" onclick="updateBatchList(this)">
                         <label for="dateStored">Date Stored</label>
                         <input type='date' id="dateStored" name="dateStored">
                         <div id="selectedVaccineInfo"></div>
@@ -202,8 +187,7 @@ include_once("../includes/database.php") ?>
 
         <div class="search-container">
             <input type="text" id="searchVaccine" name="searchVaccine" placeholder="Search" onkeyup="searchVaccine()">
-            <button type="submit" id="searchVaccineBtn" name="searchVaccineBtn" onclick="searchVaccine()"><i
-                        class="fa fa-search"></i></button>
+            <button type="submit" id="searchVaccineBtn" name="searchVaccineBtn" onclick="searchVaccine()"><i class="fa fa-search"></i></button>
         </div>
 
         <table class="table table-row table-hover" id="vaccineTable">
@@ -233,14 +217,14 @@ include_once("../includes/database.php") ?>
                 $dateStored = $vl->getDateVaccStored();
                 $batchQty = $vl->getVaccBatchQty();
 
-                foreach ($vaccineBatches as $vb) {
-                    if ($vb->getVaccBatchId() == $vaccineLotId) {
+                foreach($vaccineBatches as $vb){
+                    if($vb->getVaccBatchId() == $vaccineLotId){
                         $vaccExp = $vb->getDateExp();
                     }
                 }
 
-                foreach ($vaccines as $vac) {
-                    if ($vaccLotVaccId == $vac->getVaccId()) {
+                foreach($vaccines as $vac){
+                    if ($vaccLotVaccId == $vac->getVaccId()){
                         $vaccName = $vac->getVaccName();
                     }
                 }
@@ -338,6 +322,7 @@ if (isset($_POST['addBtnNewVaccine'])) {
 }
 ?>
 
+
 <!-- jQuery CDN - Slim version (=without AJAX) -->
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
@@ -366,7 +351,7 @@ if (isset($_POST['addBtnNewVaccine'])) {
         var textSearch = document.getElementById("searchVaccine").value;
         if (textSearch === "") {
             $.ajax({
-                url: 'ManageVaccineProcessor.php',
+                url: '../PersonnelBackEnd/ManageVaccinePersonnelProcessor.php',
                 type: 'POST',
                 data: {"cancel": textSearch},
                 success: function (result) {
@@ -375,7 +360,7 @@ if (isset($_POST['addBtnNewVaccine'])) {
             });
         } else {
             $.ajax({
-                url: 'ManageVaccineProcessor.php',
+                url: '../PersonnelBackEnd/ManageVaccinePersonnelProcessor.php',
                 type: 'POST',
                 data: {"search": textSearch},
                 success: function (result) {
@@ -431,18 +416,19 @@ if (isset($_POST['addBtnNewVaccine'])) {
 
     function updateVaccineInfo(vaccine) {
         $.ajax({
-            url: 'ManageVaccineProcessor.php',
+            url: '../PersonnelBackEnd/ManageVaccinePersonnelProcessor.php',
             type: 'POST',
             data: {"vaccine": vaccine.value},
             success: function (result) {
                 document.getElementById("selectedVaccineInfo").innerHTML = result;
+                console.log("ok");
             }
         });
     }
 
     function updateBatchList(batch) {
         $.ajax({
-            url: 'ManageVaccineProcessor.php',
+            url: '../PersonnelBackEnd/ManageVaccinePersonnelProcessor.php',
             type: 'POST',
             data: {"batch": batch.value},
             success: function (result) {
