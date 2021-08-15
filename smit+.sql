@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Aug 09, 2021 at 03:20 PM
+-- Generation Time: Aug 15, 2021 at 01:15 PM
 -- Server version: 5.7.31
 -- PHP Version: 7.3.21
 
@@ -339,7 +339,9 @@ INSERT INTO `report` (`report_id`, `patient_id`, `report_type`, `report_details`
 (2, 2, 'SMS', 'I\'m experiencing bothering symptoms, such as diarrhea, vomiting and headaches.', '', '', '2021-07-10', '2021-07-12 16:00:00', 'Pending'),
 (3, 3, 'Smit+ App', '...', 'sick', 'sick', '2021-07-13', '2021-07-13 16:00:00', 'Invalidated'),
 (4, 4, 'Smit+ App', 'Ako ay nilalagnat, parang pagod palagi, at walang pang lasa', '', 'Fever, Tiredness, Loss of taste', '2021-07-13', '2021-07-13 16:00:00', 'Verified'),
-(5, 5, 'SMS', 'After vaccination, I noticed that I feel some side effects, such as tiredness, headache, lost of taste', '', '', '2021-07-13', '2021-07-13 16:00:00', 'Pending');
+(5, 5, 'SMS', 'After vaccination, I noticed that I feel some side effects, such as tiredness, headache, lost of taste', '', '', '2021-07-13', '2021-07-13 16:00:00', 'Pending'),
+(6, 1, 'Smit+ App', 'The Quick Browner Fox Jumps Over ', 'a:6:{i:0;s:7:\"Chills,\";i:1;s:1:\",\";i:2;s:12:\"Muscle pain,\";i:3;s:7:\"Nausea,\";i:4;s:10:\"Tiredness,\";i:5;s:31:\"Other:Eye Redness, Stomach Pain\";}', 'a:10:{i:0;s:6:\"Fever,\";i:1;s:10:\"Dry Cough,\";i:2;s:8:\"Fatigue,\";i:3;s:16:\"Aches and Pains,\";i:4;s:11:\"Runny Rose,\";i:5;s:12:\"Sore throat,\";i:6;s:20:\"Shortness of breath,\";i:7;s:9:\"Diarrhea,\";i:8;s:1:\",\";i:9;s:23:\"Loss of smell and taste\";}', '2021-08-05', '2021-08-10 07:49:48', 'Pending'),
+(7, 1, 'Smit+ App', 'The Quick Browner Fox Jumps Over ', 'a:6:{i:0;s:7:\"Chills,\";i:1;s:1:\",\";i:2;s:12:\"Muscle pain,\";i:3;s:7:\"Nausea,\";i:4;s:10:\"Tiredness,\";i:5;s:31:\"Other:Eye Redness, Stomach Pain\";}', 'a:10:{i:0;s:6:\"Fever,\";i:1;s:10:\"Dry Cough,\";i:2;s:8:\"Fatigue,\";i:3;s:16:\"Aches and Pains,\";i:4;s:11:\"Runny Rose,\";i:5;s:12:\"Sore throat,\";i:6;s:20:\"Shortness of breath,\";i:7;s:9:\"Diarrhea,\";i:8;s:1:\",\";i:9;s:23:\"Loss of smell and taste\";}', '2021-08-01', '2021-08-10 07:51:08', 'Pending');
 
 -- --------------------------------------------------------
 
@@ -408,8 +410,6 @@ CREATE TABLE IF NOT EXISTS `vaccine_batch` (
   `vaccine_id` int(11) NOT NULL,
   `vaccine_quantity` int(11) NOT NULL,
   `date_stored` date NOT NULL,
-  `date_manufactured` date NOT NULL,
-  `date_of_expiration` date NOT NULL,
   PRIMARY KEY (`vaccine_batch_id`),
   KEY `vaccine_lot_id` (`vaccine_lot_id`),
   KEY `vaccine_id` (`vaccine_id`)
@@ -419,16 +419,16 @@ CREATE TABLE IF NOT EXISTS `vaccine_batch` (
 -- Dumping data for table `vaccine_batch`
 --
 
-INSERT INTO `vaccine_batch` (`vaccine_batch_id`, `vaccine_lot_id`, `vaccine_id`, `vaccine_quantity`, `date_stored`, `date_manufactured`, `date_of_expiration`) VALUES
-(1, 3, 5, 5000, '2021-07-14', '2021-06-01', '2022-06-01'),
-(2, 3, 5, 5000, '2021-07-14', '2021-06-01', '2022-06-01'),
-(3, 3, 5, 5000, '2021-07-14', '2021-06-01', '2022-06-01'),
-(4, 3, 5, 5000, '2021-07-14', '2021-06-01', '2022-06-01'),
-(5, 3, 5, 5000, '2021-07-14', '2021-06-01', '2022-06-01'),
-(6, 1, 2, 1000, '2021-08-04', '2021-08-01', '2022-08-04'),
-(7, 2, 1, 2000, '2021-08-01', '2021-07-01', '2022-08-01'),
-(8, 4, 3, 1000, '2021-08-01', '2021-06-21', '2022-06-15'),
-(9, 5, 4, 5000, '2021-07-01', '2021-06-09', '2022-06-10');
+INSERT INTO `vaccine_batch` (`vaccine_batch_id`, `vaccine_lot_id`, `vaccine_id`, `vaccine_quantity`, `date_stored`) VALUES
+(1, 3, 5, 5000, '2021-07-14'),
+(2, 3, 5, 5000, '2021-07-14'),
+(3, 3, 5, 5000, '2021-07-14'),
+(4, 3, 5, 5000, '2021-07-14'),
+(5, 3, 5, 5000, '2021-07-14'),
+(6, 1, 2, 1000, '2021-08-04'),
+(7, 2, 1, 2000, '2021-08-01'),
+(8, 4, 3, 1000, '2021-08-01'),
+(9, 5, 4, 5000, '2021-07-01');
 
 -- --------------------------------------------------------
 
@@ -498,6 +498,8 @@ CREATE TABLE IF NOT EXISTS `vaccine_lot` (
   `employee_account_id` int(11) NOT NULL,
   `vaccine_batch_quantity` int(11) NOT NULL,
   `date_vaccine_added` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `date_manufactured` date NOT NULL,
+  `date_of_expiration` date NOT NULL,
   PRIMARY KEY (`vaccine_lot_id`),
   KEY `vaccine_id` (`vaccine_id`),
   KEY `employee_account_id` (`employee_account_id`)
@@ -507,12 +509,12 @@ CREATE TABLE IF NOT EXISTS `vaccine_lot` (
 -- Dumping data for table `vaccine_lot`
 --
 
-INSERT INTO `vaccine_lot` (`vaccine_lot_id`, `vaccine_id`, `employee_account_id`, `vaccine_batch_quantity`, `date_vaccine_added`) VALUES
-(1, 2, 1, 1, '2021-07-14 15:33:41'),
-(2, 1, 4, 1, '2021-07-14 15:33:41'),
-(3, 5, 1, 5, '2021-07-14 15:33:41'),
-(4, 3, 4, 1, '2021-07-14 15:33:41'),
-(5, 4, 4, 1, '2021-07-14 15:33:41');
+INSERT INTO `vaccine_lot` (`vaccine_lot_id`, `vaccine_id`, `employee_account_id`, `vaccine_batch_quantity`, `date_vaccine_added`, `date_manufactured`, `date_of_expiration`) VALUES
+(1, 2, 1, 1, '2021-07-14 15:33:41', '2021-08-02', '2022-08-08'),
+(2, 1, 4, 1, '2021-07-14 15:33:41', '2021-07-06', '2022-07-01'),
+(3, 5, 1, 5, '2021-07-14 15:33:41', '2021-05-08', '2022-05-04'),
+(4, 3, 4, 1, '2021-07-14 15:33:41', '2021-06-08', '2022-06-01'),
+(5, 4, 4, 1, '2021-07-14 15:33:41', '2021-06-01', '2021-06-03');
 
 --
 -- Constraints for dumped tables
