@@ -8,21 +8,40 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title></title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Baguio SMIT+ | Login</title>
+    <!--Favicon-->
+    <link rel="icon" href="../img/FaviSMIT+.png" type="image/jpg">
+    <!--CSS-->
+    <link rel="stylesheet" href="../css/patientLoginStyle.css">
+    <!--Bootstrap-->
+    <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" rel="stylesheet">
     </head>
     <body>
-        <form action="">
-            <input type="text" name="username" id="username" placeholder="Enter username" required><br>
-            <input type="password" name="password" id="password" placeholder="Enter password" required><br>
-            <button type="button" name="button" id="login">Login</button><br>
-            <a href="patientRegistration.php">Create an account</a><br>
-            <a href="">Forgot password</a><br>
-        </form>
+        <div class="loginow">
+            <h3 class="logInToText pt-5">Login to Baguio SMIT+</h3>
+            <form id="login-form" class="form" action="EmployeeLoginAuthentication.php" method="post">
+                <img src="../img/SMIT+.png" class="logo" alt="">
+                <div class="form-group">
+                    <input type="username" name="username" id="username" class="form-control" placeholder="Username" required>
+                </div>
+                <div class="form-group">
+                    <input type="password" name="password" id="password" placeholder="Password" class="form-control" required>
+                </div>
+                <div class="form-button">
+                    <button name="loginButton" id="login" class="buttonLogin">Login</button>
+                </div>
+                <div class="form-button">
+                    <button name="registerButton" class="buttonRegister" href="patientRegistration.php">Resgister</button>
+                </div>
+                <div class="form-link">
+                    <a href="" id="forgot_pswd">Forget password?</a>
+                </div>
+            </form>
+        </div>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script>
             $(function(){

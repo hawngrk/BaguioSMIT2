@@ -1,31 +1,29 @@
 <?php
     session_start();
     if(!isset($_SESSION['userlogin'])) {
-        header("Location: patientDashboard.php");
+        header("Location: patientLogin.php");
     }
 ?>
 <!DOCTYPE html>
 <html>
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <title>SMIT+ | Profile</title>
+    <title>SMIT+ | Infographics</title>
     <!--Favicon-->
     <link rel="icon" href="../img/FaviSMIT+.png" type="image/jpg">
     <!--Custom CSS-->
     <link rel="stylesheet" href="../css/patientStyle.css">
-     <!--Bootstrap-->
-     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
- 
-     <!-- Font Awesome JS -->
-     <script src="https://kit.fontawesome.com/fcdb0fe9f3.js" crossorigin="anonymous"></script>
-     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
-     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
+    <!--Bootstrap-->
+    <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" rel="stylesheet">
+    
+    <!-- Font Awesome JS -->
+    <script src="https://kit.fontawesome.com/fcdb0fe9f3.js" crossorigin="anonymous"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
+
 </head>
 
 <body>
@@ -69,26 +67,30 @@
     <!--Page Content-->
     <div class="bodyWrapper">
         <div>
-            <h1 class="helpheader">Profile</h1>
+            <h1 class="helpheader">Infographics</h1>
             <hr>
         </div>
-        <div class="reportWrapper">
-            <img src="../img/displ.png" id="profPic" alt="">
-            <hr>
+        <div class="reportWrapper infoWrapper">
+            <div class="card infographics">
+                <img src="../img/2019-nCoV.jpg" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <p class="card-text">DOH Case of Pneumonia.</p>
+                </div>
+            </div>
+            <div class="card infographics">
+                <img src="../img/2019-nCoVHealthAdvisory.jpg" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <p class="card-text">Health Advisory</p>
+                </div>
+            </div>
+            <div class="card infographics">
+                <img src="../img/orig_facemask.jpg" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <p class="card-text">How to wear a facemask</p>
+                </div>
+            </div>
+        </div>
 
-            <form class="prof" action="">
-                <h4 class="h4Prof">Name</h4> <input type="text" id="nameProf" value="HUDSON KIT P. NATIVIDAD"> <label for="nameProf" readonly></label>
-                <br>
-                <h4 class="h4Prof">Age</h4><input type="text" id="ageProf" value="21 years old"><label for="ageProf" readonly></label>
-                <br>
-                <h4 class="h4Prof">Address</h4><input type="text" id="addProf" value="100 Montebello St. Bakakeng Sur, Baguio City, 2600" readonly><label for="addProf"></label>
-                <hr>
-                <h4 class="h4Prof">Vaccine Brand</h4>
-                <input type="text" id="vaccBrand" value="SINOVAC" readonly><br>
-                <input type="checkbox" id="dose1"><strong> 1st Dose</strong> February 21, 2021</label><br>
-                <input type="checkbox" id="dose2"><label id="dose22" for="dose2"><strong> 2nd Dose</strong> March 21, 2021</label>
-            </form>
-        </div>
     </div>
 </body>
 

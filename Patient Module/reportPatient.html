@@ -13,10 +13,7 @@
     <link rel="stylesheet" href="../css/patientStyle.css">
     <!--Bootstrap-->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-    <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
     <!-- Font Awesome JS -->
@@ -75,28 +72,85 @@
             <hr>
         </div>
         <div class="reportWrapper reportWrapperbg">
-            <form>
+            <form action="processes/processReport.php" method="post" target="_blank" id="report-form">
                 <h5>1. Date the last time you went out</h5>
                 <input type="date" class="dateBtn" name="date" id="date">
+
                 <hr>
+
                 <h5>2. Select the vaccine side effect/s that applies:</h5>
-                <input type="radio" id="chills" class="radioBtn" name="side_effect" value="Chills">   <label for="chills">Chills</label><br>
-                <input type="radio" id="fever" class="radioBtn" name="side_effect" value="Fever">   <label for="fever">Fever</label><br>
-                <input type="radio" id="headache" class="radioBtn" name="side_effect" value="Headache">   <label for="headache">Headache</label><br>
-                <input type="radio" id="musclePain" class="radioBtn" name="side_effect" value="MusclePain">   <label for="musclePain">Muscle Pain</label><br>
-                <input type="radio" id="nausea" class="radioBtn" name="side_effect" value="nausea">   <label for="nausea">Nausea</label><br>
-                <input type="radio" id="tiredness" class="radioBtn" name="side_effect" value="tiredness">   <label for="nausea">Tiredness</label><br>
-                <input type="radio" id="otherSide" class="radioBtn" name="side_effect" value="Please specify here">   <label for="otherSide"> <input type="text" id="otherSide" name="side_effect" value="Please specify here"></label><br>
+
+                <input type="hidden" name="chills" value="">
+                <input type="radio" id="chills" class="radioBtn" name="chills value="Chills">   
+                <label for="chills">Chills</label><br>
+
+                <input type="hidden" name="sFever" value="">
+                <input type="radio" id="sFever" name="sFever" class="radioBtn" name="side_effect" value="Fever">   
+                <label for="fever">Fever</label><br>
+
+                <input type="hidden" name="headache" value="">                
+                <input type="radio" id="sHeadache" class="radioBtn" name="sHeadache" value="Headache">   
+                <label for="headache">Headache</label><br>
+
+                <input type="hidden" name="musclePain" value="">
+                <input type="radio" id="musclePain" class="radioBtn" name="musclePain" value="Muscle Pain">   
+                <label for="musclePain">Muscle Pain</label><br>
+
+                <input type="hidden" name="nausea" value="">
+                <input type="radio" id="nausea" class="radioBtn" name="nausea" value="Nausea">
+                <label for="nausea">Nausea</label><br>
+
+                <input type="hidden" name="tiredness" value="">
+                <input type="radio" id="tiredness" class="radioBtn" name="tiredness" value="tiredness">   
+                <label for="nausea">Tiredness</label><br>
+
+                <input type="hidden" name="other" value="">
+                <input type="radio" id="otherSide" class="radioBtn" name="other" value="Please specify here">
+
+                <label for="otherSide"> 
+                <input type="text" id="otherSide" name="other " value="Please specify here"></label><br>
+
                 <hr>
                 <h5>3.Select the COVID-19 symtom/s that applies</h5>
-                <input type="radio" id="cough" class="radioBtn" name="side_effect" value="radio"> <label for="cough">Cough</label><br>
-                <input type="radio" id="fever" class="radioBtn" name="side_effect" value="fever"> <label for="fever">Fever</label><br>
-                <input type="radio" id="diff" class="radioBtn" name="side_effect" value="diff"> <label for="diff">Difficulty Breathing or Shortness of Breath</label><br>
-                <input type="radio" id="ache" class="radioBtn" name="side_effect" value="ache"> <label for="ache">Muscle or Body Ache</label><br>
-                <input type="radio" id="head" class="radioBtn" name="side_effect" value="head"> <label for="head">Headache</label><br>
+
+
+                <input type="hidden" name="cough" value="">
+                <input type="radio" id="cough" class="radioBtn" name="cough" value="Cough"> 
+                <label for="cough">Cough</label><br>
+
+                <input type="hidden" name="cFever" value="">
+                <input type="radio" id="cFever" class="radioBtn" name="side_effect" value="Fever"> 
+                <label for="fever">Fever</label><br>
+
+                <input type="hidden" name="diff" value="">
+                <input type="radio" id="diff" class="radioBtn" name="diff" value="Difficulty Breathing or Shortness of Breath"> 
+                <label for="diff">Difficulty Breathing or Shortness of Breath</label><br>
+                
+                <input type="hidden" name="ache" value="">
+                <input type="radio" id="ache" class="radioBtn" name="sache" value="Muscle or Body Ache"> 
+                <label for="ache">Muscle or Body Ache</label><br>
+
+                <input type="hidden" name="cHeadache" value="">
+                <input type="radio" id="head" class="radioBtn" name="cHeadache" value="Headache"> <label for="head">Headache</label><br>
+
+                <input type="hidden" name="fatigue" value="">
+                <input type="radio" id="fatigue" class="radioBtn" name="fatigue" value="Fatigue"> <label for="fatigue">Fatigue</label><br>
+
+                <input type="hidden" name="runny" value="">
+                <input type="radio" id="runny" class="radioBtn" name="runny" value="Runny Nose"> <label for="runny">Runny Nose</label><br>
+
+                <input type="hidden" name="diarrhea" value="">
+                <input type="radio" id="diarrhea" class="radioBtn" name="diarrhea" value="Diarrhea"> <label for="head">Diarrhea</label><br>
+
+                <input type="hidden" name="sore" value="">
+                <input type="radio" id="sore" class="radioBtn" name="sore" value="Sore Throat"> <label for="head">Sore Throat</label><br>
+
+                <input type="hidden" name="loss" value="">
+                <input type="radio" id="loss" class="radioBtn" name="loss" value="Loss of Smell and taste"> <label for="head">Loss of Smell and taste</label><br>
+
+                <button type="submit" name="processReport" form="report-form" class="helpBtn">Submit</button>
             </form>
         </div>
     </div>
 </body>
-
 </html>

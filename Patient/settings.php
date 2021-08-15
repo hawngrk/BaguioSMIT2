@@ -1,3 +1,9 @@
+<?php
+    session_start();
+    if(!isset($_SESSION['userlogin'])) {
+        header("Location: patientDashboard.php");
+    }
+?>
 <!DOCTYPE html>
 <html>
 
@@ -23,7 +29,7 @@
 </head>
 
 <body>
-    <!--Navigation Bar-->
+<!--Navigation Bar-->
     <nav class="navbar navbar-expand-md">
         <img src="../img/faviSMIT+ copy.png" class="logoImg" alt="">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
@@ -32,23 +38,23 @@
         <div class="collapse navbar-collapse" id="collapsibleNavbar">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="homePatient.html"><i class="fas fa-home"></i> Home <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="patientDashboard.php"><i class="fas fa-home"></i> Home <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="profilePatient.html"><i class="fas fa-user-circle"></i> Profile</a>
+                    <a class="nav-link" href="profile.php"><i class="fas fa-user-circle"></i> Profile</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="reportPatient.html"><i class="fas fa-file"></i> Report</a>
+                    <a class="nav-link" href="report.php"><i class="fas fa-file"></i> Report</a>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="settingsPatient.html" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle" href="settings.php" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="fas fa-cog"></i> Settings
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="infographicsPatient.html"><i class="fas fa-file-image"></i> Infographics</a>
+                        <a class="dropdown-item" href="infographics.php"><i class="fas fa-file-image"></i> Infographics</a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="helpPatient.html"><i class="fas fa-question-circle"></i> Help</a>
-                        <a class="dropdown-item" href="aboutPatient.html"><i class="fas fa-info-circle"></i> About</a>
+                        <a class="dropdown-item" href="help.php"><i class="fas fa-question-circle"></i> Help</a>
+                        <a class="dropdown-item" href="about.php"><i class="fas fa-info-circle"></i> About</a>
                     </div>
                 </li>
             </ul>

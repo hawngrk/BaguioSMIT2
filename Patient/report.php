@@ -1,103 +1,164 @@
 <?php
     session_start();
     if(!isset($_SESSION['userlogin'])) {
-       header("Location: patientDashboard.php");
+       header("Location: patientLogin.php");
     }
 ?>
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title></title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="">
-    </head>
-    <body>
-        <form action="processes/processReport.php" method="post" target="_blank" id="report-form">
-            <h3>1. Date of the last time you went out</h3>
-            <input type="hidden" name="last-out">
-            <input type="date" name="last-out" id="last-out"><br>
 
-            <h3>2. Select the vaccine side effect/s that applies:</h3>
-            
-            <input type="hidden" name="chills" value="">
-            <input type="checkbox" name="chills" id="chills" value="Chills">
-            <label for="chills">Chills</label><br>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-            <input type="hidden" name="headache" value="">
-            <input type="checkbox" name="headache" id="headache" value="Headache">
-            <label for="headache">Headache</label><br>
+    <title>NavTemplate</title>
+    <!--Favicon-->
+    <link rel="icon" href="../img/FaviSMIT+.png" type="image/jpg">
+    <!--Custom CSS-->
+    <link rel="stylesheet" href="../css/patientStyle.css">
+    <!--Bootstrap-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-            <input type="hidden" name="muscle-pain" value="">
-            <input type="checkbox" name="muscle-pain" id="muscle-pain" value="Muscle pain">
-            <label for="muscle-pain">Muscle Pain</label><br>
+    <!-- Font Awesome JS -->
+    <script src="https://kit.fontawesome.com/fcdb0fe9f3.js" crossorigin="anonymous"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
 
-            <input type="hidden" name="nausea" value="">
-            <input type="checkbox" name="nausea" id="nausea" value="Nausea">
-            <label for="nausea">Nausea</label><br>
+</head>
 
-            <input type="hidden" name="tiredness" value="">
-            <input type="checkbox" name="tiredness" id="tiredness" value="Tiredness">
-            <label for="tiredness">Tiredness</label><br>
+<body>
+ <!--Navigation Bar-->
+    <nav class="navbar navbar-expand-md">
+        <img src="../img/faviSMIT+ copy.png" class="logoImg" alt="">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+            <span><i class="fas fa-bars"></i></span>
+        </button>
+        <div class="collapse navbar-collapse" id="collapsibleNavbar">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="patientDashboard.php"><i class="fas fa-home"></i> Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="profile.php"><i class="fas fa-user-circle"></i> Profile</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="report.php"><i class="fas fa-file"></i> Report</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="settings.php" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-cog"></i> Settings
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="infographics.php"><i class="fas fa-file-image"></i> Infographics</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="help.php"><i class="fas fa-question-circle"></i> Help</a>
+                        <a class="dropdown-item" href="about.php"><i class="fas fa-info-circle"></i> About</a>
+                    </div>
+                </li>
+            </ul>
+            <form class="form-inline">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-light" type="submit">Search</button>
+            </form>
+            <button href="loginPatient.html" class="signoutBtn" type="button"><i class="fas fa-sign-out-alt"></i></button>
+        </div>
+    </nav>
 
-            <input type="hidden" name="other" value="">
-            <input type="checkbox" name="other" id="other" value="Other:">
-            <label for="other">Other side effect/s (Stomach pain, Eye redness)</label><br>
 
-            <input type="text" name="other-symptom" id="other-symptom" placeholder="Please specify here"><br>
-            <input type="checkbox" name="none" id="no-side-effect" value="">
-            <label for="no-side-effect">None of the Above</label><br>
+    <!--Page Content-->
+    <div class="bodyWrapper">
+        <div>
+            <h1 class="helpheader">Report Symptoms</h1>
+            <p class="headerWrapper"><i>**(Please understand that upon filling up this form,
+                you are allowing us to process and use the data. As
+                well as providing us true information and not just a made up one.
+                Providing false information is punishable by law.)
+            </i></p>
+            <hr>
+        </div>
+        <div class="reportWrapper reportWrapperbg">
+            <form action="processes/processReport.php" method="post" target="_blank" id="report-form">
+                <h5>1. Date the last time you went out</h5>
+                <input type="date" class="dateBtn" name="date" id="date">
 
-            <h3>3. Select the COVID-19 symptom/s that applies:</h3>
+                <hr>
 
-            <input type="hidden" name="fever" value="">
-            <input type="checkbox" name="fever" id="fever" value="Fever">
-            <label for="fever">Fever</label><br>
+                <h5>2. Select the vaccine side effect/s that applies:</h5>
 
-            <input type="hidden" name="dry-cough" value="">
-            <input type="checkbox" name="dry-cough" id="dry-cough" value="Dry Cough">
-            <label for="dry-cough">Dry Cough</label><br>
+                <input type="hidden" name="chills" value="">
+                <input type="radio" id="chills" class="radioBtn" name="chills value="Chills">   
+                <label for="chills">Chills</label><br>
 
-            <input type="hidden" name="fatigue" value="">
-            <input type="checkbox" name="fatigue" id="fatigue" value="Fatigue">
-            <label for="fatigue">Fatigue</label><br>
+                <input type="hidden" name="sFever" value="">
+                <input type="radio" id="sFever" name="sFever" class="radioBtn" name="side_effect" value="Fever">   
+                <label for="fever">Fever</label><br>
 
-            <input type="hidden" name="aches-and-pains" value="">
-            <input type="checkbox" name="aches-and-pains" id="aches-and-pains" value="Aches and Pains">
-            <label for="aches-and-pains">Aches and Pains</label><br>
+                <input type="hidden" name="headache" value="">                
+                <input type="radio" id="sHeadache" class="radioBtn" name="sHeadache" value="Headache">   
+                <label for="headache">Headache</label><br>
 
-            <input type="hidden" name="runny-nose" value="">
-            <input type="checkbox" name="runny-nose" id="runny-nose" value="Runny Rose">
-            <label for="runny-nose">Runny Nose</label><br>
+                <input type="hidden" name="musclePain" value="">
+                <input type="radio" id="musclePain" class="radioBtn" name="musclePain" value="Muscle Pain">   
+                <label for="musclePain">Muscle Pain</label><br>
 
-            <input type="hidden" name="sore-throat" value="">
-            <input type="checkbox" name="sore-throat" id="sore-throat" value="Sore throat">
-            <label for="sore-throat">Sore Throat</label><br> 
+                <input type="hidden" name="nausea" value="">
+                <input type="radio" id="nausea" class="radioBtn" name="nausea" value="Nausea">
+                <label for="nausea">Nausea</label><br>
 
-            <input type="hidden" name="shortness-of-breath" value="">
-            <input type="checkbox" name="shortness-of-breath" id="shortness-of-breath" value="Shortness of breath">
-            <label for="shortness-of-breath">Shortness of Breath</label><br>   
+                <input type="hidden" name="tiredness" value="">
+                <input type="radio" id="tiredness" class="radioBtn" name="tiredness" value="tiredness">   
+                <label for="nausea">Tiredness</label><br>
 
-            <input type="hidden" name="diarrhea" value="">
-            <input type="checkbox" name="diarrhea" id="diarrhea" value="Diarrhea">
-            <label for="diarrhea">Diarrhea</label><br>
+                <input type="hidden" name="other" value="">
+                <input type="radio" id="otherSide" class="radioBtn" name="other" value="Please specify here">
 
-            <input type="hidden" name="cHeadache" value="">
-            <input type="checkbox" name="cHeadache" id="cHeadache" value="Headache">
-            <label for="headache">Headache</label><br>
+                <label for="otherSide"> 
+                <input type="text" id="otherSide" name="other " value="Please specify here"></label><br>
 
-            <input type="hidden" name="loss-of-smell-and-taste" value="">
-            <input type="checkbox" name="loss-of-smell-and-taste" id="loss-of-smell-and-taste" value="Loss of smell and taste">
-            <label for="loss-of-smell-and-taste">Loss of smell and Taste</label><br>
+                <hr>
+                <h5>3.Select the COVID-19 symtom/s that applies</h5>
 
-            <input type="checkbox" name="no-symptoms" id="no-symptoms" value="">
-            <label for="no-symptoms">None of the Above</label><br>
-            
-            <h3>Additional Description</h3><br>
-            <input type="text" name="description" id="description"><br>
-            <button type="submit" name="processReport" form="report-form">Submit</button>
-        </form>
-    </body>
+
+                <input type="hidden" name="cough" value="">
+                <input type="radio" id="cough" class="radioBtn" name="cough" value="Cough"> 
+                <label for="cough">Cough</label><br>
+
+                <input type="hidden" name="cFever" value="">
+                <input type="radio" id="cFever" class="radioBtn" name="side_effect" value="Fever"> 
+                <label for="fever">Fever</label><br>
+
+                <input type="hidden" name="diff" value="">
+                <input type="radio" id="diff" class="radioBtn" name="diff" value="Difficulty Breathing or Shortness of Breath"> 
+                <label for="diff">Difficulty Breathing or Shortness of Breath</label><br>
+                
+                <input type="hidden" name="ache" value="">
+                <input type="radio" id="ache" class="radioBtn" name="sache" value="Muscle or Body Ache"> 
+                <label for="ache">Muscle or Body Ache</label><br>
+
+                <input type="hidden" name="cHeadache" value="">
+                <input type="radio" id="head" class="radioBtn" name="cHeadache" value="Headache"> <label for="head">Headache</label><br>
+
+                <input type="hidden" name="fatigue" value="">
+                <input type="radio" id="fatigue" class="radioBtn" name="fatigue" value="Fatigue"> <label for="fatigue">Fatigue</label><br>
+
+                <input type="hidden" name="runny" value="">
+                <input type="radio" id="runny" class="radioBtn" name="runny" value="Runny Nose"> <label for="runny">Runny Nose</label><br>
+
+                <input type="hidden" name="diarrhea" value="">
+                <input type="radio" id="diarrhea" class="radioBtn" name="diarrhea" value="Diarrhea"> <label for="head">Diarrhea</label><br>
+
+                <input type="hidden" name="sore" value="">
+                <input type="radio" id="sore" class="radioBtn" name="sore" value="Sore Throat"> <label for="head">Sore Throat</label><br>
+
+                <input type="hidden" name="loss" value="">
+                <input type="radio" id="loss" class="radioBtn" name="loss" value="Loss of Smell and taste"> <label for="head">Loss of Smell and taste</label><br>
+
+                <button type="submit" name="processReport" form="report-form" class="helpBtn">Submit</button>
+            </form>
+        </div>
+    </div>
+</body>
 </html>
