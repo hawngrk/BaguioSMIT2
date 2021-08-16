@@ -311,3 +311,16 @@
 html {
     scroll-behavior: smooth;
 }
+
+.developedImg {
+    width: 30%;
+}
+
+.managedImg {
+    width: 20%;
+}
+
+.developedImg,
+.managedImg {
+    margin-left: 2%;
+}
