@@ -106,25 +106,11 @@ include_once("../includes/database.php") ?>
 
         <!-- Page Content  -->
 
-
-        <div class="listPatientColumn">
-            <div class="four listPatientRow">
-                <div class="listPatient-box colored">
-                    <center><p>Deployment Summary</p></center>
-                </div>
-            </div>
-            <div class="four listPatientRow row2">
-                <div id="listPatientContent" class="listPatient-box colored">
-                </div>
-            </div>
-        </div>
-
         <button id="addDepBtn" type="button" class="buttonTop">
             Add Deployment
         </button>
 
-
-        <div id="DeployModal" class="modal">
+        <div id="DeployModal" class="modal-window">
             <div class="content-modal">
                 <div class="modal-header">
                     <h4 class="modal-title">Add Deployment</h4>
@@ -189,23 +175,32 @@ include_once("../includes/database.php") ?>
                             </div>
                         </div>
                     </div>
-
-
+                    <div id="uploadListPatient">
+                        <h4> List Patients </h4>
+                        <div>
+                            <a href="url">Generate File</a>
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
-                    <button id="cancel1" type="button" class="button5"> Cancel</button>
-                    <button id='add1' type="button" class="button5"> Add</button>
+                    <button id="cancel1" type="button" class="btn btn-outline-dark"> Cancel </button>
+                    <button id='add1' type="button" class="btn btn-success""> Add</button>
                 </div>
             </div>
         </div>
 
-        <div id="DeployModalConf" class="modal">
+        <div id="DeployModalConf" class="modal-window">
             <div class="content-modal">
-                <span id="close3" class="close">&times;</span>
-                <div class="AddDeploymentConf-PopUp">
+                <div class="modal-header">
+                    <h4 class="modal-title">Add Deployment</h4>
+                    <span id="close3" class="close">&times;</span>
+                </div>
+                <div class="modal-body">
                     <h3> Are you sure to add this deployment? </h3>
-                    <button id="no1" type="button" class="button5"> No</button>
-                    <button id="yes1" type="button" class="button5"> Yes</button>
+                </div>
+                <div class="modal-footer">
+                    <button id="no1" type="button" class="btn btn-outline-dark"> No </button>
+                    <button id="yes1" type="button" class="btn btn-success""> Yes </button>
                 </div>
             </div>
         </div>
@@ -214,7 +209,7 @@ include_once("../includes/database.php") ?>
             Add Health District
         </button>
 
-        <div id="HealthDModal" class="modal">
+        <div id="HealthDModal" class="modal-window">
             <div class="content-modal">
                 <div class="modal-header">
                     <h4 class="modal-title">Add Health District</h4>
@@ -241,29 +236,65 @@ include_once("../includes/database.php") ?>
                         </select>
                     </div>
 
-                    <div class="AddHealthD-PopUp">
-                        <input type="checkbox" id="D1" name="D1" value="Bike">
-                        <label for="D1"> District 1</label><br>
-                        <input type="checkbox" id="D2" name="D2" value="Car">
-                        <label for="D2"> District 2</label><br>
-                        <input type="checkbox" id="D3" name="vehicle3" value="Boat">
-                        <label for="D3"> District 3</label><br>
+                    <div class="AddHealthD-option">
+                        <div class="row">
+                            <ul>
+                                <li>
+                                    <input type="checkbox" id="D1" name="D1" value="D1">
+                                    <label for="D1"> District 1</label><br>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="D2" name="D2" value="D2">
+                                    <label for="D2"> District 2</label><br>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="D3" name="D3" value="D3">
+                                    <label for="D3"> District 3</label><br>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="D3" name="D3" value="D3">
+                                    <label for="D3"> District 3</label><br>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="D3" name="D3" value="D3">
+                                    <label for="D3"> District 3</label><br>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="D3" name="D3" value="D3">
+                                    <label for="D3"> District 3</label><br>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="D3" name="D3" value="D3">
+                                    <label for="D3"> District 3</label><br>
+                                </li>
+
+                            </ul>
+
+                        </div>
+
                     </div>
                     <div class="modal-footer">
-                        <button id="cancel2" type="button" class="button5"> Cancel</button>
-                        <button id='add2' type="button" class="button5"> Add</button>
+                        <button id="cancel2" type="button" class="btn btn-outline-dark"> Cancel </button>
+                        <button id='add2' type="button" class="btn btn-success"> Add</button>
+
                     </div>
                 </div>
             </div>
         </div>
 
-        <div id="HealthDModalConf" class="modal">
-            <div class="modal-content">
-                <span id="close4" class="close">&times;</span>
-                <div class="AddDeploymentConf-PopUp">
+        <div id="HealthDModalConf" class="modal-window">
+            <div class="content-modal">
+                <div class="modal-header">
+                    <h4 class="modal-title">Add Health District</h4>
+                    <span id="close4" class="close">&times;</span>
+                </div>
+
+                <div class="modal-body">
                     <h3> Are you sure to add this Health District? </h3>
-                    <button id="no2" type="button" class="button5"> No</button>
-                    <button id='yes2' type="button" class="button5"> Yes</button>
+                </div>
+                <div class="modal-footer">
+                    <button id="no2" type="button" class="btn btn-outline-dark"> No </button>
+                    <button id='yes2' type="button" class="btn btn-success"> Yes </button>
                 </div>
             </div>
         </div>
@@ -297,58 +328,29 @@ include_once("../includes/database.php") ?>
             </form>
         </div>
 
-        <table class="table tableDep table-row table-hover">
+        <table class="table table-row table-hover">
             <thead>
             <tr>
                 <th scope="col">#</th>
-                <th scope="col">Vaccination Drive Id</th>
+                <th scope="col">Vaccine ID</th>
+                <th scope="col">Vaccine Name</th>
                 <th scope="col">Brand</th>
-                <th scope="col">Health District</th>
                 <th scope="col">Location</th>
                 <th scope="col">Date</th>
                 <th scope="col">Action</th>
             </tr>
             </thead>
-
-            <?php
-            require_once '../require/getVaccinationDrive.php';
-            require_once '../require/getVaccineDeployment.php';
-            require_once '../require/getHealthDistrict.php';
-            require_once '../require/getVaccine.php';
-
-            $count = 0;
-            foreach ($vaccination_drive as $vd) {
-                $count++;
-                $driveId = $vd->getDriveId();
-                $location = $vd->getVaccLocation();
-                $date = $vd->getVaccDate();
-
-
-                foreach ($vaccineDeployment as $vDep) {
-                    if ($driveId == $vDep->getDeploymentDriveId()) {
-                        foreach ($vaccines as $vac) {
-                            if ($vDep->getDeploymentVaccId() == $vac->getVaccId()) {
-                                $brand = $vac->getVaccName();
-                            }
-                        }
-                    }
-                }
-
-                foreach ($health_district as $hd) {
-                    if ($vd->getHealthDistId() == $hd->getHealthDistrictId()) {
-                        $healthDistrict = $hd->getHealthDistrictName();
-                    }
-                }
-                echo "<tr onclick = 'showDrive(this)'>
-                <td>$count</td>
-                <td>$driveId</td>
-                <td>$brand</td>
-                <td>$healthDistrict</td>
-                <td>$location</td>
-                <td>$date</td>
-</tr>";
-            }
-            ?>
+            <tbody>
+            <tr class="table-row" data-href="www.google.com">
+                <th scope="row">1</th>
+                <td>SINOVAC001</td>
+                <td>SINOVAC</td>
+                <td>SINOVAC MANUFACTURER</td>
+                <td>COVAX Facility</td>
+                <td>DECEMBEr 17, 2021</td>
+                <td></td>
+            </tr>
+            </tbody>
         </table>
     </div>
     <script type="text/javascript">
@@ -377,61 +379,64 @@ include_once("../includes/database.php") ?>
         var close2 = document.getElementById("close2")
         var close3 = document.getElementById("close3")
         var close4 = document.getElementById("close4")
-        var list = document.getElementById("listPatientContent")
 
-        addDepButt.onclick = function () {
+        addDepButt.onclick = function() {
             modal1.style.display = "block";
         }
 
-        cancel1.onclick = function () {
+        cancel1.onclick = function() {
             modal1.style.display = "none";
         }
 
-        add1.onclick = function () {
+        add1.onclick = function() {
+            modal1.style.display = "none";
             modal3.style.display = "block";
         }
 
-        no1.onclick = function () {
+        no1.onclick = function() {
+            modal1.style.display = "block";
             modal3.style.display = "none";
         }
 
-        yes1.onclick = function () {
+        yes1.onclick = function() {
             //enter code to add deployment here
         }
 
-        addHealthD.onclick = function () {
+        addHealthD.onclick = function() {
             modal2.style.display = "block";
         }
 
-        cancel2.onclick = function () {
+        cancel2.onclick = function() {
             modal2.style.display = "none";
         }
 
-        add2.onclick = function () {
+        add2.onclick = function() {
+            modal2.style.display = "none";
             modal4.style.display = "block";
         }
 
-        no2.onclick = function () {
+        no2.onclick = function() {
+            modal2.style.display = "block";
             modal4.style.display = "none";
         }
 
-        window.onclick = function (event) {
+        window.onclick = function(event) {
             if (event.target == modal1 || event.target == modal2) {
                 modal1.style.display = "none";
                 modal2.style.display = "none";
             }
         }
 
-        close1.onclick = function () {
+        close1.onclick = function() {
             modal1.style.display = "none";
         }
-        close2.onclick = function () {
+        close2.onclick = function() {
             modal2.style.display = "none";
         }
-        close3.onclick = function () {
+        close3.onclick = function() {
             modal3.style.display = "none";
         }
-        close4.onclick = function () {
+        close4.onclick = function() {
             modal4.style.display = "none";
         }
 
