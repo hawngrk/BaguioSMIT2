@@ -103,8 +103,10 @@ include_once("../includes/database.php") ?>
         </nav>
 
         <!-- Page Content  -->
-        <button type="button" class="buttonTop" id="generateReportBtn" onclick="generateReport()">Generate Report
+        <button type="button" class="buttonTop" id="generateReportBtn" onclick="generateReport(1)">Generate Report
         </button>
+
+        <button type="button" class="buttonTop" id="invalidatedReportBtn" onclick="showInvalidatedReports()">Invalidated Reports</button>
 
         <!--Search Input and Button-->
         <div class="search-container">
@@ -238,6 +240,10 @@ include_once("../includes/database.php") ?>
 
             </div>
 
+            <div id="invalidatedReportsModal" class="modal">
+
+            </div>
+
             <div id="viewReportModal" class="modal">
                 <div class='modal-content container'>
                     <h2 id='headerReviewReport'><span id='viewReportClose' class='close'>&times;</span></h2>
@@ -320,61 +326,129 @@ include_once("../includes/database.php") ?>
         })
     }
 
-    function generateReport() {
+    function generateReport(view) {
         $.ajax({
             url: 'manageReportViewProcessor.php',
             type: 'POST',
-            data: {"generate": 1},
+            data: {"generate": view},
             success: function (result) {
                 document.getElementById("reportsTable").innerHTML = result;
             }
         });
 
+        if (view === 1) {
+            $.ajax({
+                url: 'manageReportViewProcessor.php',
+                type: 'POST',
+                data: {"options": 1},
+                success: function (result) {
+                    document.getElementById("generateReportOptions").innerHTML = result;
+                }
+            });
+        } else if (view === 2) {
+            document.getElementById("generateReportOptions").innerHTML = "";
+        }
+    }
+
+    var invalidatedReportsModal = document.getElementById("invalidatedReportsModal");
+
+    function showInvalidatedReports() {
         $.ajax({
             url: 'manageReportViewProcessor.php',
             type: 'POST',
-            data: {"options": 1},
+            data: {"invalidated": 1},
             success: function (result) {
-                document.getElementById("generateReportOptions").innerHTML = result;
+                document.getElementById("invalidatedReportsModal").innerHTML = result;
+                invalidatedReportsModal.style.display = "block";
             }
         });
     }
 
-    function cancelGenerateReport() {
+
+    function viewInvalidatedReport(reportId) {
         $.ajax({
             url: 'manageReportViewProcessor.php',
             type: 'POST',
-            data: {"cancel": 1},
+            data: {"report": reportId, "view": 1},
             success: function (result) {
-                document.getElementById("reportsTable").innerHTML = result;
-                document.getElementById("generateReportOptions").innerHTML = "";
+                document.getElementById("invalidatedReportsModal").innerHTML = result;
+                invalidatedReportsModal.style.display = "block";
             }
         });
+    }
+
+    function editInvalidatedReport(reportId) {
+        $.ajax({
+            url: 'manageReportViewProcessor.php',
+            type: 'POST',
+            data: {"report": reportId, "view": 2},
+            success: function (result) {
+                document.getElementById("invalidatedReportsModal").innerHTML = result;
+                invalidatedReportsModal.style.display = "block";
+            }
+        });
+    }
+
+    function closeInvalidatedReports() {
+        invalidatedReportsModal.style.display = "none";
     }
 
     var viewReportModal = document.getElementById("viewReportModal");
 
-    window.onclick = function (event) {
-        if (event.target === viewReportModal) {
+    function viewReport(reportId) {
+        $.ajax({
+            url: 'manageReportViewProcessor.php',
+            type: 'POST',
+            data: {"report": reportId, "view": 1},
+            success: function (result) {
+                document.getElementById("viewReportModal").innerHTML = result;
+                viewReportModal.style.display = "block";
+            }
+        });
+    }
+
+    function editReport(reportId) {
+        $.ajax({
+            url: 'manageReportViewProcessor.php',
+            type: 'POST',
+            data: {"report": reportId, "view": 2},
+            success: function (result) {
+                document.getElementById("viewReportModal").innerHTML = result;
+                viewReportModal.style.display = "block";
+            }
+        });
+    }
+
+    function closeViewReport(status) {
+        if (status === 'Invalidated') {
+            invalidatedReportsModal.style.display = "none";
+        } else {
             viewReportModal.style.display = "none";
         }
     }
 
-    function viewReport(reportId) {
-        console.log('ok');
-        $.ajax({
-            url: 'manageReportViewProcessor.php',
-            type: 'POST',
-            data: {"report": reportId},
-            success: function (result) {
-                document.getElementById("viewReportModal").innerHTML = result;
-            }
-        })
-        viewReportModal.style.display = "block";
+    function changeRepStatus(reportid, status) {
+        var selectedStatus = document.getElementById('statusSelection').value;
+        if (selectedStatus !== status) {
+            $.ajax({
+                url: 'manageReportViewProcessor.php',
+                type: 'POST',
+                data: {"changeStatus": selectedStatus, "reportid": reportid},
+                success: function (result) {
+                    showInvalidatedReports();
+                }
+            });
+        } else {
+            showInvalidatedReports();
+        }
     }
 
-    function closeViewReport() {
-        viewReportModal.style.display = "none";
+    window.onclick = function (event) {
+        if (event.target === viewReportModal) {
+            viewReportModal.style.display = "none";
+        } else if (event.target === invalidatedReportsModal) {
+            invalidatedReportsModal.style.display = "none";
+        }
     }
 </script>
 </body>

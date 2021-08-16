@@ -120,11 +120,53 @@ if (isset($_POST['filter'])) {
     }
 }
 
-if (isset($_POST['generate'])) {
+if (isset($_POST['invalidated'])) {
+    include_once("../includes/database.php");
+    $queryInvalidated = "SELECT report.report_id, patient.patient_full_name, report.date_reported FROM report JOIN patient ON report.report_id = patient.patient_id JOIN patient_details ON patient.patient_id = patient_details.patient_id WHERE report.report_status = 'Invalidated';";
     echo "
+    <div class='modal-content container'>
+    <h2 id='headerInvalidatedReports'><span id='invalidatedReportsClose' class='close' onclick='closeInvalidatedReports()'>&times;</span>Invalidated Reports</h2>
+    <div class='ViewInvalidated-PopUp'>
+      <table class='table table-row table-hover tableReport'>
       <thead>
             <tr>
-                <th scope='col'>Select All/Clear</th>
+                <th scope='col'>#</th>
+                <th scope='col'>Report ID</th>
+                <th scope='col'>Name of Reporter</th>
+                <th scope='col'>Date Reported</th>
+                <th scope='col'>Action</th>
+            </tr>
+            </thead>
+            ";
+    $stmt = $database->stmt_init();
+    $stmt->prepare($queryInvalidated);
+    $stmt->execute();
+    $stmt->bind_result($reportId, $reporter, $dateReported);
+
+    while ($stmt->fetch()) {
+        echo "<tr>
+                <td>$reportId</td>
+                <td>$reportId</td>
+                <td>$reporter</td>
+                <td>$dateReported</td>
+                <td><button class='viewReportBtn' type='submit' value='$reportId' onclick='viewInvalidatedReport($reportId)'>Review Report</button></td>
+                </tr>";
+    }
+    echo "
+    </table>
+    </div>
+    </div>
+    ";
+}
+
+if (isset($_POST['generate'])) {
+    $view = $_POST['generate'];
+    echo "
+      <thead>
+            <tr>";
+    if ($view == 1) {
+        echo   "<th scope='col'>Select All/Clear</th>";
+    } echo"
                 <th scope='col'>#</th>
                 <th scope='col'>Report ID</th>
                 <th scope='col'>Name of Reporter</th>
@@ -151,8 +193,11 @@ if (isset($_POST['generate'])) {
                         $reporter = $pat->getPatientFullName();
                     }
                 }
-                echo "<tr>
-                <td><input type='checkbox'></td>
+                echo "<tr>";
+                if ($view == 1) {
+                    echo "<td><input type='checkbox'></td>";
+                }
+                echo "
                 <td>$count</td>
                 <td>$reportId</td>
                 <td>$reporter</td>
@@ -163,50 +208,10 @@ if (isset($_POST['generate'])) {
             }
 }
 
-if (isset($_POST['cancel'])) {
-    echo "
-    <thead>
-            <tr>
-                <th scope='col'>#</th>
-                <th scope='col'>Report ID</th>
-                <th scope='col'>Name of Reporter</th>
-                <th scope='col'>Date Reported</th>
-                <th scope='col'>Report Verified</th>
-                <th scope='col'>Action</th>
-            </tr>
-            </thead> ";
-
-            require_once '../require/getReport.php';
-            require_once '../require/getPatient.php';
-
-            $count = 0;
-            foreach ($reports as $rep) {
-                $count++;
-                $reportId = $rep->getReportId();
-                $patientId = $rep->getReportPatientId();
-                $dateReported = $rep->getDateReported();
-                $status = $rep->getReportStatus();
-
-                foreach ($patients as $pat) {
-                    if ($patientId == $pat->getPatientId()) {
-                        $reporter = $pat->getPatientFullName();
-                    }
-                }
-                echo "<tr>
-                <td>$count</td>
-                <td>$reportId</td>
-                <td>$reporter</td>
-                <td>$dateReported</td>
-                <td>$status</td>
-                <td><button class='viewReportBtn' type='submit' value='$reportId' onclick='viewReport($reportId)'>Review Report</button></td>
-</tr>";
-            }
-}
-
 if (isset($_POST['options'])) {
     echo "
     <button type='button' class='buttonTop' id='downloadGenerateReportBtn'>Download Files</button>
-    <button type='button' class='buttonTop' id='cancelGenerateReportBtn' onclick='cancelGenerateReport()'>Cancel</button>";
+    <button type='button' class='buttonTop' id='cancelGenerateReportBtn' onclick='generateReport(2)'>Cancel</button>";
 }
 
 if (isset($_POST['report'])) {
@@ -215,6 +220,8 @@ if (isset($_POST['report'])) {
     require '../require/getPatientDetails.php';
     require '../require/getVaccine.php';
     $reportId = $_POST['report'];
+    $view = $_POST['view'];
+    print_r($view);
     $patientId = '';
     $reportType = '';
     $dateRecentTravel = '';
@@ -252,7 +259,15 @@ if (isset($_POST['report'])) {
     }
     echo "
     <div class='modal-content container'>
-    <h2 id='headerReviewReport'>REVIEW REPORT - $patientName<span id='viewReportClose' class='close' onclick='closeViewReport()'>&times;</span></h2>
+    <h2 id='headerReviewReport'>REVIEW REPORT - $patientName<span id='viewReportClose' class='close' onclick='closeViewReport(\"$reportStatus\")'>&times;</span></h2>";
+    if ($view == 1) {
+        if ($reportStatus === 'Invalidated') {
+            echo "<button class='viewReportBtn' value='$reportId' onclick='editInvalidatedReport($reportId)'>Edit</button>";
+        } else {
+            echo "<button class='viewReportBtn' value='$reportId' onclick='editReport($reportId)'>Edit</button>";
+        }
+    }
+    echo "
     <div class='ReviewRerport-PopUp'>
     <div id='repInfo'>
     <h4 class='reviewReportH3'>Report Information</h4>
@@ -299,9 +314,43 @@ if (isset($_POST['report'])) {
     <h4 class='reviewReportH3'>Patient Information</h4>
     <p>Patient Address: $patientAddress</p>
     <p>Contact Number: $patientNum</p>
-    </div>
-    <p>Report Status: $reportStatus</p>
-    </div>
-    </div>
-    ";
+    </div>";
+    if ($view == 1) {
+        echo "<p>Report Status: $reportStatus</p>
+        </div> ";
+        if ($reportStatus === 'Invalidated') {
+            echo "<button type='button' id='backInvalidatedReport' onclick='showInvalidatedReports()'>Back</button>";
+        }
+        echo "</div>";
+    } else if ($view == 2) {
+        echo "<p>Report Status: </p>";
+        if ($reportStatus == 'Verified') {
+            echo "
+            <select class='form-select col-lg-12' id='statusSelection'>
+            <option selected>Verify</option>
+            <option>Invalidate</option>
+            </select>";
+        } else if ($reportStatus == 'Invalidated') {
+            echo "
+            <select class='form-select col-lg-12' id='statusSelection'>
+            <option>Verify</option>
+            <option selected>Invalidated</option>
+            </select>";
+        }
+        echo"
+        </div>";
+        if ($reportStatus === 'Invalidated') {
+            echo "<button id='cancelBtnEditReport' onclick='viewInvalidatedReport($reportId)'> Cancel </button>";
+        } else {
+            echo "<button id='cancelBtnEditReport' onclick='viewReport($reportId)'> Cancel </button>";
+        }
+        echo "
+        <button id='confirmBtnEditReport' name='confirmBtnEditReport' onclick='changeRepStatus($reportId, \"$reportStatus\")'> Confirm        </button>
+        </div>";
+    }
+}
+
+if (isset($_POST['changeStatus'])) {
+    $reportId = $_POST['reportid'];
+    $status = $_POST['changeStatus'];
 }
