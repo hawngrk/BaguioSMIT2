@@ -105,27 +105,36 @@
                     Upload File
                 </button>
 
-            <!--Modal for uploading personnel-->
-            <div id="uploadFileModal" class="modal">
+            <!--Modal for uploading patient csv-->
+            <!--To include uploading files limited to csv file only-->
+            <div id="uploadFileModal" class="modal-window">
                 <div class="content-modal">
                     <div class="modal-header">
-                        <div id="uploadingFile">
-                            <h3> Upload File/s </h3>
-                        </div>
+                        <h3> Upload File/s </h3>
                         <span id="close" class="close">&times;</span>
                     </div>
 
                     <div class="modal-body">
-                        <p>Upload a list of patients (.csv) <br> or </p>
-                        <input type="file" class="form-control" id="fileUpload" multiple/>
-                        <button id="browse" type="button" class="'button4 btn-primary"> Browse </button>
-
-                        <div id="listFile">
-                            <!--temporary uploading-->
-                            <h6> Uploaded Files </h6>
-                            <p> prereg_09-19-2021_validates.csv</p>
-                            <p> prereg_09-21-2021_validates.csv</p>
+                        <div class="row">
+                            <div class="column" id="upload-content">
+                                <button class="button" id="iconBrowse"><i class="fas fa-file-upload"></i></button>
+                                <p>Upload a list of patients (.csv) </p>
+                                <button class="brwsButton" id="bttnBrowse" type="button"> Browse </button>
+                                <!--<p>Upload a list of patients (.csv) <br></p>
+                                <input type="file" class="form-control" id="fileUpload" multiple/>
+                                <button id="browse" type="button" class="'button4 btn-primary"> Browse </button> -->
+                            </div>
+                            <div class="column">
+                                <!--temporary uploading-->
+                                <h6> Uploaded Files </h6>
+                                <p> prereg_09-19-2021_validates.csv</p>
+                                <p> prereg_09-21-2021_validates.csv</p>
+                                <!--insert backend process for reading the uploaded files-->
+                            </div>
                         </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button id = 'add'  class="btn btn-primary"> Add </button>
                     </div>
                 </div>
             </div>
@@ -136,7 +145,7 @@
             </button>
 
             <!--Modal for adding personnel-->
-            <div id="personnelModal" class="modal">
+            <div id="personnelModal" class="modal-window">
                 <div class="content-modal">
                     <div class="modal-header">
                         <h4 class="modal-title">Add USER-Personnel</h4>
@@ -179,8 +188,8 @@
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" id="cancel" data-dismiss="modal">Cancel</button>
-                                <button type="button" id="next">Next</button>
+                                <button type="button" id="cancel"  class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                <button type="button" id="next"  class="btn btn-primary">Next</button>
                             </div>
                         </div>
                     </div>
@@ -188,7 +197,7 @@
             </div>
 
             <!--Modal for Personnel Credentials-->
-            <div id="personnelCredentials" class="modal">
+            <div id="personnelCredentials" class="modal-window">
                <div class="content-modal">
                    <div class="modal-header">
                        <span id = "close2" class="close">&times;</span>
@@ -201,12 +210,12 @@
                        <input type="text" id="password" name="password"  disabled="disabled">
                    </div>
                    <div class="modal-footer">
-                       <button type="button" id ='save'> Save </button>
+                       <button type="button" id ='save' class="btn btn-primary"> Save </button>
                    </div>
                </div>
             </div>
 
-            <div id="notifyModal" class="modal">
+            <div id="notifyModal" class="modal-window">
                 <div class="content-modal">
                     <div class="modal-header">
                         <span id = "close3" class="close">&times;</span>
@@ -216,7 +225,7 @@
                         <p> <center> User Personnel successfully added. </center> </p>
                     </div>
                     <div class="modal-footer">
-                        <button id = 'exit'> Close </button> <!--instead of close change to Done-->
+                        <button id = 'exit'  class="btn btn-primary"> Close </button> <!--instead of close change to Done-->
                     </div>
                 </div>
             </div>

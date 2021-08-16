@@ -23,10 +23,12 @@
     <script crossorigin="anonymous" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script crossorigin="anonymous" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" rel="stylesheet">
+
     <!-- Font Awesome JS -->
     <script src="https://kit.fontawesome.com/fcdb0fe9f3.js" crossorigin="anonymous"></script>
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
+
 </head>
 
 <body>
@@ -104,100 +106,123 @@
 
             <!--Modal for uploading patient csv-->
             <!--To include uploading files limited to csv file only-->
-            <div id="uploadFileModal" class="modal">
+            <div id="uploadFileModal" class="modal-window">
                 <div class="content-modal">
                     <div class="modal-header">
-                        <div id="uploadingFile">
                             <h3> Upload File/s </h3>
-                        </div>
                         <span id="close" class="close">&times;</span>
                     </div>
 
                     <div class="modal-body">
-                        <p>Upload a list of patients (.csv) <br> or </p>
-                        <input type="file" class="form-control" id="fileUpload" multiple/>
-                        <button id="browse" type="button" class="'button4 btn-primary"> Browse </button>
-
-                        <div id="listFile">
+                        <div class="row">
+                            <div class="column" id="upload-content">
+                                <div class="browseButton">
+                                    <button class="button" id="iconBrowse"><i class="fas fa-file-upload"></i></button>
+                                    <input type="file" name="file"/>
+                                    <p>Upload a list of patients (.csv) </p>
+                                    <br>
+                                </div>
+                                <div class="browseButton">
+                                    <button class="button"> Browse </button>
+                                    <input type="file" name="file"/>
+                                </div>
+                                <!--<p>Upload a list of patients (.csv) <br></p>
+                                <input type="file" class="form-control" id="fileUpload" multiple/>
+                                <button id="browse" type="button" class="'button4 btn-primary"> Browse </button> -->
+                            </div>
+                            <div class="column">
                             <!--temporary uploading-->
                             <h6> Uploaded Files </h6>
-                            <p> prereg_09-19-2021_validates.csv</p>
-                            <p> prereg_09-21-2021_validates.csv</p>
+                                <p> prereg_09-19-2021_validates.csv</p>
+                                <p> prereg_09-21-2021_validates.csv</p>
+                            <!--insert backend process for reading the uploaded files-->
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button id = 'add'> Add </button>
                         </div>
                     </div>
                 </div>
-            </div>>
+            </div>
 
             <!--Button for Adding Patient Details-->
             <button id="addVaccine" type="button" class="buttonTop">Add User</button>
 
             <!--Modal for Adding patient -->
-            <div id="patientModal" class="modal">
+            <div id="patientModal" class="modal-window">
                 <div class="content-modal">
                     <div class="modal-header">
                         <h4 class="modal-title">Add USER-Patient</h4>
                         <button type="button" id="close2" class="close" data-dismiss="modal">&times;</button>
                     </div>
                     <div class="modal-body">
-                        <h4> Basic Information</h4>
-                        <label for="lname">Last Name</label>
-                        <input type="text3" id="lname" class='input' name="lastname" placeholder="Input Last Name"><br>
+                        <div class="modal-section">
+                            <h4> Basic Information</h4>
+                            <label for="lname">Last Name</label>
+                            <input type="text3" id="lname" class='input' name="lastname" placeholder="Input Last Name"><br>
 
-                        <label for="fname">First Name</label><br>
-                        <input type="text3" id="fname" class='input' name="firstname" placeholder="Input First Name"><br>
+                            <label for="fname">First Name</label><br>
+                            <input type="text3" id="fname" class='input' name="firstname" placeholder="Input First Name"><br>
 
-                        <label for="mname">Middle Name</label><br>
-                        <input type="text3" id="mname" class='input' name="middlename" placeholder="Input Middle Name">
+                            <label for="mname">Middle Name</label><br>
+                            <input type="text3" id="mname" class='input' name="middlename" placeholder="Input Middle Name">
 
-                        <label for="suffix">Suffix</label><br>
-                        <select id="suffix" name="suffix">
-                            <option value="">None</option>
-                            <option value="sr"> Sr </option>
-                            <option value="jr"> Jr </option>
-                            <option value="1"> I </option>
-                            <option value="2"> II </option>
-                            <option value="3"> III </option>
-                        </select>
+                            <label for="suffix">Suffix</label><br>
+                            <select id="suffix" name="suffix">
+                                <option value="">None</option>
+                                <option value="sr"> Sr </option>
+                                <option value="jr"> Jr </option>
+                                <option value="1"> I </option>
+                                <option value="2"> II </option>
+                                <option value="3"> III </option>
+                            </select>
 
-                        <label for="category"> Category </label>
-                        <select class="formControl" id="category">
-                            <option value="A1"> A1 </option>
-                            <option value="A2"> A2 </option>
-                            <option value="A3"> A3 </option>
-                            <option value="A4"> A4 </option>
-                            <option value="A5"> A5 </option>
-                        </select>
+                            <label for="category"> Category </label>
+                            <select class="formControl" id="category">
+                                <option value="A1"> A1 </option>
+                                <option value="A2"> A2 </option>
+                                <option value="A3"> A3 </option>
+                                <option value="A4"> A4 </option>
+                                <option value="A5"> A5 </option>
+                            </select>
+                        </div>
 
-                        <h4> Address </h4>
-                        <label for="street">Street Name</label>
-                        <input type="text3" id="street" class='input' name="street" placeholder="Input Street Name"><br>
+                        <div class="modal-section">
+                            <h4> Address </h4>
+                            <label for="street">Street Name</label>
+                            <input type="text3" id="street" class='input' name="street" placeholder="Input Street Name"><br>
 
-                        <label for="city">City/Town</label><br>
-                        <input type="text3" id="city" class='input' name="city" placeholder="Input City/Town"><br>
+                            <label for="city">City/Town</label><br>
+                            <input type="text3" id="city" class='input' name="city" placeholder="Input City/Town"><br>
 
-                        <label for="state">State/Province</label><br>
-                        <input type="text3" id="state" class='input' name="state" placeholder="Input State/Province">
+                            <label for="state">State/Province</label><br>
+                            <input type="text3" id="state" class='input' name="state" placeholder="Input State/Province">
 
-                        <label for="postal">Postal/Zip Code</label><br>
-                        <input type="text3" id="postal" class='input' name="postal" placeholder="Input Postal/Zip Code">
+                            <label for="postal">Postal/Zip Code</label><br>
+                            <input type="text3" id="postal" class='input' name="postal" placeholder="Input Postal/Zip Code">
 
-                        <label for="date"> Birthdate </label>
-                        <input type="date" id="date" name="date">
+                            <label for="date"> Birthdate </label>
+                            <input type="date" id="date" name="date">
 
-                        <label for="gender"> Gender </label>
-                        <select class="formControl" id="gender">
-                            <option> Male </option>
-                            <option> Female </option>
-                        </select>
+                            <br>
+                            <label for="gender"> Gender </label>
+                            <select class="formControl" id="gender">
+                                <option> Male </option>
+                                <option> Female </option>
+                            </select>
+                        </div>
 
-                        <label for="number">Contact Number</label><br>
-                        <input type="text3" id="number" class='input' name="postal" placeholder="+639XXXXXXXXXX">
+                        <div class="modal-section">
+                            <label for="number">Contact Number</label><br>
+                            <input type="text3" id="number" class='input' name="postal" placeholder="+639XXXXXXXXXX">
 
-                        <label for="occupation">Occupation</label><br>
-                        <input type="text3" id="occupation" class='input' name="postal" placeholder="Input Occupation">
+                            <label for="occupation">Occupation</label><br>
+                            <input type="text3" id="occupation" class='input' name="postal" placeholder="Input Occupation">
+                        </div>
                     </div>
                     <div class="modal-footer">
-                    <button id="next"> Next </button>
+                    <button id="next"  class="btn btn-primary"> Next </button>
                     </div>
                 </div>
             </div>
