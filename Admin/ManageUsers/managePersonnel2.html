@@ -117,7 +117,7 @@
                     <div class="modal-body">
                         <div class="row">
                             <div class="column" id="upload-content">
-                                <button class="button" id="iconBrowse"><i class="fas fa-file-upload"></i></button>
+                                <button class="button" id="iconBrowse"><i class="fas fa-upload"></i></i></button>
                                 <p>Upload a list of patients (.csv) </p>
                                 <button class="brwsButton" id="bttnBrowse" type="button"> Browse </button>
                                 <!--<p>Upload a list of patients (.csv) <br></p>
@@ -134,7 +134,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button id = 'add'  class="btn btn-primary"> Add </button>
+                        <button id='add' class="btn btn-primary"> Add </button>
                     </div>
                 </div>
             </div>
@@ -188,8 +188,8 @@
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" id="cancel"  class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                                <button type="button" id="next"  class="btn btn-primary">Next</button>
+                                <button type="button" id="cancel" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                <button type="button" id="next" class="btn btn-primary">Next</button>
                             </div>
                         </div>
                     </div>
@@ -198,34 +198,37 @@
 
             <!--Modal for Personnel Credentials-->
             <div id="personnelCredentials" class="modal-window">
-               <div class="content-modal">
-                   <div class="modal-header">
-                       <span id = "close2" class="close">&times;</span>
-                   </div>
-                   <div class="modal-body">
-                       <h5> Here are the patients credentials. </h5>
-                       <label1 for="username">Username</label1>
-                       <input type="text" id="username" name="username"  disabled="disabled"><br>
-                       <label1 for="password">Password</label1>
-                       <input type="text" id="password" name="password"  disabled="disabled">
-                   </div>
-                   <div class="modal-footer">
-                       <button type="button" id ='save' class="btn btn-primary"> Save </button>
-                   </div>
-               </div>
+                <div class="content-modal">
+                    <div class="modal-header">
+                        <span id="close2" class="close">&times;</span>
+                    </div>
+                    <div class="modal-body">
+                        <h5> Here are the patients credentials. </h5>
+                        <label1 for="username">Username</label1>
+                        <input type="text" id="username" name="username" disabled="disabled"><br>
+                        <label1 for="password">Password</label1>
+                        <input type="text" id="password" name="password" disabled="disabled">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" id='save' class="btn btn-primary"> Save </button>
+                    </div>
+                </div>
             </div>
 
             <div id="notifyModal" class="modal-window">
                 <div class="content-modal">
                     <div class="modal-header">
-                        <span id = "close3" class="close">&times;</span>
+                        <span id="close3" class="close">&times;</span>
                     </div>
                     <div class="modal-body">
                         <img src="../../img/checkmark.png" alt="confirm" id="confirm">
-                        <p> <center> User Personnel successfully added. </center> </p>
+                        <p>
+                            <center> User Personnel successfully added. </center>
+                        </p>
                     </div>
                     <div class="modal-footer">
-                        <button id = 'exit'  class="btn btn-primary"> Close </button> <!--instead of close change to Done-->
+                        <button id='exit' class="btn btn-primary"> Close </button>
+                        <!--instead of close change to Done-->
                     </div>
                 </div>
             </div>
@@ -303,59 +306,59 @@
 
 
         //upload file button
-        uploadFileBtn.onclick = function (){
-            uploadFileModal.style.display = "block";
-        }
-        // add button for Add User
-        addUserBtn.onclick = function (){
+        uploadFileBtn.onclick = function() {
+                uploadFileModal.style.display = "block";
+            }
+            // add button for Add User
+        addUserBtn.onclick = function() {
             modal.style.display = "block";
         }
 
         // add button after input of personnel basic info
-        next.onclick = function (){
+        next.onclick = function() {
             modal.style.display = "none";
             addModal.style.display = "block"
         }
 
-        save.onclick = function (){
+        save.onclick = function() {
             modal.style.display = "none";
             addModal.style.display = "none";
-            notifyModal.style.display="block";
+            notifyModal.style.display = "block";
         }
 
-        span.onclick = function () {
+        span.onclick = function() {
             uploadFileModal.style.display = "none";
         }
 
-        span1.onclick = function () {
+        span1.onclick = function() {
             modal.style.display = "none";
         }
 
-        span2.onclick = function (){
-            modal.style.display = "none";
-            addModal.style.display ="none";
-        }
-
-        span3.onclick = function (){
-            modal.style.display = "none";
-            addModal.style.display ="none";
-            notifyModal.style.display = "none";
-        }
-
-        exit.onclick = function (){
-            modal.style.display = "none";
-            addModal.style.display ="none";
-            notifyModal.style.display = "none";
-        }
-
-        cancel.onclick = function (){
+        span2.onclick = function() {
             modal.style.display = "none";
             addModal.style.display = "none";
-            notifyModal.style.display="none"
         }
 
-        window.onclick = function (event){
-            if(event.target == modal || event.target == addModal || event.target == notifyModal || event.target == uploadFileModal){
+        span3.onclick = function() {
+            modal.style.display = "none";
+            addModal.style.display = "none";
+            notifyModal.style.display = "none";
+        }
+
+        exit.onclick = function() {
+            modal.style.display = "none";
+            addModal.style.display = "none";
+            notifyModal.style.display = "none";
+        }
+
+        cancel.onclick = function() {
+            modal.style.display = "none";
+            addModal.style.display = "none";
+            notifyModal.style.display = "none"
+        }
+
+        window.onclick = function(event) {
+            if (event.target == modal || event.target == addModal || event.target == notifyModal || event.target == uploadFileModal) {
                 modal.style.display = "none";
                 addModal.style.display = "none";
                 uploadFileModal.style.display = "none";
@@ -364,4 +367,5 @@
         }
     </script>
 </body>
+
 </html>
