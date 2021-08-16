@@ -55,10 +55,6 @@
                     </div>
                 </li>
             </ul>
-            <form class="form-inline">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-light" type="submit">Search</button>
-            </form>
             <button class="signoutBtn" type="submit"><i class="fas fa-sign-out-alt"></i></button>
         </div>
     </nav>
@@ -67,22 +63,80 @@
     <div class="bodyWrapper">
         <div>
             <h1 class="helpheader">About Us</h1>
-            <hr>
+            <hr class="aboutHr">
         </div>
         <div class="reportWrapper">
-            <h5 style="text-align: justify;">SMIT+ started as an idea for a group of students as a requirement for their IT Project. Considering the circumstance the members opted for a project idea that will help the government in fighting the pandemic situation. As the Department of
+            <h5 class="h5About" style="text-align: justify;">SMIT+ started as an idea for a group of students as a requirement for their IT Project. Considering the circumstance the members opted for a project idea that will help the government in fighting the pandemic situation. As the Department of
                 Health transition to the next phase of fighting COVID-19, the group goes along with it and came up with Monitoring, Tracking the Vaccination Process and stocks. <br> <br>Baguio City is the chosen case study place and as the project progresses
                 it will be presented to other LGU. Aiming to fight and Stop this pandemic through technology.
             </h5>
             <hr>
-            <h4>Developed by:</h4>
-            <img src="../img/SMIT+.png" alt="" style="width: 40%;">
+            <h4 class="h4About">Developed by:</h4>
+            <img src="../img/SMIT+.png" class="developedImg" alt="">
 
-            <h4>Managed by:</h4>
-            <img src="../img/city-of-baguio-seal_orig.png" alt="" style="width: 20%;">
+            <h4 class="h4About">Managed by:</h4>
+            <img src="../img/city-of-baguio-seal_orig.png" class="managedImg" alt="">
         </div>
 
     </div>
 </body>
 
 </html>
+
+<style>
+    @media screen and ( min-width:320px) and (max-width:420px) {
+        body {
+            background: black;
+        }
+        .h5About {
+            margin-top: 2%;
+            text-align: justify;
+            font-size: 16px;
+        }
+        .h4About {
+            font-size: 18px;
+        }
+        .helpheader {
+            font-size: 40px;
+            margin-top: 2%;
+            margin-bottom: 2%;
+        }
+        .reportWrapper {
+            margin-top: 0%;
+            padding-top: 0%;
+        }
+        .aboutHr {
+            margin: 0%;
+            padding: 0%;
+        }
+        .logoImg {
+            width: 9%;
+        }
+    }
+    
+    @media only screen and (min-width: 481px) and (max-width: 768px) {
+        body {
+            background: blue;
+        }
+        .logoImg {
+            width: 7%;
+        }
+        .developedImg {
+            width: 30%;
+        }
+        .managedImg {
+            width: 20%;
+            margin-top: 2%;
+        }
+        .developedImg,
+        .managedImg {
+            margin-left: 2%;
+        }
+    }
+    
+    @media only screen and (min-width: 769px) and (max-width: 1024px) {
+        body {
+            background: burlywood;
+        }
+    }
+</style>
