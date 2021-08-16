@@ -48,8 +48,8 @@ include_once("../includes/database.php") ?>
             <li>
                 <a href="#"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
             </li>
-            <li>
-                <a href="ManageVaccineHome.php" class="active"><i class="fas fa-syringe"></i> Manage Vaccine</a>
+            <li class="active">
+                <a href="ManageVaccineHome.php" ><i class="fas fa-syringe"></i> Manage Vaccine</a>
             </li>
             <li>
                 <a href="#ManageUsersSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i

@@ -52,14 +52,14 @@ include_once("../includes/database.php") ?>
             <li>
                 <a href="ManageVaccineHome.php"><i class="fas fa-syringe"></i> Manage Vaccine</a>
             </li>
-            <li>
+            <li class="active">
                 <a href="#ManageUsersSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i
                             class="fas fa-users"></i> Manage Users</a>
                 <ul class="collapse list-unstyled" id="ManageUsersSubmenu">
                     <li>
                         <a href="ManagePersonnelHome.php">Personnel</a>
                     </li>
-                    <li>
+                    <li class="active">
                         <a href="ManagePatientHome.php" class="active">Patients</a>
                     </li>
                 </ul>

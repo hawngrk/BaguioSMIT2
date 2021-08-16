@@ -61,12 +61,12 @@ include_once("../includes/database.php") ?>
                         <a href="ManagePersonnelHome.php">Personnel</a>
                     </li>
                     <li>
-                        <a href="ManagePatientHome.php" class="active">Patients</a>
+                        <a href="ManagePatientHome.php" >Patients</a>
                     </li>
                 </ul>
             </li>
-            <li>
-                <a href="ManageDeployment.php"><i class="fas fa-truck"></i> Manage Deployment</a>
+            <li class="active">
+                <a href="ManageDeployment.php" ><i class="fas fa-truck"></i> Manage Deployment</a>
             </li>
             <li>
                 <a href="ManageReportHome.php"><i class="fas fa-sticky-note"></i> Reports</a>

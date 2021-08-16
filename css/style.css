@@ -79,7 +79,7 @@ a:focus {
     border-bottom: 1px solid #47748b;
 }
 
-#sidebar ul p {
+#sidebar ul p{
     color: #fff;
     padding: 10px;
 }
@@ -95,16 +95,15 @@ a:focus {
     background: #043D55;
 }
 
-#sidebar ul li a:visited {
+#sidebar ul li a {
     color: #fff !important;
-    background: #04628A;
-;
 }
 
 #sidebar ul li.active>a,
 a[aria-expanded="true"] {
     color: #fff;
-    background: #2f66ad6b;
+    background: #06425b;
+
 }
 
 a[data-toggle="collapse"] {
