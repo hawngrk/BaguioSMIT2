@@ -10,7 +10,7 @@ if(isset($_POST)){
     $contactnumber    = $_POST['contact'];
     $picture          = NULL;
     $email            = $_POST['email'];
-    $password         = sha1($_POST['password']);
+    $password         = password_hash($_POST['password'], PASSWORD_DEFAULT);
 
     //Database queries
     $sql = "INSERT INTO patient_account (patient_id, patient_username, patient_password, patient_picture, patient_email) VALUES(?,?,?,?,?)";
@@ -26,7 +26,8 @@ if(isset($_POST)){
         if ($stmselect->rowCount() > 0) {
             $checkUsername = $database->prepare($searchUsername);
             $verify = $checkUsername->execute([$username]);
-            if(!$checkUsername->rowCount() > 0) {
+            if($verify) {
+                $patient = $stmselect->fetch(PDO::FETCH_ASSOC);
                 $patientId = $patient["patient_id"];
                 $stmtinsert = $database->prepare($sql);
                 $result = $stmtinsert->execute([$patientId, $username, $password, $picture, $email]);

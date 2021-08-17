@@ -3,11 +3,6 @@
     if(!isset($_SESSION['userlogin'])) {
         header("Location: patientLogin.php");
     }
-    if(isset($_GET['logout'])) {
-        session_destroy();
-        unset($_SESSION);
-        header("location: patientLogin.php");
-    }
 ?>
 <!DOCTYPE html>
 <html>
@@ -67,7 +62,7 @@
                 <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
                 <button class="btn btn-outline-light" type="submit">Search</button>
             </form>
-            <button href="loginPatient.html" class="signoutBtn" type="button"><i class="fas fa-sign-out-alt"></i></button>
+            <button id="signOut" class="signoutBtn" type="button"><i class="fas fa-sign-out-alt"></i></button>
         </div>
     </nav>
 
@@ -120,6 +115,14 @@
         </div>
         <hr>
     </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        $(function(){
+            $('#signOut').click(function(e){
+                setTimeout('window.location.href = "logout.php"', 1000);
+            });            
+        });
+    </script>
 </body>
 <!--Plot Scipts -->
 <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>

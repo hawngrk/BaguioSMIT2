@@ -38,7 +38,7 @@
                     <button name="registerButton" class="buttonRegister" href="patientRegistration.php">Resgister</button>
                 </div>
                 <div class="form-link">
-                    <a href="" id="forgot_pswd">Forget password?</a>
+                    <a href="patientVerification.php" id="forgot_pswd">Forget password?</a>
                 </div>
             </form>
         </div>
