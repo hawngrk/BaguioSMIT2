@@ -326,30 +326,6 @@ include_once("../includes/database.php") ?>
         })
     }
 
-    function generateReport(view) {
-        $.ajax({
-            url: 'manageReportViewProcessor.php',
-            type: 'POST',
-            data: {"generate": view},
-            success: function (result) {
-                document.getElementById("reportsTable").innerHTML = result;
-            }
-        });
-
-        if (view === 1) {
-            $.ajax({
-                url: 'manageReportViewProcessor.php',
-                type: 'POST',
-                data: {"options": 1},
-                success: function (result) {
-                    document.getElementById("generateReportOptions").innerHTML = result;
-                }
-            });
-        } else if (view === 2) {
-            document.getElementById("generateReportOptions").innerHTML = "";
-        }
-    }
-
     var invalidatedReportsModal = document.getElementById("invalidatedReportsModal");
 
     function showInvalidatedReports() {
@@ -449,6 +425,48 @@ include_once("../includes/database.php") ?>
         } else if (event.target === invalidatedReportsModal) {
             invalidatedReportsModal.style.display = "none";
         }
+    }
+
+    function generateReport(view) {
+        $.ajax({
+            url: 'manageReportViewProcessor.php',
+            type: 'POST',
+            data: {"generate": view},
+            success: function (result) {
+                document.getElementById("reportsTable").innerHTML = result;
+            }
+        });
+
+        if (view === 1) {
+            $.ajax({
+                url: 'manageReportViewProcessor.php',
+                type: 'POST',
+                data: {"options": 1},
+                success: function (result) {
+                    document.getElementById("generateReportOptions").innerHTML = result;
+                }
+            });
+        } else if (view === 2) {
+            document.getElementById("generateReportOptions").innerHTML = "";
+        }
+    }
+
+    function downloadReports() {
+        var reports = document.getElementsByClassName("reportList");
+        var reportsIds = [];
+        for (i = 0; i < reports.length; i++) {
+            if (reports[i].checked === true) {
+                reportsIds.push(parseInt(reports[i].value));
+            }
+        }
+        $.ajax({
+            url: 'manageReportViewProcessor.php',
+            type: 'POST',
+            data: {"download": reportsIds},
+            success: function (result) {
+                generateReport(2);
+            }
+        });
     }
 </script>
 </body>

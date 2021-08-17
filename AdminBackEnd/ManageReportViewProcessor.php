@@ -159,61 +159,6 @@ if (isset($_POST['invalidated'])) {
     ";
 }
 
-if (isset($_POST['generate'])) {
-    $view = $_POST['generate'];
-    echo "
-      <thead>
-            <tr>";
-    if ($view == 1) {
-        echo   "<th scope='col'>Select All/Clear</th>";
-    } echo"
-                <th scope='col'>#</th>
-                <th scope='col'>Report ID</th>
-                <th scope='col'>Name of Reporter</th>
-                <th scope='col'>Date Reported</th>
-                <th scope='col'>Report Verified</th>
-                <th scope='col'>Action</th>
-            </tr>
-            </thead>
-            ";
-
-            require_once '../require/getReport.php';
-            require_once '../require/getPatient.php';
-
-            $count = 0;
-            foreach ($reports as $rep) {
-                $count++;
-                $reportId = $rep->getReportId();
-                $patientId = $rep->getReportPatientId();
-                $dateReported = $rep->getDateReported();
-                $status = $rep->getReportStatus();
-
-                foreach ($patients as $pat) {
-                    if ($patientId == $pat->getPatientId()) {
-                        $reporter = $pat->getPatientFullName();
-                    }
-                }
-                echo "<tr>";
-                if ($view == 1) {
-                    echo "<td><input type='checkbox'></td>";
-                }
-                echo "
-                <td>$count</td>
-                <td>$reportId</td>
-                <td>$reporter</td>
-                <td>$dateReported</td>
-                <td>$status</td>
-                <td><button class='viewReportBtn' type='submit' value='$reportId' onclick='viewReport($reportId)'>Review Report</button></td>
-                </tr>";
-            }
-}
-
-if (isset($_POST['options'])) {
-    echo "
-    <button type='button' class='buttonTop' id='downloadGenerateReportBtn'>Download Files</button>
-    <button type='button' class='buttonTop' id='cancelGenerateReportBtn' onclick='generateReport(2)'>Cancel</button>";
-}
-
 if (isset($_POST['report'])) {
     include '../includes/database.php';
     require '../require/getReport.php';
@@ -353,4 +298,72 @@ if (isset($_POST['report'])) {
 if (isset($_POST['changeStatus'])) {
     $reportId = $_POST['reportid'];
     $status = $_POST['changeStatus'];
+}
+
+if (isset($_POST['generate'])) {
+    $view = $_POST['generate'];
+    echo "
+      <thead>
+            <tr>";
+    if ($view == 1) {
+        echo   "<th scope='col'>Select All/Clear</th>";
+    } echo"
+                <th scope='col'>#</th>
+                <th scope='col'>Report ID</th>
+                <th scope='col'>Name of Reporter</th>
+                <th scope='col'>Date Reported</th>
+                <th scope='col'>Report Verified</th>
+                <th scope='col'>Action</th>
+            </tr>
+            </thead>
+            ";
+
+    require_once '../require/getReport.php';
+    require_once '../require/getPatient.php';
+
+    $count = 0;
+    foreach ($reports as $rep) {
+        $count++;
+        $reportId = $rep->getReportId();
+        $patientId = $rep->getReportPatientId();
+        $dateReported = $rep->getDateReported();
+        $status = $rep->getReportStatus();
+
+        foreach ($patients as $pat) {
+            if ($patientId == $pat->getPatientId()) {
+                $reporter = $pat->getPatientFullName();
+            }
+        }
+        echo "<tr>";
+        if ($view == 1) {
+            echo "<td><input type='checkbox' class='reportList' value='$reportId'></td>";
+        }
+        echo "
+                <td>$count</td>
+                <td>$reportId</td>
+                <td>$reporter</td>
+                <td>$dateReported</td>
+                <td>$status</td>
+                <td><button class='viewReportBtn' type='submit' value='$reportId' onclick='viewReport($reportId)'>Review Report</button></td>
+                </tr>";
+    }
+}
+
+if (isset($_POST['options'])) {
+    echo "
+    <button type='button' class='buttonTop' id='downloadGenerateReportBtn' onclick='downloadReports()'>Download Files</button>
+    <button type='button' class='buttonTop' id='cancelGenerateReportBtn' onclick='generateReport(2)'>Cancel</button>";
+}
+
+if (isset($_POST['download'])) {
+    include '../includes/database.php';
+    $stmt = $database->stmt_init();
+    $reports = $_POST['download'];
+    "SELECT report.report_id, patient.patient_full_name, report.date_reported FROM report JOIN patient ON report.report_id = patient.patient_id JOIN patient_details ON patient.patient_id = patient_details.patient_id WHERE report.report_status = 'Invalidated';";
+    foreach ($reports as $rep) {
+        $getReportsQuery = "SELECT * FROM report WHERE report_id=$rep;";
+        $stmt->prepare($getReportsQuery);
+        $stmt->execute();
+        $stmt->bind_result($reportId, $reporter, $dateReported);
+    }
 }
