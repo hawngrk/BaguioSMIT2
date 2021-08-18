@@ -91,19 +91,23 @@
                 <div class="vertical"></div>
                 <div class="collapseContent">
                     <div class="collapse" id="collapseChangePass">
-                        <p>Choose a strong password and don't reuse it for other accounts.</p>
-                        <input type="password" name="password" placeholder="Old Password" class="form-control settingInput formInpt" required>
-                        <p class="paragraphReminders"><i class="smallReminders">Use at least 8 characters. Don’t use a password from another site, or something too obvious like your pet’s name.</i></p>
-                        <input type="password" name="password" placeholder="New Password" class="form-control settingInput formInpt" required>
-                        <button name="loginButton" class="settingButton btn-primary btn buttonLogin">Submit</button>
-                        <hr>
+                        <form action="changePassword.php" id="changePassword">
+                            <p>Choose a strong password and don't reuse it for other accounts.</p>
+                            <input type="password" name="password" placeholder="Old Password" class="form-control settingInput formInpt" required>
+                            <p class="paragraphReminders"><i class="smallReminders">Use at least 8 characters. Don’t use a password from another site, or something too obvious like your pet’s name.</i></p>
+                            <input type="password" name="password" placeholder="New Password" class="form-control settingInput formInpt" required>
+                            <button name="loginButton" class="settingButton btn-primary btn buttonLogin" form="changePassword">Submit</button>
+                            <hr>
+                        </form>
                     </div>
 
                     <div class="collapse" id="collapseChangeNum">
-                        <p>Enter the number that you’d like to use:</p>
-                        <input type="number" name="mobile number" placeholder="+63" class="form-control settingInput formInpt" required>
-                        <button name="loginButton" class="settingButton btn btn-primary buttonLogin">Change</button>
-                        <hr>
+                        <form action="changeNumber.php" id="changeNum">
+                            <p>Enter the number that you’d like to use:</p>
+                            <input type="number" name="mobile number" placeholder="+63" class="form-control settingInput formInpt" required>
+                            <button name="loginButton" class="settingButton btn btn-primary buttonLogin" form="changeNum">Change</button>
+                            <hr>
+                        </form>
                     </div>
 
                     <div class="collapse" id="collapseChangeProf">

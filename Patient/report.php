@@ -88,7 +88,7 @@
             <hr>
         </div>
         <div class="reportWrapper reportWrapperbg">
-            <form action="processes/processReport.php" method="post" target="_blank" id="report-form">
+            <form action="processes/processReport.php" method="post" id="report-form">
                 <h5>1. Date the last time you went out</h5>
                 <input type="date" class="dateBtn" name="date" id="date">
 

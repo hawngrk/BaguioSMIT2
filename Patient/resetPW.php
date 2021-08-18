@@ -28,8 +28,8 @@
             <p>
                 <center>Please enter your new password</center>
             </p>
-            <input type="password" id="newPassword" class="newPassword" name="newPassword" placeholder='Enter your new password' required><br>
-            <input type="password" id="retypePassword" class="retypePassword" name="retypePassword" placeholder='Retype your new password' required><br>
+            <input type="password" id="resetReq1" class="newPassword" name="newPassword" placeholder='Enter your new password' required><br>
+            <input type="password" id="resetReq1" class="retypePassword" name="retypePassword" placeholder='Retype your new password' required><br>
         </div>
         <input type="submit" id="resetbutton">
     </div>
@@ -37,8 +37,9 @@
     <script> 
         $(function(){
             $('#resetbutton').click(function(e){
-                var newPassword = $('#newPassword').val();
-                var retypePassword = $('#retypePassword').val();
+
+                var newPassword = $('.newPassword').val();
+                var retypePassword = $('.retypePassword').val();
 
                 console.log(newPassword, '===', retypePassword);
                 if (newPassword == retypePassword) {

@@ -23,7 +23,7 @@
     <body>
         <div class="loginow">
             <h3 class="logInToText pt-5">Login to Baguio SMIT+</h3>
-            <form id="login-form" class="form" action="EmployeeLoginAuthentication.php" method="post">
+            <form id="login-form" class="form" method="post">
                 <img src="../img/SMIT+.png" class="logo" alt="">
                 <div class="form-group">
                     <input type="username" name="username" id="username" class="form-control" placeholder="Username" required>
@@ -35,7 +35,7 @@
                     <button name="loginButton" id="login" class="buttonLogin">Login</button>
                 </div>
                 <div class="form-button">
-                    <button name="registerButton" class="buttonRegister" href="patientRegistration.php">Resgister</button>
+                    <button name="registerButton" id="register" class="buttonRegister">Resgister</button>
                 </div>
                 <div class="form-link">
                     <a href="patientVerification.php" id="forgot_pswd">Forget password?</a>
@@ -44,6 +44,9 @@
         </div>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script>
+            $('#register').click(function(e){
+                setTimeout('window.location.href = "patientRegistration.php"', 500);
+            });
             $(function(){
                 $('#login').click(function(e){
 
@@ -71,7 +74,7 @@
                             alert('there were errors encountered');
                         }
                     });
-                });            
+                });      
             });
         </script>
     </body>
