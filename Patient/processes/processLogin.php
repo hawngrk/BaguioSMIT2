@@ -12,10 +12,8 @@ try {
     $result = $stmtselect->execute([$username]);
     $row = $stmtselect->fetch(PDO::FETCH_ASSOC);
     $hash = $row['patient_password'];
-
     if(password_verify($password, $hash)) {
-        $user = $stmtselect->fetch(PDO::FETCH_ASSOC);
-        $_SESSION['userlogin'] = $user;
+        $_SESSION['userlogin'] = $row;
         echo '1';
     } else {
         echo 'Invalid username or password';

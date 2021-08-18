@@ -29,7 +29,7 @@
 <body>
 <!--Navigation Bar-->
 <nav class="navbar navbar-expand-md">
-        <img src="../img/faviSMIT+ copy.png" class="logoImg" alt="">
+<img src="../img/faviSMIT+ copy.png" class="logoImg" alt="">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
             <span><i class="fas fa-bars"></i></span>
         </button>
@@ -53,6 +53,7 @@
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="help.php"><i class="fas fa-question-circle"></i> Help</a>
                         <a class="dropdown-item" href="about.php"><i class="fas fa-info-circle"></i> About</a>
+                        <a class="dropdown-item" href="reportlog.php"><i class="fas fa-info-circle"></i> Report Log</a>
                     </div>
                 </li>
             </ul>
@@ -60,8 +61,15 @@
                 <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
                 <button class="btn btn-outline-light" type="submit">Search</button>
             </form>
-            <button href="loginPatient.html" class="signoutBtn" type="button"><i class="fas fa-sign-out-alt"></i></button>
+            <button id="signOut" class="signoutBtn" type="button"><i class="fas fa-sign-out-alt"></i></button>
         </div>
+        <script>
+        $(function(){
+            $('#signOut').click(function(e){
+                setTimeout('window.location.href = "logout.php"', 1000);
+            });            
+            });
+        </script>
     </nav>
 
     <!--Page Content-->

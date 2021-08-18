@@ -25,6 +25,7 @@
     <script src="https://kit.fontawesome.com/fcdb0fe9f3.js" crossorigin="anonymous"></script>
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
 </head>
 
@@ -55,6 +56,7 @@
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="help.php"><i class="fas fa-question-circle"></i> Help</a>
                         <a class="dropdown-item" href="about.php"><i class="fas fa-info-circle"></i> About</a>
+                        <a class="dropdown-item" href="reportlog.php"><i class="fas fa-info-circle"></i> Report Log</a>
                     </div>
                 </li>
             </ul>
@@ -64,6 +66,13 @@
             </form>
             <button id="signOut" class="signoutBtn" type="button"><i class="fas fa-sign-out-alt"></i></button>
         </div>
+        <script>
+        $(function(){
+            $('#signOut').click(function(e){
+                setTimeout('window.location.href = "logout.php"', 1000);
+            });            
+            });
+        </script>
     </nav>
 
     <!--Page Content-->
@@ -115,14 +124,7 @@
         </div>
         <hr>
     </div>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script>
-        $(function(){
-            $('#signOut').click(function(e){
-                setTimeout('window.location.href = "logout.php"', 1000);
-            });            
-        });
-    </script>
+
 </body>
 <!--Plot Scipts -->
 <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
