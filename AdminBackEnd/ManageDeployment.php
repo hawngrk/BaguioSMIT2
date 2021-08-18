@@ -11,6 +11,7 @@ include_once("../includes/database.php") ?>
     <!-- Title -->
     <title>SMIT+ | Manage Patients</title>
 
+    <link rel="icon" href="../img/FaviSMIT+.png" type="image/jpg">
     <!-- Our Custom CSS -->
     <link href="../css/style.css" rel="stylesheet">
 
@@ -46,7 +47,7 @@ include_once("../includes/database.php") ?>
         </div>
 
         <ul class="list-unstyled components">
-            <p id="mainmenu">Main Menu</p>
+            <h4 id="mainmenu">Main Menu</h4>
             <li>
                 <a href="#"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
             </li>
@@ -107,7 +108,7 @@ include_once("../includes/database.php") ?>
         <div class="listPatientColumn">
             <div class="four listPatientRow">
                 <div class="listPatient-box colored">
-                    <center><p>Deployment Summary</p></center>
+                    <center><h5>Deployment Summary</h5></center>
                 </div>
             </div>
             <div class="four listPatientRow row2">
@@ -117,6 +118,7 @@ include_once("../includes/database.php") ?>
         </div>
 
         <button id="addDepBtn" type="button" class="buttonTop">
+            <i class="fas fa-plus"></i>
             Add Deployment
         </button>
 
@@ -216,6 +218,7 @@ include_once("../includes/database.php") ?>
         </div>
 
         <button id="addHealthDBtn" type="button" class="buttonTop">
+            <i class="fas fa-plus"></i>
             Add Health District
         </button>
 
@@ -476,7 +479,7 @@ include_once("../includes/database.php") ?>
             var butt = document.getElementById('sidebarCollapse')
             if(!clicked){
                 clicked = true;
-                butt.innerHTML = "Menu <i class = 'fas fa-angle-right'><i>";
+                butt.innerHTML = "Menu <i class = 'fas fa-angle-double-right'><i>";
             }
             else{
                 clicked = false;

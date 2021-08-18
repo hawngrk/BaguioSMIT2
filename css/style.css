@@ -63,6 +63,7 @@ a:focus {
     background: #04628A;
     color: #fff;
     transition: all 0.3s;
+    padding: .5%;
 }
 
 #sidebar.active {
@@ -406,11 +407,15 @@ input[type=text3],select{
     position: relative;
 }
 
+#uploadListPatient h4{
+    margin: 10px;
+}
+
 #uploadListPatient a{
     position: absolute;
     bottom:0;
     right:0;
-    margin: 2px;
+    margin: 5px;
 }
 
 input[type="text"]:disabled{
@@ -568,7 +573,7 @@ input[type=text4]{
 }
 
 .listPatientRow{
-    width: 100%;
+    width: auto;
 }
 
 .listPatientBox{
