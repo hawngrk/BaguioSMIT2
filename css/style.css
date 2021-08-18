@@ -103,7 +103,6 @@ a:focus {
 a[aria-expanded="true"] {
     color: #fff;
     background: #06425b;
-
 }
 
 a[data-toggle="collapse"] {
@@ -195,7 +194,7 @@ a.article:hover {
     float: right;
     background: ghostwhite;
     border: 2px solid black;
-    width: 15%;
+    width: auto;
     height: 40px;
     color: black!important;
     margin-right: 10px;
@@ -263,7 +262,7 @@ input[type=text] {
 
 
 .AddHealthD-option{
-    border: 1.5px solid lightgray;
+    border: 3px solid lightgray;
     border-radius: 5px;
     margin: 1%;
     padding: 2%;
@@ -559,3 +558,35 @@ input[type=text4]{
     right:0;
     margin: 2px;
 }
+
+.listPatientColumn{
+    float: left;
+    border: solid gray 2px;
+    border-radius: 5px;
+    width: 25%;
+    margin-right: 2%;
+}
+
+.listPatientRow{
+    width: 100%;
+}
+
+.listPatientBox{
+    display: block;
+    background: #f6f6f6;
+    padding: 40px 20px 37px;
+    text-align: center
+}
+
+.row1{
+
+}
+
+.row2{
+    height:80%
+}
+
+.tableDep{
+    width: auto!important;
+}
+

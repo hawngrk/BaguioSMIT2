@@ -88,10 +88,8 @@ include_once("../includes/database.php") ?>
 
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container-fluid">
-
-                <button type="button" id="sidebarCollapse" class="btn btn-info">
-                    <i class="fas fa-align-left"></i>
-                    <span>Menu</span>
+                <button type="button" id="sidebarCollapse" class="btn btn-info" onclick="Toggle()">
+                    <i class='fas fa-angle-left'></i> Menu
                 </button>
 
                 <button class="btnTop">
@@ -105,6 +103,18 @@ include_once("../includes/database.php") ?>
         </nav>
 
         <!-- Page Content  -->
+
+        <div class="listPatientColumn">
+            <div class="four listPatientRow">
+                <div class="listPatient-box colored">
+                    <center><p>Deployment Summary</p></center>
+                </div>
+            </div>
+            <div class="four listPatientRow row2">
+                <div id="listPatientContent" class="listPatient-box colored">
+                </div>
+            </div>
+        </div>
 
         <button id="addDepBtn" type="button" class="buttonTop">
             Add Deployment
@@ -328,7 +338,7 @@ include_once("../includes/database.php") ?>
             </form>
         </div>
 
-        <table class="table table-row table-hover">
+        <table class="table table-row table-hover tableDep">
             <thead>
             <tr>
                 <th scope="col">#</th>
@@ -347,8 +357,14 @@ include_once("../includes/database.php") ?>
                 <td>SINOVAC</td>
                 <td>SINOVAC MANUFACTURER</td>
                 <td>COVAX Facility</td>
-                <td>DECEMBEr 17, 2021</td>
-                <td></td>
+                <td>DECEMBER 17, 2021</td>
+                <td style= 'vertical-align: middle;'>
+                    <div style="text-align: left;">
+                        <button class="fa fa-eye"></button>
+                        <button class="fa fa-archive"></button>
+                    </div>
+                </td>
+
             </tr>
             </tbody>
         </table>
@@ -454,6 +470,20 @@ include_once("../includes/database.php") ?>
                 }
             })
         }
+
+        var clicked =false;
+        function Toggle(){
+            var butt = document.getElementById('sidebarCollapse')
+            if(!clicked){
+                clicked = true;
+                butt.innerHTML = "Menu <i class = 'fas fa-angle-right'><i>";
+            }
+            else{
+                clicked = false;
+                butt.innerHTML = "<i class='fas fa-angle-left'></i> Menu";
+            }
+        }
+
 
     </script>
 </body>
