@@ -28,8 +28,8 @@
             <p>
                 <center>Please enter your new password</center>
             </p>
-            <input type="password" id="newPassword" name="newPassword" placeholder='Enter your new password' required><br>
-            <input type="password" id="retypePassword" name="retypePassword" placeholder='Retype your new password' required><br>
+            <input type="password" id="newPassword" class="newPassword" name="newPassword" placeholder='Enter your new password' required><br>
+            <input type="password" id="retypePassword" class="retypePassword" name="retypePassword" placeholder='Retype your new password' required><br>
         </div>
         <input type="submit" id="resetbutton">
     </div>
