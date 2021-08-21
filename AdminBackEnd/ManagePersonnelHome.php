@@ -210,6 +210,7 @@ include_once("../includes/database.php") ?>
             </div>
         </div>
 
+        <!--Notification modal-->
         <div id="notifyModal" class="modal-window">
             <div class="content-modal">
                 <div class="modal-header">
@@ -335,6 +336,7 @@ include_once("../includes/database.php") ?>
 
     // add button after input of personnel basic info
     next.onclick = function() {
+        /*Not clickable if the inputs are missing.*/
         modal.style.display = "none";
         addModal.style.display = "block";
     }
