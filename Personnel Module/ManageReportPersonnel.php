@@ -9,7 +9,7 @@ include_once("../includes/database.php") ?>
     <title>SMIT+ | Manage Reports</title>
 
     <!-- Our Custom CSS -->
-    <link href="../css/style.css" rel="stylesheet">
+<!--    <link href="../css/style.css" rel="stylesheet">-->
     <link href="../css/personnelStyle.css" rel="stylesheet">
 
     <!-- Bootstrap-->
@@ -47,19 +47,19 @@ include_once("../includes/database.php") ?>
                 <a href="#"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
             </li>
             <li>
-                <a href="#"><i class="fas fa-syringe"></i> Manage Vaccine</a>
+                <a href="../Personnel Module/ManageVaccinePersonnel.php"><i class="fas fa-syringe"></i> Manage Vaccine</a>
             </li>
             <li>
-                <a href="#"><i class="fas fa-users"></i> Manage Patient</a>
+                <a href="../Personnel Module/ManageVaccinePersonnel.php"><i class="fas fa-users"></i> Manage Patient</a>
             </li>
             <li>
-                <a href="#"><i class="fas fa-truck"></i> View Deployment</a>
+                <a href="../Personnel Module/ViewDeploymentPersonnel.html"><i class="fas fa-truck"></i> View Deployment</a>
             </li>
             <li class="active">
-                <a href="#"><i class="fas fa-sticky-note"></i> Reports</a>
+                <a href="../Personnel Module/ManageReportPersonnel.php"><i class="fas fa-sticky-note"></i> Reports</a>
             </li>
             <li>
-                <a href="#"><i class="fas fa-question"></i> About</a>
+                <a href="../Personnel Module/aboutPersonnel.html"><i class="fas fa-question"></i> About</a>
             </li>
         </ul>
 
@@ -109,9 +109,6 @@ include_once("../includes/database.php") ?>
                 <option>Date Asc</option>
                 <option>Date Desc</option>
             </select>
-        </div>
-
-        <div>
             <select class="form-select col-lg-12 vaccineType" id="filterReports" name="filterReports"
                     onchange="filterReport(this)">
                 <option selected>All</option>
@@ -218,7 +215,7 @@ include_once("../includes/database.php") ?>
                 <td>$reporter</td>
                 <td>$dateReported</td>
                 <td>$status</td>
-                <td><button class='viewReportBtn' type='button' value='$reportId' onclick='viewReport($reportId)'>Review Report</button></td></tr>";
+                <td><button class='btn-outline-primary viewReportBtn' type='button' value='$reportId' onclick='viewReport($reportId)'>Review Report</button></td></tr>";
             }
             ?>
 
