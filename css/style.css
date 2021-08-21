@@ -215,11 +215,11 @@ a.article:hover {
     background: white;
 }
 
+
+
 .search-container button {
     display: inline-block;
     padding: 6px 5px;
-    margin-top: 8px;
-    margin-right: 5px;
     background: whitesmoke;
     font-size: 17px;
     border: none;
@@ -237,8 +237,8 @@ input[type=text] {
     font-size: 17px;
     border: whitesmoke;
     background: whitesmoke;
-    width: 60%;
     height: auto;
+    width: 70%;
 }
 
 .selectpicker {
@@ -250,6 +250,9 @@ input[type=text] {
     color: black;
 }
 
+.search-dep input[type=text] {
+    width: 30% !important;
+}
 
 /* Modal Content/Box */
 

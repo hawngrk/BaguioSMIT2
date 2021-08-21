@@ -87,9 +87,8 @@ include_once("../includes/database.php") ?>
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container-fluid">
 
-                <button type="button" id="sidebarCollapse" class="btn btn-info">
-                    <i class="fas fa-align-left"></i>
-                    <span>Menu</span>
+                <button type="button" id="sidebarCollapse" class="btn btn-info" onclick="Toggle()">
+                    <i class='fas fa-angle-left'></i> Menu
                 </button>
 
                 <button class="btnTop">
@@ -467,6 +466,18 @@ include_once("../includes/database.php") ?>
                 generateReport(2);
             }
         });
+    }
+    var clicked =false;
+    function Toggle(){
+        var butt = document.getElementById('sidebarCollapse')
+        if(!clicked){
+            clicked = true;
+            butt.innerHTML = "Menu <i class = 'fas fa-angle-double-right'><i>";
+        }
+        else{
+            clicked = false;
+            butt.innerHTML = "<i class='fas fa-angle-left'></i> Menu";
+        }
     }
 </script>
 </body>

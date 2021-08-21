@@ -47,7 +47,7 @@ include_once("../includes/database.php") ?>
         </div>
 
         <ul class="list-unstyled components">
-            <h4 id="mainmenu">Main Menu</h4>
+            <h3 id="mainmenu">Main Menu</h3>
             <li>
                 <a href="#"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
             </li>
@@ -105,7 +105,6 @@ include_once("../includes/database.php") ?>
 
         <!-- Page Content  -->
 
-
         <div class="listPatientColumn">
             <div class="four listPatientRow">
                 <div class="listPatient-box colored">
@@ -123,7 +122,6 @@ include_once("../includes/database.php") ?>
             Add Deployment
         </button>
 
-        <form id='newDeploymentForm' method="post" enctype="multipart/form-data">
         <div id="DeployModal" class="modal-window">
             <div class="content-modal">
                 <div class="modal-header">
@@ -135,55 +133,40 @@ include_once("../includes/database.php") ?>
                         <div class="col-6 col-sm-4">
                             <div class="form-group">
                                 <label for="district">Select Health District: </label>
-                                <select name="district" id="district" >
-                                    <?php
-                                    require '../require/getHealthDistrict.php';
-                                    foreach ($health_district as $hd) {
-                                        $distName = $hd->getHealthDistrictName();
-                                        $id = $hd->getHealthDistrictId();
-                                        echo "<option value =$id>$distName</option>";
-                                    }
-                                    ?>
+                                <select name="district" id="district">
+                                    <option value="d1">District 1</option>
+                                    <option value="d2">District 2</option>
+                                    <option value="d3">District 3</option>
+                                    <option value="d4">District 4</option>
                                 </select>
                             </div>
                             <div class="form-group">
                                 <label for="VaccineBr">Select Vaccine Brand: </label>
-                                <select name="vaccineBrand" id="VaccineBr">
-                                    <?php
-                                    require '../require/getVaccine.php';
-                                    foreach ($vaccines as $vac) {
-                                        $vacName = $vac->getVaccName();
-                                        $vacId = $vac->getVaccId();
-                                        echo "<option value = $vacId>$vacName</option>";
-                                    }
-                                    ?>
+                                <select name="VaccineB" id="VaccineBr">
+                                    <option value="V1">V1</option>
+                                    <option value="V2">V2</option>
+                                    <option value="V3">V3</option>
+                                    <option value="V4">V4</option>
                                 </select>
                             </div>
                         </div>
                         <div class="col-4 col-sm-4">
                             <div class="form-group">
                                 <label for="PatientCateg">Category of patients: </label>
-                                <select name="patientCategory" id="PatientCateg">
-                                    <option value="A1: Health Care Workers">A1: Health Care Workers</option>
-                                    <option value="A2: Senior Citizens">A2: Senior Citizens</option>
-                                    <option value="A3: Adult with Comorbidity">A3: Adult with Comorbidity</option>
-                                    <option value="A4: Frontline Personnel in Essential Sector">A4: Frontline Personnel
-                                        in Essential Sector
-                                    </option>
-                                    <option value="A5: Indigent Population">A5: Indigent Population</option>
-                                    <option value="A6: Rest Of The Population">A6: Rest Of The Population</option>
+                                <select name="PatientCateg" id="PatientCateg">
+                                    <option value="A1">A1</option>
+                                    <option value="A2">A2</option>
+                                    <option value="A3">A3</option>
+                                    <option value="A4">A4</option>
                                 </select>
                             </div>
                             <div class="form-group">
                                 <label for="VaccineLot">Select Vaccine Lot: </label>
-                                <select name="vaccineLot" id="VaccineLot">
-                                    <?php
-                                    require '../require/getVaccineLot.php';
-                                    foreach ($vaccineLots as $vd) {
-                                        $lot = $vd->getVaccLotId();
-                                        echo "<option value = $lot>$lot</option>";
-                                    }
-                                    ?>
+                                <select name="VaccineLot" id="VaccineLot">
+                                    <option value="VL1">VL1</option>
+                                    <option value="VL2">VL2</option>
+                                    <option value="VL3">VL3</option>
+                                    <option value="VL4">VL4</option>
                                 </select>
                             </div>
 
@@ -193,54 +176,27 @@ include_once("../includes/database.php") ?>
                                 <label for="date">Date: </label>
                                 <input type="date" id="date" name="date">
                             </div>
-                            <div class="form-group batchForm">
+                            <div class="form-group">
                                 <label for="VaccineBat">Select Vaccine Batch: </label>
-                                <select name="vaccineBatch" id="VaccineBat">
-                                    <?php
-                                    require '../require/getVaccineBatch.php';
-                                    foreach ($vaccineBatches as $vb) {
-                                        $batch = $vb->getVaccBatchId();
-                                        echo "<option value = $batch>$batch</option>";
-                                    }
-                                    ?>
+                                <select name="VaccineLot" id="VaccineBat">
+                                    <option value="bat1">bat1</option>
+                                    <option value="bat2">bat2</option>
+                                    <option value="bat3">bat3</option>
+                                    <option value="bat4">bat4</option>
                                 </select>
                             </div>
                         </div>
-
-                                <label class = 'label' for="location" >Deployment Location: </label>
-                                <input type="input" id="location" name="location" class="location" placeholder="ex. Aurora Hill Health Center">
-
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button id="cancel1" type="button" class="btn btn-outline-dark"> Cancel</button>
-                    <button id='depNext' type="button" class="button5"> Next </button>
-                </div>
-            </div>
-        </div>
-        </form>
-
-        <div id="DeployPatientModal" class="modal">
-            <div class="content-modal">
-                <div class="modal-header">
-                    <h4 class="modal-title">Add Deployment</h4>
-                    <button type="button" id="closeDep" class="close" data-dismiss="modal">&times;</button>
-                </div>
-                <div class="modal-body">
-
-                    <hr><h3>List Patients</h3>
-                    <div id="addPatientListContainer" class="addPatient">
-                        <div id = "names">
-
+                    <div id="uploadListPatient">
+                        <h4> List Patients </h4>
+                        <div>
+                            <a href="url">Generate File</a>
                         </div>
-                        <button class="position link" onclick=generate()>Generate Names</button>
                     </div>
-
                 </div>
                 <div class="modal-footer">
-                    <button id='depPrev' type="button" class="button5"> Previous </button>
-                    <button id="cancelDep" type="button" class="button5"> Cancel</button>
-                    <button id='depAdd' type="button" class="success"> Add </button>
+                    <button id="cancel1" type="button" class="btn btn-outline-dark"> Cancel </button>
+                    <button id='add1' type="button" class="btn btn-success""> Add</button>
                 </div>
             </div>
         </div>
@@ -273,8 +229,13 @@ include_once("../includes/database.php") ?>
                     <button type="button" id="close2" class="close" data-dismiss="modal">&times;</button>
                 </div>
                 <div class="modal-body">
-                    <label>Name of Health District:</label>
-                    <input type="text" name="newHealthDistrict">
+                    <div class="search-container">
+                        <form action="/action_page.php">
+                            <label>Name of Health District:</label>
+                            <input type="text" placeholder="Search" name="search">
+                            <button type="submit"><i class="fa fa-search"></i></button>
+                        </form>
+                    </div>
 
                     <div class="dropdown">
                         <label for="optionBrgy">Select Barangay/s: </label>
@@ -373,7 +334,7 @@ include_once("../includes/database.php") ?>
         </div> -->
 
         <!-- Search Container-->
-        <div class="search-container">
+        <div class="search-container search-dep">
             <form action="/action_page.php">
                 <input type="text" placeholder="Search" name="search">
                 <button type="submit"><i class="fa fa-search"></i></button>
@@ -384,60 +345,31 @@ include_once("../includes/database.php") ?>
             <thead>
             <tr>
                 <th scope="col">#</th>
+                <th scope="col">Vaccine ID</th>
                 <th scope="col">Vaccine Name</th>
                 <th scope="col">Brand</th>
-                <th scope="col">Health District</th>
                 <th scope="col">Location</th>
                 <th scope="col">Date</th>
                 <th scope="col">Action</th>
             </tr>
             </thead>
-
-            <?php
-            require_once '../require/getVaccinationDrive.php';
-            require_once '../require/getVaccineDeployment.php';
-            require_once '../require/getHealthDistrict.php';
-            require_once '../require/getVaccine.php';
-
-            $count = 0;
-            foreach ($vaccination_drive as $vd) {
-                $count++;
-                $driveId = $vd->getDriveId();
-                $location = $vd->getVaccLocation();
-                $date = $vd->getVaccDate();
-
-
-                foreach ($vaccineDeployment as $vDep) {
-                    if ($driveId == $vDep->getDeploymentDriveId()) {
-                        foreach ($vaccines as $vac) {
-                            if ($vDep->getDeploymentVaccId() == $vac->getVaccId()) {
-                                $brand = $vac->getVaccName();
-                            }
-                        }
-                    }
-                }
-
-                foreach ($health_district as $hd) {
-                    if ($vd->getHealthDistId() == $hd->getHealthDistrictId()) {
-                        $healthDistrict = $hd->getHealthDistrictName();
-                    }
-                }
-                echo "<tr class='table-row' onclick = 'showDrive(this)'>
-                <td>$count</td>
-                <td>$driveId</td>
-                <td>$brand</td>
-                <td>$healthDistrict</td>
-                <td>$location</td>
-                <td>$date</td>
+            <tbody>
+            <tr class="table-row" data-href="www.google.com">
+                <th scope="row">1</th>
+                <td>SINOVAC001</td>
+                <td>SINOVAC</td>
+                <td>SINOVAC MANUFACTURER</td>
+                <td>COVAX Facility</td>
+                <td>DECEMBER 17, 2021</td>
                 <td style= 'vertical-align: middle;'>
-                    <div style='text-align: left;'>
-                        <button class='fa fa-eye'></button>
-                        <button class='fa fa-archive'></button>
+                    <div style="text-align: left;">
+                        <button class="fa fa-eye"></button>
+                        <button class="fa fa-archive"></button>
                     </div>
                 </td>
-</tr>";
-            }
-            ?>
+
+            </tr>
+            </tbody>
         </table>
     </div>
     <script type="text/javascript">
@@ -452,41 +384,26 @@ include_once("../includes/database.php") ?>
         var modal2 = document.getElementById("HealthDModal");
         var modal3 = document.getElementById("DeployModalConf");
         var modal4 = document.getElementById("HealthDModalConf");
-        var modal5 = document.getElementById("DeployPatientModal");
         var addDepButt = document.getElementById("addDepBtn");
         var addHealthD = document.getElementById("addHealthDBtn");
         var cancel1 = document.getElementById("cancel1");
         var cancel2 = document.getElementById("cancel2");
-        var cancel3 = document.getElementById("cancelDep");
+        var add1 = document.getElementById("add1");
         var add2 = document.getElementById("add2");
         var no1 = document.getElementById("no1");
         var yes1 = document.getElementById("yes1");
         var no2 = document.getElementById("no2");
         var yes = document.getElementById("yes2");
-        var close1 = document.getElementById("close1");
-        var close2 = document.getElementById("close2");
-        var close3 = document.getElementById("close3");
-        var close4 = document.getElementById("close4");
-        var close5 = document.getElementById("closeDep");
-        var nextBtn = document.getElementById("depNext");
-        var prevBtn = document.getElementById("depPrev");
-        var list = document.getElementById("listPatientContent")
+        var close1 = document.getElementById("close1")
+        var close2 = document.getElementById("close2")
+        var close3 = document.getElementById("close3")
+        var close4 = document.getElementById("close4")
 
-        nextBtn.onclick = function () {
-            modal1.style.display = "none";
-            modal5.style.display = "block";
-        }
-
-        prevBtn.onclick = function () {
-            modal5.style.display = "none";
+        addDepButt.onclick = function() {
             modal1.style.display = "block";
         }
 
-        addDepButt.onclick = function () {
-            modal1.style.display = "block";
-        }
-
-        cancel1.onclick = function () {
+        cancel1.onclick = function() {
             modal1.style.display = "none";
         }
 
@@ -500,23 +417,20 @@ include_once("../includes/database.php") ?>
             modal3.style.display = "none";
         }
 
-        yes1.onclick = function () {
+        yes1.onclick = function() {
             //enter code to add deployment here
         }
 
-        addHealthD.onclick = function () {
+        addHealthD.onclick = function() {
             modal2.style.display = "block";
         }
 
-        cancel2.onclick = function () {
+        cancel2.onclick = function() {
             modal2.style.display = "none";
         }
 
-        cancel3.onclick = function () {
-            modal5.style.display = "none";
-        }
-
-        add2.onclick = function () {
+        add2.onclick = function() {
+            modal2.style.display = "none";
             modal4.style.display = "block";
         }
 
@@ -525,32 +439,27 @@ include_once("../includes/database.php") ?>
             modal4.style.display = "none";
         }
 
-        window.onclick = function (event) {
-            if (event.target == modal1 || event.target == modal2 || event.target == modal5) {
+        window.onclick = function(event) {
+            if (event.target == modal1 || event.target == modal2) {
                 modal1.style.display = "none";
                 modal2.style.display = "none";
-                modal5.style.display = "none";
             }
         }
 
-        close1.onclick = function () {
+        close1.onclick = function() {
             modal1.style.display = "none";
         }
-        close2.onclick = function () {
+        close2.onclick = function() {
             modal2.style.display = "none";
         }
-        close3.onclick = function () {
+        close3.onclick = function() {
             modal3.style.display = "none";
         }
-        close4.onclick = function () {
+        close4.onclick = function() {
             modal4.style.display = "none";
         }
 
-        close5.onclick = function () {
-            modal5.style.display = "none";
-        }
-
-        function showDrive(val) {
+        function showDrive (val) {
             console.log(val);
             var id = val.getElementsByTagName("td")[1].innerText;
             console.log(id);
@@ -561,23 +470,8 @@ include_once("../includes/database.php") ?>
                 success: function (result) {
                     console.log('passed');
                     document.getElementById("listPatientContent").innerHTML = result;
-
                 }
             })
-        }
-
-        function generate(){
-            var dist = document.getElementById("district").value;
-            var categ = document.getElementById("PatientCateg").value;
-            $.ajax({
-                url: 'ManageDeploymentSummary.php',
-                method: 'POST',
-                data: {district: dist, category: categ},
-                success: function (result) {
-                    document.getElementById("names").innerHTML = result;
-                }
-            })
-
         }
 
         var clicked =false;
