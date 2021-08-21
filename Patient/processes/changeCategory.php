@@ -3,11 +3,11 @@ session_start();
 require_once("../configure.php");
 
 $user = $_SESSION['userlogin'];
-$contact = $_POST['contact'];
+$category = $_POST['category'];
 $password = $_POST['password'];
 
 $selectUser = "SELECT * FROM patient_account WHERE patient_id = ?";
-$changeContact = "UPDATE patient_details SET patient_contact = ? where patient_id = ?";
+$changeCategory = "UPDATE patient_details SET patient_priotity_group = ? where patient_id = ?";
 
 try {
     $stmtselect = $database ->prepare($selectUser);
@@ -16,8 +16,8 @@ try {
     $hashedPassword = $accountDetails['patient_password'];
 
     if(password_verify($password, $hashedPassword)) {
-        $stmtinsert = $database->prepare($changeContact);
-        $result = $stmtinsert->execute([$contact, $user['patient_id']]);                                  
+        $stmtinsert = $database->prepare($changeCategory);
+        $result = $stmtinsert->execute([$category, $user['patient_id']]);                                  
         if($result) {
             echo 'Contact number sucessfully changed';
         } else {

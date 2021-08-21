@@ -91,12 +91,12 @@
                 <div class="vertical"></div>
                 <div class="collapseContent">
                     <div class="collapse" id="collapseChangePass">
-                        <form action="changePassword.php" id="changePassword">
+                        <form>
                             <p>Choose a strong password and don't reuse it for other accounts.</p>
-                            <input type="password" name="password" placeholder="Old Password" class="form-control settingInput formInpt" required>
+                            <input type="password" name="password" id="oldPassword" placeholder="Old Password" class="form-control settingInput formInpt" required>
                             <p class="paragraphReminders"><i class="smallReminders">Use at least 8 characters. Don’t use a password from another site, or something too obvious like your pet’s name.</i></p>
-                            <input type="password" name="password" placeholder="New Password" class="form-control settingInput formInpt" required>
-                            <button name="loginButton" class="settingButton btn-primary btn buttonLogin" form="changePassword">Submit</button>
+                            <input type="password" name="password" id="newPassword" placeholder="New Password" class="form-control settingInput formInpt" required>
+                            <button id="changePs" name="loginButton" class="settingButton btn-primary btn buttonLogin" >Submit</button>
                             <hr>
                         </form>
                     </div>
@@ -104,8 +104,8 @@
                     <div class="collapse" id="collapseChangeNum">
                         <form action="changeNumber.php" id="changeNum">
                             <p>Enter the number that you’d like to use:</p>
-                            <input type="number" name="mobile number" placeholder="+63" class="form-control settingInput formInpt" required>
-                            <button name="loginButton" class="settingButton btn btn-primary buttonLogin" form="changeNum">Change</button>
+                            <input id="contactNumber" type="number" name="mobile number" placeholder="+63" class="form-control settingInput formInpt" required>
+                            <button name="loginButton" id="changeContact" class="settingButton btn btn-primary buttonLogin" form="changeNum">Change</button>
                             <hr>
                         </form>
                     </div>
@@ -125,14 +125,68 @@
                             <option> A4: Frontline Personnel in Essential Sector, including Uniform Personnel </option>
                             <option> ROP: Rest of the Population </option>
                         </select>
-                        <button name="loginButton" class="settingButton btn btn-primary buttonLogin">Save</button>
+                        <button name="loginButton" id="changeCategory" class="settingButton btn btn-primary buttonLogin">Save</button>
                     </div>
-
                 </div>
             </div>
         </div>
-
     </div>
+    <script>
+        $('#changePs').click(function(e) {
+            var oldPassword = $('#oldPassword').val();
+            var newPassword = $('#newPassword').val();
+
+            $.ajax({
+                type: 'POST',
+                url: 'processes/changePassword.php',
+                data: {oldPassword: oldPassword, newPassword: newPassword},
+                success: function(data) {
+                    alert(data);
+                    setTimeout('window.location.href = "logout.php"');
+                },
+                error: function(data) {
+                    alert(data);
+                }
+
+            });
+        });
+
+        $('#changePs').click(function(e) {
+            var password = $('#oldPassword').val();
+            var contactNumber = $('#contactNumber').val();
+            
+            $.ajax({
+                type: 'POST', 
+                url: 'processes/changeContact.php',
+                data: {password: password, contact: contactNumber},
+                success: function(data) {
+                    alert(data);
+                    setTimeout('window.location.href = "logout.php"');
+                },
+                error: function(data) {
+                    alert(data);
+                }
+            });
+        });
+
+        $('#changeCategory').click(function(e) {
+            var password = $('#oldPassword').val();
+            var newCategory = $('#category').val();
+            
+            $.ajax({
+                type: 'POST',
+                url: 'processes/changeCategory.php',
+                data: {password: password, category: newCategory},
+                success: function(data) {
+                    alert(data);
+                    setTimeout('window.location.href = "logout.php"');
+                },
+                error: function(data) {
+                    alert(data);
+                }
+            });
+        });
+    </script>
 </body>
 
 </html>

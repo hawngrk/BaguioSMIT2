@@ -124,7 +124,7 @@
                 <input type="radio" id="otherSide" class="radioBtn" name="other" value="Please specify here">
 
                 <label for="otherSide"> 
-                <input type="text" id="otherSide" name="other " value="Please specify here"></label><br>
+                <input type="text" id="otherSide" name="other " placeholder="Please specify here"></label><br>
 
                 <hr>
                 <h5>3.Select the COVID-19 symtom/s that applies</h5>
@@ -163,6 +163,9 @@
 
                 <input type="hidden" name="loss" value="">
                 <input type="radio" id="loss" class="radioBtn" name="loss" value="Loss of Smell and taste"> <label for="head">Loss of Smell and taste</label><br>
+
+                <label for="additionalDetails"><h5>Additional Details:</h5></label><br>
+                <input type="text" id="additionalDetails" name="description">
 
                 <button type="submit" name="processReport" form="report-form" class="helpBtn">Submit</button>
             </form>

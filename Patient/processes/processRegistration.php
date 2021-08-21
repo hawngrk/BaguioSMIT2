@@ -26,7 +26,7 @@ if(isset($_POST)){
         if ($stmselect->rowCount() > 0) {
             $checkUsername = $database->prepare($searchUsername);
             $verify = $checkUsername->execute([$username]);
-            if($verify) {
+            if(!$verify) {
                 $patient = $stmselect->fetch(PDO::FETCH_ASSOC);
                 $patientId = $patient["patient_id"];
                 $stmtinsert = $database->prepare($sql);
