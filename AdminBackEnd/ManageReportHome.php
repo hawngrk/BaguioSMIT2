@@ -154,7 +154,7 @@ include_once("../includes/database.php") ?>
             <div class="four counterRow">
                 <div class="counter-box">
                     <?php
-                    $query = "SELECT COUNT(report_status) FROM report WHERE report_status = 'Unverified'";
+                    $query = "SELECT COUNT(report_status) FROM report WHERE report_status = 'Pending'";
                     $stmt = $database->stmt_init();
                     $stmt->prepare($query);
                     $stmt->execute();
@@ -162,7 +162,7 @@ include_once("../includes/database.php") ?>
                     $stmt->fetch();
                     echo "<span class='counter'>$unverifiedReports</span>"
                     ?>
-                    <p>Total of Unverified Reports</p>
+                    <p>Total of Pending Reports</p>
                 </div>
             </div>
 
