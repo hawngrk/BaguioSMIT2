@@ -112,7 +112,9 @@ include_once("../includes/database.php") ?>
                     <center><h5>Deployment Summary</h5></center>
                 </div>
             </div>
-            <div id="listPatientContent" class="four listPatientRow row2 listPatient-box colored">
+            <div class="four listPatientRow row2">
+                <div id="listPatientContent" class="listPatient-box colored">
+                </div>
             </div>
         </div>
 
@@ -559,6 +561,7 @@ include_once("../includes/database.php") ?>
                 success: function (result) {
                     console.log('passed');
                     document.getElementById("listPatientContent").innerHTML = result;
+
                 }
             })
         }
