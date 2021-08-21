@@ -402,7 +402,7 @@ input[type=text1] {
 }
 
 
-/*Text Inputs*/
+/*Text Inputs and drop down menu*/
 input[type=text3],select{
     width: 95%;
     padding: 12px;

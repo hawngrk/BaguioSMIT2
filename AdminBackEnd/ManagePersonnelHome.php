@@ -100,26 +100,37 @@ include_once("../includes/database.php") ?>
             Upload File
         </button>
 
-        <!--Modal for adding personnel-->
-        <div id="uploadFileModal" class="modal">
-            <div class="modal-content">
-                <span id="close" class="close">&times;</span>
-                <div id="uploadingFile">
+        <!--Modal for uploading personnel-->
+        <div id="uploadFileModal" class="modal-window">
+            <div class="content-modal">
+                <div class="modal-header">
                     <h3> Upload File/s </h3>
-                    <p>Upload a list of patients (.csv) <br> or </p>
-                    <input type="file" class="form-control" id="fileUpload" multiple/>
-                    <button id="browse" type="button" class="'button4 btn-primary"> Browse </button>
+                    <span id="close" class="close">&times;</span>
                 </div>
 
-                <div id="listFile">
-                    <!--temporary uploading-->
-                    <h6> Uploaded Files </h6>
-                    <p> prereg_09-19-2021_validates.csv</p>
-                    <p> prereg_09-21-2021_validates.csv</p>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="column" id="upload-content">
+                            <button class="button" id="iconBrowse"><i class="fas fa-upload"></i></i></button>
+                            <p>Upload a list of patients (.csv) </p>
+                            <button class="brwsButton" id="bttnBrowse" type="button"> Browse </button>
+                            <!--<p>Upload a list of patients (.csv) <br></p>
+                            <input type="file" class="form-control" id="fileUpload" multiple/>
+                            <button id="browse" type="button" class="'button4 btn-primary"> Browse </button> -->
+                        </div>
+                        <div class="column">
+                            <!--temporary uploading-->
+                            <h6> Uploaded Files </h6>
+                            <p> prereg_09-19-2021_validates.csv</p>
+                            <p> prereg_09-21-2021_validates.csv</p>
+                            <!--insert backend process for reading the uploaded files-->
+                        </div>
+                    </div>
                 </div>
-
+                <div class="modal-footer">
+                    <button id="add" class="btn btn-primary"> Add </button>
+                </div>
             </div>
-
         </div>
 
         <!--Button for Adding Personnel Details-->
@@ -128,83 +139,93 @@ include_once("../includes/database.php") ?>
         </button>
 
         <!--Modal for adding personnel-->
-        <div id="personnelModal" class="modal">
-            <div class="modal-content">
+        <div id="personnelModal" class="modal-window">
+            <div class="content-modal">
                 <div class="modal-header">
                     <h4 class="modal-title">Add USER-Personnel</h4>
                     <button type="button" id="close1" class="close" data-dismiss="modal">&times;</button>
                 </div>
                 <div class="modal-body">
-                    <div class="AddNewVaccine-PopUp">
+                    <div class="AddNewPersonnel-PopUp">
                         <h5> Basic Information</h5>
                         <div class="row">
                             <div class="col-sm">
                                 <label for="lname">Last Name</label>
-                                <input type="text" id="lname" class='input' name="lastname" placeholder="Input Last Name"><br>
+                                <input type="text3" id="lname" class='input' name="lastname" placeholder="Input Last Name"><br>
 
                                 <label for="fname">First Name</label><br>
-                                <input type="text" id="fname" class='input' name="firstname" placeholder="Input First Name"><br>
+                                <input type="text3" id="fname" class='input' name="firstname" placeholder="Input First Name"><br>
 
                                 <label for="mname">Middle Name</label><br>
-                                <input type="text" id="mname" class='input' name="middlename" placeholder="Input Middle Name">
+                                <input type="text3" id="mname" class='input' name="middlename" placeholder="Input Middle Name">
+                            </div>
 
+                            <div class="col-sm">
                                 <label for="suffix">Suffix</label><br>
                                 <select id="suffix" name="suffix">
                                     <option value="">None</option>
                                     <option value="sr"> Sr </option>
-                                    <option> Jr </option>
-                                    <option> I </option>
-                                    <option> II </option>
-                                    <option> III </option>
+                                    <option value="jr"> Jr </option>
+                                    <option value="1"> I </option>
+                                    <option value="2"> II </option>
+                                    <option value="3"> III </option>
                                 </select>
-
-                            </div>
-                            <div class="col-sm">
+                                <br>
                                 <label for="role">Role</label><br>
                                 <select id="role" name="suffix">
                                     <option value="" disabled selected hidden>Select a Role...</option>
-                                    <option> City Hall Employee </option>
-                                    <option> Vaccination Personnel </option>
+                                    <option value="city hall employee"> City Hall Employee </option>
+                                    <option value="vaccination personnel"> Vaccination Personnel </option>
                                 </select>
+                                <br>
                                 <label for="contactNumber"> Contact Number </label>
-                                <input type="text" class="formControl" id="contactNumber" name="contactNumber" placeholder="+639">
+                                <input type="text3" class="formControl" id="contactNumber" name="contactNumber" placeholder="+639XXXXXXXX">
                             </div>
                         </div>
                         <div class="modal-footer">
                             <button type="button" id="cancel" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                            <button type="button" id="next" class="btn btn-primary" data-dismiss="modal">Next</button>
+                            <button type="button" id="next" class="btn btn-primary">Next</button>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
 
-            <!--Modal for personnel credentials-->
-            <div id="addButtonModal" class="modal">
-                <div class="modal-content">
+        <!--Modal for Personnel Credentials-->
+        <div id="personnelCredentials" class="modal-window">
+            <div class="content-modal">
+                <div class="modal-header">
                     <span id="close2" class="close">&times;</span>
-                    <h5> Here are the patients credentials. </h5>
-                    <input class="col-xs-12" type="input" name="username" placeholder="Username" disabled>
-                    <input class="col-xs-12" type="input" name="password" placeholder="Password" disabled>
-                    <button id='save'> Save </button>
                 </div>
-
+                <div class="modal-body">
+                    <h5> Here are the patients credentials. </h5>
+                    <label1 for="username">Username</label1>
+                    <input type="text" id="username" name="username" disabled="disabled"><br>
+                    <label1 for="password">Password</label1>
+                    <input type="text" id="password" name="password" disabled="disabled">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id='save' class="btn btn-success"> Save </button>
+                </div>
             </div>
+        </div>
 
-            <!--Modal for successful notification-->
-            <div id="notifyModal" class="modal">
-                <div class="modal-content">
+        <div id="notifyModal" class="modal-window">
+            <div class="content-modal">
+                <div class="modal-header">
                     <span id="close3" class="close">&times;</span>
-                    <br>
-                    <img src="../img/checkmark.png">
+                </div>
+                <div class="modal-body">
+                    <img src="../../img/checkmark.png" alt="confirm" id="confirm">
                     <p>
                     <center> User Personnel successfully added. </center>
                     </p>
-                    <button id='exit'> Close </button>
                 </div>
-                <!--instead of close change to Done-->
-
+                <div class="modal-footer">
+                    <button id='exit' class="btn btn-primary"> Close </button>
+                    <!--instead of close change to Done-->
+                </div>
             </div>
-
         </div>
 
         <!--Search-->
@@ -283,7 +304,7 @@ include_once("../includes/database.php") ?>
 <script>
     //modals
     var modal = document.getElementById("personnelModal");
-    var addModal = document.getElementById("addButtonModal");
+    var addModal = document.getElementById("personnelCredentials");
     var notifyModal = document.getElementById("notifyModal");
     var uploadFileModal = document.getElementById("uploadFileModal")
 
