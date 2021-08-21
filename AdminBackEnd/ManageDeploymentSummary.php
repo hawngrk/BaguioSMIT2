@@ -108,3 +108,41 @@ if (isset($_POST['id'])) {
 
     echo "<button>View More</button>";
 }
+
+if (isset($_POST['district'])){
+    $district = $_POST['district'];
+    $category = $_POST['category'];
+    include_once '../includes/database.php';
+
+    require_once '../require/getPatientDetails.php';
+    require_once '../require/getBarangay.php';
+
+    $barangayList = [];
+    foreach($barangays as $bar){
+        if($bar->getBarangayHealthDistrictId() == $district){
+            $barangayList[] = $bar->getBarangayName();
+        }
+    }
+
+    foreach($patient_details as $pd){
+        if ($pd->getPriorityGroup() == $category){
+            foreach ($barangayList as $bl){
+                if($pd->getBrgy() == $bl){
+                    if ($pd->getPatientMName() == null && $pd->getPatientSuffix() == null) {
+                        $name = $pd->getPatientLName() . ", " . $pd->getPatientFName();
+                    } else if ($pd->getPatientSuffix() == null) {
+                        $name = $pd->getPatientLName() . ", " . $pd->getPatientFName() . " " . $pd->getPatientMName();
+                    } else if ($pd->getPatientMName() == null) {
+                        $name = $pd->getPatientLName() . ", " . $pd->getPatientFName() . " " . $pd->getPatientSuffix();
+                    } else {
+                        $name = $pd->getPatientLName() . ", " . $pd->getPatientFName() . " " . $pd->getPatientMName() . " " . $pd->getPatientSuffix();
+                    }
+
+                    echo "<p>$name</p>";
+                }
+            }
+        }
+    }
+
+
+}

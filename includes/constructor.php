@@ -674,6 +674,38 @@ class patientDrive
 
 
 
+<?php
+class barangay
+{
+    private $barangayId;
+    private $barangayHealthDistrictId;
+    private $barangayName;
+
+    public function __construct($barangayId, $healthDistId, $name)
+    {
+        $this->barangayId = $barangayId;
+        $this->barangayHealthDistrictId = $healthDistId;
+        $this->barangayName = $name;
+
+    }
+
+    public function getBarangayId()
+    {
+        return $this->barangayId;
+    }
+
+    public function getBarangayHealthDistrictId()
+    {
+        return $this->barangayHealthDistrictId;
+    }
+
+    public function getBarangayName()
+    {
+        return $this->barangayName;
+    }
+}
+
+
 
 
 
