@@ -291,35 +291,19 @@ include_once("../includes/database.php") ?>
                     <div class="AddHealthD-option">
                         <div class="row">
                             <ul>
-                                <li>
-                                    <input type="checkbox" id="D1" name="D1" value="D1">
-                                    <label for="D1"> District 1</label><br>
-                                </li>
-                                <li>
-                                    <input type="checkbox" id="D2" name="D2" value="D2">
-                                    <label for="D2"> District 2</label><br>
-                                </li>
-                                <li>
-                                    <input type="checkbox" id="D3" name="D3" value="D3">
-                                    <label for="D3"> District 3</label><br>
-                                </li>
-                                <li>
-                                    <input type="checkbox" id="D3" name="D3" value="D3">
-                                    <label for="D3"> District 3</label><br>
-                                </li>
-                                <li>
-                                    <input type="checkbox" id="D3" name="D3" value="D3">
-                                    <label for="D3"> District 3</label><br>
-                                </li>
-                                <li>
-                                    <input type="checkbox" id="D3" name="D3" value="D3">
-                                    <label for="D3"> District 3</label><br>
-                                </li>
-                                <li>
-                                    <input type="checkbox" id="D3" name="D3" value="D3">
-                                    <label for="D3"> District 3</label><br>
-                                </li>
+                                <?php
+                                require_once "../require/getBarangay.php";
 
+
+                                foreach ($barangays as $b){
+                                    $id = $b->getBarangayId();
+                                    $name = $b->getBarangayName();
+                                    echo " <li>
+                                    <input type='checkbox' value='$id'>
+                                    <label>$name</label><br>
+                                </li> ";
+                                }
+                                ?>
                             </ul>
 
                         </div>
@@ -350,27 +334,6 @@ include_once("../includes/database.php") ?>
                 </div>
             </div>
         </div>
-
-        <!-- <div class="row">
-            <div class="column column1">
-                <table class="table">
-                    <thead>
-                        <th>List Patients View</th>
-                    </thead>
-                </table>
-            </div>
-            <div class="column column2">
-                <table class="table table-condensed table-striped table-hover table-bordered" id="tableDeploy">
-                    <thead>
-                        <th>Vaccine ID</th>
-                        <th>Brand/s</th>
-                        <th>Location</th>
-                        <th>Date</th>
-                        <th>Action</th>
-                    </thead>
-                </table>
-            </div>
-        </div> -->
 
         <!-- Search Container-->
         <div class="search-container">
