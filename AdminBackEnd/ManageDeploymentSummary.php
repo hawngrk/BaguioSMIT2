@@ -141,17 +141,17 @@ if (isset($_POST['district'])){
                         $patient['id'] = $pd->getPatientDeetPatId();
                         $patient['name'] =  $pd->getPatientLName() . ", " . $pd->getPatientFName() . " " . $pd->getPatientMName();
 
-                        echo "json_encode($patient)";
+                        echo json_encode($patient);
                     } else if ($pd->getPatientMName() == null) {
                         $patient['id'] = $pd->getPatientDeetPatId();
                         $patient['name'] =  $pd->getPatientLName() . ", " . $pd->getPatientFName() . " " . $pd->getPatientSuffix();
 
-                        echo "json_encode($patient)";
+                        echo json_encode($patient);
                     } else {
                         $patient['id'] = $pd->getPatientDeetPatId();
                         $patient['name'] =   $pd->getPatientLName() . ", " . $pd->getPatientFName() . " " . $pd->getPatientMName() . " " . $pd->getPatientSuffix();
 
-                        echo "json_encode($patient)";
+                        echo json_encode($patient);
                     }
 
                 }

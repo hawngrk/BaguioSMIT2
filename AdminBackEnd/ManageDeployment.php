@@ -275,7 +275,10 @@ include_once("../includes/database.php") ?>
                 </div>
                 <div class="modal-body">
                     <label>Name of Health District:</label>
-                    <input type="text" name="newHealthDistrict">
+                    <input class = "districtWidth" type="text" name="newHealthDistrict">
+
+                    <label>Health District Contact Number:</label>
+                    <input class = "contactWidth" type="text" name="contactNumber">
 
                     <div>
                         <label for="optionBrgy">Select Barangay/s: </label>
@@ -299,7 +302,7 @@ include_once("../includes/database.php") ?>
                                     $id = $b->getBarangayId();
                                     $name = $b->getBarangayName();
                                     echo " <li>
-                                    <input type='checkbox' value='$id'>
+                                    <input class = 'checkboxes' type='checkbox' value='$id'>
                                     <label>$name</label><br>
                                 </li> ";
                                 }
@@ -577,6 +580,14 @@ include_once("../includes/database.php") ?>
             else{
                 clicked = false;
                 butt.innerHTML = "<i class='fas fa-angle-left'></i> Menu";
+            }
+        }
+
+        var checkedValue = [];
+        var inputElements = document.getElementsByClassName('checkboxes');
+        for(var i=0; inputElements[i]; ++i){
+            if(inputElements[i].checked){
+                checkedValue.push(inputElements[i].value);
             }
         }
     </script>
