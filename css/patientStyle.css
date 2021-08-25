@@ -1,3 +1,4 @@
+
 .navbar {
     background: #2f70bb!important;
 }
@@ -54,7 +55,7 @@
 }
 
 .reportWrapper {
-    width: 90%;
+    width: 83%;
     margin: auto;
     padding: 0%;
 }
@@ -151,7 +152,7 @@
 
 .reportWrapperbg {
     padding-top: 3%!important;
-    background: rgb(209, 221, 245);
+    background:rgb(244 246 251);
 }
 
 .headerWrapper {
@@ -159,12 +160,6 @@
     margin: auto;
     padding: 0%;
 }
-
-.radioBtn,
-.dateBtn {
-    margin-left: 3%;
-}
-
 
 /*Home Patient*/
 
@@ -323,4 +318,36 @@ html {
 .developedImg,
 .managedImg {
     margin-left: 2%;
+}
+
+#symtompsDescrip{
+    margin-left: 5%;
+    border-radius: 12px;
+}
+
+.questions {
+    margin-left: 2%;
+}
+
+.reportWrapperbg {
+    border-radius: 12px;
+}
+
+.sbmitBtn {
+    float:right!important;
+    text-align: center!important;
+    width: 10%!important;
+    height: auto!important;
+    font-size: 0.2in!important;
+    margin-top: 20%;
+    margin-right: 5%;
+}
+
+#report-form {
+    padding-bottom:7%;
+    margin-bottom:10%;
+}
+
+.secondChoices, .dateBtn, .radioBtn {
+    margin-left: 5%;
 }

@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <title>NavTemplate</title>
+    <title>SMIT+ | Report</title>
     <!--Favicon-->
     <link rel="icon" href="../img/FaviSMIT+.png" type="image/jpg">
     <!--Custom CSS-->
@@ -73,31 +73,32 @@
         </div>
         <div class="reportWrapper reportWrapperbg">
             <form action="processes/processReport.php" method="post" target="_blank" id="report-form">
-                <h5>1. Date the last time you went out</h5>
+                <h5 class="questions">1. Date the last time you went out</h5>
+
                 <input type="date" class="dateBtn" name="date" id="date">
 
                 <hr>
 
-                <h5>2. Select the vaccine side effect/s that applies:</h5>
-
+                <h5 class="questions">2. Select the vaccine side effect/s that applies:</h5>
+                <div class="secondChoices">
                 <input type="hidden" name="chills" value="">
-                <input type="radio" id="chills" class="radioBtn" name="chills value="Chills">   
+                <input type="radio" id="chills" class="radioBtn" name="chills" value="Chills">  
                 <label for="chills">Chills</label><br>
 
                 <input type="hidden" name="sFever" value="">
-                <input type="radio" id="sFever" name="sFever" class="radioBtn" name="side_effect" value="Fever">   
-                <label for="fever">Fever</label><br>
+                <input type="radio" id="sFever" name="sFever" class="radioBtn" name="side_effect" value="Fever">  
+                <label for="sfever">Fever</label><br>
 
                 <input type="hidden" name="headache" value="">                
-                <input type="radio" id="sHeadache" class="radioBtn" name="sHeadache" value="Headache">   
-                <label for="headache">Headache</label><br>
+                <input type="radio" id="sHeadache" class="radioBtn" name="sheadache" value="Headache">  
+                <label for="sheadache">Headache</label><br>
 
                 <input type="hidden" name="musclePain" value="">
                 <input type="radio" id="musclePain" class="radioBtn" name="musclePain" value="Muscle Pain">   
                 <label for="musclePain">Muscle Pain</label><br>
 
                 <input type="hidden" name="nausea" value="">
-                <input type="radio" id="nausea" class="radioBtn" name="nausea" value="Nausea">
+                <input type="radio" id="nausea" class="radioBtn" name="nausea" value="Nausea">  
                 <label for="nausea">Nausea</label><br>
 
                 <input type="hidden" name="tiredness" value="">
@@ -109,11 +110,11 @@
 
                 <label for="otherSide"> 
                 <input type="text" id="otherSide" name="other " value="Please specify here"></label><br>
-
+                </div>
                 <hr>
-                <h5>3.Select the COVID-19 symtom/s that applies</h5>
+                <h5 class="questions">3.Select the COVID-19 symtom/s that applies</h5>
 
-
+            <div class="secondChoices">
                 <input type="hidden" name="cough" value="">
                 <input type="radio" id="cough" class="radioBtn" name="cough" value="Cough"> 
                 <label for="cough">Cough</label><br>
@@ -147,8 +148,10 @@
 
                 <input type="hidden" name="loss" value="">
                 <input type="radio" id="loss" class="radioBtn" name="loss" value="Loss of Smell and taste"> <label for="head">Loss of Smell and taste</label><br>
-
-                <button type="submit" name="processReport" form="report-form" class="helpBtn">Submit</button>
+            </div>
+                <h5 class="questions">4. Detailed Description of the symtomps</h5>
+                <textarea id="symtompsDescrip" name="symtompsDescrip" rows="8" cols="80"></textarea>
+                <button type="submit" name="processReport" form="report-form" class="helpBtn sbmitBtn btn-success">Submit</button>
             </form>
         </div>
     </div>
