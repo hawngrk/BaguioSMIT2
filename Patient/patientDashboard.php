@@ -28,7 +28,6 @@
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-
 </head>
 
 <body>
@@ -79,9 +78,8 @@
     
     <!--Page Content-->
     <div class="reportWrapper">
-        <h1 class="helpheader">Hi, Kit. Stay Safe and wear your Mask.</h1>
+        <h1 id="userHeader" class="helpheader"></h1>
         <hr>
-
         <h3 class="helpheader">Baguio COVID Toll</h3>
         <div id="counters">
             <div class="row counters1">
@@ -126,7 +124,20 @@
         </div>
         <hr>
     </div>
-
+    <script>
+        $(function() {
+            var type = 'getUsername';
+            $.ajax({
+                type: 'GET',
+                url: 'processes/accountDetails.php',
+                data: {type: type},
+                success: function(data) {
+                    var accountDetails = JSON.parse(data);
+                    document.getElementById("userHeader").innerHTML = "Hi, " + accountDetails.patient_first_name + " Stay Safe and wear your Mask.";
+                }
+            })
+        })
+    </script>
 </body>
 <!--Plot Scipts -->
 <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>

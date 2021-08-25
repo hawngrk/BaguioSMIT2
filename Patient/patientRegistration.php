@@ -71,7 +71,7 @@
                     
                     e.preventDefault();
 
-                    $.ajax ({
+                    $.ajax({
                         type: 'POST', 
                         url: 'processes/processRegistration.php',
                         data: {firstname: firstname, middlename: middlename, lastname: lastname, username: username, contact: contact, email: email, password: password},

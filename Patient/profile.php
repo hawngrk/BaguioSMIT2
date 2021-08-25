@@ -98,6 +98,26 @@
             </form>
         </div>
     </div>
+    <script>
+        $(function() {
+            var type = 'getProfile';
+            $.ajax({
+                type: 'GET',
+                url: 'processes/accountDetails.php',
+                data: {type: type},
+                success: function(data) {
+                    var accountDetails = JSON.parse(data);
+                    console.log(accountDetails);
+                    document.getElementById("").innerHTML = '';
+                    document.getElementById("").innerHTML = '';
+                    document.getElementById("").innerHTML = '';
+                    document.getElementById("").innerHTML = '';
+                    document.getElementById("").innerHTML = '';
+                    document.getElementById("").innerHTML = '';
+                }
+            })
+        })
+    </script>
 </body>
 
 </html>
