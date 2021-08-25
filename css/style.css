@@ -627,7 +627,6 @@ input[type=text4]{
     position: absolute;
     bottom: 5%;
     left: 41%;
-
 }
 
 .link{
@@ -643,6 +642,35 @@ input[type=text4]{
     margin-left: 1%;
     width: 73%;
     border-radius: 12px;
+}
+
+.datePos{
+    margin-top: 5%;
+}
+
+.batchForm{
+    padding-top: 4.5%;
+}
+
+.sortPosition{
+    margin-left: 2%;
+}
+
+.sortWidth{
+    width: 15%;
+    height: 10%;
+}
+
+.contactWidth{
+    width: 67%!important;
+}
+
+.districtWidth{
+    width: 75%!important;
+}
+
+.checkboxes{
+
 }
 
 .label{

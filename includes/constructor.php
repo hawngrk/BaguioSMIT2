@@ -1,6 +1,3 @@
-<!--@Author Batac, Jecelito V.
-    Date Created: July 7, 2021
-    Description: Constructor classes-->
 <?php
     class employeeAccounts{
         private $empUsername;
