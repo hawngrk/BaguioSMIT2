@@ -135,7 +135,7 @@ include_once("../includes/database.php") ?>
                             <div class="col-6 col-sm-4">
                                 <div class="form-group">
                                     <label for="district">Select Health District: </label>
-                                    <select name="district" id="district" >
+                                    <select name="district" id="district">
                                         <?php
                                         require '../require/getHealthDistrict.php';
                                         foreach ($health_district as $hd) {
@@ -188,8 +188,8 @@ include_once("../includes/database.php") ?>
                                 </div>
 
                             </div>
-                            <div class="col-2 col-sm-4">
-                                <div class="form-group">
+                            <div class="col-2 col-sm-4 datePos">
+                                <div class="form-group ">
                                     <label for="date">Date: </label>
                                     <input type="date" id="date" name="date">
                                 </div>
@@ -240,10 +240,11 @@ include_once("../includes/database.php") ?>
                 <div class="modal-footer">
                     <button id='depPrev' type="button" class="button5"> Previous </button>
                     <button id="cancelDep" type="button" class="button5"> Cancel</button>
-                    <button id='depAdd' type="button" class="success"> Add </button>
+                    <button id='depAdd' type="button" class="success" onclick=addDep()> Add </button>
                 </div>
             </div>
         </div>
+
 
         <div id="DeployModalConf" class="modal-window">
             <div class="content-modal">
@@ -276,15 +277,14 @@ include_once("../includes/database.php") ?>
                     <label>Name of Health District:</label>
                     <input type="text" name="newHealthDistrict">
 
-                    <div class="dropdown">
+                    <div>
                         <label for="optionBrgy">Select Barangay/s: </label>
                         <a href="#" class="w3-bar-item w3-button">All</a>
                         <a href="#" class="w3-bar-item w3-button">None</a>
-                        <select id="optionBrgy">
-                            <option value="brgy1">brgy1</option>
-                            <option value="brgy2">brgy2</option>
-                            <option value="brgy3">brgy3</option>
-                            <option value="brgy4">brgy4</option>
+
+                        <label class = "sortPosition">Sort By:</label>
+                        <select class="sortWidth" id="sort">
+                            <option value="brgy1" >None</option>
                         </select>
                     </div>
 
@@ -455,6 +455,7 @@ include_once("../includes/database.php") ?>
         var modal5 = document.getElementById("DeployPatientModal");
         var addDepButt = document.getElementById("addDepBtn");
         var addHealthD = document.getElementById("addHealthDBtn");
+        var depAdd = document.getElementById("depAdd");
         var cancel1 = document.getElementById("cancel1");
         var cancel2 = document.getElementById("cancel2");
         var cancel3 = document.getElementById("cancelDep");
@@ -470,7 +471,7 @@ include_once("../includes/database.php") ?>
         var close5 = document.getElementById("closeDep");
         var nextBtn = document.getElementById("depNext");
         var prevBtn = document.getElementById("depPrev");
-        var list = document.getElementById("listPatientContent")
+        var list = document.getElementById("listPatientContent");
 
         nextBtn.onclick = function () {
             modal1.style.display = "none";
@@ -488,11 +489,6 @@ include_once("../includes/database.php") ?>
 
         cancel1.onclick = function () {
             modal1.style.display = "none";
-        }
-
-        add1.onclick = function() {
-            modal1.style.display = "none";
-            modal3.style.display = "block";
         }
 
         no1.onclick = function() {
@@ -566,19 +562,47 @@ include_once("../includes/database.php") ?>
             })
         }
 
+        var id = [];
+
         function generate(){
             var dist = document.getElementById("district").value;
             var categ = document.getElementById("PatientCateg").value;
+
             $.ajax({
                 url: 'ManageDeploymentSummary.php',
                 method: 'POST',
                 data: {district: dist, category: categ},
                 success: function (result) {
-                    document.getElementById("names").innerHTML = result;
+                    var patient =  JSON.parse(result)
+
+
+                    id.push(patient.id);
+
+                    document.getElementById("names").innerHTML = patient.name;
                 }
             })
 
         }
+
+        function addDep(){
+            var district = document.getElementById("district").value;
+            var brand = document.getElementById("VaccineBr").value;
+            var lot = document.getElementById("VaccineLot").value;
+            var date = document.getElementById("date").value;
+            var batch = document.getElementById("VaccineBat").value;
+            var location = document.getElementById("location").value;
+            $.ajax({
+                url: 'ManageDeploymentSummary.php',
+                method: 'POST',
+                data: {district: district, brand: brand, lot: lot, date: date, batch: batch, location: location, patientListId: id},
+                success: function (result) {
+
+                    console.log(result);
+                }
+            })
+
+        }
+
 
         var clicked =false;
         function Toggle(){
@@ -592,8 +616,6 @@ include_once("../includes/database.php") ?>
                 butt.innerHTML = "<i class='fas fa-angle-left'></i> Menu";
             }
         }
-
-
     </script>
 </body>
 
