@@ -200,10 +200,10 @@ include_once("../includes/database.php") ?>
                             </div>
                             <div class="col-2 col-sm-4 datePos">
                                 <div class="form-group ">
-                                    <label for="date">Date: </label>
-                                    <input type="date" id="date" name="date">
+                                    <label>Date: </label><br>
+                                    <input type="date" id="date" name="date" class="dateForm">
                                 </div>
-                                <div class="form-group batchForm">
+                                <div class="form-group">
                                     <label for="VaccineBat">Select Vaccine Batch: </label>
                                     <select name="vaccineBatch" id="VaccineBat">
                                         <?php

@@ -648,8 +648,11 @@ input[type=text4]{
     margin-top: 0.1%;
 }
 
-.batchForm{
-    padding-top: 4.5%;
+.dateForm{
+    height: 26%;
+    width: 95%;
+    border: 2px solid #ccc;
+    border-radius: 8px;
 }
 
 .sortPosition{
