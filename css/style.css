@@ -99,7 +99,7 @@ a:focus {
 #sidebar ul li a {
     color: #fff !important;
     background: #04628A;
-    ;
+;
 }
 
 #sidebar ul li.active>a,
@@ -232,13 +232,17 @@ a.article:hover {
     background: rgb(165, 165, 165);
 }
 
-input[type=text] {
+input[type=text]{
     margin-top: 8px;
     font-size: 17px;
     border: whitesmoke;
     background: whitesmoke;
     height: auto;
     width: 70%;
+}
+
+input[type=textDesc]{
+    height: 60%;
 }
 
 .selectpicker {
