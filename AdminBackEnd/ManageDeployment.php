@@ -132,8 +132,18 @@ include_once("../includes/database.php") ?>
                     </div>
                     <div class="modal-body">
                         <div class="row">
+                            <div class="intendedVax">
+                            <label>Select intended Vaccination Dose:</label>
+                            <input type="radio" id="firstVax" class="radioBtn" name="firstVax" value="First Vaccination">
+                            <label for="firstVax">First Vaccination</label>
+
+                            <input type="radio" id="secondVax" class="radioBtn" name="secondVax" value="Second Vaccination">
+                            <label for="secondVax">Second Vaccination</label>
+                             <hr>
+                            </div>
                             <div class="col-6 col-sm-4">
                                 <div class="form-group">
+
                                     <label for="district">Select Health District: </label>
                                     <select name="district" id="district">
                                         <?php

@@ -645,7 +645,7 @@ input[type=text4]{
 }
 
 .datePos{
-    margin-top: 5%;
+    margin-top: 0.1%;
 }
 
 .batchForm{
@@ -675,4 +675,13 @@ input[type=text4]{
 
 .label{
     margin-left: 2%;
+}
+
+.intendedVax {
+    text-align: center;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    font-size:17px;
+    width:100%;
 }
