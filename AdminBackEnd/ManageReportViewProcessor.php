@@ -14,7 +14,11 @@ if (isset($_POST['search'])) {
             </tr>
             </thead>
             ";
-    $querySearch = "SELECT report.report_id, patient.patient_full_name, report.date_reported, report.report_status FROM report JOIN patient ON report.report_id = patient.patient_id JOIN patient_details ON patient.patient_id = patient_details.patient_id WHERE report.report_id LIKE '$search%' OR patient_details.patient_last_name LIKE '$search%' OR patient_details.patient_first_name LIKE '$search%' OR patient_details.patient_middle_name LIKE '$search%';";
+    if (empty($search)) {
+        $querySearch = "SELECT report.report_id, patient.patient_full_name, report.date_reported, report.report_status FROM report JOIN patient ON report.report_id = patient.patient_id JOIN patient_details ON patient.patient_id = patient_details.patient_id;";
+    } else {
+        $querySearch = "SELECT report.report_id, patient.patient_full_name, report.date_reported, report.report_status FROM report JOIN patient ON report.report_id = patient.patient_id JOIN patient_details ON patient.patient_id = patient_details.patient_id WHERE report.report_id LIKE '$search%' OR patient_details.patient_last_name LIKE '$search%' OR patient_details.patient_first_name LIKE '$search%' OR patient_details.patient_middle_name LIKE '$search%';";
+    }
     $stmt = $database->stmt_init();
     $stmt->prepare($querySearch);
     $stmt->execute();
@@ -166,7 +170,6 @@ if (isset($_POST['report'])) {
     require '../require/getVaccine.php';
     $reportId = $_POST['report'];
     $view = $_POST['view'];
-    print_r($view);
     $patientId = '';
     $reportType = '';
     $dateRecentTravel = '';

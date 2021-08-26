@@ -284,7 +284,7 @@ include_once("../includes/database.php") ?>
             $.ajax({
                 url: 'ManageReportViewProcessor.php',
                 type: 'POST',
-                data: {"cancel": textSearch},
+                data: {"search": textSearch},
                 success: function (result) {
                     document.getElementById("reportsTable").innerHTML = result;
                 }
@@ -459,14 +459,18 @@ include_once("../includes/database.php") ?>
             }
         }
         $.ajax({
-            url: 'manageReportViewProcessor.php',
+            url: 'ManageReportViewProcessor.php',
             type: 'POST',
             data: {"download": reportsIds},
             success: function (result) {
-                generateReport(2);
+                //window.location.href = "DownloadReports.php";
+                //generateReport(2)
+                console.log('ok');
+                console.log(result);
             }
         });
     }
+
     var clicked =false;
     function Toggle(){
         var butt = document.getElementById('sidebarCollapse')
