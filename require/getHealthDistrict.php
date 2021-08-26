@@ -3,7 +3,7 @@
 include_once("../includes/database.php");
 include_once("../includes/constructor.php");
 
-$query = "SELECT health_disctrict_id, health_district_name FROM health_district";
+$query = "SELECT health_district_id, health_district_name FROM health_district";
 $health_district= [];
 
 $stmt = $database->stmt_init();

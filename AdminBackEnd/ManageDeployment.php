@@ -47,7 +47,7 @@ include_once("../includes/database.php") ?>
         </div>
 
         <ul class="list-unstyled components">
-            <h4 id="mainmenu">Main Menu</h4>
+            <p id="mainmenu">Main Menu</p>
             <li>
                 <a href="#"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
             </li>
@@ -61,19 +61,19 @@ include_once("../includes/database.php") ?>
                     <li>
                         <a href="ManagePersonnelHome.php">Personnel</a>
                     </li>
-                    <li>
-                        <a href="ManagePatientHome.php" >Patients</a>
+                    <li class="active">
+                        <a href="ManagePatientHome.php" class="active">Patients</a>
                     </li>
                 </ul>
             </li>
             <li class="active">
-                <a href="ManageDeployment.php" ><i class="fas fa-truck"></i> Manage Deployment</a>
+                <a href="ManageDeployment.php"><i class="fas fa-truck"></i> Manage Deployment</a>
             </li>
             <li>
                 <a href="ManageReportHome.php"><i class="fas fa-sticky-note"></i> Reports</a>
             </li>
             <li>
-                <a href="#"><i class="fas fa-question"></i> About</a>
+                <a href="aboutAdmin.html"><i class="fas fa-question"></i> About</a>
             </li>
         </ul>
 
@@ -285,10 +285,10 @@ include_once("../includes/database.php") ?>
                 </div>
                 <div class="modal-body">
                     <label>Name of Health District:</label>
-                    <input class = "districtWidth" type="text" name="newHealthDistrict">
+                    <input class = "districtWidth" type="text" id="newHealthDistrict" name="newHealthDistrict">
 
                     <label>Health District Contact Number:</label>
-                    <input class = "contactWidth" type="text" name="contactNumber">
+                    <input class = "contactWidth" type="text" id="contactNumber" name="contactNumber">
 
                     <div>
                         <label for="optionBrgy">Select Barangay/s: </label>
@@ -312,7 +312,7 @@ include_once("../includes/database.php") ?>
                                     $id = $b->getBarangayId();
                                     $name = $b->getBarangayName();
                                     echo " <li>
-                                    <input class = 'checkboxes' type='checkbox' value='$id'>
+                                    <input class = 'checkboxes' type='checkbox' onclick='addHealthDistrict($id)'>
                                     <label>$name</label><br>
                                 </li> ";
                                 }
@@ -324,7 +324,7 @@ include_once("../includes/database.php") ?>
                     </div>
                     <div class="modal-footer">
                         <button id="cancel2" type="button" class="btn btn-outline-dark"> Cancel </button>
-                        <button id='add2' type="button" class="btn btn-success"> Add</button>
+                        <button id='add2' type="button" class="btn btn-success""> Add</button>
 
                     </div>
                 </div>
@@ -343,7 +343,7 @@ include_once("../includes/database.php") ?>
                 </div>
                 <div class="modal-footer">
                     <button id="no2" type="button" class="btn btn-outline-dark"> No </button>
-                    <button id='yes2' type="button" class="btn btn-success"> Yes </button>
+                    <button type="button" class="btn btn-success" onclick="updateDistrict()"> Yes </button>
                 </div>
             </div>
         </div>
@@ -406,10 +406,11 @@ include_once("../includes/database.php") ?>
                 <td>$location</td>
                 <td>$date</td>
                 <td style= 'vertical-align: middle;'>
+                <!--
                     <div style='text-align: left;'>
                         <button class='fa fa-eye'></button>
                         <button class='fa fa-archive'></button>
-                    </div>
+                    </div>-->
                 </td>
 </tr>";
             }
@@ -591,14 +592,31 @@ include_once("../includes/database.php") ?>
                 clicked = false;
                 butt.innerHTML = "<i class='fas fa-angle-left'></i> Menu";
             }
+
         }
 
         var checkedValue = [];
-        var inputElements = document.getElementsByClassName('checkboxes');
-        for(var i=0; inputElements[i]; ++i){
-            if(inputElements[i].checked){
-                checkedValue.push(inputElements[i].value);
+        function addHealthDistrict(id) {
+
+            if(checkedValue.indexOf(id) < 0){
+                checkedValue.push(id);
+            }else{
+                var idx = checkedValue.indexOf(id);
+                checkedValue.splice(idx, 1);
             }
+        }
+
+        function updateDistrict(){
+            var healthDistrictName = document.getElementById("newHealthDistrict").value;
+            var districtNumber = document.getElementById("contactNumber").value;
+            $.ajax({
+                url: 'ManageDeploymentSummary.php',
+                method: 'POST',
+                data: {barangays: checkedValue, healthDistrictName: healthDistrictName, number: districtNumber},
+                success: function (result) {
+                    window.location.href = "ManageDeployment.php";
+                }
+            })
         }
     </script>
 </body>
