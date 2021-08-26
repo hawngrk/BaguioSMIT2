@@ -200,7 +200,7 @@ include_once("../includes/database.php") ?>
         </form>
 
         <div class="search-container">
-            <input type="text" id="searchVaccine" name="searchVaccine" placeholder="Search" onkeyup="searchVaccine()">
+            <input type="text" id="searchVaccine" class="searchHome" name="searchVaccine" placeholder="Search" onkeyup="searchVaccine()">
             <button type="submit" id="searchVaccineBtn" name="searchVaccineBtn" onclick="searchVaccine()"><i
                         class="fa fa-search"></i></button>
         </div>

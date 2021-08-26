@@ -47,7 +47,7 @@ include_once("../includes/database.php") ?>
         </div>
 
         <ul class="list-unstyled components">
-            <p id="mainmenu">Main Menu</p>
+            <h4 id="mainmenu">Main Menu</h4>
             <li>
                 <a href="#"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
             </li>
@@ -61,19 +61,19 @@ include_once("../includes/database.php") ?>
                     <li>
                         <a href="ManagePersonnelHome.php">Personnel</a>
                     </li>
-                    <li class="active">
-                        <a href="ManagePatientHome.php" class="active">Patients</a>
+                    <li>
+                        <a href="ManagePatientHome.php" >Patients</a>
                     </li>
                 </ul>
             </li>
             <li class="active">
-                <a href="ManageDeployment.php"><i class="fas fa-truck"></i> Manage Deployment</a>
+                <a href="ManageDeployment.php" ><i class="fas fa-truck"></i> Manage Deployment</a>
             </li>
             <li>
                 <a href="ManageReportHome.php"><i class="fas fa-sticky-note"></i> Reports</a>
             </li>
             <li>
-                <a href="aboutAdmin.html"><i class="fas fa-question"></i> About</a>
+                <a href="#"><i class="fas fa-question"></i> About</a>
             </li>
         </ul>
 
@@ -132,18 +132,8 @@ include_once("../includes/database.php") ?>
                     </div>
                     <div class="modal-body">
                         <div class="row">
-                            <div class="intendedVax">
-                            <label>Select intended Vaccination Dose:</label>
-                            <input type="radio" id="firstVax" class="radioBtn" name="firstVax" value="First Vaccination">
-                            <label for="firstVax">First Vaccination</label>
-
-                            <input type="radio" id="secondVax" class="radioBtn" name="secondVax" value="Second Vaccination">
-                            <label for="secondVax">Second Vaccination</label>
-                             <hr>
-                            </div>
                             <div class="col-6 col-sm-4">
                                 <div class="form-group">
-
                                     <label for="district">Select Health District: </label>
                                     <select name="district" id="district">
                                         <?php
@@ -200,10 +190,10 @@ include_once("../includes/database.php") ?>
                             </div>
                             <div class="col-2 col-sm-4 datePos">
                                 <div class="form-group ">
-                                    <label>Date: </label><br>
-                                    <input type="date" id="date" name="date" class="dateForm">
+                                    <label for="date">Date: </label>
+                                    <input type="date" id="date" name="date">
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group batchForm">
                                     <label for="VaccineBat">Select Vaccine Batch: </label>
                                     <select name="vaccineBatch" id="VaccineBat">
                                         <?php
@@ -224,13 +214,13 @@ include_once("../includes/database.php") ?>
                     </div>
                     <div class="modal-footer">
                         <button id="cancel1" type="button" class="btn btn-outline-dark"> Cancel</button>
-                        <button id='depNext' type="button" class="button5"> Next </button>
+                        <button id='depNext' type="button" class="btn btn-primary"> Next </button>
                     </div>
                 </div>
             </div>
         </form>
 
-        <div id="DeployPatientModal" class="modal">
+        <div id="DeployPatientModal" class="modal-window">
             <div class="content-modal">
                 <div class="modal-header">
                     <h4 class="modal-title">Add Deployment</h4>
@@ -242,15 +232,15 @@ include_once("../includes/database.php") ?>
                     <div id="addPatientListContainer" class="addPatient">
                         <div id = "names">
 
+                            <button class="position link" id="genNames" onclick=generate()>Generate Names</button>
                         </div>
-                        <button class="position link" onclick=generate()>Generate Names</button>
                     </div>
 
                 </div>
                 <div class="modal-footer">
-                    <button id='depPrev' type="button" class="button5"> Previous </button>
-                    <button id="cancelDep" type="button" class="button5"> Cancel</button>
-                    <button id='depAdd' type="button" class="success" onclick=addDep()> Add </button>
+                    <button id='depPrev' type="button" class="btn btn-outline-dark"> Previous </button>
+                    <button id="cancelDep" type="button" class="btn btn-outline-dark"> Cancel</button>
+                    <button id='depAdd' type="button" class="btn btn-success" onclick=addDep()> Add </button>
                 </div>
             </div>
         </div>
@@ -285,12 +275,12 @@ include_once("../includes/database.php") ?>
                 </div>
                 <div class="modal-body">
                     <label>Name of Health District:</label>
-                    <input class = "districtWidth" type="text" id="newHealthDistrict" name="newHealthDistrict">
+                    <input class = "districtWidth" type="text" name="newHealthDistrict">
 
                     <label>Health District Contact Number:</label>
-                    <input class = "contactWidth" type="text" id="contactNumber" name="contactNumber">
+                    <input class = "contactWidth" type="text" name="contactNumber">
 
-                    <div>
+                    <div class="sortPortion">
                         <label for="optionBrgy">Select Barangay/s: </label>
                         <a href="#" class="w3-bar-item w3-button">All</a>
                         <a href="#" class="w3-bar-item w3-button">None</a>
@@ -312,7 +302,7 @@ include_once("../includes/database.php") ?>
                                     $id = $b->getBarangayId();
                                     $name = $b->getBarangayName();
                                     echo " <li>
-                                    <input class = 'checkboxes' type='checkbox' onclick='addHealthDistrict($id)'>
+                                    <input class = 'checkboxes' type='checkbox' value='$id'>
                                     <label>$name</label><br>
                                 </li> ";
                                 }
@@ -324,7 +314,7 @@ include_once("../includes/database.php") ?>
                     </div>
                     <div class="modal-footer">
                         <button id="cancel2" type="button" class="btn btn-outline-dark"> Cancel </button>
-                        <button id='add2' type="button" class="btn btn-success""> Add</button>
+                        <button id='add2' type="button" class="btn btn-success"> Add</button>
 
                     </div>
                 </div>
@@ -343,7 +333,7 @@ include_once("../includes/database.php") ?>
                 </div>
                 <div class="modal-footer">
                     <button id="no2" type="button" class="btn btn-outline-dark"> No </button>
-                    <button type="button" class="btn btn-success" onclick="updateDistrict()"> Yes </button>
+                    <button id='yes2' type="button" class="btn btn-success"> Yes </button>
                 </div>
             </div>
         </div>
@@ -406,11 +396,10 @@ include_once("../includes/database.php") ?>
                 <td>$location</td>
                 <td>$date</td>
                 <td style= 'vertical-align: middle;'>
-                <!--
                     <div style='text-align: left;'>
                         <button class='fa fa-eye'></button>
                         <button class='fa fa-archive'></button>
-                    </div>-->
+                    </div>
                 </td>
 </tr>";
             }
@@ -592,31 +581,14 @@ include_once("../includes/database.php") ?>
                 clicked = false;
                 butt.innerHTML = "<i class='fas fa-angle-left'></i> Menu";
             }
-
         }
 
         var checkedValue = [];
-        function addHealthDistrict(id) {
-
-            if(checkedValue.indexOf(id) < 0){
-                checkedValue.push(id);
-            }else{
-                var idx = checkedValue.indexOf(id);
-                checkedValue.splice(idx, 1);
+        var inputElements = document.getElementsByClassName('checkboxes');
+        for(var i=0; inputElements[i]; ++i){
+            if(inputElements[i].checked){
+                checkedValue.push(inputElements[i].value);
             }
-        }
-
-        function updateDistrict(){
-            var healthDistrictName = document.getElementById("newHealthDistrict").value;
-            var districtNumber = document.getElementById("contactNumber").value;
-            $.ajax({
-                url: 'ManageDeploymentSummary.php',
-                method: 'POST',
-                data: {barangays: checkedValue, healthDistrictName: healthDistrictName, number: districtNumber},
-                success: function (result) {
-                    window.location.href = "ManageDeployment.php";
-                }
-            })
         }
     </script>
 </body>
