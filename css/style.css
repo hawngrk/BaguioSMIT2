@@ -417,7 +417,7 @@ input[type=text1] {
 
 /*Text Inputs and drop down menu*/
 input[type=text3],select{
-    width: 95%;
+    width: 70%;
     padding: 12px;
     margin: 8px;
     display: inline-block;

@@ -16,14 +16,22 @@ include_once("../includes/database.php") ?>
     <link href="../css/style.css" rel="stylesheet">
 
     <!-- Bootstrap-->
-    <script crossorigin="anonymous" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-    <script crossorigin="anonymous" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script crossorigin="anonymous" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-    <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" rel="stylesheet">
+    <script crossorigin="anonymous" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script crossorigin="anonymous" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+            src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script crossorigin="anonymous" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" rel="stylesheet">
     <!-- Font Awesome JS -->
     <script src="https://kit.fontawesome.com/fcdb0fe9f3.js" crossorigin="anonymous"></script>
-    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
-    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js"
+            integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ"
+            crossorigin="anonymous"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js"
+            integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY"
+            crossorigin="anonymous"></script>
 
 </head>
 
@@ -46,7 +54,8 @@ include_once("../includes/database.php") ?>
                 <a href="ManageVaccineHome.php"><i class="fas fa-syringe"></i> Manage Vaccine</a>
             </li>
             <li class="active">
-                <a href="#ManageUsersSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fas fa-users"></i> Manage Users</a>
+                <a href="#ManageUsersSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i
+                            class="fas fa-users"></i> Manage Users</a>
                 <ul class="collapse list-unstyled" id="ManageUsersSubmenu">
                     <li class="active">
                         <a href="ManagePersonnelHome.php" class="active">Personnel</a>
@@ -113,7 +122,7 @@ include_once("../includes/database.php") ?>
                         <div class="column" id="upload-content">
                             <button class="button" id="iconBrowse"><i class="fas fa-upload"></i></i></button>
                             <p>Upload a list of patients (.csv) </p>
-                            <button class="brwsButton" id="bttnBrowse" type="button"> Browse </button>
+                            <button class="brwsButton" id="bttnBrowse" type="button"> Browse</button>
                             <!--<p>Upload a list of patients (.csv) <br></p>
                             <input type="file" class="form-control" id="fileUpload" multiple/>
                             <button id="browse" type="button" class="'button4 btn-primary"> Browse </button> -->
@@ -128,7 +137,7 @@ include_once("../includes/database.php") ?>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button id="add" class="btn btn-primary"> Add </button>
+                    <button id="add" class="btn btn-primary"> Add</button>
                 </div>
             </div>
         </div>
@@ -146,46 +155,45 @@ include_once("../includes/database.php") ?>
                     <button type="button" id="close1" class="close" data-dismiss="modal">&times;</button>
                 </div>
                 <div class="modal-body">
-                    <div class="AddNewPersonnel-PopUp">
-                        <h5> Basic Information</h5>
-                        <div class="row">
-                            <div class="col-sm">
-                                <label for="lname">Last Name</label>
-                                <input type="text3" id="lname" class='input' name="lastname" placeholder="Input Last Name"><br>
-
-                                <label for="fname">First Name</label><br>
-                                <input type="text3" id="fname" class='input' name="firstname" placeholder="Input First Name"><br>
-
-                                <label for="mname">Middle Name</label><br>
-                                <input type="text3" id="mname" class='input' name="middlename" placeholder="Input Middle Name">
-                            </div>
-
-                            <div class="col-sm">
-                                <label for="suffix">Suffix</label><br>
-                                <select id="suffix" name="suffix">
-                                    <option value="">None</option>
-                                    <option value="sr"> Sr </option>
-                                    <option value="jr"> Jr </option>
-                                    <option value="1"> I </option>
-                                    <option value="2"> II </option>
-                                    <option value="3"> III </option>
-                                </select>
-                                <br>
-                                <label for="role">Role</label><br>
-                                <select id="role" name="suffix">
-                                    <option value="" disabled selected hidden>Select a Role...</option>
-                                    <option value="city hall employee"> City Hall Employee </option>
-                                    <option value="vaccination personnel"> Vaccination Personnel </option>
-                                </select>
-                                <br>
-                                <label for="contactNumber"> Contact Number </label>
-                                <input type="text3" class="formControl" id="contactNumber" name="contactNumber" placeholder="+639XXXXXXXX">
-                            </div>
+                    <h5> Basic Information</h5>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label for="lName">Last Name</label>
+                            <input type="text3" class="form-control" id="lName"
+                                   placeholder="Enter Last Name">
+                            <label for="fName">First Name</label>
+                            <input type="text3" class="form-control" id="fName"
+                                   placeholder="Enter First Name">
+                            <label for="mName">Middle Name</label>
+                            <input type="text3" class="form-control" id="mName"
+                                   placeholder="Enter Middle Name">
                         </div>
-                        <div class="modal-footer">
-                            <button type="button" id="cancel" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                            <button type="button" id="next" class="btn btn-primary">Next</button>
+                        <div class="col-md-6">
+                            <label for="suffix">Suffix</label>
+                            <select id="suffix" name="suffix">
+                                <option value="">None</option>
+                                <option value="sr"> Sr</option>
+                                <option value="jr"> Jr</option>
+                                <option value="1"> I</option>
+                                <option value="2"> II</option>
+                                <option value="3"> III</option>
+                            </select>
+                            <label for="role">Role</label>
+                            <select id="role">
+                                <option value="">Select</option>
+                                <option value="cityHallEmp"> City Hall Employee </option>
+                                <option value="vaccinationPer"> Vaccination Personnel </option>
+                            </select>
+                            <label for="contactNum">Contact Number</label>
+                            <input type="text3" class="form-control" id="contactNum"
+                                   placeholder="+639-XXX-XXXX-XX">
+
                         </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" id="cancel" class="btn btn-secondary" data-dismiss="modal">Cancel
+                        </button>
+                        <button type="button" id="next" class="btn btn-primary">Next</button>
                     </div>
                 </div>
             </div>
@@ -205,7 +213,7 @@ include_once("../includes/database.php") ?>
                     <input type="text" id="password" name="password" disabled="disabled">
                 </div>
                 <div class="modal-footer">
-                    <button type="button" id='save' class="btn btn-success"> Save </button>
+                    <button type="button" id='save' class="btn btn-success"> Save</button>
                 </div>
             </div>
         </div>
@@ -219,11 +227,11 @@ include_once("../includes/database.php") ?>
                 <div class="modal-body">
                     <img src="../../img/checkmark.png" alt="confirm" id="confirm">
                     <p>
-                    <center> User Personnel successfully added. </center>
+                    <center> User Personnel successfully added.</center>
                     </p>
                 </div>
                 <div class="modal-footer">
-                    <button id='exit' class="btn btn-primary"> Close </button>
+                    <button id='exit' class="btn btn-primary"> Done</button>
                     <!--instead of close change to Done-->
                 </div>
             </div>
@@ -258,14 +266,14 @@ include_once("../includes/database.php") ?>
                 $role = $emp->getEmployeeRole();
                 $contact = $emp->getEmployeeContact();
 
-                if ($emp->getEmployeeMiddleName() == null && $emp->getEmployeeSuffix() == null){
-                    $name = $emp->getEmployeeLastName(). ", ".$emp->getEmployeeFirstName();
-                } else if($emp->getEmployeeSuffix() == null) {
-                    $name = $emp->getEmployeeLastName(). ", ".$emp->getEmployeeFirstName(). " ". $emp->getEmployeeMiddleName();
-                } else if($emp->getEmployeeMiddleName() == null){
-                    $name = $emp->getEmployeeLastName(). ", ".$emp->getEmployeeFirstName(). " ". $emp->getEmployeeSuffix();
-                } else{
-                    $name = $emp->getEmployeeLastName(). ", ".$emp->getEmployeeFirstName(). " ". $emp->getEmployeeMiddleName(). " ". $emp->getEmployeeSuffix();
+                if ($emp->getEmployeeMiddleName() == null && $emp->getEmployeeSuffix() == null) {
+                    $name = $emp->getEmployeeLastName() . ", " . $emp->getEmployeeFirstName();
+                } else if ($emp->getEmployeeSuffix() == null) {
+                    $name = $emp->getEmployeeLastName() . ", " . $emp->getEmployeeFirstName() . " " . $emp->getEmployeeMiddleName();
+                } else if ($emp->getEmployeeMiddleName() == null) {
+                    $name = $emp->getEmployeeLastName() . ", " . $emp->getEmployeeFirstName() . " " . $emp->getEmployeeSuffix();
+                } else {
+                    $name = $emp->getEmployeeLastName() . ", " . $emp->getEmployeeFirstName() . " " . $emp->getEmployeeMiddleName() . " " . $emp->getEmployeeSuffix();
                 }
 
                 echo "<tr>
@@ -286,17 +294,23 @@ include_once("../includes/database.php") ?>
 </div>
 
 <!-- jQuery CDN - Slim version (=without AJAX) -->
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
 <!-- Popper.JS -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"
+        integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ"
+        crossorigin="anonymous"></script>
 <!-- Bootstrap JS -->
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"
+        integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm"
+        crossorigin="anonymous"></script>
 <!-- AJAX -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
 <script type="text/javascript">
-    $(document).ready(function() {
-        $('#sidebarCollapse').on('click', function() {
+    $(document).ready(function () {
+        $('#sidebarCollapse').on('click', function () {
             $('#sidebar').toggleClass('active');
         });
     });
@@ -326,59 +340,59 @@ include_once("../includes/database.php") ?>
 
 
     //upload file button
-    uploadFileBtn.onclick = function() {
+    uploadFileBtn.onclick = function () {
         uploadFileModal.style.display = "block";
     }
     // add button for Add User
-    addUserBtn.onclick = function() {
+    addUserBtn.onclick = function () {
         modal.style.display = "block";
     }
 
     // add button after input of personnel basic info
-    next.onclick = function() {
+    next.onclick = function () {
         /*Not clickable if the inputs are missing.*/
         modal.style.display = "none";
         addModal.style.display = "block";
     }
 
-    save.onclick = function() {
+    save.onclick = function () {
         modal.style.display = "none";
         addModal.style.display = "none";
         notifyModal.style.display = "block";
     }
 
-    span.onclick = function() {
+    span.onclick = function () {
         uploadFileModal.style.display = "none";
     }
 
-    span1.onclick = function() {
+    span1.onclick = function () {
         modal.style.display = "none";
     }
 
-    span2.onclick = function() {
-        modal.style.display = "none";
-        addModal.style.display = "none";
-    }
-
-    span3.onclick = function() {
+    span2.onclick = function () {
         modal.style.display = "none";
         addModal.style.display = "none";
-        notifyModal.style.display = "none";
     }
 
-    exit.onclick = function() {
+    span3.onclick = function () {
         modal.style.display = "none";
         addModal.style.display = "none";
         notifyModal.style.display = "none";
     }
 
-    cancel.onclick = function() {
+    exit.onclick = function () {
+        modal.style.display = "none";
+        addModal.style.display = "none";
+        notifyModal.style.display = "none";
+    }
+
+    cancel.onclick = function () {
         modal.style.display = "none";
         addModal.style.display = "none";
         notifyModal.style.display = "none"
     }
 
-    window.onclick = function(event) {
+    window.onclick = function (event) {
         if (event.target == modal || event.target == addModal || event.target == notifyModal || event.target == uploadFileModal) {
             modal.style.display = "none";
             addModal.style.display = "none";
@@ -387,14 +401,14 @@ include_once("../includes/database.php") ?>
         }
     }
 
-    var clicked =false;
-    function Toggle(){
+    var clicked = false;
+
+    function Toggle() {
         var butt = document.getElementById('sidebarCollapse')
-        if(!clicked){
+        if (!clicked) {
             clicked = true;
             butt.innerHTML = "Menu <i class = 'fas fa-angle-double-right'><i>";
-        }
-        else{
+        } else {
             clicked = false;
             butt.innerHTML = "<i class='fas fa-angle-left'></i> Menu";
         }
