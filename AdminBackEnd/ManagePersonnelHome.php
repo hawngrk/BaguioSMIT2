@@ -118,16 +118,17 @@ include_once("../includes/database.php") ?>
                 </div>
 
                 <div class="modal-body">
-                    <div class="row">
-                        <div class="column" id="upload-content">
-                            <button class="button" id="iconBrowse"><i class="fas fa-upload"></i></i></button>
-                            <p>Upload a list of patients (.csv) </p>
-                            <button class="brwsButton" id="bttnBrowse" type="button"> Browse</button>
+                    <div class="row" id="upload-content">
+                        <div class="col">
+                            <div class="col-md-12 text-center">
+                                <button class="button" id="iconBrowse"><i class="fas fa-upload"></i></i></button>
+                                <p><br>Upload a list of patients (.csv) </p>
                             <!--<p>Upload a list of patients (.csv) <br></p>
                             <input type="file" class="form-control" id="fileUpload" multiple/>
                             <button id="browse" type="button" class="'button4 btn-primary"> Browse </button> -->
+                            </div>
                         </div>
-                        <div class="column">
+                        <div class="col">
                             <!--temporary uploading-->
                             <h6> Uploaded Files </h6>
                             <p> prereg_09-19-2021_validates.csv</p>
@@ -137,6 +138,7 @@ include_once("../includes/database.php") ?>
                     </div>
                 </div>
                 <div class="modal-footer">
+                    <button type="button" id="cancel1" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                     <button id="add" class="btn btn-primary"> Add</button>
                 </div>
             </div>
@@ -159,13 +161,13 @@ include_once("../includes/database.php") ?>
                     <div class="row">
                         <div class="col-md-6">
                             <label for="lName">Last Name</label>
-                            <input type="text3" class="form-control" id="lName"
+                            <input type="text3" class="form-control basicInfoSizes" id="lName"
                                    placeholder="Enter Last Name">
-                            <label for="fName">First Name</label>
-                            <input type="text3" class="form-control" id="fName"
+                            <label class="infoPosition" for="fName">First Name</label>
+                            <input type="text3" class="form-control basicInfoSizes" id="fName"
                                    placeholder="Enter First Name">
-                            <label for="mName">Middle Name</label>
-                            <input type="text3" class="form-control" id="mName"
+                            <label class="infoPosition" for="mName">Middle Name</label>
+                            <input type="text3" class="form-control basicInfoSizes" id="mName"
                                    placeholder="Enter Middle Name">
                         </div>
                         <div class="col-md-6">
@@ -178,21 +180,20 @@ include_once("../includes/database.php") ?>
                                 <option value="2"> II</option>
                                 <option value="3"> III</option>
                             </select>
-                            <label for="role">Role</label>
+                            <label class="infoPosition" for="role">Role</label>
                             <select id="role">
                                 <option value="">Select</option>
                                 <option value="cityHallEmp"> City Hall Employee </option>
                                 <option value="vaccinationPer"> Vaccination Personnel </option>
                             </select>
-                            <label for="contactNum">Contact Number</label>
-                            <input type="text3" class="form-control" id="contactNum"
-                                   placeholder="+639-XXX-XXXX-XX">
+                            <label class="infoPosition" for="contactNum">Contact Number</label>
+                            <input type="text3" class="form-control basicInfoSizes" id="contactNum"
+                                   placeholder="+63XXXXXXXXX" pattern="+63[0-9]{10}" required>
 
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" id="cancel" class="btn btn-secondary" data-dismiss="modal">Cancel
-                        </button>
+                        <button type="button" id="cancel" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                         <button type="button" id="next" class="btn btn-primary">Next</button>
                     </div>
                 </div>
@@ -206,13 +207,16 @@ include_once("../includes/database.php") ?>
                     <span id="close2" class="close">&times;</span>
                 </div>
                 <div class="modal-body">
-                    <h5> Here are the patients credentials. </h5>
-                    <label1 for="username">Username</label1>
-                    <input type="text" id="username" name="username" disabled="disabled"><br>
-                    <label1 for="password">Password</label1>
-                    <input type="text" id="password" name="password" disabled="disabled">
+                    <h5> Here are the personnel credentials. </h5>
+                    <label class="cred" for="username"> Username</label>
+                    <input type="text" id="username" name="username" disabled="disabled">
+
+                    <label class="cred" for="password">Password</label>
+                    <input class="passwordPos" type="text" id="password" name="password" disabled="disabled">
                 </div>
+
                 <div class="modal-footer">
+                    <button type='button' id="previous" class="btn btn-outline-secondary mr-auto"> Previous </button>
                     <button type="button" id='save' class="btn btn-success"> Save</button>
                 </div>
             </div>
@@ -326,6 +330,7 @@ include_once("../includes/database.php") ?>
     //buttons
     var addUserBtn = document.getElementById("addUserBtn");
     var uploadFileBtn = document.getElementById("uploadFile")
+    var prev = document.getElementById("previous")
 
     //cancel
     var span = document.getElementById("close");
@@ -333,6 +338,7 @@ include_once("../includes/database.php") ?>
     var span2 = document.getElementById("close2");
     var span3 = document.getElementById("close3");
     var cancel = document.getElementById("cancel");
+    var cancelUploadModal = document.getElementById("cancel1")
 
     var exit = document.getElementById('exit')
     var next = document.getElementById("next");
@@ -343,8 +349,18 @@ include_once("../includes/database.php") ?>
     uploadFileBtn.onclick = function () {
         uploadFileModal.style.display = "block";
     }
+
+    cancelUploadModal.onclick = function (){
+        uploadFileModal.style.display = "none";
+    }
+
     // add button for Add User
     addUserBtn.onclick = function () {
+        modal.style.display = "block";
+    }
+
+    prev.onclick = function (){
+        addModal.style.display = "none";
         modal.style.display = "block";
     }
 
