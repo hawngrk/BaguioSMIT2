@@ -189,10 +189,6 @@ include_once("../includes/database.php") ?>
                                     <option value="female"> Female</option>
                                 </select>
 
-                                <!--Birthdate-->
-                                <label for="date"> Birthdate </label>
-                                <input type="date" id="date" name="date">
-
                                 <!--Category-->
                                 <br>
                                 <label for="priority"> Priority Group</label>
@@ -214,9 +210,16 @@ include_once("../includes/database.php") ?>
                                 <input type="text3" id="number" class='input' name="postal"
                                        placeholder="+639XXXXXXXXXX">
 
+                                <br>
                                 <label for="occupation">Occupation</label><br>
                                 <input type="text3" id="occupation" class='input' name="postal"
                                        placeholder="Input Occupation">
+
+                                <div id = "birthdate">
+                                    <!--Birthdate-->
+                                    <label for="date"> Birthdate </label>
+                                    <input type="date" id="date" name="date">
+                                </div>
                             </div>
                         </div>
                         <div class="row1">
@@ -400,7 +403,7 @@ include_once("../includes/database.php") ?>
         <!-- Search Container-->
         <div class="search-container">
             <form action="/action_page.php">
-                <input type="text" placeholder="Search" name="search">
+                <input type="text" placeholder="Search" name="search" id="searchPatient">
                 <button type="submit"><i class="fa fa-search"></i>
                 </button>
             </form>

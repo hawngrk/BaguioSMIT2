@@ -232,7 +232,7 @@ include_once("../includes/database.php") ?>
         <!--Search-->
         <div class="search-container">
             <form action="/action_page.php">
-                <input type="text" placeholder="Search" name="search">
+                <input type="text" placeholder="Search" name="search" id="searchPersonnel">
                 <button type="submit"><i class="fa fa-search"></i></button>
             </form>
         </div>
