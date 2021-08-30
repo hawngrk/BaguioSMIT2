@@ -47,7 +47,7 @@ include_once("../includes/database.php") ?>
         </div>
 
         <ul class="list-unstyled components">
-            <h4 id="mainmenu">Main Menu</h4>
+            <h3 id="mainmenu">Main Menu</h3>
             <li>
                 <a href="#"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
             </li>
