@@ -47,7 +47,7 @@ include_once("../includes/database.php") ?>
         </div>
 
         <ul class="list-unstyled components">
-            <p id="mainmenu">Main Menu</p>
+            <h3 id="mainmenu">Main Menu</h3>
             <li>
                 <a href="#"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
             </li>
@@ -199,13 +199,13 @@ include_once("../includes/database.php") ?>
                     </div>
                     <div class="modal-footer">
                         <button id="cancel1" type="button" class="btn btn-outline-dark"> Cancel</button>
-                        <button id='depNext' type="button" class="button5"> Next </button>
+                        <button id='depNext' type="button" class="btn btn-primary"> Next </button>
                     </div>
                 </div>
             </div>
         </form>
 
-        <div id="DeployPatientModal" class="modal">
+        <div id="DeployPatientModal" class="modal-window">
             <div class="content-modal">
                 <div class="modal-header">
                     <h4 class="modal-title">Add Deployment</h4>
@@ -223,9 +223,9 @@ include_once("../includes/database.php") ?>
 
                 </div>
                 <div class="modal-footer">
-                    <button id='depPrev' type="button" class="button5"> Previous </button>
-                    <button id="cancelDep" type="button" class="button5"> Cancel</button>
-                    <button id='depAdd' type="button" class="success" onclick=addDep()> Add </button>
+                    <button id='depPrev' type="button" class="btn btn-outline-secondary mr-auto"> Previous </button>
+                    <button id="cancelDep" type="button" class="btn btn-outline-secondary"> Cancel</button>
+                    <button id='depAdd' type="btn btn-primary" class="btn btn-success" onclick=addDep()> Add </button>
                 </div>
             </div>
         </div>
@@ -265,7 +265,7 @@ include_once("../includes/database.php") ?>
                     <label>Health District Contact Number:</label>
                     <input class = "contactWidth" type="text" id="contactNumber" name="contactNumber">
 
-                    <div>
+                    <div id="HealthDModalSort">
                         <label for="optionBrgy">Select Barangay/s: </label>
                         <a href="#" class="w3-bar-item w3-button">All</a>
                         <a href="#" class="w3-bar-item w3-button">None</a>
@@ -326,7 +326,7 @@ include_once("../includes/database.php") ?>
         <!-- Search Container-->
         <div class="search-container">
             <form action="/action_page.php">
-                <input type="text" placeholder="Search" name="search">
+                <input type="text" placeholder="Search" id="searchDep" name="search">
                 <button type="submit"><i class="fa fa-search"></i></button>
             </form>
         </div>
