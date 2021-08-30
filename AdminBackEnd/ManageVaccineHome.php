@@ -44,7 +44,7 @@ include_once("../includes/database.php") ?>
         </div>
 
         <ul class="list-unstyled components">
-            <p id="mainmenu">Main Menu</p>
+            <h3 id="mainmenu">Main Menu</h3>
             <li>
                 <a href="#"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
             </li>
@@ -214,9 +214,11 @@ include_once("../includes/database.php") ?>
         </form>
 
         <div class="search-container">
-            <input type="text" id="searchVaccine" class="searchHome" name="searchVaccine" placeholder="Search" onkeyup="searchVaccine()">
-            <button type="submit" id="searchVaccineBtn" name="searchVaccineBtn" onclick="searchVaccine()"><i
-                        class="fa fa-search"></i></button>
+            <form action="/action_page.php">
+                <input type="text" id="searchVaccine" class="searchHome" name="searchVaccine" placeholder="Search" onkeyup="searchVaccine()">
+                <button type="submit" id="searchVaccineBtn" name="searchVaccineBtn" onclick="searchVaccine()"><i
+                            class="fa fa-search"></i></button>
+            </form>
         </div>
 
         <table class="table table-row table-hover" id="vaccineTable">

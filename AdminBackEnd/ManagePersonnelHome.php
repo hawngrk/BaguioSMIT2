@@ -46,7 +46,7 @@ include_once("../includes/database.php") ?>
         </div>
 
         <ul class="list-unstyled components">
-            <p id="mainmenu">Main Menu</p>
+            <h3 id="mainmenu">Main Menu</h3>
             <li>
                 <a href="#"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
             </li>
@@ -240,7 +240,7 @@ include_once("../includes/database.php") ?>
         <!--Search-->
         <div class="search-container">
             <form action="/action_page.php">
-                <input type="text" placeholder="Search" name="search">
+                <input type="text" placeholder="Search" name="search" id="searchPersonnel">
                 <button type="submit"><i class="fa fa-search"></i></button>
             </form>
         </div>

@@ -238,8 +238,17 @@ input[type=text]{
     border: whitesmoke;
     background: whitesmoke;
     height: auto;
-    width: 70%;
 }
+
+#searchDep{
+    width: 30%;
+}
+
+#searchVaccine,#searchPatient,#searchPersonnel,#searchReport{
+    width: 60%;
+}
+
+
 
 input[type=textDesc]{
     height: 60%;
@@ -693,3 +702,9 @@ input[type=text4]{
 .label{
     margin-left: 2%;
 }
+
+#birthdate{
+    margin: 4%;
+}
+
+#searchVaccineBtn
