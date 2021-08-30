@@ -267,11 +267,6 @@ input[type=textDesc]{
     width: 30% !important;
 }
 
-#depPrev{
-    position: relative;
-    margin-right: 59%;
-}
-
 /* Modal Content/Box */
 
 .content-modal{
@@ -303,10 +298,6 @@ input[type=textDesc]{
     font-weight: bold;
 }
 
-#genNames{
-    margin-right: 10%;
-    margin-bottom: 3%;
-}
 .close:hover,
 .close:focus {
     color: black;
@@ -648,7 +639,7 @@ input[type=text4]{
     width: 95%;
     position: absolute;
     bottom: 5%;
-    left: 40%;
+    left: 41%;
 }
 
 .link{
@@ -658,7 +649,10 @@ input[type=text4]{
     color: #069;
     text-decoration: underline;
     cursor: pointer;
+    margin-bottom: 3%;
 }
+
+
 
 .location{
     margin-left: 1%;
@@ -666,12 +660,21 @@ input[type=text4]{
     border-radius: 12px;
 }
 
-.datePos{
-    margin-top: 5%;
+.limit{
+    margin-left: 3%;
+    width: 73%;
+    border-radius: 12px;
 }
 
-.batchForm{
-    padding-top: 4.5%;
+.datePos{
+    margin-top: 0.1%;
+}
+
+.dateForm{
+    height: 26%;
+    width: 95%;
+    border: 2px solid #ccc;
+    border-radius: 8px;
 }
 
 .sortPosition{
@@ -683,10 +686,6 @@ input[type=text4]{
     height: auto;
 }
 
-.sortPortion{
-    margin-top: 2%;
-}
-
 .contactWidth{
     width: 75%!important;
 }
@@ -695,12 +694,25 @@ input[type=text4]{
     width: 75%!important;
 }
 
+#HealthDModalSort{
+    margin: 2%;
+}
+
 .checkboxes{
 
 }
 
 .label{
     margin-left: 2%;
+}
+
+.intendedVax {
+    text-align: center;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    font-size:17px;
+    width:100%;
 }
 
 #birthdate{

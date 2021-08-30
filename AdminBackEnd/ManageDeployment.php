@@ -61,19 +61,19 @@ include_once("../includes/database.php") ?>
                     <li>
                         <a href="ManagePersonnelHome.php">Personnel</a>
                     </li>
-                    <li>
-                        <a href="ManagePatientHome.php" >Patients</a>
+                    <li class="active">
+                        <a href="ManagePatientHome.php" class="active">Patients</a>
                     </li>
                 </ul>
             </li>
             <li class="active">
-                <a href="ManageDeployment.php" ><i class="fas fa-truck"></i> Manage Deployment</a>
+                <a href="ManageDeployment.php"><i class="fas fa-truck"></i> Manage Deployment</a>
             </li>
             <li>
                 <a href="ManageReportHome.php"><i class="fas fa-sticky-note"></i> Reports</a>
             </li>
             <li>
-                <a href="#"><i class="fas fa-question"></i> About</a>
+                <a href="aboutAdmin.html"><i class="fas fa-question"></i> About</a>
             </li>
         </ul>
 
@@ -132,8 +132,18 @@ include_once("../includes/database.php") ?>
                     </div>
                     <div class="modal-body">
                         <div class="row">
-                            <div class="col-6 col-sm-4">
+                            <div class="intendedVax">
+                                <label>Select intended Vaccination Dose:</label>
+                                <input type="radio" id="firstVax" class="radioBtn" name="firstVax" value="First Vaccination">
+                                <label for="firstVax">First Vaccination</label>
+
+                                <input type="radio" id="secondVax" class="radioBtn" name="secondVax" value="Second Vaccination">
+                                <label for="secondVax">Second Vaccination</label>
+                                <hr>
+                            </div>
+                            <div class="col">
                                 <div class="form-group">
+
                                     <label for="district">Select Health District: </label>
                                     <select name="district" id="district">
                                         <?php
@@ -160,7 +170,7 @@ include_once("../includes/database.php") ?>
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-4 col-sm-4">
+                            <div class="col">
                                 <div class="form-group">
                                     <label for="PatientCateg">Category of patients: </label>
                                     <select name="patientCategory" id="PatientCateg">
@@ -174,43 +184,18 @@ include_once("../includes/database.php") ?>
                                         <option value="A6: Rest Of The Population">A6: Rest Of The Population</option>
                                     </select>
                                 </div>
-                                <div class="form-group">
-                                    <label for="VaccineLot">Select Vaccine Lot: </label>
-                                    <select name="vaccineLot" id="VaccineLot">
-                                        <?php
-                                        require '../require/getVaccineLot.php';
-                                        foreach ($vaccineLots as $vd) {
-                                            $lot = $vd->getVaccLotId();
-                                            echo "<option value = $lot>$lot</option>";
-                                        }
-                                        ?>
-                                    </select>
-                                </div>
 
-                            </div>
-                            <div class="col-2 col-sm-4 datePos">
                                 <div class="form-group ">
-                                    <label for="date">Date: </label>
-                                    <input type="date" id="date" name="date">
-                                </div>
-                                <div class="form-group batchForm">
-                                    <label for="VaccineBat">Select Vaccine Batch: </label>
-                                    <select name="vaccineBatch" id="VaccineBat">
-                                        <?php
-                                        require '../require/getVaccineBatch.php';
-                                        foreach ($vaccineBatches as $vb) {
-                                            $batch = $vb->getVaccBatchId();
-                                            echo "<option value = $batch>$batch</option>";
-                                        }
-                                        ?>
-                                    </select>
+                                    <label>Date: </label><br>
+                                    <input type="date" id="date" name="date" class="dateForm">
                                 </div>
                             </div>
-
-                            <label class = 'label' for="location" >Deployment Location: </label>
-                            <input type="input" id="location" name="location" class="location" placeholder="ex. Aurora Hill Health Center">
-
                         </div>
+                        <label class = 'label' for="location" >Deployment Location: </label>
+                        <input type="input" id="location" name="location" class="location" placeholder="ex. Aurora Hill Health Center">
+
+                        <label class = 'label' for="limit" >Number of Patients: </label>
+                        <input type="input" id="limit" name="location" class="limit" placeholder="ex. 100">
                     </div>
                     <div class="modal-footer">
                         <button id="cancel1" type="button" class="btn btn-outline-dark"> Cancel</button>
@@ -232,15 +217,15 @@ include_once("../includes/database.php") ?>
                     <div id="addPatientListContainer" class="addPatient">
                         <div id = "names">
 
-                            <button class="position link" id="genNames" onclick=generate()>Generate Names</button>
                         </div>
+                        <button class="position link" onclick=generate()>Generate Names</button>
                     </div>
 
                 </div>
                 <div class="modal-footer">
-                    <button id='depPrev' type="button" class="btn btn-outline-dark"> Previous </button>
-                    <button id="cancelDep" type="button" class="btn btn-outline-dark"> Cancel</button>
-                    <button id='depAdd' type="button" class="btn btn-success" onclick=addDep()> Add </button>
+                    <button id='depPrev' type="button" class="btn btn-outline-secondary mr-auto"> Previous </button>
+                    <button id="cancelDep" type="button" class="btn btn-outline-secondary"> Cancel</button>
+                    <button id='depAdd' type="btn btn-primary" class="btn btn-success" onclick=addDep()> Add </button>
                 </div>
             </div>
         </div>
@@ -275,12 +260,12 @@ include_once("../includes/database.php") ?>
                 </div>
                 <div class="modal-body">
                     <label>Name of Health District:</label>
-                    <input class = "districtWidth" type="text" name="newHealthDistrict">
+                    <input class = "districtWidth" type="text" id="newHealthDistrict" name="newHealthDistrict">
 
                     <label>Health District Contact Number:</label>
-                    <input class = "contactWidth" type="text" name="contactNumber">
+                    <input class = "contactWidth" type="text" id="contactNumber" name="contactNumber">
 
-                    <div class="sortPortion">
+                    <div id="HealthDModalSort">
                         <label for="optionBrgy">Select Barangay/s: </label>
                         <a href="#" class="w3-bar-item w3-button">All</a>
                         <a href="#" class="w3-bar-item w3-button">None</a>
@@ -302,7 +287,7 @@ include_once("../includes/database.php") ?>
                                     $id = $b->getBarangayId();
                                     $name = $b->getBarangayName();
                                     echo " <li>
-                                    <input class = 'checkboxes' type='checkbox' value='$id'>
+                                    <input class = 'checkboxes' type='checkbox' onclick='addHealthDistrict($id)'>
                                     <label>$name</label><br>
                                 </li> ";
                                 }
@@ -314,7 +299,7 @@ include_once("../includes/database.php") ?>
                     </div>
                     <div class="modal-footer">
                         <button id="cancel2" type="button" class="btn btn-outline-dark"> Cancel </button>
-                        <button id='add2' type="button" class="btn btn-success"> Add</button>
+                        <button id='add2' type="button" class="btn btn-success""> Add</button>
 
                     </div>
                 </div>
@@ -333,7 +318,7 @@ include_once("../includes/database.php") ?>
                 </div>
                 <div class="modal-footer">
                     <button id="no2" type="button" class="btn btn-outline-dark"> No </button>
-                    <button id='yes2' type="button" class="btn btn-success"> Yes </button>
+                    <button type="button" class="btn btn-success" onclick="updateDistrict()"> Yes </button>
                 </div>
             </div>
         </div>
@@ -341,7 +326,7 @@ include_once("../includes/database.php") ?>
         <!-- Search Container-->
         <div class="search-container">
             <form action="/action_page.php">
-                <input type="text" placeholder="Search" name="search" id="searchDep">
+                <input type="text" placeholder="Search" id="searchDep" name="search">
                 <button type="submit"><i class="fa fa-search"></i></button>
             </form>
         </div>
@@ -396,10 +381,11 @@ include_once("../includes/database.php") ?>
                 <td>$location</td>
                 <td>$date</td>
                 <td style= 'vertical-align: middle;'>
+                <!--
                     <div style='text-align: left;'>
                         <button class='fa fa-eye'></button>
                         <button class='fa fa-archive'></button>
-                    </div>
+                    </div>-->
                 </td>
 </tr>";
             }
@@ -547,7 +533,6 @@ include_once("../includes/database.php") ?>
                     document.getElementById("names").innerHTML = patient.name;
                 }
             })
-
         }
 
         function addDep(){
@@ -581,15 +566,31 @@ include_once("../includes/database.php") ?>
                 clicked = false;
                 butt.innerHTML = "<i class='fas fa-angle-left'></i> Menu";
             }
+
         }
 
         var checkedValue = [];
-        var inputElements = document.getElementsByClassName('checkboxes');
-        for(var i=0; inputElements[i]; ++i){
-            if(inputElements[i].checked){
-                checkedValue.push(inputElements[i].value);
+        function addHealthDistrict(id) {
+
+            if(checkedValue.indexOf(id) < 0){
+                checkedValue.push(id);
+            }else{
+                var idx = checkedValue.indexOf(id);
+                checkedValue.splice(idx, 1);
             }
+        }
+
+        function updateDistrict(){
+            var healthDistrictName = document.getElementById("newHealthDistrict").value;
+            var districtNumber = document.getElementById("contactNumber").value;
+            $.ajax({
+                url: 'ManageDeploymentSummary.php',
+                method: 'POST',
+                data: {barangays: checkedValue, healthDistrictName: healthDistrictName, number: districtNumber},
+                success: function (result) {
+                    window.location.href = "ManageDeployment.php";
+                }
+            })
         }
     </script>
 </body>
-
