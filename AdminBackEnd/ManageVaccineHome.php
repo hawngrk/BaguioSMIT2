@@ -70,7 +70,7 @@ include_once("../includes/database.php") ?>
                 <a href="ManageReportHome.php"><i class="fas fa-sticky-note"></i> Reports</a>
             </li>
             <li>
-                <a href="#"><i class="fas fa-question"></i> About</a>
+                <a href="aboutAdmin.html"><i class="fas fa-question"></i> About</a>
             </li>
         </ul>
 
@@ -106,10 +106,13 @@ include_once("../includes/database.php") ?>
         <button id="addVaccineBtn" type="button" class="buttonTop">Add Vaccine</button>
 
         <form id='addVaccineForm' method="post" enctype="multipart/form-data">
-            <div id="vaccineModal" class="modal">
-                <div class="modal-content container">
-                    <h2 id="headerAddVaccine"> Add Vaccine <span id="addVaccineClose" class="close">&times;</span></h2>
-                    <div class="AddVaccine-PopUp">
+            <div id="vaccineModal" class="modal-window">
+                <div class="content-modal">
+                    <div class="modal-header">
+                        <h2 id="headerAddVaccine"> Add Vaccine </h2>
+                        <span id="addVaccineClose" class="close">&times;</span>
+                    </div>
+                    <div class="modal-body">
                         <label for="selectedVaccine"> Select a Vaccine: </label>
                         <select class="form-select col-lg-12 vaccineType" id="selectedVaccine" name="selectedVaccine"
                                 onchange="updateVaccineInfo(this)">
@@ -129,6 +132,7 @@ include_once("../includes/database.php") ?>
                             }
                             ?>
                         </select>
+
                         <label for="batchNo"> Batch Quantity Received </label>
                         <input type="number" id="batchNo" name="batchNo" min="1" max="15" value="1"
                                onkeyup="updateBatchList(this)" onclick="updateBatchList(this)">
@@ -136,12 +140,12 @@ include_once("../includes/database.php") ?>
                         <input type='date' id="dateStored" name="dateStored">
                         <div id="selectedVaccineInfo"></div>
                         <div id="vaccineBatch"></div>
-                        <div>
-                            <button id="cancelBtnVaccine">Cancel</button>
-                            <?php
-                            echo " <button type='submit' id='addBtnVaccine' name='addBtnVaccine' form='addVaccineForm'> Add </button>";
-                            ?>
-                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button id="cancelBtnVaccine">Cancel</button>
+                        <?php
+                        echo " <button type='submit' id='addBtnVaccine' name='addBtnVaccine' form='addVaccineForm'> Add </button>";
+                        ?>
                     </div>
                 </div>
             </div>
@@ -150,57 +154,67 @@ include_once("../includes/database.php") ?>
         <button id="addNewVaccineBtn" type="button" class="buttonTop">Add New Vaccine</button>
 
         <form id='newVaccineForm' method="post" enctype="multipart/form-data">
-            <div id="newVaccineModal" class="modal">
-                <div class="modal-content container">
-                    <h2 id="headerAddNewVaccine">Add New Vaccine<span id="newVaccineClose" class="close">&times;</span>
-                    </h2>
-                    <div class="AddNewVaccine-PopUp">
-                        <h4 class="addNewVaccineH3">Vaccine Details</h4>
-                        <input class="vaccineName col-lg-12" type="input" name="vaccineName" placeholder="Vaccine Name">
-                        <input class="vaccineManufacturer col-lg-12" type="input" name="vaccineManufacturer"
-                               placeholder="Vaccine Manufacturer">
-                        <input class="vaccineDescription col-lg-12" type="input" name="vaccineDescription"
-                               placeholder="Vaccine Description">
-                        <h4 class="addNewVaccineH3">Vaccine Characteristics</h4>
-                        <!-- <input class="col-xs-12" type="input" name="vaccineType" placeholder="Vaccine Type"> -->
-                        <select class="form-select col-lg-12 vaccineType" name="vaccineType">
-                            <option selected disabled>Vaccine Type</option>
-                            <option>Inactivated Vaccine</option>
-                            <option>Live-attenuated Vaccine</option>
-                            <option>Viral vector Vaccine</option>
-                        </select>
-
-                        <select class="form-select col-lg-12 vaccineEfficacy" name="vaccineEfficacy">
-                            <option selected disabled>Vaccine Efficacy</option>
-                            <option>90%</option>
-                            <option>70%</option>
-                            <option>50%</option>
-                        </select>
-
-                        <input class="col-lg-12 dosageRequired" type="input" name="dosage"
-                               placeholder="Dosage Required">
-                        <input class="col-lg-12 dosageInterval" type="input" name="interval"
-                               placeholder="Dosage Interval">
-
-                        <h4 class="addNewVaccineH3"> Storage and Handling</h4>
-                        <input class="col-lg-12 minimumTemperature" type="input" name="minTemp"
-                               placeholder="Minimum Temperature">
-                        <input class="col-lg-12 maximumTemperature" type="input" name="maxTemp"
-                               placeholder="Maximum Temperature">
-                        <input class="col-lg-12 lifeSpan" type="input" name="lifeSpan" placeholder="Life Span">
+            <div id="newVaccineModal" class="modal-window">
+                <div class="content-modal">
+                    <div class="modal-header">
+                        <h2 id="headerAddNewVaccine">Add New Vaccine</h2>
+                        <span id="newVaccineClose" class="close">&times;</span>
                     </div>
-                    <div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h4>Vaccine Details</h4>
+                                <label for="vaccineName"> Vaccine Name </label>
+                                <input type="text3"  class="form-control" id="vaccineName" placeholder="Ex. Sinovac">
+
+                                <label for="vaccineManufacturer"> Vaccine Manufacturer </label>
+                                <input type="text3"  class="form-control" id="vaccineManufacturer" placeholder="Enter Manufacturer">
+
+                                <label for="vaccineDescription"> Vaccine Description </label>
+                                <input type="textDesc"  class="form-control" id="vaccineDescription" placeholder="Enter Description">
+                            </div>
+                            <div class="col-md-6">
+                                <h4 class="addNewVaccineH3">Vaccine Characteristics</h4>
+                                <label for="vaccineType"> Vaccine Type: </label>
+                                <select id="vaccineType">
+                                    <option selected disabled>Select Vaccine Type</option>
+                                    <option value="Inactivated Virus">Inactivated Vaccine</option>
+                                    <!--<option value="Live-attenuated Vaccine">Live-attenuated Vaccine</option>-->
+                                    <option value="Viral vector">Viral vector Vaccine</option>
+                                </select>
+                                <label for="vaccineEfficacy"> Vaccine Efficacy: </label>
+                                <select id="vaccineEfficacy">
+                                    <option selected disabled>Select Vaccine Efficacy</option>
+                                    <option value="90">90%</option>
+                                    <option value="70">70%</option>
+                                    <option value="50">50%</option>
+                                </select>
+                                <label for="dosageRequired"> Dosage Required </label>
+                                <input type="text3"  class="form-control" id="dosageRequired" placeholder="Enter Dosage Required">
+                                <label for="dosageInterval"> Dosage Interval </label>
+                                <input type="text3"  class="form-control" id="dosageInterval" placeholder="Enter Dosage Interval">
+                                <h4> Storage and Handling</h4>
+                                <label for="minimumTemperature"> Minimum Temperature </label>
+                                <input type="text3"  class="form-control" id="minimumTemperature" placeholder="Minimum Temperature">
+                                <label for="maximumTemperature"> Maximum Temperature </label>
+                                <input type="text3"  class="form-control" id="maximumTemperature" placeholder="Maximum Temperature">
+                                <label for="lifeSpan"> Life Span </label>
+                                <input type="text3"  class="form-control" id="lifeSpan" placeholder="Life Span">
+                            </div>
+                        </div>
+                    <div class="modal-footer">
                         <button id="cancelBtnNewVaccine"> Cancel</button>
                         <?php
                         echo " <button type='submit' id='addBtnNewVaccine' name='addBtnNewVaccine' form='newVaccineForm'> Add </button>";
                         ?>
+                    </div>
                     </div>
                 </div>
             </div>
         </form>
 
         <div class="search-container">
-            <input type="text" id="searchVaccine" name="searchVaccine" placeholder="Search" onkeyup="searchVaccine()">
+            <input type="text" id="searchVaccine" class="searchHome" name="searchVaccine" placeholder="Search" onkeyup="searchVaccine()">
             <button type="submit" id="searchVaccineBtn" name="searchVaccineBtn" onclick="searchVaccine()"><i
                         class="fa fa-search"></i></button>
         </div>

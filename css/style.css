@@ -99,7 +99,7 @@ a:focus {
 #sidebar ul li a {
     color: #fff !important;
     background: #04628A;
-    ;
+;
 }
 
 #sidebar ul li.active>a,
@@ -232,13 +232,17 @@ a.article:hover {
     background: rgb(165, 165, 165);
 }
 
-input[type=text] {
+input[type=text]{
     margin-top: 8px;
     font-size: 17px;
     border: whitesmoke;
     background: whitesmoke;
     height: auto;
     width: 70%;
+}
+
+input[type=textDesc]{
+    height: 60%;
 }
 
 .selectpicker {
@@ -252,6 +256,11 @@ input[type=text] {
 
 .search-dep input[type=text] {
     width: 30% !important;
+}
+
+#depPrev{
+    position: relative;
+    margin-right: 59%;
 }
 
 /* Modal Content/Box */
@@ -285,6 +294,10 @@ input[type=text] {
     font-weight: bold;
 }
 
+#genNames{
+    margin-right: 10%;
+    margin-bottom: 3%;
+}
 .close:hover,
 .close:focus {
     color: black;
@@ -626,7 +639,7 @@ input[type=text4]{
     width: 95%;
     position: absolute;
     bottom: 5%;
-    left: 41%;
+    left: 40%;
 }
 
 .link{
@@ -645,7 +658,7 @@ input[type=text4]{
 }
 
 .datePos{
-    margin-top: 0.1%;
+    margin-top: 5%;
 }
 
 .batchForm{
@@ -657,12 +670,16 @@ input[type=text4]{
 }
 
 .sortWidth{
-    width: 15%;
-    height: 10%;
+    width: auto;
+    height: auto;
+}
+
+.sortPortion{
+    margin-top: 2%;
 }
 
 .contactWidth{
-    width: 67%!important;
+    width: 75%!important;
 }
 
 .districtWidth{
@@ -675,13 +692,4 @@ input[type=text4]{
 
 .label{
     margin-left: 2%;
-}
-
-.intendedVax {
-    text-align: center;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    font-size:17px;
-    width:100%;
 }

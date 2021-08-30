@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Aug 21, 2021 at 04:59 AM
+-- Generation Time: Aug 26, 2021 at 01:58 PM
 -- Server version: 10.4.10-MariaDB
 -- PHP Version: 7.3.12
 
@@ -42,12 +42,12 @@ CREATE TABLE IF NOT EXISTS `barangay` (
 --
 
 INSERT INTO `barangay` (`barangay_id`, `health_district_id`, `barangay_name`) VALUES
-(1, 8, 'San Luis Village'),
-(2, 8, 'San Rogue Village'),
+(1, 17, 'San Luis Village'),
+(2, 18, 'San Rogue Village'),
 (3, 8, 'Irisan'),
 (4, 15, 'Upper Dagsian'),
-(5, 15, 'Lower Dagsian'),
-(6, 15, 'Scout Barrio');
+(5, 18, 'Lower Dagsian'),
+(6, 17, 'Scout Barrio');
 
 -- --------------------------------------------------------
 
@@ -117,17 +117,17 @@ INSERT INTO `employee_account` (`employee_account_id`, `employee_id`, `employee_
 
 DROP TABLE IF EXISTS `health_district`;
 CREATE TABLE IF NOT EXISTS `health_district` (
-  `health_disctrict_id` int(11) NOT NULL AUTO_INCREMENT,
+  `health_district_id` int(11) NOT NULL AUTO_INCREMENT,
   `health_district_name` varchar(255) NOT NULL,
-  `hd_contanct_number` char(11) NOT NULL,
-  PRIMARY KEY (`health_disctrict_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
+  `hd_contact_number` char(11) NOT NULL,
+  PRIMARY KEY (`health_district_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `health_district`
 --
 
-INSERT INTO `health_district` (`health_disctrict_id`, `health_district_name`, `hd_contanct_number`) VALUES
+INSERT INTO `health_district` (`health_district_id`, `health_district_name`, `hd_contact_number`) VALUES
 (1, 'Asin Health Center', '6204798'),
 (2, 'Atab health Center', '4209087'),
 (3, 'Atok Trail Health Center', '6205395'),
@@ -143,7 +143,9 @@ INSERT INTO `health_district` (`health_disctrict_id`, `health_district_name`, `h
 (13, 'Pinsao Health Center', '6657805'),
 (14, 'Quezon Hill Health Center', '65205469'),
 (15, 'Quirino Center', '09350692877'),
-(16, 'Scount Barrio Center', '09262163933');
+(16, 'Scount Barrio Center', '09262163933'),
+(17, 'health', '09090909090'),
+(18, 'Health2', '09090909090');
 
 -- --------------------------------------------------------
 
@@ -448,8 +450,7 @@ INSERT INTO `vaccine_deployment` (`drive_id`, `vaccine_id`) VALUES
 (2, 4),
 (3, 4),
 (4, 1),
-(5, 2),
-(5, 3);
+(5, 2);
 
 -- --------------------------------------------------------
 
@@ -517,7 +518,7 @@ INSERT INTO `vaccine_lot` (`vaccine_lot_id`, `vaccine_id`, `employee_account_id`
 -- Constraints for table `barangay`
 --
 ALTER TABLE `barangay`
-  ADD CONSTRAINT `barangay_ibfk_1` FOREIGN KEY (`health_district_id`) REFERENCES `health_district` (`health_disctrict_id`);
+  ADD CONSTRAINT `barangay_ibfk_1` FOREIGN KEY (`health_district_id`) REFERENCES `health_district` (`health_district_id`);
 
 --
 -- Constraints for table `employee_account`
@@ -561,7 +562,7 @@ ALTER TABLE `report`
 -- Constraints for table `vaccination_drive`
 --
 ALTER TABLE `vaccination_drive`
-  ADD CONSTRAINT `vaccination_drive_ibfk_1` FOREIGN KEY (`health_district_id`) REFERENCES `health_district` (`health_disctrict_id`);
+  ADD CONSTRAINT `vaccination_drive_ibfk_1` FOREIGN KEY (`health_district_id`) REFERENCES `health_district` (`health_district_id`);
 
 --
 -- Constraints for table `vaccine_batch`
