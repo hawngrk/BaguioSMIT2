@@ -1,4 +1,7 @@
 <?php
+
+include_once "../includes/database.php";
+
 if (isset($_POST['id'])) {
     $driverId = $_POST['id'];
     include '../includes/database.php';
@@ -46,9 +49,9 @@ if (isset($_POST['id'])) {
     $patientListName =[];
     foreach ($patients as $p){
         foreach ($patientList as $pl){
-        if($pl == $p->getPatientId()) {
-            $name = $p-> getPatientFullName();
-            $patientListName[] = $name;
+            if($pl == $p->getPatientId()) {
+                $name = $p-> getPatientFullName();
+                $patientListName[] = $name;
             }
         }
     }
@@ -112,6 +115,7 @@ if (isset($_POST['id'])) {
 if (isset($_POST['district'])){
     $district = $_POST['district'];
     $category = $_POST['category'];
+    $patient = [];
     include_once '../includes/database.php';
 
     require_once '../require/getPatientDetails.php';
@@ -129,16 +133,27 @@ if (isset($_POST['district'])){
             foreach ($barangayList as $bl){
                 if($pd->getBrgy() == $bl){
                     if ($pd->getPatientMName() == null && $pd->getPatientSuffix() == null) {
-                        $name = $pd->getPatientLName() . ", " . $pd->getPatientFName();
+                        $patient['id'] = $pd->getPatientDeetPatId();
+                        $patient['name'] = $pd->getPatientLName() . ", " . $pd->getPatientFName();
+
+                        echo json_encode($patient);
                     } else if ($pd->getPatientSuffix() == null) {
-                        $name = $pd->getPatientLName() . ", " . $pd->getPatientFName() . " " . $pd->getPatientMName();
+                        $patient['id'] = $pd->getPatientDeetPatId();
+                        $patient['name'] =  $pd->getPatientLName() . ", " . $pd->getPatientFName() . " " . $pd->getPatientMName();
+
+                        echo json_encode($patient);
                     } else if ($pd->getPatientMName() == null) {
-                        $name = $pd->getPatientLName() . ", " . $pd->getPatientFName() . " " . $pd->getPatientSuffix();
+                        $patient['id'] = $pd->getPatientDeetPatId();
+                        $patient['name'] =  $pd->getPatientLName() . ", " . $pd->getPatientFName() . " " . $pd->getPatientSuffix();
+
+                        echo json_encode($patient);
                     } else {
-                        $name = $pd->getPatientLName() . ", " . $pd->getPatientFName() . " " . $pd->getPatientMName() . " " . $pd->getPatientSuffix();
+                        $patient['id'] = $pd->getPatientDeetPatId();
+                        $patient['name'] =   $pd->getPatientLName() . ", " . $pd->getPatientFName() . " " . $pd->getPatientMName() . " " . $pd->getPatientSuffix();
+
+                        echo json_encode($patient);
                     }
 
-                    echo "<p>$name</p>";
                 }
             }
         }
@@ -169,6 +184,10 @@ if (isset($_POST['brand'])){
     $database->query($query2);
 
 
+    foreach ($patientIdList as $pil) {
+        $query3 = "INSERT INTO patient_drive (patient_id, drive_id, vaccine_batch_id) VALUE ('$pil', '$driveId', '$batch');";
+        $database->query($query3);
+    }
 }
 
 if (isset($_POST['barangays'])) {
