@@ -417,12 +417,24 @@ input[type=text1] {
 
 /*Text Inputs and drop down menu*/
 input[type=text3],select{
-    width: 95%;
-    padding: 12px;
-    margin: 8px;
+    width: 30%;
+    padding: 10px;
     display: inline-block;
-    border: 2px solid #04628A;
     border-radius: 8px;
+    margin-top: -1%;
+}
+
+input[type=date]{
+    width: 95%;
+    height:48;
+    margin-top: 2px;
+    padding: 10px;
+    display: inline-block;
+    border-radius: 8px;
+}
+
+.input{
+    margin-top: 2%;
 }
 
 #uploadListPatient{
@@ -443,16 +455,12 @@ input[type=text3],select{
     margin: 5px;
 }
 
-input[type="text"]:disabled{
-    width: 50%;
-    padding: 12px;
-    margin: 8px;
-    border: 2px solid #04628A;
-    border-radius: 8px;
+.cred{
+    padding-left: 15%;
 }
 
-label1{
-    padding-left: 100px;
+.label1{
+    margin-top: 3%;
 }
 
 .modal{
@@ -515,7 +523,7 @@ img{
 
 /* Modal Footer */
 .modal-footer{
-    border: none;
+    border: none!important;
 }
 
 
@@ -523,7 +531,6 @@ img{
 input[type=text3],select{
     width: 95%;
     padding: 12px;
-    margin: 8px;
     display: inline-block;
     border: 2px solid #ccc;
     border-radius: 8px;
@@ -536,6 +543,18 @@ input[type=text4]{
     display: inline-block;
     border: 2px solid #ccc;
     border-radius: 8px;
+}
+
+input[type=text]:disabled{
+    margin-left: 3%;
+    width: 50%;
+    padding: 2%;
+    border: 2px solid #04628A;
+    border-radius: 8px;
+}
+
+.passwordPos{
+    margin-left:3.5%!important;
 }
 
 .dropdown {
@@ -715,8 +734,54 @@ input[type=text4]{
     width:100%;
 }
 
+.basicInfoSizes{
+    height: 18%!important;
+    margin: 0!important;
+}
+
+.infoPosition{
+    margin-top: 4%;
+}
+
 #birthdate{
     margin: 4%;
 }
 
 #searchVaccineBtn
+
+.details{
+    margin-top: -2%;
+}
+
+#barangay{
+    width: 95%;
+    height: 20%;
+    padding: 12px;
+    display: inline-block;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    margin-top: -1%;
+}
+
+#others{
+    margin-left: 4%;
+    width: 80%;
+}
+
+#allergies{
+    margin-left: 1%;
+}
+
+#iconBrowse{
+    display:inline-block;
+    width: 40%;
+    height: 80%;
+    border-radius: 8px;
+    text-align: center;
+}
+
+#upload-content{
+    margin-top: 2%;
+}
+
+
