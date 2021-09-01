@@ -105,7 +105,7 @@ include_once("../includes/database.php") ?>
         <!-- Page Content  -->
 
         <!--Button for Uploading File-->
-        <button id="uploadFile" type="button" class="buttonTop">Upload File</button>
+        <button id="uploadFileBtn" type="button" class="buttonTop">Upload File</button>
 
         <!--Modal for uploading patient csv-->
         <!--To include uploading files limited to csv file only-->
@@ -113,7 +113,7 @@ include_once("../includes/database.php") ?>
             <div class="content-modal">
                 <div class="modal-header">
                     <h3> Upload File/s </h3>
-                    <span id="close" class="close">&times;</span>
+                    <span id="uploadFileClose" class="close">&times;</span>
                 </div>
 
                 <div class="modal-body">
@@ -135,8 +135,8 @@ include_once("../includes/database.php") ?>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" id="cancel1" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                    <button id="add" class="btn btn-primary"> Add</button>
+                    <button type="button" id="uploadFileCancelBtn" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button id="uploadFileConfirmBtn" class="btn btn-primary"> Add</button>
                 </div>
             </div>
         </div>
@@ -146,251 +146,252 @@ include_once("../includes/database.php") ?>
         <button id="addPatientBtn" type="button" class="buttonTop">Add User</button>
 
         <!--Modal for Adding patient -->
-        <div id="patientInformationModal" class="modal-window">
-            <div class="content-modal">
-                <div class="modal-header">
-                    <h4 class="modal-title">Add User | Patient - Information</h4>
-                    <button type="button" id="addPatientInfoClose" class="close" data-dismiss="modal">&times;</button>
-                </div>
-                <div class="modal-body">
-                    <div class="modal-section">
-                        <h4> Basic Information</h4>
-                        <div class="row">
-                            <div class="col-md-4">
-                                <label for="lname">Last Name</label>
-                                <input type="text3" id="lname" class='input' name="lastname"
-                                       placeholder="Input Last Name">
-                                <br>
-                                <label class="label1" for="suffix">Suffix</label><br>
-                                <select id="suffix" name="suffix">
-                                    <option value="">None</option>
-                                    <option value="sr"> Sr</option>
-                                    <option value="jr"> Jr</option>
-                                    <option value="1"> I</option>
-                                    <option value="2"> II</option>
-                                    <option value="3"> III</option>
-                                </select>
-                                <br>
-                                <!--Category-->
-                                <label class="label1" for="priority"> Priority Group</label>
-                                <select class="formControl" id="priority">
-                                    <option value="" disabled selected hidden>Select a Category...</option>
-                                    <option value="">Select</option>
-                                    <option value="A1"> A1: Health Care Workers</option>
-                                    <option value="A2"> A2: Senior Citizens</option>
-                                    <option value="A3"> A3: Adult with Comorbidity</option>
-                                    <option value="A4"> A4: Frontline Personnel in Essential Sector, including Uniformed
-                                        Personnel
-                                    </option>
-                                    <option value="A5"> A5: Indigent Population</option>
-                                    <option value="ROP"> ROP: Rest of the Population</option>
-                                </select>
+        <form id='addPatientForm' method="post" enctype="multipart/form-data">
+            <div id="patientInformationModal" class="modal-window">
+                <div class="content-modal">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Add User | Patient - Information</h4>
+                        <button type="button" id="addPatientInfoClose" class="close" data-dismiss="modal">&times;
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="modal-section">
+                            <h4> Basic Information</h4>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label for="lname">Last Name</label>
+                                    <input type="text3" id="lname" class='input' name="lastname" placeholder="Input Last Name">
+                                    <br>
+                                    <label class="label1" for="suffix">Suffix</label><br>
+                                    <select id="suffix" name="suffix">
+                                        <option selected value="">None</option>
+                                        <option>Sr</option>
+                                        <option>Jr</option>
+                                        <option>I</option>
+                                        <option>II</option>
+                                        <option>III</option>
+                                    </select>
+                                    <br>
+                                    <!--Category-->
+                                    <label class="label1" for="priority"> Priority Group</label>
+                                    <select class="formControl" id="priority" name="priority">
+                                        <option disabled selected>Select a Category...</option>
+                                        <option>A1: Health Care Workers</option>
+                                        <option>A2: Senior Citizens</option>
+                                        <option>A3: Adult with Comorbidity</option>
+                                        <option>A4: Frontline Personnel in Essential Sector, including Uniformed Personnel</option>
+                                        <option>A5: Indigent Population</option>
+                                        <option>ROP: Rest of the Population</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="fname">First Name</label><br>
+                                    <input type="text3" id="fname" class='input' name="firstname" placeholder="Input First Name">
+                                    <br>
+                                    <label class="label1" for="gender"> Gender </label>
+                                    <select class="formControl" id="gender" name="gender">
+                                        <option disabled selected>Select a Gender...</option>
+                                        <option>Male</option>
+                                        <option>Female</option>
+                                    </select>
+                                    <br>
+                                    <label class="label1" for="occupation">Occupation</label><br>
+                                    <input type="text3" id="occupation" class='details' name="occupation" placeholder="Input Occupation">
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="mname">Middle Name</label><br>
+                                    <input type="text3" id="mname" class='input' name="middlename" placeholder="Input Middle Name">
+                                    <br>
+                                    <label class="label1" for="date"> Birthdate </label>
+                                    <input type="date" id="date" name="birthdate">
+                                    <br>
+                                    <label class="label1" for="number">Contact Number</label><br>
+                                    <input type="text3" id="number" class='details' name="contactnumber" placeholder="+63XXXXXXXXX" pattern="+63[0-9]{10}" required>
+                                </div>
                             </div>
-                            <div class="col-md-4">
-                                <label for="fname">First Name</label><br>
-                                <input type="text3" id="fname" class='input' name="firstname"
-                                       placeholder="Input First Name">
-                                <br>
-                                <label class="label1" for="gender"> Gender </label>
-                                <select class="formControl" id="gender">
-                                    <option value="" disabled selected hidden>Select a Gender...</option>
-                                    <option value="">Select</option>
-                                    <option value="male"> Male</option>
-                                    <option value="female"> Female</option>
-                                </select>
-                                <br>
-                                <label class="label1" for="occupation">Occupation</label><br>
-                                <input type="text3" id="occupation" class='details' name="postal"
-                                       placeholder="Input Occupation">
-                            </div>
-                            <div class="col-md-4">
-                                <label for="mname">Middle Name</label><br>
-                                <input type="text3" id="mname" class='input' name="middlename"
-                                       placeholder="Input Middle Name">
-                                <br>
-                                <label class="label1" for="date"> Birthdate </label>
-                                <input type="date" id="date" name="date">
-                                <br>
-                                <label class="label1" for="number">Contact Number</label><br>
-                                <input type="text3" id="number" class='details' name="postal" placeholder="+63XXXXXXXXX" pattern="+63[0-9]{10}" required>
-                            </div>
-                        </div>
-                        <br>
-                        <h5> Address </h5>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <label for="street">Street Name</label>
-                                <input type="text3" id="street" class='input' name="street"
-                                       placeholder="Input Street Name"><br>
-                                <label class="label1" for="city">City/Town</label>
-                                <input type="text3" id="city" class='input' name="city" placeholder="City/Town"
-                                       disabled="disabled"><br>
-                                <label class="label1" for="region">Region</label><br>
-                                <input type="text3" id="region" class='input' name="region" placeholder="Region"
-                                       disabled="disabled">
-                            </div>
-                            <div class="col-md-6">
-                                <label for="barangay"> Barangay </label>
-                                <select class="formControl" id="barangay">
-                                    <option value="" disabled selected hidden>Select a Barangay...</option>
-                                    <option value="">Select</option>
-                                    <option value="alfonsoTabora"> Alfonso Tabora</option>
-                                    <option value="ambiong"> Ambiong</option>
-                                    <option value="andresBonifacio"> Andres Bonifacio</option>
-                                    <option value="apuganLoakane"> Apugan-Loakan</option>
-                                    <option value="Irisan"> Irisan</option>
-                                    <option value="Upper Dagsian"> Upper Dagsian</option>
-                                    <option value="Lower Dagsian"> Lower Dagsian</option>
-                                    <option value="Scout Barrio"> Scout Barrio</option>
-                                </select>
-                                <br>
-                                <label class="label1" for="state">State/Province</label>
-                                <input type="text3" id="state" class='input' name="state" placeholder="State/Province"
-                                       disabled="disabled">
-
+                            <br>
+                            <h5> Address </h5>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label for="street">Street Name</label>
+                                    <input type="text3" id="street" class='input' name="street" placeholder="Input Street Name">
+                                    <br>
+                                    <label class="label1" for="city">City/Town</label>
+                                    <input type="text3" id="city" class='input' name="city" placeholder="City/Town" disabled="disabled">
+                                    <br>
+                                    <label class="label1" for="region">Region</label>
+                                    <br>
+                                    <input type="text3" id="region" class='input' name="region" placeholder="Region" disabled="disabled">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="barangay"> Barangay </label>
+                                    <select class="formControl" id="barangay" name="barangay" onchange="updateAddress()">
+                                        <option disabled selected>Select a Barangay...</option>
+                                        <option>Alfonso Tabora</option>
+                                        <option>Ambiong</option>
+                                        <option>Andres Bonifacio</option>
+                                        <option>Apugan-Loakan</option>
+                                        <option>Irisan</option>
+                                        <option>Upper Dagsian</option>
+                                        <option>Lower Dagsian</option>
+                                        <option>Scout Barrio</option>
+                                    </select>
+                                    <br>
+                                    <label class="label1" for="state">State/Province</label>
+                                    <input type="text3" id="state" class='input' name="state" placeholder="State/Province" disabled="disabled">
+                                </div>
                             </div>
                         </div>
-
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" id="addPatientInfoCancelBtn" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        <button type="button" id="addPatientNextBtn" class="btn btn-primary">Next</button>
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" id="cancel" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                    <button type="button" id="nextBtnAddPatient" class="btn btn-primary">Next</button>
-                </div>
             </div>
-        </div>
 
-        <div id="patientMedBackgroundModal" class="modal-window">
-            <div class="content-modal">
-                <div class="modal-header">
-                    <h4 class="modal-title">Add User | Patient - Medical Background</h4>
-                    <button type="button" id="addPatientMedClose" class="close" data-dismiss="modal">&times;</button>
-                </div>
 
-                <div class="modal-body">
-                    <div class="modal-section">
-                        <h4>Medical Background</h4>
-                        <div id="allergies" class="row">
-                            <div class="col-md-6">
-                                <h5> Allergies</h5>
-                                <div class="row">
-                                    <div class="col-md-3">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value="pet" id="pet">
-                                            <label class="form-check-label" for="flexCheckDefault"> Pet </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value="bite" id="bite">
-                                            <label class="form-check-label" for="flexCheckDefault"> Bite </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value="skin" id="skin">
-                                            <label class="form-check-label" for="flexCheckDefault"> Skin </label>
+            <div id="patientMedBackgroundModal" class="modal-window">
+                <div class="content-modal">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Add User | Patient - Medical Background</h4>
+                        <button type="button" id="addPatientMedClose" class="close" data-dismiss="modal">&times;
+                        </button>
+                    </div>
+
+                    <div class="modal-body">
+                        <div class="modal-section">
+                            <h4>Medical Background</h4>
+                            <div id="allergies" class="row">
+                                <div class="col-md-6">
+                                    <h5> Allergies</h5>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <div class="form-check">
+                                                <input type="hidden" name="pet" value="0">
+                                                <input class="form-check-input" type="checkbox" value="1" id="pet" name="pet">
+                                                <label class="form-check-label" for="flexCheckDefault"> Pet </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input type="hidden" name="bite" value="0">
+                                                <input class="form-check-input" type="checkbox" value="1" id="bite" name="bite">
+                                                <label class="form-check-label" for="flexCheckDefault"> Bite </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input type="hidden" name="skin" value="0">
+                                                <input class="form-check-input" type="checkbox" value="1" id="skin" name="skin">
+                                                <label class="form-check-label" for="flexCheckDefault"> Skin </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" id="none" name="noneAllergies" onclick="disableAllergies(this)">
+                                                <label class="form-check-label" for="flexCheckDefault"> None </label>
+                                            </div>
                                         </div>
 
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value="none" id="none">
-                                            <label class="form-check-label" for="flexCheckDefault"> None </label>
+                                        <div class="col-md-3">
+                                            <div class="form-check">
+                                                <input type="hidden" name="food" value="0">
+                                                <input class="form-check-input" type="checkbox" value="1" id="food" name="food">
+                                                <label class="form-check-label" for="flexCheckDefault"> Food </label>
+                                            </div>
+
+                                            <div class="form-check">
+                                                <input type="hidden" name="mold" value="0">
+                                                <input class="form-check-input" type="checkbox" value="1" id="mold" name="mold">
+                                                <label class="form-check-label" for="flexCheckDefault"> Mold </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input type="hidden" name="latex" value="0">
+                                                <input class="form-check-input" type="checkbox" value="1" id="latex" name="latex">
+                                                <label class="form-check-label" for="flexCheckDefault"> Latex </label>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <div class="form-check">
+                                                <input type="hidden" name="pollen" value="0">
+                                                <input class="form-check-input" type="checkbox" value="1" id="pollen" name="pollen">
+                                                <label class="form-check-label" for="flexCheckDefault"> Pollen </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input type="hidden" name="insect" value="0">
+                                                <input class="form-check-input" type="checkbox" value="1" id="insect" name="insect">
+                                                <label class="form-check-label" for="flexCheckDefault"> Insect </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input type="hidden" name="medication" value="0">
+                                                <input class="form-check-input" type="checkbox" value="1" id="medication" name="medication">
+                                                <label class="form-check-label" for="flexCheckDefault"> Medication </label>
+                                            </div>
                                         </div>
                                     </div>
-
-                                    <div class="col-md-3">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value="food" id="food">
-                                            <label class="form-check-label" for="flexCheckDefault"> Food </label>
-                                        </div>
-
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value="mold" id="mold">
-                                            <label class="form-check-label" for="flexCheckDefault"> Mold </label>
-                                        </div>
-
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value="latex" id="latex">
-                                            <label class="form-check-label" for="flexCheckDefault"> Latex </label>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-3">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value="pollen" id="pollen">
-                                            <label class="form-check-label" for="flexCheckDefault"> Pollen </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value="insect" id="insect">
-                                            <label class="form-check-label" for="flexCheckDefault"> Insect </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value="medication"
-                                                   id="medication">
-                                            <label class="form-check-label" for="flexCheckDefault"> Medication </label>
-                                        </div>
+                                    <div class="row">
+                                        <input type="text" id="others" name="othersAllergies" placeholder="Others:" class="form-control"/>
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <input type="text" id="others" placeholder="Others:" class="form-control"/>
+
+                                <div class="col-md-6">
+                                    <h5> Comorbidities </h5>
+                                    <div class="row">
+                                        <div class="col-md-5">
+                                            <div class="form-check">
+                                                <input type="hidden" name="cancer" value="0">
+                                                <input class="form-check-input" type="checkbox" value="1" id="cancer" name="cancer">
+                                                <label class="form-check-label" for="flexCheckDefault"> Cancer </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input type="hidden" name="asthma" value="0">
+                                                <input class="form-check-input" type="checkbox" value="1" id="asthma" name="asthma">
+                                                <label class="form-check-label" for="flexCheckDefault"> Asthma </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input type="hidden" name="diabetes" value="0">
+                                                <input class="form-check-input" type="checkbox" value="1" id="diabetes" name="diabetes">
+                                                <label class="form-check-label" for="flexCheckDefault"> Diabetes </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" id="none" name="noneComorbidities" onclick="disableComorbidities(this)">
+                                                <label class="form-check-label" for="flexCheckDefault"> None </label>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="col-md-5-pr-3">
+                                            <div class="form-check">
+                                                <input type="hidden" name="hypertension" value="0">
+                                                <input class="form-check-input" type="checkbox" value="1" id="hypertension" name="hypertension">
+                                                <label class="form-check-label" for="flexCheckDefault"> Hypertension </label>
+                                            </div>
+
+                                            <div class="form-check">
+                                                <input type="hidden" name="heartDiseases" value="0">
+                                                <input class="form-check-input" type="checkbox" value="1" id="heartDiseases" name="heartDiseases">
+                                                <label class="form-check-label" for="flexCheckDefault"> Heart Diseases </label>
+                                            </div>
+
+                                            <div class="form-check">
+                                                <input type="hidden" name="kidneyDiseases" value="0">
+                                                <input class="form-check-input" type="checkbox" value="1" id="kidneyDiseases" name="kidneyDiseases">
+                                                <label class="form-check-label" for="flexCheckDefault"> Kidney Diseases </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <input type="text" id="others" name="othersComobidities" placeholder="Others:" class="form-control"/>
+                                    </div>
                                 </div>
                             </div>
 
-                            <div class="col-md-6">
-                                <h5> Comorbidities </h5>
-                                <div class="row">
-                                    <div class="col-md-5">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value="cancer" id="cancer">
-                                            <label class="form-check-label" for="flexCheckDefault"> Cancer </label>
-                                        </div>
-
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value="asthma" id="asthma">
-                                            <label class="form-check-label" for="flexCheckDefault"> Asthma </label>
-                                        </div>
-
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value="diabetes" id="diabetes">
-                                            <label class="form-check-label" for="flexCheckDefault"> Diabetes </label>
-                                        </div>
-
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value="none" id="none">
-                                            <label class="form-check-label" for="flexCheckDefault"> None </label>
-                                        </div>
-
-                                    </div>
-
-                                    <div class="col-md-5-pr-3">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value="hypertension" id="hypertension">
-                                            <label class="form-check-label" for="flexCheckDefault"> Hypertension </label>
-                                        </div>
-
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value="heartDiseases" id="heartDiseases">
-                                            <label class="form-check-label" for="flexCheckDefault"> Heart Diseases </label>
-                                        </div>
-
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value="kidneyDiseases" id="kidneyDiseases">
-                                            <label class="form-check-label" for="flexCheckDefault"> Kidney Diseases </label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <input type="text" id="others" placeholder="Others:" class="form-control"/>
-                                </div>
-                            </div>
                         </div>
-
+                    </div>
+                    <div class="modal-footer">
+                        <button type='button' id="addPatientPrevBtn" class="btn btn-outline-secondary mr-auto"> Previous </button>
+                        <button type="button" id="addPatientMedCancelBtn" class="btn btn-secondary"> Cancel</button>
+                        <button type="submit" id="addPatientConfirmBtn" name="addPatientConfirmBtn" form="addPatientForm" class="btn btn-primary"> Add </button>
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <button type='button' id="prevBtnAddPatient" class="btn btn-outline-secondary mr-auto"> Previous
-                    </button>
-                    <button type="button" id="cancelBtnAddPatientMed" class="btn btn-secondary"> Cancel</button>
-                    <button type="submit" id="addPatientConfirmBtn" class="btn btn-primary"> Add</button>
-                </div>
             </div>
-        </div>
+        </form>
 
         <!--Notification modal-->
         <div id="notifyModal" class="modal-window">
@@ -405,7 +406,7 @@ include_once("../includes/database.php") ?>
                     </p>
                 </div>
                 <div class="modal-footer">
-                    <button id='done' class="btn btn-primary" type="submit"> Done</button>
+                    <button id='notificationDoneBtn' class="btn btn-primary" type="submit"> Done</button>
                     <!--instead of close change to Done-->
                 </div>
             </div>
@@ -468,52 +469,52 @@ include_once("../includes/database.php") ?>
     <?php
     if (isset($_POST['addPatientConfirmBtn'])) {
         include '../includes/database.php';
-        $lastName = $_POST['lastName'];
-        $firstName = $_POST['firstName'];
-        $middleName = $_POST['middleName'];
+        $lastName = $_POST['lastname'];
+        $firstName = $_POST['firstname'];
+        $middleName = $_POST['middlename'];
         $suffix = $_POST['suffix'];
-        if ($suffix == 'None') {
-            $suffix = "";
-        }
-        $group = $_POST['group'];
-        $category = $_POST['category'];
-        $categoryNumber = $_POST['categoryNumber'];
+        $group = $_POST['priority'];
+        //$category = $_POST['category'];
+        //$categoryNumber = $_POST['categoryNumber'];
 
-        $house = $_POST['house'];
+        $gender = $_POST['gender'];
+        $occupation = $_POST['occupation'];
+        $birthday = $_POST['birthdate'];
+        $contactNumber = $_POST['contactnumber'];
+
+        $street = $_POST['street'];
         $barangay = $_POST['barangay'];
-        $cityTown = $_POST['city'];
+        $city = $_POST['city'];
         $state = $_POST['state'];
         $region = $_POST['region'];
-        $birthday = $_POST['birthdate'];
-        $age = $_POST['age'];
-        $gender = $_POST['gender'];
-        $contactNumber = $_POST['contactNum'];
-        $occupation = $_POST['occupation'];
+        //$age = $_POST['age'];
 
         $fullName = $lastName . " " . $firstName . " " . $middleName . " ";
-
+        $pet = $_POST['pet'];
+        $bite = $_POST['bite'];
         $skin = $_POST['skin'];
         $food = $_POST['food'];
-        $medication = $_POST['medication'];
-        $insect = $_POST['insect'];
-        $pollen = $_POST['pollen'];
-        $bite = $_POST['bite'];
-        $latex = $_POST['latex'];
         $mold = $_POST['mold'];
-        $pet = $_POST['pet'];
-
-        $hypertension = $_POST['hypertension'];
-        $heart = $_POST['heart'];
-        $kidney = $_POST['kidney'];
-        $diabetes = $_POST['diabetes'];
-        $asthma = $_POST['asthma'];
-        $immunodeficiency = $_POST['immunodeficiency'];
-        $cancer = $_POST['cancer'];
-
-        if (empty($_POST['others'])) {
-            $others = "";
+        $latex = $_POST['latex'];
+        $pollen = $_POST['pollen'];
+        $insect = $_POST['insect'];
+        $medication = $_POST['medication'];
+        if (empty($_POST['othersAllergies'])) {
+            $othersAllergies = "";
         } else {
-            $others = $_POST['others'];
+            $othersAllergies = $_POST['othersAllergies'];
+        }
+
+        $cancer = $_POST['cancer'];
+        $asthma = $_POST['asthma'];
+        $diabetes = $_POST['diabetes'];
+        $hypertension = $_POST['hypertension'];
+        $heart = $_POST['heartDiseases'];
+        $kidney = $_POST['kidneyDiseases'];
+        if (empty($_POST['othersComorbidities'])) {
+            $othersComorbidities = "";
+        } else {
+            $othersComorbidities = $_POST['othersComorbidities'];
         }
 
         $patientTableQuery = "INSERT INTO patient (patient_full_name, vaccination_status) VALUE ('$fullName', 'Not Vaccinated');";
@@ -527,11 +528,11 @@ include_once("../includes/database.php") ?>
         $dbase->fetch();
         $dbase->close();
 
-        $patient_detailsTableQuery = "INSERT INTO patient_details (patient_id, patient_first_name, patient_last_name, patient_middle_name, patient_suffix, patient_priority_group, patient_category_id, patient_category_number, patient_house_address, patient_barangay_address, patient_CM_address, patient_province, patient_region, patient_birthdate, patient_age, patient_gender, patient_contact_number, patient_occupation) VALUE ('$patientid', '$firstName', '$lastName', '$middleName', '$suffix', '$group', '$category', '$categoryNumber', '$house', '$barangay', '$cityTown', '$state', '$region', '$birthday', '$age', '$gender', '$contactNumber', '$occupation');";
+        $patient_detailsTableQuery = "INSERT INTO patient_details (patient_id, patient_first_name, patient_last_name, patient_middle_name, patient_suffix, patient_priority_group, patient_category_id, patient_category_number, patient_house_address, patient_barangay_address, patient_CM_address, patient_province, patient_region, patient_birthdate, patient_age, patient_gender, patient_contact_number, patient_occupation) VALUE ('$patientid', '$firstName', '$lastName', '$middleName', '$suffix', '$group', 'Other ID', '2191057', '$street', '$barangay', '$city', '$state', '$region', '$birthday', '20', '$gender', '$contactNumber', '$occupation');";
         $database->query($patient_detailsTableQuery);
 
 
-        $medical_backgroundTableQuery = "INSERT INTO medical_background (patient_id, skin_allergy, food_allergy, medication_allergy, insect_allergy, pollen_allergy, bite_allergy, latex_allergy, mold_allergy, pet_allergy, hypertension, heart_disease, kidney_disease, diabetes_mellitus, bronchial_asthma, immunodeficiency, cancer, other_commorbidity) VALUE ('$patientid', '$skin', '$food', '$medication', '$insect', '$pollen', '$bite', '$latex', '$mold', '$pet', '$hypertension', '$heart', '$kidney', '$diabetes', '$asthma', '$immunodeficiency', '$cancer', '$others');";
+        $medical_backgroundTableQuery = "INSERT INTO medical_background (patient_id, skin_allergy, food_allergy, medication_allergy, insect_allergy, pollen_allergy, bite_allergy, latex_allergy, mold_allergy, pet_allergy, hypertension, heart_disease, kidney_disease, diabetes_mellitus, bronchial_asthma, immunodeficiency, cancer, other_commorbidity) VALUE ('$patientid', '$skin', '$food', '$medication', '$insect', '$pollen', '$bite', '$latex', '$mold', '$pet', '$hypertension', '$heart', '$kidney', '$diabetes', '$asthma', '0', '$cancer', '');";
         $database->query($medical_backgroundTableQuery);
     }
     ?>
@@ -560,86 +561,7 @@ include_once("../includes/database.php") ?>
     </script>
 
     <script>
-        var patientInformationModal = document.getElementById("patientInformationModal");
-        var patientMedBackgroundModal = document.getElementById("patientMedBackgroundModal");
-        var addPatientBtn = document.getElementById("addPatientBtn");
-
-        var nextBtnAddPatient = document.getElementById("nextBtnAddPatient");
-        var prevBtnAddPatient = document.getElementById("prevBtnAddPatient");
-
-        var addPatientInfoClose = document.getElementById("addPatientInfoClose");
-        var addPatientMedClose = document.getElementById("addPatientMedClose");
-        var notificationClose = document.getElementById("notificationClose");
-
-        var cancelAddPatientInfo = document.getElementById("cancelBtnAddPatientInfo");
-        var cancelAddPatientMed = document.getElementById("cancelBtnAddPatientMed");
-        var cancel= document.getElementById("cancel1");
-
-        var addPatientConfirmBtn = document.getElementById("addPatientConfirmBtn");
-
-        var uploadFileModal = document.getElementById("uploadFileModal");
-        var uploadFileBtn = document.getElementById("uploadFile");
-
-        var notificationModal = document.getElementById("notifyModal");
-
-        var done = document.getElementById("done");
-        var close = document.getElementById("close");
-
-        //upload file button
-        uploadFileBtn.onclick = function () {
-            uploadFileModal.style.display = "block";
-        }
-
-        cancel.onclick = function (){
-            uploadFileModal.style.display = "none";
-        }
-
-        close.onclick = function () {
-            uploadFileModal.style.display = "none";
-        }
-
-        addPatientBtn.onclick = function () {
-            patientInformationModal.style.display = "block";
-        }
-
-        addPatientConfirmBtn.onclick = function () {
-            patientMedBackgroundModal.style.display = "none";
-            notificationModal.style.display = "block";
-
-        }
-        nextBtnAddPatient.onclick = function () {
-            patientInformationModal.style.display = "none";
-            patientMedBackgroundModal.style.display = "block";
-        }
-
-        prevBtnAddPatient.onclick = function () {
-            patientMedBackgroundModal.style.display = "none";
-            patientInformationModal.style.display = "block";
-        }
-
-        addPatientInfoClose.onclick = function () {
-            patientInformationModal.style.display = "none";
-        }
-
-        done.onclick = function () {
-            notificationModal.style.display = "none";
-        }
-
-        addPatientMedClose.onclick = function () {
-            patientMedBackgroundModal.style.display = "none";
-        }
-
-        cancelAddPatientInfo.onclick = function () {
-            patientInformationModal.style.display = "none";
-        }
-
-        cancelAddPatientMed.onclick = function () {
-            patientMedBackgroundModal.style.display = "none";
-        }
-
-        notificationClose.onclick = function () {
-            notificationModal.style.display = "none";
-        }
+        // Sidebar
         var clicked = false;
 
         function Toggle() {
@@ -653,11 +575,145 @@ include_once("../includes/database.php") ?>
             }
         }
 
+        // Add Patient
+        var addPatientBtn = document.getElementById("addPatientBtn");
+        var patientInformationModal = document.getElementById("patientInformationModal");
+        var patientMedBackgroundModal = document.getElementById("patientMedBackgroundModal");
+
+        var addPatientNextBtn = document.getElementById("addPatientNextBtn");
+        var addPatientPrevBtn = document.getElementById("addPatientPrevBtn");
+        var addPatientInfoCancelBtn = document.getElementById("addPatientInfoCancelBtn");
+        var addPatientMedCancelBtn = document.getElementById("addPatientMedCancelBtn");
+        var addPatientConfirmBtn = document.getElementById("addPatientConfirmBtn");
+
+        var addPatientInfoClose = document.getElementById("addPatientInfoClose");
+        var addPatientMedClose = document.getElementById("addPatientMedClose");
+
+        addPatientBtn.onclick = function () {
+            patientInformationModal.style.display = "block";
+        }
+
+        addPatientNextBtn.onclick = function () {
+            patientInformationModal.style.display = "none";
+            patientMedBackgroundModal.style.display = "block";
+        }
+
+        addPatientPrevBtn.onclick = function () {
+            patientMedBackgroundModal.style.display = "none";
+            patientInformationModal.style.display = "block";
+        }
+        addPatientInfoCancelBtn.onclick = function () {
+            patientInformationModal.style.display = "none";
+        }
+
+        addPatientMedCancelBtn.onclick = function () {
+            patientMedBackgroundModal.style.display = "none";
+        }
+
+        addPatientConfirmBtn.onclick = function () {
+            patientMedBackgroundModal.style.display = "none";
+            notificationModal.style.display = "block";
+
+        }
+
+        addPatientInfoClose.onclick = function () {
+            patientInformationModal.style.display = "none";
+        }
+
+        addPatientMedClose.onclick = function () {
+            patientMedBackgroundModal.style.display = "none";
+        }
+
+        // Upload File
+        var uploadFileBtn = document.getElementById("uploadFileBtn");
+        var uploadFileModal = document.getElementById("uploadFileModal");
+        var uploadFileCancelBtn = document.getElementById("uploadFileCancelBtn");
+        var uploadFileConfirmBtn = document.getElementById("uploadFileConfirmBtn");
+        var uploadFileClose = document.getElementById("uploadFileClose");
+
+        uploadFileBtn.onclick = function () {
+            uploadFileModal.style.display = "block";
+        }
+
+        uploadFileCancelBtn.onclick = function () {
+            uploadFileModal.style.display = "none";
+        }
+
+        uploadFileClose.onclick = function () {
+            uploadFileModal.style.display = "none";
+        }
+
+        uploadFileConfirmBtn.onclick = function () {
+            uploadFileModal.style.display = "none";
+        }
+
+        // Add Patient Notification
+        var notificationModal = document.getElementById("notifyModal");
+        var notificationDoneBtn = document.getElementById("notificationDoneBtn");
+        var notificationClose = document.getElementById("notificationClose");
+
+        notificationDoneBtn.onclick = function () {
+            notificationModal.style.display = "none";
+        }
+        notificationClose.onclick = function () {
+            notificationModal.style.display = "none";
+        }
+
         window.onclick = function (event) {
             if (event.target === patientInformationModal) {
                 patientInformationModal.style.display = "none";
             } else if (event.target === patientMedBackgroundModal) {
                 patientMedBackgroundModal.style.display = "none";
+            } else if (event.target === uploadFileModal) {
+                uploadFileModal.style.display = "none";
+            }
+        }
+
+        function updateAddress() {
+            document.getElementById("city").value = "Baguio City";
+            document.getElementById("state").value = "Benguet";
+            document.getElementById("region").value = "Cordillera Administrative Region";
+        }
+
+        function disableAllergies(elem) {
+            if (elem.checked) {
+                document.getElementById('pet').disabled = true;
+                document.getElementById('bite').disabled = true;
+                document.getElementById('skin').disabled = true;
+                document.getElementById('food').disabled = true;
+                document.getElementById('mold').disabled = true;
+                document.getElementById('latex').disabled = true;
+                document.getElementById('pollen').disabled = true;
+                document.getElementById('insect').disabled = true;
+                document.getElementById('medication').disabled = true;
+            } else {
+                document.getElementById('pet').disabled = false;
+                document.getElementById('bite').disabled = false;
+                document.getElementById('skin').disabled = false;
+                document.getElementById('food').disabled = false;
+                document.getElementById('mold').disabled = false;
+                document.getElementById('latex').disabled = false;
+                document.getElementById('pollen').disabled = false;
+                document.getElementById('insect').disabled = false;
+                document.getElementById('medication').disabled = false;
+            }
+        }
+
+        function disableComorbidities(elem) {
+            if (elem.checked) {
+                document.getElementById('cancer').disabled = true;
+                document.getElementById('asthma').disabled = true;
+                document.getElementById('diabetes').disabled = true;
+                document.getElementById('hypertension').disabled = true;
+                document.getElementById('heartDiseases').disabled = true;
+                document.getElementById('kidneyDiseases').disabled = true;
+            } else {
+                document.getElementById('cancer').disabled = false;
+                document.getElementById('asthma').disabled = false;
+                document.getElementById('diabetes').disabled = false;
+                document.getElementById('hypertension').disabled = false;
+                document.getElementById('heartDiseases').disabled = false;
+                document.getElementById('kidneyDiseases').disabled = false;
             }
         }
     </script>

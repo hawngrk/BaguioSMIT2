@@ -1,6 +1,6 @@
 <?php
 if (isset($_POST['search'])) {
-    include_once("../includes/database.php");
+    include '../includes/database.php';
     $search = $_POST['search'];
     echo "
       <thead>
@@ -37,7 +37,7 @@ if (isset($_POST['search'])) {
 }
 
 if (isset($_POST['sort'])) {
-    include_once("../includes/database.php");
+    include '../includes/database.php';
     $querySort = '';
     $sort = $_POST['sort'];
     echo "
@@ -80,9 +80,9 @@ if (isset($_POST['sort'])) {
 }
 
 if (isset($_POST['filter'])) {
-    include_once("../includes/database.php");
-    $querySort = '';
-    $sort = $_POST['filter'];
+    include '../includes/database.php';
+    $filter = $_POST['filter'];
+    $queryFilter = '';
     echo "
       <thead>
             <tr>
@@ -96,19 +96,17 @@ if (isset($_POST['filter'])) {
             </thead>
             ";
 
-    if ($sort == 'All') {
-        $querySort = "SELECT report.report_id, patient.patient_full_name, report.date_reported, report.report_status FROM report JOIN patient ON report.report_id = patient.patient_id JOIN patient_details ON patient.patient_id = patient_details.patient_id;";
-    } else if ($sort == 'Unverified') {
-        $querySort = "SELECT report.report_id, patient.patient_full_name, report.date_reported, report.report_status FROM report JOIN patient ON report.report_id = patient.patient_id JOIN patient_details ON patient.patient_id = patient_details.patient_id WHERE report.report_status = 'Unverified';";
-    } else if ($sort == 'Verified') {
-        print_r('passed verified');
-        $querySort = "SELECT report.report_id, patient.patient_full_name, report.date_reported, report.report_status FROM report JOIN patient ON report.report_id = patient.patient_id JOIN patient_details ON patient.patient_id = patient_details.patient_id WHERE report.report_status = 'Verified';";
-    } else if ($sort == 'Invalidated') {
-        print_r('passed invalidated');
-        $querySort = "SELECT report.report_id, patient.patient_full_name, report.date_reported, report.report_status FROM report JOIN patient ON report.report_id = patient.patient_id JOIN patient_details ON patient.patient_id = patient_details.patient_id WHERE report.report_status = 'Invalidated';";
+    if ($filter == 'All') {
+        $queryFilter = "SELECT report.report_id, patient.patient_full_name, report.date_reported, report.report_status FROM report JOIN patient ON report.report_id = patient.patient_id JOIN patient_details ON patient.patient_id = patient_details.patient_id;";
+    } else if ($filter == 'Unverified') {
+        $queryFilter = "SELECT report.report_id, patient.patient_full_name, report.date_reported, report.report_status FROM report JOIN patient ON report.report_id = patient.patient_id JOIN patient_details ON patient.patient_id = patient_details.patient_id WHERE report.report_status = 'Unverified';";
+    } else if ($filter == 'Verified') {
+        $queryFilter = "SELECT report.report_id, patient.patient_full_name, report.date_reported, report.report_status FROM report JOIN patient ON report.report_id = patient.patient_id JOIN patient_details ON patient.patient_id = patient_details.patient_id WHERE report.report_status = 'Verified';";
+    } else if ($filter == 'Invalidated') {
+        $queryFilter = "SELECT report.report_id, patient.patient_full_name, report.date_reported, report.report_status FROM report JOIN patient ON report.report_id = patient.patient_id JOIN patient_details ON patient.patient_id = patient_details.patient_id WHERE report.report_status = 'Invalidated';";
     }
     $stmt = $database->stmt_init();
-    $stmt->prepare($querySort);
+    $stmt->prepare($queryFilter);
     $stmt->execute();
     $stmt->bind_result($reportId, $reporter, $dateReported, $status);
 
@@ -125,7 +123,7 @@ if (isset($_POST['filter'])) {
 }
 
 if (isset($_POST['invalidated'])) {
-    include_once("../includes/database.php");
+    include '../includes/database.php';
     $queryInvalidated = "SELECT report.report_id, patient.patient_full_name, report.date_reported FROM report JOIN patient ON report.report_id = patient.patient_id JOIN patient_details ON patient.patient_id = patient_details.patient_id WHERE report.report_status = 'Invalidated';";
     echo "
     <div class='modal-content container'>
@@ -282,7 +280,7 @@ if (isset($_POST['report'])) {
             echo "
             <select class='form-select col-lg-12' id='statusSelection'>
             <option>Verify</option>
-            <option selected>Invalidated</option>
+            <option selected>Invalidate</option>
             </select>";
         }
         echo"
