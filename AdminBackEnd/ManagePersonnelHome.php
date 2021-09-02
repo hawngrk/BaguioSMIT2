@@ -105,7 +105,7 @@ include_once("../includes/database.php") ?>
 
         <!--Button for Uploading File-->
         <!--To include uploading files limited to csv file only-->
-        <button id="uploadFile" type="button" class="buttonTop" data-toggle="modal" data-target="#upload-File">
+        <button id="uploadFileBtn" type="button" class="buttonTop" data-toggle="modal" data-target="#upload-File">
             Upload File
         </button>
 
@@ -114,7 +114,7 @@ include_once("../includes/database.php") ?>
             <div class="content-modal">
                 <div class="modal-header">
                     <h3> Upload File/s </h3>
-                    <span id="close" class="close">&times;</span>
+                    <span id="uploadFileClose" class="close">&times;</span>
                 </div>
 
                 <div class="modal-body">
@@ -123,9 +123,9 @@ include_once("../includes/database.php") ?>
                             <div class="col-md-12 text-center">
                                 <button class="button" id="iconBrowse"><i class="fas fa-upload"></i></i></button>
                                 <p><br>Upload a list of patients (.csv) </p>
-                            <!--<p>Upload a list of patients (.csv) <br></p>
-                            <input type="file" class="form-control" id="fileUpload" multiple/>
-                            <button id="browse" type="button" class="'button4 btn-primary"> Browse </button> -->
+                                <!--<p>Upload a list of patients (.csv) <br></p>
+                                <input type="file" class="form-control" id="fileUpload" multiple/>
+                                <button id="browse" type="button" class="'button4 btn-primary"> Browse </button> -->
                             </div>
                         </div>
                         <div class="col">
@@ -138,95 +138,103 @@ include_once("../includes/database.php") ?>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" id="cancel1" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                    <button id="add" class="btn btn-primary"> Add</button>
+                    <button type="button" id="uploadFileCancelBtn" class="btn btn-secondary" data-dismiss="modal">
+                        Cancel
+                    </button>
+                    <button id="uploadFileConfirmBtn" class="btn btn-primary">Add</button>
                 </div>
             </div>
         </div>
 
         <!--Button for Adding Personnel Details-->
-        <button id="addUserBtn" type="button" class="buttonTop">
-            Add User
-        </button>
+        <button id="addPersonnelBtn" type="button" class="buttonTop">Add User</button>
 
         <!--Modal for adding personnel-->
-        <div id="personnelModal" class="modal-window">
-            <div class="content-modal">
-                <div class="modal-header">
-                    <h4 class="modal-title">Add USER-Personnel</h4>
-                    <button type="button" id="close1" class="close" data-dismiss="modal">&times;</button>
-                </div>
-                <div class="modal-body">
-                    <h5> Basic Information</h5>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <label for="lName">Last Name</label>
-                            <input type="text3" class="form-control basicInfoSizes" id="lName"
-                                   placeholder="Enter Last Name">
-                            <label class="infoPosition" for="fName">First Name</label>
-                            <input type="text3" class="form-control basicInfoSizes" id="fName"
-                                   placeholder="Enter First Name">
-                            <label class="infoPosition" for="mName">Middle Name</label>
-                            <input type="text3" class="form-control basicInfoSizes" id="mName"
-                                   placeholder="Enter Middle Name">
+        <form id='addPersonnelForm' method="post" enctype="multipart/form-data">
+            <div id="personnelModal" class="modal-window">
+                <div class="content-modal">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Add USER-Personnel</h4>
+                        <button type="button" id="addPersonnelClose" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <h5> Basic Information</h5>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label for="lName">Last Name</label>
+                                <input type="text3" class="form-control basicInfoSizes" id="lName" name="lName"
+                                       placeholder="Enter Last Name">
+                                <label class="infoPosition" for="fName">First Name</label>
+                                <input type="text3" class="form-control basicInfoSizes" id="fName" name="fName"
+                                       placeholder="Enter First Name">
+                                <label class="infoPosition" for="mName">Middle Name</label>
+                                <input type="text3" class="form-control basicInfoSizes" id="mName" name="mName"
+                                       placeholder="Enter Middle Name">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="suffix">Suffix</label>
+                                <select id="suffix" name="suffix">
+                                    <option value="">None</option>
+                                    <option>Sr</option>
+                                    <option>Jr</option>
+                                    <option>I</option>
+                                    <option>II</option>
+                                    <option>III</option>
+                                </select>
+                                <label class="infoPosition" for="role">Role</label>
+                                <select id="role" name="role">
+                                    <option disabled selected>Select Role...</option>
+                                    <option>City Hall Employee</option>
+                                    <option>Vaccination Personnel</option>
+                                </select>
+                                <label class="infoPosition" for="contactNum">Contact Number</label>
+                                <input type="text3" class="form-control basicInfoSizes" id="contactNum"
+                                       name="contactNum" placeholder="+63XXXXXXXXX" pattern="+63[0-9]{10}" required>
+                            </div>
                         </div>
-                        <div class="col-md-6">
-                            <label for="suffix">Suffix</label>
-                            <select id="suffix" name="suffix">
-                                <option value="">None</option>
-                                <option value="sr"> Sr</option>
-                                <option value="jr"> Jr</option>
-                                <option value="1"> I</option>
-                                <option value="2"> II</option>
-                                <option value="3"> III</option>
-                            </select>
-                            <label class="infoPosition" for="role">Role</label>
-                            <select id="role">
-                                <option value="">Select</option>
-                                <option value="cityHallEmp"> City Hall Employee </option>
-                                <option value="vaccinationPer"> Vaccination Personnel </option>
-                            </select>
-                            <label class="infoPosition" for="contactNum">Contact Number</label>
-                            <input type="text3" class="form-control basicInfoSizes" id="contactNum"
-                                   placeholder="+63XXXXXXXXX" pattern="+63[0-9]{10}" required>
-
+                        <div class="modal-footer">
+                            <button type="button" id="addPersonnelCancelBtn" class="btn btn-secondary"
+                                    data-dismiss="modal">Cancel
+                            </button>
+                            <button type="button" id="addPersonnelConfirmBtn" class="btn btn-primary">Add
+                            </button>
                         </div>
                     </div>
+                </div>
+            </div>
+
+            <!--Modal for Personnel Credentials-->
+            <div id="credentialsModal" class="modal-window">
+                <div class="content-modal">
+                    <div class="modal-header">
+                        <span id="credentialsClose" class="close">&times;</span>
+                    </div>
+                    <div class="modal-body">
+                        <h5> Here are the personnel credentials. </h5>
+                        <label class="cred" for="username"> Username</label>
+                        <input type="text" id="username" name="username" disabled="disabled">
+
+                        <label class="cred" for="password">Password</label>
+                        <input class="passwordPos" type="text" id="password" name="password" disabled="disabled">
+                    </div>
+
                     <div class="modal-footer">
-                        <button type="button" id="cancel" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                        <button type="button" id="next" class="btn btn-primary">Next</button>
+                        <button type='button' id="addPersonnelPrevBtn" class="btn btn-outline-secondary mr-auto">
+                            Previous
+                        </button>
+                        <button type="submit" id="addPersonnelSaveBtn" name="addPersonnelSaveBtn"
+                                form="addPersonnelForm" class="btn btn-success"> Save
+                        </button>
                     </div>
                 </div>
             </div>
-        </div>
-
-        <!--Modal for Personnel Credentials-->
-        <div id="personnelCredentials" class="modal-window">
-            <div class="content-modal">
-                <div class="modal-header">
-                    <span id="close2" class="close">&times;</span>
-                </div>
-                <div class="modal-body">
-                    <h5> Here are the personnel credentials. </h5>
-                    <label class="cred" for="username"> Username</label>
-                    <input type="text" id="username" name="username" disabled="disabled">
-
-                    <label class="cred" for="password">Password</label>
-                    <input class="passwordPos" type="text" id="password" name="password" disabled="disabled">
-                </div>
-
-                <div class="modal-footer">
-                    <button type='button' id="previous" class="btn btn-outline-secondary mr-auto"> Previous </button>
-                    <button type="button" id='save' class="btn btn-success"> Save</button>
-                </div>
-            </div>
-        </div>
+        </form>
 
         <!--Notification modal-->
         <div id="notifyModal" class="modal-window">
             <div class="content-modal">
                 <div class="modal-header">
-                    <span id="close3" class="close">&times;</span>
+                    <span id="notificationClose" class="close">&times;</span>
                 </div>
                 <div class="modal-body">
                     <img src="../../img/checkmark.png" alt="confirm" id="confirm">
@@ -235,7 +243,7 @@ include_once("../includes/database.php") ?>
                     </p>
                 </div>
                 <div class="modal-footer">
-                    <button id='exit' class="btn btn-primary"> Done</button>
+                    <button id='notificationDoneBtn' class="btn btn-primary">Done</button>
                     <!--instead of close change to Done-->
                 </div>
             </div>
@@ -243,12 +251,10 @@ include_once("../includes/database.php") ?>
 
         <!--Search-->
         <div class="search-container">
-            <form action="/action_page.php">
-                <input type="text" placeholder="Search" name="search" id="searchPersonnel">
-                <button type="submit"><i class="fa fa-search"></i></button>
-            </form>
+            <input type="text" placeholder="Search" id="searchPersonnel" name="searchPersonnel" onkeyup="searchPersonnel()">
+            <button type="submit" id="searchPersonnelBtn" name="searchPersonnelBtn" onclick="searchPersonnel()"><i class="fa fa-search"></i></button>
         </div>
-        <table class="table table-row table-hover">
+        <table class="table table-row table-hover" id="personnelTable">
             <thead>
             <tr>
                 <th scope="col">#</th>
@@ -286,16 +292,41 @@ include_once("../includes/database.php") ?>
                 <td>$name</td>
                 <td>$role</td>
                 <td>$contact</td>
-                
-</tr>";
+                </tr>";
             }
             ?>
-
         </table>
-
     </div>
 </div>
-</div>
+
+<?php
+if (isset($_POST['addPersonnelSaveBtn'])) {
+    include '../includes/database.php';
+    $lastName = $_POST['lName'];
+    $firstName = $_POST['fName'];
+    $middleName = $_POST['mName'];
+    $suffix = $_POST['suffix'];
+    $role = $_POST['role'];
+    $contactNumber = $_POST['contactNum'];
+
+    $employeeTableQuery = "INSERT INTO employee (employee_first_name, employee_last_name, employee_middle_name, employee_suffix, employee_role, employee_contact_number)  VALUE ('$lastName', '$firstName', '$middleName', '$suffix', '$role', '$contactNumber');";
+    $database->query($employeeTableQuery);
+
+    $username = str_replace(' ', '', $firstName);
+    $password = str_replace(' ', '', $lastName);
+
+    $getEmployeeIdQuery = "SELECT employee_id FROM employee ORDER BY employee_id DESC LIMIT 1";
+    $dbase = $database->stmt_init();
+    $dbase->prepare($getEmployeeIdQuery);
+    $dbase->execute();
+    $dbase->bind_result($employeeid);
+    $dbase->fetch();
+    $dbase->close();
+
+    $employee_accountTableQuery = "INSERT INTO employee_account (employee_id, employee_username, employee_password, employee_account_type) VALUE ('$employeeid', '$username', '$password', 'Client');";
+    $database->query($employee_accountTableQuery);
+}
+?>
 
 <!-- jQuery CDN - Slim version (=without AJAX) -->
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
@@ -321,102 +352,7 @@ include_once("../includes/database.php") ?>
 </script>
 
 <script>
-    //modals
-    var modal = document.getElementById("personnelModal");
-    var addModal = document.getElementById("personnelCredentials");
-    var notifyModal = document.getElementById("notifyModal");
-    var uploadFileModal = document.getElementById("uploadFileModal")
-
-    //buttons
-    var addUserBtn = document.getElementById("addUserBtn");
-    var uploadFileBtn = document.getElementById("uploadFile")
-    var prev = document.getElementById("previous")
-
-    //cancel
-    var span = document.getElementById("close");
-    var span1 = document.getElementById("close1");
-    var span2 = document.getElementById("close2");
-    var span3 = document.getElementById("close3");
-    var cancel = document.getElementById("cancel");
-    var cancelUploadModal = document.getElementById("cancel1")
-
-    var exit = document.getElementById('exit')
-    var next = document.getElementById("next");
-    var save = document.getElementById("save");
-
-
-    //upload file button
-    uploadFileBtn.onclick = function () {
-        uploadFileModal.style.display = "block";
-    }
-
-    cancelUploadModal.onclick = function (){
-        uploadFileModal.style.display = "none";
-    }
-
-    // add button for Add User
-    addUserBtn.onclick = function () {
-        modal.style.display = "block";
-    }
-
-    prev.onclick = function (){
-        addModal.style.display = "none";
-        modal.style.display = "block";
-    }
-
-    // add button after input of personnel basic info
-    next.onclick = function () {
-        /*Not clickable if the inputs are missing.*/
-        modal.style.display = "none";
-        addModal.style.display = "block";
-    }
-
-    save.onclick = function () {
-        modal.style.display = "none";
-        addModal.style.display = "none";
-        notifyModal.style.display = "block";
-    }
-
-    span.onclick = function () {
-        uploadFileModal.style.display = "none";
-    }
-
-    span1.onclick = function () {
-        modal.style.display = "none";
-    }
-
-    span2.onclick = function () {
-        modal.style.display = "none";
-        addModal.style.display = "none";
-    }
-
-    span3.onclick = function () {
-        modal.style.display = "none";
-        addModal.style.display = "none";
-        notifyModal.style.display = "none";
-    }
-
-    exit.onclick = function () {
-        modal.style.display = "none";
-        addModal.style.display = "none";
-        notifyModal.style.display = "none";
-    }
-
-    cancel.onclick = function () {
-        modal.style.display = "none";
-        addModal.style.display = "none";
-        notifyModal.style.display = "none"
-    }
-
-    window.onclick = function (event) {
-        if (event.target == modal || event.target == addModal || event.target == notifyModal || event.target == uploadFileModal) {
-            modal.style.display = "none";
-            addModal.style.display = "none";
-            uploadFileModal.style.display = "none";
-            notifyModal.style.display = "none";
-        }
-    }
-
+    //Sidebar
     var clicked = false;
 
     function Toggle() {
@@ -428,6 +364,98 @@ include_once("../includes/database.php") ?>
             clicked = false;
             butt.innerHTML = "<i class='fas fa-angle-left'></i> Menu";
         }
+    }
+
+    //Add Personnel
+    var addPersonnelBtn = document.getElementById("addPersonnelBtn");
+    var personnelModal = document.getElementById("personnelModal");
+    var addPersonnelClose = document.getElementById("addPersonnelClose");
+    var addPersonnelCancelBtn = document.getElementById("addPersonnelCancelBtn");
+    var addPersonnelConfirmBtn = document.getElementById("addPersonnelConfirmBtn");
+
+    addPersonnelBtn.onclick = function () {
+        personnelModal.style.display = "block";
+    }
+
+    addPersonnelClose.onclick = function () {
+        personnelModal.style.display = "none";
+    }
+
+    addPersonnelCancelBtn.onclick = function () {
+        personnelModal.style.display = "none";
+    }
+
+    addPersonnelConfirmBtn.onclick = function () {
+        personnelModal.style.display = "none";
+        credentialsModal.style.display = "block";
+    }
+
+    //Credentials
+    var credentialsModal = document.getElementById("credentialsModal");
+    var credentialsClose = document.getElementById("credentialsClose");
+    var addPersonnelPrevBtn = document.getElementById("addPersonnelPrevBtn")
+    var addPersonnelSaveBtn = document.getElementById("addPersonnelSaveBtn");
+
+    credentialsClose.onclick = function () {
+        credentialsModal.style.display = "none";
+    }
+
+    addPersonnelPrevBtn.onclick = function () {
+        credentialsModal.style.display = "none";
+        personnelModal.style.display = "block";
+    }
+
+    addPersonnelSaveBtn.onclick = function () {
+        credentialsModal.style.display = "none";
+        notifyModal.style.display = "block";
+    }
+
+    //Notification
+    var notifyModal = document.getElementById("notifyModal");
+    var notificationClose = document.getElementById("notificationClose");
+    var notificationDoneBtn = document.getElementById("notificationDoneBtn");
+
+    notificationClose.onclick = function () {
+        notifyModal.style.display = "none";
+    }
+
+    notificationDoneBtn.onclick = function () {
+        notifyModal.style.display = "none";
+    }
+
+    //Upload
+    var uploadFileBtn = document.getElementById("uploadFileBtn");
+    var uploadFileModal = document.getElementById("uploadFileModal");
+    var uploadFileClose = document.getElementById("uploadFileClose");
+    var uploadFileCancelBtn = document.getElementById("uploadFileCancelBtn");
+    var uploadFileConfirmBtn = document.getElementById("uploadFileConfirmBtn");
+
+    uploadFileBtn.onclick = function () {
+        uploadFileModal.style.display = "block";
+    }
+
+    uploadFileClose.onclick = function () {
+        uploadFileModal.style.display = "none";
+    }
+
+    uploadFileCancelBtn.onclick = function () {
+        uploadFileModal.style.display = "none";
+    }
+
+    uploadFileConfirmBtn.onclick = function () {
+        uploadFileModal.style.display = "none";
+    }
+
+    function searchPersonnel() {
+        var textSearch = document.getElementById("searchPersonnel").value;
+        $.ajax({
+            url: 'ManagePersonnelProcessor.php',
+            type: 'POST',
+            data: {"search": textSearch},
+            success: function (result) {
+                document.getElementById("personnelTable").innerHTML = result;
+            }
+        });
     }
 </script>
 </body>
