@@ -272,15 +272,10 @@ include_once("../includes/database.php") ?>
                 <td>$vaccExp</td>
                 <td>$batchQty</td>
                 <td>$vaccQty</td>
-                <td><button class='viewVaccineBtn' type='submit' value='$vaccineLotId' onclick='viewVaccine($vaccineLotId)'>Review Vaccine</button></td>
                 </tr>";
             }
             ?>
         </table>
-
-        <div id="viewVaccineModal" class="modal">
-
-        </div>
     </div>
 </div>
 
@@ -453,24 +448,6 @@ if (isset($_POST['addBtnNewVaccine'])) {
                 document.getElementById("vaccineBatch").innerHTML = result;
             }
         });
-    }
-
-    var viewVaccineModal = document.getElementById("viewVaccineModal");
-
-    function viewVaccine(vaccineid) {
-        $.ajax({
-            url: 'manageVaccineProcessor.php',
-            type: 'POST',
-            data: {"viewVaccine": vaccineid},
-            success: function (result) {
-                document.getElementById("viewVaccineModal").innerHTML = result;
-                viewVaccineModal.style.display = "block";
-            }
-        });
-    }
-
-    function viewVaccineClose() {
-        viewVaccineModal.style.display = "none";
     }
 </script>
 
