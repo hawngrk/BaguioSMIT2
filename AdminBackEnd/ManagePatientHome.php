@@ -414,14 +414,11 @@ include_once("../includes/database.php") ?>
 
         <!-- Search Container-->
         <div class="search-container">
-            <form action="/action_page.php">
-                <input type="text" placeholder="Search" name="search" id="searchPatient">
-                <button type="submit"><i class="fa fa-search"></i>
-                </button>
-            </form>
+            <input type="text" id="searchPatient" class="searchHome" name="searchPatient" placeholder="Search" onkeyup="searchPatient()">
+            <button type="submit" id="searchPatientBtn" name="searchPatientBtn" onclick="searchPatient()"><i class="fa fa-search"></i></button>
         </div>
 
-        <table class="table table-row table-hover">
+        <table class="table table-row table-hover" id="patientTable">
             <thead>
             <tr>
                 <th scope="col">#</th>
@@ -716,15 +713,28 @@ include_once("../includes/database.php") ?>
                 document.getElementById('kidneyDiseases').disabled = false;
             }
         }
+
+        function searchPatient() {
+            console.log('passed');
+            var textSearch = document.getElementById("searchPatient").value;
+            $.ajax({
+                url: 'ManagePatientProcessor.php',
+                type: 'POST',
+                data: {"search": textSearch},
+                success: function (result) {
+                    document.getElementById("patientTable").innerHTML = result;
+                }
+            });
+        }
     </script>
 
+    <!--
     <script>
         $(document).ready(function ($) {
             $(".table-row").click(function () {
                 window.document.location = $(this).data("href");
             });
         });
-
-
     </script>
+    -->
 </body>

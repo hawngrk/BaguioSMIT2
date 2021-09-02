@@ -7,42 +7,12 @@ require_once '../require/getVaccineLot.php';
 if (isset($_POST['search'])) {
     include("../includes/database.php");
     $search = $_POST['search'];
-    $querySearch = "SELECT vaccine_lot.vaccine_lot_id, vaccine.vaccine_name, vaccine_lot.date_stored, vaccine_batch.date_of_expiration, vaccine_lot.vaccine_batch_quantity, SUM(vaccine_batch.vaccine_quantity) FROM vaccine_lot JOIN vaccine ON vaccine_lot.vaccine_id = vaccine.vaccine_id JOIN vaccine_batch ON vaccine_lot.vaccine_lot_id = vaccine_batch.vaccine_lot_id WHERE vaccine_lot.vaccine_lot_id LIKE '$search%' OR vaccine.vaccine_name LIKE '$search%' GROUP BY vaccine_lot.vaccine_lot_id;";
-    echo "
-     <thead>
-            <tr>
-                <th scope='col'>#</th>
-                <th scope='col'>Vaccine Lot ID</th>
-                <th scope='col'>Vaccine Name</th>
-                <th scope='col'>Date Received</th>
-                <th scope='col'>Date Expiration</th>
-                <th scope='col'>Batch Quantity</th>
-                <th scope='col''>Bottle Quantity</th>
-                <th scope='col'>Action</th>
-            </tr>
-            </thead>";
-
-    $count = 1;
-    $stmt = $database->stmt_init();
-    $stmt->prepare($querySearch);
-    $stmt->execute();
-    $stmt->bind_result($vaccineLotId, $vaccName, $dateStored, $vaccExp, $batchQty, $vaccQty);
-    while ($stmt->fetch()) {
-        echo "<tr>
-                <td>$count</td>
-                <td>$vaccineLotId</td>
-                <td>$vaccName</td>
-                <td>$dateStored</td>
-                <td>$vaccExp</td>
-                <td>$batchQty</td>
-                <td>$vaccQty</td>
-                </tr>";
-        $count++;
+    if ($search === "") {
+        $querySearch = "SELECT vaccine_lot.vaccine_lot_id, vaccine.vaccine_name, vaccine_lot.date_stored, vaccine_batch.date_of_expiration, vaccine_lot.vaccine_batch_quantity, SUM(vaccine_batch.vaccine_quantity) FROM vaccine_lot JOIN vaccine ON vaccine_lot.vaccine_id = vaccine.vaccine_id JOIN vaccine_batch ON vaccine_lot.vaccine_lot_id = vaccine_batch.vaccine_lot_id GROUP BY vaccine_lot.vaccine_lot_id;";
+    } else {
+        $querySearch = "SELECT vaccine_lot.vaccine_lot_id, vaccine.vaccine_name, vaccine_lot.date_stored, vaccine_batch.date_of_expiration, vaccine_lot.vaccine_batch_quantity, SUM(vaccine_batch.vaccine_quantity) FROM vaccine_lot JOIN vaccine ON vaccine_lot.vaccine_id = vaccine.vaccine_id JOIN vaccine_batch ON vaccine_lot.vaccine_lot_id = vaccine_batch.vaccine_lot_id WHERE vaccine_lot.vaccine_lot_id LIKE '$search%' OR vaccine.vaccine_name LIKE '$search%' GROUP BY vaccine_lot.vaccine_lot_id;";
     }
-}
 
-if (isset($_POST['cancel'])) {
-    $querySearch = "SELECT vaccine_lot.vaccine_lot_id, vaccine.vaccine_name, vaccine_lot.date_stored, vaccine_batch.date_of_expiration, vaccine_lot.vaccine_batch_quantity, SUM(vaccine_batch.vaccine_quantity) FROM vaccine_lot JOIN vaccine ON vaccine_lot.vaccine_id = vaccine.vaccine_id JOIN vaccine_batch ON vaccine_lot.vaccine_lot_id = vaccine_batch.vaccine_lot_id GROUP BY vaccine_lot.vaccine_lot_id;";
     echo "
      <thead>
             <tr>
@@ -126,3 +96,27 @@ if (isset($_POST['batch'])) {
     echo "</table>";
 }
 
+if (isset($_POST['viewVaccine'])) {
+    include '../includes/database.php';
+    $lot = $_POST['viewVaccine'];
+    $getVaccineLotQuery = "SELECT vaccine_lot.vaccine_lot_id, vaccine.vaccine_name, vaccine_lot.date_stored, vaccine_batch.date_of_expiration, vaccine_lot.vaccine_batch_quantity, SUM(vaccine_batch.vaccine_quantity) FROM vaccine_lot JOIN vaccine ON vaccine_lot.vaccine_id = vaccine.vaccine_id JOIN vaccine_batch ON vaccine_lot.vaccine_lot_id = vaccine_batch.vaccine_lot_id WHERE vaccine_lot.vaccine_lot_id = $lot GROUP BY vaccine_lot.vaccine_lot_id;";
+
+    $stmt = $database->stmt_init();
+    $stmt->prepare($getVaccineLotQuery);
+    $stmt->execute();
+    $stmt->bind_result($vaccineLotId, $vaccName, $dateStored, $vaccExp, $batchQty, $vaccQty);
+    $stmt->fetch();
+
+    echo "
+    <div class='modal-content container'>
+    <h2 id='headerReviewVaccine'>EDIT VACCINE - $vaccineLotId . " - ". $vaccName <span id='viewReportClose' class='close' onclick='viewVaccineClose()'>&times;</span></h2>
+    <div class='ReviewVaccine-PopUp'>
+    <h4>Vaccine Lot Information</h4>
+    <p>Vaccine Lot ID: $vaccineLotId</p>
+    <p>Vaccine Name: $vaccName</p>
+    <p>Date Received: $dateStored</p>
+    <p>Date of Expiration: $vaccExp</p>
+    <p>Batch Quantity: $batchQty</p>
+    <p>Bottle Quantity: $vaccQty</p>
+    </div>";
+}

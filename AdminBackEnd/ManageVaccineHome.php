@@ -114,8 +114,7 @@ include_once("../includes/database.php") ?>
                     </div>
                     <div class="modal-body">
                         <label for="selectedVaccine"> Select a Vaccine: </label>
-                        <select class="form-select col-lg-12 vaccineType" id="selectedVaccine" name="selectedVaccine"
-                                onchange="updateVaccineInfo(this)">
+                        <select class="form-select col-lg-12 vaccineType" id="selectedVaccine" name="selectedVaccine" onchange="updateVaccineInfo(this)">
                             <?php
                             include '../includes/database.php';
                             $getVaccinesQuery = "SELECT vaccine_name FROM vaccine";
@@ -214,11 +213,8 @@ include_once("../includes/database.php") ?>
         </form>
 
         <div class="search-container">
-            <form action="/action_page.php">
-                <input type="text" id="searchVaccine" class="searchHome" name="searchVaccine" placeholder="Search" onkeyup="searchVaccine()">
-                <button type="submit" id="searchVaccineBtn" name="searchVaccineBtn" onclick="searchVaccine()"><i
-                            class="fa fa-search"></i></button>
-            </form>
+            <input type="text" id="searchVaccine" class="searchHome" name="searchVaccine" placeholder="Search" onkeyup="searchVaccine()">
+            <button type="submit" id="searchVaccineBtn" name="searchVaccineBtn" onclick="searchVaccine()"><i class="fa fa-search"></i></button>
         </div>
 
         <table class="table table-row table-hover" id="vaccineTable">
@@ -276,11 +272,15 @@ include_once("../includes/database.php") ?>
                 <td>$vaccExp</td>
                 <td>$batchQty</td>
                 <td>$vaccQty</td>
-                
-</tr>";
+                <td><button class='viewVaccineBtn' type='submit' value='$vaccineLotId' onclick='viewVaccine($vaccineLotId)'>Review Vaccine</button></td>
+                </tr>";
             }
             ?>
         </table>
+
+        <div id="viewVaccineModal" class="modal">
+
+        </div>
     </div>
 </div>
 
@@ -379,25 +379,14 @@ if (isset($_POST['addBtnNewVaccine'])) {
 <script>
     function searchVaccine() {
         var textSearch = document.getElementById("searchVaccine").value;
-        if (textSearch === "") {
-            $.ajax({
-                url: 'ManageVaccineProcessor.php',
-                type: 'POST',
-                data: {"cancel": textSearch},
-                success: function (result) {
-                    document.getElementById("vaccineTable").innerHTML = result;
-                }
-            });
-        } else {
-            $.ajax({
-                url: 'ManageVaccineProcessor.php',
-                type: 'POST',
-                data: {"search": textSearch},
-                success: function (result) {
-                    document.getElementById("vaccineTable").innerHTML = result;
-                }
-            });
-        }
+        $.ajax({
+            url: 'ManageVaccineProcessor.php',
+            type: 'POST',
+            data: {"search": textSearch},
+            success: function (result) {
+                document.getElementById("vaccineTable").innerHTML = result;
+            }
+        });
     }
 
     // Add Vaccine
@@ -465,14 +454,27 @@ if (isset($_POST['addBtnNewVaccine'])) {
             }
         });
     }
+
+    var viewVaccineModal = document.getElementById("viewVaccineModal");
+
+    function viewVaccine(vaccineid) {
+        $.ajax({
+            url: 'manageVaccineProcessor.php',
+            type: 'POST',
+            data: {"viewVaccine": vaccineid},
+            success: function (result) {
+                document.getElementById("viewVaccineModal").innerHTML = result;
+                viewVaccineModal.style.display = "block";
+            }
+        });
+    }
+
+    function viewVaccineClose() {
+        viewVaccineModal.style.display = "none";
+    }
 </script>
 
 <script>
-    $(document).ready(function ($) {
-        $(".table-row").click(function () {
-            window.document.location = $(this).data("href");
-        });
-    });
     var clicked =false;
     function Toggle(){
         var butt = document.getElementById('sidebarCollapse')
@@ -486,4 +488,14 @@ if (isset($_POST['addBtnNewVaccine'])) {
         }
     }
 </script>
+<!--
+<script>
+
+    $(document).ready(function ($) {
+        $(".table-row").click(function () {
+            window.document.location = $(this).data("href");
+        });
+    });
+</script>
+ -->
 </body>
