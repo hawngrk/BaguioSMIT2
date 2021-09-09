@@ -188,10 +188,22 @@ select{
     background-color: #04628A;
 }
 
-
 #success{
     display: block;
     margin-left: auto;
     margin-right: auto;
     width: 20%;
 }
+
+#headingNav1, #headingNav2 {
+    text-align: center;
+}
+
+#headingNav2 {
+    font-size: 12px;
+}
+
+#sidebar.active {
+    margin-left: -250px;
+}
+
