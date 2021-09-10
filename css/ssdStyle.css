@@ -169,6 +169,7 @@ a.article:hover {
 }
 
 select{
+
     width: 100%;
     height: auto;
     border-radius: 7px;
@@ -185,8 +186,7 @@ select{
 }
 
 #sendStubs{
-    margin-left: 70%;
-    margin-top: 10%;
+    margin: 0% 5% 5% 67%;
 }
 
 #buttonGroup{
@@ -194,22 +194,11 @@ select{
     width: 90%;
 }
 
-.deploymentSummary{
-    border-radius: 5px;
-    border: 1px solid black;
-    width: auto;
-    height: auto;
+.deploymentSummaryContents,.deploymentQueueContents, .labels{
+    margin-left: 4%;
 }
 
-.deploymentSummaryContents,.deploymentQueueContents{
-    margin: 4%;
-}
 
-.deploymentQueue{
-    margin-top: 6%;
-    border-radius: 5px;
-    border: 1px solid black;
-}
 
 /* Modal Content/Box */
 .content-modal{
@@ -270,11 +259,12 @@ select{
     font-size: 12px;
 }
 
+
 #sidebar.active {
     margin-left: -250px;
 }
 
-#totalPopulation, #vaccineDeployments, #totalPopulationPerHD{
+#totalPopulation, #vaccineDeployments, #totalPopulationPerHD, #selectDeployment,#deploymentSummary, #healthDistrictContainer, #deploymentQueue{
     padding-top: 2%;
     background-color: white;
     width: 40%;

@@ -83,67 +83,50 @@
         </nav>
 
         <!-- Page Content  -->
-        <div class="mainColumn">
-            <div class="firstCol">
-                <div class="row">
-                    <div class="col-md-6">
-                        <select name="deployment" id="deployment">
-                            <option value="" disabled selected hidden>Select Deployment</option>
-                            <option value="">Select...</option>
-                            <option value="deployment1">Deployment1</option>
-                            <option value="deployment2">Deployment2</option>
-                            <option value="deployment3">Deployment3</option>
-                            <option value="deployment4">Deployment4</option>
-                        </select>
-                    </div>
-                    <div class="col">
-                        <div class="deploymentSummary">
-                            <div class="deploymentSummaryContents">
-                                <h2>Deployment Summary</h2>
-                                <label class="deploymentLabels" for="sched"> Schedule: </label>
-                                <input type="text" class="form-control basicInfoSizes" id="sched" name="sched" disabled
-                                       readonly>
+        <div class="row">
+            <div id="selectDeployment">
+                <select>
+                    <option value="" disabled selected hidden>Select Deployment</option>
+                    <option value="">Select...</option>
+                    <option value="deployment1">Deployment1</option>
+                    <option value="deployment2">Deployment2</option>
+                    <option value="deployment3">Deployment3</option>
+                    <option value="deployment4">Deployment4</option>
+                </select>
+            </div>
 
-                                <label class="deploymentLabels" for="site"> Site: </label>
-                                <input type="text" class="form-control basicInfoSizes" id="site" name="site" disabled
-                                       readonly>
+            <div id="deploymentSummary">
+                <div class="labels">
+                    <h2>Deployment Summary</h2>
+                    <p> Schedule: </p>
+                    <p> Site: </p>
+                    <p> Brand: </p>
+                </div>
+            </div>
+        </div>
 
-                                <label class="deploymentLabels" for="brand"> Brand: </label>
-                                <input type="text" class="form-control basicInfoSizes" id="brand" name="brand" disabled
-                                       readonly>
-                            </div>
-                        </div>
-                    </div>
+        <div class="row healthDistrict">
+            <div id="healthDistrictContainer">
+                <h2 class="labels"> Health Center Districts: </h2>
+                <div class="btn-group-vertical" id="buttonGroup">
+                    <button type="button" class="btn btn-secondary" id="firstBarangay">Bakakeng Norte
+                    </button>
+                    <br>
+                    <button type="button" class="btn btn-secondary">Bakakeng Sur</button>
+                    <br>
+                    <button type="button" class="btn btn-secondary">Bakakeng Central</button>
                 </div>
 
-                <div class="row">
-                    <div class="col">
-                        <div class="healthDistrictContainer">
-                            <h2> Health Center Districts: </h2>
-                            <div class="btn-group-vertical" id="buttonGroup">
-                                <button type="button" class="btn btn-secondary" id="firstBarangay">Bakakeng Norte
-                                </button>
-                                <br>
-                                <button type="button" class="btn btn-secondary">Bakakeng Sur</button>
-                                <br>
-                                <button type="button" class="btn btn-secondary">Bakakeng Central</button>
-                            </div>
+                <button id="sendStubs" type="button" class="btn btn-success"><i
+                        class="fas fa-paper-plane"></i> Send Stubs </button>
+            </div>
 
-                            <button id="sendStubs" type="button" class="btn btn-success"><i
-                                    class="fas fa-paper-plane"></i>
-                                Send Stubs
-                            </button>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="deploymentQueue">
-                            <div class="deploymentQueueContents">
-                                <h2>Deployment Queue</h2>
-                            </div>
-                        </div>
-
-                    </div>
+            <div id="deploymentQueue">
+                <div class="labels">
+                    <h2>Deployment Queue</h2>
                 </div>
+
+        </div>
 
                 <!--Allocation of Stubs Modal-->
                 <div id="barangayModal" class="modal-window">
