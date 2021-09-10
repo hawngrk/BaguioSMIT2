@@ -155,18 +155,6 @@ a.article:hover {
     border: none;
 }
 
-@media (max-width: 768px) {
-    #sidebar {
-        margin-left: -250px;
-    }
-    #sidebar.active {
-        margin-left: 0;
-    }
-    #sidebarCollapse span {
-        display: none;
-    }
-}
-
 .btnTop {
     border: none;
     background: whitesmoke;
@@ -285,4 +273,24 @@ select{
 #sidebar.active {
     margin-left: -250px;
 }
+
+#totalPopulation, #vaccineDeployments, #totalPopulationPerHD{
+    padding-top: 2%;
+    background-color: white;
+    width: 40%;
+    border-radius: 12px;
+    display: inline-block;
+    margin-left: 7%;
+}
+
+#vaccineDeploymentContent{
+    margin: 5%;
+}
+
+.healthDistrict{
+    padding-top: 3%;
+    margin-left: 5%;
+}
+
+
 
