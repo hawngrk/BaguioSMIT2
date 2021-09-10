@@ -49,10 +49,10 @@
             <h5 id="headingNav2"> September 17, 2021 | 01:24 PM</h5>
             <hr>
 
-            <li class="active">
+            <li>
                 <a href="homeSsdModule.html"><i class="fas fa-home"></i> Home</a>
             </li>
-            <li>
+            <li class="active">
                 <a href="distributeStubSsdModule.html"><i class="fas fa-ticket-alt"></i> Stub Distribute</a>
             </li>
         </ul>
@@ -88,10 +88,10 @@
                 <select>
                     <option value="" disabled selected hidden>Select Deployment</option>
                     <option value="">Select...</option>
-                    <option value="deployment1">Deployment1</option>
-                    <option value="deployment2">Deployment2</option>
-                    <option value="deployment3">Deployment3</option>
-                    <option value="deployment4">Deployment4</option>
+                    <option value="deployment1">Deployment1 </option>
+                    <option value="deployment2">Deployment2 </option>
+                    <option value="deployment3">Deployment3 </option>
+                    <option value="deployment4">Deployment4 </option>
                 </select>
             </div>
 
@@ -109,16 +109,17 @@
             <div id="healthDistrictContainer">
                 <h2 class="labels"> Health Center Districts: </h2>
                 <div class="btn-group-vertical" id="buttonGroup">
-                    <button type="button" class="btn btn-secondary" id="firstBarangay">Bakakeng Norte
+                    <button type="button" class="btn btn-secondary" id="firstBarangay">ATAB HEALTH DISTRICT
                     </button>
                     <br>
-                    <button type="button" class="btn btn-secondary">Bakakeng Sur</button>
+                    <button type="button" class="btn btn-secondary">AURORA HILL HEALTH DISTRICT</button>
                     <br>
-                    <button type="button" class="btn btn-secondary">Bakakeng Central</button>
+                    <button type="button" class="btn btn-secondary">PINSAO HEALTH DISTRICT</button>
                 </div>
 
                 <button id="sendStubs" type="button" class="btn btn-success"><i
-                        class="fas fa-paper-plane"></i> Send Stubs </button>
+                        class="fas fa-paper-plane"></i> Send Stubs
+                </button>
             </div>
 
             <div id="deploymentQueue">
@@ -126,58 +127,54 @@
                     <h2>Deployment Queue</h2>
                 </div>
 
+            </div>
         </div>
 
-                <!--Allocation of Stubs Modal-->
-                <div id="barangayModal" class="modal-window">
-                    <div class="content-modal">
-                        <div class="modal-header">
-                            <!--Name of the Health center associated with the barangay under-->
-                            <h3> ATAB HEALTH DISTRICT CENTER - Deployment 1 </h3>
-                            <span id="closeModal" class="close">&times;</span>
-                        </div>
+        <div id="barangayModal" class="modal-window">
+            <div class="content-modal">
+                <div class="modal-header">
+                    <!--Name of the Health center associated with the barangay under-->
+                    <h3> ATAB HEALTH DISTRICT CENTER - Deployment 1 </h3>
+                    <span id="closeModal" class="close">&times;</span>
+                </div>
 
-                        <div class="modal-body">
-                            <div class="stubNumbersContainer">
-                                <!--First Row -->
-                                <div class="row">
-                                    <div class="col">
-                                        <p> BARANGAY LIST </p>
-                                    </div>
-                                    <div class="col">
-                                        <p> Enter the number of stubs per Category</p>
-                                    </div>
-                                </div>
+                <div class="modal-body">
+                    <div class="stubNumbersContainer">
+                        <!--First Row -->
+                        <div class="row">
+                            <div class="col">
+                                <p> BARANGAY LIST </p>
+                            </div>
+                            <div class="col">
+                                <p> Enter the number of stubs per Category</p>
                             </div>
                         </div>
                     </div>
                 </div>
-                <!--Ending Div-->
             </div>
         </div>
     </div>
-
-    <script>
-        // barangay buttons
-        var firstBarangay = document.getElementById("firstBarangay");
-
-        //modals
-        var barangayModal = document.getElementById("barangayModal");
-
-
-        var exitModal = document.getElementById("closeModal");
-
-        firstBarangay.onclick = function () {
-            barangayModal.style.display = "block";
-        }
-
-        // exit or close
-        exitModal.onclick = function () {
-            barangayModal.style.display = "none";
-        }
-
-
-    </script>
 </div>
+<script>
+    // barangay buttons
+    var firstBarangay = document.getElementById("firstBarangay");
+
+    //modals
+    var barangayModal = document.getElementById("barangayModal");
+
+    // exit modals
+    var exitModal = document.getElementById("closeModal");
+
+    firstBarangay.onclick = function () {
+        barangayModal.style.display = "block";
+    }
+
+    // exit or close
+    exitModal.onclick = function () {
+        barangayModal.style.display = "none";
+    }
+
+
+</script>
 </body>
 </html>
