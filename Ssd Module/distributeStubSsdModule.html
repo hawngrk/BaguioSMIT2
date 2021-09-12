@@ -108,14 +108,19 @@
         <div class="row healthDistrict">
             <div id="healthDistrictContainer">
                 <h2 class="labels"> Health Center Districts: </h2>
-                <div class="btn-group-vertical" id="buttonGroup">
-                    <button type="button" class="btn btn-secondary" id="firstBarangay">ATAB HEALTH DISTRICT
-                    </button>
-                    <br>
-                    <button type="button" class="btn btn-secondary">AURORA HILL HEALTH DISTRICT</button>
-                    <br>
-                    <button type="button" class="btn btn-secondary">PINSAO HEALTH DISTRICT</button>
-                </div>
+                <table class="table table-hover">
+                    <tbody>
+                    <tr>
+                        <th scope="row" class="barangay"> ATAB HEALTH DISTRICT </th>
+                    </tr>
+                    <tr>
+                        <th scope="row"> AURORA HILL HEALTH DISTRICT </th>
+                    </tr>
+                    <tr>
+                        <th scope="row"> IRISAN HEALTH DISTRICT </th>
+                    </tr>
+                    </tbody>
+                </table>
 
                 <button id="sendStubs" type="button" class="btn btn-success"><i
                         class="fas fa-paper-plane"></i> Send Stubs
@@ -212,6 +217,7 @@
 
     // exit modals
     var exitModal = document.getElementById("closeModal");
+    var doneModal = document.getElementById("submit")
 
     firstBarangay.onclick = function () {
         barangayModal.style.display = "block";
@@ -222,6 +228,9 @@
         barangayModal.style.display = "none";
     }
 
+    doneModal.onclick = function () {
+        barangayModal.style.display = "none";
+    }
 
 </script>
 </body>
