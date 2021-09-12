@@ -271,20 +271,49 @@ select{
 
 #selectDeployment{
     padding-top: 2%;
-    width: 40%;
+    width: 100%;
     border-radius: 12px;
     display: inline-block;
     margin-left: 7%;
     height: 20%;
 }
 
-#totalPopulation, #vaccineDeployments, #totalPopulationPerHD,#deploymentSummary, #healthDistrictContainer, #deploymentQueue{
+#healthDistrictContainer{
     padding-top: 2%;
     background-color: white;
-    width: 40%;
+    width: 100%;
     border-radius: 12px;
     display: inline-block;
     margin-left: 7%;
+}
+
+#deploymentSummary, #deploymentQueue{
+    padding-top: 2%;
+    background-color: white;
+    width: 100%;
+    border-radius: 12px;
+    display: inline-block;
+    margin-left: 7%;
+    margin-right: 7%;
+}
+
+#vaccineDeployments{
+    padding-top: 2%;
+    background-color: white;
+    width: 95%;
+    border-radius: 12px;
+    display: inline-block;
+    margin-right: 7%;
+}
+
+#totalPopulation,#totalPopulationPerHD{
+    padding-top: 2%;
+    background-color: white;
+    width: 100%;
+    border-radius: 12px;
+    display: inline-block;
+    margin-left: 7%;
+    margin-right: 7%;
 }
 
 #vaccineDeploymentContent{
@@ -292,7 +321,7 @@ select{
 }
 
 .healthDistrict{
-    padding-top: 3%;
+    padding-top: 5%;
     margin-left: 5%;
 }
 
@@ -300,5 +329,7 @@ select{
     background-color: white;
     border-radius: 12px;
 }
+
+
 
 
