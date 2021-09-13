@@ -118,32 +118,7 @@
                     </div>
                 </nav>
             </div>
-            <!--Page Content-->
-            <div
-                class="modal fade"
-                id="exampleModalLong"
-                tabindex="-1"
-                role="dialog"
-                aria-labelledby="exampleModalLongTitle"
-                aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLongTitle">Generate Report</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            ...
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary">Save Changes</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+
 
             <!--Search Input and Button-->
             <div class="search-container">
@@ -167,31 +142,7 @@
                 </thead>
 
             <?php
-                require_once '../require/getPatientDetails.php';
-               
-                foreach ($patient_details as $pd) {
-                    $id = $pd->getPatientDeetPatId();
-                    
-                    $fullAddress = $pd->getHouseAdd() . ", " . $pd->getBrgy() . ", " . $pd->getCity() . ", " . $pd->getProvince();
-                    $contact = $pd->getContact();
-                   
-                    if ($pd->getPatientMName() == null && $pd->getPatientSuffix() == null) {
-                        $name = $pd->getPatientLName() . ", " . $pd->getPatientFName();
-                    } else if ($pd->getPatientSuffix() == null) {
-                        $name = $pd->getPatientLName() . ", " . $pd->getPatientFName() . " " . $pd->getPatientMName();
-                    } else if ($pd->getPatientMName() == null) {
-                        $name = $pd->getPatientLName() . ", " . $pd->getPatientFName() . " " . $pd->getPatientSuffix();
-                    } else {
-                        $name = $pd->getPatientLName() . ", " . $pd->getPatientFName() . " " . $pd->getPatientMName() . " " . $pd->getPatientSuffix();
-                    }
-
-                echo "<tr>
-                <td>$id</td>
-                <td>$name</td>
-                <td>$fullAddress</td>
-                <td>$contact</td>
-                </tr>";
-                }
+               require_once "PHP Processes/showPatientDeets.php";
                 ?>
             </table>
         </div>
@@ -208,9 +159,3 @@
     width: 100%!important;
 }
 </style>
-
-<script>
-function signout() {
-    windows.href.location = ""
-}
-</script>

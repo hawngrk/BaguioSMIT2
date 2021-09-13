@@ -1,11 +1,8 @@
 <?php
-//include("../Admin/login.html");
 include("../includes/configure.php");
-//$username = $_POST["username"];
-//$password = $_POST["password"];
-$username = 'CMBing';
-$password = 'WriteFromYourFullSizedAorticPump';
 
+$username = $_POST["username"];
+$password = $_POST["password"];
 
 $accountData = "SELECT * FROM employee_account WHERE employee_username = ?";
 
@@ -31,7 +28,7 @@ try {
 
         
         $_SESSION['account'] = $accountInformation;
-        echo $accountInformation['barangay'];
+        echo $accountInformation['role'];
     } else {
         throw new Exception(header('HTTP/1.0 400 Invalid username or password'));
     }
