@@ -8,10 +8,10 @@
     $stmt = $database->stmt_init();
     $stmt->prepare($query);
     $stmt->execute();
-    $stmt->bind_result($patientId, $patientFullName, $patientFirstDosage, $patientSecondDosage, $patientVaccinationStatus);
+    $stmt->bind_result($patientId, $patientFullName, $firstDoseDate, $secondDoseDate, $patientFirstDosage, $patientSecondDosage, $queueNumber, $notification, $firstDoseVaccinator, $secondDoseVaccinator);
 
     while ($stmt->fetch()){
-        $patient = new patientInfo($patientId, $patientFullName, $patientFirstDosage, $patientSecondDosage, $patientVaccinationStatus);
+        $patient = new patientInfo($patientId, $patientFullName, $firstDoseDate, $secondDoseDate, $patientFirstDosage, $patientSecondDosage, $queueNumber, $notification, $firstDoseVaccinator, $secondDoseVaccinator);
         $patients[] = $patient;
 
     }

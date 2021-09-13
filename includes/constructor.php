@@ -140,17 +140,27 @@ class employeeInfo{
 class patientInfo{
     private $patientId;
     private $patientFullName;
+    private $firstDosageDate;
+    private $secondDosageDate;
     private $firstDosage;
     private $secondDosage;
-    private $vaccinationStatus;
+    private $queueNumber;
+    private $notification;
+    private $firstDoseVaccinator;
+    private $secondDoseVaccinator;
 
-    public function __construct($patId, $patFullName, $first, $second, $status)
+    public function __construct($patId, $patFullName, $firstDate, $secondDate, $firstDosage, $secondDosage, $queue, $notif, $firstVaccinator, $secondVaccinator)
     {
         $this->patientId = $patId;
         $this->patientFullName = $patFullName;
-        $this->firstDosage = $first;
-        $this->secondDosage = $second;
-        $this->vaccinationStatus = $status;
+        $this->firstDosageDate = $firstDate;
+        $this->secondDosageDate = $secondDate;
+        $this->firstDosage = $firstDosage;
+        $this->secondDosage = $secondDosage;
+        $this->queueNumber = $queue;
+        $this->notification = $notif;
+        $this->firstDoseVaccinator = $firstVaccinator;
+        $this->secondDoseVaccinator = $secondVaccinator;
     }
 
 
@@ -159,23 +169,39 @@ class patientInfo{
     return $this->patientFullName;
     }
 
-    public function getFirstDosage()
-    {
+    public function getFirstDosageDate() {
+        return $this->firstDosageDate;
+    }
+
+    public function getSecondDosageDate() {
+        return $this->secondDosageDate;
+    }
+
+    public function getFirstDosage() {
         return $this->firstDosage;
     }
 
-    public function getSecondDosage()
-    {
+    public function getSecondDosage() {
         return $this->secondDosage;
     }
 
-    public function getVaccinationStatus()
-    {
-        return $this->vaccinationStatus;
+    public function getQueueNumber() {
+        return $this->queueNumber;
     }
 
-    public function getPatientId()
-    {
+    public function getNotification() {
+        return $this->notification;
+    }
+
+    public function getFirstDoseVaccinator() {
+        return $this->firstDoseVaccinator;
+    }
+
+    public function getSecondDoseVaccinator() {
+        return $this->secondDoseVaccinator;
+    }
+
+    public function getPatientId() {
         return $this->patientId;
     }
 }
