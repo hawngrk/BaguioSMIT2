@@ -446,14 +446,16 @@ class vaccineLot
     private $vaccEmpAccId;
     private $vaccBatchQty;
     private $dateVaccStored;
+    private $source;
 
-    public function __construct($vaccineLotId, $vaccineLotVaccineId, $vaccineEmployeeAccId, $vaccineBatchQty, $dateVaccineStored)
+    public function __construct($vaccineLotId, $vaccineLotVaccineId, $vaccineEmployeeAccId, $vaccineBatchQty, $dateVaccineStored, $source)
     {
         $this->vaccLotId = $vaccineLotId;
         $this->vaccLotVaccId = $vaccineLotVaccineId;
         $this->vaccEmpAccId = $vaccineEmployeeAccId;
         $this->vaccBatchQty = $vaccineBatchQty;
         $this->dateVaccStored = $dateVaccineStored;
+        $this->source = $source;
     }
 
 
@@ -480,6 +482,11 @@ class vaccineLot
     public function getDateVaccStored()
     {
         return $this->dateVaccStored;
+    }
+
+    public function getSource()
+    {
+        return $this->source;
     }
 }
 ?>
@@ -542,16 +549,18 @@ class vaccineBatch
 class vaccinationDrive
 {
     private $driveId;
-    private $healthDistId;
-    private $vaccLocation;
+    private $vaccDriveVaccSiteId;
     private $vaccDate;
+    private $vaccStubs;
+    private $priorityGroup;
 
-    public function __construct($driveId, $healthDistrictId, $vaccinationLocation, $vaccinationDate)
+    public function __construct($driveId, $siteId, $vaccinationDate, $vaccinationStubs, $group)
     {
         $this->driveId = $driveId;
-        $this->healthDistId = $healthDistrictId;
-        $this->vaccLocation = $vaccinationLocation;
-        $this->vaccDate = $vaccinationDate;
+        $this->vaccDriveVaccSiteId = $siteId;
+        $this->vaccDate= $vaccinationDate;
+        $this->vaccStubs = $vaccinationStubs;
+        $this->priorityGroup = $group;
 
     }
 
@@ -560,19 +569,24 @@ class vaccinationDrive
         return $this->driveId;
     }
 
-    public function getHealthDistId()
+    public function getVaccDriveVaccSiteId()
     {
-        return $this->healthDistId;
-    }
-
-    public function getVaccLocation()
-    {
-        return $this->vaccLocation;
+        return $this->vaccDriveVaccSiteId;
     }
 
     public function getVaccDate()
     {
         return $this->vaccDate;
+    }
+
+    public function getVaccStubs()
+    {
+        return $this->vaccStubs;
+    }
+
+    public function getPriorityGroup()
+    {
+        return $this->priorityGroup;
     }
 }
 
@@ -611,13 +625,14 @@ class healthDistrict
 {
     private $healthDistrictId;
     private $healthDistrictName;
+    private $contact;
 
 
-    public function __construct($healthDistId, $healthDistName)
+    public function __construct($healthDistId, $healthDistName, $number)
     {
         $this->healthDistrictId = $healthDistId;
         $this->healthDistrictName = $healthDistName;
-
+        $this->contact = $number;
 
     }
 
@@ -631,6 +646,10 @@ class healthDistrict
         return $this->healthDistrictName;
     }
 
+    public function getContact()
+    {
+        return $this->contact;
+    }
 }
 
 ?>
@@ -701,10 +720,58 @@ class barangay
         return $this->barangayName;
     }
 }
+?>
+
+<?php
+class vaccineSite
+{
+    private $vaccinationSiteId;
+    private $vaccinationSiteLocation;
+
+    public function __construct($vaccSiteId, $vaccSiteLocation)
+    {
+        $this->vaccinationSiteId = $vaccSiteId;
+        $this->vaccinationSiteLocation = $vaccSiteLocation;
+    }
+
+    public function getVaccinationSiteId()
+    {
+        return $this->vaccinationSiteId;
+    }
+
+    public function getVaccinationSiteLocation()
+    {
+        return $this->vaccinationSiteLocation;
+    }
+}
+?>
 
 
+<?php
 
+class healthDistrictDrive
+{
+    private $driveId;
+    private $districtId;
 
+    public function __construct($bDriveId, $bDistrictId)
+    {
+        $this->driveId = $bDriveId;
+        $this->districtId = $bDistrictId;
+
+    }
+
+    public function getDriveId()
+    {
+        return $this->driveId;
+    }
+
+    public function getDistrictId()
+    {
+        return $this->districtId;
+    }
+}
+?>
 
 
 

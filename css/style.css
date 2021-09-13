@@ -207,14 +207,29 @@ a.article:hover {
     float: right;
     background: ghostwhite;
     border: 2px solid black;
-    width: auto;
+    width: 12%;
     height: 40px;
     color: black!important;
     margin-right: 10px;
+    font-size: 80%;
 }
 
 .buttonTop {
     border-radius: 12px;
+}
+
+.siteAddButton{
+    display: block;
+    float: right;
+    background: ghostwhite;
+    border: 2px solid black;
+    border-radius: 12px;
+    width: 30%;
+    height: 40px;
+    color: black!important;
+    margin-right: 10px;
+    font-size: 80%;
+    margin-bottom: 2%;
 }
 
 .buttonTop:hover {
@@ -232,12 +247,37 @@ a.article:hover {
     font-size: 17px;
     border: none;
     cursor: pointer;
-    width: 5%;
+    width: 3%;
     height: auto;
 }
 
 .search-container button:hover {
     background: rgb(165, 165, 165);
+}
+
+.buttonTransparent{
+    background: transparent!important;
+    border: transparent!important;
+
+}
+
+.hyperlink{
+    text-decoration: underline;
+    color: dodgerblue;
+    font-size: 12px;
+}
+
+.searchSite{
+    float: left;
+    width: 65%!important;
+}
+
+.siteSearchIcon{
+    width: 5% !important;
+}
+
+.editButton{
+    float: right;
 }
 
 input[type=text]{
@@ -656,10 +696,12 @@ input[type=text]:disabled{
     border-radius: 12px;
 }
 .addPatient{
-    width: 100%;
     height: 50%;
     border: solid black 1px;
-    border-radius: 5px;
+    margin-left: 3%;
+    width: 92%;
+    border-radius: 8px;
+    padding: 2%;
 }
 
 .position{
@@ -687,10 +729,9 @@ input[type=text]:disabled{
     border-radius: 12px;
 }
 
-.limit{
-    margin-left: 3%;
-    width: 73%;
-    border-radius: 12px;
+.stubs{
+    width: 98%;
+    border-radius: 8px;
 }
 
 .datePos{
@@ -725,9 +766,6 @@ input[type=text]:disabled{
     margin: 2%;
 }
 
-.label{
-    margin-left: 2%;
-}
 
 .intendedVax {
     text-align: center;
