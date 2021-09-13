@@ -1,3 +1,7 @@
+<?php
+include_once("../includes/database.php") 
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -50,18 +54,27 @@
                 <h5 id="headingNav2">September 17, 2021 | 01:24 PM</h5>
                 <hr>
                 <li class="active">
-                    <a href="#"><i class="fas fa-home"></i> Home</a>
+                    <a href="../Barangay Module/homeBarangayModule.php">
+                        <i class="fas fa-home"></i>
+                        Home</a>
                 </li>
                 <li>
-                    <a href="../Barangay Module/managePatientBarangayModule.html"><i class="fas fa-user"></i></i> Manage Patient</a>
-                </li>
+                    <a href="../Barangay Module/managePatientBarangayModule.php">
+                        <i class="fas fa-user"></i>
+                    </i>
+                    Manage Patient</a>
+            </li>
 
-                <li>
-                    <a href="#"><i class="fas fa-clipboard-list"></i> Patient Queue</a>
-                </li>
-                <li>
-                    <a href="#"><i class="fas fa-envelope-open"></i> Notification Summary</a>
-                </li>
+            <li>
+                <a href="../Barangay Module/patientQueueBarangayModule.php">
+                    <i class="fas fa-clipboard-list"></i>
+                    Patient Queue</a>
+            </li>
+            <li>
+                <a href="../Barangay Module/notificationSummaryBarangayModule.php">
+                    <i class="fas fa-envelope-open"></i>
+                    Notification Summary</a>
+            </li>
             </ul>
     
             <ul class="list-unstyled CTAs">
@@ -103,18 +116,63 @@
                 <hr>
                 <div class="priorityGroup">
                     <h5>A1</h5>
+                    <?php
+                    $query = "SELECT COUNT(patient_priority_group) FROM patient_details WHERE patient_priority_group = 'A1: Health Care Workers'";
+                    $stmt = $database->stmt_init();
+                    $stmt->prepare($query);
+                    $stmt->execute();
+                    $stmt->bind_result($A1);
+                    $stmt->fetch();
+                    echo "<p class='priorityGroups'>$A1</p>"
+                    ?>
                 </div>
                 <div class="priorityGroup">
                     <h5>A2</h5>
+                    <?php
+                    $query = "SELECT COUNT(patient_priority_group) FROM patient_details WHERE patient_priority_group = 'A2: Senior Citizens'";
+                    $stmt = $database->stmt_init();
+                    $stmt->prepare($query);
+                    $stmt->execute();
+                    $stmt->bind_result($A2);
+                    $stmt->fetch();
+                    echo "<p class='priorityGroups'>$A2</p>"
+                    ?>
                 </div>
                 <div class="priorityGroup">
                     <h5>A3</h5>
+                    <?php
+                    $query = "SELECT COUNT(patient_priority_group) FROM patient_details WHERE patient_priority_group = 'A3: Adult With Comorbidity'";
+                    $stmt = $database->stmt_init();
+                    $stmt->prepare($query);
+                    $stmt->execute();
+                    $stmt->bind_result($A3);
+                    $stmt->fetch();
+                    echo "<p class='priorityGroups'>$A3</p>"
+                    ?>
                 </div>
                 <div class="priorityGroup">
                     <h5>A4</h5>
+                    <?php
+                    $query = "SELECT COUNT(patient_priority_group) FROM patient_details WHERE patient_priority_group = 'A4: Frontline Personnel in Essential Sector'";
+                    $stmt = $database->stmt_init();
+                    $stmt->prepare($query);
+                    $stmt->execute();
+                    $stmt->bind_result($A4);
+                    $stmt->fetch();
+                    echo "<p class='priorityGroups'>$A4</p>"
+                    ?>
                 </div>
                 <div class="priorityGroup">
                    <h5>A5</h5>
+                   <?php
+                    $query = "SELECT COUNT(patient_priority_group) FROM patient_details WHERE patient_priority_group = 'A5: Indigent Population'";
+                    $stmt = $database->stmt_init();
+                    $stmt->prepare($query);
+                    $stmt->execute();
+                    $stmt->bind_result($A5);
+                    $stmt->fetch();
+                    echo "<p class='priorityGroups'>$A5</p>"
+                    ?>
                 </div>
                 <div class="priorityGroup">
                     <h5>A6</h5>
@@ -126,11 +184,27 @@
                 <div class="counterCl">
                 <div class="col colCount">
                     <h5>CLAIMED</h5>
-                    <p>100</p>
+                    <?php
+                    $query = "SELECT COUNT(notification) FROM patient WHERE notification = 1";
+                    $stmt = $database->stmt_init();
+                    $stmt->prepare($query);
+                    $stmt->execute();
+                    $stmt->bind_result($claimed);
+                    $stmt->fetch();
+                    echo "<h5>$claimed</h5>"
+                    ?>
                 </div>
                 <div class="col colCount">
                     <h5>UNCLAIMED</h5>
-                    <p>100</p>
+                    <?php
+                    $query = "SELECT COUNT(notification) FROM patient WHERE notification = 0";
+                    $stmt = $database->stmt_init();
+                    $stmt->prepare($query);
+                    $stmt->execute();
+                    $stmt->bind_result($unclaimed);
+                    $stmt->fetch();
+                    echo "<h5>$unclaimed</h5>"
+                    ?>
                 </div>
                 </div>
                 <div class="counterCl secondCounterCl">
@@ -153,6 +227,7 @@
     .priorityGroup {
         margin-left: 10%;
     }
+
     .topNav {
        display: block;
     }
@@ -212,5 +287,7 @@
     margin-top: 2%;
     margin-bottom:2%;
     }
+
+
 
 </style>

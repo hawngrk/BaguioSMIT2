@@ -502,8 +502,7 @@ include_once("../includes/database.php") ?>
                 <td>$name</td>
                 <td>$compAdd</td>
                 <td>$contact</td>
-                
-</tr>";
+                </tr>";
             }
             ?>
         </table>
