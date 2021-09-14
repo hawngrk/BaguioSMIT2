@@ -99,7 +99,7 @@ Description: Login HTML Elements for receiving credentials from the users
                             setTimeout("window.location.href = '../Vaccinator Module/ScanQR.php'", 500);
                         } 
                         if ($.trim(results)  == 'Monitoring') {
-                            setTimeout("window.location.href = '../Vaccinator Module/ScanQR.php'", 500);
+                            setTimeout("window.location.href = '../Monitoring Module/ManageUserHomeScreening.php'", 500);
                         } 
                         // if ($.trim(results)  == 'SSD') {
                         //     setTimeout("window.location.href = '../Vaccinator Module/ScanQR.php'", 500);
