@@ -1,7 +1,5 @@
 <?php 
     session_start();
-    $account = $_SESSION["account"];
-    echo $account["name"];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -24,6 +22,7 @@ Description: Login HTML Elements for receiving credentials from the users
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" rel="stylesheet">
     <!--JS-->
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
   
@@ -75,49 +74,94 @@ Description: Login HTML Elements for receiving credentials from the users
     <footer>
     
         <script>
-            
-            $('#login').click(function(e) {
-                console.log("Data sent");
+            $('#login').click(async function(e) {
                 login();
 
             }); 
 
+            $('#logout').click(async function(e){
+                logout();
+            });
            async function login() {
-                var userN = document.getElementById("userN").value;
-                var passW = document.getElementById("passW").value;
+                var userN = document.getElementById("username").value;
+                var passW = document.getElementById("password").value;
                 console.log("Data sent");
                 $.ajax({    
                     method: 'POST',              
                     url: '../AdminBackEnd/EmployeeLoginAuthentication.php',
                     data: {username: userN, password: passW},
                     success: function (results) {
-                        console.log(results);
                         if ($.trim(results) == 'Barangay') {
+                            message().success();
                             setTimeout("window.location.href = '../Barangay Module/homeBarangayModule.php'", 500);
                         } 
                         if ($.trim(results)  == 'Vaccinator') {
-                            setTimeout("window.location.href = '../Vaccinator Module/ScanQR.php'", 500);
+                            message().success();
+                            setTimeout("windo`w.location.href = '../Vaccinator Module/ScanQR.php'", 500);
                         } 
                         if ($.trim(results)  == 'Monitoring') {
+                            message().success();
                             setTimeout("window.location.href = '../Vaccinator Module/ScanQR.php'", 500);
                         } 
                         // if ($.trim(results)  == 'SSD') {
+                        //    successMessage();
                         //     setTimeout("window.location.href = '../Vaccinator Module/ScanQR.php'", 500);
                         // } 
                         // if ($.trim(results)  == 'HSO') {
+                        //    successMessage();
                         //     setTimeout("window.location.href = '../Vaccinator Module/ScanQR.php'", 500);
                         // }
                         // if ($.trim(results)  == 'EIR') {
+                        //    successMessage();
                         //     setTimeout("window.location.href = '../Vaccinator Module/ScanQR.php'", 500);
                         // }
                         else {
-                            console.log(results);
+                            message().error();
+      
                         }
                     },
                     error: function(results) {
-                        console.log('There was an error');ß
+                        console.log('There was an error');
                     }
                 })
+                            }
+            async function logout() {
+                var logoutPhp = "windows.location.href = '../includes/logout.php'";
+                message().confirmation(logoutPhp);
+            }
+
+            async function message() {
+                function error() {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Successfully Logged in',
+                        showConfirmButton: false,
+                        timer: 1500
+                    });    
+                }
+                function success() {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Invalid username or password',
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                }
+                function confirmation(link) {
+                    Swal.fire({
+                        title: 'Are you sure?',
+                        text: "You won't be able to revert this!",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Yes'
+                        }).then((result) => {
+                        if (result.isConfirmed) {
+                            setTimeout(link);
+                        }
+                    })
+                }
             }
         </script>
         <div>

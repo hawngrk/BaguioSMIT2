@@ -7,7 +7,6 @@
 
 //initial session handling subject to change - Natividad Hudson Kit P.
 session_start();
-if(!empty($_SESSION['Email'])) {
-} else {
-    header("Location:../Admin/Login.html");
+if(!isset($_SESSION['account'])) {
+    header("Location: ../admin/login.php");
 }
