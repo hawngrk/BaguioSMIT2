@@ -1,7 +1,3 @@
-
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -54,10 +50,10 @@
             <hr>
 
             <li>
-                <a href="homeSsdModule.html"><i class="fas fa-home"></i> Home</a>
+                <a href="homeSsdModule.php"><i class="fas fa-home"></i> Home</a>
             </li>
             <li class="active">
-                <a href="distributeStubSsdModule.html"><i class="fas fa-ticket-alt"></i> Stub Distribute</a>
+                <a href="distributeStubSsdModule.php"><i class="fas fa-ticket-alt"></i> Stub Distribute</a>
             </li>
         </ul>
         <ul class="list-unstyled CTAs">
@@ -91,56 +87,36 @@
             <div class="col">
                 <div class="row">
                     <div id="selectDeployment">
-                        <select>
-                            <option value="" disabled selected hidden>Select Deployment</option>
-                            <option value="">Select...</option>
-                            <option value="deployment1">Deployment1</option>
-                            <option value="deployment2">Deployment2</option>
-                            <option value="deployment3">Deployment3</option>
-                            <option value="deployment4">Deployment4</option>
+                        <select onchange="updateDeploymentDetails(this.value)">
+                            <option value='' disabled selected hidden> Select Deployment </option>
+                        <?php
+                        require_once("../require/getVaccinationDrive.php");
+                        foreach ($vaccination_drive  as $vaccinationDrive) {
+                            $id = $vaccinationDrive->getDriveId();
+
+                            echo "<option value=$id> $id </option>";
+                        }
+                        ?>
                         </select>
                     </div>
                 </div>
                 <div class="row healthDistrict">
                     <div id="healthDistrictContainer">
                         <h2 class="labels"> Health Center Districts: </h2>
-                        <table class="table table-hover">
-                            <tbody>
-                            <tr>
-                                <th scope="row" class="barangay"> ATAB HEALTH DISTRICT</th>
-                                <th scope="row">
-                                    <button id="firstBarangay" class="btn btn-info"> ALLOCATE</button>
-                                </th>
-                            </tr>
-                            <tr>
-                                <th scope="row"> AURORA HILL HEALTH DISTRICT</th>
-                                <th scope="row">
-                                    <button id="secondBarangay" class="btn btn-info"> ALLOCATE</button>
-                                </th>
-                            </tr>
-                            <tr>
-                                <th scope="row"> IRISAN HEALTH DISTRICT</th>
-                                <th scope="row">
-                                    <button id="thirdBarangay" class="btn btn-info"> ALLOCATE</button>
-                                </th>
-                            </tr>
-                            </tbody>
-                        </table>
+                        <table class="table table-hover" id="healthDistrictTable"> </table>
 
-                        <button id="sendStubs" type="button" class="btn btn-success"><i
-                                    class="fas fa-paper-plane"></i> Send Stubs
-                        </button>
                     </div>
                 </div>
             </div>
             <div class="col">
                 <div class="row">
                     <div id="deploymentSummary">
-                        <div class="labels">
+                        <div class="labels" id="labelling">
                             <h2>Deployment Summary</h2>
                             <p> Schedule: </p>
                             <p> Site: </p>
                             <p> Brand: </p>
+
                         </div>
                     </div>
                 </div>
@@ -156,107 +132,55 @@
             </div>
 
             <div id="barangayModal" class="modal-window">
-                <div class="content-modal">
-                    <div class="modal-header">
-                        <!--Name of the Health center associated with the barangay under-->
-                        <h3> ATAB HEALTH DISTRICT CENTER - Deployment 1 </h3>
-                        <span id="closeModal" class="close">&times;</span>
-                    </div>
-
-                    <div class="modal-body">
-                        <div class="stubNumbersContainer">
-                            <div class="row">
-                                <div class="col">
-                                    <center><h6> BARANGAY LIST </h6></center>
-                                </div>
-                                <div class="col">
-                                    <center><h6> Enter the number of stubs per Category</h6></center>
-                                </div>
-                            </div>
-                            <table class="table table-borderless">
-                                <thead>
-                                <tr>
-                                    <th scope="col">Covered Barangays</th>
-                                    <th scope="col">A1</th>
-                                    <th scope="col">A2</th>
-                                    <th scope="col">A3</th>
-                                    <th scope="col">A4</th>
-                                    <th scope="col">A5</th>
-                                    <th scope="col">A6</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr>
-                                    <th scope="row"> Bakakeng Norte</th>
-                                    <td><input type="number" min="0" max="100"></td>
-                                    <td><input type="number" min="0" max="100"></td>
-                                    <td><input type="number" min="0" max="100"></td>
-                                    <td><input type="number" min="0" max="100"></td>
-                                    <td><input type="number" min="0" max="100"></td>
-                                    <td><input type="number" min="0" max="100"></td>
-                                </tr>
-                                <tr>
-                                    <th scope="row"> Bakakeng Central</th>
-                                    <td><input type="number" min="0" max="100"></td>
-                                    <td><input type="number" min="0" max="100"></td>
-                                    <td><input type="number" min="0" max="100"></td>
-                                    <td><input type="number" min="0" max="100"></td>
-                                    <td><input type="number" min="0" max="100"></td>
-                                    <td><input type="number" min="0" max="100"></td>
-                                </tr>
-                                <tr>
-                                    <th scope="row"> Bakakeng Sur</th>
-                                    <td><input type="number" min="0" max="100"></td>
-                                    <td><input type="number" min="0" max="100"></td>
-                                    <td><input type="number" min="0" max="100"></td>
-                                    <td><input type="number" min="0" max="100"></td>
-                                    <td><input type="number" min="0" max="100"></td>
-                                    <td><input type="number" min="0" max="100"></td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" id="submit" class="btn btn-primary"> Done</button>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
     <script>
-        // barangay buttons
-        var firstBarangay = document.getElementById("firstBarangay");
 
-        //modals
-        var barangayModal = document.getElementById("barangayModal");
+        function updateDeploymentDetails(val){
+            $.ajax({
+                url: 'selectDeployment.php',
+                type: 'POST',
+                data: {"deploymentId": val},
+                success: function (result) {
+                    document.getElementById("labelling").innerHTML = result;
+                }
+            });
 
-        // exit modals
-        var exitModal = document.getElementById("closeModal");
-        var doneModal = document.getElementById("submit")
-
-        firstBarangay.onclick = function () {
-            barangayModal.style.display = "block";
+            $.ajax({
+                url: 'selectDeployment.php',
+                type: 'POST',
+                data: {"healthDistrict": val},
+                success: function (result) {
+                    document.getElementById("healthDistrictTable").innerHTML = result;
+                }
+            });
         }
 
-        // exit or close
-        exitModal.onclick = function () {
-            barangayModal.style.display = "none";
-        }
-
-        doneModal.onclick = function () {
-            barangayModal.style.display = "none";
+        function viewBarangays(id,name){
+            console.log(id);
+            console.log(name);
+            $.ajax({
+                url: 'selectDeployment.php',
+                type: 'POST',
+                data: {"viewBarangays": id, "healthDistrict": name},
+                success: function (result) {
+                    console.log(result);
+                    document.getElementById("barangayModal").innerHTML = result;
+                    document.getElementById("barangayModal").style.display ="block";
+                }
+            });
         }
 
     </script>
 
     <script type="text/javascript">
-    $(document).ready(function() {
-        $('#sidebarCollapse').on('click', function() {
-            $('#sidebar').toggleClass('active');
+        $(document).ready(function () {
+            $('#sidebarCollapse').on('click', function () {
+                $('#sidebar').toggleClass('active');
+            });
         });
-    });
-</script>
+    </script>
+
 </body>
 </html>
