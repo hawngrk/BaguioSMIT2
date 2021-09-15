@@ -1,3 +1,7 @@
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -124,7 +128,7 @@
                         </table>
 
                         <button id="sendStubs" type="button" class="btn btn-success"><i
-                                class="fas fa-paper-plane"></i> Send Stubs
+                                    class="fas fa-paper-plane"></i> Send Stubs
                         </button>
                     </div>
                 </div>
@@ -246,5 +250,13 @@
         }
 
     </script>
+
+    <script type="text/javascript">
+    $(document).ready(function() {
+        $('#sidebarCollapse').on('click', function() {
+            $('#sidebar').toggleClass('active');
+        });
+    });
+</script>
 </body>
 </html>
