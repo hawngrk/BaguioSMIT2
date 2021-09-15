@@ -124,20 +124,18 @@ include_once("../includes/database.php")
 
             <!--Search Input and Button-->
             <div class="search-container">
-                <form action="/action_page.php">
-                    <input type="text" placeholder="Search" name="search">
-                    <button type="submit">
+                    <input id="searchPatient" type="text" placeholder="Search" class="searchHome"name="searchPatient" onkeyup="searchPatient()">
+                    <button type="submit" id="searchPatientBtn" name="searchPatientBtn" onclick="searchPatient()">
                         <i class="fa fa-search"></i>
                     </button>
-                </form>
             </div>
 
+
             <!--Page Content-->
-            <table class="table table-row table-hover tableBrgy">
+            <table class="table table-row table-hover tableBrgy" id="patientTable">
                 <thead>
                     <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Name</th>
+                        <th scope="col">Patient Name</th>
                         <th scope="col">Category</th>
                         <th scope="col">Complete Address</th>
                         <th scope="col">Contact Number</th>
@@ -151,6 +149,19 @@ include_once("../includes/database.php")
     </div>
 </body>
 </html>
+<script>
+    function searchPatient() {
+        var textSearch = document.getElementById("searchPatient").value; 
+        $.ajax({
+            url: 'ManagePatientProcessor.php',
+            type: 'POST',
+            data: {"search": textSearch},
+            success: function (result) {
+                document.getElementById("patientTable").innerHTML = result;
+            }
+        });
+    }
+</script>
 <style>
 .topNav {
     display: block;

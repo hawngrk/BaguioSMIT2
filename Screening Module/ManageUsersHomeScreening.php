@@ -16,6 +16,9 @@
     <script crossorigin="anonymous" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script crossorigin="anonymous" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" rel="stylesheet">
+     <!--jQuery-->
+     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    
     <!-- Font Awesome JS -->
     <script src="https://kit.fontawesome.com/fcdb0fe9f3.js" crossorigin="anonymous"></script>
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
@@ -38,10 +41,10 @@
                     <h5 id="headingNav2">September 17, 2021 | 01:24 PM</h5>
                     <hr>
                 <li>
-                    <a href="#"><i class="fas fa-syringe"></i> Scan QR</a>
+                    <a href="../Screening Module/ScanQRScreening.php"><i class="fas fa-qrcode"></i></i> Scan QR</a>
                 </li>
-                <li>
-                    <a href="#"><i class="fas fa-syringe"></i>Manage Users</a>
+                <li class="active">
+                    <a href="../Screening Module/ManageUsersHomeScreening.php"><i class="fas fa-users"></i>Manage Users</a>
                 </li>
             </ul>
 
@@ -67,12 +70,10 @@
 
              <!--Search Input and Button-->
              <div class="search-container">
-                <form action="/action_page.php">
-                    <input type="text" placeholder="Search" name="search">
-                    <button type="submit">
+                    <input id="searchPatient" type="text" placeholder="Search" class="searchHome"name="searchPatient" onkeyup="searchPatient()">
+                    <button type="submit" id="searchPatientBtn" name="searchPatientBtn" onclick="searchPatient()">
                         <i class="fa fa-search"></i>
                     </button>
-                </form>
             </div>
 
             <!--Table Part-->
@@ -93,8 +94,6 @@
         </div>
     </div>
 
-    <!-- jQuery CDN - Slim version (=without AJAX) -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <!-- Popper.JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
     <!-- Bootstrap JS -->
@@ -112,4 +111,15 @@
 </html>
 
 <script>
+    function searchPatient() {
+        var textSearch = document.getElementById("searchPatient").value; 
+        $.ajax({
+            url: 'screeningSearchProcessor.php',
+            type: 'POST',
+            data: {"search": textSearch},
+            success: function (result) {
+                document.getElementById("patientTable").innerHTML = result;
+            }
+        });
+    }
 </script>

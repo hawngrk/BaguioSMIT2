@@ -41,7 +41,7 @@
                     <a href="../EIR Module/EIRHomeScreeningg.php"><i class="fas fa-home"></i></i> Home</a>
                 </li>
                 <li>
-                    <a href="../EIR Module/EIRManageUsersScreening.php"><i class="fas fa-syringe"></i> Manage Users</a>
+                    <a href="../EIR Module/EIRManageUsersScreening.php"><i class="fas fa-users"></i> Manage Users</a>
                 </li>
             </ul>
 

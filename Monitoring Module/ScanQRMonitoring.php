@@ -37,14 +37,13 @@
                     <hr>
                     <h5 id="headingNav2">September 17, 2021 | 01:24 PM</h5>
                     <hr>
-                <li>
-                    <a href="#"><i class="fas fa-syringe"></i> Scan QR</a>
+                <li class="active">
+                    <a href="../Monitoring Module/ScanQRMonitoring.php"><i class="fas fa-qrcode"></i> Scan QR</a>
                 </li>
                 <li>
-                    <a href="#"><i class="fas fa-syringe"></i>Manage Users</a>
+                    <a href="../Monitoring Module/ManageUsersHomeScreening.php"><i class="fas fa-users"></i> Manage Users</a>
                 </li>
             </ul>
-
             <ul class="list-unstyled CTAs">
                 <button type="button" class="btn btn-info signOutPersonnel">
                     <span>Sign Out</span>

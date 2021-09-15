@@ -3,7 +3,7 @@
                
                 foreach ($patient_details as $pd) {
                     $id = $pd->getPatientDeetPatId();
-                    
+                    $category = $pd->getPriorityGroup();
                     $fullAddress = $pd->getHouseAdd() . ", " . $pd->getBrgy() . ", " . $pd->getCity() . ", " . $pd->getProvince();
                     $contact = $pd->getContact();
                    
@@ -18,8 +18,8 @@
                     }
 
                 echo "<tr>
-                <td>$id</td>
                 <td>$name</td>
+                <td>$category</td>
                 <td>$fullAddress</td>
                 <td>$contact</td>
                 </tr>";
