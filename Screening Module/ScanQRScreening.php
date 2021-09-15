@@ -64,7 +64,7 @@
                     </button>
                 </div>
             </nav>
-            <h2 id="scannerTxt">Scan Patients QR Code</h2>
+            <h2 id="scannerTxt">Scan Patient QR Code</h2>
             <video id="preview"></video>
             <script type="text/javascript" src="../javascript/instascan.min.js"></script>
             <script type="text/javascript">
@@ -73,7 +73,8 @@
             });
 
             scanner.addListener('scan', function (content) {
-            console.log(content);
+                window.open(content,"_self")
+                console.log(content)
             });
 
             Instascan.Camera.getCameras().then(function (cameras) {

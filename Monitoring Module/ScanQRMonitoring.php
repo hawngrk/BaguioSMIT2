@@ -72,7 +72,8 @@
             });
 
             scanner.addListener('scan', function (content) {
-            console.log(content);
+                window.open(content,"_self")
+                console.log(content)
             });
 
             Instascan.Camera.getCameras().then(function (cameras) {
