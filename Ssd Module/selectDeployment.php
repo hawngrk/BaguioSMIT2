@@ -16,9 +16,11 @@ if (isset($_POST['deploymentId'])) {
     $stmt->close();
 
     echo "<h2>Deployment Summary</h2>
-            <p> Schedule: $schedule</p>
-            <p> Site: $site </p>
-             <p> Brand: $brand </p>";
+            <h5> Site: $site </h5>
+            <br>
+            <h5> Brand: $brand </h5>
+            <br>
+            <h5> Schedule: $schedule</h5>";
 }
 
 if (isset($_POST['healthDistrict'])) {
@@ -34,7 +36,7 @@ if (isset($_POST['healthDistrict'])) {
         echo "<tr>
                     <th scope='row' class='barangay'> $healthDistrict </th>
                      <th scope='row'>
-                      <button class='btn btn-info' onclick='viewBarangays($healthDistrictId, $healthDistrict)'> ALLOCATE </button>
+                      <button class='btn btn-info' onclick='viewBarangays($healthDistrictId)'> ALLOCATE </button>
                       </th>
                       </tr>";
     }
@@ -45,75 +47,66 @@ if (isset($_POST['healthDistrict'])) {
 
 if (isset($_POST['viewBarangays'])) {
     $healthDistrictId = $_POST['viewBarangays'];
-    $healthDistrict = $_POST['healthDistrict'];
-    echo "$healthDistrict";
+    //$healthDistrict = $_POST['healthDistrict'];
 
     $query = "SELECT barangay_name FROM barangay WHERE health_district_id = $healthDistrictId";
 
     echo "
-    <div class='content-modal'>
-                    <div class='modal-header'>
-                        <!--Name of the Health center associated with the barangay under-->
-                        <h3> $healthDistrict </h3>
-                        <span id='closeModal' class='close'>&times;</span>
-                    </div>
-                    
-                    <div class='modal-body'>
-                        <div class='stubNumbersContainer'>
-                            <div class='row'>
-                                <div class='col'>
-                                    <center><h6> BARANGAY LIST </h6></center>
-                                </div>
-                                <div class='col'>
-                                    <center><h6> Enter the number of stubs per Category</h6></center>
-                                </div>
+            <div class='content-modal'>
+                <div class='modal-header'>
+                <h3> $healthDistrict </h3>
+                <span id='closeModal' class='close' data-dismiss='modal'> &times;</span>
+                </div>
+                <div class='modal-body'>
+                    <div class='stubNumbersContainer'>
+                        <div class='row'>
+                            <div class='col'>
+                                <center> <h6> BARANGAY LIST </h6></center>
                             </div>
-                                     
-    ";
-
-    echo "<table class='table table-borderless' id='barangays'>
-<th scope='col'>Covered Barangays</th>
-<thead>
-                                    <th scope='col'>A1</th>
-                                    <th scope='col'>A2</th>
-                                    <th scope='col'>A3</th>
-                                    <th scope='col'>A4</th>
-                                    <th scope='col'>A5</th>
-                                    <th scope='col'>ROP</th>
+                            <div class='col'>
+                                <center> <h6> Enter the number of stubs per Category </h6></center>
+                            </div>
+                        </div>
+                        
+                        <table class='table table-borderless'>
+                            <thead>
+                                <tr>
+                                    <th scope='col'> Covered Barangays </th>
+                                    <th scope='col'> A1 </th> 
+                                    <th scope='col'> A2 </th>
+                                    <th scope='col'> A3 </th>
+                                    <th scope='col'> A4 </th>
+                                    <th scope='col'> A5 </th> 
+                                    <th scope='col'> ROP </th>   
                                 </tr>
-                                </thead>
-                         
-          <tr>
-                                    ";
+                            </thead> ";
+
     echo "<tbody>";
     $stmt = $database->stmt_init();
     $stmt->prepare($query);
     $stmt->execute();
     $stmt->bind_result($barangay);
     while ($stmt->fetch()) {
-        echo "<tr>
-                                    <th scope='row'> $barangay</th>
-                                    <td><input type='number' min='0' max='100'></td>
-                                    <td><input type='number' min='0' max='100'></td>
-                                    <td><input type='number' min='0' max='100'></td>
-                                    <td><input type='number' min='0' max='100'></td>
-                                    <td><input type='number' min='0' max='100'></td>
-                                    <td><input type='number' min='0' max='100'></td>
-                                </tr>";
+        echo "            <tr>
+                                <th scope='row'> $barangay</th>
+                                <td><input type='number' min='0' max='100'></td>
+                                <td><input type='number' min='0' max='100'></td>
+                                <td><input type='number' min='0' max='100'></td>
+                                <td><input type='number' min='0' max='100'></td>
+                                <td><input type='number' min='0' max='100'></td>
+                                <td><input type='number' min='0' max='100'></td>
+                          </tr>";
     }
-    $stmt-> close();
-    echo "</tbody>
-</table>
-</div>
-</div>
-<div class='modal-footer'>
-                        <button type='button' id='submit' class='btn btn-primary'> Done</button>
+    $stmt->close();
+
+    echo "             </tbody>
+                        </table>
                     </div>
                 </div>
-            </div>
-            </div>
-";
-
+                <div class='modal-footer'>
+                <button type='button' id='submit' class='btn btn-primary'> Done </button>
+                </div>
+            </div>";
 }
 
 

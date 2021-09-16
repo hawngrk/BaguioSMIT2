@@ -113,14 +113,15 @@
                     <div id="deploymentSummary">
                         <div class="labels" id="labelling">
                             <h2>Deployment Summary</h2>
-                            <p> Schedule: </p>
-                            <p> Site: </p>
-                            <p> Brand: </p>
-
+                            <h5> Site: </h5>
+                            <br>
+                            <h5> Brand: </h5>
+                            <br>
+                            <h5> Schedule: </h5>
                         </div>
                     </div>
                 </div>
-                <div class="row healthDistrict">
+                <!--<div class="row healthDistrict">
                     <div id="deploymentQueue">
                         <div class="labels">
                             <h2>Deployment Queue</h2>
@@ -128,7 +129,7 @@
                             <p> IRISAN HEALTH DISTRICT CENTER - Deployment 5</p>
                         </div>
                     </div>
-                </div>
+                </div>-->
             </div>
 
             <div id="barangayModal" class="modal-window">
@@ -157,13 +158,11 @@
             });
         }
 
-        function viewBarangays(id,name){
-            console.log(id);
-            console.log(name);
+        function viewBarangays(id){
             $.ajax({
                 url: 'selectDeployment.php',
                 type: 'POST',
-                data: {"viewBarangays": id, "healthDistrict": name},
+                data: {"viewBarangays": id},
                 success: function (result) {
                     console.log(result);
                     document.getElementById("barangayModal").innerHTML = result;
