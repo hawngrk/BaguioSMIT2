@@ -36,13 +36,11 @@ if (isset($_POST['healthDistrict'])) {
         echo "<tr>
                     <th scope='row' class='barangay'> $healthDistrict </th>
                      <th scope='row'>
-                      <button class='btn btn-info' onclick='viewBarangays($healthDistrictId)'> ALLOCATE </button>
+                      <button type='button' id='allocateButton' class='btn btn-info' onclick='viewBarangays($healthDistrictId)'> ALLOCATE </button>
                       </th>
                       </tr>";
     }
     echo "</tbody>";
-    echo "<button id='sendStubs' type='button' class='btn btn-success'><i
-                                    class='fas fa-paper-plane'></i> Send Stubs </button>";
 }
 
 if (isset($_POST['viewBarangays'])) {
@@ -55,7 +53,7 @@ if (isset($_POST['viewBarangays'])) {
             <div class='content-modal'>
                 <div class='modal-header'>
                 <h3> $healthDistrict </h3>
-                <span id='closeModal' class='close' data-dismiss='modal'> &times;</span>
+                <span id='closeModal' class='close' onclick='closeModal()'> &times;</span>
                 </div>
                 <div class='modal-body'>
                     <div class='stubNumbersContainer'>
@@ -104,7 +102,8 @@ if (isset($_POST['viewBarangays'])) {
                     </div>
                 </div>
                 <div class='modal-footer'>
-                <button type='button' id='submit' class='btn btn-primary'> Done </button>
+                <button id='sendStubs' type='button' class='btn btn-success'><i
+                                    class='fas fa-paper-plane'></i> Send Stubs </button>
                 </div>
             </div>";
 }

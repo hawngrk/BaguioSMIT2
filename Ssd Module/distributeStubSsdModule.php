@@ -93,7 +93,6 @@
                         require_once("../require/getVaccinationDrive.php");
                         foreach ($vaccination_drive  as $vaccinationDrive) {
                             $id = $vaccinationDrive->getDriveId();
-
                             echo "<option value=$id> $id </option>";
                         }
                         ?>
@@ -103,8 +102,8 @@
                 <div class="row healthDistrict">
                     <div id="healthDistrictContainer">
                         <h2 class="labels"> Health Center Districts: </h2>
-                        <table class="table table-hover" id="healthDistrictTable"> </table>
-
+                        <table class="table table-hover" id="healthDistrictTable">
+                        </table>
                     </div>
                 </div>
             </div>
@@ -164,9 +163,18 @@
                 type: 'POST',
                 data: {"viewBarangays": id},
                 success: function (result) {
-                    console.log(result);
                     document.getElementById("barangayModal").innerHTML = result;
                     document.getElementById("barangayModal").style.display ="block";
+                }
+            });
+        }
+
+        function closeModal(){
+            $.ajax({
+                url: 'selectDeployment.php',
+                type: 'POST',
+                success: function () {
+                    document.getElementById("barangayModal").style.display ="none";
                 }
             });
         }
