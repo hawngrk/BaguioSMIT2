@@ -131,15 +131,15 @@ Description: Login HTML Elements for receiving credentials from the users
             }
 
             async function message() {
-                function error() {
+                function success() {
                     Swal.fire({
-                        icon: 'success',
+                        icon: 'info',
                         title: 'Successfully Logged in',
                         showConfirmButton: false,
                         timer: 1500
                     });    
                 }
-                function success() {
+                function error() {
                     Swal.fire({
                         icon: 'error',
                         title: 'Invalid username or password',
