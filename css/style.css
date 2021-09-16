@@ -218,6 +218,10 @@ a.article:hover {
     border-radius: 12px;
 }
 
+.archive{
+    width: 0!important;
+}
+
 .siteAddButton{
     display: block;
     float: right;
@@ -289,8 +293,13 @@ input[type=text]{
     height: auto;
 }
 
-#searchDep{
-    width: 30%;
+#searchDrive{
+    width: 29%;
+}
+
+.filter{
+    width: 11%;
+    float: left;
 }
 
 #searchVaccine,#searchPatient,#searchPersonnel,#searchReport{
@@ -334,6 +343,14 @@ input[type=textDesc]{
     border-radius: 5px;
     margin: 1%;
     padding: 2%;
+}
+
+.addbrgy{
+    margin-right: 2%;
+    border: 3px solid lightgray;
+    border-radius: 5px;
+    margin: 1%;
+    padding-bottom: 8%;
 }
 
 /* The Close Button */

@@ -52,16 +52,7 @@ include_once("../includes/database.php") ?>
                 <a href="ManageVaccineHome.php"><i class="fas fa-syringe"></i> Manage Vaccine</a>
             </li>
             <li>
-                <a href="#ManageUsersSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i
-                            class="fas fa-users"></i> Manage Users</a>
-                <ul class="collapse list-unstyled" id="ManageUsersSubmenu">
-                    <li>
-                        <a href="ManagePersonnelHome.php">Personnel</a>
-                    </li>
-                    <li>
-                        <a href="ManagePatientHome.php">Patients</a>
-                    </li>
-                </ul>
+                <a href="ManagePatientHome.php"><i class="fas fa-user-circle"></i> Manage Patients</a>
             </li>
             <li>
                 <a href="ManageDeployment.php"><i class="fas fa-truck"></i> Manage Deployment</a>
@@ -116,7 +107,7 @@ include_once("../includes/database.php") ?>
             </form>
         </div>
 
-        <div>
+        <div class="filter">
             <select class="form-select col-lg-12 vaccineType" id="sortReports" name="sortReports"
                     onchange="sortReport(this)">
                 <option>Name Asc</option>
@@ -126,7 +117,7 @@ include_once("../includes/database.php") ?>
             </select>
         </div>
 
-        <div>
+        <div class="filter">
             <select class="form-select col-lg-12 vaccineType" id="filterReports" name="filterReports"
                     onchange="filterReport(this)">
                 <option selected>All</option>

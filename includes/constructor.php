@@ -579,14 +579,16 @@ class vaccinationDrive
     private $vaccDate;
     private $vaccStubs;
     private $priorityGroup;
+    private $archive;
 
-    public function __construct($driveId, $siteId, $vaccinationDate, $vaccinationStubs, $group)
+    public function __construct($driveId, $siteId, $vaccinationDate, $vaccinationStubs, $group, $archive)
     {
         $this->driveId = $driveId;
         $this->vaccDriveVaccSiteId = $siteId;
         $this->vaccDate= $vaccinationDate;
         $this->vaccStubs = $vaccinationStubs;
         $this->priorityGroup = $group;
+        $this->archive = $archive;
 
     }
 
@@ -613,6 +615,11 @@ class vaccinationDrive
     public function getPriorityGroup()
     {
         return $this->priorityGroup;
+    }
+
+    public function getArchive()
+    {
+        return $this->archive;
     }
 }
 
