@@ -162,6 +162,7 @@ a.article:hover {
 .btnTop {
     border: none;
     background: whitesmoke;
+    padding: 1%;
 }
 
 .btnBell {
@@ -218,10 +219,6 @@ a.article:hover {
     border-radius: 12px;
 }
 
-.archive{
-    width: 0!important;
-}
-
 .siteAddButton{
     display: block;
     float: right;
@@ -262,8 +259,11 @@ a.article:hover {
 .buttonTransparent{
     background: transparent!important;
     border: transparent!important;
-
+    width: 5%;
+    height: 5%;
 }
+
+
 
 .hyperlink{
     text-decoration: underline;
@@ -293,20 +293,32 @@ input[type=text]{
     height: auto;
 }
 
-#searchDrive{
-    width: 29%;
-}
-
-.filter{
-    width: 11%;
-    float: left;
+#searchDep{
+    width: 30%;
 }
 
 #searchVaccine,#searchPatient,#searchPersonnel,#searchReport{
     width: 60%;
 }
 
+#searchPatientVaxPer{
+    width: 90%;
+}
 
+hr {
+    border: 0;
+    clear: both;
+    display: block;
+    width: 96%;
+    background-color: black;
+    height: 1px;
+    margin-top: 5%;
+    margin-bottom: 5%;
+}
+
+#searchReportHSO, #searchpatientHSO, #searchVaccineHSO{
+    width: 70%;
+}
 
 input[type=textDesc]{
     height: 60%;
@@ -343,14 +355,6 @@ input[type=textDesc]{
     border-radius: 5px;
     margin: 1%;
     padding: 2%;
-}
-
-.addbrgy{
-    margin-right: 2%;
-    border: 3px solid lightgray;
-    border-radius: 5px;
-    margin: 1%;
-    padding-bottom: 8%;
 }
 
 /* The Close Button */
@@ -492,7 +496,7 @@ input[type=text3],select{
 
 input[type=date]{
     width: 95%;
-    height:48;
+    height:48%;
     margin-top: 2px;
     padding: 10px;
     display: inline-block;
@@ -571,6 +575,7 @@ img{
 .counterColumn{
     float: right;
     width: 20%;
+    margin-top: 2%;
 }
 
 .counterRow {
@@ -843,4 +848,34 @@ input[type=text]:disabled{
     margin-top: 2%;
 }
 
+.organizeDiv{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 20px;
+    margin-bottom: 1%;
+    width: 35%;
+    float: left;
+}
+
+.filterButton, .sortButton{
+    padding: 1%;
+}
+
+.sortButton{
+    margin-right: 1%;
+}
+
+select {
+    width: 15%;
+    min-width: 15%;
+    max-width: 30%;
+    border: 1px solid;
+    border-radius: 0.25em;
+    padding: 0.25em 0.5em;
+    font-size: 1.25rem;
+    cursor: pointer;
+    line-height: 1.1;
+    background-color: #fff;
+    background-image: linear-gradient(to top, #f9f9f9, #fff 33%);
+}
 

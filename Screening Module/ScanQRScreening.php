@@ -88,7 +88,9 @@
             });
             </script>
             <div id="passportInt">
-            <input id="passportId" type="text" placeholder="Passport ID"><i class="fas fa-sign-in-alt"></i>
+                <h2 id="inputTxt"> Input Manually </h2>
+                <i class="fas fa-info-circle "></i>
+                <input id="passportId" type="text" placeholder="Passport ID"><i class="fas fa-sign-in-alt fa-2x""></i>
             </div>
             
 
@@ -114,17 +116,33 @@
 </html>
 
 <style>
-    
-    #passportId {
+
+    #passportInt {
         width: 40%;
-        border-bottom: solid black 1px;
+
         background-color: transparent;
         margin-left:31%;
+    }
+
+    #passportId{
+        border-bottom: solid black 1px;
+        width: 90%;
+    }
+
+    input[type='text']::placeholder
+    {
+        text-align: center;      /* for Chrome, Firefox, Opera */
     }
 
     #scannerTxt {
         text-align: center;
     }
+
+    #inputTxt{
+        text-align: center;
+        margin-top: 3%;
+    }
+
     #preview {
         border-radius: 12px;
         width: 50%;

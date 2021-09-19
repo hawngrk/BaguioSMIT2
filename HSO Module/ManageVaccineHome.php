@@ -44,7 +44,11 @@ include_once("../includes/database.php") ?>
         </div>
 
         <ul class="list-unstyled components">
-            <h3 id="mainmenu">Main Menu</h3>
+            <h4 id="headingNav1"> Health Service Office </h4>
+            <hr>
+            <h5 id="headingNav2"> September 17, 2021 | 01:24 PM</h5>
+            <hr>
+
             <li>
                 <a href="#"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
             </li>
@@ -204,7 +208,7 @@ include_once("../includes/database.php") ?>
         </form>
 
         <div class="search-container">
-            <input type="text" id="searchVaccine" class="searchHome" name="searchVaccine" placeholder="Search" onkeyup="searchVaccine()">
+            <input type="text" id="searchVaccineHSO" class="searchHome" name="searchVaccine" placeholder="Search" onkeyup="searchVaccine()">
             <button type="submit" id="searchVaccineBtn" name="searchVaccineBtn" onclick="searchVaccine()"><i class="fa fa-search"></i></button>
         </div>
 

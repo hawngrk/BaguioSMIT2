@@ -44,7 +44,11 @@ include_once("../includes/database.php") ?>
         </div>
 
         <ul class="list-unstyled components">
-            <h3 id="mainmenu">Main Menu</h3>
+            <h4 id="headingNav1"> Health Service Office </h4>
+            <hr>
+            <h5 id="headingNav2"> September 17, 2021 | 01:24 PM</h5>
+            <hr>
+
             <li>
                 <a href="#"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
             </li>
@@ -82,11 +86,11 @@ include_once("../includes/database.php") ?>
                     <i class='fas fa-angle-left'></i> Menu
                 </button>
 
-                <button class="btnTop">
+                <button class="btnTop ">
                     <i class="fas fa-bell"></i>
                 </button>
 
-                <button class="btnTop btnBell">
+                <button class="btnTop btnBell ">
                     <i class="fas fa-cog"></i>
                 </button>
             </div>
@@ -101,31 +105,36 @@ include_once("../includes/database.php") ?>
         <!--Search Input and Button-->
         <div class="search-container">
             <form action="/action_page.php">
-            <input type="text" id="searchReport" name="searchReport" placeholder="Search" onkeyup="searchReport()">
+            <input type="text" id="searchReportHSO" name="searchReport" placeholder="Search" onkeyup="searchReport()">
             <button type="submit" id="searchReportBtn" name="searchReportBtn" onclick="searchReport()"><i
                         class="fa fa-search"></i></button>
             </form>
         </div>
 
-        <div class="filter">
-            <select class="form-select col-lg-12 vaccineType" id="sortReports" name="sortReports"
-                    onchange="sortReport(this)">
-                <option>Name Asc</option>
-                <option>Name Desc</option>
-                <option>Date Asc</option>
-                <option>Date Desc</option>
-            </select>
+        <div class="organizeDiv">
+            <div class="sortButton">
+                <h5>Sort by:</h5>
+                <select class="form-select col-lg-12 vaccineType" id="sortReports" name="sortReports"
+                        onchange="sortReport(this)">
+                    <option>Name Asc</option>
+                    <option>Name Desc</option>
+                    <option>Date Asc</option>
+                    <option>Date Desc</option>
+                </select>
+            </div>
+
+            <div class="filterButton">
+                <h5>Filter by:</h5>
+                <select class="form-select col-lg-12 vaccineType" id="filterReports" name="filterReports"
+                        onchange="filterReport(this)">
+                    <option selected>All</option>
+                    <option>Unverified</option>
+                    <option>Verified</option>
+                    <option>Invalidated</option>
+                </select>
+            </div>
         </div>
 
-        <div class="filter">
-            <select class="form-select col-lg-12 vaccineType" id="filterReports" name="filterReports"
-                    onchange="filterReport(this)">
-                <option selected>All</option>
-                <option>Unverified</option>
-                <option>Verified</option>
-                <option>Invalidated</option>
-            </select>
-        </div>
 
         <div class="counterColumn">
             <div class="four counterRow">

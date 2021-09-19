@@ -45,7 +45,11 @@ include_once("../includes/database.php") ?>
         </div>
 
         <ul class="list-unstyled components">
-            <h3 id="mainmenu">Main Menu</h3>
+            <h4 id="headingNav1"> Health Service Office </h4>
+            <hr>
+            <h5 id="headingNav2"> September 17, 2021 | 01:24 PM</h5>
+            <hr>
+
             <li>
                 <a href="#"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
             </li>
@@ -449,7 +453,7 @@ include_once("../includes/database.php") ?>
 
         <!-- Search Container-->
         <div class="search-container">
-            <input type="text" id="searchPatient" class="searchHome" name="searchPatient" placeholder="Search"
+            <input type="text" id="searchPatientHSO" class="searchHome" name="searchPatient" placeholder="Search"
                    onkeyup="searchPatient()">
             <button type="submit" id="searchPatientBtn" name="searchPatientBtn" onclick="searchPatient()"><i
                         class="fa fa-search"></i></button>

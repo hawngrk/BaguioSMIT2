@@ -168,4 +168,5 @@
 .search-container {
     width: 100%!important;
 }
+
 </style>

@@ -48,7 +48,11 @@ include_once("../includes/database.php") ?>
         </div>
 
         <ul class="list-unstyled components">
-            <h3 id="mainmenu">Main Menu</h3>
+            <h4 id="headingNav1"> Health Service Office </h4>
+            <hr>
+            <h5 id="headingNav2"> September 17, 2021 | 01:24 PM</h5>
+            <hr>
+
             <li>
                 <a href="#"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
             </li>
@@ -111,7 +115,7 @@ include_once("../includes/database.php") ?>
         </div>
 
         <button type="button" class="buttonTransparent buttonTop archive" onclick="openModal('archived')">
-            <i class="fas fa-inbox"></i>
+            <i class="fas fa-inbox fa-lg"></i>
         </button>
 
         <button type="button" class="buttonTop" onclick="openModal('DeployModal')">
@@ -910,3 +914,5 @@ include_once("../includes/database.php") ?>
 
     </script>
 </body>
+<style>
+</style>

@@ -89,7 +89,7 @@
             <div class="col">
                 <div class="row">
                     <div id="totalPopulation">
-                        <center><h5> Total Vaccinated Population </h5></center>
+                        <center><h3> Total Vaccinated Population </h3></center>
                         <center>
                             <h8> As of September 16, 2021</h8>
                         </center>
@@ -102,7 +102,7 @@
 
                 <div class="row healthDistrict">
                     <div id="totalPopulationPerHD">
-                        <center><h5> Total Vaccinated Population per Health District</h5></center>
+                        <center><h3> Total Vaccinated Population per Health District</h3></center>
                         <center>
                             <h8> As of September 16, 2021</h8>
                         </center>
@@ -121,7 +121,7 @@
 
             <div class="col">
                 <div id="vaccineDeployments">
-                    <h5> <center> Vaccine Deployments </center> </h5>
+                    <h3> <center> Vaccine Deployments </center> </h3>
                     <hr>
                     <div id="vaccineDeploymentContent">
                         <h4> September 21 , 2021 </h4>

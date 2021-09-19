@@ -219,4 +219,6 @@ h6 {
 .patientQueueButtons {
     display: flex;
 }
+
+
 </style>

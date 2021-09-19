@@ -146,14 +146,5 @@
     margin-top: 3%;
     }
 
-    hr {
-    border: 0;
-    clear: both;
-    display: block;
-    width: 96%;
-    background-color: black;
-    height: 1px;
-    margin-top: 2%;
-    margin-bottom: 2%;
-    }
+
 </style>
