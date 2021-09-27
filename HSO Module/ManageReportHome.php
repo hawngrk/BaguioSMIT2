@@ -78,7 +78,6 @@ include_once("../includes/database.php") ?>
 
     <!-- Top Nav Bar  -->
     <div id="content">
-
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container-fluid">
 

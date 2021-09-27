@@ -64,7 +64,7 @@ a:focus {
     display: flex;
     width: 100%;
     align-items: stretch;
-    background-color: #f5f4e5;
+    background-color: #ffffff;
 }
 
 #sidebar {
@@ -297,9 +297,7 @@ input[type=text]{
     width: 30%;
 }
 
-#searchVaccine,#searchPatient,#searchPersonnel,#searchReport{
-    width: 60%;
-}
+
 
 #searchPatientVaxPer{
     width: 90%;
@@ -316,8 +314,16 @@ hr {
     margin-bottom: 5%;
 }
 
+#searchVaccine,#searchPatient,#searchPersonnel,#searchReport{
+    width: 60%;
+}
+
 #searchReportHSO, #searchpatientHSO, #searchVaccineHSO{
     width: 70%;
+}
+
+#searchPatientEIR{
+    width: 90%;
 }
 
 input[type=textDesc]{
@@ -362,7 +368,7 @@ input[type=textDesc]{
 
 /* The Close Button */
 .close {
-    color: #aaa;
+    color: #ffffff;
     float: right;
     font-size: 28px;
     font-weight: bold;
@@ -575,7 +581,6 @@ img{
 .counterColumn{
     float: right;
     width: 20%;
-    margin-top: 2%;
 }
 
 .counterRow {
@@ -811,7 +816,6 @@ input[type=text]:disabled{
     margin: 4%;
 }
 
-#searchVaccineBtn
 
 .details{
     margin-top: -2%;
@@ -865,17 +869,41 @@ input[type=text]:disabled{
     margin-right: 1%;
 }
 
-select {
-    width: 15%;
-    min-width: 15%;
-    max-width: 30%;
-    border: 1px solid;
-    border-radius: 0.25em;
-    padding: 0.25em 0.5em;
-    font-size: 1.25rem;
-    cursor: pointer;
-    line-height: 1.1;
-    background-color: #fff;
-    background-image: linear-gradient(to top, #f9f9f9, #fff 33%);
+ h5~select {
+     border: 1px solid;
+     border-radius: 0.25em;
+     padding: 0.25em 0.5em;
+     font-size: 1rem;
+     cursor: pointer;
+     line-height: 1.1;
+     background-color: #fff;
+     background-image: linear-gradient(to top, #f9f9f9, #fff 33%);
 }
 
+.patientQCounter {
+    background-color: white;
+    width: 18%;
+    height: auto;
+    margin-left: 2%;
+    border-radius: 12px;
+}
+
+.patientQueueButtons p,
+h6 {
+    text-align: center;
+}
+
+.patientQueueButtons h6 {
+    padding-top: 10%;
+}
+
+#confirmationNotif {
+    border-radius: 12px;
+    font-size: 25px;
+    text-align: left;
+    margin-left: 7%;
+}
+
+.patientQueueButtons {
+    display: flex;
+}

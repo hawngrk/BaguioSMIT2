@@ -58,9 +58,8 @@
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
                 <div class="container-fluid">
 
-                    <button type="button" id="sidebarCollapse" class="btn btn-info menuPersonnel">
-                        <i class="fas fa-align-left"></i>
-                        <span>Menu</span>
+                    <button type="button" id="sidebarCollapse" class="btn btn-info" onclick="Toggle()">
+                        <i class='fas fa-angle-left'></i> Menu
                     </button>
                 </div>
             </nav>
@@ -110,6 +109,18 @@
                 $('#sidebar').toggleClass('active');
             });
         });
+        var clicked = false;
+
+        function Toggle() {
+            var butt = document.getElementById('sidebarCollapse')
+            if (!clicked) {
+                clicked = true;
+                butt.innerHTML = "Menu <i class = 'fas fa-angle-double-right'><i>";
+            } else {
+                clicked = false;
+                butt.innerHTML = "<i class='fas fa-angle-left'></i> Menu";
+            }
+        }
     </script>
 </body>
 

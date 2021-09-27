@@ -136,9 +136,9 @@ include_once("../includes/database.php") ?>
                         <div id="vaccineBatch"></div>
                     </div>
                     <div class="modal-footer">
-                        <button id="cancelBtnVaccine">Cancel</button>
+                        <button id="cancelBtnVaccine" class='btn btn-secondary'>Cancel</button>
                         <?php
-                        echo " <button type='submit' id='addBtnVaccine' name='addBtnVaccine' form='addVaccineForm'> Add </button>";
+                        echo " <button type='submit' id='addBtnVaccine' class='btn btn-primary' name='addBtnVaccine' form='addVaccineForm'> Add </button>";
                         ?>
                     </div>
                 </div>
@@ -197,9 +197,9 @@ include_once("../includes/database.php") ?>
                             </div>
                         </div>
                     <div class="modal-footer">
-                        <button id="cancelBtnNewVaccine"> Cancel</button>
+                        <button id="cancelBtnNewVaccine" class='btn btn-secondary'> Cancel</button>
                         <?php
-                        echo " <button type='submit' id='addBtnNewVaccine' name='addBtnNewVaccine' form='newVaccineForm'> Add </button>";
+                        echo " <button type='submit' id='addBtnNewVaccine' class='btn btn-primary' name='addBtnNewVaccine' form='newVaccineForm'> Add </button>";
                         ?>
                     </div>
                     </div>

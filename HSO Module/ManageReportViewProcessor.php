@@ -352,8 +352,8 @@ if (isset($_POST['generate'])) {
 
 if (isset($_POST['options'])) {
     echo "
-    <button type='button' class='buttonTop' id='downloadGenerateReportBtn' onclick='downloadReports()'>Download Files</button>
-    <button type='button' class='buttonTop' id='cancelGenerateReportBtn' onclick='generateReport(2)'>Cancel</button>";
+    <button type='button' class='buttonTop reportButton' id='downloadGenerateReportBtn' onclick='downloadReports()'>Download Files</button>
+    <button type='button' class='buttonTop reportButton' id='cancelGenerateReportBtn' onclick='generateReport(2)'>Cancel</button>";
 }
 
 if (isset($_POST['download'])) {

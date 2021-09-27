@@ -151,7 +151,7 @@ include_once("../includes/database.php")
 </html>
 <script>
     function searchPatient() {
-        var textSearch = document.getElementById("searchPatient").value; 
+        var textSearch = document.getElementById("searchPatient").value;
         $.ajax({
             url: 'ManagePatientProcessor.php',
             type: 'POST',
@@ -160,6 +160,27 @@ include_once("../includes/database.php")
                 document.getElementById("patientTable").innerHTML = result;
             }
         });
+    }
+
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#sidebarCollapse').on('click', function () {
+            $('#sidebar').toggleClass('active');
+        });
+    });
+    var clicked = false;
+
+    function Toggle() {
+        var butt = document.getElementById('sidebarCollapse')
+        if (!clicked) {
+            clicked = true;
+            butt.innerHTML = "Menu <i class = 'fas fa-angle-double-right'><i>";
+        } else {
+            clicked = false;
+            butt.innerHTML = "<i class='fas fa-angle-left'></i> Menu";
+        }
     }
 </script>
 <style>

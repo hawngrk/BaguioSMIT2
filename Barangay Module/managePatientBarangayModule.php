@@ -96,29 +96,22 @@
         <!-- Top Nav Bar -->
 
         <div id="content">
-            <div class="topNav row">
-                <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                    <div class="container-fluid">
-                        <button
-                            type="button"
-                            id="sidebarCollapse"
-                            class="btn btn-info"
-                            onclick="Toggle()">
-                            <i class='fas fa-angle-left'></i>
-                            Menu
-                        </button>
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <div class="container-fluid">
 
-                        <button class="btnTop">
-                            <i class="fas fa-bell"></i>
-                        </button>
+                    <button type="button" id="sidebarCollapse" class="btn btn-info" onclick="Toggle()">
+                        <i class='fas fa-angle-left'></i> Menu
+                    </button>
 
-                        <button class="btnTop btnBell">
-                            <i class="fas fa-cog"></i>
-                        </button>
-                    </div>
-                </nav>
-            </div>
+                    <button class="btnTop">
+                        <i class="fas fa-bell"></i>
+                    </button>
 
+                    <button class="btnTop btnBell">
+                        <i class="fas fa-cog"></i>
+                    </button>
+                </div>
+            </nav>
 
             <!--Search Input and Button-->
             <div class="search-container">
@@ -147,6 +140,26 @@
     </div>
 </body>
 </html>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#sidebarCollapse').on('click', function () {
+            $('#sidebar').toggleClass('active');
+        });
+    });
+    var clicked = false;
+
+    function Toggle() {
+        var butt = document.getElementById('sidebarCollapse')
+        if (!clicked) {
+            clicked = true;
+            butt.innerHTML = "Menu <i class = 'fas fa-angle-double-right'><i>";
+        } else {
+            clicked = false;
+            butt.innerHTML = "<i class='fas fa-angle-left'></i> Menu";
+        }
+    }
+</script>
 <script>
     function searchPatient() {
         var textSearch = document.getElementById("searchPatient").value; 

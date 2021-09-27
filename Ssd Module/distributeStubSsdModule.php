@@ -178,7 +178,6 @@
                 }
             });
         }
-
     </script>
 
     <script type="text/javascript">
@@ -187,6 +186,18 @@
                 $('#sidebar').toggleClass('active');
             });
         });
+        var clicked = false;
+
+        function Toggle() {
+            var butt = document.getElementById('sidebarCollapse')
+            if (!clicked) {
+                clicked = true;
+                butt.innerHTML = "Menu <i class = 'fas fa-angle-double-right'><i>";
+            } else {
+                clicked = false;
+                butt.innerHTML = "<i class='fas fa-angle-left'></i> Menu";
+            }
+        }
     </script>
 
 </body>

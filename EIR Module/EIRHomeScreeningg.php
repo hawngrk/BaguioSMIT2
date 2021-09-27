@@ -9,6 +9,7 @@
     <title>Baguio SMIT+ | EIR Home</title>
 
     <!-- Our Custom CSS -->
+    <link rel="icon" href="../img/FaviSMIT+.png" type="image/jpg">
     <link href="../css/style.css" rel="stylesheet">
 
     <!-- Bootstrap-->
@@ -58,9 +59,8 @@
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
                 <div class="container-fluid">
 
-                    <button type="button" id="sidebarCollapse" class="btn btn-info menuPersonnel">
-                        <i class="fas fa-align-left"></i>
-                        <span>Menu</span>
+                    <button type="button" id="sidebarCollapse" class="btn btn-info" onclick="Toggle()">
+                        <i class='fas fa-angle-left'></i> Menu
                     </button>
                 </div>
             </nav>
@@ -68,7 +68,7 @@
              <!--Search Input and Button-->
              <div class="search-container">
                 <form action="/action_page.php">
-                    <input type="text" placeholder="Search" name="search">
+                    <input type="text" placeholder="Search" id="searchPatientEIR" name="search">
                     <button type="submit">
                         <i class="fa fa-search"></i>
                     </button>
@@ -104,11 +104,23 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
 
     <script type="text/javascript">
-        $(document).ready(function() {
-            $('#sidebarCollapse').on('click', function() {
+        $(document).ready(function () {
+            $('#sidebarCollapse').on('click', function () {
                 $('#sidebar').toggleClass('active');
             });
         });
+        var clicked = false;
+
+        function Toggle() {
+            var butt = document.getElementById('sidebarCollapse')
+            if (!clicked) {
+                clicked = true;
+                butt.innerHTML = "Menu <i class = 'fas fa-angle-double-right'><i>";
+            } else {
+                clicked = false;
+                butt.innerHTML = "<i class='fas fa-angle-left'></i> Menu";
+            }
+        }
     </script>
 </body>
 
