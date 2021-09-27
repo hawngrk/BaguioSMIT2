@@ -32,6 +32,7 @@ include_once("../includes/database.php") ?>
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js"
             integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY"
             crossorigin="anonymous"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
@@ -45,11 +46,7 @@ include_once("../includes/database.php") ?>
         </div>
 
         <ul class="list-unstyled components">
-            <h4 id="headingNav1"> Health Service Office </h4>
-            <hr>
-            <h5 id="headingNav2"> September 17, 2021 | 01:24 PM</h5>
-            <hr>
-
+            <h3 id="mainmenu">Main Menu</h3>
             <li>
                 <a href="#"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
             </li>
@@ -100,7 +97,10 @@ include_once("../includes/database.php") ?>
         <!-- Page Content  -->
 
         <!--Button for Uploading File-->
-        <button id="uploadFileBtn" type="button" class="buttonTop">Upload File</button>
+        <button type="button" class="buttonTransparent buttonTop archive" onclick="openModal('archived')">
+            <i class="fas fa-inbox"></i>
+        </button>
+<!--        <button id="uploadFileBtn" type="button" class="buttonTop">Upload File</button>-->
 
         <!--Modal for uploading patient csv-->
         <!--To include uploading files limited to csv file only-->
@@ -142,8 +142,6 @@ include_once("../includes/database.php") ?>
         <!--Button for Adding Patient Details-->
         <button id="addPatientBtn" type="button" class="buttonTop">Add User</button>
 
-        <!--Modal for Adding patient -->
-        <form id='addPatientForm' method="post" enctype="multipart/form-data">
             <div id="patientInformationModal" class="modal-window">
                 <div class="content-modal">
                     <div class="modal-header">
@@ -163,20 +161,20 @@ include_once("../includes/database.php") ?>
                                     <label class="label1" for="suffix">Suffix</label><br>
                                     <select id="suffix" name="suffix">
                                         <option selected value="">None</option>
-                                        <option>Sr</option>
-                                        <option>Jr</option>
-                                        <option>I</option>
-                                        <option>II</option>
-                                        <option>III</option>
+                                        <option value="sr">Sr</option>
+                                        <option value="jr">Jr</option>
+                                        <option value="I">I</option>
+                                        <option value="II">II</option>
+                                        <option value="III">III</option>
                                     </select>
                                     <br>
                                     <!--Category-->
                                     <label class="label1" for="priority"> Priority Group</label>
                                     <select class="formControl" id="priority" name="priority">
                                         <option disabled selected>Select a Category...</option>
-                                        <option>A1: Health Care Workers</option>
-                                        <option>A2: Senior Citizens</option>
-                                        <option>A3: Adult with Comorbidity</option>
+                                        <option value="A1: Health Care Workers">A1: Health Care Workers</option>
+                                        <option value="A2: Senior Citizens">A2: Senior Citizens</option>
+                                        <option value="A3: Adult with Comorbidity">A3: Adult with Comorbidity</option>
                                         <option>A4: Frontline Personnel in Essential Sector, including Uniformed
                                             Personnel
                                         </option>
@@ -192,8 +190,8 @@ include_once("../includes/database.php") ?>
                                     <label class="label1" for="gender"> Gender </label>
                                     <select class="formControl" id="gender" name="gender">
                                         <option disabled selected>Select a Gender...</option>
-                                        <option>Male</option>
-                                        <option>Female</option>
+                                        <option value="male">Male</option>
+                                        <option value="female">Female</option>
                                     </select>
                                     <br>
                                     <label class="label1" for="occupation">Occupation</label><br>
@@ -210,7 +208,7 @@ include_once("../includes/database.php") ?>
                                     <br>
                                     <label class="label1" for="number">Contact Number</label><br>
                                     <input type="text3" id="number" class='details' name="contactnumber"
-                                           placeholder="+63XXXXXXXXX" pattern="+63[0-9]{10}" required>
+                                           placeholder="+09XXXXXXXXX">
                                 </div>
                             </div>
                             <br>
@@ -235,11 +233,11 @@ include_once("../includes/database.php") ?>
                                     <select class="formControl" id="barangay" name="barangay"
                                             onchange="updateAddress()">
                                         <option disabled selected>Select a Barangay...</option>
-                                        <option>Alfonso Tabora</option>
+                                        <option value="Alfonso tabora">Alfonso Tabora</option>
                                         <option>Ambiong</option>
                                         <option>Andres Bonifacio</option>
                                         <option>Apugan-Loakan</option>
-                                        <option>Irisan</option>
+                                        <option value="Irisan">Irisan</option>
                                         <option>Upper Dagsian</option>
                                         <option>Lower Dagsian</option>
                                         <option>Scout Barrio</option>
@@ -424,13 +422,11 @@ include_once("../includes/database.php") ?>
                             Previous
                         </button>
                         <button type="button" id="addPatientMedCancelBtn" class="btn btn-secondary"> Cancel</button>
-                        <button type="submit" id="addPatientConfirmBtn" name="addPatientConfirmBtn"
-                                form="addPatientForm" class="btn btn-primary"> Add
-                        </button>
+                        <button type="button" class="btn btn-primary" onclick="addPatient()"> Add </button>
                     </div>
                 </div>
             </div>
-        </form>
+
 
         <!--Notification modal-->
         <div id="notifyModal" class="modal-window">
@@ -451,129 +447,125 @@ include_once("../includes/database.php") ?>
             </div>
         </div>
 
-        <!-- Search Container-->
-        <div class="search-container">
-            <input type="text" id="searchPatientHSO" class="searchHome" name="searchPatient" placeholder="Search"
-                   onkeyup="searchPatient()">
-            <button type="submit" id="searchPatientBtn" name="searchPatientBtn" onclick="searchPatient()"><i
-                        class="fa fa-search"></i></button>
+
+        <div id="archived" class="modal-window">
+            <div class="content-modal">
+                <div class="modal-header">
+                    <h4 class="modal-title">Archived Vaccination Drives</h4>
+                    <button type="button" class="close" data-dismiss="modal" onclick="closeModal('archived')">
+                        &times;
+                    </button>
+                </div>
+                <div id = 'archivedContent' class="modal-body">
+                    <table class="table table-row table-hover tableBrgy" id="patientTable">
+                        <thead>
+                        <tr>
+                            <th scope="col">Patient Name</th>
+                            <th scope="col">Category</th>
+                            <th scope="col">Complete Address</th>
+                            <th scope="col">Contact Number</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                        </thead>
+
+                        <?php
+                        require_once '../require/getPatientDetails.php';
+
+                        foreach ($patient_details as $pd) {
+                            if ($pd->getArchived() == 1) {
+                                $id = $pd->getPatientDeetPatId();
+                                $category = $pd->getPriorityGroup();
+                                $fullAddress = $pd->getHouseAdd() . ", " . $pd->getBrgy() . ", " . $pd->getCity() . ", " . $pd->getProvince();
+                                $contact = $pd->getContact();
+
+                                if ($pd->getPatientMName() == null && $pd->getPatientSuffix() == null) {
+                                    $name = $pd->getPatientLName() . ", " . $pd->getPatientFName();
+                                } else if ($pd->getPatientSuffix() == null) {
+                                    $name = $pd->getPatientLName() . ", " . $pd->getPatientFName() . " " . $pd->getPatientMName();
+                                } else if ($pd->getPatientMName() == null) {
+                                    $name = $pd->getPatientLName() . ", " . $pd->getPatientFName() . " " . $pd->getPatientSuffix();
+                                } else {
+                                    $name = $pd->getPatientLName() . ", " . $pd->getPatientFName() . " " . $pd->getPatientMName() . " " . $pd->getPatientSuffix();
+                                }
+
+                                echo "<tr>
+                        <td>$name</td>
+                        <td>$category</td>
+                        <td>$fullAddress</td>
+                        <td>$contact</td>
+                        <td>
+                            <div style='text-align: left;'>
+                                <button class='buttonTransparent hyperlink' onclick='archive(0, clickArchive, $id)'>unarchive<i class='fa fa-archive'></i></button>
+                            </div>
+                        </td>
+                    </tr>";
+                            }
+                        }
+                        ?>
+                    </table>
+                </div>
+            </div>
         </div>
 
-        <table class="table table-row table-hover" id="patientTable">
-            <thead>
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">Patient ID</th>
-                <th scope="col">Patient Name</th>
-                <th scope="col">Complete Address</th>
-                <th scope="col">Contact Number</th>
-                <th scope="col">Action</th>
-            </tr>
-            </thead>
+            <div class="search-container">
+                <input id="searchPatient" type="text" placeholder="Search" class="searchHome"name="searchPatient" onkeyup="searchPatient()">
+                <button type="submit" id="searchPatientBtn" name="searchPatientBtn" onclick="searchPatient()">
+                    <i class="fa fa-search"></i>
+                </button>
+            </div>
 
-            <?php
-            require_once '../require/getPatientDetails.php';
+            <!--Table Part-->
+            <table class="table table-row table-hover tableBrgy" id="patientTable">
+                <thead>
+                <tr>
+                    <th scope="col">Patient Name</th>
+                    <th scope="col">Category</th>
+                    <th scope="col">Complete Address</th>
+                    <th scope="col">Contact Number</th>
+                    <th scope="col">Action</th>
+                </tr>
+                </thead>
 
-            $count = 0;
-            foreach ($patient_details as $pd) {
-                $count++;
-                $id = $pd->getPatientDeetPatId();
-                $compAdd = $pd->getHouseAdd() . ", " . $pd->getBrgy() . ", " . $pd->getCity() . ", " . $pd->getProvince();
-                $contact = $pd->getContact();
+                    <?php
+                    require_once '../require/getPatientDetails.php';
 
-                if ($pd->getPatientMName() == null && $pd->getPatientSuffix() == null) {
-                    $name = $pd->getPatientLName() . ", " . $pd->getPatientFName();
-                } else if ($pd->getPatientSuffix() == null) {
-                    $name = $pd->getPatientLName() . ", " . $pd->getPatientFName() . " " . $pd->getPatientMName();
-                } else if ($pd->getPatientMName() == null) {
-                    $name = $pd->getPatientLName() . ", " . $pd->getPatientFName() . " " . $pd->getPatientSuffix();
-                } else {
-                    $name = $pd->getPatientLName() . ", " . $pd->getPatientFName() . " " . $pd->getPatientMName() . " " . $pd->getPatientSuffix();
-                }
+                    foreach ($patient_details as $pd) {
+                        if($pd->getArchived() == 0) {
+                            $id = $pd->getPatientDeetPatId();
+                            $category = $pd->getPriorityGroup();
+                            $fullAddress = $pd->getHouseAdd() . ", " . $pd->getBrgy() . ", " . $pd->getCity() . ", " . $pd->getProvince();
+                            $contact = $pd->getContact();
 
-                echo "<tr>
-                <td>$count</td>
-                <td>$id</td>
-                <td>$name</td>
-                <td>$compAdd</td>
-                <td>$contact</td>
-                </tr>";
-            }
-            ?>
-        </table>
+                            if ($pd->getPatientMName() == null && $pd->getPatientSuffix() == null) {
+                                $name = $pd->getPatientLName() . ", " . $pd->getPatientFName();
+                            } else if ($pd->getPatientSuffix() == null) {
+                                $name = $pd->getPatientLName() . ", " . $pd->getPatientFName() . " " . $pd->getPatientMName();
+                            } else if ($pd->getPatientMName() == null) {
+                                $name = $pd->getPatientLName() . ", " . $pd->getPatientFName() . " " . $pd->getPatientSuffix();
+                            } else {
+                                $name = $pd->getPatientLName() . ", " . $pd->getPatientFName() . " " . $pd->getPatientMName() . " " . $pd->getPatientSuffix();
+                            }
+
+                            echo "<tr>
+                        <td>$name</td>
+                        <td>$category</td>
+                        <td>$fullAddress</td>
+                        <td>$contact</td>
+                        <td>
+                            <div style='text-align: left;'>
+                                <button class='buttonTransparent' onclick='archive(1, clickArchive, $id)'><i class='fa fa-archive'></i></button>
+                            </div>
+                        </td>
+                    </tr>";
+                        }
+                    }
+                    ?>
+            </table>
+        </div>
     </div>
 </div>
 
-<?php
-if (isset($_POST['addPatientConfirmBtn'])) {
-    include '../includes/database.php';
-    $lastName = $_POST['lastname'];
-    $firstName = $_POST['firstname'];
-    $middleName = $_POST['middlename'];
-    $suffix = $_POST['suffix'];
-    $group = $_POST['priority'];
-    //$category = $_POST['category'];
-    //$categoryNumber = $_POST['categoryNumber'];
 
-    $gender = $_POST['gender'];
-    $occupation = $_POST['occupation'];
-    $birthday = $_POST['birthdate'];
-    $contactNumber = $_POST['contactnumber'];
-
-    $street = $_POST['street'];
-    $barangay = $_POST['barangay'];
-    $city = $_POST['city'];
-    $state = $_POST['state'];
-    $region = $_POST['region'];
-    //$age = $_POST['age'];
-
-    $fullName = $lastName . " " . $firstName . " " . $middleName . " ";
-    $pet = $_POST['pet'];
-    $bite = $_POST['bite'];
-    $skin = $_POST['skin'];
-    $food = $_POST['food'];
-    $mold = $_POST['mold'];
-    $latex = $_POST['latex'];
-    $pollen = $_POST['pollen'];
-    $insect = $_POST['insect'];
-    $medication = $_POST['medication'];
-    if (empty($_POST['othersAllergies'])) {
-        $othersAllergies = "";
-    } else {
-        $othersAllergies = $_POST['othersAllergies'];
-    }
-
-    $cancer = $_POST['cancer'];
-    $asthma = $_POST['asthma'];
-    $diabetes = $_POST['diabetes'];
-    $hypertension = $_POST['hypertension'];
-    $heart = $_POST['heartDiseases'];
-    $kidney = $_POST['kidneyDiseases'];
-    if (empty($_POST['othersComorbidities'])) {
-        $othersComorbidities = "";
-    } else {
-        $othersComorbidities = $_POST['othersComorbidities'];
-    }
-
-    $patientTableQuery = "INSERT INTO patient (patient_full_name, vaccination_status) VALUE ('$fullName', 'Not Vaccinated');";
-    $database->query($patientTableQuery);
-
-    $getPatientIdQuery = "SELECT patient_id FROM patient ORDER BY patient_id DESC LIMIT 1";
-    $dbase = $database->stmt_init();
-    $dbase->prepare($getPatientIdQuery);
-    $dbase->execute();
-    $dbase->bind_result($patientid);
-    $dbase->fetch();
-    $dbase->close();
-
-    $patient_detailsTableQuery = "INSERT INTO patient_details (patient_id, patient_first_name, patient_last_name, patient_middle_name, patient_suffix, patient_priority_group, patient_category_id, patient_category_number, patient_house_address, patient_barangay_address, patient_CM_address, patient_province, patient_region, patient_birthdate, patient_age, patient_gender, patient_contact_number, patient_occupation) VALUE ('$patientid', '$firstName', '$lastName', '$middleName', '$suffix', '$group', 'Other ID', '2191057', '$street', '$barangay', '$city', '$state', '$region', '$birthday', '20', '$gender', '$contactNumber', '$occupation');";
-    $database->query($patient_detailsTableQuery);
-
-
-    $medical_backgroundTableQuery = "INSERT INTO medical_background (patient_id, skin_allergy, food_allergy, medication_allergy, insect_allergy, pollen_allergy, bite_allergy, latex_allergy, mold_allergy, pet_allergy, hypertension, heart_disease, kidney_disease, diabetes_mellitus, bronchial_asthma, immunodeficiency, cancer, other_commorbidity) VALUE ('$patientid', '$skin', '$food', '$medication', '$insect', '$pollen', '$bite', '$latex', '$mold', '$pet', '$hypertension', '$heart', '$kidney', '$diabetes', '$asthma', '0', '$cancer', '');";
-    $database->query($medical_backgroundTableQuery);
-}
-?>
 
 <!-- jQuery CDN - Slim version (=without AJAX) -->
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
@@ -622,7 +614,6 @@ if (isset($_POST['addPatientConfirmBtn'])) {
     var addPatientPrevBtn = document.getElementById("addPatientPrevBtn");
     var addPatientInfoCancelBtn = document.getElementById("addPatientInfoCancelBtn");
     var addPatientMedCancelBtn = document.getElementById("addPatientMedCancelBtn");
-    var addPatientConfirmBtn = document.getElementById("addPatientConfirmBtn");
 
     var addPatientInfoClose = document.getElementById("addPatientInfoClose");
     var addPatientMedClose = document.getElementById("addPatientMedClose");
@@ -648,11 +639,6 @@ if (isset($_POST['addPatientConfirmBtn'])) {
         patientMedBackgroundModal.style.display = "none";
     }
 
-    addPatientConfirmBtn.onclick = function () {
-        patientMedBackgroundModal.style.display = "none";
-        notificationModal.style.display = "block";
-
-    }
 
     addPatientInfoClose.onclick = function () {
         patientInformationModal.style.display = "none";
@@ -663,15 +649,15 @@ if (isset($_POST['addPatientConfirmBtn'])) {
     }
 
     // Upload File
-    var uploadFileBtn = document.getElementById("uploadFileBtn");
+    // var uploadFileBtn = document.getElementById("uploadFileBtn");
     var uploadFileModal = document.getElementById("uploadFileModal");
     var uploadFileCancelBtn = document.getElementById("uploadFileCancelBtn");
     var uploadFileConfirmBtn = document.getElementById("uploadFileConfirmBtn");
     var uploadFileClose = document.getElementById("uploadFileClose");
 
-    uploadFileBtn.onclick = function () {
-        uploadFileModal.style.display = "block";
-    }
+    // uploadFileBtn.onclick = function () {
+    //     uploadFileModal.style.display = "block";
+    // }
 
     uploadFileCancelBtn.onclick = function () {
         uploadFileModal.style.display = "none";
@@ -758,13 +744,112 @@ if (isset($_POST['addPatientConfirmBtn'])) {
     function searchPatient() {
         var textSearch = document.getElementById("searchPatient").value;
         $.ajax({
-            url: 'ManagePatientProcessor.php',
+            url: '../Barangay Module/ManagePatientProcessor.php',
             type: 'POST',
             data: {"search": textSearch},
             success: function (result) {
                 document.getElementById("patientTable").innerHTML = result;
             }
         });
+    }
+
+    function addPatient(){
+        notificationModal.style.display = "block";
+        var last = document.getElementById("lname").value;
+        var first = document.getElementById("fname").value;
+        var middle = document.getElementById("mname").value;
+        var suffix = document.getElementById("suffix").value;
+        var priority = document.getElementById("priority").value;
+        var gender = document.getElementById("gender").value;
+        var occupation = document.getElementById("occupation").value;
+        var birthday = document.getElementById("date").value;
+        var contact = document.getElementById("number").value;
+        var street = document.getElementById("street").value;
+        var brgy = document.getElementById("barangay").value;
+        var city = document.getElementById("city").value;
+        var state = document.getElementById("state").value;
+        var region = document.getElementById("region").value;
+
+        $.ajax({
+            url: '../Barangay Module/ManagePatientProcessor.php',
+            type: 'POST',
+            data: {lastname: last, firstname: first, middlename: middle, suffix: suffix, priority: priority, gender: gender, occupation: occupation, birthday: birthday, contactnumber: contact, street: street, barangay: brgy, city: city, state: state, region: region },
+            success: function (result) {
+                document.getElementById("patientMedBackgroundModal").style.display = "none";
+                document.getElementById("patientTable").innerHTML = "";
+                document.getElementById("patientTable").innerHTML = result;
+            }
+        });
+    }
+
+    async function archive(archive, action, drive) {
+        if(archive == 1){
+            archiveText = "Archive";
+        }else{
+            archiveText = "UnArchive";
+        }
+        Swal.fire({
+            icon: 'info',
+            title: 'Are You Sure you Want to ' + archiveText + ' this item?',
+            showDenyButton: true,
+            confirmButtonText: 'Yes',
+            denyButtonText: `No`,
+        }).then((result) => {
+            if (result.isConfirmed) {
+                action(drive, archiveText);
+                Swal.fire('Saved!', '', 'success')
+            } else if (result.isDenied) {
+                Swal.fire('Changes are not saved', '', 'info')
+            }
+        })
+    }
+
+    async function archive(archive, action, drive) {
+        if(archive == 1){
+            archiveText = "Archive";
+        }else{
+            archiveText = "UnArchive";
+        }
+        Swal.fire({
+            icon: 'info',
+            title: 'Are You Sure you Want to ' + archiveText + ' this item?',
+            showDenyButton: true,
+            confirmButtonText: 'Yes',
+            denyButtonText: `No`,
+        }).then((result) => {
+            if (result.isConfirmed) {
+                action(drive, archiveText);
+                Swal.fire('Saved!', '', 'success')
+            } else if (result.isDenied) {
+                Swal.fire('Changes are not saved', '', 'info')
+            }
+        })
+    }
+
+    function clickArchive(drive, option){
+        $.ajax({
+            url: '../Barangay Module/ManagePatientProcessor.php',
+            method: 'POST',
+            data: {archive: drive, option: option},
+            success: function (result) {
+                if (option == "Archive") {
+                    window.location.href = "ManagePatientHome.php";
+
+                } else if(option == "UnArchive") {
+                    document.getElementById("patientTable").innerHTML = "";
+                    document.getElementById("patientTable").innerHTML = result;
+                }
+            }
+        })
+    }
+
+    function closeModal(modal) {
+        document.getElementById(modal).style.display = "none";
+    }
+
+    function openModal(modal) {
+        console.log(modal)
+        document.getElementById(modal).style.display = "block";
     }
 </script>
 

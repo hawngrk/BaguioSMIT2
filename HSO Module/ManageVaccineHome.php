@@ -31,6 +31,7 @@ include_once("../includes/database.php") ?>
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js"
             integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY"
             crossorigin="anonymous"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
@@ -44,11 +45,7 @@ include_once("../includes/database.php") ?>
         </div>
 
         <ul class="list-unstyled components">
-            <h4 id="headingNav1"> Health Service Office </h4>
-            <hr>
-            <h5 id="headingNav2"> September 17, 2021 | 01:24 PM</h5>
-            <hr>
-
+            <h3 id="mainmenu">Main Menu</h3>
             <li>
                 <a href="#"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
             </li>
@@ -97,6 +94,9 @@ include_once("../includes/database.php") ?>
         </nav>
 
         <!-- Page Content  -->
+        <button type="button" class="buttonTransparent buttonTop archive" onclick="openModal('archived')">
+            <i class="fas fa-inbox"></i>
+        </button>
 
         <button id="addVaccineBtn" type="button" class="buttonTop">Add Vaccine</button>
 
@@ -127,19 +127,23 @@ include_once("../includes/database.php") ?>
                             ?>
                         </select>
 
-                        <label for="batchNo"> Batch Quantity Received </label>
-                        <input type="number" id="batchNo" name="batchNo" min="1" max="15" value="1"
-                               onkeyup="updateBatchList(this)" onclick="updateBatchList(this)">
+                        <label for="qty"> Total Vial Quantity Received: </label>
+                        <input type="text" id="qty" style="width:70%"><br>
                         <label for="dateStored">Date Stored</label>
                         <input type='date' id="dateStored" name="dateStored">
-                        <div id="selectedVaccineInfo"></div>
-                        <div id="vaccineBatch"></div>
+                        <label for="dateExp">Date of Expiration</label>
+                        <input type='date' id="dateExp" name="dateExp">
+                        <label for="source"> Vaccine Source: </label>
+                        <select id="source">
+                            <option selected disabled>Select Vaccine Source</option>
+                            <option value="National Government">National Government</option>
+                            <option value="Department Of Health">Department Of Health</option>
+                        </select>
                     </div>
                     <div class="modal-footer">
-                        <button id="cancelBtnVaccine" class='btn btn-secondary'>Cancel</button>
-                        <?php
-                        echo " <button type='submit' id='addBtnVaccine' class='btn btn-primary' name='addBtnVaccine' form='addVaccineForm'> Add </button>";
-                        ?>
+                        <button id="cancelBtnVaccine">Cancel</button>
+                        <button id="addVaccineBtn" type='submit' onclick="addVaccine()"> Add </button>
+
                     </div>
                 </div>
             </div>
@@ -173,7 +177,6 @@ include_once("../includes/database.php") ?>
                                 <select id="vaccineType">
                                     <option selected disabled>Select Vaccine Type</option>
                                     <option value="Inactivated Virus">Inactivated Vaccine</option>
-                                    <!--<option value="Live-attenuated Vaccine">Live-attenuated Vaccine</option>-->
                                     <option value="Viral vector">Viral vector Vaccine</option>
                                 </select>
                                 <label for="vaccineEfficacy"> Vaccine Efficacy: </label>
@@ -185,32 +188,100 @@ include_once("../includes/database.php") ?>
                                 </select>
                                 <label for="dosageRequired"> Dosage Required </label>
                                 <input type="text3"  class="form-control" id="dosageRequired" placeholder="Enter Dosage Required">
-                                <label for="dosageInterval"> Dosage Interval </label>
+                                <label for="dosageInterval"> Dosage Interval(Days) </label>
                                 <input type="text3"  class="form-control" id="dosageInterval" placeholder="Enter Dosage Interval">
                                 <h4> Storage and Handling</h4>
-                                <label for="minimumTemperature"> Minimum Temperature </label>
+                                <label for="minimumTemperature"> Minimum Temperature(Degree Celcius) </label>
                                 <input type="text3"  class="form-control" id="minimumTemperature" placeholder="Minimum Temperature">
-                                <label for="maximumTemperature"> Maximum Temperature </label>
+                                <label for="maximumTemperature"> Maximum Temperature(Degree Celcius) </label>
                                 <input type="text3"  class="form-control" id="maximumTemperature" placeholder="Maximum Temperature">
-                                <label for="lifeSpan"> Life Span </label>
+                                <label for="lifeSpan"> Life Span(Months) </label>
                                 <input type="text3"  class="form-control" id="lifeSpan" placeholder="Life Span">
                             </div>
                         </div>
                     <div class="modal-footer">
-                        <button id="cancelBtnNewVaccine" class='btn btn-secondary'> Cancel</button>
-                        <?php
-                        echo " <button type='submit' id='addBtnNewVaccine' class='btn btn-primary' name='addBtnNewVaccine' form='newVaccineForm'> Add </button>";
-                        ?>
+                        <button id="cancelBtnNewVaccine"> Cancel</button>
+                        <button type='submit' id='addBtnNewVaccine' name='addBtnNewVaccine' onclick="addNewVaccine()"> Add </button>
                     </div>
                     </div>
                 </div>
             </div>
         </form>
 
-        <div class="search-container">
-            <input type="text" id="searchVaccineHSO" class="searchHome" name="searchVaccine" placeholder="Search" onkeyup="searchVaccine()">
-            <button type="submit" id="searchVaccineBtn" name="searchVaccineBtn" onclick="searchVaccine()"><i class="fa fa-search"></i></button>
+        <div id="archived" class="modal-window">
+            <div class="content-modal">
+                <div class="modal-header">
+                    <h4 class="modal-title">Archived Vaccination Drives</h4>
+                    <button type="button" class="close" data-dismiss="modal" onclick="closeModal('archived')">
+                        &times;
+                    </button>
+                </div>
+                <div id = 'archivedContent' class="modal-body">
+                    <table class="table table-row table-hover" id="vaccineTable">
+                        <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Vaccine Lot ID</th>
+                            <th scope="col">Vaccine Name</th>
+                            <th scope="col">Vaccine Source</th>
+                            <th scope="col">Date Received</th>
+                            <th scope="col">Expiration</th>
+                            <th scope="col">Bottle Quantity</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                        </thead>
+                        <div id="vaccineContent">
+                            <?php
+                            require_once '../require/getVaccine.php';
+                            require_once '../require/getVaccineBatch.php';
+                            require_once '../require/getVaccineLot.php';
+
+                            $count = 0;
+                            foreach ($vaccineLots as $vl) {
+                                if($vl->getArchived() == 1) {
+                                    $count++;
+                                    $vaccineLotId = $vl->getVaccLotId();
+                                    $vaccLotVaccId = $vl->getVaccLotVaccId();
+                                    $dateStored = $vl->getDateVaccStored();
+                                    $batchQty = $vl->getVaccBatchQty();
+                                    $source = $vl->getSource();
+                                    $vaccExp = $vl->getExpiration();
+
+
+                                    foreach ($vaccines as $vac) {
+                                        if ($vaccLotVaccId == $vac->getVaccId()) {
+                                            $vaccName = $vac->getVaccName();
+                                        }
+                                    }
+
+                                    echo "<tr>
+                <td>$count</td>
+                <td>$vaccineLotId</td>
+                <td>$vaccName</td>
+                <td>$source</td>
+                <td>$dateStored</td>
+                <td>$vaccExp</td>
+                <td>$batchQty</td>
+                <td>
+                    <div style='text-align: left;'>
+                        <button class='buttonTransparent hyperlink' onclick='archive(0, clickArchive, $vaccineLotId )'>unarchive <i class='fas fa-box-open'></i></button>
+                    </div>
+                </td>
+                </tr>";
+                                }
+                            }
+                            ?>
+                        </div>
+                    </table>
+                </div>
+            </div>
         </div>
+
+<!--        <div class="search-container">-->
+<!--            <input type="text" id="searchVaccine" class="searchHome" name="searchVaccine" placeholder="Search" onkeyup="searchVaccine()">-->
+<!--            <button type="submit" id="searchVaccineBtn" name="searchVaccineBtn" onclick="searchVaccine()"><i class="fa fa-search"></i></button>-->
+<!--        </div>-->
+
 
         <table class="table table-row table-hover" id="vaccineTable">
             <thead>
@@ -220,12 +291,11 @@ include_once("../includes/database.php") ?>
                 <th scope="col">Vaccine Name</th>
                 <th scope="col">Vaccine Source</th>
                 <th scope="col">Date Received</th>
-                <th scope="col">Date Expiration</th>
+                <th scope="col">Expiration</th>
                 <th scope="col">Bottle Quantity</th>
                 <th scope="col">Action</th>
             </tr>
             </thead>
-
             <?php
             require_once '../require/getVaccine.php';
             require_once '../require/getVaccineBatch.php';
@@ -233,115 +303,42 @@ include_once("../includes/database.php") ?>
 
             $count = 0;
             foreach ($vaccineLots as $vl) {
-                $count++;
-                $vaccineLotId = $vl->getVaccLotId();
-                $vaccLotVaccId = $vl->getVaccLotVaccId();
-                $dateStored = $vl->getDateVaccStored();
-                $batchQty = $vl->getVaccBatchQty();
+                if($vl->getArchived() == 0) {
+                    $count++;
+                    $vaccineLotId = $vl->getVaccLotId();
+                    $vaccLotVaccId = $vl->getVaccLotVaccId();
+                    $dateStored = $vl->getDateVaccStored();
+                    $batchQty = $vl->getVaccBatchQty();
+                    $source = $vl->getSource();
+                    $vaccExp = $vl->getExpiration();
 
-                foreach ($vaccineBatches as $vb) {
-                    if ($vb->getVaccBatchId() == $vaccineLotId) {
-                        $vaccExp = $vb->getDateExp();
+
+                    foreach ($vaccines as $vac) {
+                        if ($vaccLotVaccId == $vac->getVaccId()) {
+                            $vaccName = $vac->getVaccName();
+                        }
                     }
-                }
 
-                foreach ($vaccines as $vac) {
-                    if ($vaccLotVaccId == $vac->getVaccId()) {
-                        $vaccName = $vac->getVaccName();
-                    }
-                }
-
-                $query = "SELECT SUM(vaccine_quantity) FROM vaccine_batch WHERE vaccine_lot_id = $vaccineLotId";
-
-                $stmt = $database->stmt_init();
-                $stmt->prepare($query);
-                $stmt->execute();
-                $stmt->bind_result($vaccQty);
-                $stmt->fetch();
-
-                echo "<tr>
+                    echo "<tr>
                 <td>$count</td>
                 <td>$vaccineLotId</td>
                 <td>$vaccName</td>
+                <td>$source</td>
                 <td>$dateStored</td>
                 <td>$vaccExp</td>
                 <td>$batchQty</td>
-                <td>$vaccQty</td>
+                <td>
+                    <div style='text-align: left;'>
+                          <button class='buttonTransparent' onclick='archive(1, clickArchive, $vaccineLotId)'><i class='fa fa-archive'></i></button>
+                    </div>
+                </td>
                 </tr>";
+                }
             }
             ?>
         </table>
     </div>
 </div>
-
-<?php
-if (isset($_POST['addBtnVaccine'])) {
-    include '../includes/database.php';
-    $selectedVaccine = $_POST['selectedVaccine'];
-    $batchNo = $_POST['batchNo'];
-    $dateStored = $_POST['dateStored'];
-    $batchVacQty = $_POST['batchVacQty'];
-    $batchDateManu = $_POST['batchDateManu'];
-    $batchDateExp = $_POST['batchDateExp'];
-
-    $getVacIdQuery = "SELECT vaccine_id FROM vaccine WHERE vaccine_name='$selectedVaccine'";
-    $dbase = $database->stmt_init();
-    $dbase->prepare($getVacIdQuery);
-    $dbase->execute();
-    $dbase->bind_result($vaccineid);
-    $dbase->fetch();
-    $dbase->close();
-
-    $query1 = "INSERT INTO vaccine_lot (vaccine_id, employee_account_id, vaccine_batch_quantity, date_stored) VALUE ('$vaccineid', 1, '$batchNo', '$dateStored');";
-    $database->query($query1);
-
-    $getVacLotIdQuery = "SELECT vaccine_lot_id FROM vaccine_lot ORDER BY vaccine_lot_id DESC LIMIT 1";
-    $dbase = $database->stmt_init();
-    $dbase->prepare($getVacLotIdQuery);
-    $dbase->execute();
-    $dbase->bind_result($vaccineLotId);
-    $dbase->fetch();
-    $dbase->close();
-
-    $count = 0;
-    while ($count < $batchNo) {
-        $query2 = "INSERT INTO vaccine_batch (vaccine_lot_id, vaccine_id, vaccine_quantity, date_manufactured, date_of_expiration) VALUE ('$vaccineLotId', '$vaccineid', '$batchVacQty[$count]', '$batchDateManu[$count]', '$batchDateExp[$count]');";
-        $database->query($query2);
-        $count++;
-    }
-}
-?>
-
-<?php
-if (isset($_POST['addBtnNewVaccine'])) {
-    include '../includes/database.php';
-    $vaccineName = $_POST['vaccineName'];
-    $vaccineManufacturer = $_POST['vaccineManufacturer'];
-    $vaccineDescription = $_POST['vaccineDescription'];
-    $vaccineType = $_POST['vaccineType'];
-    $vaccineEfficacy = (int)$_POST['vaccineEfficacy'];
-    $dosage = $_POST['dosage'];
-    $interval = $_POST['interval'];
-    $minTemp = $_POST['minTemp'];
-    $maxTemp = $_POST['maxTemp'];
-    $lifeSpan = $_POST['lifeSpan'];
-
-
-    $query1 = "INSERT INTO vaccine (vaccine_name, vaccine_type, vaccine_efficacy, vaccine_lifespan_in_months) VALUE ('$vaccineName', '$vaccineType', '$vaccineEfficacy', '$lifeSpan');";
-    $database->query($query1);
-
-    $getQuery = "SELECT vaccine_id FROM vaccine WHERE vaccine_name='$vaccineName'";
-    $dbase = $database->stmt_init();
-    $dbase->prepare($getQuery);
-    $dbase->execute();
-    $dbase->bind_result($vaccineid);
-    $dbase->fetch();
-    $dbase->close();
-
-    $query2 = "INSERT INTO vaccine_information (vaccine_id, vaccine_manufacturer, vaccine_description, vaccine_dosage_required, vaccine_dosage_interval, vaccine_minimum_temperature, vaccine_maximum_temperature) VALUE ('$vaccineid', '$vaccineManufacturer', '$vaccineDescription', '$dosage', '$interval', '$minTemp', '$maxTemp');";
-    $database->query($query2);
-}
-?>
 
 <!-- jQuery CDN - Slim version (=without AJAX) -->
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
@@ -444,6 +441,101 @@ if (isset($_POST['addBtnNewVaccine'])) {
             }
         });
     }
+
+    function addVaccine(){
+        var vaccId = document.getElementById("selectedVaccine").value;
+        var qty = document.getElementById('qty').value;
+        var dateStored = document.getElementById('dateStored').value;
+        var dateExp = document.getElementById('dateExp').value;
+        var source = document.getElementById('source').value;
+        $.ajax({
+            url: 'ManageVaccineProcessor.php',
+            type: 'POST',
+            data: {vaccId: vaccId, qty: qty, stored: dateStored, exp: dateExp, source: source},
+            success: function (result) {
+                document.getElementById('vaccineContent').innerHTML = result;
+            }
+        });
+    }
+
+    function addNewVaccine(){
+        var vaccName = document.getElementById("vaccineName").value;
+        var manu = document.getElementById('vaccineManufacturer').value;
+        var desc = document.getElementById('vaccineDescription').value;
+        var type = document.getElementById('vaccineType').value;
+        var efficacy = document.getElementById('vaccineEfficacy').value;
+        var dosage = document.getElementById('dosageRequired').value;
+        var interval = document.getElementById('dosageInterval').value;
+        var minTemp = document.getElementById('minimumTemperature').value;
+        var maxTemp = document.getElementById('maximumTemperature').value;
+        var lifeSpan = document.getElementById('lifeSpan').value;
+
+        console.log(vaccName);
+        console.log(manu);
+        console.log(desc);
+        console.log(type);
+        console.log(efficacy);
+        console.log(dosage);
+        console.log(interval);
+        console.log(minTemp);
+        console.log(maxTemp);
+        console.log(lifeSpan);
+        $.ajax({
+            url: 'ManageVaccineProcessor.php',
+            type: 'POST',
+            data: {vaccineName: vaccName, vaccineDescription: desc, vaccineManufacturer: manu, vaccineType: type, vaccineEfficacy: efficacy, dosage: dosage, interval: interval, minTemp: minTemp, maxTemp: maxTemp, lifeSpan: lifeSpan},
+            success: function (result) {
+            }
+        });
+    }
+
+    async function archive(archive, action, drive) {
+        if(archive == 1){
+            archiveText = "Archive";
+        }else{
+            archiveText = "UnArchive";
+        }
+        Swal.fire({
+            icon: 'info',
+            title: 'Are You Sure you Want to ' + archiveText + ' this item?',
+            showDenyButton: true,
+            confirmButtonText: 'Yes',
+            denyButtonText: `No`,
+        }).then((result) => {
+            if (result.isConfirmed) {
+                action(drive, archiveText);
+                Swal.fire('Saved!', '', 'success')
+            } else if (result.isDenied) {
+                Swal.fire('Changes are not saved', '', 'info')
+            }
+        })
+    }
+
+    function clickArchive(drive, option){
+        $.ajax({
+            url: 'ManageVaccineProcessor.php',
+            method: 'POST',
+            data: {archive: drive, option: option},
+            success: function (result) {
+                if (option == "Archive") {
+                    window.location.href = "ManageVaccineHome.php";
+
+                } else if(option == "UnArchive") {
+                    document.getElementById("vaccineTable").innerHTML = "";
+                    document.getElementById("vaccineTable").innerHTML = result;
+                }
+            }
+        })
+    }
+
+    function closeModal(modal) {
+        document.getElementById(modal).style.display = "none";
+    }
+
+    function openModal(modal) {
+        console.log(modal)
+        document.getElementById(modal).style.display = "block";
+    }
 </script>
 
 <script>
@@ -460,14 +552,4 @@ if (isset($_POST['addBtnNewVaccine'])) {
         }
     }
 </script>
-<!--
-<script>
-
-    $(document).ready(function ($) {
-        $(".table-row").click(function () {
-            window.document.location = $(this).data("href");
-        });
-    });
-</script>
- -->
 </body>
