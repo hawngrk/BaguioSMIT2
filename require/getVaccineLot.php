@@ -9,9 +9,9 @@ $vaccineLots = [];
 $stmt = $database->stmt_init();
 $stmt->prepare($query);
 $stmt->execute();
-$stmt->bind_result($vaccineLotId, $vaccineLotVaccineId, $vaccineLotEmployee, $vaccineBatchQty, $dateStored, $source);
+$stmt->bind_result($vaccineLotId, $vaccineLotVaccineId, $vaccineLotEmployee, $dateStored, $source, $vaccineBatchQty, $vaccineExp, $archived);
 
 while ($stmt->fetch()){
-    $vaccineLot = new vaccineLot($vaccineLotId, $vaccineLotVaccineId, $vaccineLotEmployee, $vaccineBatchQty, $dateStored, $source);
+    $vaccineLot = new vaccineLot($vaccineLotId, $vaccineLotVaccineId, $vaccineLotEmployee, $dateStored, $source, $vaccineBatchQty, $vaccineExp, $archived);
     $vaccineLots[] = $vaccineLot;
 }

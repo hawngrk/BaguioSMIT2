@@ -227,9 +227,10 @@ class patientDetails{
     private $gender;
     private $contact;
     private $occupation;
+    private $archived;
 
 
-    public function __construct($patientDetailPatientId, $patFirstName, $patLastName, $patMiddleName,$patientSuffix, $priorityGroup, $categoryId, $categoryNumber, $houseAddress, $barangay, $city, $province, $region, $birthdate, $age, $gender, $contact, $occupation)
+    public function __construct($patientDetailPatientId, $patFirstName, $patLastName, $patMiddleName,$patientSuffix, $priorityGroup, $categoryId, $categoryNumber, $houseAddress, $barangay, $city, $province, $region, $birthdate, $age, $gender, $contact, $occupation, $archived)
     {
         $this->patientDeetPatId = $patientDetailPatientId;
         $this->patientFName = $patFirstName;
@@ -249,6 +250,7 @@ class patientDetails{
         $this->gender = $gender;
         $this->contact = $contact;
         $this->occupation = $occupation;
+        $this->archived = $archived;
     }
 
     public function getPatientDeetPatId()
@@ -340,6 +342,11 @@ class patientDetails{
     {
         return $this->occupation;
     }
+
+    public function getArchived()
+{
+    return $this->archived;
+}
 }
 ?>
 
@@ -473,8 +480,10 @@ class vaccineLot
     private $vaccBatchQty;
     private $dateVaccStored;
     private $source;
+    private $expiration;
+    private $archived;
 
-    public function __construct($vaccineLotId, $vaccineLotVaccineId, $vaccineEmployeeAccId, $vaccineBatchQty, $dateVaccineStored, $source)
+    public function __construct($vaccineLotId, $vaccineLotVaccineId, $vaccineEmployeeAccId, $dateVaccineStored, $source, $vaccineBatchQty, $expiration, $archived)
     {
         $this->vaccLotId = $vaccineLotId;
         $this->vaccLotVaccId = $vaccineLotVaccineId;
@@ -482,6 +491,8 @@ class vaccineLot
         $this->vaccBatchQty = $vaccineBatchQty;
         $this->dateVaccStored = $dateVaccineStored;
         $this->source = $source;
+        $this->expiration = $expiration;
+        $this->archived = $archived;
     }
 
 
@@ -513,6 +524,16 @@ class vaccineLot
     public function getSource()
     {
         return $this->source;
+    }
+
+    public function getExpiration()
+    {
+        return $this->expiration;
+    }
+
+    public function getArchived()
+    {
+        return $this->archived;
     }
 }
 ?>
