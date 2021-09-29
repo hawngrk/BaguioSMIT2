@@ -48,10 +48,10 @@
                     <h5 id="headingNav2">September 17, 2021 | 01:24 PM</h5>
                     <hr>
                 <li>
-                    <a href="../Monitoring Module/ScanQRMonitoring.php"><i class="fas fa-qrcode"></i> Scan QR</a>
+                    <a href="ScanQRMonitoring.php"><i class="fas fa-qrcode"></i> Scan QR</a>
                 </li>
                 <li class="active">
-                    <a href="../Monitoring Module/ManageUsersHomeScreening.php"><i class="fas fa-users"></i> Manage Users</a>
+                    <a href="ManageUsersHomeMontoring.php"><i class="fas fa-users"></i> Manage Users</a>
                 </li>
             </ul>
 
@@ -74,7 +74,7 @@
                 </div>
             </nav>
 
-              <!--Search Input and Button-->
+             <!--Search Input and Button-->
              <div class="search-container">
                     <input id="searchPatientVaxPer" type="text" placeholder="Search" class="searchHome" name="searchPatient" onkeyup="searchPatient()">
                     <button type="submit" id="searchPatientBtn" name="searchPatientBtn" onclick="searchPatient()">
