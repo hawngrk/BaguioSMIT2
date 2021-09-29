@@ -80,17 +80,28 @@
             <table class="table table-row table-hover tableBrgy" id="patientTable">
                 <thead>
                     <tr>
-                        <th scope="col">#</th>
+                        <th scope="col">ID</th>
                         <th scope="col">Name</th>
                         <th scope="col">Category</th>
                         <th scope="col">Complete Address</th>
                         <th scope="col">Contact Number</th>
+                        <th scope="col">Action</th>
                     </tr>
                 </thead>
                 <?php
                 include '../includes/showPatientDeets.php';
                 ?>
             </table>
+
+            <div id="preVacView" class="modal-window">
+                <div class="content-modal">
+                <div class="modal-header">
+                        <h4 class="modal-title">Pre-Vaccine Vitals</h4>
+                        <span id="newVaccineClose" class="close">&times;</span>
+                    </div>
+                    <div class="modal-body" id="patientRow"></div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -124,7 +135,7 @@
 
 <script>
     function searchPatient() {
-        var textSearch = document.getElementById("searchPatient").value; 
+        var textSearch = document.getElementById("searchPatientVaxPer").value; 
         $.ajax({
             url: 'screeningSearchProcessor.php',
             type: 'POST',
@@ -133,5 +144,22 @@
                 document.getElementById("patientTable").innerHTML = result;
             }
         });
+    }
+
+    function clickModalRow(patientId) {
+        // Modal Settings 
+        preVacView.style.display = "block";
+        newVaccineClose.onclick = function () {
+            preVacView.style.display = "none";
+        }
+        // Fetching Data from the Database Code
+        $.ajax({
+            url: 'screeningSearchProcessor.php',
+            type: 'POST',
+            data: {"modalScreening": patientId},
+            success: function (data){
+                document.getElementById('patientRow').innerHTML = data;
+            }
+        })
     }
 </script>
