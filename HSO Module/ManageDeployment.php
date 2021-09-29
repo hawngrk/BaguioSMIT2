@@ -104,7 +104,7 @@ include_once("../includes/database.php") ?>
 
         <div class="listPatientColumn">
             <div class="four listPatientRow">
-                <div class="listPatient-box colored">
+                <div class="listPatient-box colored depSum">
                     <center><h5>Deployment Summary</h5></center>
                 </div>
             </div>
@@ -520,7 +520,7 @@ include_once("../includes/database.php") ?>
                         <td>$stubs</td>
                         <td>
                             <div style='text-align: left;'>
-                                <button class='buttonTransparent hyperlink' onclick='archive(0, clickArchive, $driveId )'>unarchive <i class='fas fa-box-open'></i></button>
+                                <button class='btn btn-warning' onclick='archive(0, clickArchive, $driveId )'>unarchive <i class='fas fa-box-open'></i></button>
                             </div>
                         </td>
              

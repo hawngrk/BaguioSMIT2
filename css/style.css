@@ -216,6 +216,17 @@ a.article:hover {
     font-size: 80%;
 }
 
+.genButton{
+    float: right;
+    margin: .5%;
+    margin-top: 2%;
+}
+
+#DlRepNote{
+    float: right;
+    margin-bottom: 1%;
+}
+
 .buttonTop {
     border-radius: 12px;
 }
@@ -305,7 +316,7 @@ input[type=text]{
 
 
 #searchPatientVaxPer, #searchPatientEIR{
-    width: 90%;
+    width: 95%;
 }
 
 hr {
@@ -485,10 +496,16 @@ input[type=text1] {
     color: #fff
 }
 
+
+
 .tableReport {
     width: 80%!important;
 }
 
+
+.depSum h5{
+    padding: 2%;
+}
 
 /* Modal Header */
 .modal-header{
@@ -716,7 +733,8 @@ input[type=text]:disabled{
 }
 
 .row2{
-    height:80%
+    height:80%;
+    margin:2%;
 }
 
 .tableDep{
@@ -733,7 +751,9 @@ input[type=text]:disabled{
     border-radius: 12px;
 }
 
-
+h7~h8{
+    margin-left: 4%;
+}
 .addPatient{
     height: 50%;
     border: solid black 1px;

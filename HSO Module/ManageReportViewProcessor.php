@@ -307,7 +307,7 @@ if (isset($_POST['report'])) {
         <button id='confirmBtnEditReport' name='confirmBtnEditReport' onclick='changeRepStatus($reportId, \"$reportStatus\")'> Confirm        </button>
         </div>";
     }
-}
+
 
 echo"
     <div class='modal-footer'>
@@ -324,7 +324,7 @@ echo"
     </div>
     </div>
     ";
-
+}
 
 
 if (isset($_POST['changeStatus'])) {
@@ -338,7 +338,7 @@ if (isset($_POST['generate'])) {
       <thead>
             <tr>";
     if ($view == 1) {
-        echo   "<th scope='col'>Select All/Clear</th>";
+        echo   "<th scope='col'>Select</th>";
     } echo"
                 <th scope='col'>#</th>
                 <th scope='col'>Report ID</th>
@@ -383,8 +383,10 @@ if (isset($_POST['generate'])) {
 
 if (isset($_POST['options'])) {
     echo "
-    <button type='button' class='buttonTop reportButton' id='downloadGenerateReportBtn' onclick='downloadReports()'>Download Files</button>
-    <button type='button' class='buttonTop reportButton' id='cancelGenerateReportBtn' onclick='generateReport(2)'>Cancel</button>";
+    <button type='button' class='btn btn-success genButton' id='downloadGenerateReportBtn' onclick='downloadReports()'>Download Files</button>
+    <button type='button' class='btn btn-secondary genButton' id='cancelGenerateReportBtn' onclick='generateReport(2)'>Cancel</button>
+    <h9 id='DlRepNote'>Note: select report/s you want to download</h9>
+    ";
 }
 
 if (isset($_POST['download'])) {

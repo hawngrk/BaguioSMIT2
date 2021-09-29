@@ -277,7 +277,7 @@ include_once("../includes/database.php") ?>
 
 <script>
     function searchReport() {
-        var textSearch = document.getElementById("searchReport").value;
+        var textSearch = document.getElementById("searchReportHSO").value;
         if (textSearch === "") {
             $.ajax({
                 url: 'ManageReportViewProcessor.php',
