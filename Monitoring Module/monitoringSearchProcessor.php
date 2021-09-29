@@ -3,13 +3,11 @@ include("../includes/database.php");
 
 if (isset($_POST['search'])) {
     $search = $_POST['search'];
-    if ($search === "") {
+    if ($search == "") {
         $querySearch = "SELECT patient.patient_id, patient.patient_full_name, patient_details.patient_priority_group, CONCAT(patient_details.patient_house_address, ' ', patient_details.patient_barangay_address, ' ', patient_details.patient_CM_address, ' ', patient_details.patient_province) AS full_address, patient_contact_number FROM patient JOIN patient_details ON patient.patient_id = patient_details.patient_id;";
     } else {
         $querySearch = "SELECT patient.patient_id, patient.patient_full_name,  patient_details.patient_priority_group, CONCAT(patient_details.patient_house_address, ' ', patient_details.patient_barangay_address, ' ', patient_details.patient_CM_address, ' ', patient_details.patient_province) AS full_address, patient_contact_number FROM patient JOIN patient_details ON patient.patient_id = patient_details.patient_id WHERE patient.patient_id LIKE '$search%' OR patient.patient_full_name LIKE '$search%';";
     }
-
-
 
     echo "
     <thead>
@@ -27,6 +25,8 @@ if (isset($_POST['search'])) {
     $stmt->prepare($querySearch);
     $stmt->execute();
     $stmt->bind_result($patientID, $patientName, $category, $patientAddress, $contactNum);
+
+    
     while ($stmt->fetch()) {
         echo "<tr>
                 <td>$patientID</td>

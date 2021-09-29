@@ -969,3 +969,11 @@ input[name=vitals]{
 #postVacView button, #preVacView button{
     align-content: flex-end;
 }
+
+#postVac {
+    width: 110%;
+    font-size: smaller;
+    color: white!important;
+    border-radius: 14px;
+    border: solid 1px black;
+}
