@@ -103,8 +103,9 @@ include_once("../includes/database.php") ?>
         <!--Button for Uploading File-->
         <button type="button" class="buttonTransparent buttonTop archive" onclick="openModal('archived')">
             <i class="fas fa-inbox"></i>
+
         </button>
-<!--        <button id="uploadFileBtn" type="button" class="buttonTop">Upload File</button>-->
+        <button id="uploadFileBtn" type="button" class="buttonTop">Upload File</button>
 
         <!--Modal for uploading patient csv-->
         <!--To include uploading files limited to csv file only-->
@@ -119,17 +120,21 @@ include_once("../includes/database.php") ?>
                     <div class="row" id="upload-content">
                         <div class="col">
                             <div class="col-md-12 text-center">
-                                <button class="button" id="iconBrowse"><i class="fas fa-upload"></i></i></button>
+                                <button class="button" id="iconBrowse"
+                                        onclick="document.getElementById('fileUpload').click()">
+                                    <label for="fileUpload"><i class="fas fa-upload"></i></label>
+                                </button>
+                                <input id="fileUpload" type="file" style="display: none"
+                                       onchange="getUploadedFiles(this)" multiple/>
                                 <p><br> Upload a list of patients (.csv) </p>
                             </div>
                         </div>
 
                         <div class="col">
-                            <!--temporary uploading-->
                             <h6> Uploaded Files </h6>
-                            <p> prereg_09-19-2021_validates.csv</p>
-                            <p> prereg_09-21-2021_validates.csv</p>
-                            <!--insert backend process for reading the uploaded files-->
+                            <div id="uploadedFiles">
+
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -137,7 +142,9 @@ include_once("../includes/database.php") ?>
                     <button type="button" id="uploadFileCancelBtn" class="btn btn-secondary" data-dismiss="modal">
                         Cancel
                     </button>
-                    <button id="uploadFileConfirmBtn" class="btn btn-success"> Add</button>
+                    <button type="button" id="uploadFileConfirmBtn" class="btn btn-primary"
+                            name="patientUploadFile" onclick="uploadFiles()">Add
+                    </button>
                 </div>
             </div>
         </div>
@@ -426,7 +433,7 @@ include_once("../includes/database.php") ?>
                             Previous
                         </button>
                         <button type="button" id="addPatientMedCancelBtn" class="btn btn-secondary"> Cancel</button>
-                        <button type="button" class="btn btn-success" onclick="addPatient()"> Add </button>
+                        <button type="button" class="btn btn-primary" onclick="addPatient()"> Add </button>
                     </div>
                 </div>
             </div>
@@ -653,25 +660,22 @@ include_once("../includes/database.php") ?>
     }
 
     // Upload File
-    // var uploadFileBtn = document.getElementById("uploadFileBtn");
+    var uploadFileBtn = document.getElementById("uploadFileBtn");
     var uploadFileModal = document.getElementById("uploadFileModal");
     var uploadFileCancelBtn = document.getElementById("uploadFileCancelBtn");
     var uploadFileConfirmBtn = document.getElementById("uploadFileConfirmBtn");
     var uploadFileClose = document.getElementById("uploadFileClose");
 
-    // uploadFileBtn.onclick = function () {
-    //     uploadFileModal.style.display = "block";
-    // }
+    uploadFileBtn.onclick = function () {
+        document.getElementById("uploadedFiles").innerHTML = '';
+        uploadFileModal.style.display = "block";
+    }
 
     uploadFileCancelBtn.onclick = function () {
         uploadFileModal.style.display = "none";
     }
 
     uploadFileClose.onclick = function () {
-        uploadFileModal.style.display = "none";
-    }
-
-    uploadFileConfirmBtn.onclick = function () {
         uploadFileModal.style.display = "none";
     }
 
@@ -854,6 +858,30 @@ include_once("../includes/database.php") ?>
     function openModal(modal) {
         console.log(modal)
         document.getElementById(modal).style.display = "block";
+    }
+
+    function getUploadedFiles(item) {
+        for (var i = 0; i < item.files.length; i++) {
+            var element = document.createElement('p');
+            element.innerHTML = item.files[i].name;
+            document.getElementById("uploadedFiles").insertAdjacentElement("beforeend", element);
+        }
+    }
+
+    function uploadFiles() {
+        var files = document.getElementById("fileUpload").files;
+        var formData = new FormData();
+        formData.append('file', files[0]);
+        $.ajax({
+            url: 'UploadFile.php',
+            type: 'POST',
+            contentType: false,
+            processData: false,
+            data: formData,
+            success: function (result) {
+                uploadFileModal.style.display = "none";
+            }
+        });
     }
 </script>
 
