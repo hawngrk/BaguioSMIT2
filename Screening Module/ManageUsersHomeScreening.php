@@ -104,36 +104,82 @@
             </div>
         </div>
     </div>
-
-    <!-- Popper.JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
-    <!-- Bootstrap JS -->
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
-
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $('#sidebarCollapse').on('click', function () {
-                $('#sidebar').toggleClass('active');
-            });
-        });
-        var clicked = false;
-
-        function Toggle() {
-            var butt = document.getElementById('sidebarCollapse')
-            if (!clicked) {
-                clicked = true;
-                butt.innerHTML = "Menu <i class = 'fas fa-angle-double-right'><i>";
-            } else {
-                clicked = false;
-                butt.innerHTML = "<i class='fas fa-angle-left'></i> Menu";
-            }
-        }
-    </script>
-</body>
+    </body>
 
 </html>
 
 <script>
+     function searchPatient() {
+        var textSearch = document.getElementById("searchPatientVaxPer").value; 
+        $.ajax({
+            url: 'screeningSearchProcessor.php',
+            type: 'POST',
+            data: {"search": textSearch},
+            success: function (result) {
+                document.getElementById("patientTable").innerHTML = result;
+            }
+        });
+    }
+
+    function clickModalRow(patientId) {
+        // Modal Settings 
+        preVacView.style.display = "block";
+        newVaccineClose.onclick = function () {
+            preVacView.style.display = "none";
+        }
+
+        // Fetching Data from the Database Code
+        $.ajax({
+            url: 'screeningSearchProcessor.php',
+            type: 'POST',
+            data: {"modalScreening": patientId},
+            success: function (data){
+                document.getElementById('patientRow').innerHTML = data;
+            }
+        })
+    }
+
+    function btnViewPostVac(param) {
+        if (param == 'close') {
+            preVacView.style.display = "none";
+        } else {
+            var pulse = getElementById('pulseR');
+            var temp = getElementById('tempR');
+            var bp = getElementById('bpR');
+
+            $.ajax({
+                url: 'screeningSearchProcessor.php',
+                type: 'POST',
+                data: {'pulse':pulse, 'temp':temp, 'bp':bp},
+                success: function(postVat) {
+                    alert('Successfully Added to the Database.');
+                }
+            })
+        }
+    }
+</script>
+
+<script type="text/javascript">
+$(document).ready(function() {
+            $('#sidebarCollapse').on('click', function() {
+                $('#sidebar').toggleClass('active');
+            });
+        });
+var clicked = false;
+
+function Toggle() {
+    var butt = document.getElementById('sidebarCollapse')
+    if (!clicked) {
+        clicked = true;
+        butt.innerHTML = "Menu <i class = 'fas fa-angle-double-right'><i>";
+    } else {
+        clicked = false;
+        butt.innerHTML = "<i class='fas fa-angle-left'></i> Menu";
+    }
+}
+</script>
+
+<!-- <script>
     function searchPatient() {
         var textSearch = document.getElementById("searchPatientVaxPer").value; 
         $.ajax({
@@ -162,4 +208,4 @@
             }
         })
     }
-</script>
+</script> -->

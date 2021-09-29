@@ -69,17 +69,17 @@ if (isset($_POST['modalScreening'])) {
             <div class='col'>
             <h5>Pre-Vaccine Vitals:</h5>
             <form>
-            Pulse Rate: <input id='pulseR' type='text' name='vital'>
+            Pulse Rate: <input id='pulseR' type='text' name='vitals'>
             <br>
-            Temperature: <input id='tempR' type='text' name='vital'>
+            Temperature: <input id='tempR' type='text' name='vitals'>
             <br>
-            Blood Pressure: <input id='bpR' type='text' name='vital'>
+            Blood Pressure: <input id='bpR' type='text' name='vitals'>
             </form>
             </div>
             </div>
             <div class='modal-footer'>
-            <button onlcick=btnViewPostVac(add) type='button' class='btn btn-success'> Add</button>
-            <button onclick=btnViewPostVac(close) type='button' class='btn btn-danger'> Cancel</button>
+            <button onlcick=btnViewPostVac('ad') type='button' class='btn btn-success'> Add</button>
+            <button onclick=btnViewPostVac('close') type='button' class='btn btn-danger'> Cancel</button>
             </div>
             </div>
             ";
