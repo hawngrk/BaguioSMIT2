@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
     <title>Baguio SMIT+</title>
-
+    <link rel="icon" href="../img/FaviSMIT+.png" type="image/jpg">
     <!-- Our Custom CSS -->
     <link href="../css/style.css" rel="stylesheet">
 
@@ -89,7 +89,7 @@
             <div id="passportInt">
                 <h2 id="inputTxt"> Input Manually </h2>
                 <i class="fas fa-info-circle "></i>
-                <input id="passportId" type="text" placeholder="Passport ID"><i class="fas fa-sign-in-alt fa-2x""></i>
+                <input id="passportId" type="text" placeholder="Passport ID"><i class="fas fa-sign-in-alt""></i>
             </div>
             
 
@@ -130,7 +130,6 @@
 
     #passportInt {
         width: 40%;
-
         background-color: transparent;
         margin-left:31%;
     }

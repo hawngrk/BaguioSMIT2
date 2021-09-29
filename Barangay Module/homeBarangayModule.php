@@ -299,7 +299,7 @@ include_once("../includes/database.php")
     margin-left: 15% !important;
 }
 .counterCl {
-    background-color: white;
+    background-color: #f6f6f6;
     width: 30%;
     border-radius: 12px;
     display: block;
@@ -316,7 +316,7 @@ include_once("../includes/database.php")
 }
 #availableStubs,
 #stubDelegationNotice {
-    background-color: white;
+    background-color: #f6f6f6;
     width: 40%;
     border-radius: 12px;
     display: inline-block;

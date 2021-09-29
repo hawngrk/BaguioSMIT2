@@ -45,7 +45,10 @@ include_once("../includes/database.php") ?>
         </div>
 
         <ul class="list-unstyled components">
-            <h3 id="mainmenu">Main Menu</h3>
+            <h4 id="headingNav1"> Health Service Office </h4>
+            <hr>
+            <h5 id="headingNav2"> September 17, 2021 | 01:24 PM</h5>
+            <hr>
             <li>
                 <a href="#"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
             </li>
@@ -126,9 +129,10 @@ include_once("../includes/database.php") ?>
                             }
                             ?>
                         </select>
-
+                        <br>
+                        <br>
                         <label for="qty"> Total Vial Quantity Received: </label>
-                        <input type="text" id="qty" style="width:70%"><br>
+                        <input type="text" id="qty"><br>
                         <label for="dateStored">Date Stored</label>
                         <input type='date' id="dateStored" name="dateStored">
                         <label for="dateExp">Date of Expiration</label>
@@ -141,8 +145,8 @@ include_once("../includes/database.php") ?>
                         </select>
                     </div>
                     <div class="modal-footer">
-                        <button id="cancelBtnVaccine">Cancel</button>
-                        <button id="addVaccineBtn" type='submit' onclick="addVaccine()"> Add </button>
+                        <button id="cancelBtnVaccine" class="btn btn-secondary">Cancel</button>
+                        <button id="addVaccineBtn" class="btn btn-success"type='submit' onclick="addVaccine()"> Add </button>
 
                     </div>
                 </div>
@@ -200,8 +204,8 @@ include_once("../includes/database.php") ?>
                             </div>
                         </div>
                     <div class="modal-footer">
-                        <button id="cancelBtnNewVaccine"> Cancel</button>
-                        <button type='submit' id='addBtnNewVaccine' name='addBtnNewVaccine' onclick="addNewVaccine()"> Add </button>
+                        <button id="cancelBtnNewVaccine" class="btn btn-secondary"> Cancel</button>
+                        <button type='submit' id='addBtnNewVaccine' class="btn btn-success" name='addBtnNewVaccine' onclick="addNewVaccine()"> Add </button>
                     </div>
                     </div>
                 </div>
@@ -217,7 +221,7 @@ include_once("../includes/database.php") ?>
                     </button>
                 </div>
                 <div id = 'archivedContent' class="modal-body">
-                    <table class="table table-row table-hover" id="vaccineTable">
+                    <table class="table table-row table-hover tableDep" id="vaccineTable">
                         <thead>
                         <tr>
                             <th scope="col">#</th>
@@ -283,7 +287,7 @@ include_once("../includes/database.php") ?>
 <!--        </div>-->
 
 
-        <table class="table table-row table-hover" id="vaccineTable">
+        <table class="table table-row table-hover tableVax" id="vaccineTable">
             <thead>
             <tr>
                 <th scope="col">#</th>

@@ -24,6 +24,7 @@ p {
     margin-bottom: -12%;
 }
 
+
 a,
 a:hover,
 a:focus {
@@ -256,6 +257,10 @@ a.article:hover {
     background: rgb(165, 165, 165);
 }
 
+.search-container{
+    margin-bottom: 1%;
+}
+
 .buttonTransparent{
     background: transparent!important;
     border: transparent!important;
@@ -299,7 +304,7 @@ input[type=text]{
 
 
 
-#searchPatientVaxPer{
+#searchPatientVaxPer, #searchPatientEIR{
     width: 90%;
 }
 
@@ -322,9 +327,6 @@ hr {
     width: 70%;
 }
 
-#searchPatientEIR{
-    width: 90%;
-}
 
 input[type=textDesc]{
     height: 60%;
@@ -436,10 +438,14 @@ input[type=text1] {
     font-size: 85%;
 }
 
+
 .CounterReportContainer {
     margin-top: 10%;
 }
 
+.editRepBtn{
+    margin-top: 2%;
+}
 .counter-box {
     display: block;
     background: #f6f6f6;
@@ -502,12 +508,11 @@ input[type=text3],select{
 
 input[type=date]{
     width: 95%;
-    height:48%;
+    height:auto;
     margin-top: 2px;
     padding: 10px;
     display: inline-block;
     border-radius: 8px;
-   
 }
 
 .input{
@@ -707,7 +712,7 @@ input[type=text]:disabled{
     display: block;
     background: #f6f6f6;
     padding: 40px 20px 37px;
-    text-align: center
+    text-align: center;
 }
 
 .row2{
@@ -716,12 +721,19 @@ input[type=text]:disabled{
 
 .tableDep{
     width: 73%!important;
+    height: 60%;
+    margin-top: 10%;
+}
+.tableVax{
+    margin-top: 10%;
 }
 
 .tableBrgy {
     background-color: white;
     border-radius: 12px;
 }
+
+
 .addPatient{
     height: 50%;
     border: solid black 1px;

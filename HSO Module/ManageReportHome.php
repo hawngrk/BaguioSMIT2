@@ -236,18 +236,15 @@ include_once("../includes/database.php") ?>
             }
             ?>
 
-            <div id="generateReportOptions">
+            <div id="generateReportOptions" >
 
             </div>
 
-            <div id="invalidatedReportsModal" class="modal">
+            <div id="invalidatedReportsModal" class="modal-window">
 
             </div>
 
-            <div id="viewReportModal" class="modal">
-                <div class='modal-content container'>
-                    <h2 id='headerReviewReport'><span id='viewReportClose' class='close'>&times;</span></h2>
-                </div>
+            <div id="viewReportModal" class="modal-window">
             </div>
         </table>
     </div>

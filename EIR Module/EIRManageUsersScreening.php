@@ -70,8 +70,8 @@
 
              <!--Search Input and Button-->
              <div class="search-container">
-                    <input id="searchPatient" type="text" placeholder="Search" class="searchHome"name="searchPatient" onkeyup="searchPatient()">
-                    <button type="submit" id="searchPatientBtn" name="searchPatientBtn" onclick="searchPatient()">
+                    <input id="searchPatientEIR" type="text"  placeholder="Search" class="searchHome"name="searchPatient" onkeyup="searchPatient()">
+                    <button type="submit" name="searchPatientBtn" onclick="searchPatient()">
                         <i class="fa fa-search"></i>
                     </button>
             </div>

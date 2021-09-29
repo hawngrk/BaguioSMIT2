@@ -8,6 +8,8 @@
 
     <title>Baguio SMIT+</title>
 
+
+    <link rel="icon" href="../img/FaviSMIT+.png" type="image/jpg">
     <!-- Our Custom CSS -->
     <link href="../css/style.css" rel="stylesheet">
 

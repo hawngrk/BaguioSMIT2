@@ -46,7 +46,11 @@ include_once("../includes/database.php") ?>
         </div>
 
         <ul class="list-unstyled components">
-            <h3 id="mainmenu">Main Menu</h3>
+            <h4 id="headingNav1"> Health Service Office </h4>
+            <hr>
+            <h5 id="headingNav2"> September 17, 2021 | 01:24 PM</h5>
+            <hr>
+
             <li>
                 <a href="#"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
             </li>
@@ -133,7 +137,7 @@ include_once("../includes/database.php") ?>
                     <button type="button" id="uploadFileCancelBtn" class="btn btn-secondary" data-dismiss="modal">
                         Cancel
                     </button>
-                    <button id="uploadFileConfirmBtn" class="btn btn-primary"> Add</button>
+                    <button id="uploadFileConfirmBtn" class="btn btn-success"> Add</button>
                 </div>
             </div>
         </div>
@@ -422,7 +426,7 @@ include_once("../includes/database.php") ?>
                             Previous
                         </button>
                         <button type="button" id="addPatientMedCancelBtn" class="btn btn-secondary"> Cancel</button>
-                        <button type="button" class="btn btn-primary" onclick="addPatient()"> Add </button>
+                        <button type="button" class="btn btn-success" onclick="addPatient()"> Add </button>
                     </div>
                 </div>
             </div>

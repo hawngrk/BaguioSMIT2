@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
     <!-- Title -->
-    <title>SMIT+(Ssd) | Stub Distribute</title>
+    <title>SMIT+(SSD) | Stub Distribute</title>
 
     <link rel="icon" href="../img/FaviSMIT+.png" type="image/jpg">
     <!-- Our Custom CSS -->
@@ -87,8 +87,9 @@
             <div class="col">
                 <div class="row">
                     <div id="selectDeployment">
-                        <select onchange="updateDeploymentDetails(this.value)">
-                            <option value='' disabled selected hidden> Select Deployment </option>
+                        <h5>Select Deployment:</h5>
+                        <select id="selectDeploymentSSD" onchange="updateDeploymentDetails(this.value)">
+                            <option value='' disabled selected hidden> Click here to select deployment </option>
                         <?php
                         require_once("../require/getVaccinationDrive.php");
                         foreach ($vaccination_drive  as $vaccinationDrive) {
@@ -156,7 +157,6 @@
                 }
             });
         }
-
         function viewBarangays(id){
             $.ajax({
                 url: 'selectDeployment.php',
