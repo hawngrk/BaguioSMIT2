@@ -74,9 +74,9 @@
                 </div>
             </nav>
 
-             <!--Search Input and Button-->
+              <!--Search Input and Button-->
              <div class="search-container">
-                    <input id="searchPatientVaxPer" type="text" placeholder="Search" class="searchHome"name="searchPatient" onkeyup="searchPatient()">
+                    <input id="searchPatientVaxPer" type="text" placeholder="Search" class="searchHome" name="searchPatient" onkeyup="searchPatient()">
                     <button type="submit" id="searchPatientBtn" name="searchPatientBtn" onclick="searchPatient()">
                         <i class="fa fa-search"></i>
                     </button>
@@ -86,25 +86,35 @@
             <table class="table table-row table-hover tableBrgy" id="patientTable">
                 <thead>
                     <tr>
+                        <th scope="col">ID</th>
                         <th scope="col">Patient Name</th>
                         <th scope="col">Category</th>
                         <th scope="col">Complete Address</th>
                         <th scope="col">Contact Number</th>
+                        <th scope="col">Action</th>
                     </tr>
                 </thead>
                 <?php
                 include '../includes/showPatientDeets.php';
                 ?>
             </table>
+            <div id="postVacView" class="modal-window">
+                <div class="content-modal">
+                <div class="modal-header">
+                        <h3 class="modal-title">Post-Vaccine Vitals</h3>
+                        <span id="newVaccineClose" class="close">&times;</span>
+                    </div>
+                    <div class="modal-body" id="patientRow"></div>
+                </div>
+            </div>
+            </div>
         </div>
     </div>
-
-
 </html>
 
 <script>
      function searchPatient() {
-        var textSearch = document.getElementById("searchPatient").value; 
+        var textSearch = document.getElementById("searchPatientVaxPer").value; 
         $.ajax({
             url: 'monitoringSearchProcessor.php',
             type: 'POST',
@@ -113,6 +123,43 @@
                 document.getElementById("patientTable").innerHTML = result;
             }
         });
+    }
+
+    function clickModalRow(patientId) {
+        // Modal Settings 
+        postVacView.style.display = "block";
+        newVaccineClose.onclick = function () {
+            postVacView.style.display = "none";
+        }
+
+        // Fetching Data from the Database Code
+        $.ajax({
+            url: 'monitoringSearchProcessor.php',
+            type: 'POST',
+            data: {"modalRes": patientId},
+            success: function (data){
+                document.getElementById('patientRow').innerHTML = data;
+            }
+        })
+    }
+
+    function btnViewPostVac(param) {
+        if (param == 'close') {
+            postVacView.style.display = "none";
+        } else {
+            var pulse = getElementById('pulseR');
+            var temp = getElementById('tempR');
+            var bp = getElementById('bpR');
+
+            $.ajax({
+                url: 'monitoringSearchProcessor.php',
+                type: 'POST',
+                data: {'pulse':pulse, 'temp':temp, 'bp':bp},
+                success: function(postVat) {
+                    alert('Successfully Added to the Database.');
+                }
+            })
+        }
     }
 </script>
 
