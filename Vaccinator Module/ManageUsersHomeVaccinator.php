@@ -81,50 +81,36 @@
             <table class="table table-row table-hover tableBrgy" id="patientTable">
                 <thead>
                     <tr>
-                        <th scope="col">Name</th>
+                        <th scope="col">ID</th>
+                        <th scope="col">Patient Name</th>
                         <th scope="col">Category</th>
                         <th scope="col">Complete Address</th>
                         <th scope="col">Contact Number</th>
+                        <th scope="col">Action</th>
                     </tr>
                 </thead>
                 <?php
-                 include '../includes/showPatientDeets.php';
+                 include '../includes/justPatientDeets.php';
                 ?>
             </table>
+            <div id="justVacView" class="modal-window">
+                <div class="content-modal">
+                <div class="modal-header">
+                        <h3 class="modal-title">View Patient Details</h3>
+                        <span id="newVaccineClose" class="close">&times;</span>
+                    </div>
+                    <div class="modal-body" id="patientRow"></div>
+                </div>
+            </div>
         </div>
     </div>
-
-    <!-- Popper.JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
-    <!-- Bootstrap JS -->
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
-
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $('#sidebarCollapse').on('click', function () {
-                $('#sidebar').toggleClass('active');
-            });
-        });
-        var clicked = false;
-
-        function Toggle() {
-            var butt = document.getElementById('sidebarCollapse')
-            if (!clicked) {
-                clicked = true;
-                butt.innerHTML = "Menu <i class = 'fas fa-angle-double-right'><i>";
-            } else {
-                clicked = false;
-                butt.innerHTML = "<i class='fas fa-angle-left'></i> Menu";
-            }
-        }
-    </script>
 </body>
 
 </html>
 
 <script>
     function searchPatient() {
-        var textSearch = document.getElementById("searchPatient").value; 
+        var textSearch = document.getElementById("searchPatientVaxPer").value; 
         $.ajax({
             url: 'vaccinatorSearchProcessor.php',
             type: 'POST',
@@ -133,5 +119,42 @@
                 document.getElementById("patientTable").innerHTML = result;
             }
         });
+    }
+
+    function clickModalRow(patientId) {
+        // Modal Settings 
+        justVacView.style.display = "block";
+        newVaccineClose.onclick = function () {
+            justVacView.style.display = "none";
+        }
+
+        // Fetching Data from the Database Code
+        $.ajax({
+            url: 'vaccinatorSearchProcessor.php',
+            type: 'POST',
+            data: {"viewPatientDetails": patientId},
+            success: function (data){
+                document.getElementById('patientRow').innerHTML = data;
+            }
+        })
+    }
+
+    function btnViewPostVac(param) {
+        if (param == 'close') {
+            justVacView.style.display = "none";
+        } else {
+            var pulse = getElementById('pulseR');
+            var temp = getElementById('tempR');
+            var bp = getElementById('bpR');
+
+            $.ajax({
+                url: 'vaccinatorSearchProcessor.php',
+                type: 'POST',
+                data: {'pulse':pulse, 'temp':temp, 'bp':bp},
+                success: function(postVat) {
+                    alert('Successfully Added to the Database.');
+                }
+            })
+        }
     }
 </script>
