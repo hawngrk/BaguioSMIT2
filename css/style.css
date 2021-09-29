@@ -921,3 +921,51 @@ h6 {
 .patientQueueButtons {
     display: flex;
 }
+
+/*CSS For Personnel Vaccination*/
+#patientRow h6, #patientRow form{
+    margin-left: 4%;
+}
+
+#patientRow p{
+		margin-left: 7%;   		
+        font-size: 90%;
+		color: black;
+}
+
+#patientRow form{
+    margin-bottom: 3%;
+}
+
+input[name=vitals]{
+    border-radius: 5px;
+    border: solid black 1px;
+    width: 70%;
+}
+#pulseR {
+    margin-left: 7%;
+}
+#tempR {
+    margin-left: 4%;
+}
+#patientRow h5 {
+    margin-left: 3%;
+}
+
+#postVacView .content-modal {
+    padding: 0%;
+    width: 81%;
+}
+
+#preVacView .content-modal {
+    padding: 0%;
+    width: 81%;
+}
+
+#postVacView h6, #preVacView h6{
+    display: inline;
+}
+
+#postVacView button, #preVacView button{
+    align-content: flex-end;
+}
