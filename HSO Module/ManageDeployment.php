@@ -520,7 +520,7 @@ include_once("../includes/database.php") ?>
                         <td>$stubs</td>
                         <td>
                             <div style='text-align: left;'>
-                                <button class='btn btn-warning' onclick='archive(0, clickArchive, $driveId )'>unarchive <i class='fas fa-box-open'></i></button>
+                                <button class='btn btn-warning' onclick='archive(0, clickArchive, $driveId )'><i class='fas fa-box-open'></i>unarchive </button>
                             </div>
                         </td>
              
@@ -544,7 +544,7 @@ include_once("../includes/database.php") ?>
 <!--        </div>-->
 
         <div id="unarchiveContent">
-        <table class="table table-row table-hover tableDep" id = "driveTable">
+        <table class="table table-row table-hover tableDeploy" id = "driveTable">
             <thead>
             <tr>
                 <th scope="col">#</th>

@@ -98,7 +98,7 @@ include_once("../includes/database.php") ?>
 
         <!-- Page Content  -->
         <button type="button" class="buttonTransparent buttonTop archive" onclick="openModal('archived')">
-            <i class="fas fa-inbox"></i>
+            <i class="fas fa-inbox fa-lg"></i>
         </button>
 
         <button id="addVaccineBtn" type="button" class="buttonTop">Add Vaccine</button>
@@ -221,6 +221,7 @@ include_once("../includes/database.php") ?>
                     </button>
                 </div>
                 <div id = 'archivedContent' class="modal-body">
+
                     <table class="table table-row table-hover tableDep" id="vaccineTable">
                         <thead>
                         <tr>
@@ -267,8 +268,8 @@ include_once("../includes/database.php") ?>
                 <td>$vaccExp</td>
                 <td>$batchQty</td>
                 <td>
-                    <div style='text-align: left;'>
-                        <button class='buttonTransparent hyperlink' onclick='archive(0, clickArchive, $vaccineLotId )'>unarchive <i class='fas fa-box-open'></i></button>
+                    <div style='text-align: center;'>
+                        <button class='btn btn-warning' onclick='archive(0, clickArchive, $vaccineLotId )'><i class='fas fa-box-open'></i> unarchive</button>
                     </div>
                 </td>
                 </tr>";

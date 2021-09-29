@@ -315,7 +315,7 @@ input[type=text]{
 
 
 
-#searchPatientVaxPer, #searchPatientEIR{
+#searchPatientVaxPer, #searchPatientEIR, #searchPatientBrgy{
     width: 95%;
 }
 
@@ -334,8 +334,12 @@ hr {
     width: 60%;
 }
 
-#searchReportHSO, #searchpatientHSO, #searchVaccineHSO{
+#searchReportHSO, #searchVaccineHSO{
     width: 70%;
+}
+
+#searchpatientHSO{
+    width: 75%;
 }
 
 
@@ -364,7 +368,7 @@ input[type=textDesc]{
     margin: 5% auto;
     /* 15% from the top and centered */
     border: 1px solid #888;
-    width: 50%;
+    width: auto;
     /*Could be more or less, depending on screen size */
 }
 
@@ -588,7 +592,7 @@ input[type=date]{
     margin: 5% auto;
     /* 15% from the top and centered */
     border: 1px solid #888;
-    width: 50%;
+    width: fit-content;
     /*Could be more or less, depending on screen size */
     border-radius: 12px;
 }
@@ -738,6 +742,11 @@ input[type=text]:disabled{
 }
 
 .tableDep{
+    width: fit-content;
+    height: auto;
+}
+
+.tableDeploy{
     width: 73%!important;
     height: 60%;
     margin-top: 10%;

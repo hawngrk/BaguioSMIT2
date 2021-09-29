@@ -116,7 +116,7 @@ include_once("../includes/database.php")
 
         <!--Search Input and Button-->
         <div class="search-container">
-                    <input id="searchPatient" type="text" placeholder="Search" class="searchHome"name="searchPatient" onkeyup="searchPatient()">
+                    <input id="searchPatientQueue" type="text" placeholder="Search" class="searchHome"name="searchPatient" onkeyup="searchPatient()">
                     <button type="submit" id="searchPatientBtn" name="searchPatientBtn" onclick="searchPatient()">
                         <i class="fa fa-search"></i>
                     </button>
@@ -170,7 +170,7 @@ include_once("../includes/database.php")
 </html>
 <script>
     function searchPatient() {
-        var textSearch = document.getElementById("searchPatient").value; 
+        var textSearch = document.getElementById("searchPatientQueue").value;
         $.ajax({
             url: 'ManagePatientProcessor.php',
             type: 'POST',

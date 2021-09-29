@@ -102,7 +102,7 @@ include_once("../includes/database.php") ?>
 
         <!--Button for Uploading File-->
         <button type="button" class="buttonTransparent buttonTop archive" onclick="openModal('archived')">
-            <i class="fas fa-inbox"></i>
+            <i class="fas fa-inbox fa-lg"></i>
 
         </button>
         <button id="uploadFileBtn" type="button" class="buttonTop">Upload File</button>
@@ -506,7 +506,7 @@ include_once("../includes/database.php") ?>
                         <td>$contact</td>
                         <td>
                             <div style='text-align: left;'>
-                                <button class='buttonTransparent hyperlink' onclick='archive(0, clickArchive, $id)'>unarchive<i class='fa fa-archive'></i></button>
+                                <button class='btn btn-warning' onclick='archive(0, clickArchive, $id)'><i class='fa fa-archive'></i> unarchive</button>
                             </div>
                         </td>
                     </tr>";
@@ -519,7 +519,7 @@ include_once("../includes/database.php") ?>
         </div>
 
             <div class="search-container">
-                <input id="searchPatient" type="text" placeholder="Search" class="searchHome"name="searchPatient" onkeyup="searchPatient()">
+                <input id="searchPatientHSO" type="text" placeholder="Search" class="searchHome"name="searchPatient" onkeyup="searchPatient()">
                 <button type="submit" id="searchPatientBtn" name="searchPatientBtn" onclick="searchPatient()">
                     <i class="fa fa-search"></i>
                 </button>
@@ -750,7 +750,7 @@ include_once("../includes/database.php") ?>
     }
 
     function searchPatient() {
-        var textSearch = document.getElementById("searchPatient").value;
+        var textSearch = document.getElementById("searchPatientHSO).value;
         $.ajax({
             url: '../Barangay Module/ManagePatientProcessor.php',
             type: 'POST',

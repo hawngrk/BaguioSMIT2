@@ -115,8 +115,8 @@
 
             <!--Search Input and Button-->
             <div class="search-container">
-                    <input id="searchPatient" type="text" placeholder="Search" class="searchHome"name="searchPatient" onkeyup="searchPatient()">
-                    <button type="submit" id="searchPatientBtn" name="searchPatientBtn" onclick="searchPatient()">
+                    <input id="searchPatientBrgy" type="text" placeholder="Search" class="searchHome"name="searchPatient" onkeyup="searchPatientBrgy()">
+                    <button type="submit" id="searchPatientBtn" name="searchPatientBtn" onclick="searchPatientBrgy()">
                         <i class="fa fa-search"></i>
                     </button>
             </div>
@@ -161,8 +161,8 @@
     }
 </script>
 <script>
-    function searchPatient() {
-        var textSearch = document.getElementById("searchPatient").value; 
+    function searchPatientBrgy() {
+        var textSearch = document.getElementById("searchPatientBrgy").value;
         $.ajax({
             type: 'POST',
             url: 'ManagePatientProcessor.php',
