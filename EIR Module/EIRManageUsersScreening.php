@@ -68,10 +68,12 @@
                 </div>
             </nav>
 
+            <button id="addPatientAccount" type="button" class="buttonTop">Add Patient Account</button>
+
              <!--Search Input and Button-->
              <div class="search-container">
                     <input id="searchPatientEIR" type="text"  placeholder="Search" class="searchHome"name="searchPatient" onkeyup="searchPatient()">
-                    <button type="submit" name="searchPatientBtn" onclick="searchPatient()">
+                    <button type="submit" name="searchPatientEIRBtn" onclick="searchPatient()">
                         <i class="fa fa-search"></i>
                     </button>
             </div>
@@ -79,18 +81,219 @@
             <!--Table Part-->
             <table class="table table-row table-hover tableBrgy" id="patientTable">
             <thead>
-                <tr>
+                <tr class="labelRow">
+                    <th scope="col"> Patient ID</th>
                     <th scope="col">Patient Name</th>
                     <th scope="col">Category</th>
                     <th scope="col">Complete Address</th>
                     <th scope="col">Contact Number</th>
+                    <th scope="col"></th>
                 </tr>
             </thead>
                 <?php
-                include '../includes/showPatientDeets.php';
+                include '../includes/showRegisteredPatients.php';
                 ?>
             </table>
         </div>
+        <!--Patient Add User Modal-->
+        <div id="addPatientModal" class="modal-window">
+            <div class="content-modal">
+                <div class="modal-header">
+                    <h4 class="modal-title">Add User | Patient - Information</h4>
+                    <button type="button" id="addPatientInfoClose" class="close" data-dismiss="modal">&times;
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="personalInfo">
+                        <h5> Personal Information </h5>
+                        <div class="row">
+                            <div class="col">
+                                <label for="lname">Last Name</label>
+                                <input type="text3" id="lname" class='input' name="lastname"
+                                       placeholder="Input Answer Here">
+                            </div>
+                            <div class="col">
+                                <label for="fname">First Name</label>
+                                <input type="text3" id="fname" class='input' name="firstname"
+                                       placeholder="Input Answer Here">
+
+                            </div>
+                            <div class="col">
+                                <label for="mname">Middle Name</label>
+                                <input type="text3" id="mname" class='input' name="middlename"
+                                       placeholder="Input Answer Here">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <label class="label1" for="suffix">Suffix</label><br>
+                                <select id="suffix" name="suffix">
+                                    <option selected value="">None</option>
+                                    <option value="sr">Sr</option>
+                                    <option value="jr">Jr</option>
+                                    <option value="I">I</option>
+                                    <option value="II">II</option>
+                                    <option value="III">III</option>
+                                </select>
+                            </div>
+                            <div class="col">
+                                <label class="label1" for="gender"> Gender </label>
+                                <select class="formControl" id="gender" name="gender">
+                                    <option disabled selected>Select a Gender...</option>
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                </select>
+                            </div>
+                            <div class="col">
+                                <label class="label1" for="date"> Birthdate </label>
+                                <input type="date" id="date" name="birthdate">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-4">
+                                <label class="label1" for="occupation">Occupation</label>
+                                <input type="text3" id="occupation" class='input' name="middlename"
+                                       placeholder="Input Answer Here">
+                            </div>
+                            <div class="col-4">
+                                <label class="label1" for="contactNum">Contact Number</label>
+                                <input type="text3" id="contactNum" class='input' name="contactNum"
+                                       placeholder="09XX-XXX-XXXX">
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <hr>
+                    <div class="categoryInfo">
+                        <h5> Category Information </h5>
+                        <div class="row">
+                            <div class="col">
+                                <label for="priorityGroup">Priority Group</label>
+                                <select class="formControl" id="priorityGroup" name="priorityGroup">
+                                    <option disabled selected>Select a Category Group...</option>
+                                    <option value="A1: Health Care Workers">A1: Health Care Workers</option>
+                                    <option value="A2: Senior Citizens">A2: Senior Citizens</option>
+                                    <option value="A3: Adult with Comorbidity">A3: Adult with Comorbidity</option>
+                                    <option value="A4: Frontliner">A4: Frontline Personnel in Essential Sector, including Uniformed
+                                        Personnel
+                                    </option>
+                                    <option value="A5: Indigent">A5: Indigent Population</option>
+                                    <option value="A6: ROP">A6: Rest of the Population</option>
+                                </select>
+                            </div>
+                            <div class="col">
+                                <label for="categoryID">Category ID</label><br>
+                                <select id="categoryID" name="categoryID">
+                                    <option disabled selected>Select a Category ID...</option>
+                                    <option value="passport">PASSPORT</option>
+                                    <option value="birth">BIRTH</option>
+                                    <option value="others"> OTHER ID </option>
+                                </select>
+                            </div>
+                            <div class="col">
+                                <label for="categoryNo"> Category ID No.</label>
+                                <input type="text3" id="categoryNo" class='input' name="categoryNo"
+                                       placeholder="Input Answer Here">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-4">
+                                <label class="label1" for="philHealth"> PhilHealth ID No.</label>
+                                <input type="text3" id="philHealth" class='input' name="philHealth"
+                                       placeholder="Input Answer Here">
+                            </div>
+                            <div class="col-4">
+                                <label class="label1" for="pwdID"> PWD ID No.</label>
+                                <input type="text3" id="pwdID" class='input' name="pwdID"
+                                       placeholder="Input Answer Here">
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <hr>
+                    <div class="addressInfo">
+                        <h5> Address Information </h5>
+                        <div class="row">
+                            <div class="col-8">
+                                <label for="street">Street Name</label>
+                                <input type="text3" id="street" class='input' name="street"
+                                       placeholder="Input Street Name">
+                            </div>
+                            <div class="col-4">
+                                <div id="barangayList">
+                                    <label for="barangay"> Barangay </label>
+                                    <select>
+                                        <option value="" disabled selected hidden> Select Barangay</option>
+                                        <option value=""> Select Barangay </option>
+                                        <?php
+                                        require_once("../require/getBarangay.php");
+                                        foreach($barangays as $barangay){
+                                            $id = $barangay-> getBarangayName();
+                                            echo "<option value=$id>$id</option>";
+                                        }
+                                        ?>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <label class="label1" for="city">City/Town</label>
+                                <input type="text3" id="city" class='input' name="city" placeholder="City/Town"
+                                       disabled="disabled">
+                            </div>
+                            <div class="col">
+                                <label class="label1" for="region">Region</label>
+                                <input type="text3" id="region" class='input' name="region" placeholder="Region"
+                                       disabled="disabled">
+                            </div>
+
+                            <div class="col">
+                                <label class="label1" for="state">State/Province</label>
+                                <input type="text3" id="state" class='input' name="state"
+                                       placeholder="State/Province" disabled="disabled">
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <hr>
+                    <div class="medicalInfo">
+                        <h5> Medical Information </h5>
+                        <div class="row">
+                            <div class="col-4">
+                                <label for="allergy"> Allergy with Vaccine? </label>
+                                <select class="formControl" id="allergy" name="allergy">
+                                    <option disabled selected>Select Answer...</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="none">None</option>
+                                </select>
+                            </div>
+                            <div class="col-4">
+                                <label for="comorbidity"> With Comorbidity? </label>
+                                <select id="comorbidity" name="comorbidity" onchange="showComorbiditiesList()">
+                                    <option disabled selected>Select Answer...</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="none">None</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="comorbiditiesList">
+                        <!--Include list of Comorbidities in DB-->
+                    </div>
+                    <div class="row">
+                        <div class="consent">
+                            <input type="checkbox" name="accept" value="accept" id="accept">
+                            <label> I have accept and understand the <a href="#"> Terms and Condition. </a> </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="addPatientBtn" class="btn btn-success" onclick="addPatient()">Done</button>
+                </div>
+            </div>
+        </div>
+
     </div>
 
     <!-- Popper.JS -->
@@ -133,6 +336,70 @@
             }
         });
     }
+
+    function showComorbiditiesList() {
+
+    }
+
+
+    function addPatient(){
+        notificationModal.style.display = "block";
+        var last = document.getElementById("lname").value;
+        var first = document.getElementById("fname").value;
+        var middle = document.getElementById("mname").value;
+        var suffix = document.getElementById("suffix").value;
+        var priority = document.getElementById("priority").value;
+        var gender = document.getElementById("gender").value;
+        var occupation = document.getElementById("occupation").value;
+        var birthday = document.getElementById("date").value;
+        var contact = document.getElementById("number").value;
+        var street = document.getElementById("street").value;
+        var brgy = document.getElementById("barangay").value;
+        var city = document.getElementById("city").value;
+        var state = document.getElementById("state").value;
+        var region = document.getElementById("region").value;
+
+        $.ajax({
+            url: '../Barangay Module/PHP Processes/ManagePatientProcessor.php',
+            type: 'POST',
+            data: {lastname: last, firstname: first, middlename: middle, suffix: suffix, priority: priority, gender: gender, occupation: occupation, birthday: birthday, contactnumber: contact, street: street, barangay: brgy, city: city, state: state, region: region },
+            success: function (result) {
+                document.getElementById("patientMedBackgroundModal").style.display = "none";
+                document.getElementById("patientTable").innerHTML = "";
+                document.getElementById("patientTable").innerHTML = result;
+            }
+        });
+    }
+
 </script>
+
+<script>
+    //modals
+    var addPatientModal = document.getElementById("addPatientModal");
+
+    //buttons
+    var addPatientAccountButton = document.getElementById("addPatientAccount");
+    var closeAddPatientModal = document.getElementById("addPatientInfoClose");
+
+    var sucess = document.getElementById("addPatientBtn");
+
+
+    //open
+    addPatientAccountButton.onclick = function () {
+        addPatientModal.style.display = "block";
+    }
+
+    //close
+    closeAddPatientModal.onclick = function () {
+        addPatientModal.style.display = "none";
+    }
+
+    //success
+    sucess.onclick = function (){
+        addPatientModal.style.display = "none";
+    }
+
+</script>
+
 
 

@@ -15,7 +15,7 @@ if (isset($_POST['deploymentId'])) {
     $stmt->fetch();
     $stmt->close();
 
-    echo "<h2>Deployment Summary</h2>
+    echo "
             <h5> Site: $site </h5>
             <br>
             <h5> Brand: $brand </h5>
@@ -87,12 +87,12 @@ if (isset($_POST['viewBarangays'])) {
     while ($stmt->fetch()) {
         echo "            <tr>
                                 <th scope='row'> $barangay</th>
-                                <td><input type='number' min='0' max='100'></td>
-                                <td><input type='number' min='0' max='100'></td>
-                                <td><input type='number' min='0' max='100'></td>
-                                <td><input type='number' min='0' max='100'></td>
-                                <td><input type='number' min='0' max='100'></td>
-                                <td><input type='number' min='0' max='100'></td>
+                                <td><input type='number' min='0' max='1500'></td>
+                                <td><input type='number' min='0' max='1500'></td>
+                                <td><input type='number' min='0' max='1500'></td>
+                                <td><input type='number' min='0' max='1500'></td>
+                                <td><input type='number' min='0' max='1500'></td>
+                                <td><input type='number' min='0' max='1500'></td>
                           </tr>";
     }
     $stmt->close();

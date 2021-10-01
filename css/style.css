@@ -279,8 +279,6 @@ a.article:hover {
     height: 5%;
 }
 
-
-
 .hyperlink{
     text-decoration: underline;
     color: dodgerblue;
@@ -316,7 +314,7 @@ input[type=text]{
 
 
 #searchPatientVaxPer, #searchPatientEIR, #searchPatientBrgy{
-    width: 95%;
+    width: 80%;
 }
 
 hr {
@@ -520,8 +518,6 @@ input[type=text1] {
 
 /*Text Inputs and drop down menu*/
 input[type=text3],select{
-    width: 30%;
-    padding: 10px;
     display: inline-block;
     border-radius: 8px;
     margin-top: -1%;
@@ -531,7 +527,7 @@ input[type=date]{
     width: 95%;
     height:auto;
     margin-top: 2px;
-    padding: 10px;
+    padding: 3px;
     display: inline-block;
     border-radius: 8px;
 }
@@ -633,7 +629,7 @@ img{
 /*Text Inputs*/
 input[type=text3],select{
     width: 95%;
-    padding: 12px;
+    padding: 5px;
     display: inline-block;
     border: 2px solid #ccc;
     border-radius: 8px;
@@ -1005,4 +1001,89 @@ input[name=vitals]{
     color: white!important;
     border-radius: 14px;
     border: solid 1px black;
+}
+
+/*SSD MODULE CSS*/
+#selectDeployment{
+    width: 60%;
+    border-radius: 12px;
+    display: inline-block;
+    margin-left: 7%;
+    height: 20%;
+}
+
+#healthDistrictContainer{
+    padding-top: 2%;
+    background-color: white;
+    width: 100%;
+    border-radius: 12px;
+    display: inline-block;
+    margin-left: 7%;
+}
+
+#deploymentSummary, #deploymentQueue{
+    padding: 2%;
+    background-color: white;
+    width: 100%;
+    border-radius: 12px;
+    display: inline-block;
+    margin-left: 7%;
+    margin-right: 7%;
+}
+
+#vaccineDeployments{
+    padding-top: 2%;
+    width: 95%;
+    border-radius: 12px;
+    display: inline-block;
+    margin-right: 7%;
+    padding: 2%;
+    background-color: #f6f6f6;
+}
+
+#totalPopulation,#totalPopulationPerHD{
+    padding: 2%;
+    background-color: #f6f6f6;
+    width: 100%;
+    border-radius: 12px;
+    display: inline-block;
+    margin-left: 7%;
+    margin-right: 7%;
+}
+
+#totalPopulation{
+    margin-bottom: 2%;
+}
+
+#vaccineDeploymentContent{
+    margin: 5%;
+}
+
+
+.tableBrgy {
+    background-color: white;
+    border-radius: 12px;
+}
+
+#deploymentSummary{
+    margin-top: 12%;
+    background-color: #f6f6f6;
+}
+
+.deploymentSummaryContents,.deploymentQueueContents, .labels{
+    margin-left: 4%;
+}
+
+/*CSS for EIR MODULE*/
+.labelRow{
+    text-align: center;
+}
+
+input[type=checkbox]{
+    margin: 30px 0px 0px 58px;
+}
+
+.personalInfo,.categoryInfo,.addressInfo,.medicalInfo{
+    margin-left: 40px;
+    margin-right: 40px;
 }
