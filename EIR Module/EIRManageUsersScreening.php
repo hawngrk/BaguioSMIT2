@@ -13,24 +13,16 @@
     <link href="../css/style.css" rel="stylesheet">
 
     <!-- Bootstrap-->
-    <script crossorigin="anonymous" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-            src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-    <script crossorigin="anonymous" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-            src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script crossorigin="anonymous" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-            src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-    <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" rel="stylesheet">
+    <script crossorigin="anonymous" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script crossorigin="anonymous" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script crossorigin="anonymous" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" rel="stylesheet">
     <!--jQuery-->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <!-- Font Awesome JS -->
     <script src="https://kit.fontawesome.com/fcdb0fe9f3.js" crossorigin="anonymous"></script>
-    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js"
-            integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ"
-            crossorigin="anonymous"></script>
-    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js"
-            integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY"
-            crossorigin="anonymous"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
 
 </head>
 
@@ -80,8 +72,7 @@
 
         <!--Search Input and Button-->
         <div class="search-container">
-            <input id="searchPatientEIR" type="text" placeholder="Search" class="searchHome" name="searchPatient"
-                   onkeyup="searchPatient()">
+            <input id="searchPatientEIR" type="text"  placeholder="Search" class="searchHome"name="searchPatient" onkeyup="searchPatient()">
             <button type="submit" name="searchPatientEIRBtn" onclick="searchPatient()">
                 <i class="fa fa-search"></i>
             </button>
@@ -183,8 +174,7 @@
                                 <option value="A1: Health Care Workers">A1: Health Care Workers</option>
                                 <option value="A2: Senior Citizens">A2: Senior Citizens</option>
                                 <option value="A3: Adult with Comorbidity">A3: Adult with Comorbidity</option>
-                                <option value="A4: Frontliner">A4: Frontline Personnel in Essential Sector, including
-                                    Uniformed
+                                <option value="A4: Frontliner">A4: Frontline Personnel in Essential Sector, including Uniformed
                                     Personnel
                                 </option>
                                 <option value="A5: Indigent">A5: Indigent Population</option>
@@ -197,7 +187,7 @@
                                 <option disabled selected>Select a Category ID...</option>
                                 <option value="passport">PASSPORT</option>
                                 <option value="birth">BIRTH</option>
-                                <option value="others"> OTHER ID</option>
+                                <option value="others"> OTHER ID </option>
                             </select>
                         </div>
                         <div class="col">
@@ -234,11 +224,11 @@
                                 <label for="barangay"> Barangay </label>
                                 <select>
                                     <option value="" disabled selected hidden> Select Barangay</option>
-                                    <option value=""> Select Barangay</option>
+                                    <option value=""> Select Barangay </option>
                                     <?php
                                     require_once("../require/getBarangay.php");
-                                    foreach ($barangays as $barangay) {
-                                        $id = $barangay->getBarangayName();
+                                    foreach($barangays as $barangay){
+                                        $id = $barangay-> getBarangayName();
                                         echo "<option value=$id>$id</option>";
                                     }
                                     ?>
@@ -248,17 +238,20 @@
                     </div>
                     <div class="row">
                         <div class="col">
-                            <label class="label1" for="city">City/Municipality</label>
-                            <input type="text3" id="city" class='input' name="city" disabled="disabled">
+                            <label class="label1" for="city">City/Town</label>
+                            <input type="text3" id="city" class='input' name="city" placeholder="City/Town"
+                                   disabled="disabled">
                         </div>
                         <div class="col">
-                            <label class="label1" for="province">Province</label>
-                            <input type="text3" id="province" class='input' name="province" disabled="disabled">
+                            <label class="label1" for="region">Region</label>
+                            <input type="text3" id="region" class='input' name="region" placeholder="Region"
+                                   disabled="disabled">
                         </div>
 
                         <div class="col">
-                            <label class="label1" for="region">Region</label>
-                            <input type="text3" id="region" class='input' name="region" disabled="disabled">
+                            <label class="label1" for="state">State/Province</label>
+                            <input type="text3" id="state" class='input' name="state"
+                                   placeholder="State/Province" disabled="disabled">
                         </div>
                     </div>
                 </div>
@@ -270,90 +263,47 @@
                         <div class="col-4">
                             <label for="allergy"> Allergy with Vaccine? </label>
                             <select class="formControl" id="allergy" name="allergy">
-                                <option selected disabled>Select Answer...</option>
-                                <option value="none">None</option>
+                                <option disabled selected>Select Answer...</option>
                                 <option value="yes">Yes</option>
+                                <option value="none">None</option>
                             </select>
                         </div>
                         <div class="col-4">
                             <label for="comorbidity"> With Comorbidity? </label>
-                            <select class="" id="comorbidity" name="comorbidity">
-                                <option selected disabled>Select Answer...</option>
-                                <option value="none"> None</option>
-                                <option value="yes"> Yes</option>
+                            <select id="comorbidity" name="comorbidity" onchange="showComorbiditiesList()">
+                                <option disabled selected>Select Answer...</option>
+                                <option value="yes">Yes</option>
+                                <option value="none">None</option>
                             </select>
                         </div>
                     </div>
                 </div>
-                <div id="comorbidityList">
-                    <h5> Comorbidity Information</h5>
-                    <div class="listOfComorbidity">
-                        <div class="row">
-                            <div class="col">
-                                <input type="checkbox" name="hypertension" value="hypertension" id="hypertension">
-                                <label> Hypertension</label>
-                            </div>
-                            <div class="col">
-                                <input type="checkbox" name="heartDisease" value="heartDisease" id="heartDisease">
-                                <label> Heart Disease</label>
-                            </div>
-                            <div class="col">
-                                <input type="checkbox" name="kidneyDisease" value="kidneyDisease" id="kidneyDisease">
-                                <label> Kidney Disease </label>
-                            </div>
-                            <div class="col">
-                                <input type="checkbox" name="diabetes" value="diabetes" id="diabetes">
-                                <label> Diabetes Mellitus </label>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col">
-                                <input type="checkbox" name="asthma" value="asthma" id="asthma">
-                                <label> Bronchial Asthma </label>
-                            </div>
-                            <div class="col">
-                                <input type="checkbox" name="immunodeficiency" value="immunodeficiency"
-                                       id="immunodeficiency">
-                                <label> Immunodeficiency </label>
-                            </div>
-                            <div class="col">
-                                <input type="checkbox" name="cancer" value="cancer" id="cancer">
-                                <label> Cancer </label>
-                            </div>
-                            <div class="col">
-                                <input type="text3" id="others" class='form-control' name="others"
-                                       placeholder="Other Commorbidity">
-                            </div>
-                        </div>
+                <div id="comorbiditiesList">
+                    <!--Include list of Comorbidities in DB-->
+                </div>
+                <div class="row">
+                    <div class="consent">
+                        <input type="checkbox" name="accept" value="accept" id="accept">
+                        <label> I have accept and understand the <a href="#"> Terms and Condition. </a> </label>
+                    </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="consent">
-                    <input type="checkbox" name="accept" value="accept" id="accept">
-                    <label> I have accept and understand the <a href="#"> Terms and Condition. </a> </label>
-                </div>
+            <div class="modal-footer">
+                <button type="button" id="addPatientBtn" class="btn btn-success" onclick="addPatient()">Done</button>
             </div>
-        </div>
-        <div class="modal-footer">
-            <button type="button" id="addPatientBtn" class="btn btn-success" onclick="addPatient()">Done</button>
         </div>
     </div>
-</div>
 
 </div>
 
 <!-- Popper.JS -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"
-        integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ"
-        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
 <!-- Bootstrap JS -->
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"
-        integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm"
-        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
 
 <script type="text/javascript">
-    $(document).ready(function () {
-        $('#sidebarCollapse').on('click', function () {
+    $(document).ready(function() {
+        $('#sidebarCollapse').on('click', function() {
             $('#sidebar').toggleClass('active');
         });
     });
@@ -387,7 +337,12 @@
         });
     }
 
-    function addPatient() {
+    function showComorbiditiesList() {
+
+    }
+
+
+    function addPatient(){
         notificationModal.style.display = "block";
         var last = document.getElementById("lname").value;
         var first = document.getElementById("fname").value;
@@ -407,22 +362,7 @@
         $.ajax({
             url: '../Barangay Module/PHP Processes/ManagePatientProcessor.php',
             type: 'POST',
-            data: {
-                lastname: last,
-                firstname: first,
-                middlename: middle,
-                suffix: suffix,
-                priority: priority,
-                gender: gender,
-                occupation: occupation,
-                birthday: birthday,
-                contactnumber: contact,
-                street: street,
-                barangay: brgy,
-                city: city,
-                state: state,
-                region: region
-            },
+            data: {lastname: last, firstname: first, middlename: middle, suffix: suffix, priority: priority, gender: gender, occupation: occupation, birthday: birthday, contactnumber: contact, street: street, barangay: brgy, city: city, state: state, region: region },
             success: function (result) {
                 document.getElementById("patientMedBackgroundModal").style.display = "none";
                 document.getElementById("patientTable").innerHTML = "";
@@ -434,12 +374,6 @@
 </script>
 
 <script>
-    var choice = document.getElementById("comorbidity");
-
-    choice.onchange = function () {
-        var showList = document.getElementById("comorbidityList");
-        showList.style.display = (this.value == "none") ? "none" : "block";
-    }
     //modals
     var addPatientModal = document.getElementById("addPatientModal");
 
@@ -461,11 +395,8 @@
     }
 
     //success
-    sucess.onclick = function () {
+    sucess.onclick = function (){
         addPatientModal.style.display = "none";
     }
 
 </script>
-
-
-
