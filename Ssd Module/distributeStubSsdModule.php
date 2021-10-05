@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
     <!-- Title -->
-    <title>SMIT+(SSD) | Stub Distribute</title>
+    <title>SMIT+(Ssd) | Stub Distribute</title>
 
     <link rel="icon" href="../img/FaviSMIT+.png" type="image/jpg">
     <!-- Our Custom CSS -->
@@ -30,6 +30,10 @@
             integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY"
             crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://js.pusher.com/7.0/pusher.min.js"></script>
+    <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
 
 </head>
 
@@ -72,7 +76,8 @@
                     <i class='fas fa-angle-left'></i> Menu
                 </button>
 
-                <button class="btnTop">
+                <button id="buttonMarker" class="btnTop" onclick="openNotif('notificationModal')">
+                    <span class="marker" id="marker"><i class="fas fa-circle"></i></span>
                     <i class="fas fa-bell"></i>
                 </button>
 
@@ -87,16 +92,15 @@
             <div class="col">
                 <div class="row">
                     <div id="selectDeployment">
-                        <h5>Select Deployment:</h5>
-                        <select id="selectDeploymentSSD" onchange="updateDeploymentDetails(this.value)">
-                            <option value='' disabled selected hidden> Click here to select deployment </option>
-                        <?php
-                        require_once("../require/getVaccinationDrive.php");
-                        foreach ($vaccination_drive  as $vaccinationDrive) {
-                            $id = $vaccinationDrive->getDriveId();
-                            echo "<option value=$id> $id </option>";
-                        }
-                        ?>
+                        <select onchange="updateDeploymentDetails(this.value)">
+                            <option value='' disabled selected hidden> Select Deployment </option>
+                            <?php
+                            require_once("../require/getVaccinationDrive.php");
+                            foreach ($vaccination_drive  as $vaccinationDrive) {
+                                $id = $vaccinationDrive->getDriveId();
+                                echo "<option value=$id> $id </option>";
+                            }
+                            ?>
                         </select>
                     </div>
                 </div>
@@ -117,7 +121,14 @@
                             <br>
                             <h5> Brand: </h5>
                             <br>
-                            <h5> Schedule: </h5>
+                            <h5> Scheduled Date: </h5>
+                            <br>
+                            <h5> Priority Group: </h5>
+                            <br>
+                            <h5> Number Of Stubs: </h5>
+                            <br>
+                            <h5> Health Districts: </h5>
+
                         </div>
                     </div>
                 </div>
@@ -136,7 +147,166 @@
             </div>
         </div>
     </div>
+
+    <div id="notificationModal" class="modal-window">
+        <div class="content-modal">
+            <div class="modal-header">
+                <h4 class="modal-title">Notifications</h4>
+                <button type="button" class="close" data-dismiss="modal" onclick="window.location.href = 'distributeStubSsdModule.php'">
+                    &times;
+                </button>
+            </div>
+            <div class="modal-body" id="notificationContent">
+                                        <?php
+                                        $query = "SELECT vaccination_drive.drive_id, vaccination_sites.location, vaccination_drive.vaccination_date, vaccination_drive.stubs, vaccination_drive.notif_opened FROM vaccination_sites JOIN vaccination_drive ON vaccination_sites.vaccination_site_id = vaccination_drive.vaccination_site_id ORDER BY drive_id desc;";
+                                        $vaccination_drive = [];
+
+                                        $stmt = $database->stmt_init();
+                                        $stmt->prepare($query);
+                                        $stmt->execute();
+                                        $stmt->bind_result($driveId, $locName, $date, $stubs, $opened);
+
+                                        while ($stmt->fetch()) {
+                                            if ($opened== 1){
+                                                echo "
+                                                   
+                                                      
+                                                        <div id='$driveId' style='color: #9C9C9C'>
+                                                            <p>Vaccination Location: $locName<br>
+                                                               Date: $date <br>
+                                                               Number of Stubs: $stubs <br>
+                                                            </p>
+                                                        </div>
+                                                      <hr style='width: 100%; background: azure'>
+                                                 
+                                                      ";
+                                            } else{
+
+                                                echo "
+                                                   <script>document.getElementById('marker').setAttribute('style', 'color:#c10d0d!important');</script>
+                                                      
+                                                        <div id='$driveId' style='background: lightgray'>
+                                                            <p>Vaccination Location: $locName<br>
+                                                               Date: $date <br>
+                                                               Number of Stubs: $stubs <br>
+                                                            </p>
+                                                        </div>
+                                                      <hr style='width: 100%; background: azure'>
+                                                 
+                                                      ";
+
+                                            }
+
+                                        }
+                                        ?>
+
+            </div>
+        </div>
+    </div>
     <script>
+
+        var pusher = new Pusher('8bde1d2aef3f7c91d16a', {
+            cluster: 'ap1'
+        });
+
+        var channel = pusher.subscribe('my-channel');
+        channel.bind('my-event', function(data) {
+            var id = data.message;
+
+            toastr.options.positionClass = 'toast-bottom-right';
+            toastr.info('You Have Received A New Deployment!');
+
+            document.getElementById('marker').setAttribute('style', 'color:#c10d0d!important') ;
+            document.getElementById("notificationContent").innerHTML = "";
+            document.getElementById("selectDeployment").innerHTML = "";
+
+            $.ajax({
+                url: 'selectDeployment.php',
+                type: 'POST',
+                data: {"notifDrive": "notifDrive"},
+                success: function (result) {
+                    document.getElementById("notificationContent").innerHTML = result;
+                }
+            });
+
+            $.ajax({
+                url: 'selectDeployment.php',
+                type: 'POST',
+                data: {"notifListDrives": "list"},
+                success: function (result) {
+                    document.getElementById("selectDeployment").innerHTML = result;
+                }
+            });
+        });
+
+        function openNotif(modal){
+            document.getElementById(modal).style.display = "block";
+            $.ajax({
+                url: 'selectDeployment.php',
+                type: 'POST',
+                data: {"open": "opened"},
+                success: function (result) {
+                    setTimeout(function(){ document.getElementById('marker').setAttribute('style', 'color:transparent!important'); }, 5000);
+                }
+            });
+        }
+
+        function sendStubs(drive){
+            var result = {};
+            var trs = document.getElementById('healthDStubs').getElementsByTagName("tr");
+            for(var idx = 1; idx < trs.length; idx++) {
+                var tds = trs[idx].getElementsByTagName("td");
+                result[trs[idx].id] = [];
+                for (var index = 0; index < tds.length; index++) {
+                    var val = tds[index].firstChild.value;
+                    result[trs[idx].id].push(val);
+                }
+            }
+            $.ajax({
+                url: 'selectDeployment.php',
+                type: 'POST',
+                data: {"sendStubs": result, "stubsDrive": drive },
+                success: function (result) {
+                    closeModal('barangayModal');
+                }
+            });
+
+        }
+
+        var counter = 500;
+        function countStubs(num, oldnum, item){
+            if (num == undefined || num == "") {
+                num = 0;
+            }
+
+            if(oldnum == undefined || oldnum == ""){
+
+                oldnum = 0;
+            }
+
+            if (num > counter){
+                alert('Number Exceeds Number Of Left Stubs!');
+                item.value = 0;
+            }else if (num < oldnum){
+                counter = counter + parseInt(oldnum);
+                counter = counter - parseInt(num);
+                console.log('if',counter);
+            }else{
+                counter = counter - parseInt(num);
+                console.log('else',counter);
+            }
+
+            document.getElementById('counter').innerHTML = "";
+            document.getElementById('counter').innerHTML = "<center><p><i class='fas fa-ticket-alt'></i> number of Stubs Left: " + counter + "</p> </center>";
+        }
+
+        function checkZero(item){
+            if(counter == 0){
+                alert('No more stubs');
+                item.value = 0;
+            }
+        }
+
 
         function updateDeploymentDetails(val){
             $.ajax({
@@ -157,26 +327,36 @@
                 }
             });
         }
-        function viewBarangays(id){
+
+        function viewBarangays(id, driveId, prioGroup, stubs){
+            console.log('passed')
+            counter = stubs;
             $.ajax({
                 url: 'selectDeployment.php',
                 type: 'POST',
-                data: {"viewBarangays": id},
+                data: {"viewBarangays": id, drive: driveId},
                 success: function (result) {
                     document.getElementById("barangayModal").innerHTML = result;
                     document.getElementById("barangayModal").style.display ="block";
+                        disable(prioGroup);
+
                 }
             });
         }
 
-        function closeModal(){
-            $.ajax({
-                url: 'selectDeployment.php',
-                type: 'POST',
-                success: function () {
-                    document.getElementById("barangayModal").style.display ="none";
-                }
-            });
+        function disable(group){
+            var input =  document.getElementsByClassName(group);
+            for (var i = 0; i < input.length; i++) {
+                input[i].disabled = false;
+            }
+        }
+
+        function closeModal(modal){
+            document.getElementById(modal).style.display ="none";
+        }
+
+        function openModal(modal) {
+            document.getElementById(modal).style.display = "block";
         }
     </script>
 

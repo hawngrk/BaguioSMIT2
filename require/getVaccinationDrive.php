@@ -8,9 +8,9 @@ $vaccination_drive = [];
 $stmt = $database->stmt_init();
 $stmt->prepare($query);
 $stmt->execute();
-$stmt->bind_result($driveId, $siteId, $date, $stubs, $group, $archive);
+$stmt->bind_result($driveId, $siteId, $date, $stubs, $group, $archive, $opened);
 
 while ($stmt->fetch()) {
-    $vaccDrive = new vaccinationDrive($driveId, $siteId, $date, $stubs, $group, $archive);
+    $vaccDrive = new vaccinationDrive($driveId, $siteId, $date, $stubs, $group, $archive, $opened);
     $vaccination_drive[] = $vaccDrive;
 }
