@@ -601,8 +601,10 @@ class vaccinationDrive
     private $vaccStubs;
     private $priorityGroup;
     private $archive;
+    private $opened;
 
-    public function __construct($driveId, $siteId, $vaccinationDate, $vaccinationStubs, $group, $archive)
+
+    public function __construct($driveId, $siteId, $vaccinationDate, $vaccinationStubs, $group, $archive, $opened)
     {
         $this->driveId = $driveId;
         $this->vaccDriveVaccSiteId = $siteId;
@@ -610,6 +612,7 @@ class vaccinationDrive
         $this->vaccStubs = $vaccinationStubs;
         $this->priorityGroup = $group;
         $this->archive = $archive;
+        $this->opened = $opened;
 
     }
 
@@ -641,6 +644,11 @@ class vaccinationDrive
     public function getArchive()
     {
         return $this->archive;
+    }
+
+    public function getOpened()
+    {
+        return $this->opened;
     }
 }
 
@@ -750,12 +758,19 @@ class barangay
     private $barangayId;
     private $barangayHealthDistrictId;
     private $barangayName;
+    private $city;
+    private $province;
+    private $region;
 
-    public function __construct($barangayId, $healthDistId, $name)
+
+    public function __construct($barangayId, $healthDistId, $name, $city, $prov, $region)
     {
         $this->barangayId = $barangayId;
         $this->barangayHealthDistrictId = $healthDistId;
         $this->barangayName = $name;
+        $this->city = $city;
+        $this->province = $prov;
+        $this->region = $region;
 
     }
 
@@ -772,6 +787,21 @@ class barangay
     public function getBarangayName()
     {
         return $this->barangayName;
+    }
+
+    public function getCity()
+    {
+        return $this->city;
+    }
+
+    public function getProvince()
+    {
+        return $this->province;
+    }
+
+    public function getRegion()
+    {
+        return $this->region;
     }
 }
 ?>
