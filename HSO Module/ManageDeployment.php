@@ -89,10 +89,6 @@ include_once("../includes/database.php") ?>
                     <i class='fas fa-angle-left'></i> Menu
                 </button>
 
-                <button class="btnTop">
-                    <i class="fas fa-bell"></i>
-                </button>
-
                 <button class="btnTop btnBell">
                     <i class="fas fa-cog"></i>
                 </button>
@@ -104,7 +100,7 @@ include_once("../includes/database.php") ?>
 
         <div class="listPatientColumn">
             <div class="four listPatientRow">
-                <div class="listPatient-box colored depSum">
+                <div class="listPatient-box colored">
                     <center><h5>Deployment Summary</h5></center>
                 </div>
             </div>
@@ -241,12 +237,6 @@ include_once("../includes/database.php") ?>
                 </div>
 
                 <div id="healthDMain" class="modal-body">
-<!--                    <div class="search-container searchSite">-->
-<!--                        <form action="/action_page.php">-->
-<!--                            <input type="text" placeholder="Search" name="search">-->
-<!--                            <button type="submit" class="siteSearchIcon"><i class="fa fa-search"></i></button>-->
-<!--                        </form>-->
-<!--                    </div>-->
                     <button type="button" class="siteAddButton" onclick="openModal('HealthDModal')">
                         <i class="fas fa-plus"></i>
                         Add Health District
@@ -400,12 +390,6 @@ include_once("../includes/database.php") ?>
                     </button>
                 </div>
                 <div class="modal-body">
-<!--                    <div class="search-container searchSite">-->
-<!--                        <form action="/action_page.php">-->
-<!--                            <input type="text" placeholder="Search" name="search">-->
-<!--                            <button type="submit" class="siteSearchIcon"><i class="fa fa-search"></i></button>-->
-<!--                        </form>-->
-<!--                    </div>-->
                     <button type="button" class="siteAddButton" onclick=" openModal('addVaccSite')">
                         <i class="fas fa-plus"></i>
                         Add Vaccination Site
@@ -520,7 +504,7 @@ include_once("../includes/database.php") ?>
                         <td>$stubs</td>
                         <td>
                             <div style='text-align: left;'>
-                                <button class='btn btn-warning' onclick='archive(0, clickArchive, $driveId )'><i class='fas fa-box-open'></i>unarchive </button>
+                                <button class='buttonTransparent hyperlink' onclick='archive(0, clickArchive, $driveId )'>unarchive <i class='fas fa-box-open'></i></button>
                             </div>
                         </td>
              
@@ -544,7 +528,7 @@ include_once("../includes/database.php") ?>
 <!--        </div>-->
 
         <div id="unarchiveContent">
-        <table class="table table-row table-hover tableDeploy" id = "driveTable">
+        <table class="table table-row table-hover tableDep" id = "driveTable">
             <thead>
             <tr>
                 <th scope="col">#</th>
@@ -623,7 +607,7 @@ include_once("../includes/database.php") ?>
             console.log(drive)
             console.log(option)
             $.ajax({
-                url: 'ManageDeploymentSummary.php',
+                url: 'ManageDeploymentProcessor.php',
                 method: 'POST',
                 data: {archive: drive, option: option},
                 success: function (result) {
@@ -644,7 +628,7 @@ include_once("../includes/database.php") ?>
 
         function openList(val) {
             $.ajax({
-                url: 'ManageDeploymentSummary.php',
+                url: 'ManageDeploymentProcessor.php',
                 method: 'POST',
                 data: {barId: val},
                 success: function (result) {
@@ -663,7 +647,7 @@ include_once("../includes/database.php") ?>
             var id = val.getElementsByTagName("td")[1].innerText;
             console.log(id);
             $.ajax({
-                url: 'ManageDeploymentSummary.php',
+                url: 'ManageDeploymentProcessor.php',
                 method: 'POST',
                 data: {id: id},
                 success: function (result) {
@@ -680,7 +664,7 @@ include_once("../includes/database.php") ?>
             var number = val.getElementsByTagName("td")[3].innerText;
 
             $.ajax({
-                url: 'ManageDeploymentSummary.php',
+                url: 'ManageDeploymentProcessor.php',
                 method: 'POST',
                 data: {healthName: name, number: number, healthId: id},
                 success: function (result) {
@@ -702,7 +686,7 @@ include_once("../includes/database.php") ?>
             }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
-                        url: 'ManageDeploymentSummary.php',
+                        url: 'ManageDeploymentProcessor.php',
                         method: 'POST',
                         data: {
                             list: checkedValue,
@@ -729,7 +713,7 @@ include_once("../includes/database.php") ?>
             var stubs = document.getElementById("stubs").value;
             var categ = document.getElementById("PatientCateg").value;
             $.ajax({
-                url: 'ManageDeploymentSummary.php',
+                url: 'ManageDeploymentProcessor.php',
                 method: 'POST',
                 data: {
                     districts: checkedValue,
@@ -753,7 +737,7 @@ include_once("../includes/database.php") ?>
             console.log(healthDistrictName);
             console.log(checkedValue);
             $.ajax({
-                url: 'ManageDeploymentSummary.php',
+                url: 'ManageDeploymentProcessor.php',
                 method: 'POST',
                 data: {barangays: checkedValue, healthDistrictName: healthDistrictName, number: districtNumber},
                 success: function (result) {
@@ -767,7 +751,7 @@ include_once("../includes/database.php") ?>
             var siteName = document.getElementById("newVaccinationSite").value;
             console.log(siteName);
             $.ajax({
-                url: 'ManageDeploymentSummary.php',
+                url: 'ManageDeploymentProcessor.php',
                 method: 'POST',
                 data: {site: siteName},
                 success: function (result) {
@@ -803,7 +787,7 @@ include_once("../includes/database.php") ?>
         function deleteDistrict(delDistId) {
             console.log('passed');
             $.ajax({
-                url: 'ManageDeploymentSummary.php',
+                url: 'ManageDeploymentProcessor.php',
                 method: 'POST',
                 data: {deleteDistId: delDistId},
                 success: function (result) {
@@ -817,13 +801,10 @@ include_once("../includes/database.php") ?>
         function deleteBarangay(barangayId) {
             console.log(barangayId)
             $.ajax({
-                url: 'ManageDeploymentSummary.php',
+                url: 'ManageDeploymentProcessor.php',
                 method: 'POST',
                 data: {brgyId: barangayId},
                 success: function (result) {
-                    // modal11.style.display = "none"
-                    // modal8.style.display = "none";
-                    // modal8.style.display = "block";
                     document.getElementById('healthDContent').innerHTML = "";
                     document.getElementById('healthDContent').innerHTML = result;
                     console.log(result)
@@ -835,7 +816,7 @@ include_once("../includes/database.php") ?>
         function deleteSite(siteId) {
             console.log(siteId);
             $.ajax({
-                url: 'ManageDeploymentSummary.php',
+                url: 'ManageDeploymentProcessor.php',
                 method: 'POST',
                 data: {deleteSiteId: siteId},
                 success: function (result) {
@@ -899,20 +880,6 @@ include_once("../includes/database.php") ?>
                 }
             })
         }
-        //
-        // function searchDrive() {
-        //     var textSearch = document.getElementById("searchDrive").value;
-        //     $.ajax({
-        //         url: 'ManageDeploymentSummary.php',
-        //         type: 'POST',
-        //         data: {"search": textSearch},
-        //         success: function (result) {
-        //             document.getElementById("driveTable").innerHTML = result;
-        //         }
-        //     });
-        // }
 
     </script>
 </body>
-<style>
-</style>
