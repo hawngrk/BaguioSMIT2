@@ -197,7 +197,6 @@ select{
     margin-left: 4%;
 }
 
-
 /* Modal Content/Box */
 .content-modal{
     background-color: #fefefe;
@@ -322,6 +321,10 @@ select{
     margin: 5%;
 }
 
+.healthDistrict{
+    padding-top: 5%;
+    margin-left: 5%;
+}
 
 .tableBrgy {
     background-color: white;
@@ -332,4 +335,54 @@ select{
     margin-top: 8%;
     background-color: #f6f6f6;
 }
+
+.marker{
+    color: transparent!important;
+    font-size: 40%;
+}
+
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link{
+    background-color: #17A2B8;
+}
+.dropdown-menu{
+    top: 60px;
+    right: 0px;
+    left: unset;
+    width: 460px;
+    box-shadow: 0px 5px 7px -1px #c1c1c1;
+    padding-bottom: 0px;
+    padding: 0px;
+}
+.dropdown-menu:before{
+    content: "";
+    position: absolute;
+    top: -20px;
+    right: 12px;
+    border:10px solid #343A40;
+    border-color: transparent transparent #343A40 transparent;
+}
+
+.bold{
+    font-weight: 800!important;
+}
+
+#counter{
+    width: 26%;
+    font-size: 60%;
+    float: right;
+    color: cadetblue;
+    margin-top: 1%;
+}
+
+.barangayList{
+    margin-left: 3%;
+    color: #9C9C9C;
+}
+
+.closeModal{
+    background-color: rgb(0, 0, 0);
+    background-color: rgba(0, 0, 0, 0);
+}
+
+
 
