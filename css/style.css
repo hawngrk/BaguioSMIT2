@@ -853,30 +853,8 @@ h7~h8{
     margin: 4%;
 }
 
-
-
-
 .details{
     margin-top: -2%;
-}
-
-#barangay{
-    width: 95%;
-    height: 20%;
-    padding: 12px;
-    display: inline-block;
-    border: 2px solid #ccc;
-    border-radius: 8px;
-    margin-top: -1%;
-}
-
-#others{
-    margin-left: 4%;
-    width: 80%;
-}
-
-#allergies{
-    margin-left: 1%;
 }
 
 #iconBrowse{
@@ -947,6 +925,7 @@ h6 {
     display: flex;
 }
 
+/* ---------------------------------------------------------------------------------- */
 /*CSS For Personnel Vaccination*/
 #patientRow h6, #patientRow form{
     margin-left: 4%;
@@ -1074,6 +1053,7 @@ input[name=vitals]{
     margin-left: 4%;
 }
 
+/* ---------------------------------------------------------------------------------- */
 /*CSS for EIR MODULE*/
 .labelRow{
     text-align: center;
@@ -1087,6 +1067,12 @@ input[name=vitals]{
     margin-left: 40px;
     margin-right: 40px;
 }
+
+#otherTextField{
+    display: none;
+    margin-top: 10px;
+}
+
 
 #comorbidityList{
     margin-left: 40px;
