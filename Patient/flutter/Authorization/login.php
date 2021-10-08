@@ -12,8 +12,12 @@ try {
     $stmtselect->execute([$username]);
     $row = $stmtselect->fetch(PDO::FETCH_ASSOC);
     $hash = $row['patient_password'];
-
-    return password_verify($password, $hash) ? '1' : '0';
+    if (password_verify($password, $hash)) {
+        $_SESSION['account'] = $row;
+        echo '1';
+    } else {
+        echo '0';
+    }
 } catch(PDOException $e) {
     echo 'Caught exception: ' , $e->getMessage();
 }
