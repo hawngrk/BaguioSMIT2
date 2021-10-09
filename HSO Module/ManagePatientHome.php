@@ -103,7 +103,6 @@ include_once("../includes/database.php") ?>
         <!--Button for Uploading File-->
         <button type="button" class="buttonTransparent buttonTop archive" onclick="openModal('archived')">
             <i class="fas fa-inbox fa-lg"></i>
-
         </button>
         <button id="uploadFileBtn" type="button" class="buttonTop">Upload File</button>
 
@@ -460,15 +459,15 @@ include_once("../includes/database.php") ?>
 
 
         <div id="archived" class="modal-window">
-            <div class="content-modal">
+            <div class="content-modal-table">
                 <div class="modal-header">
-                    <h4 class="modal-title">Archived Vaccination Drives</h4>
+                    <h4 class="modal-title">Archived Patients</h4>
                     <button type="button" class="close" data-dismiss="modal" onclick="closeModal('archived')">
                         &times;
                     </button>
                 </div>
                 <div id = 'archivedContent' class="modal-body">
-                    <table class="table table-row table-hover tableBrgy" id="patientTable">
+                    <table class="table table-row table-hover tableModal" id="patientTable">
                         <thead>
                         <tr>
                             <th scope="col">Patient Name</th>
@@ -856,7 +855,7 @@ include_once("../includes/database.php") ?>
     }
 
     function openModal(modal) {
-        console.log(modal)
+        console.log(modal);
         document.getElementById(modal).style.display = "block";
     }
 

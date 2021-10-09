@@ -457,7 +457,7 @@ include_once("../includes/database.php") ?>
         </div>
 
         <div id="archived" class="modal-window">
-            <div class="content-modal">
+            <div class="content-modal-table">
                 <div class="modal-header">
                     <h4 class="modal-title">Archived Vaccination Drives</h4>
                     <button type="button" class="close" data-dismiss="modal" onclick="closeModal('archived')">
@@ -465,7 +465,7 @@ include_once("../includes/database.php") ?>
                     </button>
                 </div>
                 <div id = 'archivedContent' class="modal-body">
-                    <table class="table table-row table-hover">
+                    <table class="table table-row table-hover tableModal">
                         <thead>
                         <tr>
                             <th scope="col">#</th>
@@ -504,7 +504,7 @@ include_once("../includes/database.php") ?>
                         <td>$stubs</td>
                         <td>
                             <div style='text-align: left;'>
-                                <button class='buttonTransparent hyperlink' onclick='archive(0, clickArchive, $driveId )'>unarchive <i class='fas fa-box-open'></i></button>
+                                <button class='btn btn-warning' onclick='archive(0, clickArchive, $driveId )'>unarchive <i class='fas fa-box-open'></i></button>
                             </div>
                         </td>
              

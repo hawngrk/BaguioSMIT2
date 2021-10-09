@@ -335,7 +335,7 @@ hr {
 }
 
 #searchpatientHSO{
-    width: 75%;
+    width: 60%;
 }
 
 input[type=textDesc]{
@@ -357,15 +357,6 @@ input[type=textDesc]{
 
 /* Modal Content/Box */
 
-.content-modal{
-    background-color: #fefefe;
-    border-radius: 12px;
-    margin: 5% auto;
-    /* 15% from the top and centered */
-    border: 1px solid #888;
-    width: auto;
-    /*Could be more or less, depending on screen size */
-}
 
 
 .AddHealthD-option{
@@ -585,6 +576,16 @@ input[type=date]{
     margin: 5% auto;
     /* 15% from the top and centered */
     border: 1px solid #888;
+    width: 60%;
+    /*Could be more or less, depending on screen size */
+    border-radius: 12px;
+}
+
+.content-modal-table{
+    background-color: #fefefe;
+    margin: 5% auto;
+    /* 15% from the top and centered */
+    border: 1px solid #888;
     width: fit-content;
     /*Could be more or less, depending on screen size */
     border-radius: 12px;
@@ -735,6 +736,12 @@ input[type=text]:disabled{
 }
 
 .tableDep{
+    width: 73%!important;
+    height: 60%;
+    margin-top: 10%;
+}
+
+.tableModal{
     width: fit-content;
     height: auto;
 }
@@ -930,7 +937,7 @@ h6 {
 }
 
 #patientRow p{
-		margin-left: 7%;   		
+		margin-left: 7%;
         font-size: 90%;
 		color: black;
 }

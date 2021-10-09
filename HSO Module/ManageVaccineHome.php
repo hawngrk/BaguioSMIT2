@@ -213,7 +213,7 @@ include_once("../includes/database.php") ?>
         </form>
 
         <div id="archived" class="modal-window">
-            <div class="content-modal">
+            <div class="content-modal-table">
                 <div class="modal-header">
                     <h4 class="modal-title">Archived Vaccination Drives</h4>
                     <button type="button" class="close" data-dismiss="modal" onclick="closeModal('archived')">
@@ -222,7 +222,7 @@ include_once("../includes/database.php") ?>
                 </div>
                 <div id = 'archivedContent' class="modal-body">
 
-                    <table class="table table-row table-hover tableDep" id="vaccineTable">
+                    <table class="table table-row table-hover tableModal" id="vaccineTable">
                         <thead>
                         <tr>
                             <th scope="col">#</th>
