@@ -750,7 +750,7 @@ include_once("../includes/database.php") ?>
     }
 
     function searchPatient() {
-        var textSearch = document.getElementById("searchPatientHSO).value;
+        var textSearch = document.getElementById("searchPatientHSO").value;
         $.ajax({
             url: '../Barangay Module/ManagePatientProcessor.php',
             type: 'POST',

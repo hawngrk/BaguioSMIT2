@@ -311,8 +311,6 @@ input[type=text]{
     width: 30%;
 }
 
-
-
 #searchPatientVaxPer, #searchPatientEIR, #searchPatientBrgy{
     width: 80%;
 }
@@ -339,7 +337,6 @@ hr {
 #searchpatientHSO{
     width: 75%;
 }
-
 
 input[type=textDesc]{
     height: 60%;
@@ -927,6 +924,7 @@ h6 {
 
 /* ---------------------------------------------------------------------------------- */
 /*CSS For Personnel Vaccination*/
+/* ---------------------------------------------------------------------------------- */
 #patientRow h6, #patientRow form{
     margin-left: 4%;
 }
@@ -1073,7 +1071,6 @@ input[name=vitals]{
     margin-top: 10px;
 }
 
-
 #comorbidityList{
     margin-left: 40px;
     margin-right: 40px;
@@ -1087,4 +1084,9 @@ input[name=vitals]{
 .listOfComorbidity{
     margin-left: 50px;
     margin-right: 50px;
+}
+
+.required:after{
+    content: " *";
+    color: red;
 }
