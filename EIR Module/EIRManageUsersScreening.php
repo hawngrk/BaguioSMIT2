@@ -306,12 +306,12 @@
                                            id="kidneyDisease">
                                     <label> Kidney Disease </label>
                                 </div>
+                            </div>
+                            <div class="row">
                                 <div class="col">
                                     <input type="checkbox" name="diabetes" value="diabetes" id="diabetes">
                                     <label> Diabetes Mellitus </label>
                                 </div>
-                            </div>
-                            <div class="row">
                                 <div class="col">
                                     <input type="checkbox" name="asthma" value="asthma" id="asthma">
                                     <label> Bronchial Asthma </label>
@@ -321,7 +321,9 @@
                                            id="immunodeficiency">
                                     <label> Immunodeficiency </label>
                                 </div>
-                                <div class="col">
+                            </div>
+                            <div class="row">
+                                <div class="col-4">
                                     <input type="checkbox" name="cancer" value="cancer" id="cancer">
                                     <label> Cancer </label>
                                 </div>
@@ -330,9 +332,12 @@
                                            onclick="showOthersInput(this)">
                                     <label> Others </label>
                                 </div>
-                            </div>
-                            <div id="otherTextField">
-                                <input type="text3" name="others" id="others" placeholder="Input Other Commorbidity">
+                                <div class="col">
+                                    <div id="otherTextField">
+                                        <input type="text3" name="others" id="others" placeholder="Input Other Commorbidity">
+                                    </div>
+                                </div>
+
                             </div>
                         </div>
                     </div>

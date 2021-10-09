@@ -352,12 +352,12 @@ include_once("../includes/database.php") ?>
                                                    id="kidneyDisease">
                                             <label> Kidney Disease </label>
                                         </div>
-                                        <div class="col">
-                                            <input type="checkbox" name="diabetes" value="diabetes" id="diabetes">
-                                            <label> Diabetes Mellitus </label>
-                                        </div>
                                     </div>
                                     <div class="row">
+                                        <div class="col">
+                                                <input type="checkbox" name="diabetes" value="diabetes" id="diabetes">
+                                                <label> Diabetes Mellitus </label>
+                                        </div>
                                         <div class="col">
                                             <input type="checkbox" name="asthma" value="asthma" id="asthma">
                                             <label> Bronchial Asthma </label>
@@ -367,7 +367,9 @@ include_once("../includes/database.php") ?>
                                                    id="immunodeficiency">
                                             <label> Immunodeficiency </label>
                                         </div>
-                                        <div class="col">
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-4">
                                             <input type="checkbox" name="cancer" value="cancer" id="cancer">
                                             <label> Cancer </label>
                                         </div>
@@ -376,9 +378,12 @@ include_once("../includes/database.php") ?>
                                                    onclick="showOthersInput(this)">
                                             <label> Others </label>
                                         </div>
-                                    </div>
-                                    <div id="otherTextField">
-                                        <input type="text3" name="others" id="others" placeholder="Input Other Commorbidity">
+                                        <div class="col">
+                                            <div id="otherTextField">
+                                                <input type="text3" name="others" id="others" placeholder="Input Other Commorbidity">
+                                            </div>
+                                        </div>
+
                                     </div>
                                 </div>
                             </div>
@@ -386,8 +391,7 @@ include_once("../includes/database.php") ?>
                     </div>
                     <div class="modal-footer">
                         <button type="button" id="addPatientInfoCancelBtn" class="btn btn-secondary"
-                                data-dismiss="modal">Cancel
-                        </button>
+                                data-dismiss="modal">Cancel </button>
                         <button type="button" id="addPatientNextBtn" class="btn btn-success">Add</button>
                     </div>
                 </div>
@@ -588,31 +592,14 @@ include_once("../includes/database.php") ?>
         patientInformationModal.style.display = "block";
     }
 
-    addPatientNextBtn.onclick = function () {
-        patientInformationModal.style.display = "none";
-        patientMedBackgroundModal.style.display = "block";
-    }
-
-    addPatientPrevBtn.onclick = function () {
-        patientMedBackgroundModal.style.display = "none";
-        patientInformationModal.style.display = "block";
-    }
     addPatientInfoCancelBtn.onclick = function () {
         patientInformationModal.style.display = "none";
     }
-
-    addPatientMedCancelBtn.onclick = function () {
-        patientMedBackgroundModal.style.display = "none";
-    }
-
 
     addPatientInfoClose.onclick = function () {
         patientInformationModal.style.display = "none";
     }
 
-    addPatientMedClose.onclick = function () {
-        patientMedBackgroundModal.style.display = "none";
-    }
 
     // Upload File
     var uploadFileBtn = document.getElementById("uploadFileBtn");
@@ -656,11 +643,6 @@ include_once("../includes/database.php") ?>
         }
     }
 
-/*    function updateAddress() {
-        document.getElementById("city").value = "Baguio City";
-        document.getElementById("state").value = "Benguet";
-        document.getElementById("region").value = "Cordillera Administrative Region";
-    }*/
 
     function searchPatient() {
         var textSearch = document.getElementById("searchPatientHSO").value;
