@@ -216,6 +216,29 @@ a.article:hover {
     font-size: 80%;
 }
 
+.buttonTop2 {
+    display: block;
+    float: right;
+    background: ghostwhite;
+    border: 2px solid black;
+    width: 12%;
+    height: auto;
+    color: black!important;
+    margin-right: 10px;
+    font-size: 80%;
+    padding: .2%;
+    border-radius: 12px;
+}
+
+.buttonTop2:hover {
+    background: #e7e7e7;
+}
+
+.buttonTop2:visited {
+    background: white;
+}
+
+
 .genButton{
     float: right;
     margin: .5%;
@@ -311,8 +334,12 @@ input[type=text]{
     width: 30%;
 }
 
-#searchPatientVaxPer, #searchPatientEIR, #searchPatientBrgy{
+#searchPatientEIR, #searchPatientBrgy{
     width: 80%;
+}
+
+#searchPatientVaxPer{
+    width: 95%;
 }
 
 hr {
@@ -1058,6 +1085,13 @@ input[name=vitals]{
     margin-left: 4%;
 }
 
+.depSummary{
+    padding: 1%;
+}
+
+.depSummary .listPatientRow{
+    margin-bottom: 5%;
+}
 /* ---------------------------------------------------------------------------------- */
 /*CSS for EIR MODULE*/
 .labelRow{

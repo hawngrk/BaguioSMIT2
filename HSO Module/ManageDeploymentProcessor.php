@@ -59,22 +59,22 @@ if (isset($_POST['id'])) {
 
 
     echo "
-    <p><b>Vaccination Site:</b></p>
-    <center><p>$siteName</p></center>
-    <p><b>Vaccination Brand:</b></p>
-    <center><p>$brand</p></center>
-    <p><b>Category Of Patient:</b></p>
-    <center><p>$group</p></center>
-    <p><b>Vaccination Date:</b></p>
-    <center><p>$date</p></center>
-    <p><b>Number of Stubs:</b></p>
-    <center><p>$stubs</p></center>
+    <h7><b>Vaccination Site:</b></h7><br>
+    <h8>$siteName</h8><br><br>
+    <h7><b>Vaccination Brand:</b></h7><br>
+    <h8>$brand</h8><br><br>
+    <h7><b>Category Of Patient:</b></h7><br>
+    <h8>$group</h8><br><br>
+    <h7><b>Vaccination Date:</b></h7><br>
+    <h8>$date</h8><br><br>
+    <h7><b>Number of Stubs:</b></h7><br>
+    <h8>$stubs</h8><br><br>
     ";
 
-    echo "<p><b>Health Districts:</b></p>";
+    echo "<h7><b>Health Districts:</b></h7>";
 
     foreach ($distNames as $dn){
-        echo "<center><p>$dn</p></center>";
+        echo "<br><h8>$dn</h8></br>";
     }
 }
 

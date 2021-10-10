@@ -98,10 +98,10 @@ include_once("../includes/database.php") ?>
         <!-- Page Content  -->
 
 
-        <div class="listPatientColumn">
+        <div class="listPatientColumn depSummary">
             <div class="four listPatientRow">
                 <div class="listPatient-box colored">
-                    <center><h5>Deployment Summary</h5></center>
+                    <center><h3>Deployment Summary</h3></center>
                 </div>
             </div>
             <div class="four listPatientRow row2">

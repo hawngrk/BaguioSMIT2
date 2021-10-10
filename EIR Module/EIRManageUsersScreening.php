@@ -67,7 +67,6 @@
 
     <!-- Page Content  -->
     <div id="content">
-
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container-fluid">
 
@@ -77,7 +76,7 @@
             </div>
         </nav>
 
-        <button id="addPatientAccount" type="button" class="buttonTop">Add Patient Account</button>
+        <button id="addPatientAccount" type="button" class="buttonTop2">Add Patient Account</button>
 
         <!--Search Input and Button-->
         <div class="search-container">

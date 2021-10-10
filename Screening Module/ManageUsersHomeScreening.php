@@ -45,7 +45,7 @@
                     <a href="../Screening Module/ScanQRScreening.php"><i class="fas fa-qrcode"></i></i> Scan QR</a>
                 </li>
                 <li class="active">
-                    <a href="../Screening Module/ManageUsersHomeScreening.php"><i class="fas fa-users"></i>Manage Users</a>
+                    <a href="../Screening Module/ManageUsersHomeScreening.php"><i class="fas fa-users"></i> Manage Users</a>
                 </li>
             </ul>
 
@@ -81,7 +81,7 @@
                 <thead>
                     <tr>
                         <th scope="col">ID</th>
-                        <th scope="col">Name</th>
+                        <th scope="col">Patient Name</th>
                         <th scope="col">Category</th>
                         <th scope="col">Complete Address</th>
                         <th scope="col">Contact Number</th>
