@@ -24,6 +24,8 @@
     <script src="https://kit.fontawesome.com/fcdb0fe9f3.js" crossorigin="anonymous"></script>
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
+    <!-- SWAL-->
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
@@ -153,19 +155,35 @@
     function btnViewPostVac(param) {
         if (param == 'close') {
             preVacView.style.display = "none";
-        } else {
-            var pulse = getElementById('pulseR');
-            var temp = getElementById('tempR');
-            var bp = getElementById('bpR');
+        } 
 
-            $.ajax({
-                url: 'screeningSearchProcessor.php',
-                type: 'POST',
-                data: {'pulse':pulse, 'temp':temp, 'bp':bp},
-                success: function(postVat) {
-                    alert('Successfully Added to the Database.');
+        if (param == 'add') {
+            var id = document.getElementById('addButtonId').value;
+            var pulse = document.getElementById('pulseR').value;
+            var temp = document.getElementById('tempR').value;
+            var bp = document.getElementById('bpRDias').value;
+            var bpSys = document.getElementById('bpRSys').value;
+            
+            Swal.fire({
+                title: 'Add these vitals?',
+                showDenyButton: true,
+                confirmButtonText: 'Yes',
+                denyButtonText: `No`,
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url: 'screeningSearchProcessor.php',
+                            type: 'POST',
+                            data: {'pulse':pulse, 'temp':temp, 'diastolic':bpRDias, 'systolic': bpSys, 'id': id },
+                            success: function(preVat) {
+                                document.getElementById('preVacView').style.display = 'none';
+                            }
+                        });
+                        Swal.fire('Saved!', '', 'success')
+                    } else if (result.isDenied) {
+                        Swal.fire('Changes are not saved', '', 'info')
+                    }
+                })
                 }
-            })
-        }
     }
 </script>
