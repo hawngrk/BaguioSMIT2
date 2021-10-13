@@ -303,30 +303,30 @@
                         <div class="listOfComorbidity">
                             <div class="row">
                                 <div class="col">
-                                    <input type="checkbox" name="hypertension" value="hypertension" id="hypertension">
+                                    <input type="checkbox" name="hypertension" value="1" id="hypertension">
                                     <label> Hypertension</label>
                                 </div>
                                 <div class="col">
-                                    <input type="checkbox" name="heartDisease" value="heartDisease" id="heartDisease">
+                                    <input type="checkbox" name="heartDisease" value="1" id="heartDisease">
                                     <label> Heart Disease</label>
                                 </div>
                                 <div class="col">
-                                    <input type="checkbox" name="kidneyDisease" value="kidneyDisease"
+                                    <input type="checkbox" name="kidneyDisease" value="1"
                                            id="kidneyDisease">
                                     <label> Kidney Disease </label>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col">
-                                    <input type="checkbox" name="diabetes" value="diabetes" id="diabetes">
+                                    <input type="checkbox" name="diabetes" value="1" id="diabetes">
                                     <label> Diabetes Mellitus </label>
                                 </div>
                                 <div class="col">
-                                    <input type="checkbox" name="asthma" value="asthma" id="asthma">
+                                    <input type="checkbox" name="asthma" value="1" id="asthma">
                                     <label> Bronchial Asthma </label>
                                 </div>
                                 <div class="col">
-                                    <input type="checkbox" name="immunodeficiency" value="immunodeficiency"
+                                    <input type="checkbox" name="immunodeficiency" value="1"
                                            id="immunodeficiency">
                                     <label> Immunodeficiency </label>
                                 </div>
@@ -448,34 +448,66 @@
     function addPatient() {
         var addButton = document.getElementById("addBtn");
 
+        //Personal Information
         var last = document.getElementById("lname").value;
         var first = document.getElementById("fname").value;
         var middle = document.getElementById("mname").value;
         var suffix = document.getElementById("suffix").value;
         var gender = document.getElementById("gender").value;
-        var birthday = document.getElementById("date").value;
+        var birthdate = document.getElementById("date").value;
         var occupation = document.getElementById("occupation").value;
         var contact = document.getElementById("contactNum").value;
+        var email = document.getElementById("email").value;
 
+        //Category Information
         var priority = document.getElementById("priorityGroup").value;
         var id = document.getElementById("categoryID").value;
         var idNo = document.getElementById("categoryNo").value;
         var philHealth = document.getElementById("philHealth").value;
         var pwd = document.getElementById("pwdId").value;
 
+        //Address Information
         var street = document.getElementById("houseAddress").value;
         var brgy = document.getElementById("barangay").value;
         var city = document.getElementById("city").value;
         var province = document.getElementById("province").value;
         var region = document.getElementById("region").value;
 
+        //Medical Information
         var allergy = document.getElementById("allergy").value;
-        var comorbidity = document.getElementById("comorbidity");
+        var comorbidity = document.getElementById("comorbidity").value;
 
+        
+        var hypertension = $('#hypertension:checked').val();
+        var hypertension = $('#diabetes:checked').val();
+        var hypertension = $('#cancer:checked').val();
+        var hypertension = $('#heartDisease:checked').val();
+        var hypertension = $('#asthma:checked').val();
+        var hypertension = $('#kidneyDisease:checked').val();
+        var hypertension = $('#immunodeficiency:checked').val();
+        var others = getElementbyId('others').value;
         $.ajax({
-            url: '../Barangay Module/ManagePatientProcessor.php',
+            url: '../patient/authorization/pre_registration.php',
             type: 'POST',
-            data: {lastname: last, firstname: first, middlename: middle, suffix: suffix, priority: priority, gender: gender, occupation: occupation, birthday: birthday, contactnumber: contact, street: street, barangay: brgy, city: city, state: state, region: region },
+            data: {lastname: last, 
+                firstname: first, 
+                middlename: middle, 
+                suffix: suffix, 
+                priority: priority,
+                category: id,
+                categoryID: idNo,
+                philhealthID: philHealth,
+                pwdID: pwd, 
+                gender: gender, 
+                occupation: occupation, 
+                birthday: birthday, 
+                contact: contact, 
+                email: email,
+                street: street, 
+                barangay: brgy, 
+                cmAddress: city, 
+                state: state, 
+                region: region },
             success: function (result) {
                 addButton.disabled = false;
                 document.getElementById("patientTable").innerHTML = "";
@@ -483,7 +515,7 @@
             }
         });
     }
-
+    
     //Show Comorbidity List
     var choice = document.getElementById("comorbidity");
     choice.onchange = function () {
@@ -511,6 +543,7 @@
     closeAddPatientModal.onclick = function () {
         addPatientModal.style.display = "none";
     }
+
 
 </script>
 </body>

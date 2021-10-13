@@ -2,41 +2,7 @@
     require_once("validate_details.php");
     require_once("generate_credentials.php");
     require_once("../../../includes/configure.php");
-    
-    // //Test variables
-    // $firstname = 'Josh'; 
-    // $lastname = 'Radnor';
-    // $middlename       = '';
-    // $suffix           = '';
-    // $priorityGroup    = 'A2: Senior Citizen';
-    // $category         = 'OtherID';
-    // $categoryID       = '784274';
-    // $houseAddress     = '88b Lot 4 block 1';
-    // $barangay         = 'San Luis Village';
-    // $cmAddress        = 'Baguio City';
-    // $province         = 'Benguet';
-    // $region           = 'Cordillera Administrative Region';
-    // $birthdate        = '1992-7-21';
-    // $age              = '23';
-    // $gender           = 'Male';
-    // $occupation       = 'Retired';
-    
-    // //For patient_account table
-    // $contact = '+6923003948';
-    // $email = 'JoshRadnor@gmail.com';
 
-    // //Inputs for patient_medical_background table
-    // $allergyToVaccine  = 0;
-    // $hypertension      = 0;
-    // $heartDisease      = 0;
-    // $kidneyDiesease    = 0;
-    // $diabetesMellitus  = 1;
-    // $bronchialAsthma   = 0;
-    // $immunodeficiency  = 0;
-    // $cancer            = 0;
-    // $otherCommorbidity =  ' ';   
-    // $method = 'register';
-    //Inputs for Patient_details table
     $firstname        = $_POST['firstname'];
     $lastname         = $_POST['lastname'];
     $middlename       = $_POST['middlename'];
@@ -44,13 +10,15 @@
     $priorityGroup    = $_POST['priority'];
     $category         = $_POST['category'];
     $categoryID       = $_POST['categoryID'];
+    $categoryID       = $_POST['philhealthID'];
+    $categoryID       = $_POST['pwdID'];
     $houseAddress     = $_POST['houseAdress'];
     $barangay         = $_POST['barangay'];
     $cmAddress        = $_POST['cmAddress'];
     $province         = $_POST['province'];
     $region           = $_POST['region'];
     $birthdate        = $_POST['birthdate'];
-    $age              = $_POST['age'];
+    $age              = getAge($birthdate);
     $gender           = $_POST['gender'];
     $occupation       = $_POST['occupation'];
     
@@ -62,24 +30,21 @@
     $allergyToVaccine  = $_POST['allergy'];
     $hypertension      = $_POST['hypertension'];
     $heartDisease      = $_POST['heartDisease'];
-    $kidneyDiesease    = $_POST['kidneyDiesease'];
+    $kidneyDiesease    = $_POST['kidneyDisease'];
     $diabetesMellitus  = $_POST['diabetesMellitus'];
     $bronchialAsthma   = $_POST['bronchialAsthma'];
     $immunodeficiency  = $_POST['immunodeficiency'];
     $cancer            = $_POST['cancer'];
     $otherCommorbidity = $_POST['otherCommorbidity'];
-       $method            = $_POST['method'];
-    if ($method == 'register' ) {
-        if (verifyPatient($firstname, $lastname, $contact) == '1') {
-          echo "Patient already exist";  
-        } else {
-            $patientID = insertPatient($firstname, $lastname);
-            echo 'Patient_ID', $patientID['patient_id'];
-            insertDetails($patientID['patient_id'], $firstname, $lastname, $middlename, $suffix, $priorityGroup, $category, $categoryID, $houseAddress, $barangay, $cmAddress, $province, $region, $birthdate, $age, $gender, $contact, $occupation);
-            insertMedicalBackground($patientID['patient_id'], $allergyToVaccine, $hypertension, $heartDisease, $kidneyDiesease, $diabetesMellitus, $bronchialAsthma, $immunodeficiency, $cancer, $otherCommorbidity);
-            // $accountDetails = createAccount($patientID['patient_id'], $firstname, $lastname, $email);
-            // echo json_encode($accountDetails);
-        }
+    if (verifyPatient($firstname, $lastname, $contact) == '1') {
+      echo "Patient already exist";  
+    } else {
+        $patientID = insertPatient($firstname, $lastname);
+        echo 'Patient_ID', $patientID['patient_id'];
+        insertDetails($patientID['patient_id'], $firstname, $lastname, $middlename, $suffix, $priorityGroup, $category, $categoryID, $houseAddress, $barangay, $cmAddress, $province, $region, $birthdate, $age, $gender, $contact, $occupation);
+        insertMedicalBackground($patientID['patient_id'], $allergyToVaccine, $hypertension, $heartDisease, $kidneyDiesease, $diabetesMellitus, $bronchialAsthma, $immunodeficiency, $cancer, $otherCommorbidity);
+        $accountDetails = createAccount($patientID['patient_id'], $firstname, $lastname, $email);
+        echo json_encode($accountDetails);
     }
     
 //Inserts full name in the patient table
@@ -134,4 +99,16 @@ function getPatientId($firstname, $lastname) {
     } catch (PDOException $e) {
         echo 'Caught exception: ', $e->getMessage();
     }
+}
+
+function getAge($birthDate) {
+    //explode the date to get month, day and year
+    $birthDate = explode("/", $birthDate);
+    //get age from date or birthdate
+    $age = (date("md", date("U", mktime(0, 0, 0, $birthDate[0], $birthDate[1], $birthDate[2]))) > date("md")
+        ? ((date("Y") - $birthDate[2]) - 1)
+        : (date("Y") - $birthDate[2]));
+
+    return $age;
+
 }
