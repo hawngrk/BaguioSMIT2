@@ -69,11 +69,15 @@ if (isset($_POST['modalScreening'])) {
             <div class='col'>
             <h5>Pre-Vaccine Vitals:</h5>
             <form>
-            Pulse Rate: <input id='pulseR' type='text' name='vitals'>
+            Pulse Rate: <input id='pulseR' type='text' placeholder='Beats Per Minute' name='vitals'>
             <br>
-            Temperature: <input id='tempR' type='text' name='vitals'>
+            Temperature: <input id='tempR' type='text' placeholder='in Celcius' name='vitals'>
             <br>
-            Blood Pressure: <input id='bpR' type='text' name='vitals'>
+            <strong>Blood Pressure</strong>
+            <br>
+            Diastolic: <input id='bpRDias' type='text' placeholder='millimetres of mercury' name='vitals'>
+            <br>
+            Systolic: <input id='bpRSys' type='text' placeholder='millimetres of mercury' name='vitals'>
             </form>
             </div>
             </div>

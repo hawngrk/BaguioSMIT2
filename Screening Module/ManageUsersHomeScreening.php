@@ -41,6 +41,7 @@
                     <hr>
                     <div class="timeBox">
                     <p id="time"></p>  <p id="datee"></p>
+                    <script src="../includes/detailedDateAndTime.js"></script>
                     </div>
                     <hr>
                 <li>
@@ -168,81 +169,3 @@
         }
     }
 </script>
-
-<script> 
-    // var timeDisplay = document.getElementById("time");
-
-    // function refreshTime() {
-    // var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-    // var dateString = new Date().toLocaleString(undefined, options);
-
-    // timeDisplay.innerHTML = dateString;
-    // }
-
-    var timeDisplay = document.getElementById("time");
-    var dateDisplay = document.getElementById("datee");
-
-    function refreshTime() {
-        var dateString = new Date().toLocaleTimeString("en-US", {timeZone: "Asia/Manila"});
-        var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-        var timeString = new Date().toLocaleDateString(undefined, options);
-        // var formattedString = dateString.replace(", ", " - ");
-        timeDisplay.innerHTML = dateString;
-        dateDisplay.innerHTML = timeString;
-    }
-
-    setInterval(refreshTime, 1000);
-
-    </script>
-
-<!-- <script type="text/javascript">
-$(document).ready(function() {
-            $('#sidebarCollapse').on('click', function() {
-                $('#sidebar').toggleClass('active');
-            });
-        });
-var clicked = false;
-
-function Toggle() {
-    var butt = document.getElementById('sidebarCollapse')
-    if (!clicked) {
-        clicked = true;
-        butt.innerHTML = "Menu <i class = 'fas fa-angle-double-right'><i>";
-    } else {
-        clicked = false;
-        butt.innerHTML = "<i class='fas fa-angle-left'></i> Menu";
-    }
-}
-</script> -->
-
-
-<!-- <script>
-    function searchPatient() {
-        var textSearch = document.getElementById("searchPatientVaxPer").value; 
-        $.ajax({
-            url: 'screeningSearchProcessor.php',
-            type: 'POST',
-            data: {"search": textSearch},
-            success: function (result) {
-                document.getElementById("patientTable").innerHTML = result;
-            }
-        });
-    }
-
-    function clickModalRow(patientId) {
-        // Modal Settings 
-        preVacView.style.display = "block";
-        newVaccineClose.onclick = function () {
-            preVacView.style.display = "none";
-        }
-        // Fetching Data from the Database Code
-        $.ajax({
-            url: 'screeningSearchProcessor.php',
-            type: 'POST',
-            data: {"modalScreening": patientId},
-            success: function (data){
-                document.getElementById('patientRow').innerHTML = data;
-            }
-        })
-    }
-</script> -->

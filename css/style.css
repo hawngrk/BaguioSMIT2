@@ -1032,6 +1032,12 @@ input[name=vitals]{
 #tempR {
     margin-left: 4%;
 }
+#bpRDias {
+    margin-left: 4%;
+}
+#bpRSys {
+    margin-left: 5%;
+}
 #patientRow h5 {
     margin-left: 3%;
 }

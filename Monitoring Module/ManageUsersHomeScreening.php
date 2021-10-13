@@ -46,6 +46,7 @@
                     <hr>
                     <div class="timeBox">
                     <p id="time"></p>  <p id="datee"></p>
+                    <script src="../includes/detailedDateAndTime.js"></script>
                     </div>
                     <hr>
                 <li>
@@ -79,6 +80,7 @@
                     <button class="btnTop">
                     <i class="fas fa-cog"></i>
                     </button>
+
                 </div>
             </nav>
 
@@ -174,47 +176,5 @@
 </script>
 
 <script> 
-    // var timeDisplay = document.getElementById("time");
-
-    // function refreshTime() {
-    // var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-    // var dateString = new Date().toLocaleString(undefined, options);
-
-    // timeDisplay.innerHTML = dateString;
-    // }
-
-    var timeDisplay = document.getElementById("time");
-    var dateDisplay = document.getElementById("datee");
-
-    function refreshTime() {
-        var dateString = new Date().toLocaleTimeString("en-US", {timeZone: "Asia/Manila"});
-        var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-        var timeString = new Date().toLocaleDateString(undefined, options);
-        // var formattedString = dateString.replace(", ", " - ");
-        timeDisplay.innerHTML = dateString;
-        dateDisplay.innerHTML = timeString;
-    }
-
-    setInterval(refreshTime, 1000);
-
     function addVitals() {}
-    </script>
-<!-- <script type="text/javascript">
-$(document).ready(function() {
-            $('#sidebarCollapse').on('click', function() {
-                $('#sidebar').toggleClass('active');
-            });
-        });
-var clicked = false;
-
-function Toggle() {
-    var butt = document.getElementById('sidebarCollapse')
-    if (!clicked) {
-        clicked = true;
-        butt.innerHTML = "Menu <i class = 'fas fa-angle-double-right'><i>";
-    } else {
-        clicked = false;
-        butt.innerHTML = "<i class='fas fa-angle-left'></i> Menu";
-    }
-}
-</script> -->
+</script>
