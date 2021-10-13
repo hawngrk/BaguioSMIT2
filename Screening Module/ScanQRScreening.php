@@ -35,9 +35,10 @@
 
             <ul class="list-unstyled components">
                 <h4 id="headingNav1">Screening</h4>
-                    <hr>
+                <hr>
                     <div class="timeBox">
                     <p id="time"></p>  <p id="datee"></p>
+                    <script src="../includes/detailedDateAndTime.js"></script>
                     </div>
                     <hr>
                 <li class="active">
@@ -135,31 +136,6 @@
 </body>
 
 </html>
-<script> 
-    // var timeDisplay = document.getElementById("time");
-
-    // function refreshTime() {
-    // var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-    // var dateString = new Date().toLocaleString(undefined, options);
-
-    // timeDisplay.innerHTML = dateString;
-    // }
-
-    var timeDisplay = document.getElementById("time");
-    var dateDisplay = document.getElementById("datee");
-
-    function refreshTime() {
-        var dateString = new Date().toLocaleTimeString("en-US", {timeZone: "Asia/Manila"});
-        var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-        var timeString = new Date().toLocaleDateString(undefined, options);
-        // var formattedString = dateString.replace(", ", " - ");
-        timeDisplay.innerHTML = dateString;
-        dateDisplay.innerHTML = timeString;
-    }
-
-    setInterval(refreshTime, 1000);
-
-    </script>
 <style>
 
     #passportInt {
