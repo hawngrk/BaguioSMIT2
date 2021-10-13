@@ -212,8 +212,24 @@ a.article:hover {
     float: right;
     background: ghostwhite;
     border: 2px solid black;
+    width: 12%;
+    height: 40px;
+    color: black!important;
     margin-right: 10px;
-    font-size: 50%;
+    font-size: 80%;
+}
+
+.buttonTop3{
+    display: block;
+    float: right;
+    margin-right: 10px;
+    right: 0px;
+}
+
+.buttontop4{
+    display: block;
+    float: left;
+    margin-right: 10px;
 }
 
 .buttonTop2 {
@@ -249,6 +265,14 @@ a.article:hover {
     float: right;
     margin-bottom: 1%;
 }
+
+.buttonContainer{
+    position: relative;
+    width: 100%;
+    display: inline-block;
+}
+
+
 
 .buttonTop {
     border-radius: 12px;
@@ -746,6 +770,8 @@ input[type=text]:disabled{
     margin-left: 2%;
 }
 
+
+
 .listPatientRow{
     width: auto;
 }
@@ -766,7 +792,7 @@ input[type=text]:disabled{
 .tableDep{
     width: 73%!important;
     height: 60%;
-    margin-top: 10%;
+    margin-top: 2%;
 }
 
 .tableModal{
@@ -1087,7 +1113,17 @@ input[name=vitals]{
 }
 
 .depSummary{
+    border: solid gray 2px;
+    border-radius: 5px;
+    width: 25%;
+    height: auto;
+    margin-left: 2%;
     padding: 1%;
+    margin-top: 2%;
+}
+
+#unarchiveContent{
+    height: auto;
 }
 
 .depSummary .listPatientRow{

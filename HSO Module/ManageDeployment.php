@@ -98,27 +98,6 @@ include_once("../includes/database.php") ?>
         <!-- Page Content  -->
 
 
-        <div class="listPatientColumn depSummary">
-            <div class="four listPatientRow">
-                <div class="listPatient-box colored">
-                    <center><h3>Deployment Summary</h3></center>
-                </div>
-            </div>
-            <div class="four listPatientRow row2">
-                <div id="listPatientContent" class="listPatient-box colored">
-                </div>
-            </div>
-        </div>
-
-        <button type="button" class="buttonTransparent buttonTop archive" onclick="openModal('archived')">
-            <i class="fas fa-inbox fa-lg"></i>
-        </button>
-
-        <button type="button" class="btn btn-primary buttonTop" onclick="openModal('DeployModal')">
-            <i class="fas fa-plus"></i>
-            Add Deployment
-        </button>
-
 
 
         <form id='newDeploymentForm' method="post" enctype="multipart/form-data">
@@ -223,10 +202,6 @@ include_once("../includes/database.php") ?>
             </div>
         </form>
 
-
-        <button id="HealthDBtn" type="button" class="btn btn-primary buttonTop" onclick="openModal('HealthD')">
-            Health Districts
-        </button>
 
         <div id="HealthD" class="modal-window">
             <div class="content-modal">
@@ -375,11 +350,28 @@ include_once("../includes/database.php") ?>
             </div>
         </div>
 
+        <div class="buttonContainer">
+            <button type="button" class="btn btn-outline-primary buttonTop3 float-left">
+                Filter
+            </button>
+            <button type="button" class="btn btn-outline-primary buttonTop3 float-left">
+                Sort
+            </button>
+            <button type="button" class="btn btn-outline-dark buttonTop3 float-right" onclick="openModal('archived')">
+                <i class="fas fa-inbox fa-lg"></i>
+            </button>
+            <button type="button" class="btn btn-primary buttonTop3 float-right" onclick="openModal('vaccSiteModal')">
+                Vaccination Sites
+            </button>
+            <button id="HealthDBtn" type="button" class="btn btn-primary buttonTop3" onclick="openModal('HealthD')">
+                Health Districts
+            </button>
+            <button type="button" class="btn btn-primary buttonTop3" onclick="openModal('DeployModal')">
+                <i class="fas fa-plus"></i>
+                Add Deployment
+            </button>
 
-        <button type="button" class="btn btn-primary buttonTop" onclick="openModal('vaccSiteModal')">
-            Vaccination Sites
-        </button>
-
+        </div>
 
         <div id="vaccSiteModal" class="modal-window">
             <div class="content-modal">
@@ -527,8 +519,8 @@ include_once("../includes/database.php") ?>
 <!--                        class="fa fa-search"></i></button>-->
 <!--        </div>-->
 
-        <div id="unarchiveContent">
-        <table class="table table-row table-hover tableDep" id = "driveTable">
+        <div id="unarchiveContent" class="row">
+        <table class="table table-row table-hover tableDep column" id = "driveTable">
             <thead>
             <tr>
                 <th scope="col">#</th>
@@ -577,6 +569,17 @@ include_once("../includes/database.php") ?>
 
             ?>
         </table>
+            <div class="depSummary column">
+                <div class="four listPatientRow">
+                    <div class="listPatient-box colored">
+                        <center><h3>Deployment Summary</h3></center>
+                    </div>
+                </div>
+                <div class="four listPatientRow row2">
+                    <div id="listPatientContent" class="listPatient-box colored">
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
