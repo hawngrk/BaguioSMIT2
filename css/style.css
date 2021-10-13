@@ -761,7 +761,8 @@ input[type=text]:disabled{
 }
 
 .row2{
-    height:80%;
+    max-height: fit-content;
+    min-height: 65%;
     margin:2%;
 }
 
