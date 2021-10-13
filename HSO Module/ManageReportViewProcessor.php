@@ -385,7 +385,7 @@ if (isset($_POST['options'])) {
     echo "
     <button type='button' class='btn btn-success genButton' id='downloadGenerateReportBtn' onclick='downloadReports()'>Download Files</button>
     <button type='button' class='btn btn-secondary genButton' id='cancelGenerateReportBtn' onclick='generateReport(2)'>Cancel</button>
-    <h9 id='DlRepNote'>Note: select report/s you want to download</h9>
+    <h10 id='DlRepNote'>Note: select report/s you want to download</h10>
     ";
 }
 

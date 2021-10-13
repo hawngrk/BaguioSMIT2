@@ -99,41 +99,42 @@ include_once("../includes/database.php") ?>
         </nav>
 
         <!-- Page Content  -->
-        <button type="button" class="buttonTop" id="generateReportBtn" onclick="generateReport(1)">Generate Report
-        </button>
+        <div class="topContainer">
+            <button type="button" class="btn btn-primary buttonTop3" id="generateReportBtn" onclick="generateReport(1)">Generate Report</button>
 
-        <button type="button" class="buttonTop" id="invalidatedReportBtn" onclick="showInvalidatedReports()">Invalidated Reports</button>
+            <button type="button" class="btn btn-primary buttonTop3" id="invalidatedReportBtn" onclick="showInvalidatedReports()">Invalidated Reports</button>
 
-        <!--Search Input and Button-->
-        <div class="search-container">
-            <form action="/action_page.php">
-            <input type="text" id="searchReportHSO" name="searchReport" placeholder="Search" onkeyup="searchReport()">
-            <button type="submit" id="searchReportBtn" name="searchReportBtn" onclick="searchReport()"><i
-                        class="fa fa-search"></i></button>
-            </form>
-        </div>
+            <!--Search Input and Button-->
+            <div class="search-container">
+                <form action="/action_page.php">
+                    <input type="text" class="searchReport" id="searchReportHSO" name="searchReport" placeholder="Search" onkeyup="searchReport()">
 
-        <div class="organizeDiv">
-            <div class="sortButton">
-                <h5>Sort by:</h5>
-                <select class="form-select col-lg-12 vaccineType" id="sortReports" name="sortReports"
-                        onchange="sortReport(this)">
-                    <option>Name Asc</option>
-                    <option>Name Desc</option>
-                    <option>Date Asc</option>
-                    <option>Date Desc</option>
-                </select>
+                    <!--                    <button type="submit" id="searchReportBtn" name="searchReportBtn" onclick="searchReport()"><i-->
+<!--                                class="fa fa-search"></i></button>-->
+                </form>
             </div>
 
-            <div class="filterButton">
-                <h5>Filter by:</h5>
-                <select class="form-select col-lg-12 vaccineType" id="filterReports" name="filterReports"
-                        onchange="filterReport(this)">
-                    <option selected>All</option>
-                    <option>Unverified</option>
-                    <option>Verified</option>
-                    <option>Invalidated</option>
-                </select>
+            <div class="organizeDiv">
+                    <select class="form-select col-lg-12 sortButton" id="sortReports" name="sortReports"
+                            onchange="sortReport(this)">
+                        <option value="" selected disabled hidden>Sort By</option>
+                        <option>Name Asc</option>
+                        <option>Name Desc</option>
+                        <option>Date Asc</option>
+                        <option>Date Desc</option>
+                    </select>
+                    <select class="form-select col-lg-12 filterButton" id="filterReports" name="filterReports"
+                            onchange="filterReport(this)">
+                        <option value="" selected disabled hidden>Filter By</option>
+                        <option>All</option>
+                        <option>Unverified</option>
+                        <option>Verified</option>
+                        <option>Invalidated</option>
+                    </select>
+            </div>
+
+            <div id="generateReportOptions">
+
             </div>
         </div>
 
@@ -239,9 +240,7 @@ include_once("../includes/database.php") ?>
             }
             ?>
 
-            <div id="generateReportOptions" >
 
-            </div>
 
             <div id="invalidatedReportsModal" class="modal-window">
 
