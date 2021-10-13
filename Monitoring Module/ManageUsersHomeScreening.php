@@ -44,7 +44,9 @@
             <ul class="list-unstyled components">
                 <h4 id="headingNav1">Monitoring</h4>
                     <hr>
-                    <h5 id="headingNav2">September 17, 2021 | 01:24 PM</h5>
+                    <div class="timeBox">
+                    <p id="time"></p>  <p id="datee"></p>
+                    </div>
                     <hr>
                 <li>
                     <a href="ScanQRMonitoring.php"><i class="fas fa-qrcode"></i> Scan QR</a>
@@ -64,11 +66,18 @@
         <!-- Page Content  -->
         <div id="content">
 
-            <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                <div class="container-fluid">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light upperBoxOG">
+                <div class="container-fluid upperBox">
 
-                    <button type="button" id="sidebarCollapse" class="btn btn-info" onclick="Toggle()">
+                    <!-- <button type="button" id="sidebarCollapse" class="btn btn-info" onclick="Toggle()">
                         <i class='fas fa-angle-left'></i> Menu
+                    </button> -->
+                    <button class="btnTop">
+                    <i class="fas fa-bell"></i>
+                    </button>
+
+                    <button class="btnTop">
+                    <i class="fas fa-cog"></i>
                     </button>
                 </div>
             </nav>
@@ -164,7 +173,31 @@
     }
 </script>
 
-<script type="text/javascript">
+<script> 
+    // var timeDisplay = document.getElementById("time");
+
+    // function refreshTime() {
+    // var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    // var dateString = new Date().toLocaleString(undefined, options);
+
+    // timeDisplay.innerHTML = dateString;
+    // }
+
+    var timeDisplay = document.getElementById("time");
+    var dateDisplay = document.getElementById("datee");
+
+    function refreshTime() {
+        var dateString = new Date().toLocaleTimeString("en-US", {timeZone: "Asia/Manila"});
+        var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        var timeString = new Date().toLocaleDateString(undefined, options);
+        // var formattedString = dateString.replace(", ", " - ");
+        timeDisplay.innerHTML = dateString;
+        dateDisplay.innerHTML = timeString;
+    }
+
+    setInterval(refreshTime, 1000);
+    </script>
+<!-- <script type="text/javascript">
 $(document).ready(function() {
             $('#sidebarCollapse').on('click', function() {
                 $('#sidebar').toggleClass('active');
@@ -182,4 +215,4 @@ function Toggle() {
         butt.innerHTML = "<i class='fas fa-angle-left'></i> Menu";
     }
 }
-</script>
+</script> -->

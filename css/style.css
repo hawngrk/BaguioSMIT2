@@ -167,11 +167,32 @@ a.article:hover {
     border: none;
     background: whitesmoke;
     padding: 1%;
+    margin-right: 7%;
 }
 
+.timeBox {
+    margin-bottom: -9%;
+    margin-top: -6%;
+    font-size: 86%;
+}
+
+#time {
+    margin-bottom: -8%;
+    font-size: 195%!important;
+}
 .btnBell {
     margin-left: -85%;
 }
+
+.upperBox {
+    display: block !important;
+    padding-left: 94% !important;
+}
+
+.upperBoxOG {
+    margin-bottom: 1%;
+}
+
 
 
 /* ---------------------------------------------------
