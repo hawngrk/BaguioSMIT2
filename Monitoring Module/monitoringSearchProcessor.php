@@ -104,8 +104,10 @@ if (isset($_POST['pulse'])) {
     $tempRR = $_POST['temp'];
     $bpR = $_POST['bp'];
 
-    $queryInsert = "UPDATE patient SET 1st_dosage_pulse = ?, 1st_dosage_temp = ?, 1st_dosage_bpR = ? WHERE patient_id = ?";
+    $queryInsert = "UPDATE patient_vitals SET post_vital_pulse_rate_1st_dose = ?, post_vital_temp_rate_1st_dose = ?, post_vital_bpr_1st_dose = ? WHERE patient_id = ?";
     
     $stmtinsert = $database->prepare($queryInsert);
     $stmtinsert->execute([$pulseRR, $tempRR, $bpR]);
+
+    echo"vitals added";
 }

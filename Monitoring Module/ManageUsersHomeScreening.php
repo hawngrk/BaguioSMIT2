@@ -196,6 +196,8 @@
     }
 
     setInterval(refreshTime, 1000);
+
+    function addVitals() {}
     </script>
 <!-- <script type="text/javascript">
 $(document).ready(function() {
