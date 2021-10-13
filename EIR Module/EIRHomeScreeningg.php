@@ -21,6 +21,7 @@
     <script src="https://kit.fontawesome.com/fcdb0fe9f3.js" crossorigin="anonymous"></script>
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
+    <script defer src="../includes/showDateAndTime.js"> </script>
 </head>
 
 <body>
@@ -36,7 +37,7 @@
             <ul class="list-unstyled components">
                 <h4 id="headingNav1">Entry Immunization Register</h4>
                     <hr>
-                    <h5 id="headingNav2">September 17, 2021 | 01:24 PM</h5>
+                    <h5 id="headingNav2"></h5>
                     <hr>
                 <li class="active">
                     <a href="../EIR Module/EIRHomeScreeningg.php"><i class="fas fa-home"></i></i> Home</a>

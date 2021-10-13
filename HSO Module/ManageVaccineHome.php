@@ -32,6 +32,8 @@ include_once("../includes/database.php") ?>
             integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY"
             crossorigin="anonymous"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script defer src="../includes/showDateAndTime.js"> </script>
 </head>
 
 <body>
@@ -97,11 +99,21 @@ include_once("../includes/database.php") ?>
         </nav>
 
         <!-- Page Content  -->
-        <button type="button" class="buttonTransparent buttonTop archive" onclick="openModal('archived')">
-            <i class="fas fa-inbox fa-lg"></i>
-        </button>
+        <div class="buttonContainer">
+            <button type="button" class="btn btn-outline-primary buttonTop3 float-left"> <i class="fas fa-filter"></i>
+            </button>
+            <button type="button" class="btn btn-outline-primary buttonTop3 float-left">
+                <i class="fas fa-sort"></i>
+            </button>
 
-        <button id="addVaccineBtn" type="button" class="buttonTop">Add Vaccine</button>
+            <button type="button" class="btn btn-outline-dark buttonTop3 float-right" onclick="openModal('archived')">
+                <i class="fas fa-inbox fa-lg"></i>
+            </button>
+
+            <button id="addVaccineBtn" type="button" class="btn btn-primary buttonTop3">Add Vaccine</button>
+
+            <button id="addNewVaccineBtn" type="button" class="btn btn-primary buttonTop3">Add New Vaccine</button>
+        </div>
 
         <form id='addVaccineForm' method="post" enctype="multipart/form-data">
             <div id="vaccineModal" class="modal-window">
@@ -152,8 +164,6 @@ include_once("../includes/database.php") ?>
                 </div>
             </div>
         </form>
-
-        <button id="addNewVaccineBtn" type="button" class="buttonTop">Add New Vaccine</button>
 
         <form id='newVaccineForm' method="post" enctype="multipart/form-data">
             <div id="newVaccineModal" class="modal-window">

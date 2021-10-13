@@ -32,6 +32,7 @@
             integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY"
             crossorigin="anonymous"></script>
 
+    <script defer src="../includes/showDateAndTime.js"> </script>
 </head>
 
 <body>
@@ -76,15 +77,18 @@
             </div>
         </nav>
 
-        <button id="addPatientAccount" type="button" class="buttonTop2">Add Patient Account</button>
-
-        <!--Search Input and Button-->
-        <div class="search-container">
-            <input id="searchPatientEIR" type="text" placeholder="Search" class="searchHome" name="searchPatient"
-                   onkeyup="searchPatient()">
-            <button type="submit" name="searchPatientEIRBtn" onclick="searchPatient()">
-                <i class="fa fa-search"></i>
+        <div class="buttonContainer">
+            <button type="button" class="btn btn-outline-primary buttonTop3 float-left"> <i class="fas fa-filter"></i>
             </button>
+            <button type="button" class="btn btn-outline-primary buttonTop3 float-left">
+                <i class="fas fa-sort"></i>
+            </button>
+
+            <button type="button" class="btn btn-outline-dark buttonTop3 float-right" onclick="openModal('archived')">
+                <i class="fas fa-inbox fa-lg"></i>
+            </button>
+
+            <button id="addPatientAccount" type="button" class="btn btn-primary buttonTop3">Add Patient Account</button>
         </div>
 
         <!--Table Part-->
@@ -160,15 +164,21 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-4">
+                            <div class="col">
                                 <label class="label1 required" for="occupation">Occupation </label>
                                 <input type="text3" id="occupation" class='input' name="middlename"
                                        placeholder="Input Answer Here" required>
                             </div>
-                            <div class="col-4">
+                            <div class="col">
                                 <label class="label1 required" for="contactNum">Contact Number </label>
                                 <input type="text3" id="contactNum" class='input' name="contactNum"
                                        placeholder="09XX-XXX-XXXX" required>
+                            </div>
+
+                            <div class="col">
+                                <label class="label1 required" for="email"> Email </label>
+                                <input type="text3" id="email" class='input' name="email"
+                                       placeholder="@email.com" required>
                             </div>
                         </div>
                     </div>
@@ -379,12 +389,6 @@
         crossorigin="anonymous"></script>
 
 <script type="text/javascript">
-    //Display date
-    var dt = new Date();
-    document.getElementById("headingNav2").innerHTML = dt.toLocaleString('en-us', {
-        dateStyle: 'long',
-        timeStyle: 'short'
-    });
 
     $(document).ready(function () {
         $('#sidebarCollapse').on('click', function () {

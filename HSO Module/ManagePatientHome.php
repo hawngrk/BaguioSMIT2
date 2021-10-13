@@ -33,6 +33,8 @@ include_once("../includes/database.php") ?>
             integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY"
             crossorigin="anonymous"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script defer src="../includes/showDateAndTime.js"> </script>
 </head>
 
 <body>
@@ -99,6 +101,7 @@ include_once("../includes/database.php") ?>
         </nav>
 
         <!-- Page Content  -->
+
 
         <!--Button for Uploading File-->
         <button type="button" class="buttonTransparent buttonTop archive" onclick="openModal('archived')">

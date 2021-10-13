@@ -827,7 +827,7 @@ input[type=text]:disabled{
     margin-top: 10%;
 }
 .tableVax{
-    margin-top: 10%;
+    margin-top: 2%;
 }
 
 .tableBrgy {
@@ -1122,6 +1122,7 @@ input[name=vitals]{
 .tableBrgy {
     background-color: white;
     border-radius: 12px;
+    margin-top: 2%;
 }
 
 #deploymentSummary{

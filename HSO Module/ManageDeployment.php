@@ -35,6 +35,8 @@ include_once("../includes/database.php") ?>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+    <script defer src="../includes/showDateAndTime.js"> </script>
+
 </head>
 
 <body>
@@ -96,10 +98,6 @@ include_once("../includes/database.php") ?>
         </nav>
 
         <!-- Page Content  -->
-
-
-
-
         <form id='newDeploymentForm' method="post" enctype="multipart/form-data">
             <div id="DeployModal" class="modal-window">
                 <div class="content-modal">
@@ -201,7 +199,6 @@ include_once("../includes/database.php") ?>
                 </div>
             </div>
         </form>
-
 
         <div id="HealthD" class="modal-window">
             <div class="content-modal">
@@ -351,21 +348,24 @@ include_once("../includes/database.php") ?>
         </div>
 
         <div class="buttonContainer">
-            <button type="button" class="btn btn-outline-primary buttonTop3 float-left">
-                Filter
+            <button type="button" class="btn btn-outline-primary buttonTop3 float-left"> <i class="fas fa-filter"></i>
             </button>
             <button type="button" class="btn btn-outline-primary buttonTop3 float-left">
-                Sort
+                <i class="fas fa-sort"></i>
             </button>
+
             <button type="button" class="btn btn-outline-dark buttonTop3 float-right" onclick="openModal('archived')">
                 <i class="fas fa-inbox fa-lg"></i>
             </button>
+
             <button type="button" class="btn btn-primary buttonTop3 float-right" onclick="openModal('vaccSiteModal')">
                 Vaccination Sites
             </button>
+
             <button id="HealthDBtn" type="button" class="btn btn-primary buttonTop3" onclick="openModal('HealthD')">
                 Health Districts
             </button>
+
             <button type="button" class="btn btn-primary buttonTop3" onclick="openModal('DeployModal')">
                 <i class="fas fa-plus"></i>
                 Add Deployment
