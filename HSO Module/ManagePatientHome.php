@@ -104,10 +104,6 @@ include_once("../includes/database.php") ?>
 
 
         <!--Button for Uploading File-->
-        <button type="button" class="buttonTransparent buttonTop archive" onclick="openModal('archived')">
-            <i class="fas fa-inbox fa-lg"></i>
-        </button>
-        <button id="uploadFileBtn" type="button" class="buttonTop">Upload File</button>
 
         <!--Modal for uploading patient csv-->
         <!--To include uploading files limited to csv file only-->
@@ -153,7 +149,6 @@ include_once("../includes/database.php") ?>
 
 
         <!--Button for Adding Patient Details-->
-        <button id="addPatientBtn" type="button" class="buttonTop">Add User</button>
 
             <div id="patientInformationModal" class="modal-window">
                 <div class="content-modal">
@@ -400,6 +395,24 @@ include_once("../includes/database.php") ?>
                 </div>
             </div>
 
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-10 col-md-8">
+                    <div class="search-container">
+                        <input id="searchPatientHSO" type="text" placeholder="Search" class="searchHome"name="searchPatient" onkeyup="searchPatient()">
+                    </div>
+                </div>
+                <div class="col-6 col-md-4"">
+                    <button type="button" class="btn btn-outline-dark buttonTop3" onclick="openModal('archived')">
+                        <i class="fas fa-inbox fa-lg"></i>
+                    </button>
+                    <button id="uploadFileBtn" type="button" class="btn btn-primary buttonTop3">Upload File</button>
+                    <button id="addPatientBtn" type="button" class="btn btn-primary buttonTop3">Add User</button>
+
+                </div>
+            </div>
+
+        </div>
 
         <!--Notification modal-->
         <div id="notifyModal" class="modal-window">
@@ -480,12 +493,7 @@ include_once("../includes/database.php") ?>
             </div>
         </div>
 
-            <div class="search-container">
-                <input id="searchPatientHSO" type="text" placeholder="Search" class="searchHome"name="searchPatient" onkeyup="searchPatient()">
-                <button type="submit" id="searchPatientBtn" name="searchPatientBtn" onclick="searchPatient()">
-                    <i class="fa fa-search"></i>
-                </button>
-            </div>
+
 
             <!--Table Part-->
             <table class="table table-row table-hover tableBrgy" id="patientTable">

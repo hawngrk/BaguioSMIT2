@@ -99,19 +99,27 @@ include_once("../includes/database.php") ?>
         </nav>
 
         <!-- Page Content  -->
-        <div class="topContainer">
-            <button type="button" class="btn btn-primary buttonTop3" id="generateReportBtn" onclick="generateReport(1)">Generate Report</button>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-6">
+                    <div class="search-container">
+                        <form action="/action_page.php">
+                            <input type="text" class="searchReport" id="searchReportHSO" name="searchReport" placeholder="Search" onkeyup="searchReport()">
 
-            <button type="button" class="btn btn-primary buttonTop3" id="invalidatedReportBtn" onclick="showInvalidatedReports()">Invalidated Reports</button>
+                            <!--                    <button type="submit" id="searchReportBtn" name="searchReportBtn" onclick="searchReport()"><i-->
+                            <!--                                class="fa fa-search"></i></button>-->
+                        </form>
+                    </div>
+                </div>
+                <div class="col">
+                    <button type="button" class="btn btn-primary buttonTop3" id="generateReportBtn" onclick="generateReport(1)">Generate Report</button>
 
-            <!--Search Input and Button-->
-            <div class="search-container">
-                <form action="/action_page.php">
-                    <input type="text" class="searchReport" id="searchReportHSO" name="searchReport" placeholder="Search" onkeyup="searchReport()">
+                    <button type="button" class="btn btn-primary buttonTop3" id="invalidatedReportBtn" onclick="showInvalidatedReports()">Invalidated Reports</button>
 
-                    <!--                    <button type="submit" id="searchReportBtn" name="searchReportBtn" onclick="searchReport()"><i-->
-<!--                                class="fa fa-search"></i></button>-->
-                </form>
+                </div>
+
+                <!--Search Input and Button-->
+
             </div>
 
             <div class="organizeDiv">

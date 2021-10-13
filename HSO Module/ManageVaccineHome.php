@@ -100,9 +100,9 @@ include_once("../includes/database.php") ?>
 
         <!-- Page Content  -->
         <div class="buttonContainer">
-            <button type="button" class="btn btn-outline-primary buttonTop3 float-left"> <i class="fas fa-filter"></i>
+            <button type="button" class="btn btn-outline-dark buttonTop3 float-left"> <i class="fas fa-filter"></i>
             </button>
-            <button type="button" class="btn btn-outline-primary buttonTop3 float-left">
+            <button type="button" class="btn btn-outline-dark buttonTop3 float-left">
                 <i class="fas fa-sort"></i>
             </button>
 
