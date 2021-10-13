@@ -66,6 +66,8 @@ a:focus {
     width: 100%;
     align-items: stretch;
     background-color: #ffffff;
+    position: relative;
+    overflow: hidden;
 }
 
 #sidebar {
@@ -75,6 +77,7 @@ a:focus {
     color: #fff;
     transition: all 0.3s;
     padding: .5%;
+
 }
 
 #sidebar.active {
