@@ -76,7 +76,8 @@ if (isset($_POST['modalRes'])) {
             <h5>Pre-Vaccine Vitals:</h5>
             <h6>Pulse Rate:</h6><p>$prePulse</p>
             <h6>Temperature Rate:</h6><p>$preTemp</p>
-            <h6>Blood Presuure Rate:</h6><p>$preBP</p>
+            <h6>Blood Presure Diastolic:</h6><p>$preBP</p>
+            <h6>Blood Presure Systolic:</h6><p>$preBP</p>
             <hr>
             <h5>Post-Vaccine Vitals:</h5>
             <form>
@@ -93,6 +94,7 @@ if (isset($_POST['modalRes'])) {
             </div>
             </div>
             <div class='modal-footer'>
+            ##########Copy add button######
                 <button onclick=btnViewPostVac('add') id='addButtonId' type='button' class='btn btn-success' value=$id> Add</button>
                 <button onclick=btnViewPostVac('close') type='button' class='btn btn-danger'> Cancel</button>
              </div>
@@ -102,6 +104,7 @@ if (isset($_POST['modalRes'])) {
     }
 }
 
+
 if (isset($_POST['pulse'])) {
     require_once('../includes/configure.php');
     $pulseRR = $_POST['pulse'];
@@ -109,51 +112,28 @@ if (isset($_POST['pulse'])) {
     $bpDiastolic = $_POST['diastolic'];
     $bpSystolic = $_POST['systolic'];
     $id = $_POST['id'];
-    $vital = $_POST['vital'];
-    
     
     try {
-        $query = ("UPDATE patient_vitals SET post_vital_pulse_rate_2nd_dose = ?, post_vital_temp_rate_2nd_dose = ?, post_vital_bpDiastolic_2nd_dose = ?, post_vital_bpSystolic_2nd_dose = ? WHERE patient_vitals.patient_id = ?");
-        $stmtinsert = $database->prepare($query);
-        $stmtinsert->execute([$pulseRR, $tempRR, $bpDiastolic, $bpSystolic, $id]);
-        
+        //Get patient getails for checking if it is post vital for second dose or first dose
+        $querySelect = "SELECT * FROM patient WHERE patient_id = ?";
+        $stmtselect = $database->prepare($querySelect);
+        $stmtselect->execute([$id]);
+        $row = $stmtselect->fetch(PDO::FETCH_ASSOC);
+
+        //Test mo kay Ted Mosby at Marshall Ericksen pero insert mo muna sila sa patient_vital table pero null lahat except patient_id
+        if ($row['second_dose_vaccination'] == 1) {
+            //Code for post vital second dosage
+            $query = ("UPDATE patient_vitals SET post_vital_pulse_rate_2nd_dose = ?, post_vital_temp_rate_2nd_dose = ?, post_vital_bpDiastolic_2nd_dose = ?, post_vital_bpSystolic_2nd_dose = ? WHERE patient_vitals.patient_id = ?");
+            $stmtinsert = $database->prepare($query);
+            $stmtinsert->execute([$pulseRR, $tempRR, $bpDiastolic, $bpSystolic, $id]);
+        } else {
+            //Code for post vital first dosage
+            $query = ("UPDATE patient_vitals SET post_vital_pulse_rate_1st_dose = ?, post_vital_temp_rate_1st_dose = ?, post_vital_bpDiastolic_1st_dose = ?, post_vital_bpSystolic_1st_dose = ? WHERE patient_vitals.patient_id = ?");
+            $stmtinsert = $database->prepare($query);
+            $stmtinsert->execute([$pulseRR, $tempRR, $bpDiastolic, $bpSystolic, $id]);
+        }   
     } catch (Exception $th) {
         echo $th->getMessage();
     }
-
-    echo'added';
-
+    echo 'added';
 }
-    // function createQuery($id, $vital, $pulseRR, $tempRR, $bpDiastolic, $bpSystolic) {
-    //     require_once('../includes/configure.php');
-    //     $querySelect = "SELECT * FROM patient WHERE patient_id = ?";
-    
-    //     try {
-    //         $stmtselect = $database->prepare($querySelect);
-    //         $stmtselect->execute([$id]);
-    //         $row = $stmtselect->fetch(PDO::FETCH_ASSOC);
-    //         if ($vital == "pre") {
-    //             if ($row["first_dose_vaccination"] == '0') {
-    //                 $query = ("UPDATE patient_vitals SET pre_vital_pulse_rate_1st_dose = ?, pre_vital_temp_rate_1st_dose = ?, pre_vital_bpDiastolic_1st_dose = ?, pre_vital_bpSystolic_1st_dose = ? WHERE patient_vitals.patient_id = ?");
-    //                 $stmtinsert = $database->prepare($query);
-    //                 $stmtinsert->execute([$pulseRR, $tempRR, $bpDiastolic, $bpSystolic, $id]);
-    //             } else if ($row["first_dose_vaccination"] == '1' && $row["second_dose_vaccination"] == '0') {
-    //                 $query = ("UPDATE patient_vitals SET pre_vital_pulse_rate_2nd_dose = ?, pre_vital_temp_rate_2nd_dose = ?, pre_vital_bpDiastolic_2nd_dose = ?, pre_vital_bpSystolic_2nd_dose = ? WHERE patient_vitals.patient_id = ?");
-    //                 $stmtinsert = $database->prepare($query);
-    //                 $stmtinsert->execute([$pulseRR, $tempRR, $bpDiastolic, $bpSystolic, $id]);
-    //             }
-    //         } else {
-    //             if ($row["first_dose_vacciantion"] == 1 && $row["second_dose_vaccination"] == 0) {                
-    //                 $query = ("UPDATE patient_vitals SET post_vital_pulse_rate_1st_dose = ?, post_vital_temp_rate_1st_dose = ?, post_vital_bpDiastolic_1st_dose = ?, post_vital_bpSystolic_1st_dose = ? WHERE patient_vitals.patient_id = ?");
-    //                 $stmtinsert = $database->prepare($query);
-    //                 $stmtinsert->execute([$pulseRR, $tempRR, $bpDiastolic, $bpSystolic, $id]);
-    //             } else {
-    //                 $query = ("UPDATE patient_vitals SET post_vital_pulse_rate_2nd_dose = ?, post_vital_temp_rate_2nd_dose = ?, post_vital_bpDiastolic_2nd_dose = ?, post_vital_bpSystolic_2nd_dose = ? WHERE patient_vitals.patient_id = ?");
-    //                 $stmtinsert = $database->prepare($query);
-    //                 $stmtinsert->execute([$pulseRR, $tempRR, $bpDiastolic, $bpSystolic, $id]);
-    //             }
-    //         }
-    //     } catch (Exception $th) {
-    //         echo $th->getMessage();
-    //     }
-    // }

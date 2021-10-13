@@ -178,7 +178,7 @@
                         $.ajax({
                         url: 'monitoringSearchProcessor.php',
                         type: 'POST',
-                        data: {'pulse':pulse, 'temp':temp, 'diastolic':bpDias, 'systolic': bpSys, 'id': id, 'vitals':'post'},
+                        data: {'pulse':pulse, 'temp':temp, 'diastolic':bpDias, 'systolic': bpSys, 'id': id},
                         success: function(postVat) {
                             document.getElementById('postVacView').style.display = 'none';
                         }
