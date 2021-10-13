@@ -212,11 +212,8 @@ a.article:hover {
     float: right;
     background: ghostwhite;
     border: 2px solid black;
-    width: 12%;
-    height: 40px;
-    color: black!important;
     margin-right: 10px;
-    font-size: 80%;
+    font-size: 50%;
 }
 
 .buttonTop2 {
@@ -741,12 +738,12 @@ input[type=text]:disabled{
 }
 
 .listPatientColumn{
-    float: left;
+    float: right;
     border: solid gray 2px;
     border-radius: 5px;
     width: 25%;
     height: auto;
-    margin-right: 2%;
+    margin-left: 2%;
 }
 
 .listPatientRow{

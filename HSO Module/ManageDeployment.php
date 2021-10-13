@@ -114,7 +114,7 @@ include_once("../includes/database.php") ?>
             <i class="fas fa-inbox fa-lg"></i>
         </button>
 
-        <button type="button" class="buttonTop" onclick="openModal('DeployModal')">
+        <button type="button" class="btn btn-primary buttonTop" onclick="openModal('DeployModal')">
             <i class="fas fa-plus"></i>
             Add Deployment
         </button>
@@ -224,7 +224,7 @@ include_once("../includes/database.php") ?>
         </form>
 
 
-        <button id="HealthDBtn" type="button" class="buttonTop" onclick="openModal('HealthD')">
+        <button id="HealthDBtn" type="button" class="btn btn-primary buttonTop" onclick="openModal('HealthD')">
             Health Districts
         </button>
 
@@ -376,7 +376,7 @@ include_once("../includes/database.php") ?>
         </div>
 
 
-        <button type="button" class="buttonTop" onclick="openModal('vaccSiteModal')">
+        <button type="button" class="btn btn-primary buttonTop" onclick="openModal('vaccSiteModal')">
             Vaccination Sites
         </button>
 
