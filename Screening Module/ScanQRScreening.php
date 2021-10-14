@@ -38,7 +38,7 @@
                 <hr>
                     <div class="timeBox">
                     <p id="time"></p>  <p id="datee"></p>
-                    <script src="../includes/detailedDateAndTime.js"></script>
+                    <script src="../javascript/detailedDateAndTime.js"></script>
                     </div>
                     <hr>
                 <li class="active">
