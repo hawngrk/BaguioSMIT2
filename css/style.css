@@ -126,13 +126,7 @@ a[data-toggle="collapse"] {
     position: relative;
 }
 
-.dropdown-toggle::after {
-    display: block;
-    position: absolute;
-    top: 50%;
-    right: 20px;
-    transform: translateY(-50%);
-}
+
 
 ul ul a {
     font-size: 0.9em !important;
@@ -169,31 +163,9 @@ a.article:hover {
     padding: 1%;
 }
 
-.btnTop3{
-    position: relative;
-    float: right;
+.btnBell {
+    margin-left: -85%;
 }
-.timeBox {
-    margin-bottom: -9%;
-    margin-top: -6%;
-    font-size: 86%;
-}
-
-#time {
-    margin-bottom: -8%;
-    font-size: 195%!important;
-}
-
-
-.upperBox {
-    display: block !important;
-    padding-left: 94% !important;
-}
-
-.upperBoxOG {
-    margin-bottom: 1%;
-}
-
 
 
 /* ---------------------------------------------------
@@ -243,8 +215,7 @@ a.article:hover {
 
 .buttonTop3{
     float: right;
-    margin: 2px;
-    width: auto;
+    margin-right: 5px;
 }
 
 .buttontop4{
@@ -278,14 +249,9 @@ a.article:hover {
 
 .genButton{
     float: right;
-    margin-right: .5%;
+    margin: .5%;
+    margin-top: 2%;
 }
-
-
-#generateReportOptions{
-    height: fit-content;
-}
-
 
 #DlRepNote{
     float: right;
@@ -293,8 +259,9 @@ a.article:hover {
 }
 
 .topContainer{
-    display: grid;
+    position: relative;
     width: 100%;
+    display: inline-block;
 }
 
 
@@ -345,9 +312,7 @@ a.article:hover {
 }
 
 .searchDept{
-    position: relative;
-    float: left;
-    width: 100%;
+    width: 35%;
 }
 
 .buttonTransparent{
@@ -372,7 +337,9 @@ a.article:hover {
     width: 5% !important;
 }
 
-
+.searchReport{
+    width: ;
+}
 .editButton{
     float: right;
 }
@@ -384,6 +351,7 @@ input[type=text]{
     border: 2px solid #ccc;
     border-radius: 8px;
     max-height: fit-content;
+    text-align: center;
 }
 
 
@@ -407,20 +375,16 @@ hr {
     margin-bottom: 5%;
 }
 
-#searchVaccine,#searchPatient,#searchPersonnel{
+#searchVaccine,#searchPatient,#searchPersonnel,#searchReport{
     width: 60%;
 }
 
-#searchReportHSO{
-    width: 100%;
-}
-
-#searchVaccineHSO{
+#searchReportHSO, #searchVaccineHSO{
     width: 65%;
 }
 
 #searchpatientHSO{
-    width: 100%;
+    width: 60%;
 }
 
 input[type=textDesc]{
@@ -432,7 +396,9 @@ input[type=textDesc]{
     height: 40px;
 }
 
-
+.sortButton, .filterButton{
+    width: 70%;
+}
 .addNewVaccineH3 {
     color: black;
 }
@@ -745,16 +711,6 @@ input[type=text]:disabled{
     display: inline-block;
 }
 
-.dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: #f9f9f9;
-    min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    padding: 12px 16px;
-    z-index: 1;
-}
-
 .modal-window {
     display: none;
     /* Hidden by default */
@@ -819,7 +775,8 @@ input[type=text]:disabled{
 }
 
 .row2{
-    height: fit-content;
+    max-height: fit-content;
+    min-height: 100%;
     margin:2%;
 }
 
@@ -970,63 +927,8 @@ h7~h8{
     float: left;
 }
 
-
-
-select {
-    /* styling */
-    background-color: white;
-    border: thin solid #000000;
-    border-radius: 4px;
-    display: inline-block;
-    font: inherit;
-    line-height: 1.5em;
-    padding: 0.5em 3.5em 0.5em 1em;
-
-    /* reset */
-
-    margin: 0;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-}
-
-
-/* arrows */
-
-select.sortButton, select.filterButton {
-    background-image:
-            linear-gradient(45deg, transparent 50%, #f3f3f3 50%),
-            linear-gradient(135deg, #f6f6f6 50%, transparent 50%),
-            linear-gradient(to right, #007bfe, #007bfe);
-    background-position:
-            calc(100% - 20px) calc(1em + 2px),
-            calc(100% - 15px) calc(1em + 2px),
-            100% 0;
-    background-size:
-            5px 5px,
-            5px 5px,
-            2.5em 2.5em;
-    background-repeat: no-repeat;
-}
-
-select.sortButton:focus, select.filterButton:focus {
-    background-image:
-            linear-gradient(45deg, white 50%, transparent 50%),
-            linear-gradient(135deg, transparent 50%, white 50%),
-            linear-gradient(to right, gray, gray);
-    background-position:
-            calc(100% - 15px) 1em,
-            calc(100% - 20px) 1em,
-            100% 0;
-    background-size:
-            5px 5px,
-            5px 5px,
-            2.5em 2.5em;
-    background-repeat: no-repeat;
-    border-color: grey;
-    outline: 0;
+.filterButton, .sortButton{
+    padding: 1%;
 }
 
 .sortButton{
@@ -1099,12 +1001,6 @@ input[name=vitals]{
 }
 #tempR {
     margin-left: 4%;
-}
-#bpRDias {
-    margin-left: 4%;
-}
-#bpRSys {
-    margin-left: 5%;
 }
 #patientRow h5 {
     margin-left: 3%;
@@ -1196,7 +1092,6 @@ input[name=vitals]{
 .tableBrgy {
     background-color: white;
     border-radius: 12px;
-    margin-top: 2%;
 }
 
 #deploymentSummary{
@@ -1213,7 +1108,7 @@ input[name=vitals]{
     border-radius: 5px;
     width: 25%;
     max-height: fit-content;
-    min-height: 550px;
+    min-height: 100%;
     margin-left: 2%;
     padding: 1%;
     margin-top: 2%;
