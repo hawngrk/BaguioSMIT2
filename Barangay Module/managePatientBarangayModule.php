@@ -44,6 +44,7 @@
             integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY"
             crossorigin="anonymous"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script defer src="../javascript/showDateAndTime.js"> </script>
 
     </head>
 
@@ -60,7 +61,7 @@
                 <ul class="list-unstyled components">
                     <h4 id="headingNav1">Bakakeng North/Sur</h4>
                     <hr>
-                    <h5 id="headingNav2">September 17, 2021 | 01:24 PM</h5>
+                    <h5 id="headingNav2"></h5>
                     <hr>
                     <li>
                         <a href="../Barangay Module/homeBarangayModule.php">
@@ -96,22 +97,6 @@
         <!-- Top Nav Bar -->
 
         <div id="content">
-            <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                <div class="container-fluid">
-
-                    <button type="button" id="sidebarCollapse" class="btn btn-info" onclick="Toggle()">
-                        <i class='fas fa-angle-left'></i> Menu
-                    </button>
-
-                    <button class="btnTop">
-                        <i class="fas fa-bell"></i>
-                    </button>
-
-                    <button class="btnTop btnBell">
-                        <i class="fas fa-cog"></i>
-                    </button>
-                </div>
-            </nav>
 
             <!--Search Input and Button-->
             <div class="search-container">

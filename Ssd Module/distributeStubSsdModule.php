@@ -10,7 +10,7 @@
 
     <link rel="icon" href="../img/FaviSMIT+.png" type="image/jpg">
     <!-- Our Custom CSS -->
-    <link href="../css/ssdStyle.css" rel="stylesheet">
+    <link href="../css/style.css" rel="stylesheet">
 
     <!-- Bootstrap-->
     <script crossorigin="anonymous" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
@@ -34,6 +34,7 @@
     <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet"/>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
+    <script defer src="../javascript/showDateAndTime.js"> </script>
 
 </head>
 
@@ -50,7 +51,7 @@
         <ul class="list-unstyled components">
             <h4 id="headingNav1"> Special Service Division</h4>
             <hr>
-            <h5 id="headingNav2"> September 17, 2021 | 01:24 PM</h5>
+            <h5 id="headingNav2"></h5>
             <hr>
 
             <li>
@@ -69,30 +70,12 @@
 
     <!-- Top Nav Bar  -->
     <div id="content">
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <div class="container-fluid">
-
-                <button type="button" id="sidebarCollapse" class="btn btn-info" onclick="Toggle()">
-                    <i class='fas fa-angle-left'></i> Menu
-                </button>
-
-                <button id="buttonMarker" class="btnTop" onclick="openNotif('notificationModal')">
-                    <span class="marker" id="marker"><i class="fas fa-circle"></i></span>
-                    <i class="fas fa-bell"></i>
-                </button>
-
-                <button class="btnTop btnBell">
-                    <i class="fas fa-cog"></i>
-                </button>
-            </div>
-        </nav>
-
         <!-- Page Content  -->
         <div class="row">
             <div class="col">
                 <div class="row">
                     <div id="selectDeployment">
-                        <select onchange="updateDeploymentDetails(this.value)">
+                        <select class="form-select" id="selectHealthDistrict" onchange="updateDeploymentDetails(this.value)">
                             <option value='' disabled selected hidden> Select Deployment </option>
                             <?php
                             require_once("../require/getVaccinationDrive.php");
@@ -104,9 +87,9 @@
                         </select>
                     </div>
                 </div>
-                <div class="row healthDistrict">
-                    <div id="healthDistrictContainer">
-                        <h2 class="labels"> Health Center Districts: </h2>
+                <div class="row">
+                    <div id="hDistrictContainer">
+                        <h2> Health Center Districts: </h2>
                         <table class="table table-hover" id="healthDistrictTable">
                         </table>
                     </div>
@@ -115,8 +98,8 @@
             <div class="col">
                 <div class="row">
                     <div id="deploymentSummary">
-                        <div class="labels" id="labelling">
-                            <h2>Deployment Summary</h2>
+                        <h2>Deployment Summary</h2>
+                        <div id="labelling">
                             <h5> Site: </h5>
                             <br>
                             <h5> Brand: </h5>
@@ -132,15 +115,6 @@
                         </div>
                     </div>
                 </div>
-                <!--<div class="row healthDistrict">
-                    <div id="deploymentQueue">
-                        <div class="labels">
-                            <h2>Deployment Queue</h2>
-                            <p> QUEZON HILL HEALTH DISTRICT CENTER - Deployment 4</p>
-                            <p> IRISAN HEALTH DISTRICT CENTER - Deployment 5</p>
-                        </div>
-                    </div>
-                </div>-->
             </div>
 
             <div id="barangayModal" class="modal-window">

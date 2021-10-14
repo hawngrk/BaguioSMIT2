@@ -35,7 +35,7 @@ include_once("../includes/database.php") ?>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-    <script defer src="../includes/showDateAndTime.js"> </script>
+    <script defer src="../javascript/showDateAndTime.js"> </script>
 
 </head>
 

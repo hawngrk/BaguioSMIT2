@@ -24,7 +24,6 @@ p {
     margin-bottom: -12%;
 }
 
-
 a,
 a:hover,
 a:focus {
@@ -572,8 +571,6 @@ input[type=text1] {
     color: #fff
 }
 
-
-
 .tableReport {
     width: 80%!important;
 }
@@ -1072,9 +1069,8 @@ h6 {
     display: flex;
 }
 
-/* ---------------------------------------------------------------------------------- */
-/*CSS For Personnel Vaccination*/
-/* ---------------------------------------------------------------------------------- */
+/* --------------------------------------------------------------------
+-------------- CSS For Personnel Vaccination ---------------------- */
 #patientRow h6, #patientRow form{
     margin-left: 4%;
 }
@@ -1136,32 +1132,34 @@ input[name=vitals]{
     border: solid 1px black;
 }
 
-/*SSD MODULE CSS*/
+/* ------------------------------------------------------------------- */
+/* ------------------------CSS for SSD MODULE ----------------------- */
+#selectHealthDistrict{
+    width: 100%;
+    border-radius: 7px;
+}
+
+#allocateButton{
+    margin-left: 38%;
+}
+
 #selectDeployment{
-    width: 60%;
-    border-radius: 12px;
+    width: 100%;
     display: inline-block;
     margin-left: 7%;
     height: 20%;
 }
 
-#healthDistrictContainer{
+#hDistrictContainer{
+    margin-top: 5%;
+    margin-left: 7%;
     padding-top: 2%;
+    padding-left: 2%;
     background-color: white;
     width: 100%;
     border-radius: 12px;
     display: inline-block;
-    margin-left: 7%;
-}
-
-#deploymentSummary, #deploymentQueue{
-    padding: 2%;
-    background-color: white;
-    width: 100%;
-    border-radius: 12px;
-    display: inline-block;
-    margin-left: 7%;
-    margin-right: 7%;
+    border: 1px solid black;
 }
 
 #vaccineDeployments{
@@ -1192,42 +1190,84 @@ input[name=vitals]{
     margin: 5%;
 }
 
+#labelling{
+    margin-left: 3%;
+}
 
 .tableBrgy {
     background-color: white;
     border-radius: 12px;
-    margin-top: 2%;
 }
 
 #deploymentSummary{
     margin-top: 12%;
     background-color: #f6f6f6;
+    padding: 2%;
+    width: 100%;
+    border-radius: 12px;
+    display: inline-block;
+    margin-left: 7%;
+    margin-right: 7%;
 }
 
-.deploymentSummaryContents,.deploymentQueueContents, .labels{
-    margin-left: 4%;
+.marker{
+    color: transparent!important;
+    font-size: 40%;
 }
 
-.depSummary{
-    border: solid gray 2px;
-    border-radius: 5px;
-    width: 25%;
-    max-height: fit-content;
-    min-height: 550px;
-    margin-left: 2%;
-    padding: 1%;
-    margin-top: 2%;
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link{
+    background-color: #17A2B8;
 }
+.dropdown-menu{
+    top: 60px;
+    right: 0px;
+    left: unset;
+    width: 460px;
+    box-shadow: 0px 5px 7px -1px #c1c1c1;
+    padding-bottom: 0px;
+    padding: 0px;
+}
+.dropdown-menu:before{
+    content: "";
+    position: absolute;
+    top: -20px;
+    right: 12px;
+    border:10px solid #343A40;
+    border-color: transparent transparent #343A40 transparent;
+}
+
+.bold{
+    font-weight: 800!important;
+}
+
+#counter{
+    width: 26%;
+    font-size: 60%;
+    float: right;
+    color: cadetblue;
+    margin-top: 1%;
+}
+
+.barangayList{
+    margin-left: 3%;
+    color: #9C9C9C;
+}
+
+.closeModal{
+    background-color: rgb(0, 0, 0);
+    background-color: rgba(0, 0, 0, 0);
+}
+
+
+
 
 #unarchiveContent{
     height: auto;
 }
 
-.depSummary .listPatientRow{
-    margin-bottom: 5%;
-}
-/* ---------------------------------------------------------------------------------- */
-/*CSS for EIR MODULE*/
+
+/* ------------------------------------------------------------------- */
+/* ----------------------------CSS for EIR MODULE ---------------------*/
 .labelRow{
     text-align: center;
 }

@@ -33,7 +33,7 @@ include_once("../includes/database.php") ?>
             crossorigin="anonymous"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-    <script defer src="../includes/showDateAndTime.js"> </script>
+    <script defer src="../javascript/showDateAndTime.js"> </script>
 </head>
 
 <body>

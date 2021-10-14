@@ -45,6 +45,7 @@ include_once("../includes/database.php")
         integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY"
         crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script defer src="../javascript/showDateAndTime.js"> </script>
 
 </head>
 
@@ -97,23 +98,6 @@ include_once("../includes/database.php")
     <!-- Top Nav Bar -->
 
     <div id="content">
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <div class="container-fluid">
-
-                <button type="button" id="sidebarCollapse" class="btn btn-info" onclick="Toggle()">
-                    <i class='fas fa-angle-left'></i> Menu
-                </button>
-
-                <button class="btnTop">
-                    <i class="fas fa-bell"></i>
-                </button>
-
-                <button class="btnTop btnBell">
-                    <i class="fas fa-cog"></i>
-                </button>
-            </div>
-        </nav>
-
         <!--Search Input and Button-->
         <div class="search-container">
                     <input id="searchPatientQueue" type="text" placeholder="Search" class="searchHome"name="searchPatient" onkeyup="searchPatient()">

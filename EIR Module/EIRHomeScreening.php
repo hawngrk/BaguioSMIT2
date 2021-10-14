@@ -21,7 +21,7 @@
     <script src="https://kit.fontawesome.com/fcdb0fe9f3.js" crossorigin="anonymous"></script>
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
-    <script defer src="../includes/showDateAndTime.js"> </script>
+    <script defer src="../javascript/showDateAndTime.js"> </script>
 </head>
 
 <body>
@@ -56,16 +56,6 @@
 
         <!-- Page Content  -->
         <div id="content">
-
-            <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                <div class="container-fluid">
-
-                    <button type="button" id="sidebarCollapse" class="btn btn-info" onclick="Toggle()">
-                        <i class='fas fa-angle-left'></i> Menu
-                    </button>
-                </div>
-            </nav>
-
             <div class="row dash">
                 <div class="vaccination">
                     <h5>Vaccinated/Total Population</h5>
