@@ -28,7 +28,8 @@
     <!-- Bootstrap JS -->
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-
+    <!-- SWAL-->
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
@@ -46,7 +47,7 @@
                     <hr>
                     <div class="timeBox">
                     <p id="time"></p>  <p id="datee"></p>
-                    <script src="../includes/detailedDateAndTime.js"></script>
+                    <script src="../javascript/detailedDateAndTime.js"></script>
                     </div>
                     <hr>
                 <li>
@@ -158,23 +159,37 @@
     function btnViewPostVac(param) {
         if (param == 'close') {
             postVacView.style.display = "none";
-        } else {
-            var pulse = getElementById('pulseR');
-            var temp = getElementById('tempR');
-            var bp = getElementById('bpR');
+        } 
+        
+        if(param == 'add') {
+            var id = document.getElementById('addButtonId').value;
+            var pulse = document.getElementById('pulseR').value;
+            var temp = document.getElementById('tempR').value;
+            var bpDias = document.getElementById('bpRDias').value;
+            var bpSys = document.getElementById('bpRSys').value;
 
-            $.ajax({
-                url: 'monitoringSearchProcessor.php',
-                type: 'POST',
-                data: {'pulse':pulse, 'temp':temp, 'bp':bp},
-                success: function(postVat) {
-                    alert('Successfully Added to the Database.');
-                }
-            })
+            Swal.fire({
+                    title: 'Add these vitals?',
+                    showDenyButton: true,
+                    confirmButtonText: 'Yes',
+                    denyButtonText: `No`,
+                    }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                        url: 'monitoringSearchProcessor.php',
+                        type: 'POST',
+                        data: {'pulse':pulse, 'temp':temp, 'diastolic':bpDias, 'systolic': bpSys, 'id': id},
+                        success: function(postVat) {
+                            document.getElementById('postVacView').style.display = 'none';
+                        }
+                        });
+                        Swal.fire('Saved!', '', 'success')
+                    } else if (result.isDenied) {
+                    Swal.fire('Changes are not saved', '', 'info')
+                    }
+                    })
+            
         }
     }
 </script>
 
-<script> 
-    function addVitals() {}
-</script>

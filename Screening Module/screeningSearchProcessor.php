@@ -82,7 +82,7 @@ if (isset($_POST['modalScreening'])) {
             </div>
             </div>
             <div class='modal-footer'>
-            <button onlcick=btnViewPostVac('ad') type='button' class='btn btn-success'> Add</button>
+            <button onclick=btnViewPostVac('add') id='addButtonId' type='button' class='btn btn-success' value=$id> Add</button>
             <button onclick=btnViewPostVac('close') type='button' class='btn btn-danger'> Cancel</button>
             </div>
             </div>
@@ -95,10 +95,27 @@ if (isset($_POST['pulse'])) {
     require_once('../includes/configure.php');
     $pulseRR = $_POST['pulse'];
     $tempRR = $_POST['temp'];
-    $bpR = $_POST['bp'];
+    $bpDiastolic = $_POST['diastolic'];
+    $bpSystolic = $_POST['systolic'];
+    $id = $_POST['id'];
 
-    $queryInsert = "UPDATE patient SET 1st_dosage_pulse = ?, 1st_dosage_temp = ?, 1st_dosage_bpR = ? WHERE patient_id = ?";
-    
-    $stmtinsert = $database->prepare($queryInsert);
-    $stmtinsert->execute([$pulseRR, $tempRR, $bpR]);
+    try {
+        $querySelect = "SELECT * FROM patient WHERE patient_id = ?";
+        $stmtselect = $database->prepare($querySelect);
+        $stmtselect->execute([$id]);
+        $row = $stmtselect->fetch(PDO::FETCH_ASSOC);
+
+        if ($row['first_dose_vaccination'] == 1 && $row['second_dose_vaccination'] == 0) {
+            $query = ("UPDATE patient_vitals SET pre_vital_pulse_rate_2nd_dose = ?, pre_vital_temp_rate_2nd_dose = ?, pre_vital_bpDiastolic_2nd_dose = ?, pre_vital_bpSystolic_2nd_dose = ? WHERE patient_vitals.patient_id = ?");
+            $stmtinsert = $database->prepare($query);
+            $stmtinsert->execute([$pulseRR, $tempRR, $bpDiastolic, $bpSystolic, $id]);
+        } else {
+            $query = ("UPDATE patient_vitals SET pre_vital_pulse_rate_1st_dose = ?, pre_vital_temp_rate_1st_dose = ?, pre_vital_bpDiastolic_1st_dose = ?, pre_vital_bpSystolic_1st_dose = ? WHERE patient_vitals.patient_id = ?");
+            $stmtinsert = $database->prepare($query);
+            $stmtinsert->execute([$pulseRR, $tempRR, $bpDiastolic, $bpSystolic, $id]);
+        }
+    } catch (Exception $th) {
+        echo $th->getMessage();
+    }
+    echo 'added';
 }

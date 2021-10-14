@@ -31,8 +31,7 @@
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js"
             integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY"
             crossorigin="anonymous"></script>
-
-    <script defer src="../includes/showDateAndTime.js"> </script>
+    <script defer src="../javascript/showDateAndTime.js"> </script>
 </head>
 
 <body>
@@ -68,14 +67,6 @@
 
     <!-- Page Content  -->
     <div id="content">
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <div class="container-fluid">
-
-                <button type="button" id="sidebarCollapse" class="btn btn-info" onclick="Toggle()">
-                    <i class='fas fa-angle-left'></i> Menu
-                </button>
-            </div>
-        </nav>
 
         <div class="buttonContainer">
             <button type="button" class="btn btn-outline-primary buttonTop3 float-left"> <i class="fas fa-filter"></i>
@@ -303,30 +294,30 @@
                         <div class="listOfComorbidity">
                             <div class="row">
                                 <div class="col">
-                                    <input type="checkbox" name="hypertension" value="hypertension" id="hypertension">
+                                    <input type="checkbox" name="hypertension" value="1" id="hypertension">
                                     <label> Hypertension</label>
                                 </div>
                                 <div class="col">
-                                    <input type="checkbox" name="heartDisease" value="heartDisease" id="heartDisease">
+                                    <input type="checkbox" name="heartDisease" value="1" id="heartDisease">
                                     <label> Heart Disease</label>
                                 </div>
                                 <div class="col">
-                                    <input type="checkbox" name="kidneyDisease" value="kidneyDisease"
+                                    <input type="checkbox" name="kidneyDisease" value="1"
                                            id="kidneyDisease">
                                     <label> Kidney Disease </label>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col">
-                                    <input type="checkbox" name="diabetes" value="diabetes" id="diabetes">
+                                    <input type="checkbox" name="diabetes" value="1" id="diabetes">
                                     <label> Diabetes Mellitus </label>
                                 </div>
                                 <div class="col">
-                                    <input type="checkbox" name="asthma" value="asthma" id="asthma">
+                                    <input type="checkbox" name="asthma" value="1" id="asthma">
                                     <label> Bronchial Asthma </label>
                                 </div>
                                 <div class="col">
-                                    <input type="checkbox" name="immunodeficiency" value="immunodeficiency"
+                                    <input type="checkbox" name="immunodeficiency" value="1"
                                            id="immunodeficiency">
                                     <label> Immunodeficiency </label>
                                 </div>
@@ -448,42 +439,98 @@
     function addPatient() {
         var addButton = document.getElementById("addBtn");
 
+        //Personal Information
         var last = document.getElementById("lname").value;
         var first = document.getElementById("fname").value;
         var middle = document.getElementById("mname").value;
         var suffix = document.getElementById("suffix").value;
         var gender = document.getElementById("gender").value;
-        var birthday = document.getElementById("date").value;
+        var birthdate = document.getElementById("date").value;
         var occupation = document.getElementById("occupation").value;
         var contact = document.getElementById("contactNum").value;
+        var email = document.getElementById("email").value;
 
+        //Category Information
         var priority = document.getElementById("priorityGroup").value;
         var id = document.getElementById("categoryID").value;
         var idNo = document.getElementById("categoryNo").value;
         var philHealth = document.getElementById("philHealth").value;
         var pwd = document.getElementById("pwdId").value;
 
-        var street = document.getElementById("houseAddress").value;
+        //Address Information
+        var houseAddress = document.getElementById("houseAddress").value;
         var brgy = document.getElementById("barangay").value;
         var city = document.getElementById("city").value;
         var province = document.getElementById("province").value;
         var region = document.getElementById("region").value;
 
+        //Clinical Information
         var allergy = document.getElementById("allergy").value;
-        var comorbidity = document.getElementById("comorbidity");
+        var comorbidity = document.getElementById("comorbidity").value;
+
+        //Commorbidity Information
+        var hypertension = $('#hypertension:checked').val();
+        var diabetes = $('#diabetes:checked').val();
+        var cancer = $('#cancer:checked').val();
+        var heartDisease = $('#heartDisease:checked').val();
+        var asthma = $('#asthma:checked').val();
+        var kidneyDisease = $('#kidneyDisease:checked').val();
+        var immunodeficiency = $('#immunodeficiency:checked').val();
+        var other = document.getElementbyId('others').value;
+
 
         $.ajax({
-            url: '../Barangay Module/ManagePatientProcessor.php',
+            url: '../patient/authorization/pre_registration.php',
             type: 'POST',
-            data: {lastname: last, firstname: first, middlename: middle, suffix: suffix, priority: priority, gender: gender, occupation: occupation, birthday: birthday, contactnumber: contact, street: street, barangay: brgy, city: city, state: state, region: region },
+            data: {
+                //Personal Information
+                lastname: last, 
+                firstname: first, 
+                middlename: middle, 
+                suffix: suffix, 
+                gender: gender, 
+                occupation: occupation, 
+                birthday: birthday, 
+
+                //Contact Information
+                contact: contact, 
+                email: email,
+
+                //Priority Group
+                priority: priority,
+                category: id,
+                categoryID: idNo,
+                philhealthID: philHealth,
+                pwdID: pwd, 
+                
+                //Address Information
+                houseAddress: houseAddress, 
+                barangay: brgy, 
+                cmAddress: city,
+                province: province,  
+                region: region ,
+                
+                //Clinical Information
+                allergy: allergy,
+                commorbid: commorbidity,
+                hypertension: hypertension,
+                heartDisease: heartDisease,
+                kidneyDisease: kidneyDisease,
+                diabetesMellitus : diabetes,
+                bronchialAsthma: asthma, 
+                immunodeficiency: immunodeficiency,
+                cancer: cancer,
+                otherCommorbidity: other
+                },
             success: function (result) {
+                console.log(result);
                 addButton.disabled = false;
                 document.getElementById("patientTable").innerHTML = "";
                 document.getElementById("patientTable").innerHTML = result;
             }
         });
     }
-
+    
     //Show Comorbidity List
     var choice = document.getElementById("comorbidity");
     choice.onchange = function () {
@@ -511,6 +558,7 @@
     closeAddPatientModal.onclick = function () {
         addPatientModal.style.display = "none";
     }
+
 
 </script>
 </body>

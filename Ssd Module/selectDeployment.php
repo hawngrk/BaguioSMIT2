@@ -17,7 +17,7 @@ if (isset($_POST['deploymentId'])) {
     $stmt->fetch();
     $stmt->close();
 
-    echo "<h2>Deployment Summary</h2>
+    echo "
             <h5> Site: $site </h5>
             <br>
             <h5> Brand: $brand </h5>

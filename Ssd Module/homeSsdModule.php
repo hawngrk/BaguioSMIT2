@@ -10,7 +10,7 @@
 
     <link rel="icon" href="../img/FaviSMIT+.png" type="image/jpg">
     <!-- Our Custom CSS -->
-    <link href="../css/ssdStyle.css" rel="stylesheet">
+    <link href="../css/style.css" rel="stylesheet">
 
     <!-- Bootstrap-->
     <script crossorigin="anonymous" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
@@ -31,6 +31,7 @@
             integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY"
             crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script defer src="../javascript/showDateAndTime.js"> </script>
 
 </head>
 
@@ -47,7 +48,7 @@
         <ul class="list-unstyled components">
             <h4 id="headingNav1"> Special Service Division</h4>
             <hr>
-            <h5 id="headingNav2"> September 17, 2021 | 01:24 PM</h5>
+            <h5 id="headingNav2"> </h5>
             <hr>
 
             <li class="active">
@@ -66,23 +67,6 @@
 
     <!-- Whole Page  -->
     <div id="content">
-        <!-- Top Nav Bar  -->
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <div class="container-fluid">
-
-                <button type="button" id="sidebarCollapse" class="btn btn-info" onclick="Toggle()">
-                    <i class='fas fa-angle-left'></i> Menu
-                </button>
-
-                <button class="btnTop">
-                    <i class="fas fa-bell"></i>
-                </button>
-
-                <button class="btnTop btnBell">
-                    <i class="fas fa-cog"></i>
-                </button>
-            </div>
-        </nav>
 
         <!-- Page Content  -->
         <div class="row">

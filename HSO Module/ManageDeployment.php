@@ -35,7 +35,7 @@ include_once("../includes/database.php") ?>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-    <script defer src="../includes/showDateAndTime.js"> </script>
+    <script defer src="../javascript/showDateAndTime.js"> </script>
 
 </head>
 
@@ -85,11 +85,8 @@ include_once("../includes/database.php") ?>
     <!-- Top Nav Bar  -->
     <div id="content">
 
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <div class="container-fluid">
-                <button type="button" id="sidebarCollapse" class="btn btn-info" onclick="Toggle()">
-                    <i class='fas fa-angle-left'></i> Menu
-                </button>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light upperBoxOG">
+            <div class="container-fluid upperBox">
 
                 <button class="btnTop btnBell">
                     <i class="fas fa-cog"></i>
