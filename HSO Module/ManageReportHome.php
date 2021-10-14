@@ -81,12 +81,8 @@ include_once("../includes/database.php") ?>
 
     <!-- Top Nav Bar  -->
     <div id="content">
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <div class="container-fluid">
-
-                <button type="button" id="sidebarCollapse" class="btn btn-info" onclick="Toggle()">
-                    <i class='fas fa-angle-left'></i> Menu
-                </button>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light upperBoxOG">
+            <div class="container-fluid upperBox">
 
                 <button class="btnTop ">
                     <i class="fas fa-bell"></i>
