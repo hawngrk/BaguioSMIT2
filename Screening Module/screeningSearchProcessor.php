@@ -105,7 +105,7 @@ if (isset($_POST['pulse'])) {
         $stmtselect->execute([$id]);
         $row = $stmtselect->fetch(PDO::FETCH_ASSOC);
 
-        if ($row['second_dose_vaccination'] == 1) {
+        if ($row['first_dose_vaccination'] == 1 && $row['second_dose_vaccination'] == 0) {
             $query = ("UPDATE patient_vitals SET pre_vital_pulse_rate_2nd_dose = ?, pre_vital_temp_rate_2nd_dose = ?, pre_vital_bpDiastolic_2nd_dose = ?, pre_vital_bpSystolic_2nd_dose = ? WHERE patient_vitals.patient_id = ?");
             $stmtinsert = $database->prepare($query);
             $stmtinsert->execute([$pulseRR, $tempRR, $bpDiastolic, $bpSystolic, $id]);

@@ -94,7 +94,6 @@ if (isset($_POST['modalRes'])) {
             </div>
             </div>
             <div class='modal-footer'>
-            ##########Copy add button######
                 <button onclick=btnViewPostVac('add') id='addButtonId' type='button' class='btn btn-success' value=$id> Add</button>
                 <button onclick=btnViewPostVac('close') type='button' class='btn btn-danger'> Cancel</button>
              </div>
@@ -114,20 +113,16 @@ if (isset($_POST['pulse'])) {
     $id = $_POST['id'];
     
     try {
-        //Get patient getails for checking if it is post vital for second dose or first dose
         $querySelect = "SELECT * FROM patient WHERE patient_id = ?";
         $stmtselect = $database->prepare($querySelect);
         $stmtselect->execute([$id]);
         $row = $stmtselect->fetch(PDO::FETCH_ASSOC);
 
-        //Test mo kay Ted Mosby at Marshall Ericksen pero insert mo muna sila sa patient_vital table pero null lahat except patient_id
         if ($row['second_dose_vaccination'] == 1) {
-            //Code for post vital second dosage
             $query = ("UPDATE patient_vitals SET post_vital_pulse_rate_2nd_dose = ?, post_vital_temp_rate_2nd_dose = ?, post_vital_bpDiastolic_2nd_dose = ?, post_vital_bpSystolic_2nd_dose = ? WHERE patient_vitals.patient_id = ?");
             $stmtinsert = $database->prepare($query);
             $stmtinsert->execute([$pulseRR, $tempRR, $bpDiastolic, $bpSystolic, $id]);
         } else {
-            //Code for post vital first dosage
             $query = ("UPDATE patient_vitals SET post_vital_pulse_rate_1st_dose = ?, post_vital_temp_rate_1st_dose = ?, post_vital_bpDiastolic_1st_dose = ?, post_vital_bpSystolic_1st_dose = ? WHERE patient_vitals.patient_id = ?");
             $stmtinsert = $database->prepare($query);
             $stmtinsert->execute([$pulseRR, $tempRR, $bpDiastolic, $bpSystolic, $id]);
