@@ -467,48 +467,72 @@
         var pwd = document.getElementById("pwdId").value;
 
         //Address Information
-        var street = document.getElementById("houseAddress").value;
+        var houseAddress = document.getElementById("houseAddress").value;
         var brgy = document.getElementById("barangay").value;
         var city = document.getElementById("city").value;
         var province = document.getElementById("province").value;
         var region = document.getElementById("region").value;
 
-        //Medical Information
+        //Clinical Information
         var allergy = document.getElementById("allergy").value;
         var comorbidity = document.getElementById("comorbidity").value;
 
-        
+        //Commorbidity Information
         var hypertension = $('#hypertension:checked').val();
-        var hypertension = $('#diabetes:checked').val();
-        var hypertension = $('#cancer:checked').val();
-        var hypertension = $('#heartDisease:checked').val();
-        var hypertension = $('#asthma:checked').val();
-        var hypertension = $('#kidneyDisease:checked').val();
-        var hypertension = $('#immunodeficiency:checked').val();
-        var others = getElementbyId('others').value;
+        var diabetes = $('#diabetes:checked').val();
+        var cancer = $('#cancer:checked').val();
+        var heartDisease = $('#heartDisease:checked').val();
+        var asthma = $('#asthma:checked').val();
+        var kidneyDisease = $('#kidneyDisease:checked').val();
+        var immunodeficiency = $('#immunodeficiency:checked').val();
+        var other = document.getElementbyId('others').value;
+
+
         $.ajax({
             url: '../patient/authorization/pre_registration.php',
             type: 'POST',
-            data: {lastname: last, 
+            data: {
+                //Personal Information
+                lastname: last, 
                 firstname: first, 
                 middlename: middle, 
                 suffix: suffix, 
+                gender: gender, 
+                occupation: occupation, 
+                birthday: birthday, 
+
+                //Contact Information
+                contact: contact, 
+                email: email,
+
+                //Priority Group
                 priority: priority,
                 category: id,
                 categoryID: idNo,
                 philhealthID: philHealth,
                 pwdID: pwd, 
-                gender: gender, 
-                occupation: occupation, 
-                birthday: birthday, 
-                contact: contact, 
-                email: email,
-                street: street, 
+                
+                //Address Information
+                houseAddress: houseAddress, 
                 barangay: brgy, 
-                cmAddress: city, 
-                state: state, 
-                region: region },
+                cmAddress: city,
+                province: province,  
+                region: region ,
+                
+                //Clinical Information
+                allergy: allergy,
+                commorbid: commorbidity,
+                hypertension: hypertension,
+                heartDisease: heartDisease,
+                kidneyDisease: kidneyDisease,
+                diabetesMellitus : diabetes,
+                bronchialAsthma: asthma, 
+                immunodeficiency: immunodeficiency,
+                cancer: cancer,
+                otherCommorbidity: other
+                },
             success: function (result) {
+                console.log(result);
                 addButton.disabled = false;
                 document.getElementById("patientTable").innerHTML = "";
                 document.getElementById("patientTable").innerHTML = result;

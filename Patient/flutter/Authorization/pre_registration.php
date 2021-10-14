@@ -12,7 +12,7 @@
     $categoryID       = $_POST['categoryID'];
     $categoryID       = $_POST['philhealthID'];
     $categoryID       = $_POST['pwdID'];
-    $houseAddress     = $_POST['houseAdress'];
+    $houseAddress     = $_POST['houseAddress'];
     $barangay         = $_POST['barangay'];
     $cmAddress        = $_POST['cmAddress'];
     $province         = $_POST['province'];
