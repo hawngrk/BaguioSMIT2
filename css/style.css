@@ -972,7 +972,7 @@ h7~h8{
 
 
 
-select {
+.organizeDiv select {
     /* styling */
     background-color: white;
     border: thin solid #000000;
@@ -1240,7 +1240,7 @@ input[name=vitals]{
     border-color: transparent transparent #343A40 transparent;
 }
 
-.depSummary{
+.depSummary {
     border: solid gray 2px;
     border-radius: 5px;
     width: 25%;
@@ -1249,6 +1249,7 @@ input[name=vitals]{
     margin-left: 2%;
     padding: 1%;
     margin-top: 2%;
+}
 .bold{
     font-weight: 800!important;
 }
@@ -1320,39 +1321,3 @@ input[name=vitals]{
     content: " *";
     color: red;
 }
-
-/*Scan QR*/
-#passportInt {
-    width: 40%;
-
-    background-color: transparent;
-    margin-left:31%;
-}
-
-#passportId{
-    border-bottom: solid black 1px;
-    width: 90%;
-}
-
-#scannerTxt {
-    text-align: center;
-}
-
-#inputTxt{
-    text-align: center;
-    margin-top: 3%;
-}
-
-#preview {
-    border-radius: 12px;
-    width: 50%;
-    height: auto;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-input[id='passportId']::placeholder
-    {
-        text-align: center;      /* for Chrome, Firefox, Opera */
-    }
