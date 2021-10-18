@@ -333,13 +333,24 @@ if (isset($_POST['changeStatus'])) {
 }
 
 if (isset($_POST['generate'])) {
-    $view = $_POST['generate'];
     echo "
-      <thead>
-            <tr>";
-    if ($view == 1) {
-        echo   "<th scope='col'>Select</th>";
-    } echo"
+        <div class='content-modal'>
+            <div class='modal-header'>
+                <h4>Generate Reports</h4>
+                <button type='button' class='close' data-dismiss='modal' onclick='closeGenerateReports()'>
+                    &times;
+                </button>
+            </div>
+    
+    
+        <div class='modal-body'>
+        <button type='button' class='btn btn-success genButton' id='downloadGenerateReportBtn' onclick='downloadReports()'>Download Files</button>
+        <button type='button' class='btn btn-secondary genButton' id='cancelGenerateReportBtn' onclick='closeGenerateReports()'>Cancel</button>
+        <h10 id='DlRepNote'>Note: select report/s you want to download</h10>
+            <table class='table table-row table-hover'>
+            <thead>
+            <tr>
+                <th scope='col'>Select</th>
                 <th scope='col'>#</th>
                 <th scope='col'>Report ID</th>
                 <th scope='col'>Name of Reporter</th>
@@ -366,19 +377,21 @@ if (isset($_POST['generate'])) {
                 $reporter = $pat->getPatientFullName();
             }
         }
-        echo "<tr>";
-        if ($view == 1) {
-            echo "<td><input type='checkbox' class='reportList' value='$reportId'></td>";
-        }
-        echo "
+        echo "<tr>
+                <td><input type='checkbox' class='reportList' value='$reportId'></td>
                 <td>$count</td>
                 <td>$reportId</td>
                 <td>$reporter</td>
                 <td>$dateReported</td>
                 <td>$status</td>
-                <td><button class='viewReportBtn' type='submit' value='$reportId' onclick='viewReport($reportId)'>Review Report</button></td>
+                <td><button class='badge badge-secondary' type='submit' value='$reportId' onclick='viewReport($reportId)'>Review Report</button></td>
                 </tr>";
     }
+
+    echo "
+        </table>
+        </div>
+        </div>";
 }
 
 if (isset($_POST['options'])) {

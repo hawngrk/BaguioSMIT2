@@ -108,7 +108,7 @@ include_once("../includes/database.php") ?>
                     </div>
                 </div>
                 <div class="col-sm-auto">
-                    <button type="button" class="btn btn-primary buttonTop3" id="generateReportBtn" onclick="generateReport(1)">Generate Report</button>
+                    <button type="button" class="btn btn-primary buttonTop3" id="generateReportBtn" onclick="generateReport()">Generate Report</button>
 
                     <button type="button" class="btn btn-primary buttonTop3" id="invalidatedReportBtn" onclick="showInvalidatedReports()">Invalidated Reports</button>
 
@@ -135,10 +135,6 @@ include_once("../includes/database.php") ?>
                         <option>Verified</option>
                         <option>Invalidated</option>
                     </select>
-            </div>
-
-            <div id="generateReportOptions">
-
             </div>
         </div>
 
@@ -246,12 +242,10 @@ include_once("../includes/database.php") ?>
 
 
 
-            <div id="invalidatedReportsModal" class="modal-window">
+            <div id="invalidatedReportsModal" class="modal-window"></div>
+            <div id="generateReportModal" class="modal-window"></div>
+            <div id="viewReportModal" class="modal-window"></div>
 
-            </div>
-
-            <div id="viewReportModal" class="modal-window">
-            </div>
         </table>
     </div>
 </div>
@@ -422,36 +416,22 @@ include_once("../includes/database.php") ?>
         }
     }
 
-    window.onclick = function (event) {
-        if (event.target === viewReportModal) {
-            viewReportModal.style.display = "none";
-        } else if (event.target === invalidatedReportsModal) {
-            invalidatedReportsModal.style.display = "none";
-        }
-    }
+    var generateReportsModal = document.getElementById("generateReportModal");
 
-    function generateReport(view) {
+    function generateReport() {
         $.ajax({
             url: 'manageReportViewProcessor.php',
             type: 'POST',
-            data: {"generate": view},
+            data: {"generate": 1},
             success: function (result) {
-                document.getElementById("reportsTable").innerHTML = result;
+                document.getElementById("generateReportModal").innerHTML = result;
+                generateReportsModal.style.display = "block";
             }
         });
+    }
 
-        if (view === 1) {
-            $.ajax({
-                url: 'manageReportViewProcessor.php',
-                type: 'POST',
-                data: {"options": 1},
-                success: function (result) {
-                    document.getElementById("generateReportOptions").innerHTML = result;
-                }
-            });
-        } else if (view === 2) {
-            document.getElementById("generateReportOptions").innerHTML = "";
-        }
+    function closeGenerateReports() {
+        generateReportsModal.style.display = "none";
     }
 
     function downloadReports() {
@@ -473,6 +453,16 @@ include_once("../includes/database.php") ?>
                 console.log(result);
             }
         });
+    }
+
+    window.onclick = function (event) {
+        if (event.target === viewReportModal) {
+            viewReportModal.style.display = "none";
+        } else if (event.target === invalidatedReportsModal) {
+            invalidatedReportsModal.style.display = "none";
+        } else if (event.target === generateReportsModal) {
+            generateReportsModal.style.display = "none";
+        }
     }
 
     var clicked =false;
