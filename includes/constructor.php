@@ -217,6 +217,8 @@ class patientDetails{
     private $priorityGroup;
     private $categoryId;
     private $categoryNum;
+    private $philHealthID;
+    private $pwdID;
     private $houseAdd;
     private $brgy;
     private $city;
@@ -230,7 +232,7 @@ class patientDetails{
     private $archived;
 
 
-    public function __construct($patientDetailPatientId, $patFirstName, $patLastName, $patMiddleName,$patientSuffix, $priorityGroup, $categoryId, $categoryNumber, $houseAddress, $barangay, $city, $province, $region, $birthdate, $age, $gender, $contact, $occupation, $archived)
+    public function __construct($patientDetailPatientId, $patFirstName, $patLastName, $patMiddleName,$patientSuffix, $priorityGroup, $categoryId, $categoryNumber, $philHealthID, $pwdID, $houseAddress, $barangay, $city, $province, $region, $birthdate, $age, $gender, $contact, $occupation, $archived)
     {
         $this->patientDeetPatId = $patientDetailPatientId;
         $this->patientFName = $patFirstName;
@@ -240,6 +242,8 @@ class patientDetails{
         $this->priorityGroup = $priorityGroup;
         $this->categoryId = $categoryId;
         $this->categoryNum = $categoryNumber;
+        $this->philHealthID = $philHealthID;
+        $this->pwdID = $pwdID;
         $this->houseAdd = $houseAddress;
         $this->brgy = $barangay;
         $this->city = $city;
@@ -287,12 +291,21 @@ class patientDetails{
     {
         return $this->categoryId;
     }
-
+    
     public function getCategoryNum()
     {
         return $this->categoryNum;
     }
+    public function getPhilHealthID() 
+    {
+        return $this->philHealthID;
+    }
 
+    public function getPWDID() 
+    {
+        return $this->pwdID;
+    }
+    
     public function getHouseAdd()
     {
         return $this->houseAdd;
