@@ -3,24 +3,30 @@
     require_once("generate_credentials.php");
     require_once("../../../includes/configure.php");
 
+    //Personal Information
     $firstname        = $_POST['firstname'];
     $lastname         = $_POST['lastname'];
     $middlename       = $_POST['middlename'];
     $suffix           = $_POST['suffix'];
+    $birthdate        = $_POST['birthdate'];
+    $age              = $_POST['age'];
+    $gender           = $_POST['gender'];
+    $occupation       = $_POST['occupation'];
+    
+
+    //Category Information
     $priorityGroup    = $_POST['priority'];
     $category         = $_POST['category'];
     $categoryID       = $_POST['categoryID'];
-    $philHealthID      = $_POST['philhealthID'];
+    $philHealthID     = $_POST['philhealthID'];
     $pwdID            = $_POST['pwdID'];
+    
+    //Address Information
     $houseAddress     = $_POST['houseAddress'];
     $barangay         = $_POST['barangay'];
     $cmAddress        = $_POST['cmAddress'];
     $province         = $_POST['province'];
     $region           = $_POST['region'];
-    $birthdate        = $_POST['birthdate'];
-    $age              = $_POST['age'];
-    $gender           = $_POST['gender'];
-    $occupation       = $_POST['occupation'];
     
     //For patient_account table
     $email            = $_POST['email'];
