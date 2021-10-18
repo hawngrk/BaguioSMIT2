@@ -29,11 +29,12 @@
         <nav id="sidebar">
             <div class="sidebar-header">
                 <div class="sidebar-brand-icon">
-                    <img style="width:150px;" src="../img/SMIT+.png" alt="Baguio Logo">
+                <img src="../img/logoo.png" style="width: 104%; margin-bottom:-19%; margin-top:-5%;" alt="Baguio Logo">
                 </div>
             </div>
 
             <ul class="list-unstyled components">
+                <hr>
                 <h4 id="headingNav1">Monitoring</h4>
                     <hr>
                     <div class="timeBox">

@@ -42,12 +42,13 @@ include_once("../includes/database.php") ?>
     <!-- Sidebar  -->
     <nav id="sidebar">
         <div class="sidebar-header">
-            <div class="sidebar-brand-icon">
-                <img style="width:150px;" src="../img/SMIT+.png" alt="Baguio Logo">
+        <div class="sidebar-brand-icon">
+                <img src="../img/logoo.png" style="width: 104%; margin-bottom:-19%; margin-top:-5%;" alt="Baguio Logo">
             </div>
         </div>
 
         <ul class="list-unstyled components">
+            <hr>
             <h4 id="headingNav1"> Health Service Office </h4>
             <hr>
             <h5 id="headingNav2"> September 17, 2021 | 01:24 PM</h5>
