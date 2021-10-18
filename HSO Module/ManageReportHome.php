@@ -97,7 +97,7 @@ include_once("../includes/database.php") ?>
         <!-- Page Content  -->
         <div class="container-fluid">
             <div class="row">
-                <div class="col-6">
+                <div class="col my-auto">
                     <div class="search-container">
                         <form action="/action_page.php">
                             <input type="text" class="searchReport" id="searchReportHSO" name="searchReport" placeholder="Search" onkeyup="searchReport()">
@@ -107,7 +107,7 @@ include_once("../includes/database.php") ?>
                         </form>
                     </div>
                 </div>
-                <div class="col">
+                <div class="col-sm-auto">
                     <button type="button" class="btn btn-primary buttonTop3" id="generateReportBtn" onclick="generateReport(1)">Generate Report</button>
 
                     <button type="button" class="btn btn-primary buttonTop3" id="invalidatedReportBtn" onclick="showInvalidatedReports()">Invalidated Reports</button>

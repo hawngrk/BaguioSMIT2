@@ -360,12 +360,12 @@ include_once("../includes/database.php") ?>
                         <i class="fas fa-sort-amount-down "></i>
                     </button>
                 </div>
-                <div class="col-4">
+                <div class="col my-auto">
                     <div class="search-container searchDept float-left">
                         <input id="searchDep" type="text" placeholder="Search" class="searchHome "name="searchPatient" onkeyup="searchPatient()">
                     </div>
                 </div>
-                <div class="col">
+                <div class="col-sm-auto">
                     <button type="button" class="btn btn-outline-dark buttonTop3 float-right" onclick="openModal('archived')">
                         <i class="fas fa-inbox fa-lg"></i>
                     </button>

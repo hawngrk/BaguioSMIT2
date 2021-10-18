@@ -340,15 +340,14 @@ a.article:hover {
     background: rgb(165, 165, 165);
 }
 
-.search-container{
-    margin-bottom: 1%;
-}
 
 .searchDept{
     position: relative;
     float: left;
     width: 100%;
 }
+
+
 
 .buttonTransparent{
     background: transparent!important;
@@ -839,9 +838,7 @@ input[type=text]:disabled{
     height: 60%;
     margin-top: 10%;
 }
-.tableVax{
-    margin-top: 10%;
-}
+
 
 h7~h8{
     margin-left: 4%;
@@ -1240,7 +1237,7 @@ input[name=vitals]{
     border-radius: 5px;
     width: 25%;
     max-height: fit-content;
-    min-height: 100%;
+    min-height: 500px;
     margin-left: 2%;
     padding: 1%;
     margin-top: 2%;

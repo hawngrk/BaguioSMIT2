@@ -394,18 +394,17 @@ include_once("../includes/database.php") ?>
 
         <div class="container-fluid">
             <div class="row">
-                <div class="col-10 col-md-8">
+                <div class="col my-auto" >
                     <div class="search-container">
                         <input id="searchPatientHSO" type="text" placeholder="Search" class="searchHome"name="searchPatient" onkeyup="searchPatient()">
                     </div>
                 </div>
-                <div class="col-6 col-md-4"">
+                <div class="col-sm-auto">
+                    <button id="uploadFileBtn" type="button" class="btn btn-primary buttonTop3">Upload File</button>
+                    <button id="addPatientBtn" type="button" class="btn btn-primary buttonTop3">Add User</button>
                     <button type="button" class="btn btn-outline-dark buttonTop3" onclick="openModal('archived')">
                         <i class="fas fa-inbox fa-lg"></i>
                     </button>
-                    <button id="uploadFileBtn" type="button" class="btn btn-primary buttonTop3">Upload File</button>
-                    <button id="addPatientBtn" type="button" class="btn btn-primary buttonTop3">Add User</button>
-
                 </div>
             </div>
 

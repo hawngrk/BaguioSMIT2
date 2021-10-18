@@ -95,20 +95,27 @@ include_once("../includes/database.php") ?>
         </nav>
 
         <!-- Page Content  -->
-        <div class="buttonContainer">
-            <button type="button" class="btn btn-outline-dark buttonTop3 float-left"> <i class="fas fa-filter"></i>
-            </button>
-            <button type="button" class="btn btn-outline-dark buttonTop3 float-left">
-                <i class="fas fa-sort"></i>
-            </button>
 
-            <button type="button" class="btn btn-outline-dark buttonTop3 float-right" onclick="openModal('archived')">
-                <i class="fas fa-inbox fa-lg"></i>
-            </button>
 
-            <button id="addVaccineBtn" type="button" class="btn btn-primary buttonTop3">Add Vaccine</button>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col">
+                    <button type="button" class="btn btn-outline-dark buttonTop3 float-left"> <i class="fas fa-filter"></i>
+                    </button>
+                    <button type="button" class="btn btn-outline-dark buttonTop3 float-left">
+                        <i class="fas fa-sort"></i>
+                    </button>
+                </div>
+                <div class="col">
+                    <button type="button" class="btn btn-outline-dark buttonTop3 float-right" onclick="openModal('archived')">
+                        <i class="fas fa-inbox fa-lg"></i>
+                    </button>
 
-            <button id="addNewVaccineBtn" type="button" class="btn btn-primary buttonTop3">Add New Vaccine</button>
+                    <button id="addVaccineBtn" type="button" class="btn btn-primary buttonTop3 float-right">Add Vaccine</button>
+
+                    <button id="addNewVaccineBtn" type="button" class="btn btn-primary buttonTop3 float-right">Add New Vaccine</button>
+                </div>
+            </div>
         </div>
 
         <form id='addVaccineForm' method="post" enctype="multipart/form-data">
