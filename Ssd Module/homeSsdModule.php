@@ -1,5 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
+<?php
+include_once("../includes/database.php")
+?>
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -32,6 +34,10 @@
             crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script defer src="../javascript/showDateAndTime.js"> </script>
+    <script src="https://js.pusher.com/7.0/pusher.min.js"></script>
+    <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
 
 </head>
 
@@ -67,6 +73,24 @@
 
     <!-- Whole Page  -->
     <div id="content">
+        <!-- Top Nav Bar  -->
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container-fluid">
+
+                <button type="button" id="sidebarCollapse" class="btn btn-info" onclick="Toggle()">
+                    <i class='fas fa-angle-left'></i> Menu
+                </button>
+
+                <button id="buttonMarker" class="btnTop" onclick="openNotif('notificationModal')">
+                    <span class="marker" id="marker"><i class="fas fa-circle"></i></span>
+                    <i class="fas fa-bell"></i>
+                </button>
+
+                <button class="btnTop btnBell">
+                    <i class="fas fa-cog"></i>
+                </button>
+            </div>
+        </nav>
 
         <!-- Page Content  -->
         <div class="row">
@@ -121,6 +145,62 @@
                 </div>
             </div>
         </div>
+
+        <div id="notificationModal" class="modal-window">
+            <div class="content-modal">
+                <div class="modal-header">
+                    <h4 class="modal-title">Notifications</h4>
+                    <button type="button" class="close" data-dismiss="modal" onclick="window.location.href = 'homeSsdModule.php'">
+                        &times;
+                    </button>
+                </div>
+                <div class="modal-body" id="notificationContent">
+                    <?php
+                    $query = "SELECT vaccination_drive.drive_id, vaccination_sites.location, vaccination_drive.vaccination_date, vaccination_drive.stubs, vaccination_drive.notif_opened FROM vaccination_sites JOIN vaccination_drive ON vaccination_sites.vaccination_site_id = vaccination_drive.vaccination_site_id ORDER BY drive_id desc;";
+                    $vaccination_drive = [];
+
+                    $stmt = $database->stmt_init();
+                    $stmt->prepare($query);
+                    $stmt->execute();
+                    $stmt->bind_result($driveId, $locName, $date, $stubs, $opened);
+
+                    while ($stmt->fetch()) {
+                        if ($opened== 1){
+                            echo "
+
+
+                                                        <div id='$driveId' style='color: #9C9C9C'>
+                                                            <p>Vaccination Location: $locName<br>
+                                                               Date: $date <br>
+                                                               Number of Stubs: $stubs <br>
+                                                            </p>
+                                                        </div>
+                                                      <hr style='width: 100%; background: azure'>
+
+                                                      ";
+                        } else{
+
+                            echo "
+                                                   <script>document.getElementById('marker').setAttribute('style', 'color:#c10d0d!important');</script>
+
+                                                        <div id='$driveId' style='background: lightgray'>
+                                                            <p>Vaccination Location: $locName<br>
+                                                               Date: $date <br>
+                                                               Number of Stubs: $stubs <br>
+                                                            </p>
+                                                        </div>
+                                                      <hr style='width: 100%; background: azure'>
+
+                                                      ";
+
+                        }
+
+                    }
+                    ?>
+
+                </div>
+            </div>
+        </div>
     </div>
 
 </body>
@@ -143,5 +223,49 @@
             clicked = false;
             butt.innerHTML = "<i class='fas fa-angle-left'></i> Menu";
         }
+    }
+
+    var pusher = new Pusher('8bde1d2aef3f7c91d16a', {
+        cluster: 'ap1'
+    });
+
+    var channel = pusher.subscribe('ssd');
+    channel.bind('my-event', function(data) {
+        var id = data.message;
+
+        toastr.options.positionClass = 'toast-bottom-right';
+        toastr.info('You Have Received A New Deployment!');
+
+        document.getElementById('marker').setAttribute('style', 'color:#c10d0d!important') ;
+        document.getElementById("notificationContent").innerHTML = "";
+
+        $.ajax({
+            url: 'selectDeployment.php',
+            type: 'POST',
+            data: {"notifDrive": "notifDrive"},
+            success: function (result) {
+                document.getElementById("notificationContent").innerHTML = result;
+            }
+        });
+    });
+
+    function openNotif(modal){
+        document.getElementById(modal).style.display = "block";
+        $.ajax({
+            url: 'selectDeployment.php',
+            type: 'POST',
+            data: {"open": "opened"},
+            success: function (result) {
+                setTimeout(function(){ document.getElementById('marker').setAttribute('style', 'color:transparent!important'); }, 5000);
+            }
+        });
+    }
+
+    function closeModal(modal){
+        document.getElementById(modal).style.display ="none";
+    }
+
+    function openModal(modal) {
+        document.getElementById(modal).style.display = "block";
     }
 </script>

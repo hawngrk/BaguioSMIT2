@@ -21,119 +21,184 @@
     <script src="https://kit.fontawesome.com/fcdb0fe9f3.js" crossorigin="anonymous"></script>
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 
 <body>
-    <div class="wrapper">
-        <!-- Sidebar  -->
-        <nav id="sidebar">
-            <div class="sidebar-header">
-                <div class="sidebar-brand-icon">
-                <img src="../img/logoo.png" style="width: 104%; margin-bottom:-19%; margin-top:-5%;" alt="Baguio Logo">
-                </div>
+<div class="wrapper">
+    <!-- Sidebar  -->
+    <nav id="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-brand-icon">
+                <img style="width:150px;" src="../img/SMIT+.png" alt="Baguio Logo">
             </div>
+        </div>
 
-            <ul class="list-unstyled components">
-                <hr>
-                <h4 id="headingNav1">Screening</h4>
-                <hr>
-                    <div class="timeBox">
-                    <p id="time"></p>  <p id="datee"></p>
-                    <script src="../javascript/detailedDateAndTime.js"></script>
-                    </div>
-                    <hr>
-                <li class="active">
-                    <a href="../Screening Module/ScanQRScreening.php"><i class="fas fa-qrcode"></i></i> Scan QR</a>
-                </li>
-                <li>
-                    <a href="../Screening Module/ManageUsersHomeScreening.php"><i class="fas fa-users"></i> Manage Users</a>
-                </li>
-            </ul>
+        <ul class="list-unstyled components">
+            <h4 id="headingNav1">Screening</h4>
+            <hr>
+            <div class="timeBox">
+                <p id="time"></p>  <p id="datee"></p>
+                <script src="../javascript/detailedDateAndTime.js"></script>
+            </div>
+            <hr>
+            <li class="active">
+                <a href="../Screening Module/ScanQRScreening.php"><i class="fas fa-qrcode"></i></i> Scan QR</a>
+            </li>
+            <li>
+                <a href="../Screening Module/ManageUsersHomeScreening.php"><i class="fas fa-users"></i> Manage Users</a>
+            </li>
+        </ul>
 
-            <ul class="list-unstyled CTAs">
-                <button type="button" class="btn btn-info signOutPersonnel">
-                    <span>Sign Out</span>
-                </button>
-            </ul>
-        </nav>
+        <ul class="list-unstyled CTAs">
+            <button type="button" class="btn btn-info signOutPersonnel">
+                <span>Sign Out</span>
+            </button>
+        </ul>
+    </nav>
 
-        <!-- Page Content  -->
-        <div id="content">
+    <!-- Page Content  -->
+    <div id="content">
 
-            <nav class="navbar navbar-expand-lg navbar-light bg-light upperBoxOG">
-                <div class="container-fluid upperBox">
-                    <!-- <button type="button" id="sidebarCollapse" class="btn btn-info" onclick="Toggle()">
-                        <i class='fas fa-angle-left'></i> Menu
-                    </button> -->
-                    <button class="btnTop">
-                    <i class="fas fa-bell"></i>
-                    </button>
-
-                    <button class="btnTop">
-                    <i class="fas fa-cog"></i>
-                    </button>
-
+        <div id="qrView" class="modal-window">
+            <div class="content-modal">
+                <div class="modal-header">
+                    <h3 class="modal-title">Pre-Vaccine Vitals</h3>
+                    <button type="button" class="close" data-dismiss="modal" onclick="closeModal('qrView')">&times;</button>
                 </div>
-            </nav>
-            <h2 id="scannerTxt">Scan Patient QR Code</h2>
-            <video id="preview"></video>
-            <script type="text/javascript" src="../javascript/instascan.min.js"></script>
-            <script type="text/javascript">
+                <div class="modal-body" id="qr"></div>
+            </div>
+        </div>
+
+        <nav class="navbar navbar-expand-lg navbar-light bg-light upperBoxOG">
+            <div class="container-fluid upperBox">
+
+                <button class="btnTop">
+                    <i class="fas fa-cog"></i>
+                </button>
+
+            </div>
+        </nav>
+        <h2 id="scannerTxt">Scan Patients QR Code</h2>
+        <video id="preview"></video>
+        <script type="text/javascript" src="../javascript/instascan.min.js"></script>
+        <script type="text/javascript">
             let scanner = new Instascan.Scanner({
-            video: document.getElementById('preview')
+                video: document.getElementById('preview')
             });
 
             scanner.addListener('scan', function (content) {
-                window.open(content,"_self")
-                console.log(content)
+                qr(content);
+
             });
 
             Instascan.Camera.getCameras().then(function (cameras) {
-            if (cameras.length > 0) {
-            scanner.start(cameras[0]);
-            } else {
-            console.error('No cameras found.');
-            }
+                if (cameras.length > 0) {
+                    scanner.start(cameras[0]);
+                } else {
+                    console.error('No cameras found.');
+                }
             }).catch(function (e) {
-            console.error(e);
+                console.error(e);
             });
-            </script>
-            <div id="passportInt">
-                <h2 id="inputTxt"> Input Manually </h2>
+        </script>
+        <div id="passportInt">
+            <h2 id="inputTxt"> Input Manually </h2>
+            <div>
                 <i class="fas fa-info-circle "></i>
-                <input id="passportId" type="text" placeholder="Passport ID"><i class="fas fa-sign-in-alt""></i>
+                <input id="passportId" type="text" placeholder="Passport ID">
+                <button class="buttonTransparent" onclick="passport(document.getElementById('passportId').value)"><i class="fas fa-sign-in-alt"></i></button>
             </div>
-            
-
         </div>
+
+
     </div>
+</div>
 
-    <!-- jQuery CDN - Slim version (=without AJAX) -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <!-- Popper.JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
-    <!-- Bootstrap JS -->
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
-
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $('#sidebarCollapse').on('click', function () {
-                $('#sidebar').toggleClass('active');
-            });
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#sidebarCollapse').on('click', function () {
+            $('#sidebar').toggleClass('active');
         });
-        var clicked = false;
+    });
+    var clicked = false;
 
-        function Toggle() {
-            var butt = document.getElementById('sidebarCollapse')
-            if (!clicked) {
-                clicked = true;
-                butt.innerHTML = "Menu <i class = 'fas fa-angle-double-right'><i>";
-            } else {
-                clicked = false;
-                butt.innerHTML = "<i class='fas fa-angle-left'></i> Menu";
-            }
+    function Toggle() {
+        var butt = document.getElementById('sidebarCollapse')
+        if (!clicked) {
+            clicked = true;
+            butt.innerHTML = "Menu <i class = 'fas fa-angle-double-right'><i>";
+        } else {
+            clicked = false;
+            butt.innerHTML = "<i class='fas fa-angle-left'></i> Menu";
         }
-    </script>
+    }
+
+    function qr(content){
+        $.ajax({
+            url: 'screeningSearchProcessor.php',
+            method: 'POST',
+            data: {patientId: content},
+            success: function (result) {
+                document.getElementById('qrView').style.display = "block";
+                document.getElementById('qr').innerHTML = result;
+            }
+        })
+    }
+
+    function passport(passportId){
+        $.ajax({
+            url: 'screeningSearchProcessor.php',
+            method: 'POST',
+            data: {passport: passportId},
+            success: function (result) {
+                document.getElementById('qrView').style.display = "block";
+                document.getElementById('qr').innerHTML = result;
+            }
+        })
+    }
+
+    function closeModal(modal){
+        document.getElementById(modal).style.display = "none";
+    }
+</script>
 </body>
 
 </html>
+
+<style>
+
+    #passportInt {
+        width: 55%;
+        background-color: transparent;
+        margin-left: 23%;
+    }
+
+    #passportId{
+        border-bottom: solid black 1px;
+        width: 90%;
+    }
+
+    input[type='text']::placeholder
+    {
+        text-align: center;      /* for Chrome, Firefox, Opera */
+    }
+
+    #scannerTxt {
+        text-align: center;
+    }
+
+    #inputTxt{
+        text-align: center;
+        margin-top: 3%;
+    }
+
+    #preview {
+        border-radius: 12px;
+        width: 50%;
+        height: auto;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+</style>

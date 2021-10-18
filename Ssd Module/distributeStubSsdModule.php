@@ -10,7 +10,7 @@
 
     <link rel="icon" href="../img/FaviSMIT+.png" type="image/jpg">
     <!-- Our Custom CSS -->
-    <link href="../css/SSDstyle.css" rel="stylesheet">
+    <link href="../css/style.css" rel="stylesheet">
 
     <!-- Bootstrap-->
     <script crossorigin="anonymous" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
@@ -71,6 +71,25 @@
     <!-- Top Nav Bar  -->
     <div id="content">
         <!-- Page Content  -->
+
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container-fluid">
+
+                <button type="button" id="sidebarCollapse" class="btn btn-info" onclick="Toggle()">
+                    <i class='fas fa-angle-left'></i> Menu
+                </button>
+
+                <button id="buttonMarker" class="btnTop" onclick="openNotif('notificationModal')">
+                    <span class="marker" id="marker"><i class="fas fa-circle"></i></span>
+                    <i class="fas fa-bell"></i>
+                </button>
+
+                <button class="btnTop btnBell">
+                    <i class="fas fa-cog"></i>
+                </button>
+            </div>
+        </nav>
+
         <div class="row">
             <div class="col">
                 <div class="row">
@@ -131,18 +150,18 @@
                 </button>
             </div>
             <div class="modal-body" id="notificationContent">
-                                        <?php
-                                        $query = "SELECT vaccination_drive.drive_id, vaccination_sites.location, vaccination_drive.vaccination_date, vaccination_drive.stubs, vaccination_drive.notif_opened FROM vaccination_sites JOIN vaccination_drive ON vaccination_sites.vaccination_site_id = vaccination_drive.vaccination_site_id ORDER BY drive_id desc;";
-                                        $vaccination_drive = [];
+                <?php
+                $query = "SELECT vaccination_drive.drive_id, vaccination_sites.location, vaccination_drive.vaccination_date, vaccination_drive.stubs, vaccination_drive.notif_opened FROM vaccination_sites JOIN vaccination_drive ON vaccination_sites.vaccination_site_id = vaccination_drive.vaccination_site_id ORDER BY drive_id desc;";
+                $vaccination_drive = [];
 
-                                        $stmt = $database->stmt_init();
-                                        $stmt->prepare($query);
-                                        $stmt->execute();
-                                        $stmt->bind_result($driveId, $locName, $date, $stubs, $opened);
+                $stmt = $database->stmt_init();
+                $stmt->prepare($query);
+                $stmt->execute();
+                $stmt->bind_result($driveId, $locName, $date, $stubs, $opened);
 
-                                        while ($stmt->fetch()) {
-                                            if ($opened== 1){
-                                                echo "
+                while ($stmt->fetch()) {
+                    if ($opened== 1){
+                        echo "
                                                    
                                                       
                                                         <div id='$driveId' style='color: #9C9C9C'>
@@ -154,9 +173,9 @@
                                                       <hr style='width: 100%; background: azure'>
                                                  
                                                       ";
-                                            } else{
+                    } else{
 
-                                                echo "
+                        echo "
                                                    <script>document.getElementById('marker').setAttribute('style', 'color:#c10d0d!important');</script>
                                                       
                                                         <div id='$driveId' style='background: lightgray'>
@@ -169,21 +188,20 @@
                                                  
                                                       ";
 
-                                            }
+                    }
 
-                                        }
-                                        ?>
+                }
+                ?>
 
             </div>
         </div>
     </div>
     <script>
-
         var pusher = new Pusher('8bde1d2aef3f7c91d16a', {
             cluster: 'ap1'
         });
 
-        var channel = pusher.subscribe('my-channel');
+        var channel = pusher.subscribe('ssd');
         channel.bind('my-event', function(data) {
             var id = data.message;
 
@@ -312,7 +330,7 @@
                 success: function (result) {
                     document.getElementById("barangayModal").innerHTML = result;
                     document.getElementById("barangayModal").style.display ="block";
-                        disable(prioGroup);
+                    disable(prioGroup);
 
                 }
             });

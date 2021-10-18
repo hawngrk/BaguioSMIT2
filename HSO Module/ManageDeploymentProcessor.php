@@ -121,7 +121,7 @@ if (isset($_POST['districts'])){
     );
 
     $data['message'] = $driveId;
-    $pusher->trigger('my-channel', 'my-event', $data);
+    $pusher->trigger('ssd', 'my-event', $data);
 }
 
 if (isset($_POST['barangays'])) {
@@ -539,7 +539,7 @@ if (isset($_POST['archive'])){
         $query = "UPDATE `vaccination_drive` SET `Archived`= 0 WHERE `drive_id` = '$archivedId'";
         $database->query($query);
 
-     echo'
+        echo'
                     <table class="table table-row table-hover">
                         <thead>
                         <tr>
@@ -552,25 +552,25 @@ if (isset($_POST['archive'])){
                         </tr>
                         </thead>';
 
-                        require_once '../require/getVaccinationDrive.php';
-                        require_once '../require/getVaccinationSites.php';
+        require_once '../require/getVaccinationDrive.php';
+        require_once '../require/getVaccinationSites.php';
 
-                        $count = 0;
-                        foreach ($vaccination_drive as $vd) {
-                            if ($vd->getArchive() == 1) {
-                                $count++;
-                                $driveId = $vd->getDriveId();
-                                $date = $vd->getVaccDate();
-                                $stubs = $vd->getVaccStubs();
+        $count = 0;
+        foreach ($vaccination_drive as $vd) {
+            if ($vd->getArchive() == 1) {
+                $count++;
+                $driveId = $vd->getDriveId();
+                $date = $vd->getVaccDate();
+                $stubs = $vd->getVaccStubs();
 
 
-                                foreach ($vaccinationSites as $vs) {
-                                    if ($vs->getVaccinationSiteId() == $vd->getVaccDriveVaccSiteId()) {
-                                        $vaccinationSite = $vs->getVaccinationSiteLocation();
-                                    }
-                                }
+                foreach ($vaccinationSites as $vs) {
+                    if ($vs->getVaccinationSiteId() == $vd->getVaccDriveVaccSiteId()) {
+                        $vaccinationSite = $vs->getVaccinationSiteLocation();
+                    }
+                }
 
-                                echo "<tr class='table-row' >
+                echo "<tr class='table-row' >
                         <td>$count</td>
                         <td>$driveId</td>
                         <td>$vaccinationSite</td>
@@ -583,9 +583,9 @@ if (isset($_POST['archive'])){
                         </td>
              
                       </tr>";
-                            }
-                        }
+            }
+        }
 
-                    echo "</table>";
+        echo "</table>";
     }
 }

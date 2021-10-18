@@ -16,7 +16,7 @@ if (isset($_POST['search'])) {
                 <th scope='col'>Contact Number</th>
             </tr>
             </thead>";
-            
+
     $stmt = $database->stmt_init();
     $stmt->prepare($querySearch);
     $stmt->execute();
@@ -93,7 +93,7 @@ if (isset($_POST['lastname'])) {
 
 //    $medical_backgroundTableQuery = "INSERT INTO medical_background (patient_id, skin_allergy, food_allergy, medication_allergy, insect_allergy, pollen_allergy, bite_allergy, latex_allergy, mold_allergy, pet_allergy, hypertension, heart_disease, kidney_disease, diabetes_mellitus, bronchial_asthma, immunodeficiency, cancer, other_commorbidity) VALUE ('$patientid', '$skin', '$food', '$medication', '$insect', '$pollen', '$bite', '$latex', '$mold', '$pet', '$hypertension', '$heart', '$kidney', '$diabetes', '$asthma', '0', '$cancer', '');";
 //    $database->query($medical_backgroundTableQuery);
-echo'<thead>
+    echo'<thead>
                 <tr>
                     <th scope="col">Patient Name</th>
                     <th scope="col">Category</th>
@@ -102,31 +102,31 @@ echo'<thead>
                 </tr>
                 </thead>';
 
-                    require_once '../require/getPatientDetails.php';
+    require_once '../require/getPatientDetails.php';
 
-                    foreach ($patient_details as $pd) {
-                    $id = $pd->getPatientDeetPatId();
-                    $category = $pd->getPriorityGroup();
-                    $fullAddress = $pd->getHouseAdd() . ", " . $pd->getBrgy() . ", " . $pd->getCity() . ", " . $pd->getProvince();
-                    $contact = $pd->getContact();
+    foreach ($patient_details as $pd) {
+        $id = $pd->getPatientDeetPatId();
+        $category = $pd->getPriorityGroup();
+        $fullAddress = $pd->getHouseAdd() . ", " . $pd->getBrgy() . ", " . $pd->getCity() . ", " . $pd->getProvince();
+        $contact = $pd->getContact();
 
-                    if ($pd->getPatientMName() == null && $pd->getPatientSuffix() == null) {
-                    $name = $pd->getPatientLName() . ", " . $pd->getPatientFName();
-                    } else if ($pd->getPatientSuffix() == null) {
-                    $name = $pd->getPatientLName() . ", " . $pd->getPatientFName() . " " . $pd->getPatientMName();
-                    } else if ($pd->getPatientMName() == null) {
-                    $name = $pd->getPatientLName() . ", " . $pd->getPatientFName() . " " . $pd->getPatientSuffix();
-                    } else {
-                    $name = $pd->getPatientLName() . ", " . $pd->getPatientFName() . " " . $pd->getPatientMName() . " " . $pd->getPatientSuffix();
-                    }
+        if ($pd->getPatientMName() == null && $pd->getPatientSuffix() == null) {
+            $name = $pd->getPatientLName() . ", " . $pd->getPatientFName();
+        } else if ($pd->getPatientSuffix() == null) {
+            $name = $pd->getPatientLName() . ", " . $pd->getPatientFName() . " " . $pd->getPatientMName();
+        } else if ($pd->getPatientMName() == null) {
+            $name = $pd->getPatientLName() . ", " . $pd->getPatientFName() . " " . $pd->getPatientSuffix();
+        } else {
+            $name = $pd->getPatientLName() . ", " . $pd->getPatientFName() . " " . $pd->getPatientMName() . " " . $pd->getPatientSuffix();
+        }
 
-                    echo "<tr>
+        echo "<tr>
                         <td>$name</td>
                         <td>$category</td>
                         <td>$fullAddress</td>
                         <td>$contact</td>
                     </tr>";
-                    }
+    }
 
 }
 
@@ -153,26 +153,26 @@ if (isset($_POST['archive'])){
                 </tr>
                 </thead>';
 
-                    require_once '../require/getPatientDetails.php';
+        require_once '../require/getPatientDetails.php';
 
-                    foreach ($patient_details as $pd) {
-                        if ($pd->getArchived() == 1) {
-                            $id = $pd->getPatientDeetPatId();
-                            $category = $pd->getPriorityGroup();
-                            $fullAddress = $pd->getHouseAdd() . ", " . $pd->getBrgy() . ", " . $pd->getCity() . ", " . $pd->getProvince();
-                            $contact = $pd->getContact();
+        foreach ($patient_details as $pd) {
+            if ($pd->getArchived() == 1) {
+                $id = $pd->getPatientDeetPatId();
+                $category = $pd->getPriorityGroup();
+                $fullAddress = $pd->getHouseAdd() . ", " . $pd->getBrgy() . ", " . $pd->getCity() . ", " . $pd->getProvince();
+                $contact = $pd->getContact();
 
-                            if ($pd->getPatientMName() == null && $pd->getPatientSuffix() == null) {
-                                $name = $pd->getPatientLName() . ", " . $pd->getPatientFName();
-                            } else if ($pd->getPatientSuffix() == null) {
-                                $name = $pd->getPatientLName() . ", " . $pd->getPatientFName() . " " . $pd->getPatientMName();
-                            } else if ($pd->getPatientMName() == null) {
-                                $name = $pd->getPatientLName() . ", " . $pd->getPatientFName() . " " . $pd->getPatientSuffix();
-                            } else {
-                                $name = $pd->getPatientLName() . ", " . $pd->getPatientFName() . " " . $pd->getPatientMName() . " " . $pd->getPatientSuffix();
-                            }
+                if ($pd->getPatientMName() == null && $pd->getPatientSuffix() == null) {
+                    $name = $pd->getPatientLName() . ", " . $pd->getPatientFName();
+                } else if ($pd->getPatientSuffix() == null) {
+                    $name = $pd->getPatientLName() . ", " . $pd->getPatientFName() . " " . $pd->getPatientMName();
+                } else if ($pd->getPatientMName() == null) {
+                    $name = $pd->getPatientLName() . ", " . $pd->getPatientFName() . " " . $pd->getPatientSuffix();
+                } else {
+                    $name = $pd->getPatientLName() . ", " . $pd->getPatientFName() . " " . $pd->getPatientMName() . " " . $pd->getPatientSuffix();
+                }
 
-                            echo "<tr>
+                echo "<tr>
                         <td>$name</td>
                         <td>$category</td>
                         <td>$fullAddress</td>
@@ -183,8 +183,223 @@ if (isset($_POST['archive'])){
                             </div>
                         </td>
                     </tr>";
-                        }
-                    }
+            }
+        }
 
     }
+}
+
+if (isset($_POST['patientId'])) {
+    require_once ('../require/getPatientDetails.php');
+    require_once ('../require/getPatient.php');
+
+    $patId = $_POST['patientId'];
+
+    foreach ($patient_details as $patient){
+        if($patient->getPatientDeetPatId() == $patId){
+            $group = $patient->getPriorityGroup();
+            $age = $patient->getAge();
+            $gender = $patient->getGender();
+            $contact = $patient->getContact();
+        }
+    }
+
+    foreach ($patients as $pat){
+        if ($pat->getPatientId() == $patId){
+            $name = $pat->getPatientFullName();
+        }
+    }
+
+    echo "      
+                <img style='width:150px;' src='../img/SMIT+.png' alt='Baguio Logo'><br>
+                
+                <h1> REGISTERED <i class='far fa-check-circle' style='color: green'></i></h1><br><br>
+                
+                <h5>Full Name: $name</h5><br>
+                <h5>Gender: $gender</h5><br>
+                <h5>Age: $age</h5><br>
+                <h5>Contact Number: $contact</h5><br>
+                
+                <button id='postVac' class='btn-success' type='submit' style='width: 50%; float: right' onclick='queuePatient($patId)'>Confirm Registration</button>";
+
+}
+
+if (isset($_POST['passport'])) {
+    require_once ('../require/getPatientDetails.php');
+    require_once ('../require/getPatient.php');
+
+    $passportId = $_POST['passport'];
+
+    foreach ($patient_details as $patient){
+        if($patient->getPatientDeetPatId() == $passportId){
+            $group = $patient->getPriorityGroup();
+            $age = $patient->getAge();
+            $gender = $patient->getGender();
+            $contact = $patient->getContact();
+        }
+    }
+
+    foreach ($patients as $pat){
+        if ($pat->getPatientId() == $passportId){
+            $patientId = $pat->getPatientId();
+            $name = $pat->getPatientFullName();
+        }
+    }
+
+    echo "      
+                <img style='width:150px;' src='../img/SMIT+.png' alt='Baguio Logo'><br>
+                
+                <h1> REGISTERED <i class='far fa-check-circle' style='color: green'></i></h1><br><br>
+                
+                <h5>Full Name: $name</h5><br>
+                <h5>Gender: $gender</h5><br>
+                <h5>Age: $age</h5><br>
+                <h5>Contact Number: $contact</h5><br>
+                
+                <button id='postVac' class='btn-success' type='submit' style='width: 50%; float: right' onclick='queuePatient($patientId)'>Confirm Registration</button>";
+
+}
+
+if (isset($_POST['queue'])){
+    $queuedId = $_POST['queue'];
+
+    $query = "UPDATE patient SET for_queue ='1' WHERE patient_id = $queuedId";
+    $database->query($query);
+}
+
+if (isset($_POST['notifStubs'])) {
+    $query = "SELECT barangay_stubs.A1_stubs, barangay_stubs.A2_stubs, barangay_stubs.A3_stubs, barangay_stubs.A4_stubs, barangay_stubs.A5_stubs, barangay_stubs.A6_stubs, barangay_stubs.notif_opened, vaccination_sites.location, vaccination_drive.vaccination_date FROM barangay_stubs JOIN vaccination_drive ON vaccination_drive.drive_id = barangay_stubs.drive_id JOIN vaccination_sites ON vaccination_sites.vaccination_site_id = vaccination_drive.vaccination_site_id WHERE barangay_id = '113';";
+    $stmt = $database->stmt_init();
+    $stmt->prepare($query);
+    $stmt->execute();
+    $stmt->bind_result($A1, $A2, $A3, $A4, $A5, $A6, $opened, $locName, $date);
+    while ($stmt->fetch()) {
+
+        $availableStubs = [$A1, $A2, $A3, $A4, $A5, $A6];
+        $priorityStub = [];
+        $values = [];
+
+        for ($i = 0; $i < 5; $i++) {
+            if ($availableStubs[$i] != 0) {
+                $priorityStub[] = "A" . $i + 1;
+                $values[] = $availableStubs[$i];
+            }
+        }
+
+        if ($opened == 1) {
+            echo "
+                                                        <div style='color: #9C9C9C'>
+                                                            <p>Stubs:<br>";
+            foreach ($priorityStub as $ps) {
+                foreach ($values as $value)
+                    echo " $ps: $value </p>";
+            }
+
+            echo "
+                                                            <p>Vaccination Location: $locName<br>
+                                                               Date: $date <br>
+                                                            </p>
+                                                        </div>
+                                                      <hr style='width: 100%; background: azure'>
+                                                      ";
+        } else {
+
+            echo "
+                                                   <script>document.getElementById('marker').setAttribute('style', 'color:#c10d0d!important');</script>
+
+                                                        <div style='background: lightgray'>
+                                                             <h4>Stubs:</h4>";
+
+            foreach ($priorityStub as $ps) {
+                foreach ($values as $value)
+                    echo " <h3>$ps: $value </h3> <br>";
+            }
+
+            echo "
+                                                            <p>Vaccination Location: $locName<br>
+                                                               Date: $date <br>
+                                                            </p>
+                                                        </div>
+                                                      <hr style='width: 100%; background: azure'>";
+        }
+    }
+}
+
+if (isset($_POST['delegation'])){
+
+    $drId = $_POST['delegation'];
+
+    $query = "SELECT A1_stubs, A2_stubs, A3_stubs, A4_stubs, A5_stubs, A6_stubs FROM barangay_stubs WHERE drive_id = '$drId' AND barangay_id = '113';";
+    $stmt = $database->stmt_init();
+    $stmt->prepare($query);
+    $stmt->execute();
+    $stmt->bind_result($A1, $A2, $A3, $A4, $A5, $A6);
+    $stmt->fetch();
+    $stmt->close();
+
+    echo '<div id="stubDelegationNotice">
+                <center>
+                    <h5>Stub Delegation Notice</h5>
+                </center>
+                <hr>
+                <p> Special Service Division has sent:</p>';
+
+    $availableStubs = [$A1, $A2, $A3, $A4, $A5, $A6];
+    $priorityStub = [];
+    $values = [];
+
+    for ($i = 0; $i < 5; $i++) {
+        if ($availableStubs[$i] != 0) {
+            $priorityStub[] = "A" . $i + 1;
+            $values[] = $availableStubs[$i];
+        }
+    }
+
+    foreach ($priorityStub as $ps) {
+        foreach ($values as $value)
+            echo "<p> $value $ps stubs</p><br>";
+    }
+
+    echo"
+             </div>
+            <div id='availableStubs'>
+                <center>
+                    <h5>Available Stubs</h5>
+                </center>
+                <hr>
+                <div class='priorityGroup'>
+                    <h5>A1</h5>
+                    <p>$A1</p>
+                </div>
+                <div class='priorityGroup'>
+                    <h5>A2</h5>
+                   <p>$A2</p>
+                </div>
+                <div class='priorityGroup'>
+                    <h5>A3</h5>
+                 <p>$A3</p>
+                </div>
+                <div class='priorityGroup'>
+                    <h5>A4</h5>
+                  <p>$A4</p>
+                </div>
+                <div class='priorityGroup'>
+                    <h5>A5</h5>
+                   <p>$A5</p>
+                </div>
+                <div class='priorityGroup'>
+                    <h5>A6</h5>
+                   <p>$A6</p>
+                </div>
+            </div>
+        </div>";
+}
+
+if (isset($_POST['open'])){
+    $query = "UPDATE barangay_stubs SET notif_opened = '1' WHERE notif_opened = '0'";
+    $stmt = $database->stmt_init();
+    $stmt->prepare($query);
+    $stmt->execute();
+    $stmt->fetch();
+    $stmt->close();
 }

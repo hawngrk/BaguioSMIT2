@@ -119,3 +119,151 @@ if (isset($_POST['pulse'])) {
     }
     echo 'added';
 }
+
+if (isset($_POST['patientId'])) {
+    require_once ('../require/getPatientDetails.php');
+    require_once ('../require/getPatient.php');
+    require_once ('../require/getPatientDrive.php');
+
+    $patId = $_POST['patientId'];
+
+    foreach ($patient_details as $patient){
+        if($patient->getPatientDeetPatId() == $patId){
+            $group = $patient->getPriorityGroup();
+            $age = $patient->getAge();
+            $gender = $patient->getGender();
+            $contact = $patient->getContact();
+        }
+    }
+
+    foreach ($patients as $pat){
+        if ($pat->getPatientId() == $patId){
+            $name = $pat->getPatientFullName();
+            $fDate = $pat->getFirstDosageDate();
+            $sDate = $pat->getSecondDosageDate();
+            $first = $pat->getFirstDosage();
+            $second = $pat->getSecondDosage();
+        }
+    }
+
+//    foreach ($patientDrives as $patientDrive){
+//        if ($patientDrive->getPatientDrivePatientId() == $patId){
+//            $lot = $patientDrive->getPatientDriveLotId();
+//            $drive = $patientDrive->getPatientDriveDriveId();
+//        }
+//    }
+
+//    $getPatientDrive = "SELECT vaccination_sites.location, patient_drive.vaccine_lot_id FROM `patient_drive` INNER JOIN vaccination_drive ON patient_drive.drive_id = vaccination_drive.drive_id INNER JOIN vaccination_sites ON vaccination_drive.vaccination_site_id = vaccination_sites.vaccination_site_id WHERE patient_drive.patient_id = $patId";
+//    $dbase = $database->stmt_init();
+//    $dbase->prepare($getPatientDrive);
+//    $dbase->execute();
+//    $dbase->bind_result($location, $lot);
+//    $dbase->fetch();
+//    $dbase->close();
+
+
+
+
+
+    echo "      
+                <img style='width:150px;' src='../img/SMIT+.png' alt='Baguio Logo'>
+               
+                <hr>
+                <h2>PATIENT PROFILE</h2>
+                <hr><br>
+                <h5>Full Name: $name</h5><br>
+                <h5>Gender: $gender</h5><br>
+                <h5>Age: $age</h5><br>
+                <h5>Contact Number: $contact</h5><br>
+                
+                <hr>
+                <h2>VACCINATION SUMMARY</h2>
+                <hr><br>
+                
+                <h5>Priority Group: $group</h5><br>
+           
+                 
+                <h5>First Dose: ";
+
+    if ($first == 0){
+        echo "Pending </h5><br>";
+    } else {
+        echo "Vaccinated </h5></br>";
+    }
+
+    echo"<h5>First Dose Vaccination Date: $fDate</h5><br><br>
+                     <h5>Second Dose: ";
+    if ($second == 0){
+        echo "Pending </h5><br>";
+    } else {
+        echo "Vaccinated </h5></br>";
+    }
+
+    echo"<h5>Second Dose Vaccination Date: $sDate</h5><br>
+                     <button id='postVac' class='btn-success' type='submit' style='width: 20%; float: right'>Add Pre Vitals</button>";
+
+}
+
+if (isset($_POST['passport'])){
+    require_once ('../require/getPatientDetails.php');
+    require_once ('../require/getPatient.php');
+
+    $passport = $_POST['passport'];
+
+    foreach ($patient_details as $patient){
+        if($patient->getPatientDeetPatId() == $passport){
+            $group = $patient->getPriorityGroup();
+            $age = $patient->getAge();
+            $gender = $patient->getGender();
+            $contact = $patient->getContact();
+        }
+    }
+
+    foreach ($patients as $pat){
+        if ($pat->getPatientId() == $passport){
+            $name = $pat->getPatientFullName();
+            $fDate = $pat->getFirstDosageDate();
+            $sDate = $pat->getSecondDosageDate();
+            $first = $pat->getFirstDosage();
+            $second = $pat->getSecondDosage();
+        }
+    }
+
+    echo "      
+                <img style='width:150px;' src='../img/SMIT+.png' alt='Baguio Logo'>
+               
+                <hr>
+                <h2>PATIENT PROFILE</h2>
+                <hr><br>
+                <h5>Full Name: $name</h5><br>
+                <h5>Gender: $gender</h5><br>
+                <h5>Age: $age</h5><br>
+                <h5>Contact Number: $contact</h5><br>
+                
+                <hr>
+                <h2>VACCINATION SUMMARY</h2>
+                <hr><br>
+                
+                <h5>Priority Group: $group</h5><br>
+              
+                 
+                <h5>First Dose: ";
+
+    if ($first == 0){
+        echo "Not Vaccinated </h5><br>";
+    } else {
+        echo "Vaccinated </h5></br>";
+    }
+
+    echo"<h5>First Dose Vaccination Date: $fDate</h5><br><br>
+                     <h5>Second Dose: ";
+    if ($second == 0){
+        echo "Not Vaccinated </h5><br>";
+    } else {
+        echo "Vaccinated </h5></br>";
+    }
+
+    echo"<h5>Second Dose Vaccination Date: $sDate</h5><br>
+                     <button id='postVac' class='btn-success' type='submit' style='width: 20%; float: right'>Add Pre Vitals</button>";
+
+}

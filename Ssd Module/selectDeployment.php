@@ -2,6 +2,7 @@
 
 require_once("../require/getVaccinationDrive.php");
 require_once("../require/getVaccinationSites.php");
+include("../includes/database.php");
 
 
 if (isset($_POST['deploymentId'])) {
@@ -30,21 +31,21 @@ if (isset($_POST['deploymentId'])) {
             <br>
             <h5> Health Districts: </h5>";
 
-            foreach ($healthDistrictDrives as $hdd){
-                if($hdd->getDriveId() == $driveId){
-                    foreach ($health_district as $hd){
-                        if ($hd->getHealthDistrictId() == $hdd->getDistrictId()){
-                            $hName = $hd->getHealthDistrictName();
+    foreach ($healthDistrictDrives as $hdd){
+        if($hdd->getDriveId() == $driveId){
+            foreach ($health_district as $hd){
+                if ($hd->getHealthDistrictId() == $hdd->getDistrictId()){
+                    $hName = $hd->getHealthDistrictName();
 
-                            echo "
+                    echo "
                                 <li>
                                     <label>$hName</label>
                                 </li>
                                 ";
-                        }
-                    }
                 }
             }
+        }
+    }
 
 }
 
@@ -172,34 +173,37 @@ if (isset($_POST['notifDrive'])) {
     while ($stmt->fetch()) {
         if ($opened== 1){
             echo "
-                                                   
-                                                      
-                                                        <div id='$driveId' style='color: #9C9C9C' onclick='updateDeploymentDetails($driveId)'>
+
+
+                                                        <div id='$driveId' style='color: #9C9C9C'>
                                                             <p>Vaccination Location: $locName<br>
                                                                Date: $date <br>
                                                                Number of Stubs: $stubs <br>
                                                             </p>
                                                         </div>
                                                       <hr style='width: 100%; background: azure'>
-                                                 
+
                                                       ";
         } else{
+
             echo "
-                                                   
-                                                      
-                                                        <div id='$driveId' style='background: lightgray' onclick='updateDeploymentDetails($driveId)'>
+                                                   <script>document.getElementById('marker').setAttribute('style', 'color:#c10d0d!important');</script>
+
+                                                        <div id='$driveId' style='background: lightgray'>
                                                             <p>Vaccination Location: $locName<br>
                                                                Date: $date <br>
                                                                Number of Stubs: $stubs <br>
                                                             </p>
                                                         </div>
                                                       <hr style='width: 100%; background: azure'>
-                                                 
+
                                                       ";
 
         }
 
     }
+
+
 }
 
 if (isset($_POST['notifListDrives'])){
@@ -209,14 +213,14 @@ if (isset($_POST['notifListDrives'])){
     echo '<select onchange="updateDeploymentDetails(this.value)">
                             <option value="" disabled selected hidden> Select Deployment </option>';
 
-                            require_once("../require/getVaccinationDrive.php");
+    require_once("../require/getVaccinationDrive.php");
 
-                            foreach ($vaccination_drive  as $vaccinationDrive) {
-                                $id = $vaccinationDrive->getDriveId();
-                                echo "<option value=$id> $id </option>";
-                            }
+    foreach ($vaccination_drive  as $vaccinationDrive) {
+        $id = $vaccinationDrive->getDriveId();
+        echo "<option value=$id> $id </option>";
+    }
 
-                       echo" </select>";
+    echo" </select>";
 }
 
 if (isset($_POST['open'])){
@@ -234,9 +238,25 @@ if (isset($_POST['sendStubs'])){
     $driveStubs = $_POST['stubsDrive'];
 
     foreach ($result as $key => $value){
-        $query = "INSERT into barangay_stubs (barangay_id, drive_id, A1_stubs, A2_stubs, A3_stubs, A4_stubs, A5_stubs, A6_stubs) VALUE ($key, $driveStubs,$value[0], $value[1], $value[2], $value[3], $value[4], $value[5])";
+        $query = "INSERT into barangay_stubs (barangay_id, drive_id, A1_stubs, A2_stubs, A3_stubs, A4_stubs, A5_stubs, A6_stubs, notif_opened) VALUE ($key, $driveStubs,$value[0], $value[1], $value[2], $value[3], $value[4], $value[5], 0)";
         $database->query($query);
     }
+
+    require '../vendor/autoload.php';
+
+    $options = array(
+        'cluster' => 'ap1',
+    );
+
+    $pusher = new Pusher\Pusher(
+        '8bde1d2aef3f7c91d16a',
+        '5a55c8609c4d84200725',
+        '1273036',
+        $options
+    );
+
+    $data['message'] = $driveStubs;
+    $pusher->trigger('barangay', 'my-event', $data);
 }
 
 
