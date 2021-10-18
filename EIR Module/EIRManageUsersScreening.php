@@ -32,6 +32,7 @@
             integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY"
             crossorigin="anonymous"></script>
     <script defer src="../javascript/showDateAndTime.js"> </script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
@@ -67,7 +68,6 @@
 
     <!-- Page Content  -->
     <div id="content">
-
         <div class="buttonContainer">
             <button type="button" class="btn btn-outline-primary buttonTop3 float-left"> <i class="fas fa-filter"></i>
             </button>
@@ -86,7 +86,7 @@
         <table class="table table-row table-hover tableBrgy" id="patientTable">
             <thead>
             <tr class="labelRow">
-                <th scope="col"> Patient ID</th>
+                <th scope="col">ID</th>
                 <th scope="col">Patient Name</th>
                 <th scope="col">Category</th>
                 <th scope="col">Complete Address</th>
@@ -201,7 +201,7 @@
                                     <option value="prc">Professional Regulation Commission ID</option>
                                     <option value="senior">Office of Senior Citizen Affairs ID</option>
                                     <option value="facility"> Facility ID</option>
-                                    <option value="others"> Other ID</option>
+                                    <option value="other"> Other ID</option>
                                 </select>
                             </div>
                             <div class="col">
@@ -275,8 +275,8 @@
                                 <label class="required" for="allergy"> Allergy with Vaccine?</label>
                                 <select class="formControl" id="allergy" name="allergy" required>
                                     <option selected disabled>Select Answer...</option>
-                                    <option value="none">None</option>
-                                    <option value="yes">Yes</option>
+                                    <option value="None">None</option>
+                                    <option value="Yes">Yes</option>
                                 </select>
                             </div>
                             <div class="col-4">
@@ -328,13 +328,13 @@
                                     <label> Cancer </label>
                                 </div>
                                 <div class="col">
-                                    <input type="checkbox" name="others" value="others" id="others"
+                                    <input type="checkbox" name="other" value="other" id="other"
                                            onclick="showOthersInput(this)">
                                     <label> Others </label>
                                 </div>
                                 <div class="col">
                                     <div id="otherTextField">
-                                        <input type="text3" name="others" id="others" placeholder="Input Other Commorbidity">
+                                        <input type="text3" name="other" id="other" class="otherInput" placeholder="Input Other Commorbidity">
                                     </div>
                                 </div>
 
@@ -424,14 +424,14 @@
     }
 
     function showOthersInput() {
-        var elem = document.getElementById('others');
-        var others = document.getElementById('otherTextField');
+        var elem = document.getElementById('other');
+        var other = document.getElementById('otherTextField');
 
         if (elem.checked == true) {
-            others.style.display = "block";
+            other.style.display = "block";
         } else {
-            var others = document.getElementById('otherTextField');
-            others.style.display = "none";
+            var other = document.getElementById('otherTextField');
+            other.style.display = "none";
         }
     }
 
@@ -444,19 +444,22 @@
         var first = document.getElementById("fname").value;
         var middle = document.getElementById("mname").value;
         var suffix = document.getElementById("suffix").value;
+        var occupation = document.getElementById("occupation").value;
         var gender = document.getElementById("gender").value;
         var birthdate = document.getElementById("date").value;
-        var occupation = document.getElementById("occupation").value;
+        var dob = new Date(document.getElementById("date").value);
+        var age = getAge(dob);
+
+        //Contact Information
         var contact = document.getElementById("contactNum").value;
         var email = document.getElementById("email").value;
-
+        
         //Category Information
         var priority = document.getElementById("priorityGroup").value;
         var id = document.getElementById("categoryID").value;
         var idNo = document.getElementById("categoryNo").value;
         var philHealth = document.getElementById("philHealth").value;
-        var pwd = document.getElementById("pwdId").value;
-
+        var pwd = document.getElementById("pwdID").value;
         //Address Information
         var houseAddress = document.getElementById("houseAddress").value;
         var brgy = document.getElementById("barangay").value;
@@ -465,22 +468,23 @@
         var region = document.getElementById("region").value;
 
         //Clinical Information
-        var allergy = document.getElementById("allergy").value;
-        var comorbidity = document.getElementById("comorbidity").value;
+        var allergyInput = document.getElementById("allergy").value;
+        allergy = allergyInput == "None" ? 0 : 1
+        var commorbidity = document.getElementById("comorbidity").value;
 
         //Commorbidity Information
-        var hypertension = $('#hypertension:checked').val();
-        var diabetes = $('#diabetes:checked').val();
-        var cancer = $('#cancer:checked').val();
-        var heartDisease = $('#heartDisease:checked').val();
-        var asthma = $('#asthma:checked').val();
-        var kidneyDisease = $('#kidneyDisease:checked').val();
-        var immunodeficiency = $('#immunodeficiency:checked').val();
-        var other = document.getElementbyId('others').value;
-
+        var hypertension = verifyCommorbidity($('#hypertension:checked').val());
+        var diabetes = verifyCommorbidity($('#diabetes:checked').val());
+        var cancer = verifyCommorbidity($('#cancer:checked').val());
+        var heartDisease = verifyCommorbidity($('#heartDisease:checked').val());
+        var asthma = verifyCommorbidity($('#asthma:checked').val());
+        var kidneyDisease = verifyCommorbidity($('#kidneyDisease:checked').val());
+        var immunodeficiency = verifyCommorbidity($('#immunodeficiency:checked').val());
+        var other = $('#other:checked').val();
+        var enteredCommorbidity = other? document.querySelector('.otherInput').value : "";
 
         $.ajax({
-            url: '../patient/authorization/pre_registration.php',
+            url: '../patient/flutter/authorization/pre_registration.php',
             type: 'POST',
             data: {
                 //Personal Information
@@ -490,7 +494,8 @@
                 suffix: suffix, 
                 gender: gender, 
                 occupation: occupation, 
-                birthday: birthday, 
+                birthdate: birthdate, 
+                age: age,
 
                 //Contact Information
                 contact: contact, 
@@ -520,17 +525,43 @@
                 bronchialAsthma: asthma, 
                 immunodeficiency: immunodeficiency,
                 cancer: cancer,
-                otherCommorbidity: other
+                otherCommorbidity: enteredCommorbidity
                 },
+
             success: function (result) {
                 console.log(result);
-                addButton.disabled = false;
+                Swal.fire('AddedPatient', '', 'success');
+                reloadPatient();
+                addButton.disabled = true;
+            }
+        });
+    }
+    
+    //Change unchecked commorbidity to 0
+    function verifyCommorbidity(commorbidity) {
+        return !commorbidity ? 0 : 1;
+    }
+
+    function reloadPatient() {
+        $.ajax({
+            url: '../includes/showRegisteredPatients.php',
+            type: 'GET',
+            success: function (result) {
                 document.getElementById("patientTable").innerHTML = "";
                 document.getElementById("patientTable").innerHTML = result;
             }
         });
     }
-    
+
+    //Calculates the age of the patient using its birthday
+    function getAge(dob) {
+        var month_diff = Date.now() - dob.getTime();          
+        var age_dt = new Date(month_diff);               
+        var year = age_dt.getUTCFullYear();        
+        var age = Math.abs(year - 1970);  
+        return age;
+    }
+
     //Show Comorbidity List
     var choice = document.getElementById("comorbidity");
     choice.onchange = function () {
@@ -559,11 +590,6 @@
         addPatientModal.style.display = "none";
     }
 
-
 </script>
 </body>
 </html>
-
-
-
-

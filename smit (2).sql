@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 5.0.2
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: Oct 13, 2021 at 09:59 AM
--- Server version: 10.4.19-MariaDB
--- PHP Version: 8.0.7
+-- Host: 127.0.0.1:3306
+-- Generation Time: Oct 18, 2021 at 01:24 AM
+-- Server version: 5.7.31
+-- PHP Version: 7.3.21
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `smit`
+-- Database: `smit+`
 --
 
 -- --------------------------------------------------------
@@ -27,14 +27,17 @@ SET time_zone = "+00:00";
 -- Table structure for table `barangay`
 --
 
-CREATE TABLE `barangay` (
-  `barangay_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `barangay`;
+CREATE TABLE IF NOT EXISTS `barangay` (
+  `barangay_id` int(11) NOT NULL AUTO_INCREMENT,
   `health_district_id` int(11) NOT NULL,
   `barangay_name` varchar(255) NOT NULL,
   `city` varchar(255) NOT NULL,
   `province` varchar(255) NOT NULL,
-  `region` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `region` varchar(255) NOT NULL,
+  PRIMARY KEY (`barangay_id`),
+  KEY `health_district_id` (`health_district_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=128 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `barangay`
@@ -174,7 +177,8 @@ INSERT INTO `barangay` (`barangay_id`, `health_district_id`, `barangay_name`, `c
 -- Table structure for table `barangay_stubs`
 --
 
-CREATE TABLE `barangay_stubs` (
+DROP TABLE IF EXISTS `barangay_stubs`;
+CREATE TABLE IF NOT EXISTS `barangay_stubs` (
   `barangay_id` int(11) NOT NULL,
   `drive_id` int(11) NOT NULL,
   `A1_stubs` int(11) DEFAULT NULL,
@@ -182,7 +186,9 @@ CREATE TABLE `barangay_stubs` (
   `A3_stubs` int(11) DEFAULT NULL,
   `A4_stubs` int(11) DEFAULT NULL,
   `A5_stubs` int(11) DEFAULT NULL,
-  `A6_stubs` int(11) DEFAULT NULL
+  `A6_stubs` int(11) DEFAULT NULL,
+  KEY `barangay_id` (`barangay_id`),
+  KEY `drive_id` (`drive_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -203,16 +209,19 @@ INSERT INTO `barangay_stubs` (`barangay_id`, `drive_id`, `A1_stubs`, `A2_stubs`,
 -- Table structure for table `employee`
 --
 
-CREATE TABLE `employee` (
-  `employee_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `employee`;
+CREATE TABLE IF NOT EXISTS `employee` (
+  `employee_id` int(11) NOT NULL AUTO_INCREMENT,
   `employee_first_name` varchar(255) NOT NULL,
   `employee_last_name` varchar(255) NOT NULL,
   `employee_middle_name` varchar(255) DEFAULT NULL,
   `employee_suffix` varchar(255) DEFAULT NULL,
   `employee_role` varchar(255) NOT NULL,
   `barangay_id` int(11) DEFAULT NULL,
-  `employee_contact_number` char(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `employee_contact_number` char(11) NOT NULL,
+  PRIMARY KEY (`employee_id`),
+  KEY `barangay_id` (`barangay_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `employee`
@@ -232,14 +241,17 @@ INSERT INTO `employee` (`employee_id`, `employee_first_name`, `employee_last_nam
 -- Table structure for table `employee_account`
 --
 
-CREATE TABLE `employee_account` (
-  `employee_account_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `employee_account`;
+CREATE TABLE IF NOT EXISTS `employee_account` (
+  `employee_account_id` int(11) NOT NULL AUTO_INCREMENT,
   `employee_id` int(11) NOT NULL,
   `employee_username` varchar(255) NOT NULL,
   `employee_password` varchar(255) NOT NULL,
   `employee_account_type` varchar(255) NOT NULL,
-  `employee_picture` blob DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `employee_picture` blob,
+  PRIMARY KEY (`employee_account_id`),
+  UNIQUE KEY `employee_id` (`employee_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `employee_account`
@@ -259,11 +271,13 @@ INSERT INTO `employee_account` (`employee_account_id`, `employee_id`, `employee_
 -- Table structure for table `health_district`
 --
 
-CREATE TABLE `health_district` (
-  `health_district_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `health_district`;
+CREATE TABLE IF NOT EXISTS `health_district` (
+  `health_district_id` int(11) NOT NULL AUTO_INCREMENT,
   `health_district_name` varchar(255) NOT NULL,
-  `hd_contact_number` char(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `hd_contact_number` char(11) NOT NULL,
+  PRIMARY KEY (`health_district_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `health_district`
@@ -293,9 +307,12 @@ INSERT INTO `health_district` (`health_district_id`, `health_district_name`, `hd
 -- Table structure for table `health_district_drives`
 --
 
-CREATE TABLE `health_district_drives` (
+DROP TABLE IF EXISTS `health_district_drives`;
+CREATE TABLE IF NOT EXISTS `health_district_drives` (
   `drive_id` int(11) NOT NULL,
-  `health_district_id` int(11) NOT NULL
+  `health_district_id` int(11) NOT NULL,
+  KEY `drive_id` (`drive_id`),
+  KEY `health_district_id` (`health_district_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -401,40 +418,28 @@ INSERT INTO `health_district_drives` (`drive_id`, `health_district_id`) VALUES
 -- Table structure for table `medical_background`
 --
 
-CREATE TABLE `medical_background` (
+DROP TABLE IF EXISTS `medical_background`;
+CREATE TABLE IF NOT EXISTS `medical_background` (
   `patient_id` int(11) NOT NULL,
-  `skin_allergy` tinyint(1) NOT NULL,
-  `food_allergy` tinyint(1) NOT NULL,
-  `medication_allergy` tinyint(1) NOT NULL,
-  `insect_allergy` tinyint(1) NOT NULL,
-  `pollen_allergy` tinyint(1) NOT NULL,
-  `bite_allergy` tinyint(1) NOT NULL,
-  `latex_allergy` tinyint(1) NOT NULL,
-  `mold_allergy` tinyint(1) NOT NULL,
-  `pet_allergy` tinyint(1) NOT NULL,
-  `hypertension` tinyint(1) NOT NULL,
-  `heart_disease` tinyint(1) NOT NULL,
-  `kidney_disease` tinyint(1) NOT NULL,
-  `diabetes_mellitus` tinyint(1) NOT NULL,
-  `bronchial_asthma` tinyint(1) NOT NULL,
-  `immunodeficiency` tinyint(1) NOT NULL,
-  `cancer` tinyint(1) NOT NULL,
-  `other_commorbidity` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `allergy_to_vaccine` tinyint(4) NOT NULL,
+  `hypertension` tinyint(4) NOT NULL,
+  `heart_disease` tinyint(4) NOT NULL,
+  `kidney_disease` tinyint(4) NOT NULL,
+  `diabetes_mellitus` tinyint(4) NOT NULL,
+  `bronchial_asthma` tinyint(4) NOT NULL,
+  `immunodeficiency` tinyint(4) NOT NULL,
+  `cancer` tinyint(4) NOT NULL,
+  `other_commorbidity` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`patient_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `medical_background`
 --
 
-INSERT INTO `medical_background` (`patient_id`, `skin_allergy`, `food_allergy`, `medication_allergy`, `insect_allergy`, `pollen_allergy`, `bite_allergy`, `latex_allergy`, `mold_allergy`, `pet_allergy`, `hypertension`, `heart_disease`, `kidney_disease`, `diabetes_mellitus`, `bronchial_asthma`, `immunodeficiency`, `cancer`, `other_commorbidity`) VALUES
-(1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'NULL'),
-(2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'NULL'),
-(3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'NULL'),
-(4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'NULL'),
-(5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'NULL'),
-(5, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, ''),
-(5, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, ''),
-(5, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, '');
+INSERT INTO `medical_background` (`patient_id`, `allergy_to_vaccine`, `hypertension`, `heart_disease`, `kidney_disease`, `diabetes_mellitus`, `bronchial_asthma`, `immunodeficiency`, `cancer`, `other_commorbidity`) VALUES
+(8, 0, 0, 0, 0, 0, 0, 1, 0, ''),
+(9, 0, 0, 0, 0, 0, 0, 0, 0, '');
 
 -- --------------------------------------------------------
 
@@ -442,8 +447,9 @@ INSERT INTO `medical_background` (`patient_id`, `skin_allergy`, `food_allergy`, 
 -- Table structure for table `patient`
 --
 
-CREATE TABLE `patient` (
-  `patient_id` int(255) NOT NULL,
+DROP TABLE IF EXISTS `patient`;
+CREATE TABLE IF NOT EXISTS `patient` (
+  `patient_id` int(255) NOT NULL AUTO_INCREMENT,
   `patient_full_name` varchar(255) NOT NULL,
   `date_of_first_dosage` date DEFAULT NULL,
   `date_of_second_dosage` date DEFAULT NULL,
@@ -452,8 +458,11 @@ CREATE TABLE `patient` (
   `for_queue` int(1) DEFAULT NULL,
   `notification` int(1) DEFAULT NULL,
   `first_dose_vaccinator` int(11) DEFAULT NULL,
-  `second_dose_vaccinator` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `second_dose_vaccinator` int(11) DEFAULT NULL,
+  PRIMARY KEY (`patient_id`),
+  KEY `patient_first_vaccinator` (`first_dose_vaccinator`),
+  KEY `patient_second_vaccinator` (`second_dose_vaccinator`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `patient`
@@ -462,9 +471,11 @@ CREATE TABLE `patient` (
 INSERT INTO `patient` (`patient_id`, `patient_full_name`, `date_of_first_dosage`, `date_of_second_dosage`, `first_dose_vaccination`, `second_dose_vaccination`, `for_queue`, `notification`, `first_dose_vaccinator`, `second_dose_vaccinator`) VALUES
 (1, 'Theodore Evelyn Mosby', '2021-07-20', '2021-08-03', 1, 1, 1, NULL, NULL, NULL),
 (2, 'Marshall Ericksen', '2021-07-12', NULL, 1, 0, 0, NULL, NULL, NULL),
-(3, 'Lili Aldrin', NULL, '2021-07-12', 0, 1, 0, NULL, NULL, NULL),
-(4, 'Robin Scherbatsky ', NULL, NULL, 0, 0, 0, NULL, NULL, NULL),
-(5, 'Barney Stinson', NULL, NULL, 0, 0, 0, NULL, NULL, NULL);
+(3, 'Lili Aldrin', '2021-10-09', '2021-10-30', 0, 0, 0, NULL, NULL, NULL),
+(4, 'Robin Scherbatsky ', '2021-10-15', '2021-11-05', 0, 0, 0, NULL, NULL, NULL),
+(5, 'Barney Stinson', NULL, NULL, 0, 0, 0, NULL, NULL, NULL),
+(8, 'Adriel Gaviola', NULL, NULL, 0, 0, 0, NULL, NULL, NULL),
+(9, 'Hudson Natividad', NULL, NULL, 0, 0, 0, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -472,14 +483,17 @@ INSERT INTO `patient` (`patient_id`, `patient_full_name`, `date_of_first_dosage`
 -- Table structure for table `patient_account`
 --
 
-CREATE TABLE `patient_account` (
-  `patient_account_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `patient_account`;
+CREATE TABLE IF NOT EXISTS `patient_account` (
+  `patient_account_id` int(11) NOT NULL AUTO_INCREMENT,
   `patient_id` int(11) NOT NULL,
   `patient_username` varchar(255) NOT NULL,
   `patient_password` varchar(255) NOT NULL,
-  `patient_picture` blob DEFAULT NULL,
-  `patient_email` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `patient_picture` blob,
+  `patient_email` varchar(255) NOT NULL,
+  PRIMARY KEY (`patient_account_id`),
+  KEY `patient_id_account` (`patient_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `patient_account`
@@ -490,7 +504,9 @@ INSERT INTO `patient_account` (`patient_account_id`, `patient_id`, `patient_user
 (2, 2, 'EricksenM', 'iGetVaxAndGetDiscount', NULL, 'theodoremosby@gmail.com'),
 (3, 3, 'LilAldrin', 'iGetVaxAndGetEcoBag', NULL, 'theodoremosby@gmail.com'),
 (4, 4, 'RobinSparkles', 'iGetVaxAndGotErectileDysfunction', NULL, 'theodoremosby@gmail.com'),
-(5, 5, 'SwarleyB', 'iGetVaxAndStillGotCovid', NULL, 'theodoremosby@gmail.com');
+(5, 5, 'SwarleyB', 'iGetVaxAndStillGotCovid', NULL, 'theodoremosby@gmail.com'),
+(8, 8, 'AdrielGaviola', '$2y$10$IWUX25IDKI7zoYBfPouDsOv/qG/iUb1HwQdm.Rl7tKmHKy0Lhiyq.', NULL, '2191057@slu.edu.ph'),
+(9, 9, 'HudsonNatividad', '$2y$10$x6VlGS1W3XAcMDFghjMP.Oo731T0I89HEkpe9T7w523vmWEI6Q5aS', NULL, 'hudsonkit@gmail.com');
 
 -- --------------------------------------------------------
 
@@ -498,7 +514,8 @@ INSERT INTO `patient_account` (`patient_account_id`, `patient_id`, `patient_user
 -- Table structure for table `patient_barangay_queue`
 --
 
-CREATE TABLE `patient_barangay_queue` (
+DROP TABLE IF EXISTS `patient_barangay_queue`;
+CREATE TABLE IF NOT EXISTS `patient_barangay_queue` (
   `patient_id` int(11) NOT NULL,
   `barangay_id` int(11) NOT NULL,
   `queue_number` int(11) NOT NULL
@@ -517,7 +534,8 @@ INSERT INTO `patient_barangay_queue` (`patient_id`, `barangay_id`, `queue_number
 -- Table structure for table `patient_details`
 --
 
-CREATE TABLE `patient_details` (
+DROP TABLE IF EXISTS `patient_details`;
+CREATE TABLE IF NOT EXISTS `patient_details` (
   `patient_id` int(11) NOT NULL,
   `patient_first_name` varchar(255) NOT NULL,
   `patient_last_name` varchar(255) NOT NULL,
@@ -525,7 +543,9 @@ CREATE TABLE `patient_details` (
   `patient_suffix` varchar(255) DEFAULT NULL,
   `patient_priority_group` varchar(255) NOT NULL,
   `patient_category_id` varchar(255) NOT NULL,
-  `patient_category_number` int(11) NOT NULL,
+  `patient_category_number` varchar(255) NOT NULL,
+  `patient_philHealth` varchar(255) DEFAULT NULL,
+  `patient_pwd` varchar(255) DEFAULT NULL,
   `patient_house_address` varchar(255) NOT NULL,
   `patient_barangay_address` varchar(255) NOT NULL,
   `patient_CM_address` varchar(255) NOT NULL,
@@ -536,19 +556,22 @@ CREATE TABLE `patient_details` (
   `patient_gender` varchar(255) NOT NULL,
   `patient_contact_number` char(11) NOT NULL,
   `patient_occupation` varchar(255) NOT NULL,
-  `Archived` int(1) DEFAULT NULL
+  `Archived` int(1) DEFAULT NULL,
+  UNIQUE KEY `patient_id_patient_first_name` (`patient_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `patient_details`
 --
 
-INSERT INTO `patient_details` (`patient_id`, `patient_first_name`, `patient_last_name`, `patient_middle_name`, `patient_suffix`, `patient_priority_group`, `patient_category_id`, `patient_category_number`, `patient_house_address`, `patient_barangay_address`, `patient_CM_address`, `patient_province`, `patient_region`, `patient_birthdate`, `patient_age`, `patient_gender`, `patient_contact_number`, `patient_occupation`, `Archived`) VALUES
-(1, 'Theodore', 'Mosby', 'Evelyn', NULL, 'A1: Health Care Workers', 'Other ID', 2191057, '75-B Lot 4 Block 5', 'San Luis Village', 'Baguio City', 'Benguet', 'Cordillera Administrative Region', '1999-04-01', 21, 'Male', '09216357642', 'Nurse', 0),
-(2, 'Marshall', 'Ericksen', NULL, NULL, 'A2: Senior Citizens', 'Other ID', 2191057, '75-B Lot 4 Block 5', 'San Luis Village', 'Baguio City', 'Benguet', 'Cordillera Administrative Region', '1999-04-01', 21, 'Male', '09216357642', 'Nurse', 0),
-(3, 'Lili', 'Ericksen', 'Aldrin', NULL, 'A3: Adult with Comorbidity', 'Other ID', 2191057, '75-B Lot 4 Block 5', 'Irisan', 'Baguio City', 'Benguet', 'Cordillera Administrative Region', '1999-04-01', 21, 'Male', '09216357642', 'Nurse', 0),
-(4, 'Robin', 'Scherbatsky', NULL, NULL, 'A4: Frontline Personnel in Essential Sector', 'Other ID', 2191057, '75-B Lot 4 Block 5', 'San Luis Village', 'Baguio City', 'Benguet', 'Cordillera Administrative Region', '1999-04-01', 21, 'Male', '09216357642', 'Nurse', 1),
-(5, 'Barney', 'Stinson', NULL, NULL, 'A5: Indigent Population', 'Other ID', 2191057, '75-B Lot 4 Block 5', 'San Luis Village', 'Baguio City', 'Benguet', 'Cordillera Administrative Region', '1999-04-01', 21, 'Male', '09216357642', 'Nurse', 0);
+INSERT INTO `patient_details` (`patient_id`, `patient_first_name`, `patient_last_name`, `patient_middle_name`, `patient_suffix`, `patient_priority_group`, `patient_category_id`, `patient_category_number`, `patient_philHealth`, `patient_pwd`, `patient_house_address`, `patient_barangay_address`, `patient_CM_address`, `patient_province`, `patient_region`, `patient_birthdate`, `patient_age`, `patient_gender`, `patient_contact_number`, `patient_occupation`, `Archived`) VALUES
+(1, 'Theodore', 'Mosby', 'Evelyn', NULL, 'A1: Health Care Workers', 'Other ID', '2191057', NULL, NULL, '75-B Lot 4 Block 5', 'San Luis Village', 'Baguio City', 'Benguet', 'Cordillera Administrative Region', '1999-04-01', 21, 'Male', '09216357642', 'Nurse', 0),
+(2, 'Marshall', 'Ericksen', NULL, NULL, 'A2: Senior Citizens', 'Other ID', '2191057', NULL, NULL, '75-B Lot 4 Block 5', 'San Luis Village', 'Baguio City', 'Benguet', 'Cordillera Administrative Region', '1999-04-01', 21, 'Male', '09216357642', 'Nurse', 0),
+(3, 'Lili', 'Ericksen', 'Aldrin', NULL, 'A3: Adult with Comorbidity', 'Other ID', '2191057', NULL, NULL, '75-B Lot 4 Block 5', 'Irisan', 'Baguio City', 'Benguet', 'Cordillera Administrative Region', '1999-04-01', 21, 'Male', '09216357642', 'Nurse', 0),
+(4, 'Robin', 'Scherbatsky', NULL, NULL, 'A4: Frontline Personnel in Essential Sector', 'Other ID', '2191057', NULL, NULL, '75-B Lot 4 Block 5', 'San Luis Village', 'Baguio City', 'Benguet', 'Cordillera Administrative Region', '1999-04-01', 21, 'Male', '09216357642', 'Nurse', 1),
+(5, 'Barney', 'Stinson', NULL, NULL, 'A5: Indigent Population', 'Other ID', '2191057', NULL, NULL, '75-B Lot 4 Block 5', 'San Luis Village', 'Baguio City', 'Benguet', 'Cordillera Administrative Region', '1999-04-01', 21, 'Male', '09216357642', 'Nurse', 0),
+(8, 'Adriel', 'Gaviola', 'Miguel', 'jr', 'A3: Adult with Comorbidity', 'other', '214123', '123123', '123123', 'Tacay Road', '15', 'Baguio City', 'Benguet', 'Cordillera Administrative Region ', '1999-12-07', 21, 'male', '09215732334', 'Student', NULL),
+(9, 'Hudson', 'Natividad', 'Pasalo', 'sr', 'A3: Adult with Comorbidity', 'other', '214123', '123123', '123123', 'Eagle Crest', '12', 'Baguio City', 'Benguet', 'Cordillera Administrative Region ', '1999-10-13', 22, 'male', '09215732334', 'Miguel', NULL);
 
 -- --------------------------------------------------------
 
@@ -556,10 +579,14 @@ INSERT INTO `patient_details` (`patient_id`, `patient_first_name`, `patient_last
 -- Table structure for table `patient_drive`
 --
 
-CREATE TABLE `patient_drive` (
+DROP TABLE IF EXISTS `patient_drive`;
+CREATE TABLE IF NOT EXISTS `patient_drive` (
   `patient_id` int(11) NOT NULL,
   `drive_id` int(11) NOT NULL,
-  `vaccine_lot_id` int(11) NOT NULL
+  `vaccine_lot_id` int(11) NOT NULL,
+  KEY `patient_id` (`patient_id`),
+  KEY `drive_id` (`drive_id`),
+  KEY `vaccine_lot_id` (`vaccine_lot_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -576,11 +603,53 @@ INSERT INTO `patient_drive` (`patient_id`, `drive_id`, `vaccine_lot_id`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `patient_vitals`
+--
+
+DROP TABLE IF EXISTS `patient_vitals`;
+CREATE TABLE IF NOT EXISTS `patient_vitals` (
+  `patient_id` int(11) NOT NULL,
+  `pre_vital_pulse_rate_1st_dose` varchar(18) DEFAULT NULL,
+  `pre_vital_temp_rate_1st_dose` varchar(18) DEFAULT NULL,
+  `pre_vital_bpDiastolic_1st_dose` varchar(18) DEFAULT NULL,
+  `pre_vital_bpSystolic_1st_dose` varchar(18) DEFAULT NULL,
+  `post_vital_pulse_rate_1st_dose` varchar(18) DEFAULT NULL,
+  `post_vital_temp_rate_1st_dose` varchar(18) DEFAULT NULL,
+  `post_vital_bpDiastolic_1st_dose` varchar(18) DEFAULT NULL,
+  `post_vital_bpSystolic_1st_dose` varchar(18) DEFAULT NULL,
+  `pre_vital_pulse_rate_2nd_dose` varchar(18) DEFAULT NULL,
+  `pre_vital_temp_rate_2nd_dose` varchar(18) DEFAULT NULL,
+  `pre_vital_bpDiastolic_2nd_dose` varchar(18) DEFAULT NULL,
+  `pre_vital_bpSystolic_2nd_dose` varchar(18) DEFAULT NULL,
+  `post_vital_pulse_rate_2nd_dose` varchar(18) DEFAULT NULL,
+  `post_vital_temp_rate_2nd_dose` varchar(18) DEFAULT NULL,
+  `post_vital_bpDiastolic_2nd_dose` varchar(18) DEFAULT NULL,
+  `post_vital_bpSystolic_2nd_dose` varchar(18) DEFAULT NULL,
+  PRIMARY KEY (`patient_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `patient_vitals`
+--
+
+INSERT INTO `patient_vitals` (`patient_id`, `pre_vital_pulse_rate_1st_dose`, `pre_vital_temp_rate_1st_dose`, `pre_vital_bpDiastolic_1st_dose`, `pre_vital_bpSystolic_1st_dose`, `post_vital_pulse_rate_1st_dose`, `post_vital_temp_rate_1st_dose`, `post_vital_bpDiastolic_1st_dose`, `post_vital_bpSystolic_1st_dose`, `pre_vital_pulse_rate_2nd_dose`, `pre_vital_temp_rate_2nd_dose`, `pre_vital_bpDiastolic_2nd_dose`, `pre_vital_bpSystolic_2nd_dose`, `post_vital_pulse_rate_2nd_dose`, `post_vital_temp_rate_2nd_dose`, `post_vital_bpDiastolic_2nd_dose`, `post_vital_bpSystolic_2nd_dose`) VALUES
+(1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '90', '35', '120', '80'),
+(2, NULL, NULL, NULL, NULL, '90', '35', '120', '80', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(3, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(4, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(5, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(8, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(9, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `report`
 --
 
-CREATE TABLE `report` (
-  `report_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `report`;
+CREATE TABLE IF NOT EXISTS `report` (
+  `report_id` int(11) NOT NULL AUTO_INCREMENT,
   `patient_id` int(11) NOT NULL,
   `report_type` char(20) NOT NULL,
   `report_details` varchar(255) NOT NULL,
@@ -588,8 +657,10 @@ CREATE TABLE `report` (
   `COVID19_symptoms_reported` varchar(255) NOT NULL,
   `date_last_out` date NOT NULL,
   `date_reported` date NOT NULL,
-  `report_status` char(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `report_status` char(20) NOT NULL,
+  PRIMARY KEY (`report_id`),
+  UNIQUE KEY `patient_id` (`patient_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `report`
@@ -608,15 +679,18 @@ INSERT INTO `report` (`report_id`, `patient_id`, `report_type`, `report_details`
 -- Table structure for table `vaccination_drive`
 --
 
-CREATE TABLE `vaccination_drive` (
-  `drive_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `vaccination_drive`;
+CREATE TABLE IF NOT EXISTS `vaccination_drive` (
+  `drive_id` int(11) NOT NULL AUTO_INCREMENT,
   `vaccination_site_id` int(11) NOT NULL,
   `vaccination_date` date NOT NULL,
   `stubs` int(11) NOT NULL,
   `priority_group` varchar(255) NOT NULL,
   `Archived` int(1) DEFAULT NULL,
-  `notif_opened` int(1) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `notif_opened` int(1) DEFAULT NULL,
+  PRIMARY KEY (`drive_id`),
+  KEY `vaccination_site_id` (`vaccination_site_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `vaccination_drive`
@@ -635,10 +709,13 @@ INSERT INTO `vaccination_drive` (`drive_id`, `vaccination_site_id`, `vaccination
 -- Table structure for table `vaccination_sites`
 --
 
-CREATE TABLE `vaccination_sites` (
-  `vaccination_site_id` int(11) NOT NULL,
-  `location` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+DROP TABLE IF EXISTS `vaccination_sites`;
+CREATE TABLE IF NOT EXISTS `vaccination_sites` (
+  `vaccination_site_id` int(11) NOT NULL AUTO_INCREMENT,
+  `location` varchar(255) NOT NULL,
+  PRIMARY KEY (`vaccination_site_id`),
+  UNIQUE KEY `vaccination_site_id` (`vaccination_site_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `vaccination_sites`
@@ -660,13 +737,15 @@ INSERT INTO `vaccination_sites` (`vaccination_site_id`, `location`) VALUES
 -- Table structure for table `vaccine`
 --
 
-CREATE TABLE `vaccine` (
-  `vaccine_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `vaccine`;
+CREATE TABLE IF NOT EXISTS `vaccine` (
+  `vaccine_id` int(11) NOT NULL AUTO_INCREMENT,
   `vaccine_name` varchar(255) NOT NULL,
   `vaccine_type` varchar(255) NOT NULL,
   `vaccine_efficacy` int(11) NOT NULL,
-  `vaccine_lifespan_in_months` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `vaccine_lifespan_in_months` int(11) NOT NULL,
+  PRIMARY KEY (`vaccine_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `vaccine`
@@ -687,14 +766,18 @@ INSERT INTO `vaccine` (`vaccine_id`, `vaccine_name`, `vaccine_type`, `vaccine_ef
 -- Table structure for table `vaccine_batch`
 --
 
-CREATE TABLE `vaccine_batch` (
-  `vaccine_batch_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `vaccine_batch`;
+CREATE TABLE IF NOT EXISTS `vaccine_batch` (
+  `vaccine_batch_id` int(11) NOT NULL AUTO_INCREMENT,
   `vaccine_lot_id` int(11) NOT NULL,
   `vaccine_id` int(11) NOT NULL,
   `vaccine_quantity` int(11) NOT NULL,
   `date_manufactured` date NOT NULL,
-  `date_of_expiration` date NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `date_of_expiration` date NOT NULL,
+  PRIMARY KEY (`vaccine_batch_id`),
+  KEY `vaccine_lot_id` (`vaccine_lot_id`),
+  KEY `vaccine_id` (`vaccine_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `vaccine_batch`
@@ -714,9 +797,12 @@ INSERT INTO `vaccine_batch` (`vaccine_batch_id`, `vaccine_lot_id`, `vaccine_id`,
 -- Table structure for table `vaccine_deployment`
 --
 
-CREATE TABLE `vaccine_deployment` (
+DROP TABLE IF EXISTS `vaccine_deployment`;
+CREATE TABLE IF NOT EXISTS `vaccine_deployment` (
   `drive_id` int(11) NOT NULL,
-  `vaccine_id` int(11) NOT NULL
+  `vaccine_id` int(11) NOT NULL,
+  KEY `drive_id` (`drive_id`),
+  KEY `vaccine_id` (`vaccine_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -819,14 +905,16 @@ INSERT INTO `vaccine_deployment` (`drive_id`, `vaccine_id`) VALUES
 -- Table structure for table `vaccine_information`
 --
 
-CREATE TABLE `vaccine_information` (
+DROP TABLE IF EXISTS `vaccine_information`;
+CREATE TABLE IF NOT EXISTS `vaccine_information` (
   `vaccine_id` int(11) NOT NULL,
   `vaccine_manufacturer` varchar(255) NOT NULL,
   `vaccine_description` longtext NOT NULL,
   `vaccine_dosage_required` int(11) NOT NULL,
   `vaccine_dosage_interval` int(11) NOT NULL,
   `vaccine_minimum_temperature` int(11) NOT NULL,
-  `vaccine_maximum_temperature` int(11) NOT NULL
+  `vaccine_maximum_temperature` int(11) NOT NULL,
+  UNIQUE KEY `vaccine_id` (`vaccine_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -847,16 +935,20 @@ INSERT INTO `vaccine_information` (`vaccine_id`, `vaccine_manufacturer`, `vaccin
 -- Table structure for table `vaccine_lot`
 --
 
-CREATE TABLE `vaccine_lot` (
-  `vaccine_lot_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `vaccine_lot`;
+CREATE TABLE IF NOT EXISTS `vaccine_lot` (
+  `vaccine_lot_id` int(11) NOT NULL AUTO_INCREMENT,
   `vaccine_id` int(11) NOT NULL,
   `employee_account_id` int(11) NOT NULL,
   `date_stored` date NOT NULL,
   `source` varchar(255) DEFAULT NULL,
   `total_vaccine_vial_quantity` int(11) NOT NULL,
   `vaccine_expiration` date DEFAULT NULL,
-  `Archived` int(1) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `Archived` int(1) DEFAULT NULL,
+  PRIMARY KEY (`vaccine_lot_id`),
+  KEY `vaccine_id` (`vaccine_id`),
+  KEY `employee_account_id` (`employee_account_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `vaccine_lot`
@@ -873,218 +965,6 @@ INSERT INTO `vaccine_lot` (`vaccine_lot_id`, `vaccine_id`, `employee_account_id`
 (8, 4, 1, '2021-09-08', 'Department Of Health', 10000, '2021-09-23', 1);
 
 --
--- Indexes for dumped tables
---
-
---
--- Indexes for table `barangay`
---
-ALTER TABLE `barangay`
-  ADD PRIMARY KEY (`barangay_id`),
-  ADD KEY `health_district_id` (`health_district_id`);
-
---
--- Indexes for table `barangay_stubs`
---
-ALTER TABLE `barangay_stubs`
-  ADD KEY `barangay_id` (`barangay_id`),
-  ADD KEY `drive_id` (`drive_id`);
-
---
--- Indexes for table `employee`
---
-ALTER TABLE `employee`
-  ADD PRIMARY KEY (`employee_id`),
-  ADD KEY `barangay_id` (`barangay_id`);
-
---
--- Indexes for table `employee_account`
---
-ALTER TABLE `employee_account`
-  ADD PRIMARY KEY (`employee_account_id`),
-  ADD UNIQUE KEY `employee_id` (`employee_id`);
-
---
--- Indexes for table `health_district`
---
-ALTER TABLE `health_district`
-  ADD PRIMARY KEY (`health_district_id`);
-
---
--- Indexes for table `health_district_drives`
---
-ALTER TABLE `health_district_drives`
-  ADD KEY `drive_id` (`drive_id`),
-  ADD KEY `health_district_id` (`health_district_id`);
-
---
--- Indexes for table `medical_background`
---
-ALTER TABLE `medical_background`
-  ADD KEY `patient_id` (`patient_id`);
-
---
--- Indexes for table `patient`
---
-ALTER TABLE `patient`
-  ADD PRIMARY KEY (`patient_id`),
-  ADD KEY `patient_first_vaccinator` (`first_dose_vaccinator`),
-  ADD KEY `patient_second_vaccinator` (`second_dose_vaccinator`);
-
---
--- Indexes for table `patient_account`
---
-ALTER TABLE `patient_account`
-  ADD PRIMARY KEY (`patient_account_id`),
-  ADD UNIQUE KEY `patient_id` (`patient_id`);
-
---
--- Indexes for table `patient_details`
---
-ALTER TABLE `patient_details`
-  ADD UNIQUE KEY `patient_id_patient_first_name` (`patient_id`);
-
---
--- Indexes for table `patient_drive`
---
-ALTER TABLE `patient_drive`
-  ADD KEY `patient_id` (`patient_id`),
-  ADD KEY `drive_id` (`drive_id`),
-  ADD KEY `vaccine_lot_id` (`vaccine_lot_id`);
-
---
--- Indexes for table `report`
---
-ALTER TABLE `report`
-  ADD PRIMARY KEY (`report_id`),
-  ADD UNIQUE KEY `patient_id` (`patient_id`);
-
---
--- Indexes for table `vaccination_drive`
---
-ALTER TABLE `vaccination_drive`
-  ADD PRIMARY KEY (`drive_id`),
-  ADD KEY `vaccination_site_id` (`vaccination_site_id`);
-
---
--- Indexes for table `vaccination_sites`
---
-ALTER TABLE `vaccination_sites`
-  ADD PRIMARY KEY (`vaccination_site_id`),
-  ADD UNIQUE KEY `vaccination_site_id` (`vaccination_site_id`);
-
---
--- Indexes for table `vaccine`
---
-ALTER TABLE `vaccine`
-  ADD PRIMARY KEY (`vaccine_id`);
-
---
--- Indexes for table `vaccine_batch`
---
-ALTER TABLE `vaccine_batch`
-  ADD PRIMARY KEY (`vaccine_batch_id`),
-  ADD KEY `vaccine_lot_id` (`vaccine_lot_id`),
-  ADD KEY `vaccine_id` (`vaccine_id`);
-
---
--- Indexes for table `vaccine_deployment`
---
-ALTER TABLE `vaccine_deployment`
-  ADD KEY `drive_id` (`drive_id`),
-  ADD KEY `vaccine_id` (`vaccine_id`);
-
---
--- Indexes for table `vaccine_information`
---
-ALTER TABLE `vaccine_information`
-  ADD UNIQUE KEY `vaccine_id` (`vaccine_id`);
-
---
--- Indexes for table `vaccine_lot`
---
-ALTER TABLE `vaccine_lot`
-  ADD PRIMARY KEY (`vaccine_lot_id`),
-  ADD KEY `vaccine_id` (`vaccine_id`),
-  ADD KEY `employee_account_id` (`employee_account_id`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `barangay`
---
-ALTER TABLE `barangay`
-  MODIFY `barangay_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=128;
-
---
--- AUTO_INCREMENT for table `employee`
---
-ALTER TABLE `employee`
-  MODIFY `employee_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
-
---
--- AUTO_INCREMENT for table `employee_account`
---
-ALTER TABLE `employee_account`
-  MODIFY `employee_account_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
-
---
--- AUTO_INCREMENT for table `health_district`
---
-ALTER TABLE `health_district`
-  MODIFY `health_district_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
-
---
--- AUTO_INCREMENT for table `patient`
---
-ALTER TABLE `patient`
-  MODIFY `patient_id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
-
---
--- AUTO_INCREMENT for table `patient_account`
---
-ALTER TABLE `patient_account`
-  MODIFY `patient_account_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-
---
--- AUTO_INCREMENT for table `report`
---
-ALTER TABLE `report`
-  MODIFY `report_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-
---
--- AUTO_INCREMENT for table `vaccination_drive`
---
-ALTER TABLE `vaccination_drive`
-  MODIFY `drive_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=85;
-
---
--- AUTO_INCREMENT for table `vaccination_sites`
---
-ALTER TABLE `vaccination_sites`
-  MODIFY `vaccination_site_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
-
---
--- AUTO_INCREMENT for table `vaccine`
---
-ALTER TABLE `vaccine`
-  MODIFY `vaccine_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
-
---
--- AUTO_INCREMENT for table `vaccine_batch`
---
-ALTER TABLE `vaccine_batch`
-  MODIFY `vaccine_batch_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
-
---
--- AUTO_INCREMENT for table `vaccine_lot`
---
-ALTER TABLE `vaccine_lot`
-  MODIFY `vaccine_lot_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
-
---
 -- Constraints for dumped tables
 --
 
@@ -1095,29 +975,34 @@ ALTER TABLE `barangay`
   ADD CONSTRAINT `barangay_ibfk_1` FOREIGN KEY (`health_district_id`) REFERENCES `health_district` (`health_district_id`);
 
 --
--- Constraints for table `barangay_stubs`
---
-ALTER TABLE `barangay_stubs`
-  ADD CONSTRAINT `barangay_stubs_ibfk_1` FOREIGN KEY (`barangay_id`) REFERENCES `barangay` (`barangay_id`),
-  ADD CONSTRAINT `barangay_stubs_ibfk_2` FOREIGN KEY (`drive_id`) REFERENCES `vaccination_drive` (`drive_id`);
-
---
 -- Constraints for table `employee`
 --
 ALTER TABLE `employee`
   ADD CONSTRAINT `barangay_id` FOREIGN KEY (`barangay_id`) REFERENCES `barangay` (`barangay_id`);
 
 --
--- Constraints for table `employee_account`
---
-ALTER TABLE `employee_account`
-  ADD CONSTRAINT `employee_account_ibfk_1` FOREIGN KEY (`employee_id`) REFERENCES `employee` (`employee_id`);
-
---
 -- Constraints for table `medical_background`
 --
 ALTER TABLE `medical_background`
-  ADD CONSTRAINT `medical_background_ibfk_1` FOREIGN KEY (`patient_id`) REFERENCES `patient` (`patient_id`);
+  ADD CONSTRAINT `patient_id_medical` FOREIGN KEY (`patient_id`) REFERENCES `patient` (`patient_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `patient_account`
+--
+ALTER TABLE `patient_account`
+  ADD CONSTRAINT `patient_id_account` FOREIGN KEY (`patient_id`) REFERENCES `patient` (`patient_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `patient_details`
+--
+ALTER TABLE `patient_details`
+  ADD CONSTRAINT `patient_id_details` FOREIGN KEY (`patient_id`) REFERENCES `patient` (`patient_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `patient_vitals`
+--
+ALTER TABLE `patient_vitals`
+  ADD CONSTRAINT `patient_id_vitals` FOREIGN KEY (`patient_id`) REFERENCES `patient` (`patient_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

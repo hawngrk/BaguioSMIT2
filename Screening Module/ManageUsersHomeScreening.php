@@ -162,7 +162,7 @@
             var id = document.getElementById('addButtonId').value;
             var pulse = document.getElementById('pulseR').value;
             var temp = document.getElementById('tempR').value;
-            var bp = document.getElementById('bpRDias').value;
+            var bpDias = document.getElementById('bpRDias').value;
             var bpSys = document.getElementById('bpRSys').value;
             
             Swal.fire({
@@ -175,7 +175,7 @@
                         $.ajax({
                             url: 'screeningSearchProcessor.php',
                             type: 'POST',
-                            data: {'pulse':pulse, 'temp':temp, 'diastolic':bpRDias, 'systolic': bpSys, 'id': id },
+                            data: {'pulse':pulse, 'temp':temp, 'diastolic':bpDias, 'systolic': bpSys, 'id': id },
                             success: function(preVat) {
                                 document.getElementById('preVacView').style.display = 'none';
                             }

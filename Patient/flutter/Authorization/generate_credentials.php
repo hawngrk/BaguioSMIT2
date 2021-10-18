@@ -13,7 +13,6 @@
         $stmtinsert = $GLOBALS['database']->prepare($query);
         $result = $stmtinsert->execute([$patientID, $credentials['username'], $hashPassword, $email]);
 
-
         return $result ? $credentials : '0';
     }
 
@@ -23,6 +22,5 @@
         $toShuffle = $firstname.$lastname.$patientID;
         $password = str_shuffle($toShuffle);
         $credentials = array('username' => $username, 'password' => $password);
-        echo $credentials['username'], $credentials['password'];
         return $credentials;
     }

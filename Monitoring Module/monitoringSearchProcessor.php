@@ -74,10 +74,10 @@ if (isset($_POST['modalRes'])) {
             </div>
             <div class='col'>
             <h5>Pre-Vaccine Vitals:</h5>
-            <h6>Pulse Rate:</h6><p>$prePulse</p>
-            <h6>Temperature Rate:</h6><p>$preTemp</p>
-            <h6>Blood Presure Diastolic:</h6><p>$preBP</p>
-            <h6>Blood Presure Systolic:</h6><p>$preBP</p>
+            <h6>Pulse Rate:</h6><p></p>
+            <h6>Temperature Rate:</h6><p></p>
+            <h6>Blood Presure Diastolic:</h6><p></p>
+            <h6>Blood Presure Systolic:</h6><p></p>
             <hr>
             <h5>Post-Vaccine Vitals:</h5>
             <form>
