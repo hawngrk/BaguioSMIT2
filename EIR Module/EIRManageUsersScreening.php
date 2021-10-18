@@ -48,11 +48,11 @@
         <ul class="list-unstyled components">
             <h4 id="headingNav1">Entry Immunization Register</h4>
             <hr>
-            <h5 id="headingNav2"></p>
+            <h5 id="headingNav2"> <script src="../javascript/showDateAndTime.js"></script> </p>
             </h5>
             <hr>
             <li>
-                <a href="../EIR Module/EIRHomeScreeningg.php"><i class="fas fa-home"></i></i> Home</a>
+                <a href="../EIR Module/EIRHomeScreening.php"><i class="fas fa-home"></i></i> Home</a>
             </li>
             <li class="active">
                 <a href="../EIR Module/EIRManageUsersScreening.php"><i class="fas fa-users"></i> Manage Users</a>
@@ -68,37 +68,65 @@
 
     <!-- Page Content  -->
     <div id="content">
-        <div class="buttonContainer">
-            <button type="button" class="btn btn-outline-primary buttonTop3 float-left"> <i class="fas fa-filter"></i>
-            </button>
-            <button type="button" class="btn btn-outline-primary buttonTop3 float-left">
-                <i class="fas fa-sort"></i>
-            </button>
+        <div class="topButtons">
+            <button class="btnTop btnBell"> <i class="fas fa-cog"></i> </button>
+            <button class="btnTop"> <i class="fas fa-bell"></i> </button>
+        </div>
+        <br>
+        <!--Top Nav-->
+        <div class="navbar navbar-expand-lg navbar-light bg-light shadow-sm p-3 mb-4 rounded-lg">
+            <div class="container-fluid">
+                <div>
+                    <button type="button" id="upload" class=" btn btn-primary btn-default shadow-lg rounded buttonTop3"> Upload File </button>
+                    <button type="button" id="addPatientButton" class=" btn btn-primary btn-default shadow-lg rounded buttonTop3"> Add User Account </button>
+                </div>
+                <button type="button" class="btn btn-outline-dark shadow-sm buttonTop3 float-right"
+                        onclick="openModal('archived')"> <i class="fas fa-inbox fa-lg"></i>
+                </button>
+            </div>
 
-            <button type="button" class="btn btn-outline-dark buttonTop3 float-right" onclick="openModal('archived')">
-                <i class="fas fa-inbox fa-lg"></i>
-            </button>
-
-            <button id="addPatientAccount" type="button" class="btn btn-primary buttonTop3">Add Patient Account</button>
         </div>
 
-        <!--Table Part-->
-        <table class="table table-row table-hover tableBrgy" id="patientTable">
-            <thead>
-            <tr class="labelRow">
-                <th scope="col">ID</th>
-                <th scope="col">Patient Name</th>
-                <th scope="col">Category</th>
-                <th scope="col">Complete Address</th>
-                <th scope="col">Contact Number</th>
-                <th scope="col"></th>
-            </tr>
-            </thead>
-            <?php
-            include '../includes/showRegisteredPatients.php';
-            ?>
-        </table>
+        <div class="tableBrgy shadow">
+            <!--Table Part-->
+            <div class="topPart">
+                <div class="row">
+                    <div class="col">
+                        <div class="search-container searchDept float-left">
+                            <input id="searchDep" type="text" placeholder="Search..." class="searchHome form-control input-lg "
+                                   name="searchPatient" onkeyup="searchPatient()">
+                        </div>
+                    </div>
+                    <div class="col">
+                        <button type="button" class="btn btn-outline-dark buttonTop3 float-right">
+                            <i class="fas fa-sort-amount-down"></i>
+                        </button>
+                        <button type="button" class="btn btn-outline-dark buttonTop3 float-right">
+                            <i class="fas fa-filter"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <table class="table table-row table-hover" id="patientTable">
+                <thead>
+                <tr class="labelRow">
+                    <th scope="col"> Patient ID</th>
+                    <th scope="col">Patient Name</th>
+                    <th scope="col">Category</th>
+                    <th scope="col">Complete Address</th>
+                    <th scope="col">Contact Number</th>
+                    <th scope="col"></th>
+                </tr>
+                </thead>
+                <?php
+                include '../includes/showRegisteredPatients.php';
+                ?>
+            </table>
+        </div>
     </div>
+
+    <!--MODALS-->
     <!--Patient Add User Modal-->
     <div id="addPatientModal" class="modal-window">
         <div class="content-modal">
@@ -108,7 +136,8 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form id="registrationForm" name="registrationForm" action="/action_page.php" onsubmit="return validateForm()" method="post">
+                <form id="registrationForm" name="registrationForm" action="/action_page.php"
+                      onsubmit="return validateForm()" method="post">
                     <div class="personalInfo">
                         <h5> Personal Information </h5>
                         <div class="row">
@@ -201,7 +230,7 @@
                                     <option value="prc">Professional Regulation Commission ID</option>
                                     <option value="senior">Office of Senior Citizen Affairs ID</option>
                                     <option value="facility"> Facility ID</option>
-                                    <option value="other"> Other ID</option>
+                                    <option value="others"> Other ID</option>
                                 </select>
                             </div>
                             <div class="col">
@@ -235,7 +264,7 @@
                             </div>
                             <div class="col-4">
                                 <div id="barangayList">
-                                    <label class="required" for="barangay"> Barangay  </label>
+                                    <label class="required" for="barangay"> Barangay </label>
                                     <select id="barangay" onchange="updateBarangayDetails(this.value)">
                                         <option value="" disabled selected> Select Barangay</option>
                                         <?php
@@ -344,7 +373,7 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" id="addBtn" class="btn btn-success" onclick="addPatient()">Add</button>
+                <button type="button" id="addBtn" class="btn btn-success shadow-sm" onclick="addPatient()">Add</button>
             </div>
         </div>
 
@@ -453,7 +482,7 @@
         //Contact Information
         var contact = document.getElementById("contactNum").value;
         var email = document.getElementById("email").value;
-        
+
         //Category Information
         var priority = document.getElementById("priorityGroup").value;
         var id = document.getElementById("categoryID").value;
@@ -488,17 +517,17 @@
             type: 'POST',
             data: {
                 //Personal Information
-                lastname: last, 
-                firstname: first, 
-                middlename: middle, 
-                suffix: suffix, 
-                gender: gender, 
-                occupation: occupation, 
-                birthdate: birthdate, 
+                lastname: last,
+                firstname: first,
+                middlename: middle,
+                suffix: suffix,
+                gender: gender,
+                occupation: occupation,
+                birthdate: birthdate,
                 age: age,
 
                 //Contact Information
-                contact: contact, 
+                contact: contact,
                 email: email,
 
                 //Priority Group
@@ -506,15 +535,15 @@
                 category: id,
                 categoryID: idNo,
                 philhealthID: philHealth,
-                pwdID: pwd, 
-                
+                pwdID: pwd,
+
                 //Address Information
-                houseAddress: houseAddress, 
-                barangay: brgy, 
+                houseAddress: houseAddress,
+                barangay: brgy,
                 cmAddress: city,
-                province: province,  
+                province: province,
                 region: region ,
-                
+
                 //Clinical Information
                 allergy: allergy,
                 commorbid: commorbidity,
@@ -522,11 +551,11 @@
                 heartDisease: heartDisease,
                 kidneyDisease: kidneyDisease,
                 diabetesMellitus : diabetes,
-                bronchialAsthma: asthma, 
+                bronchialAsthma: asthma,
                 immunodeficiency: immunodeficiency,
                 cancer: cancer,
                 otherCommorbidity: enteredCommorbidity
-                },
+            },
 
             success: function (result) {
                 console.log(result);
@@ -536,7 +565,7 @@
             }
         });
     }
-    
+
     //Change unchecked commorbidity to 0
     function verifyCommorbidity(commorbidity) {
         return !commorbidity ? 0 : 1;
@@ -555,10 +584,10 @@
 
     //Calculates the age of the patient using its birthday
     function getAge(dob) {
-        var month_diff = Date.now() - dob.getTime();          
-        var age_dt = new Date(month_diff);               
-        var year = age_dt.getUTCFullYear();        
-        var age = Math.abs(year - 1970);  
+        var month_diff = Date.now() - dob.getTime();
+        var age_dt = new Date(month_diff);
+        var year = age_dt.getUTCFullYear();
+        var age = Math.abs(year - 1970);
         return age;
     }
 
@@ -575,7 +604,7 @@
     var notificationModal = document.getElementById("notifyModal");
 
     //buttons
-    var addPatientAccountButton = document.getElementById("addPatientAccount");
+    var addPatientAccountButton = document.getElementById("addPatientButton");
     var closeAddPatientModal = document.getElementById("addPatientInfoClose");
 
     var sucess = document.getElementById("submit");
@@ -590,6 +619,31 @@
         addPatientModal.style.display = "none";
     }
 
+
 </script>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

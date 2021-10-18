@@ -164,7 +164,7 @@ a.article:hover {
 
 .btnTop {
     border: none;
-    background: whitesmoke;
+    background: #dae6ef;
     padding: 1%;
 }
 
@@ -200,6 +200,7 @@ a.article:hover {
 ----------------------------------------------------- */
 
 #content {
+    background-color: #dae6ef;
     width: 100%;
     padding: 20px;
     min-height: 100vh;
@@ -241,8 +242,8 @@ a.article:hover {
 }
 
 .buttonTop3{
-    float: right;
-    margin: 2px;
+    float: left;
+    margin: 5px;
     width: auto;
 }
 
@@ -1319,4 +1320,215 @@ input[name=vitals]{
 .required:after{
     content: " *";
     color: red;
+}
+
+.navbar{
+    margin-top: 2%;
+    margin-bottom: 2%;
+}
+
+.topPart{
+    margin-top: 1%;
+    margin-bottom: 1%;
+}
+
+/* Home Page -- EIR Module*/
+.vaccination, .deployments{
+    background-color: white;
+    width: 40%;
+    border-radius: 12px;
+    display: inline-block;
+    margin-left: 7%;
+    margin-top: 2%;
+}
+
+.deployments {
+    margin-left: 7% !important;
+}
+
+.dash {
+    display: inline;
+    text-align: center;
+    margin-top: 2%;
+}
+
+.dash h5 {
+    padding-top: 2%;
+}
+
+.perBarangay {
+    display: inline-block;
+    margin-left: 7%;
+    border-radius: 12px;
+    background-color: white;
+    width: 40%;
+    margin-top: 3%;
+}
+
+.navbar{
+    margin-top: 2%;
+    margin-bottom: 2%;
+}
+
+.topPart{
+    margin-bottom: 1%;
+}
+
+/* Home Page -- EIR Module*/
+.vaccination, .deployments{
+    background-color: white;
+    width: 40%;
+    border-radius: 12px;
+    display: inline-block;
+    margin-left: 7%;
+    margin-top: 2%;
+}
+
+.deployments {
+    margin-left: 7% !important;
+}
+
+.dash {
+    display: inline;
+    text-align: center;
+    margin-top: 2%;
+}
+
+.dash h5 {
+    padding-top: 2%;
+}
+
+.perBarangay {
+    display: inline-block;
+    margin-left: 7%;
+    border-radius: 12px;
+    background-color: white;
+    width: 40%;
+    margin-top: 3%;
+}
+
+.navbar{
+    margin-top: 2%;
+    margin-bottom: 2%;
+}
+
+.topPart{
+    margin-bottom: 1%;
+}
+
+/* Home Page -- EIR Module*/
+.vaccination, .deployments{
+    background-color: white;
+    width: 40%;
+    border-radius: 12px;
+    display: inline-block;
+    margin-left: 7%;
+    margin-top: 2%;
+}
+
+.deployments {
+    margin-left: 7% !important;
+}
+
+.dash {
+    display: inline;
+    text-align: center;
+    margin-top: 2%;
+}
+
+.dash h5 {
+    padding-top: 2%;
+}
+
+.perBarangay {
+    display: inline-block;
+    margin-left: 7%;
+    border-radius: 12px;
+    background-color: white;
+    width: 40%;
+    margin-top: 3%;
+}
+
+.navbar{
+    margin-top: 2%;
+    margin-bottom: 2%;
+}
+
+.topPart{
+    margin-bottom: 1%;
+}
+
+/* Home Page -- EIR Module*/
+.vaccination, .deployments{
+    background-color: white;
+    width: 40%;
+    border-radius: 12px;
+    display: inline-block;
+    margin-left: 7%;
+    margin-top: 2%;
+}
+
+.deployments {
+    margin-left: 7% !important;
+}
+
+.dash {
+    display: inline;
+    text-align: center;
+    margin-top: 2%;
+}
+
+.dash h5 {
+    padding-top: 2%;
+}
+
+.perBarangay {
+    display: inline-block;
+    margin-left: 7%;
+    border-radius: 12px;
+    background-color: white;
+    width: 40%;
+    margin-top: 3%;
+}
+
+.navbar{
+    margin-top: 2%;
+    margin-bottom: 2%;
+}
+
+.topPart{
+    margin-bottom: 1%;
+}
+
+/* Home Page -- EIR Module*/
+.vaccination, .deployments{
+    background-color: white;
+    width: 40%;
+    border-radius: 12px;
+    display: inline-block;
+    margin-left: 7%;
+    margin-top: 2%;
+}
+
+.deployments {
+    margin-left: 7% !important;
+}
+
+.dash {
+    display: inline;
+    text-align: center;
+    margin-top: 2%;
+}
+
+.dash h5 {
+    padding-top: 2%;
+}
+
+.perBarangay {
+    display: inline-block;
+    margin-left: 7%;
+    border-radius: 12px;
+    background-color: white;
+    width: 40%;
+    margin-top: 3%;
 }

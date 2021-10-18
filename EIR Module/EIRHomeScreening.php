@@ -21,123 +21,104 @@
     <script src="https://kit.fontawesome.com/fcdb0fe9f3.js" crossorigin="anonymous"></script>
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
-    <script defer src="../javascript/showDateAndTime.js"> </script>
+
 </head>
 
 <body>
-    <div class="wrapper">
-        <!-- Sidebar  -->
-        <nav id="sidebar">
-            <div class="sidebar-header">
-                <div class="sidebar-brand-icon">
-                    <img style="width:150px;" src="../img/SMIT+.png" alt="Baguio Logo">
-                </div>
+<div class="wrapper">
+    <!-- Sidebar  -->
+    <nav id="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-brand-icon">
+                <img style="width:150px;" src="../img/SMIT+.png" alt="Baguio Logo">
             </div>
-
-            <ul class="list-unstyled components">
-                <h4 id="headingNav1">Entry Immunization Register</h4>
-                    <hr>
-                    <h5 id="headingNav2"></h5>
-                    <hr>
-                <li class="active">
-                    <a href="../EIR Module/EIRHomeScreeningg.php"><i class="fas fa-home"></i></i> Home</a>
-                </li>
-                <li>
-                    <a href="../EIR Module/EIRManageUsersScreening.php"><i class="fas fa-users"></i> Manage Users</a>
-                </li>
-            </ul>
-
-            <ul class="list-unstyled CTAs">
-                <button type="button" class="btn btn-info signOutPersonnel">
-                    <span>Sign Out</span>
-                </button>
-            </ul>
-        </nav>
-
-        <!-- Page Content  -->
-        <div id="content">
-            <div class="row dash">
-                <div class="vaccination">
-                    <h5>Vaccinated/Total Population</h5>
-                    <hr>
-                </div>
-                <div class="deployments">
-                    <h5>Vaccine Deployments</h5>
-                    <hr>
-                </div>
-            </div>
-            <div class="row dash">
-                <div class="perBarangay">
-                    <h5>Vaccinated / Total Population per Baranagay</h5>
-                    <hr>
-                </div>
-            </div>
-
-        
         </div>
+
+        <ul class="list-unstyled components">
+            <h4 id="headingNav1">Entry Immunization Register</h4>
+            <hr>
+            <h5 id="headingNav2">  <script src="../javascript/showDateAndTime.js"> </script></h5>
+            <hr>
+            <li class="active">
+                <a href="../EIR Module/EIRHomeScreening.php"><i class="fas fa-home"></i></i> Home</a>
+            </li>
+            <li>
+                <a href="../EIR Module/EIRManageUsersScreening.php"><i class="fas fa-users"></i> Manage Users</a>
+            </li>
+        </ul>
+
+        <ul class="list-unstyled CTAs">
+            <button type="button" class="btn btn-info signOutPersonnel">
+                <span>Sign Out</span>
+            </button>
+        </ul>
+    </nav>
+
+    <!-- Page Content  -->
+    <div id="content">
+        <div class="topButtons">
+            <button class="btnTop btnBell"> <i class="fas fa-cog"></i> </button>
+            <button class="btnTop"> <i class="fas fa-bell"></i> </button>
+        </div>
+        <br>
+        <!--Top Nav-->
+        <div class="navbar navbar-expand-lg navbar-light bg-light shadow-sm p-3 mb-4 rounded-lg">
+            <div class="container-fluid">
+                <div>
+                    <button type="button" id="filter" class=" btn btn-primary btn-default shadow-lg rounded buttonTop3 float-right"> Filter </button>
+                    <!--                        <-- Filter by population, date of registration, per barangay-->
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row dash">
+            <div class="vaccination">
+                <h5>Vaccinated/Total Population</h5>
+                <hr>
+            </div>
+            <div class="deployments">
+                <h5>Vaccine Deployments</h5>
+                <hr>
+            </div>
+        </div>
+        <div class="row dash">
+            <div class="perBarangay">
+                <h5>Vaccinated / Total Population per Baranagay</h5>
+                <hr>
+            </div>
+        </div>
+
+
     </div>
+</div>
 
-    <!-- jQuery CDN - Slim version (=without AJAX) -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <!-- Popper.JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
-    <!-- Bootstrap JS -->
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+<!-- jQuery CDN - Slim version (=without AJAX) -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<!-- Popper.JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+<!-- Bootstrap JS -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
 
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $('#sidebarCollapse').on('click', function () {
-                $('#sidebar').toggleClass('active');
-            });
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#sidebarCollapse').on('click', function () {
+            $('#sidebar').toggleClass('active');
         });
-        var clicked = false;
+    });
+    var clicked = false;
 
-        function Toggle() {
-            var butt = document.getElementById('sidebarCollapse')
-            if (!clicked) {
-                clicked = true;
-                butt.innerHTML = "Menu <i class = 'fas fa-angle-double-right'><i>";
-            } else {
-                clicked = false;
-                butt.innerHTML = "<i class='fas fa-angle-left'></i> Menu";
-            }
+    function Toggle() {
+        var butt = document.getElementById('sidebarCollapse')
+        if (!clicked) {
+            clicked = true;
+            butt.innerHTML = "Menu <i class = 'fas fa-angle-double-right'><i>";
+        } else {
+            clicked = false;
+            butt.innerHTML = "<i class='fas fa-angle-left'></i> Menu";
         }
-    </script>
+    }
+</script>
 </body>
 
 </html>
-<style>
-    .vaccination, .deployments{
-    background-color: white;
-    width: 40%;
-    border-radius: 12px;
-    display: inline-block;
-    margin-left: 7%;
-    margin-top: 2%;
-    }
-
-    .deployments {
-    margin-left: 7% !important;
-    }
-
-    .dash {
-        display: inline;
-        text-align: center;
-        margin-top: 2%;
-    }
-
-    .dash h5 {
-        padding-top: 2%;
-    }
-
-    .perBarangay {
-        display: inline-block;
-    margin-left: 7%;
-    border-radius: 12px;
-    background-color: white;
-    width: 40%;
-    margin-top: 3%;
-    }
-
-
-</style>
