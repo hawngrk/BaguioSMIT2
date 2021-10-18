@@ -11,6 +11,7 @@
     <!-- Our Custom CSS -->
     <link rel="icon" href="../img/FaviSMIT+.png" type="image/jpg">
     <link href="../css/style.css" rel="stylesheet">
+    <link href="../css/EIRModule.css" rel="stylesheet">
 
     <!-- Bootstrap-->
     <script crossorigin="anonymous" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
@@ -37,7 +38,7 @@
         <ul class="list-unstyled components">
             <h4 id="headingNav1">Entry Immunization Register</h4>
             <hr>
-            <h5 id="headingNav2">  <script src="../javascript/showDateAndTime.js"> </script></h5>
+            <h5 id="headingNav2"> <script src="../javascript/showDateAndTime.js"> </script></h5>
             <hr>
             <li class="active">
                 <a href="../EIR Module/EIRHomeScreening.php"><i class="fas fa-home"></i></i> Home</a>
@@ -57,8 +58,8 @@
     <!-- Page Content  -->
     <div id="content">
         <div class="topButtons">
-            <button class="btnTop btnBell"> <i class="fas fa-cog"></i> </button>
-            <button class="btnTop"> <i class="fas fa-bell"></i> </button>
+            <button class="btnTop btnBell float-right"> <i class="fas fa-cog"></i> </button>
+            <button class="btnTop float-right"> <i class="fas fa-bell"></i> </button>
         </div>
         <br>
         <!--Top Nav-->

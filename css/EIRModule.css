@@ -1,0 +1,88 @@
+.labelRow{
+    text-align: center;
+}
+
+.consent{
+    margin: 20px 0px 0px 58px;
+}
+
+.personalInfo,.categoryInfo,.addressInfo,.medicalInfo{
+    margin-left: 40px;
+    margin-right: 40px;
+}
+
+#otherTextField{
+    display: none;
+    margin-left: -70%;
+}
+
+#comorbidityList{
+    margin-left: 3%;
+    margin-right: 3%;
+    margin-top: 4%;
+    display: none;
+    padding: 15px;
+    border: 2px solid;
+    border-radius: 3px;
+}
+
+.listOfComorbidity{
+    margin-left: 0.5%;
+    margin-right: 0.5%;
+}
+
+.required:after{
+    content: " *";
+    color: red;
+}
+
+.navbar{
+    margin-top: 2%;
+    margin-bottom: 2%;
+}
+
+.topPart{
+    padding: 1%;
+}
+
+#patientTable{
+    padding: 2%;
+}
+
+/* Home Page -- EIR Module*/
+.vaccination, .deployments{
+    background-color: white;
+    width: 40%;
+    border-radius: 12px;
+    display: inline-block;
+    margin-left: 7%;
+    margin-top: 2%;
+}
+
+.deployments {
+    margin-left: 7% !important;
+}
+
+.dash {
+    display: inline;
+    text-align: center;
+    margin-top: 2%;
+}
+
+.dash h5 {
+    padding-top: 2%;
+}
+
+.perBarangay {
+    display: inline-block;
+    margin-left: 7%;
+    border-radius: 12px;
+    background-color: white;
+    width: 40%;
+    margin-top: 3%;
+}
+
+.navbar{
+    margin-top: 2%;
+    margin-bottom: 2%;
+}

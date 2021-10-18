@@ -11,6 +11,7 @@
     <!-- Our Custom CSS -->
     <link rel="icon" href="../img/FaviSMIT+.png" type="image/jpg">
     <link href="../css/style.css" rel="stylesheet">
+    <link href="../css/EIRModule.css" rel="stylesheet">
 
     <!-- Bootstrap-->
     <script crossorigin="anonymous" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
@@ -31,7 +32,7 @@
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js"
             integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY"
             crossorigin="anonymous"></script>
-    <script defer src="../javascript/showDateAndTime.js"> </script>
+
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
@@ -69,8 +70,8 @@
     <!-- Page Content  -->
     <div id="content">
         <div class="topButtons">
-            <button class="btnTop btnBell"> <i class="fas fa-cog"></i> </button>
-            <button class="btnTop"> <i class="fas fa-bell"></i> </button>
+            <button class="btnTop btnBell float-right"> <i class="fas fa-cog"></i> </button>
+            <button class="btnTop float-right"> <i class="fas fa-bell"></i> </button>
         </div>
         <br>
         <!--Top Nav-->
@@ -87,7 +88,7 @@
 
         </div>
 
-        <div class="tableBrgy shadow">
+        <div class="tableBrgy shadow" id="patientTable">
             <!--Table Part-->
             <div class="topPart">
                 <div class="row">
