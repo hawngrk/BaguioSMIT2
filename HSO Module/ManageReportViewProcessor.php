@@ -334,7 +334,7 @@ if (isset($_POST['changeStatus'])) {
 
 if (isset($_POST['generate'])) {
     echo "
-        <div class='content-modal'>
+        <div class='content-modal-table1'>
             <div class='modal-header'>
                 <h4>Generate Reports</h4>
                 <button type='button' class='close' data-dismiss='modal' onclick='closeGenerateReports()'>
@@ -344,9 +344,6 @@ if (isset($_POST['generate'])) {
     
     
         <div class='modal-body'>
-        <button type='button' class='btn btn-success genButton' id='downloadGenerateReportBtn' onclick='downloadReports()'>Download Files</button>
-        <button type='button' class='btn btn-secondary genButton' id='cancelGenerateReportBtn' onclick='closeGenerateReports()'>Cancel</button>
-        <h10 id='DlRepNote'>Note: select report/s you want to download</h10>
             <table class='table table-row table-hover'>
             <thead>
             <tr>
@@ -390,6 +387,13 @@ if (isset($_POST['generate'])) {
 
     echo "
         </table>
+        </div>
+        <div class='modal-footer'>
+        
+        <h10 id='DlRepNote' class='mr-auto'>Note: select report/s you want to download</h10>
+        <button type='button' class='btn btn-secondary genButton' id='cancelGenerateReportBtn' onclick='closeGenerateReports()'>Cancel</button>
+        <button type='button' class='btn btn-success genButton' id='downloadGenerateReportBtn' onclick='downloadReports()'>Download Files</button>
+        </div>
         </div>
         </div>";
 }
