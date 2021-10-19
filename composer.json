@@ -1,5 +1,6 @@
 {
     "require": {
-        "phpoffice/phpword": "^0.18.2"
+        "phpoffice/phpword": "^0.18.2",
+        "pusher/pusher-php-server": "^3.4"
     }
 }
