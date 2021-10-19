@@ -9,11 +9,11 @@
     $stmt->prepare($query);
     $stmt->execute();
     $stmt->bind_result($patientId, $patientFullName, $firstDoseDate, $secondDoseDate, $patientFirstDosage,
-        $patientSecondDosage, $queueNumber, $notification, $firstDoseVaccinator, $secondDoseVaccinator);
+        $patientSecondDosage, $forQueue, $notification, $firstDoseVaccinator, $secondDoseVaccinator);
 
     while ($stmt->fetch()){
         $patient = new patientInfo($patientId, $patientFullName, $firstDoseDate, $secondDoseDate, $patientFirstDosage,
-            $patientSecondDosage, $queueNumber, $notification, $firstDoseVaccinator, $secondDoseVaccinator);
+            $patientSecondDosage, $forQueue, $notification, $firstDoseVaccinator, $secondDoseVaccinator);
         $patients[] = $patient;
 
     }

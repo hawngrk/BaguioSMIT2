@@ -139,7 +139,7 @@ include_once("../includes/database.php")
                 <p>0</p>
             </div>
             <div>
-                <button id="confirmationNotif">
+                <button id="confirmationNotif" onclick="send()">
                     Send<br>
                     Confirmation
                     <br>Notification

@@ -144,7 +144,7 @@ class patientInfo{
     private $secondDosageDate;
     private $firstDosage;
     private $secondDosage;
-    private $queueNumber;
+    private $forQueue;
     private $notification;
     private $firstDoseVaccinator;
     private $secondDoseVaccinator;
@@ -157,7 +157,7 @@ class patientInfo{
         $this->secondDosageDate = $secondDate;
         $this->firstDosage = $firstDosage;
         $this->secondDosage = $secondDosage;
-        $this->queueNumber = $queue;
+        $this->forQueue = $queue;
         $this->notification = $notif;
         $this->firstDoseVaccinator = $firstVaccinator;
         $this->secondDoseVaccinator = $secondVaccinator;
@@ -185,8 +185,8 @@ class patientInfo{
         return $this->secondDosage;
     }
 
-    public function getQueueNumber() {
-        return $this->queueNumber;
+    public function getForQueue() {
+        return $this->forQueue;
     }
 
     public function getNotification() {
