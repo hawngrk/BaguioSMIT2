@@ -1280,3 +1280,10 @@ input[name=vitals]{
 .depSummary .listPatientRow{
     margin-bottom: 5%;
 }
+
+/* ------------------------------------------------------------------- */
+/* ------------------------CSS for Barangay MODULE ----------------------- */
+#barangayHomeContent{
+    margin-left: -2%;
+    margin-right: 5%;
+}

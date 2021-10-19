@@ -170,108 +170,107 @@ include_once("../includes/database.php")
                     }
                 }
                 ?>
-
-
-
-
             </div>
         </div>
     </div>
 
     <div id="content">
         <div class="topNav row">
-            <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                <div class="container-fluid">
-                    <button
-                            type="button"
-                            id="sidebarCollapse"
-                            class="btn btn-info"
-                            onclick="Toggle()">
-                        <i class='fas fa-angle-left'></i>
-                        Menu
-                    </button>
-
-                    <button id="buttonMarker" class="btnTop" onclick="openNotif('notificationModal')">
-                        <span class="marker" id="marker"><i class="fas fa-circle"></i></span>
-                        <i class="fas fa-bell"></i>
-                    </button>
-
-                    <button class="btnTop btnBell">
-                        <i class="fas fa-cog"></i>
-                    </button>
-                </div>
-            </nav>
+            <div class="container-fluid">
+                <button id="buttonMarker" class="btnTop float-right" onclick="openNotif('notificationModal')">
+                    <span class="marker" id="marker"><i class="fas fa-circle"></i></span>
+                    <i class="fas fa-bell"></i>
+                </button>
+            </div>
         </div>
+        <br>
+        <br>
         <!--Page Content-->
-        <div class="row" id ="barangayHomeContent">
-            <div id="stubDelegationNotice">
-                <center>
-                    <h5>Stub Delegation Notice</h5>
-                </center>
-                <hr>
+        <div id="barangayHomeContent">
+           <div class="row">
+               <div id="selectDeployment">
+                   <select class="form-select" id="selectHealthDistrict">
+                       onchange="updateDeploymentDetails(this.value)">
+                       <option value='' disabled selected hidden> Select Deployment</option>
+                       <?php
+                       require_once("../require/getVaccinationDrive.php");
+                       foreach ($vaccination_drive as $vaccinationDrive) {
+                           $id = $vaccinationDrive->getDriveId();
+                           echo "<option value=$id> $id </option>";
+                       }
+                       ?>
+                   </select>
+               </div>
+           </div>
+            <br>
+            <div class="row">
+                <div id="stubDelegationNotice">
+                    <center>
+                        <h5>Stub Delegation Notice</h5>
+                    </center>
+                    <hr>
+                </div>
+                <div id="availableStubs">
+                    <center>
+                        <h5>Available Stubs</h5>
+                    </center>
+                    <hr>
+                    <div class="priorityGroup">
+                        <h5>A1</h5>
+                        <p>0</p>
+                    </div>
+                    <div class="priorityGroup">
+                        <h5>A2</h5>
+                        <p>0</p>
+                    </div>
+                    <div class="priorityGroup">
+                        <h5>A3</h5>
+                        <p>0</p>
+                    </div>
+                    <div class="priorityGroup">
+                        <h5>A4</h5>
+                        <p>0</p>
+                    </div>
+                    <div class="priorityGroup">
+                        <h5>A5</h5>
+                        <p>0</p>
+                    </div>
+                    <div class="priorityGroup">
+                        <h5>A6</h5>
+                        <p>0</p>
+                    </div>
+                </div>
             </div>
-            <div id="availableStubs">
-                <center>
-                    <h5>Available Stubs</h5>
-                </center>
-                <hr>
-                <div class="priorityGroup">
-                    <h5>A1</h5>
-                    <p>0</p>
-                </div>
-                <div class="priorityGroup">
-                    <h5>A2</h5>
-                    <p>0</p>
-                </div>
-                <div class="priorityGroup">
-                    <h5>A3</h5>
-                    <p>0</p>
-                </div>
-                <div class="priorityGroup">
-                    <h5>A4</h5>
-                    <p>0</p>
-                </div>
-                <div class="priorityGroup">
-                    <h5>A5</h5>
-                    <p>0</p>
-                </div>
-                <div class="priorityGroup">
-                    <h5>A6</h5>
-                    <p>0</p>
-                </div>
-            </div>
-        </div>
-
-        <div class=" row">
-            <div class="counterCl">
-                <div class="col colCount">
-                    <h5>CLAIMED</h5>
-                    <?php
-                    $query = "SELECT COUNT(notification) FROM patient WHERE notification = 1";
-                    $stmt = $database->stmt_init();
-                    $stmt->prepare($query);
-                    $stmt->execute();
-                    $stmt->bind_result($claimed);
-                    $stmt->fetch();
-                    echo "<h5>$claimed</h5>"
-                    ?>
-                </div>
-                <div class="col colCount">
-                    <h5>UNCLAIMED</h5>
-                    <?php
-                    $query = "SELECT COUNT(notification) FROM patient WHERE notification = 0";
-                    $stmt = $database->stmt_init();
-                    $stmt->prepare($query);
-                    $stmt->execute();
-                    $stmt->bind_result($unclaimed);
-                    $stmt->fetch();
-                    echo "<h5>$unclaimed</h5>"
-                    ?>
+            <div class="row">
+                <div class="counterCl">
+                    <div class="col colCount">
+                        <h5>CLAIMED</h5>
+                        <?php
+                        $query = "SELECT COUNT(notification) FROM patient WHERE notification = 1";
+                        $stmt = $database->stmt_init();
+                        $stmt->prepare($query);
+                        $stmt->execute();
+                        $stmt->bind_result($claimed);
+                        $stmt->fetch();
+                        echo "<h5>$claimed</h5>"
+                        ?>
+                    </div>
+                    <div class="col colCount">
+                        <h5>UNCLAIMED</h5>
+                        <?php
+                        $query = "SELECT COUNT(notification) FROM patient WHERE notification = 0";
+                        $stmt = $database->stmt_init();
+                        $stmt->prepare($query);
+                        $stmt->execute();
+                        $stmt->bind_result($unclaimed);
+                        $stmt->fetch();
+                        echo "<h5>$unclaimed</h5>"
+                        ?>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 </body>
 </html>
 <script type="text/javascript">
@@ -352,9 +351,9 @@ include_once("../includes/database.php")
         });
     }
 
-    function closeModal(modal){
+    function closeModal(modal) {
         document.getElementById("notificationContent").innerHTML = "";
-        document.getElementById(modal).style.display ="none";
+        document.getElementById(modal).style.display = "none";
 
         $.ajax({
             url: 'ManagePatientProcessor.php',
