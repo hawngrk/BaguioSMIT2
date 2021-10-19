@@ -49,7 +49,9 @@
         <ul class="list-unstyled components">
             <h4 id="headingNav1">Entry Immunization Register</h4>
             <hr>
-            <h5 id="headingNav2"> <script src="../javascript/showDateAndTime.js"></script> </p>
+            <h5 id="headingNav2">
+                <script src="../javascript/showDateAndTime.js"></script>
+                </p>
             </h5>
             <hr>
             <li>
@@ -69,36 +71,36 @@
 
     <!-- Page Content  -->
     <div id="content">
-        <div class="topButtons">
-            <button class="btnTop btnBell float-right"> <i class="fas fa-cog"></i> </button>
-            <button class="btnTop float-right"> <i class="fas fa-bell"></i> </button>
-        </div>
-        <br>
         <!--Top Nav-->
         <div class="navbar navbar-expand-lg navbar-light bg-light shadow-sm p-3 mb-4 rounded-lg">
             <div class="container-fluid">
                 <div>
-                    <button type="button" id="upload" class=" btn btn-primary btn-default shadow-lg rounded buttonTop3"> Upload File </button>
-                    <button type="button" id="addPatientButton" class=" btn btn-primary btn-default shadow-lg rounded buttonTop3"> Add User Account </button>
+                    <button type="button" id="uploadFileButton" class="btn btn-primary buttonTop3"
+                            onclick="document.getElementById('uploadFileModal').style.display = 'block'"> <i class="fas fa-upload"></i> Upload File
+                    </button>
+                    <button type="button" id="addPatientButton"
+                            class=" btn btn-primary btn-default shadow-lg rounded buttonTop3"> Add User Account
+                    </button>
                 </div>
                 <button type="button" class="btn btn-outline-dark shadow-sm buttonTop3 float-right"
-                        onclick="openModal('archived')"> <i class="fas fa-inbox fa-lg"></i>
+                        onclick="openModal('archived')"><i class="fas fa-inbox fa-lg"></i>
                 </button>
             </div>
-
         </div>
 
         <div class="tableBrgy shadow" id="patientTable">
             <!--Table Part-->
             <div class="topPart">
                 <div class="row">
-                    <div class="col">
-                        <div class="search-container searchDept float-left">
-                            <input id="searchDep" type="text" placeholder="Search..." class="searchHome form-control input-lg "
-                                   name="searchPatient" onkeyup="searchPatient()">
+                    <div class="col my-auto">
+                        <div class="input-group">
+                            <input type="search" class="form-control border-right-0" placeholder="Search"/>
+                            <button type="button" class="btn btn-primary border-left-0">
+                                <i class="fas fa-search"></i>
+                            </button>
                         </div>
                     </div>
-                    <div class="col">
+                    <div class="col-sm-auto">
                         <button type="button" class="btn btn-outline-dark buttonTop3 float-right">
                             <i class="fas fa-sort-amount-down"></i>
                         </button>
@@ -222,6 +224,7 @@
                                     </option>
                                     <option value="A5: Indigent">A5: Indigent Population</option>
                                     <option value="A6: ROP">A6: Rest of the Population</option>
+                                    <option value="A7: 12-17">A7: 12-17 Years Old</option>
                                 </select>
                             </div>
                             <div class="col">
@@ -364,7 +367,8 @@
                                 </div>
                                 <div class="col">
                                     <div id="otherTextField">
-                                        <input type="text3" name="other" id="other" class="otherInput" placeholder="Input Other Commorbidity">
+                                        <input type="text3" name="other" id="other" class="otherInput"
+                                               placeholder="Input Other Commorbidity">
                                     </div>
                                 </div>
 
@@ -377,27 +381,46 @@
                 <button type="button" id="addBtn" class="btn btn-success shadow-sm" onclick="addPatient()">Add</button>
             </div>
         </div>
+    </div>
 
-        <!--Notification modal-->
-        <div id="notifyModal" class="modal-window">
-            <div class="content-modal">
-                <div class="modal-header">
-                    <span id="notificationClose" class="close">&times;</span>
+    <div id="uploadFileModal" class="modal-window">
+        <div class="content-modal">
+            <div class="modal-header">
+                <button type="button" id="closeUploadModal" class="close"> &times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="row" id="upload-content">
+                    <div class="col">
+                        <div class="col-md-12 text-center">
+                            <button class="button" id="iconBrowse"
+                                    onclick="document.getElementById('fileUpload').click()">
+                                <label for="fileUpload"><i class="fas fa-upload"></i></label>
+                            </button>
+                            <input id="fileUpload" type="file" style="display: none"
+                                   onchange="getUploadedFiles(this)" multiple/>
+                            <p><br> Upload a list of patients (.csv) </p>
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <h6> Uploaded Files </h6>
+                        <div id="uploadedFiles">
+
+                        </div>
+                    </div>
                 </div>
-                <div class="modal-body">
-                    <img src="../../img/checkmark.png" alt="confirm" id="confirm">
-                    <p>
-                    <center> Patient successfully added.</center>
-                    </p>
-                </div>
-                <div class="modal-footer">
-                    <button id='submit' class="btn btn-primary" type="submit"> Submit</button>
-                    <!--instead of close change to Done-->
-                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="uploadFileCancelBtn" class="btn btn-secondary"
+                        onclick="document.getElementById('uploadFileModal').style.display= 'none'">
+                    Cancel
+                </button>
+                <button type="button" id="uploadFileConfirmBtn" class="btn btn-primary"
+                        name="patientUploadFile" onclick="uploadFiles()">Add
+                </button>
             </div>
         </div>
     </div>
-
 </div>
 
 <!-- Popper.JS -->
@@ -511,7 +534,7 @@
         var kidneyDisease = verifyCommorbidity($('#kidneyDisease:checked').val());
         var immunodeficiency = verifyCommorbidity($('#immunodeficiency:checked').val());
         var other = $('#other:checked').val();
-        var enteredCommorbidity = other? document.querySelector('.otherInput').value : "";
+        var enteredCommorbidity = other ? document.querySelector('.otherInput').value : "";
 
         $.ajax({
             url: '../patient/flutter/authorization/pre_registration.php',
@@ -543,7 +566,7 @@
                 barangay: brgy,
                 cmAddress: city,
                 province: province,
-                region: region ,
+                region: region,
 
                 //Clinical Information
                 allergy: allergy,
@@ -551,7 +574,7 @@
                 hypertension: hypertension,
                 heartDisease: heartDisease,
                 kidneyDisease: kidneyDisease,
-                diabetesMellitus : diabetes,
+                diabetesMellitus: diabetes,
                 bronchialAsthma: asthma,
                 immunodeficiency: immunodeficiency,
                 cancer: cancer,
@@ -607,6 +630,7 @@
     //buttons
     var addPatientAccountButton = document.getElementById("addPatientButton");
     var closeAddPatientModal = document.getElementById("addPatientInfoClose");
+    var closeUploadModal = document.getElementById("closeUploadModal");
 
     var sucess = document.getElementById("submit");
 
@@ -620,7 +644,34 @@
         addPatientModal.style.display = "none";
     }
 
+    closeUploadModal.onclick = function () {
+        document.getElementById("uploadFileModal").style.display = "none";
+    }
 
+    //uploading File
+    function getUploadedFiles(item) {
+        for (var i = 0; i < item.files.length; i++) {
+            var element = document.createElement('p');
+            element.innerHTML = item.files[i].name;
+            document.getElementById("uploadedFiles").insertAdjacentElement("beforeend", element);
+        }
+    }
+
+    function uploadFiles() {
+        var files = document.getElementById("fileUpload").files;
+        var formData = new FormData();
+        formData.append('file', files[0]);
+        $.ajax({
+            url: '../HSO Module/UploadFile.php',
+            type: 'POST',
+            contentType: false,
+            processData: false,
+            data: formData,
+            success: function (result) {
+                uploadFileModal.style.display = "none";
+            }
+        });
+    }
 </script>
 </body>
 </html>
