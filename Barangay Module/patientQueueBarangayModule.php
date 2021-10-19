@@ -105,9 +105,23 @@ include_once("../includes/database.php")
                 <i class="fa fa-search"></i>
             </button>
         </div>
-
+        <br>
 
         <!--Page Content-->
+        <div class="row">
+            <div id="selectDeployment">
+                <select class="form-select" id="selectHealthDistrict" onchange="updateDeploymentDetails(this.value)">
+                    <option value='' disabled selected hidden> Select Deployment </option>
+                    <?php
+                    require_once("../require/getVaccinationDrive.php");
+                    foreach ($vaccination_drive  as $vaccinationDrive) {
+                        $id = $vaccinationDrive->getDriveId();
+                        echo "<option value=$id> $id </option>";
+                    }
+                    ?>
+                </select>
+            </div>
+        </div>
         <table class="table table-row table-hover tableBrgy" id="patientTable">
             <thead>
             <tr>
