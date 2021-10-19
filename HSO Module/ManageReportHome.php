@@ -447,7 +447,7 @@ include_once("../includes/database.php") ?>
             type: 'POST',
             data: {"download": reportsIds},
             success: function (result) {
-                //window.location.href = "DownloadReports.php";
+                window.location.href = "DownloadFile.php";
                 //generateReport(2)
                 console.log('ok');
                 console.log(result);

@@ -398,23 +398,55 @@ if (isset($_POST['generate'])) {
         </div>";
 }
 
-if (isset($_POST['options'])) {
-    echo "
-    <button type='button' class='btn btn-success genButton' id='downloadGenerateReportBtn' onclick='downloadReports()'>Download Files</button>
-    <button type='button' class='btn btn-secondary genButton' id='cancelGenerateReportBtn' onclick='generateReport(2)'>Cancel</button>
-    <h10 id='DlRepNote'>Note: select report/s you want to download</h10>
-    ";
-}
-
+require '../vendor/autoload.php';
+use PhpOffice\PhpWord\PhpWord;
 if (isset($_POST['download'])) {
     include '../includes/database.php';
     $stmt = $database->stmt_init();
     $reports = $_POST['download'];
-    "SELECT report.report_id, patient.patient_full_name, report.date_reported FROM report JOIN patient ON report.report_id = patient.patient_id JOIN patient_details ON patient.patient_id = patient_details.patient_id WHERE report.report_status = 'Invalidated';";
+    mkdir('reports');
+
     foreach ($reports as $rep) {
-        $getReportsQuery = "SELECT * FROM report WHERE report_id=$rep;";
+        $getReportsQuery = "SELECT report.report_id, report.report_type, report.report_details, report.report_status, CONCAT(patient_details.patient_first_name, ' ', patient_details.patient_middle_name, ' ', patient_details.patient_last_name) AS full_name, CONCAT(patient_details.patient_house_address, ' ', patient_details.patient_barangay_address, ' ', patient_details.patient_CM_address, ' ', patient_details.patient_province) AS full_address, patient_details.patient_contact_number FROM report JOIN patient_details ON report.patient_id = patient_details.patient_id WHERE report.report_id = $rep";
         $stmt->prepare($getReportsQuery);
         $stmt->execute();
-        $stmt->bind_result($reportId, $reporter, $dateReported);
+        $stmt->bind_result($reportId, $reportType, $reportDetails, $reportStatus, $patientName, $patientAddress, $patientNum);
+        $stmt->fetch();
+
+        $phpWord = new PhpWord();
+        $phpWord->addFontStyle('titleFont', array('bold' => true, 'italic' => false, 'size' => 20));
+        $phpWord->addParagraphStyle('title', array('align' => 'center', 'spaceAfter' => 100));
+        $phpWord->addFontStyle('heading', array('bold' => true, 'italic' => false, 'size' => 12));
+        $phpWord->addFontStyle('text', array('bold' => false, 'italic' => false, 'size' => 11));
+        $body = $phpWord->addSection();
+        $body->addText('REVIEW REPORT -' . " " . $patientName, 'titleFont', 'title');
+        $body->addText('');
+        $body->addText('Report Information', 'heading');
+        $body->addText('Report ID: ' . $reportId, 'text');
+        $body->addText('Report Type: ' . $reportType, 'text');
+        $body->addText('Report Details:', 'text');
+        $textbox = $body->addTextBox(
+            array(
+                'alignment'   => \PhpOffice\PhpWord\SimpleType\Jc::START,
+                'width'       => 450,
+                'height'      => 100,
+                'borderColor' => '#000000',
+                'borderSize'  => 1,
+            )
+        );
+        $textbox->addText($reportDetails, 'text');
+        $body->addText('');
+        $body->addText('Patient Information', 'heading');
+        $body->addText('Patient Address: ' . $patientAddress, 'text');
+        $body->addText('Contact Number: ' . $patientNum, 'text');
+        $body->addText('');
+        $body->addText('Vaccine Information', 'heading');
+        $body->addText('Vaccine Name: ', 'text');
+        $body->addText('Vaccination Date: ', 'text');
+        $body->addText('Current Dosage: ', 'text');
+        $body->addText('Report Status: ' . $reportStatus, 'text');
+
+        $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
+        $objWriter->save('reports/' . $reportId . " - ". $patientName. '.docx');
     }
 }
