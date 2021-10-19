@@ -71,24 +71,12 @@
     <!-- Top Nav Bar  -->
     <div id="content">
         <!-- Page Content  -->
-
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container-fluid">
-
-                <button type="button" id="sidebarCollapse" class="btn btn-info" onclick="Toggle()">
-                    <i class='fas fa-angle-left'></i> Menu
-                </button>
-
-                <button id="buttonMarker" class="btnTop" onclick="openNotif('notificationModal')">
+                <button id="buttonMarker" class="btnTop float-right" onclick="openNotif('notificationModal')">
                     <span class="marker" id="marker"><i class="fas fa-circle"></i></span>
                     <i class="fas fa-bell"></i>
                 </button>
-
-                <button class="btnTop btnBell">
-                    <i class="fas fa-cog"></i>
-                </button>
             </div>
-        </nav>
 
         <div class="row">
             <div class="col">
