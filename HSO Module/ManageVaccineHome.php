@@ -99,14 +99,28 @@ include_once("../includes/database.php") ?>
 
         <div class="container-fluid">
             <div class="row">
-                <div class="col my-auto">
-                    <button type="button" class="btn btn-outline-dark buttonTop3 float-left"> <i class="fas fa-filter"></i>
-                    </button>
-                    <button type="button" class="btn btn-outline-dark buttonTop3 float-left">
-                        <i class="fas fa-sort-amount-down"></i>
-                    </button>
+                <div class="sfDiv col-md-1.5 my-auto">
+                    <select class="form-select filterButton" id="filterReports" name="filterReports"
+                            onchange="filterReport(this)">
+                        <option value="" selected disabled hidden>Filter By</option>
+                        <option>All</option>
+                        <option>Unverified</option>
+                        <option>Verified</option>
+                        <option>Invalidated</option>
+                    </select>
                 </div>
-                <div class="col-sm-auto">
+                <div class="sfDiv col-md-1.5 my-auto">
+                    <select class="form-select sortButton" id="sortReports" name="sortReports"
+                            onchange="sortReport(this)">
+                        <option value="" selected disabled hidden>Sort By</option>
+                        <option>Name Asc</option>
+                        <option>Name Desc</option>
+                        <option>Date Asc</option>
+                        <option>Date Desc</option>
+                    </select>
+                </div>
+
+                <div class="col">
                     <button type="button" class="btn btn-warning buttonTop3 float-right" onclick="openModal('archived')">
                         <i class="fas fa-inbox fa-lg"></i>
                     </button>
