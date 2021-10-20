@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <title>Baguio SMIT+</title>
+    <title>Baguio SMIT+ | Home Monitoring</title>
 
     <!-- Our Custom CSS -->
     <link rel="icon" href="../img/FaviSMIT+.png" type="image/jpg">
