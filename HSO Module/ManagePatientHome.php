@@ -203,20 +203,20 @@ include_once("../includes/database.php") ?>
                     <div class="row" id="upload-content">
                         <div class="col">
                             <div class="col-md-12 text-center">
-                                <button class="button btn btn-primary" id="iconBrowse"
+                                <button class="shadow-sm" id="iconBrowse"
                                         onclick="document.getElementById('fileUpload').click()">
                                     Browse files
                                 </button>
+                                <br>
                                 <input id="fileUpload" type="file" style="display: none"
                                        onchange="getUploadedFiles(this)" multiple/>
-                                <p><br> Upload a list of patients (.csv) </p>
+                                <h6><br> Upload a list of patients (.csv) </h6>
                             </div>
                         </div>
 
                         <div class="col">
-                            <h6> Uploaded Files </h6>
+                            <h5> Uploaded Files </h5>
                             <div id="uploadedFiles">
-
                             </div>
                         </div>
                     </div>
@@ -834,7 +834,7 @@ include_once("../includes/database.php") ?>
 
     function getUploadedFiles(item) {
         for (var i = 0; i < item.files.length; i++) {
-            var element = document.createElement('p');
+            var element = document.createElement('li');
             element.innerHTML = item.files[i].name;
             document.getElementById("uploadedFiles").insertAdjacentElement("beforeend", element);
         }

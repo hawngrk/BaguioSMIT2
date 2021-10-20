@@ -74,7 +74,7 @@ if (isset($_POST['id'])) {
     echo "<h7><b>Health Districts:</b></h7>";
 
     foreach ($distNames as $dn){
-        echo "<br><h8>$dn</h8></br>";
+        echo "<li>$dn</li>";
     }
 }
 
