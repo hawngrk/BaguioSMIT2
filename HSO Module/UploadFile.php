@@ -13,8 +13,8 @@ if ($count > 1) {
                     //Personal Information
                     $firstName = $row[0];
                     $lastName = $row[1];
-                    $middleName = $row[2];
-                    $suffix = $row[3];
+                    $middleName = trim($row[2]);
+                    $suffix = trim($row[3]);
                     $occupation = $row[4];
                     $gender = $row[5];
                     $createDate = date_create($row[6]);
@@ -70,8 +70,8 @@ if ($count > 1) {
                 //Personal Information
                 $firstName = $row[0];
                 $lastName = $row[1];
-                $middleName = $row[2];
-                $suffix = $row[3];
+                $middleName = trim($row[2]);
+                $suffix = trim($row[3]);
                 $occupation = $row[4];
                 $gender = $row[5];
                 $createDate = date_create($row[6]);
@@ -122,14 +122,14 @@ if ($count > 1) {
 function toFullName($firstName, $lastName, $middleName, $suffix) {
 
     $name = $lastName . ", " . $firstName . " " . $middleName . " " . $suffix;
-    if ($middleName == " " && $suffix == " ") {
+    if ($middleName == "" && $suffix == "") {
         $name = $lastName . ", " . $firstName;
         return $name;
-    } else if ($suffix == " " && $middleName != " ") {
-        $name = $lastName . ", " . $firstName . " " . $middleName;
+    } else if ($suffix == "" && $middleName != "") {
+        $name = $lastName . ", " . $firstName . "" . $middleName;
         return $name;
-    } else if ($middleName == " " && $suffix != " ") {
-        $name = $lastName . ", " . $firstName . " " . $suffix;
+    } else if ($middleName == "" && $suffix != "") {
+        $name = $lastName . ", " . $firstName . "" . $suffix;
         return $name;
     } else {
         return $name;
