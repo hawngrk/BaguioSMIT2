@@ -148,7 +148,7 @@ include_once("../includes/database.php")
                 <p>0</p>
             </div>
             <div>
-                <button id="confirmationNotif" onclick="send()">
+                <button id="confirmationNotif" onclick="sendNotification()">
                     Send<br>
                     Confirmation
                     <br>Notification
@@ -168,6 +168,16 @@ include_once("../includes/database.php")
             data: {"search": textSearch},
             success: function (result) {
                 document.getElementById("patientTable").innerHTML = result;
+            }
+        });
+    }
+
+    function sendNotification() {
+        $.ajax({
+            url: 'Sendnotification.php',
+            type: 'POST',
+            success: function (result) {
+                console.log(result);
             }
         });
     }
