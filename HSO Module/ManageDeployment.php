@@ -358,13 +358,13 @@ include_once("../includes/database.php") ?>
                     </div>
                 </div>
                 <div class="col-sm-auto">
-                    <button type="button" class="btn btn-outline-dark buttonTop3 float-right" onclick="openModal('archived')">
+                    <button type="button" class="btn btn-warning buttonTop3" onclick="openModal('archived')">
                         <i class="fas fa-inbox fa-lg"></i>
                     </button>
                 </div>
             </div>
             <div class="row">
-                <div class="sfDiv col my-auto">
+                <div class="sfDiv col-md-1.5 my-auto">
                     <select class="form-select filterButton" id="filterReports" name="filterReports"
                             onchange="filterReport(this)">
                         <option value="" selected disabled hidden>Filter By</option>
@@ -374,7 +374,7 @@ include_once("../includes/database.php") ?>
                         <option># of stubs</option>
                     </select>
                 </div>
-                <div class="sfDiv col my-auto">
+                <div class="sfDiv col-md-1.5 my-auto">
                     <select class="form-select sortButton" id="sortReports" name="sortReports"
                             onchange="sortReport(this)">
                         <option value="" selected disabled hidden>Sort By</option>
@@ -387,20 +387,28 @@ include_once("../includes/database.php") ?>
                     </select>
                 </div>
 
-                <div class="col-sm-auto">
-
-                    <button type="button" class="btn btn-primary buttonTop3 float-right" onclick="openModal('vaccSiteModal')">
-                        Vaccination Sites
-                    </button>
-                    <button id="HealthDBtn" type="button" class="btn btn-primary buttonTop3" onclick="openModal('HealthD')">
-                        Health Districts
-                    </button>
-                    <button type="button" class="btn btn-primary buttonTop3" onclick="openModal('DeployModal')">
-                        <i class="fas fa-plus"></i>
-                        Add Deployment
-                    </button>
-
+                <div class="col">
+                    <div class="col">
+                        <button type="button" class=" buttonTop3" onclick="openModal('vaccSiteModal')">
+                            <i class="fas fa-hospital"></i>
+                             Vaccination Sites
+                        </button>
+                    </div>
+                    <div class="col">
+                        <button id="HealthDBtn" type="button" class="buttonTop3" onclick="openModal('HealthD')">
+                            <i class="fas fa-file-medical"></i>
+                             Health Districts
+                        </button>
+                    </div>
+                    <div class="col">
+                        <button type="button" class="buttonTop3" onclick="openModal('DeployModal')">
+                            <i class="fas fa-plus"></i>
+                             Add Deployment
+                        </button>
+                    </div>
                 </div>
+
+
 
             </div>
 
@@ -554,38 +562,38 @@ include_once("../includes/database.php") ?>
 <!--        </div>-->
 
         <div id="unarchiveContent" class="row">
-        <table class="table table-row table-hover tableDep column" id = "driveTable">
-            <thead>
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">Drive Id</th>
-                <th scope="col">Location</th>
-                <th scope="col">Date</th>
-                <th scope="col">No. of Stubs</th>
-                <th scope="col">Action</th>
-            </tr>
-            </thead>
+            <div class="col">
+                <table class="table table-row table-hover tableDep column" id = "driveTable">
+                    <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Drive Id</th>
+                        <th scope="col">Location</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">No. of Stubs</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                    </thead>
+                    <?php
+                    require_once '../require/getVaccinationDrive.php';
+                    require_once '../require/getVaccinationSites.php';
 
-            <?php
-            require_once '../require/getVaccinationDrive.php';
-            require_once '../require/getVaccinationSites.php';
-
-            $count = 0;
-            foreach ($vaccination_drive as $vd) {
-                if ($vd->getArchive() == 0) {
-                    $count++;
-                    $driveId = $vd->getDriveId();
-                    $date = $vd->getVaccDate();
-                    $stubs = $vd->getVaccStubs();
+                    $count = 0;
+                    foreach ($vaccination_drive as $vd) {
+                        if ($vd->getArchive() == 0) {
+                            $count++;
+                            $driveId = $vd->getDriveId();
+                            $date = $vd->getVaccDate();
+                            $stubs = $vd->getVaccStubs();
 
 
-                    foreach ($vaccinationSites as $vs) {
-                        if ($vs->getVaccinationSiteId() == $vd->getVaccDriveVaccSiteId()) {
-                            $vaccinationSite = $vs->getVaccinationSiteLocation();
-                        }
-                    }
+                            foreach ($vaccinationSites as $vs) {
+                                if ($vs->getVaccinationSiteId() == $vd->getVaccDriveVaccSiteId()) {
+                                    $vaccinationSite = $vs->getVaccinationSiteLocation();
+                                }
+                            }
 
-                    echo "<tr class='table-row' onclick='showDrive(this)'>
+                            echo "<tr class='table-row' onclick='showDrive(this)'>
                         <td>$count</td>
                         <td>$driveId</td>
                         <td>$vaccinationSite</td>
@@ -598,19 +606,22 @@ include_once("../includes/database.php") ?>
                         </td>
              
                       </tr>";
-                }
-            }
+                        }
+                    }
 
-            ?>
-        </table>
-            <div class="depSummary column">
-                <div class="four listPatientRow">
-                    <div class="listPatient-box colored">
-                        <center><h3>Deployment Summary</h3></center>
+                    ?>
+                </table>
+            </div>
+            <div class="col-sm-auto">
+                <div class="depSummary">
+                    <div class="four listPatientRow">
+                        <div class="listPatient-box colored">
+                            <center><h3>Deployment Summary</h3></center>
+                        </div>
                     </div>
-                </div>
-                <div class="four listPatientRow row2">
-                    <div id="listPatientContent" class="listPatient-box colored">
+                    <div class="four listPatientRow row2">
+                        <div id="listPatientContent" class="listPatient-box colored">
+                        </div>
                     </div>
                 </div>
             </div>

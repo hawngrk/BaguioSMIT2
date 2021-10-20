@@ -107,13 +107,12 @@ include_once("../includes/database.php") ?>
                     </button>
                 </div>
                 <div class="col-sm-auto">
-                    <button type="button" class="btn btn-outline-dark buttonTop3 float-right" onclick="openModal('archived')">
+                    <button type="button" class="btn btn-warning buttonTop3 float-right" onclick="openModal('archived')">
                         <i class="fas fa-inbox fa-lg"></i>
                     </button>
 
-                    <button id="addVaccineBtn" type="button" class="btn btn-primary buttonTop3 float-right">Add Vaccine</button>
-
-                    <button id="addNewVaccineBtn" type="button" class="btn btn-primary buttonTop3 float-right">Add New Vaccine</button>
+                    <button id="addVaccineBtn" type="button" class=" buttonTop3 float-right"><i class="fas fa-plus"></i> Add Vaccine</button>
+                    <button id="addNewVaccineBtn" type="button" class="buttonTop3 float-right"><i class="fas fa-syringe"></i> Add New Vaccine</button>
                 </div>
             </div>
         </div>
