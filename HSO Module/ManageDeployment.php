@@ -352,14 +352,6 @@ include_once("../includes/database.php") ?>
 
         <div class="container-fluid">
             <div class="row">
-                <div class="col-1.5">
-                    <button type="button" class="btn btn-outline-dark buttonTop3 float-left">
-                        <i class="fas fa-filter"></i>
-                    </button>
-                    <button type="button" class="btn btn-outline-dark buttonTop3 float-left">
-                        <i class="fas fa-sort-amount-down "></i>
-                    </button>
-                </div>
                 <div class="col my-auto">
                     <div class="search-container searchDept float-left">
                         <input id="searchDep" type="text" placeholder="Search" class="searchHome "name="searchPatient" onkeyup="searchPatient()">
@@ -369,6 +361,34 @@ include_once("../includes/database.php") ?>
                     <button type="button" class="btn btn-outline-dark buttonTop3 float-right" onclick="openModal('archived')">
                         <i class="fas fa-inbox fa-lg"></i>
                     </button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="sfDiv col my-auto">
+                    <select class="form-select filterButton" id="filterReports" name="filterReports"
+                            onchange="filterReport(this)">
+                        <option value="" selected disabled hidden>Filter By</option>
+                        <option>All</option>
+                        <option>Dates</option>
+                        <option>Location</option>
+                        <option># of stubs</option>
+                    </select>
+                </div>
+                <div class="sfDiv col my-auto">
+                    <select class="form-select sortButton" id="sortReports" name="sortReports"
+                            onchange="sortReport(this)">
+                        <option value="" selected disabled hidden>Sort By</option>
+                        <option>Name Asc</option>
+                        <option>Name Desc</option>
+                        <option>Date Asc</option>
+                        <option>Date Desc</option>
+                        <option># of Stubs Asc</option>
+                        <option># of Stubs Desc</option>
+                    </select>
+                </div>
+
+                <div class="col-sm-auto">
+
                     <button type="button" class="btn btn-primary buttonTop3 float-right" onclick="openModal('vaccSiteModal')">
                         Vaccination Sites
                     </button>
@@ -383,10 +403,6 @@ include_once("../includes/database.php") ?>
                 </div>
 
             </div>
-
-
-
-
 
 
         </div>

@@ -31,7 +31,7 @@ if (isset($_POST['search'])) {
                 <td>$reporter</td>
                 <td>$dateReported</td>
                 <td>$status</td>
-                <td><button class='viewReportBtn' type='submit' value='$reportId' onclick='viewReport($reportId)'>Review Report</button></td>
+                <td><button class='badge badge-secondary' type='submit' value='$reportId' onclick='viewReport($reportId)'>Review Report</button></td>
                 </tr>";
     }
 }
@@ -74,7 +74,7 @@ if (isset($_POST['sort'])) {
                 <td>$reporter</td>
                 <td>$dateReported</td>
                 <td>$status</td>
-                <td><button class='viewReportBtn' type='submit' value='$reportId' onclick='viewReport($reportId)'>Review Report</button></td>
+                <td><button class='badge badge-secondary' type='submit' value='$reportId' onclick='viewReport($reportId)'>Review Report</button></td>
                 </tr>";
     }
 }
@@ -117,7 +117,7 @@ if (isset($_POST['filter'])) {
                 <td>$reporter</td>
                 <td>$dateReported</td>
                 <td>$status</td>
-                <td><button class='viewReportBtn' type='submit' value='$reportId' onclick='viewReport($reportId)'>Review Report</button></td>
+                <td><button class='badge badge-secondary' type='submit' value='$reportId' onclick='viewReport($reportId)'>Review Report</button></td>
                 </tr>";
     }
 }
@@ -158,7 +158,7 @@ if (isset($_POST['invalidated'])) {
                 <td>$reportId</td>
                 <td>$reporter</td>
                 <td>$dateReported</td>
-                <td><button class='viewReportBtn' type='submit' value='$reportId' onclick='viewInvalidatedReport($reportId)'>Review Report</button></td>
+                <td><button class='badge badge-secondary' type='submit' value='$reportId' onclick='viewInvalidatedReport($reportId)'>Review Report</button></td>
                 </tr>";
     }
     echo "

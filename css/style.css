@@ -381,7 +381,6 @@ input[type=text]{
     display: inline-block;
     border: 2px solid #ccc;
     border-radius: 8px;
-    max-height: fit-content;
 }
 
 
@@ -574,8 +573,16 @@ input[type=text1] {
 
 .tableReport {
     width: 80%!important;
+    background-color: white;
+    border-radius: 12px;
+    margin-top: 1%;
 }
 
+.tableVax{
+    background-color: white;
+    border-radius: 12px;
+    margin-top: 1%;
+}
 
 .depSum h5{
     padding: 2%;
@@ -834,7 +841,9 @@ input[type=text]:disabled{
 .tableDep{
     width: 73%!important;
     height: 60%;
-    margin-top: 2%;
+    margin: 1%;
+    background-color: white;
+    border-radius: 12px;
 }
 
 .tableModal{
@@ -962,18 +971,10 @@ h7~h8{
     margin-top: 2%;
 }
 
-.organizeDiv{
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-gap: 20px;
-    margin-bottom: 1%;
-    width: 35%;
-    float: left;
-}
 
 
 
-.organizeDiv select {
+.sfDiv select {
     /* styling */
     background-color: white;
     border: thin solid #000000;
@@ -981,7 +982,7 @@ h7~h8{
     display: inline-block;
     font: inherit;
     line-height: 1.5em;
-    padding: 0.5em 3.5em 0.5em 1em;
+    padding: 0.3em 3.5em 0.3em 1em;
 
     /* reset */
 
@@ -994,7 +995,6 @@ h7~h8{
 }
 
 
-/* arrows */
 
 select.sortButton, select.filterButton {
     background-image:
@@ -1032,6 +1032,10 @@ select.sortButton:focus, select.filterButton:focus {
 
 .sortButton{
     margin-right: 1%;
+}
+
+.sortButton, .filterButton{
+    width: 100%;
 }
 
  h5~select {
@@ -1201,7 +1205,7 @@ input[name=vitals]{
 .tableBrgy {
     background-color: white;
     border-radius: 12px;
-    margin-top: 2%;
+    margin-top: 1%;
 }
 
 #deploymentSummary{
@@ -1247,9 +1251,9 @@ input[name=vitals]{
     width: 25%;
     max-height: fit-content;
     min-height: 500px;
-    margin-left: 2%;
     padding: 1%;
-    margin-top: 2%;
+    margin-top: 1%;
+    background-color: white;
 }
 .bold{
     font-weight: 800!important;

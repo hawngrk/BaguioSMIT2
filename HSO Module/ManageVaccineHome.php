@@ -99,14 +99,14 @@ include_once("../includes/database.php") ?>
 
         <div class="container-fluid">
             <div class="row">
-                <div class="col">
+                <div class="col my-auto">
                     <button type="button" class="btn btn-outline-dark buttonTop3 float-left"> <i class="fas fa-filter"></i>
                     </button>
                     <button type="button" class="btn btn-outline-dark buttonTop3 float-left">
-                        <i class="fas fa-sort"></i>
+                        <i class="fas fa-sort-amount-down"></i>
                     </button>
                 </div>
-                <div class="col">
+                <div class="col-sm-auto">
                     <button type="button" class="btn btn-outline-dark buttonTop3 float-right" onclick="openModal('archived')">
                         <i class="fas fa-inbox fa-lg"></i>
                     </button>
@@ -118,8 +118,9 @@ include_once("../includes/database.php") ?>
             </div>
         </div>
 
-        <form id='addVaccineForm' method="post" enctype="multipart/form-data">
+
             <div id="vaccineModal" class="modal-window">
+                <form id='addVaccineForm' method="post" enctype="multipart/form-data">
                 <div class="content-modal">
                     <div class="modal-header">
                         <h2 id="headerAddVaccine"> Add Vaccine </h2>
@@ -168,8 +169,8 @@ include_once("../includes/database.php") ?>
             </div>
         </form>
 
-        <form id='newVaccineForm' method="post" enctype="multipart/form-data">
             <div id="newVaccineModal" class="modal-window">
+                <form id='newVaccineForm' method="post" enctype="multipart/form-data">
                 <div class="content-modal">
                     <div class="modal-header">
                         <h2 id="headerAddNewVaccine">Add New Vaccine</h2>

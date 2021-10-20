@@ -115,9 +115,9 @@ include_once("../includes/database.php") ?>
                     <div class="row" id="upload-content">
                         <div class="col">
                             <div class="col-md-12 text-center">
-                                <button class="button" id="iconBrowse"
+                                <button class="button btn btn-primary" id="iconBrowse"
                                         onclick="document.getElementById('fileUpload').click()">
-                                    <label for="fileUpload"><i class="fas fa-upload"></i></label>
+                                    Browse files
                                 </button>
                                 <input id="fileUpload" type="file" style="display: none"
                                        onchange="getUploadedFiles(this)" multiple/>

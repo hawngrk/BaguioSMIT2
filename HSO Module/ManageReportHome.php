@@ -99,35 +99,34 @@ include_once("../includes/database.php") ?>
             <div class="row">
                 <div class="col my-auto">
                     <div class="search-container">
-                        <form action="/action_page.php">
-                            <input type="text" class="searchReport" id="searchReportHSO" name="searchReport" placeholder="Search" onkeyup="searchReport()">
-
-                            <!--                    <button type="submit" id="searchReportBtn" name="searchReportBtn" onclick="searchReport()"><i-->
-                            <!--                                class="fa fa-search"></i></button>-->
-                        </form>
+                        <input type="text" class="searchReport" id="searchReportHSO" name="searchReport" placeholder="Search" onkeyup="searchReport()">
+                        <!--                    <button type="submit" id="searchReportBtn" name="searchReportBtn" onclick="searchReport()"><i-->
+                        <!--                                class="fa fa-search"></i></button>-->
                     </div>
                 </div>
                 <div class="col-sm-auto">
                     <button type="button" class="btn btn-primary buttonTop3" id="generateReportBtn" onclick="generateReport()">Generate Report</button>
-
                     <button type="button" class="btn btn-primary buttonTop3" id="invalidatedReportBtn" onclick="showInvalidatedReports()">Invalidated Reports</button>
-
                 </div>
 
+
                 <!--Search Input and Button-->
-
             </div>
-
-            <div class="organizeDiv">
-                    <select class="form-select col-lg-12 sortButton" id="sortReports" name="sortReports"
-                            onchange="sortReport(this)">
-                        <option value="" selected disabled hidden>Sort By</option>
-                        <option>Name Asc</option>
-                        <option>Name Desc</option>
-                        <option>Date Asc</option>
-                        <option>Date Desc</option>
-                    </select>
-                    <select class="form-select col-lg-12 filterButton" id="filterReports" name="filterReports"
+            <div class="sfDiv row">
+                <div class="col-sm-auto">
+                    <div class="sfDiv col-sm-auto">
+                        <select class="form-select sortButton" id="sortReports" name="sortReports"
+                                onchange="sortReport(this)">
+                            <option value="" selected disabled hidden>Sort By</option>
+                            <option>Name Asc</option>
+                            <option>Name Desc</option>
+                            <option>Date Asc</option>
+                            <option>Date Desc</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-auto">
+                    <select class="form-select filterButton" id="filterReports" name="filterReports"
                             onchange="filterReport(this)">
                         <option value="" selected disabled hidden>Filter By</option>
                         <option>All</option>
@@ -135,6 +134,7 @@ include_once("../includes/database.php") ?>
                         <option>Verified</option>
                         <option>Invalidated</option>
                     </select>
+                </div>
             </div>
         </div>
 
