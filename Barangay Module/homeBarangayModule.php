@@ -186,24 +186,42 @@ include_once("../includes/database.php")
         <br>
         <br>
         <!--Page Content-->
-        <div id="barangayHomeContent">
+        <div>
            <div class="row">
                <div id="selectDeployment">
-                   <select class="form-select" id="selectHealthDistrict">
-                       onchange="updateDeploymentDetails(this.value)">
+                   <select class="form-select" id="selectHealthDistrict"
+                       onchange="updateBarangayHome(this.value)">
                        <option value='' disabled selected hidden> Select Deployment</option>
                        <?php
                        require_once("../require/getVaccinationDrive.php");
-                       foreach ($vaccination_drive as $vaccinationDrive) {
-                           $id = $vaccinationDrive->getDriveId();
-                           echo "<option value=$id> $id </option>";
+                       require_once("../require/getVaccinationSites.php");
+                       $query = "SELECT drive_id FROM barangay_stubs WHERE barangay_id = '113'";
+                       $stmt = $database->stmt_init();
+                       $stmt->prepare($query);
+                       $stmt->execute();
+                       $stmt->bind_result($id);
+                       while ($stmt->fetch()) {
+                           foreach ($vaccination_drive as $drive) {
+                               if ($drive->getDriveId() == $id) {
+                                   $location = $drive->getVaccDriveVaccSiteId();
+                                   $date = date("d-m-Y", strtotime($drive->getVaccDate()));
+                                   foreach ($vaccinationSites as $site) {
+                                       if ($site->getVaccinationSiteId() == $location) {
+                                           $locName = $site->getVaccinationSiteLocation();
+
+
+                                           echo "<option value=$id> $date - $locName </option>";
+                                       }
+                                   }
+                               }
+                           }
                        }
                        ?>
                    </select>
                </div>
            </div>
             <br>
-            <div class="row">
+            <div class="row" id="barangayHomeContent">
                 <div id="stubDelegationNotice">
                     <center>
                         <h5>Stub Delegation Notice</h5>
@@ -307,15 +325,12 @@ include_once("../includes/database.php")
     });
 
     var channel = pusher.subscribe('barangay');
-    channel.bind('my-event', function (data) {
-        var id = data.message;
-
+    channel.bind('my-event', function () {
         toastr.options.positionClass = 'toast-bottom-right';
         toastr.info('You Have Received a New Set Of Stubs!');
 
         document.getElementById('marker').setAttribute('style', 'color:#c10d0d!important');
         document.getElementById("notificationContent").innerHTML = "";
-        document.getElementById("barangayHomeContent").innerHTML = "";
 
 
         $.ajax({
@@ -324,15 +339,6 @@ include_once("../includes/database.php")
             data: {"notifStubs": ""},
             success: function (result) {
                 document.getElementById("notificationContent").innerHTML = result;
-            }
-        });
-
-        $.ajax({
-            url: 'ManagePatientProcessor.php',
-            type: 'POST',
-            data: {"delegation": id},
-            success: function (result) {
-                document.getElementById("barangayHomeContent").innerHTML = result;
             }
         });
     });
@@ -366,6 +372,17 @@ include_once("../includes/database.php")
         });
 
 
+    }
+
+    function updateBarangayHome(id){
+        $.ajax({
+            url: 'ManagePatientProcessor.php',
+            type: 'POST',
+            data: {"delegation": id},
+            success: function (result) {
+                document.getElementById("barangayHomeContent").innerHTML = result;
+            }
+        });
     }
 </script>
 
