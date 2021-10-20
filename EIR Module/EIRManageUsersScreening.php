@@ -50,9 +50,10 @@
             <hr>
             <h4 id="headingNav1">Entry Immunization Register</h4>
             <hr>
-            <h5 id="headingNav2">
-                <script src="../javascript/showDateAndTime.js"></script>
-            </h5>
+            <div class="timeBox">
+                    <p id="time"></p>  <p id="datee"></p>
+                    <script src="../javascript/detailedDateAndTime.js"></script>
+                    </div>
             <hr>
             <li>
                 <a href="../EIR Module/EIRHomeScreening.php"><i class="fas fa-home"></i></i> Home</a>
