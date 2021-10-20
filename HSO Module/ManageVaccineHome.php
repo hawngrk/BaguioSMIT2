@@ -140,38 +140,44 @@ include_once("../includes/database.php") ?>
                         <span id="addVaccineClose" class="close">&times;</span>
                     </div>
                     <div class="modal-body">
-                        <label for="selectedVaccine"> Select a Vaccine: </label>
-                        <select class="form-select col-lg-12 vaccineType" id="selectedVaccine" name="selectedVaccine" onchange="updateVaccineInfo(this)">
-                            <?php
-                            include '../includes/database.php';
-                            $getVaccinesQuery = "SELECT vaccine_name FROM vaccine";
-                            $stmt = $database->stmt_init();
-                            $stmt->prepare($getVaccinesQuery);
-                            $stmt->execute();
-                            $stmt->bind_result($vaccine);
-                            $listVaccines = [];
-                            while ($stmt->fetch()) {
-                                $listVaccines[] = $vaccine;
-                            }
-                            foreach ($listVaccines as $vac) {
-                                echo "<option>$vac</option>";
-                            }
-                            ?>
-                        </select>
-                        <br>
-                        <br>
-                        <label for="qty"> Total Vial Quantity Received: </label>
-                        <input type="text" id="qty"><br>
-                        <label for="dateStored">Date Stored</label>
-                        <input type='date' id="dateStored" name="dateStored">
-                        <label for="dateExp">Date of Expiration</label>
-                        <input type='date' id="dateExp" name="dateExp">
-                        <label for="source"> Vaccine Source: </label>
-                        <select id="source">
-                            <option selected disabled>Select Vaccine Source</option>
-                            <option value="National Government">National Government</option>
-                            <option value="Department Of Health">Department Of Health</option>
-                        </select>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label for="selectedVaccine"> Select a Vaccine: </label>
+                                <select class="form-select vaccineType" id="selectedVaccine" name="selectedVaccine" onchange="updateVaccineInfo(this)">
+                                    <?php
+                                    include '../includes/database.php';
+                                    $getVaccinesQuery = "SELECT vaccine_name FROM vaccine";
+                                    $stmt = $database->stmt_init();
+                                    $stmt->prepare($getVaccinesQuery);
+                                    $stmt->execute();
+                                    $stmt->bind_result($vaccine);
+                                    $listVaccines = [];
+                                    while ($stmt->fetch()) {
+                                        $listVaccines[] = $vaccine;
+                                    }
+                                    foreach ($listVaccines as $vac) {
+                                        echo "<option>$vac</option>";
+                                    }
+                                    ?>
+                                </select>
+                                <label for="qty"> Total Vial Quantity Received: </label>
+                                <input type="text" id="qty"><br>
+                                <label for="source"> Vaccine Source: </label>
+                                <select id="source">
+                                    <option selected disabled>Select Vaccine Source</option>
+                                    <option value="National Government">National Government</option>
+                                    <option value="Department Of Health">Department Of Health</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="dateStored">Date Stored</label>
+                                <input type='date' id="dateStored" name="dateStored">
+                                <label for="dateExp">Date of Expiration</label>
+                                <input type='date' id="dateExp" name="dateExp">
+                            </div>
+                        </div>
+
+
                     </div>
                     <div class="modal-footer">
                         <button id="cancelBtnVaccine" class="btn btn-secondary">Cancel</button>

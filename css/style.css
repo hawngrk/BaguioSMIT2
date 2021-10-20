@@ -496,9 +496,9 @@ input[type=textDesc]{
 .minimumTemperature,
 .maximumTemperature,
 .lifeSpan {
-    width: 5in;
     height: auto;
 }
+
 
 .AddHealthD-option > ul{
     list-style-type: none;
@@ -518,6 +518,10 @@ input[type=text1] {
     background: whitesmoke;
     width: 75%;
     height: auto;
+}
+
+.vaccineType, #qty{
+    width: 95%;
 }
 
 .viewReportBtn {
@@ -949,6 +953,10 @@ h7~h8{
     border: 2px solid #ccc;
     border-radius: 8px;
 }
+#dateStored, #dateExp {
+    width: 90%;
+}
+
 
 .sortPosition{
     margin-left: 2%;

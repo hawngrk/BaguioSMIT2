@@ -141,7 +141,7 @@ include_once("../includes/database.php") ?>
 
 
         <div class="row">
-            <div class="col-lg-auto">
+            <div class="col">
                 <table class="table table-row table-hover tableReport" id="reportsTable">
                     <thead>
                     <tr>
@@ -188,7 +188,7 @@ include_once("../includes/database.php") ?>
 
                 </table>
             </div>
-            <div class="col">
+            <div class="col-sm-auto">
                 <div class="counterColumn">
                     <div class="four counterRow">
                         <div class="counter-box colored1">
