@@ -1173,11 +1173,8 @@ input[name=vitals]{
 }
 
 #postVac {
-    width: 110%;
-    font-size: smaller;
-    color: white!important;
-    border-radius: 14px;
-    border: solid 1px black;
+    font-size: 120% ;
+    color: #070101 !important;
 }
 
 /* ------------------------------------------------------------------- */
