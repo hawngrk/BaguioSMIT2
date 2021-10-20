@@ -108,20 +108,6 @@ include_once("../includes/database.php")
         <br>
 
         <!--Page Content-->
-        <div class="row">
-            <div id="selectDeployment">
-                <select class="form-select" id="selectHealthDistrict" onchange="updateDeploymentDetails(this.value)">
-                    <option value='' disabled selected hidden> Select Deployment </option>
-                    <?php
-                    require_once("../require/getVaccinationDrive.php");
-                    foreach ($vaccination_drive  as $vaccinationDrive) {
-                        $id = $vaccinationDrive->getDriveId();
-                        echo "<option value=$id> $id </option>";
-                    }
-                    ?>
-                </select>
-            </div>
-        </div>
         <table class="table table-row table-hover tableBrgy" id="patientTable">
             <thead>
             <tr>
@@ -137,7 +123,16 @@ include_once("../includes/database.php")
             <div class="patientQCounter">
                 <h6>Number of Available Stubs</h6>
                 <?php
-                $query = "SELECT ";
+                $query = "SELECT drive_id, stubs FROM vaccination_drive WHERE vaccination_date = (SELECT min(vaccination_date) FROM vaccination_drive WHERE vaccination_date >= CURDATE());";
+                $stmt = $database->stmt_init();
+                $stmt->prepare($query);
+                $stmt->execute();
+                $stmt->bind_result($drive, $stubs);
+                $stmt->fetch();
+                $stmt->close();
+
+                echo "<p>$stubs</p>";
+
                 ?>
             </div>
             <div class="patientQCounter">
