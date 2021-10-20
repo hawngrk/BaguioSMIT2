@@ -42,14 +42,6 @@
     margin-bottom: 2%;
 }
 
-.table-title{
-    margin-bottom: 2%;
-}
-
-#patientTable{
-    padding: 2%;
-}
-
 /* Home Page -- EIR Module*/
 .vaccination, .deployments{
     background-color: white;

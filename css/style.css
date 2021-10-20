@@ -1097,7 +1097,7 @@ select.sortButton:focus, select.filterButton:focus {
 }
 
 .sortButton, .filterButton{
-    width: 95%;
+    width: 89%;
 }
 
  h5~select {
@@ -1196,7 +1196,7 @@ input[name=vitals]{
 }
 
 #postVac {
-    font-size: 120% ;
+    font-size: 110% ;
     color: #070101 !important;
 }
 
@@ -1261,10 +1261,9 @@ input[name=vitals]{
     margin-left: 3%;
 }
 
-.tableBrgy {
+/*HSO*/
+.tablePatient,.tableVaccine{
     background-color: white;
-    border-radius: 12px;
-    margin-top: 1%;
 }
 
 #deploymentSummary{
@@ -1403,4 +1402,19 @@ input[name=vitals]{
     margin: bottom 0%!important;
     width: 205%;
     display: flex;
+}
+
+/*CSS for Search bar div and table*/
+.table-title{
+    margin-bottom: 2%;
+}
+
+#tablePadding{
+    padding: 2%;
+}
+
+/*CSS for HSO*/
+.tableContainer{
+    background-color: #ececec;
+    padding: 2%;
 }

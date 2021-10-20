@@ -33,7 +33,6 @@ include_once("../includes/database.php") ?>
             crossorigin="anonymous"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-    <script defer src="../javascript/showDateAndTime.js"> </script>
 </head>
 
 <body>
@@ -42,14 +41,14 @@ include_once("../includes/database.php") ?>
     <nav id="sidebar">
         <div class="sidebar-header">
             <div class="sidebar-brand-icon">
-            <img src="../img/logoo.png" style="width: 104%; margin-bottom:-19%; margin-top:-5%;" alt="Baguio Logo">
+                <img src="../img/logoo.png" style="width: 104%; margin-bottom:-19%; margin-top:-5%;" alt="Baguio Logo">
             </div>
         </div>
 
         <ul class="list-unstyled components">
             <h4 id="headingNav1"> Health Service Office </h4>
             <hr>
-            <h5 id="headingNav2"> September 17, 2021 | 01:24 PM</h5>
+            <h5 id="headingNav2"> <script src="../javascript/showDateAndTime.js"> </script> </h5>
             <hr>
             <li>
                 <a href="#"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
@@ -80,48 +79,123 @@ include_once("../includes/database.php") ?>
 
     <!-- Top Nav Bar  -->
     <div id="content">
-
-
-        <!-- Page Content  -->
-
-
-        <div class="container-fluid">
-            <div class="row">
-                <div class="sfDiv col-md-1.5 my-auto">
-                    <select class="form-select filterButton" id="filterReports" name="filterReports"
-                            onchange="filterReport(this)">
-                        <option value="" selected disabled hidden>Filter By</option>
-                        <option>All</option>
-                        <option>Unverified</option>
-                        <option>Verified</option>
-                        <option>Invalidated</option>
-                    </select>
-                </div>
-                <div class="sfDiv col-md-1.5 my-auto">
-                    <select class="form-select sortButton" id="sortReports" name="sortReports"
-                            onchange="sortReport(this)">
-                        <option value="" selected disabled hidden>Sort By</option>
-                        <option>Name Asc</option>
-                        <option>Name Desc</option>
-                        <option>Date Asc</option>
-                        <option>Date Desc</option>
-                    </select>
-                </div>
-
-                <div class="col">
-                    <button type="button" class="btn btn-warning buttonTop3 float-right" onclick="openModal('archived')">
-                        <i class="fas fa-inbox fa-lg"></i>
+        <!--Top Nav-->
+        <div class="navbar navbar-expand-lg navbar-light bg-light shadow-sm p-3 mb-4 rounded-lg">
+            <div class="container-fluid">
+                <div>
+                    <button id="addVaccineBtn" type="button" class="shadow-lg  buttonTop3 float-right"><i
+                                class="fas fa-plus"></i> Add Vaccine
+                    </button>
+                    <button id="addNewVaccineBtn" type="button" class="shadow-lg  buttonTop3 float-right"><i
+                                class="fas fa-syringe"></i> Add New Vaccine
                     </button>
 
-                    <button id="addVaccineBtn" type="button" class=" buttonTop3 float-right"><i class="fas fa-plus"></i> Add Vaccine</button>
-                    <button id="addNewVaccineBtn" type="button" class="buttonTop3 float-right"><i class="fas fa-syringe"></i> Add New Vaccine</button>
+                </div>
+                <button type="button" class="btn btn-warning buttonTop3 float-right" onclick="openModal('archived')">
+                    <i class="fas fa-inbox fa-lg"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="tableContainer">
+            <div class="table-title">
+                <div class="row">
+                    <div class="col">
+                        <div class="input-group">
+                            <input type="search" class="form-control" placeholder="Search"/>
+                            <button type="button" class="btn btn-primary">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-sm-auto">
+                        <div class="row">
+                            <div class="sfDiv col-md-1.5 my-auto">
+                                <select class="form-select filterButton" id="filterReports" name="filterReports"
+                                        onchange="filterReport(this)">
+                                    <option value="" selected disabled hidden>Filter By</option>
+                                    <option>All</option>
+                                    <option>Unverified</option>
+                                    <option>Verified</option>
+                                    <option>Invalidated</option>
+                                </select>
+                            </div>
+                            <div class="sfDiv col-md-1.5 my-auto">
+                                <select class="form-select sortButton" id="sortReports" name="sortReports"
+                                        onchange="sortReport(this)">
+                                    <option value="" selected disabled hidden>Sort By</option>
+                                    <option>Name Asc</option>
+                                    <option>Name Desc</option>
+                                    <option>Date Asc</option>
+                                    <option>Date Desc</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+                <div class="tableVaccine tableScroll2 shadow">
+                    <table class="table table-hover" id="vaccineTable">
+                        <thead>
+                        <tr>
+                            <th>Vaccine Lot ID</th>
+                            <th>Vaccine Name</th>
+                            <th>Vaccine Source</th>
+                            <th>Date Received</th>
+                            <th>Expiration</th>
+                            <th>Bottle Quantity</th>
+                            <th>Action</th>
+                        </tr>
+                        </thead>
+                        <?php
+                        require_once '../require/getVaccine.php';
+                        require_once '../require/getVaccineBatch.php';
+                        require_once '../require/getVaccineLot.php';
+
+                        $count = 0;
+                        foreach ($vaccineLots as $vl) {
+                            if ($vl->getArchived() == 0) {
+                                $count++;
+                                $vaccineLotId = $vl->getVaccLotId();
+                                $vaccLotVaccId = $vl->getVaccLotVaccId();
+                                $dateStored = $vl->getDateVaccStored();
+                                $batchQty = $vl->getVaccBatchQty();
+                                $source = $vl->getSource();
+                                $vaccExp = $vl->getExpiration();
+
+
+                                foreach ($vaccines as $vac) {
+                                    if ($vaccLotVaccId == $vac->getVaccId()) {
+                                        $vaccName = $vac->getVaccName();
+                                    }
+                                }
+
+                                echo "<tr>
+                            <td>$vaccineLotId</td>
+                            <td>$vaccName</td>
+                            <td>$source</td>
+                            <td>$dateStored</td>
+                            <td>$vaccExp</td>
+                            <td>$batchQty</td>
+                            <td>
+                                <div style='text-align: left;'>
+                                      <button class='buttonTransparent' onclick='archive(1, clickArchive, $vaccineLotId)'><i class='fa fa-archive'></i></button>
+                                </div>
+                            </td>
+                            </tr>";
+                            }
+                        }
+                        ?>
+                    </table>
                 </div>
             </div>
         </div>
 
 
-            <div id="vaccineModal" class="modal-window">
-                <form id='addVaccineForm' method="post" enctype="multipart/form-data">
+        <!--Modals-->
+        <div id="vaccineModal" class="modal-window">
+            <form id='addVaccineForm' method="post" enctype="multipart/form-data">
                 <div class="content-modal">
                     <div class="modal-header">
                         <h2 id="headerAddVaccine"> Add Vaccine </h2>
@@ -173,11 +247,11 @@ include_once("../includes/database.php") ?>
 
                     </div>
                 </div>
-            </div>
+        </div>
         </form>
 
-            <div id="newVaccineModal" class="modal-window">
-                <form id='newVaccineForm' method="post" enctype="multipart/form-data">
+        <div id="newVaccineModal" class="modal-window">
+            <form id='newVaccineForm' method="post" enctype="multipart/form-data">
                 <div class="content-modal">
                     <div class="modal-header">
                         <h2 id="headerAddNewVaccine">Add New Vaccine</h2>
@@ -224,13 +298,13 @@ include_once("../includes/database.php") ?>
                                 <input type="text3"  class="form-control" id="lifeSpan" placeholder="Life Span">
                             </div>
                         </div>
-                    <div class="modal-footer">
-                        <button id="cancelBtnNewVaccine" class="btn btn-secondary"> Cancel</button>
-                        <button type='submit' id='addBtnNewVaccine' class="btn btn-success" name='addBtnNewVaccine' onclick="addNewVaccine()"> Add </button>
-                    </div>
+                        <div class="modal-footer">
+                            <button id="cancelBtnNewVaccine" class="btn btn-secondary"> Cancel</button>
+                            <button type='submit' id='addBtnNewVaccine' class="btn btn-success" name='addBtnNewVaccine' onclick="addNewVaccine()"> Add </button>
+                        </div>
                     </div>
                 </div>
-            </div>
+        </div>
         </form>
 
         <div id="archived" class="modal-window">
@@ -302,69 +376,6 @@ include_once("../includes/database.php") ?>
                 </div>
             </div>
         </div>
-
-<!--        <div class="search-container">-->
-<!--            <input type="text" id="searchVaccine" class="searchHome" name="searchVaccine" placeholder="Search" onkeyup="searchVaccine()">-->
-<!--            <button type="submit" id="searchVaccineBtn" name="searchVaccineBtn" onclick="searchVaccine()"><i class="fa fa-search"></i></button>-->
-<!--        </div>-->
-
-        <div class="tableScroll2">
-            <table class="table table-row table-hover tableVax" id="vaccineTable">
-                <thead>
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Vaccine Lot ID</th>
-                    <th scope="col">Vaccine Name</th>
-                    <th scope="col">Vaccine Source</th>
-                    <th scope="col">Date Received</th>
-                    <th scope="col">Expiration</th>
-                    <th scope="col">Bottle Quantity</th>
-                    <th scope="col">Action</th>
-                </tr>
-                </thead>
-                <?php
-                require_once '../require/getVaccine.php';
-                require_once '../require/getVaccineBatch.php';
-                require_once '../require/getVaccineLot.php';
-
-                $count = 0;
-                foreach ($vaccineLots as $vl) {
-                    if($vl->getArchived() == 0) {
-                        $count++;
-                        $vaccineLotId = $vl->getVaccLotId();
-                        $vaccLotVaccId = $vl->getVaccLotVaccId();
-                        $dateStored = $vl->getDateVaccStored();
-                        $batchQty = $vl->getVaccBatchQty();
-                        $source = $vl->getSource();
-                        $vaccExp = $vl->getExpiration();
-
-
-                        foreach ($vaccines as $vac) {
-                            if ($vaccLotVaccId == $vac->getVaccId()) {
-                                $vaccName = $vac->getVaccName();
-                            }
-                        }
-
-                        echo "<tr>
-                <td>$count</td>
-                <td>$vaccineLotId</td>
-                <td>$vaccName</td>
-                <td>$source</td>
-                <td>$dateStored</td>
-                <td>$vaccExp</td>
-                <td>$batchQty</td>
-                <td>
-                    <div style='text-align: left;'>
-                          <button class='buttonTransparent' onclick='archive(1, clickArchive, $vaccineLotId)'><i class='fa fa-archive'></i></button>
-                    </div>
-                </td>
-                </tr>";
-                    }
-                }
-                ?>
-            </table>
-        </div>
-
     </div>
 </div>
 

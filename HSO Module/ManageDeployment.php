@@ -35,7 +35,7 @@ include_once("../includes/database.php") ?>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-    <script defer src="../javascript/showDateAndTime.js"> </script>
+    <script defer src="../javascript/showDateAndTime.js"></script>
 
 </head>
 
@@ -53,7 +53,9 @@ include_once("../includes/database.php") ?>
             <hr>
             <h4 id="headingNav1"> Health Service Office </h4>
             <hr>
-            <h5 id="headingNav2"> September 17, 2021 | 01:24 PM</h5>
+            <h5 id="headingNav2">
+                <script src="../javascript/showDateAndTime.js"></script>
+            </h5>
             <hr>
 
             <li>
@@ -85,12 +87,138 @@ include_once("../includes/database.php") ?>
 
     <!-- Top Nav Bar  -->
     <div id="content">
-        
         <!-- Page Content  -->
+        <div class="navbar navbar-expand-lg navbar-light bg-light shadow-sm p-3 mb-4 rounded-lg">
+            <div class="container-fluid">
+                <div>
+                    <button type="button" class="buttonTop3 float-left" onclick="openModal('DeployModal')">
+                        <i class="fas fa-plus"></i>
+                        Add Deployment
+                    </button>
+
+                    <button id="HealthDBtn" type="button" class="buttonTop3 float-left" onclick="openModal('HealthD')">
+                        <i class="fas fa-file-medical"></i>
+                        Health Districts
+                    </button>
+
+                    <button type="button" class=" buttonTop3" onclick="openModal('vaccSiteModal')">
+                        <i class="fas fa-hospital"></i>
+                        Vaccination Sites
+                    </button>
+                </div>
+
+                <button type="button" class="btn btn-warning buttonTop3" onclick="openModal('archived')">
+                    <i class="fas fa-inbox fa-lg"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="tableContainer">
+            <div class="table-title">
+                <div class="row">
+                    <div class="col">
+                        <div class="input-group">
+                            <input type="search" class="form-control" placeholder="Search"/>
+                            <button type="button" class="btn btn-primary">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-sm-auto">
+                        <div class="row">
+                            <div class="sfDiv col-md-1.5 my-auto">
+                                <select class="form-select filterButton" id="filterReports" name="filterReports"
+                                        onchange="filterReport(this)">
+                                    <option value="" selected disabled hidden>Filter By</option>
+                                    <option>All</option>
+                                    <option>Unverified</option>
+                                    <option>Verified</option>
+                                    <option>Invalidated</option>
+                                </select>
+                            </div>
+                            <div class="sfDiv col-md-1.5 my-auto">
+                                <select class="form-select sortButton" id="sortReports" name="sortReports"
+                                        onchange="sortReport(this)">
+                                    <option value="" selected disabled hidden>Sort By</option>
+                                    <option>Name Asc</option>
+                                    <option>Name Desc</option>
+                                    <option>Date Asc</option>
+                                    <option>Date Desc</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="unarchiveContent" class="row">
+                <div class="tableScroll1 col">
+                    <table class="table table-hover tableDep" id="driveTable">
+                        <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Drive Id</th>
+                            <th scope="col">Location</th>
+                            <th scope="col">Date</th>
+                            <th scope="col">No. of Stubs</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                        </thead>
+                        <?php
+                        require_once '../require/getVaccinationDrive.php';
+                        require_once '../require/getVaccinationSites.php';
+
+                        $count = 0;
+                        foreach ($vaccination_drive as $vd) {
+                            if ($vd->getArchive() == 0) {
+                                $count++;
+                                $driveId = $vd->getDriveId();
+                                $date = $vd->getVaccDate();
+                                $stubs = $vd->getVaccStubs();
 
 
+                                foreach ($vaccinationSites as $vs) {
+                                    if ($vs->getVaccinationSiteId() == $vd->getVaccDriveVaccSiteId()) {
+                                        $vaccinationSite = $vs->getVaccinationSiteLocation();
+                                    }
+                                }
+
+                                echo "<tr class='table-row' onclick='showDrive(this)'>
+                        <td>$count</td>
+                        <td>$driveId</td>
+                        <td>$vaccinationSite</td>
+                        <td>$date</td>
+                        <td>$stubs</td>
+                        <td>
+                            <div style='text-align: left;'>
+                                <button class='buttonTransparent' onclick='event.stopPropagation(); archive(1, clickArchive, $driveId)'><i class='fa fa-archive'></i></button>
+                            </div>
+                        </td>
+             
+                      </tr>";
+                            }
+                        }
+                        ?>
+                    </table>
+                </div>
+                <div class="col-sm-auto">
+                    <div class="depSummary">
+                        <div class="four listPatientRow">
+                            <div class="listPatient-box colored">
+                                <center><h3>Deployment Summary</h3></center>
+                            </div>
+                        </div>
+                        <div class="four listPatientRow row2">
+                            <div id="listPatientContent" class="listPatient-box colored">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
 
+        <!--Deployment Form Modal-->
         <form id='newDeploymentForm' method="post" enctype="multipart/form-data">
             <div id="DeployModal" class="modal-window">
                 <div class="content-modal">
@@ -208,7 +336,7 @@ include_once("../includes/database.php") ?>
                         Add Health District
                     </button>
                     <div id="distContent">
-                        <table class="table table-row table-hover">
+                        <table class="table table-hover">
                             <thead>
                             <tr>
                                 <th scope="col">#</th>
@@ -340,106 +468,42 @@ include_once("../includes/database.php") ?>
 
             </div>
         </div>
+    </div>
 
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col my-auto">
-                    <div class="search-container searchDept float-left">
-                        <input id="searchDep" type="text" placeholder="Search" class="searchHome "name="searchPatient" onkeyup="searchPatient()">
-                    </div>
-                </div>
-                <div class="col-sm-auto">
-                    <button type="button" class="btn btn-warning buttonTop3" onclick="openModal('archived')">
-                        <i class="fas fa-inbox fa-lg"></i>
-                    </button>
-                </div>
+    <div id="vaccSiteModal" class="modal-window">
+        <div class="content-modal">
+            <div class="modal-header">
+                <h4 class="modal-title">Vaccination Sites</h4>
+                <button type="button" class="close" data-dismiss="modal" onclick="closeModal('vaccSiteModal')">
+                    &times;
+                </button>
             </div>
-            <div class="row">
-                <div class="sfDiv col-md-1.5 my-auto">
-                    <select class="form-select filterButton" id="filterReports" name="filterReports"
-                            onchange="filterReport(this)">
-                        <option value="" selected disabled hidden>Filter By</option>
-                        <option>All</option>
-                        <option>Dates</option>
-                        <option>Location</option>
-                        <option># of stubs</option>
-                    </select>
-                </div>
-                <div class="sfDiv col-md-1.5 my-auto">
-                    <select class="form-select sortButton" id="sortReports" name="sortReports"
-                            onchange="sortReport(this)">
-                        <option value="" selected disabled hidden>Sort By</option>
-                        <option>Name Asc</option>
-                        <option>Name Desc</option>
-                        <option>Date Asc</option>
-                        <option>Date Desc</option>
-                        <option># of Stubs Asc</option>
-                        <option># of Stubs Desc</option>
-                    </select>
-                </div>
+            <div class="modal-body">
+                <button type="button" class="siteAddButton" onclick=" openModal('addVaccSite')">
+                    <i class="fas fa-plus"></i>
+                    Add Vaccination Site
+                </button>
+                <div id="siteContent">
+                    <table class="table table-row table-hover">
+                        <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Vaccination Site Id</th>
+                            <th scope="col">Location</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                        </thead>
 
-                <div class="col">
-                    <div class="col">
-                        <button type="button" class=" buttonTop3" onclick="openModal('vaccSiteModal')">
-                            <i class="fas fa-hospital"></i>
-                             Vaccination Sites
-                        </button>
-                    </div>
-                    <div class="col">
-                        <button id="HealthDBtn" type="button" class="buttonTop3" onclick="openModal('HealthD')">
-                            <i class="fas fa-file-medical"></i>
-                             Health Districts
-                        </button>
-                    </div>
-                    <div class="col">
-                        <button type="button" class="buttonTop3" onclick="openModal('DeployModal')">
-                            <i class="fas fa-plus"></i>
-                             Add Deployment
-                        </button>
-                    </div>
-                </div>
+                        <?php
+                        require_once '../require/getVaccinationSites.php';
 
+                        $count = 0;
+                        foreach ($vaccinationSites as $vs) {
+                            $count++;
+                            $siteId = $vs->getVaccinationSiteId();
+                            $vaccinationSite = $vs->getVaccinationSiteLocation();
 
-
-            </div>
-
-
-        </div>
-
-        <div id="vaccSiteModal" class="modal-window">
-            <div class="content-modal">
-                <div class="modal-header">
-                    <h4 class="modal-title">Vaccination Sites</h4>
-                    <button type="button" class="close" data-dismiss="modal" onclick="closeModal('vaccSiteModal')">
-                        &times;
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <button type="button" class="siteAddButton" onclick=" openModal('addVaccSite')">
-                        <i class="fas fa-plus"></i>
-                        Add Vaccination Site
-                    </button>
-                    <div id="siteContent">
-                        <table class="table table-row table-hover">
-                            <thead>
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Vaccination Site Id</th>
-                                <th scope="col">Location</th>
-                                <th scope="col">Action</th>
-                            </tr>
-                            </thead>
-
-                            <?php
-                            require_once '../require/getVaccinationSites.php';
-
-                            $count = 0;
-                            foreach ($vaccinationSites as $vs) {
-                                $count++;
-                                $siteId = $vs->getVaccinationSiteId();
-                                $vaccinationSite = $vs->getVaccinationSiteLocation();
-
-                                echo "<tr class='table-row''>
+                            echo "<tr class='table-row''>
                                     <td>$count</td>
                                     <td>$siteId</td>
                                     <td>$vaccinationSite</td>
@@ -449,112 +513,48 @@ include_once("../includes/database.php") ?>
                                         </div>
                                     </td>
                                   </tr>";
-                            }
-                            ?>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
-        <div id="addVaccSite" class="modal-window">
-            <div class="content-modal">
-                <div class="modal-header">
-                    <h4 class="modal-title">Add Vaccination Site</h4>
-                    <button type="button" class="close" data-dismiss="modal" onclick="closeModal('addVaccSite')">
-                        &times;
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <label>Vaccine Site Location:</label>
-                    <input class="districtWidth" type="text" id="newVaccinationSite" name="newVaccinationSite">
-
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-outline-dark" onclick="closeModal('addVaccSite')"> Cancel
-                        </button>
-                        <button type="button" class="btn btn-success"
-                                onclick='add("Vaccination Site",addSite, "vaccSiteModal")'> Add
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div id="archived" class="modal-window">
-            <div class="content-modal-table">
-                <div class="modal-header">
-                    <h4 class="modal-title">Archived Vaccination Drives</h4>
-                    <button type="button" class="close" data-dismiss="modal" onclick="closeModal('archived')">
-                        &times;
-                    </button>
-                </div>
-                <div id = 'archivedContent' class="modal-body">
-                    <table class="table table-row table-hover tableModal">
-                        <thead>
-                        <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Drive Id</th>
-                            <th scope="col">Location</th>
-                            <th scope="col">Date</th>
-                            <th scope="col">No. of Stubs</th>
-                            <th scope="col">Action</th>
-                        </tr>
-                        </thead>
-
-                        <?php
-                        require_once '../require/getVaccinationDrive.php';
-                        require_once '../require/getVaccinationSites.php';
-
-                        $count = 0;
-                        foreach ($vaccination_drive as $vd) {
-                            if ($vd->getArchive() == 1) {
-                                $count++;
-                                $driveId = $vd->getDriveId();
-                                $date = $vd->getVaccDate();
-                                $stubs = $vd->getVaccStubs();
-
-
-                                foreach ($vaccinationSites as $vs) {
-                                    if ($vs->getVaccinationSiteId() == $vd->getVaccDriveVaccSiteId()) {
-                                        $vaccinationSite = $vs->getVaccinationSiteLocation();
-                                    }
-                                }
-
-                                echo "<tr class='table-row'>
-                        <td>$count</td>
-                        <td>$driveId</td>
-                        <td>$vaccinationSite</td>
-                        <td>$date</td>
-                        <td>$stubs</td>
-                        <td>
-                            <div style='text-align: left;'>
-                                <button class='btn btn-warning' onclick='archive(0, clickArchive, $driveId )'>unarchive <i class='fas fa-box-open'></i></button>
-                            </div>
-                        </td>
-             
-                      </tr>";
-                            }
                         }
-
                         ?>
                     </table>
                 </div>
             </div>
         </div>
+    </div>
 
 
-        <!-- Search Container-->
-<!--        <div class="search-container">-->
-<!--            <input type="text" id="searchDrive" name="searchDrive" placeholder="Search"-->
-<!--                   onkeyup="searchDrive()">-->
-<!--            <button type="submit" name="searchDriveBtn" onclick="searchDrive()"><i-->
-<!--                        class="fa fa-search"></i></button>-->
-<!--        </div>-->
+    <div id="addVaccSite" class="modal-window">
+        <div class="content-modal">
+            <div class="modal-header">
+                <h4 class="modal-title">Add Vaccination Site</h4>
+                <button type="button" class="close" data-dismiss="modal" onclick="closeModal('addVaccSite')">
+                    &times;
+                </button>
+            </div>
+            <div class="modal-body">
+                <label>Vaccine Site Location:</label>
+                <input class="districtWidth" type="text" id="newVaccinationSite" name="newVaccinationSite">
 
-        <div id="unarchiveContent" class="row">
-            <div class="tableScroll1 col ">
-                <table class="table table-row table-hover tableDep" id = "driveTable">
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-dark" onclick="closeModal('addVaccSite')"> Cancel
+                    </button>
+                    <button type="button" class="btn btn-success"
+                            onclick='add("Vaccination Site",addSite, "vaccSiteModal")'> Add
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="archived" class="modal-window">
+        <div class="content-modal-table">
+            <div class="modal-header">
+                <h4 class="modal-title">Archived Vaccination Drives</h4>
+                <button type="button" class="close" data-dismiss="modal" onclick="closeModal('archived')">
+                    &times;
+                </button>
+            </div>
+            <div id='archivedContent' class="modal-body">
+                <table class="table table-row table-hover tableModal">
                     <thead>
                     <tr>
                         <th scope="col">#</th>
@@ -565,13 +565,14 @@ include_once("../includes/database.php") ?>
                         <th scope="col">Action</th>
                     </tr>
                     </thead>
+
                     <?php
                     require_once '../require/getVaccinationDrive.php';
                     require_once '../require/getVaccinationSites.php';
 
                     $count = 0;
                     foreach ($vaccination_drive as $vd) {
-                        if ($vd->getArchive() == 0) {
+                        if ($vd->getArchive() == 1) {
                             $count++;
                             $driveId = $vd->getDriveId();
                             $date = $vd->getVaccDate();
@@ -584,7 +585,7 @@ include_once("../includes/database.php") ?>
                                 }
                             }
 
-                            echo "<tr class='table-row' onclick='showDrive(this)'>
+                            echo "<tr class='table-row'>
                         <td>$count</td>
                         <td>$driveId</td>
                         <td>$vaccinationSite</td>
@@ -592,7 +593,7 @@ include_once("../includes/database.php") ?>
                         <td>$stubs</td>
                         <td>
                             <div style='text-align: left;'>
-                                <button class='buttonTransparent' onclick='event.stopPropagation(); archive(1, clickArchive, $driveId)'><i class='fa fa-archive'></i></button>
+                                <button class='btn btn-warning' onclick='archive(0, clickArchive, $driveId )'>unarchive <i class='fas fa-box-open'></i></button>
                             </div>
                         </td>
              
@@ -603,321 +604,309 @@ include_once("../includes/database.php") ?>
                     ?>
                 </table>
             </div>
-            <div class="col-sm-auto">
-                <div class="depSummary">
-                    <div class="four listPatientRow">
-                        <div class="listPatient-box colored">
-                            <center><h3>Deployment Summary</h3></center>
-                        </div>
-                    </div>
-                    <div class="four listPatientRow row2">
-                        <div id="listPatientContent" class="listPatient-box colored">
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
+</div>
 
-    <script>
+<script>
 
-        var list = document.getElementById("listPatientContent");
-        var checkedValue = [];
-        var id = "";
-        var clicked = false;
+    var list = document.getElementById("listPatientContent");
+    var checkedValue = [];
+    var id = "";
+    var clicked = false;
 
-        $(document).ready(function () {
-            $('#sidebarCollapse').on('click', function () {
-                $('#sidebar').toggleClass('active');
-            });
+    $(document).ready(function () {
+        $('#sidebarCollapse').on('click', function () {
+            $('#sidebar').toggleClass('active');
         });
+    });
 
-        window.onclick = function (event) {
-            if (event.target == document.getElementById("DeployModal") || event.target == document.getElementById("HealthDModal") || event.target == document.getElementById("vaccSiteModal") || event.target == document.getElementById("HealthD")) {
-                document.getElementById("DeployModal").style.display = "none";
-                document.getElementById("HealthDModal").style.display = "none";
-                document.getElementById("vaccSiteModal").style.display = "none";
-                document.getElementById("HealthD").style.display = "none";
+    window.onclick = function (event) {
+        if (event.target == document.getElementById("DeployModal") || event.target == document.getElementById("HealthDModal") || event.target == document.getElementById("vaccSiteModal") || event.target == document.getElementById("HealthD")) {
+            document.getElementById("DeployModal").style.display = "none";
+            document.getElementById("HealthDModal").style.display = "none";
+            document.getElementById("vaccSiteModal").style.display = "none";
+            document.getElementById("HealthD").style.display = "none";
 
-            }
         }
+    }
 
-        function clickArchive(drive, option){
-            console.log(drive)
-            console.log(option)
-            $.ajax({
-                url: 'ManageDeploymentProcessor.php',
-                method: 'POST',
-                data: {archive: drive, option: option},
-                success: function (result) {
-                    if (option == "Archive") {
-                        window.location.href = "ManageDeployment.php";
-
-                    } else if(option == "UnArchive") {
-                        document.getElementById("archivedContent").innerHTML = result;
-                    }
-                }
-            })
-        }
-
-        function openModal(modal) {
-            console.log(modal)
-            document.getElementById(modal).style.display = "block";
-        }
-
-        function openList(val) {
-            $.ajax({
-                url: 'ManageDeploymentProcessor.php',
-                method: 'POST',
-                data: {barId: val},
-                success: function (result) {
-                    document.getElementById("healthDBarangayContent").innerHTML = result;
-                    document.getElementById("HealthDBarangay").style.display = "block";
-                }
-            })
-        }
-
-        function closeModal(modal) {
-            document.getElementById(modal).style.display = "none";
-        }
-
-        function showDrive(val) {
-            console.log(val);
-            var id = val.getElementsByTagName("td")[1].innerText;
-            console.log(id);
-            $.ajax({
-                url: 'ManageDeploymentProcessor.php',
-                method: 'POST',
-                data: {id: id},
-                success: function (result) {
-                    // console.log('passed');
-                    document.getElementById("listPatientContent").innerHTML = result;
-                }
-            })
-        }
-
-        function showDistrict(val) {
-
-            id = val.getElementsByTagName("td")[1].innerText;
-            var name = val.getElementsByTagName("td")[2].innerText;
-            var number = val.getElementsByTagName("td")[3].innerText;
-
-            $.ajax({
-                url: 'ManageDeploymentProcessor.php',
-                method: 'POST',
-                data: {healthName: name, number: number, healthId: id},
-                success: function (result) {
-                    document.getElementById('HealthDView').style.display = "block";
-                    document.getElementById("healthDContent").innerHTML = result;
-                }
-            })
-        }
-
-        function addBarangay() {
-            console.log(checkedValue)
-            console.log(id)
-            Swal.fire({
-                icon: 'info',
-                title: 'Do you want to add this Barangay?',
-                showDenyButton: true,
-                confirmButtonText: 'Yes',
-                denyButtonText: `No`,
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    $.ajax({
-                        url: 'ManageDeploymentProcessor.php',
-                        method: 'POST',
-                        data: {
-                            list: checkedValue,
-                            hdId: id
-                        },
-                        success: function (result) {
-                            document.getElementById("healthDContent").innerHTML = "";
-                            document.getElementById("HealthDBarangay").style.display = "none";
-                            document.getElementById("healthDContent").innerHTML = result;
-                            console.log(result)
-                        }
-                    })
-                    Swal.fire('Saved!', '', 'success')
-                } else if (result.isDenied) {
-                    Swal.fire('Changes are not saved', '', 'info')
-                }
-            })
-        }
-
-        function addDep() {
-            var brand = document.getElementById("VaccineBr").value;
-            var date = document.getElementById("date").value;
-            var location = document.getElementById("site").value;
-            var stubs = document.getElementById("stubs").value;
-            var categ = document.getElementById("PatientCateg").value;
-            $.ajax({
-                url: 'ManageDeploymentProcessor.php',
-                method: 'POST',
-                data: {
-                    districts: checkedValue,
-                    stub: stubs,
-                    date: date,
-                    location: location,
-                    brand: brand,
-                    patient_category: categ
-                },
-                success: function (result) {
+    function clickArchive(drive, option) {
+        console.log(drive)
+        console.log(option)
+        $.ajax({
+            url: 'ManageDeploymentProcessor.php',
+            method: 'POST',
+            data: {archive: drive, option: option},
+            success: function (result) {
+                if (option == "Archive") {
                     window.location.href = "ManageDeployment.php";
+
+                } else if (option == "UnArchive") {
+                    document.getElementById("archivedContent").innerHTML = result;
                 }
-            })
-
-        }
-
-        function addDistrict() {
-            var healthDistrictName = document.getElementById("newHealthDistrict").value;
-            var districtNumber = document.getElementById("contactNumber").value;
-
-            console.log(healthDistrictName);
-            console.log(checkedValue);
-            $.ajax({
-                url: 'ManageDeploymentProcessor.php',
-                method: 'POST',
-                data: {barangays: checkedValue, healthDistrictName: healthDistrictName, number: districtNumber},
-                success: function (result) {
-                    document.getElementById("HealthDModal").style.display = "none";
-                    document.getElementById("distContent").innerHTML = result;
-                }
-            })
-        }
-
-        function addSite() {
-            var siteName = document.getElementById("newVaccinationSite").value;
-            console.log(siteName);
-            $.ajax({
-                url: 'ManageDeploymentProcessor.php',
-                method: 'POST',
-                data: {site: siteName},
-                success: function (result) {
-                    document.getElementById('addVaccSite').style.display = "none";
-                    document.getElementById('siteContent').innerHTML = result;
-
-                }
-            })
-        }
-
-        function Toggle() {
-            var butt = document.getElementById('sidebarCollapse')
-            if (!clicked) {
-                clicked = true;
-                butt.innerHTML = "Menu <i class = 'fas fa-angle-double-right'><i>";
-            } else {
-                clicked = false;
-                butt.innerHTML = "<i class='fas fa-angle-left'></i> Menu";
             }
-        }
+        })
+    }
 
-        function selected(id) {
-            console.log(id);
-            if (checkedValue.indexOf(id) < 0) {
-                checkedValue.push(id);
-            } else {
-                var idx = checkedValue.indexOf(id);
-                checkedValue.splice(idx, 1);
+    function openModal(modal) {
+        console.log(modal)
+        document.getElementById(modal).style.display = "block";
+    }
+
+    function openList(val) {
+        $.ajax({
+            url: 'ManageDeploymentProcessor.php',
+            method: 'POST',
+            data: {barId: val},
+            success: function (result) {
+                document.getElementById("healthDBarangayContent").innerHTML = result;
+                document.getElementById("HealthDBarangay").style.display = "block";
             }
-        }
+        })
+    }
 
-        function deleteDistrict(delDistId) {
-            console.log('passed');
-            $.ajax({
-                url: 'ManageDeploymentProcessor.php',
-                method: 'POST',
-                data: {deleteDistId: delDistId},
-                success: function (result) {
-                    document.getElementById("distContent").innerHTML = "";
-                    document.getElementById("distContent").innerHTML = result;
-                }
-            })
+    function closeModal(modal) {
+        document.getElementById(modal).style.display = "none";
+    }
 
-        }
-
-        function deleteBarangay(barangayId) {
-            console.log(barangayId)
-            $.ajax({
-                url: 'ManageDeploymentProcessor.php',
-                method: 'POST',
-                data: {brgyId: barangayId},
-                success: function (result) {
-                    document.getElementById('healthDContent').innerHTML = "";
-                    document.getElementById('healthDContent').innerHTML = result;
-                    console.log(result)
-
-                }
-            })
-        }
-
-        function deleteSite(siteId) {
-            console.log(siteId);
-            $.ajax({
-                url: 'ManageDeploymentProcessor.php',
-                method: 'POST',
-                data: {deleteSiteId: siteId},
-                success: function (result) {
-                    document.getElementById('siteContent').innerHTML = result;
-                }
-            })
-        }
-
-        async function add(item, action) {
-            Swal.fire({
-                icon: 'info',
-                title: 'Do you want to add this ' + item + '?',
-                showDenyButton: true,
-                confirmButtonText: 'Yes',
-                denyButtonText: `No`,
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    action();
-                    Swal.fire('Saved!', '', 'success')
-                } else if (result.isDenied) {
-                    Swal.fire('Changes are not saved', '', 'info')
-                }
-            })
-        }
-
-        async function del(item, action) {
-            Swal.fire({
-                icon: 'error',
-                title: 'Are You Sure you Want to Delete?',
-                showDenyButton: true,
-                confirmButtonText: 'Yes',
-                denyButtonText: `No`,
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    action(item);
-                    Swal.fire('Saved!', '', 'success')
-                } else if (result.isDenied) {
-                    Swal.fire('Changes are not saved', '', 'info')
-                }
-            })
-        }
-
-        async function archive(archive, action, drive) {
-            if(archive == 1){
-                archiveText = "Archive";
-            }else{
-                archiveText = "UnArchive";
+    function showDrive(val) {
+        console.log(val);
+        var id = val.getElementsByTagName("td")[1].innerText;
+        console.log(id);
+        $.ajax({
+            url: 'ManageDeploymentProcessor.php',
+            method: 'POST',
+            data: {id: id},
+            success: function (result) {
+                // console.log('passed');
+                document.getElementById("listPatientContent").innerHTML = result;
             }
-            Swal.fire({
-                icon: 'info',
-                title: 'Are You Sure you Want to ' + archiveText + ' this item?',
-                showDenyButton: true,
-                confirmButtonText: 'Yes',
-                denyButtonText: `No`,
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    action(drive, archiveText);
-                    Swal.fire('Saved!', '', 'success')
-                } else if (result.isDenied) {
-                    Swal.fire('Changes are not saved', '', 'info')
-                }
-            })
-        }
+        })
+    }
 
-    </script>
+    function showDistrict(val) {
+
+        id = val.getElementsByTagName("td")[1].innerText;
+        var name = val.getElementsByTagName("td")[2].innerText;
+        var number = val.getElementsByTagName("td")[3].innerText;
+
+        $.ajax({
+            url: 'ManageDeploymentProcessor.php',
+            method: 'POST',
+            data: {healthName: name, number: number, healthId: id},
+            success: function (result) {
+                document.getElementById('HealthDView').style.display = "block";
+                document.getElementById("healthDContent").innerHTML = result;
+            }
+        })
+    }
+
+    function addBarangay() {
+        console.log(checkedValue)
+        console.log(id)
+        Swal.fire({
+            icon: 'info',
+            title: 'Do you want to add this Barangay?',
+            showDenyButton: true,
+            confirmButtonText: 'Yes',
+            denyButtonText: `No`,
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: 'ManageDeploymentProcessor.php',
+                    method: 'POST',
+                    data: {
+                        list: checkedValue,
+                        hdId: id
+                    },
+                    success: function (result) {
+                        document.getElementById("healthDContent").innerHTML = "";
+                        document.getElementById("HealthDBarangay").style.display = "none";
+                        document.getElementById("healthDContent").innerHTML = result;
+                        console.log(result)
+                    }
+                })
+                Swal.fire('Saved!', '', 'success')
+            } else if (result.isDenied) {
+                Swal.fire('Changes are not saved', '', 'info')
+            }
+        })
+    }
+
+    function addDep() {
+        var brand = document.getElementById("VaccineBr").value;
+        var date = document.getElementById("date").value;
+        var location = document.getElementById("site").value;
+        var stubs = document.getElementById("stubs").value;
+        var categ = document.getElementById("PatientCateg").value;
+        $.ajax({
+            url: 'ManageDeploymentProcessor.php',
+            method: 'POST',
+            data: {
+                districts: checkedValue,
+                stub: stubs,
+                date: date,
+                location: location,
+                brand: brand,
+                patient_category: categ
+            },
+            success: function (result) {
+                window.location.href = "ManageDeployment.php";
+            }
+        })
+
+    }
+
+    function addDistrict() {
+        var healthDistrictName = document.getElementById("newHealthDistrict").value;
+        var districtNumber = document.getElementById("contactNumber").value;
+
+        console.log(healthDistrictName);
+        console.log(checkedValue);
+        $.ajax({
+            url: 'ManageDeploymentProcessor.php',
+            method: 'POST',
+            data: {barangays: checkedValue, healthDistrictName: healthDistrictName, number: districtNumber},
+            success: function (result) {
+                document.getElementById("HealthDModal").style.display = "none";
+                document.getElementById("distContent").innerHTML = result;
+            }
+        })
+    }
+
+    function addSite() {
+        var siteName = document.getElementById("newVaccinationSite").value;
+        console.log(siteName);
+        $.ajax({
+            url: 'ManageDeploymentProcessor.php',
+            method: 'POST',
+            data: {site: siteName},
+            success: function (result) {
+                document.getElementById('addVaccSite').style.display = "none";
+                document.getElementById('siteContent').innerHTML = result;
+
+            }
+        })
+    }
+
+    function Toggle() {
+        var butt = document.getElementById('sidebarCollapse')
+        if (!clicked) {
+            clicked = true;
+            butt.innerHTML = "Menu <i class = 'fas fa-angle-double-right'><i>";
+        } else {
+            clicked = false;
+            butt.innerHTML = "<i class='fas fa-angle-left'></i> Menu";
+        }
+    }
+
+    function selected(id) {
+        console.log(id);
+        if (checkedValue.indexOf(id) < 0) {
+            checkedValue.push(id);
+        } else {
+            var idx = checkedValue.indexOf(id);
+            checkedValue.splice(idx, 1);
+        }
+    }
+
+    function deleteDistrict(delDistId) {
+        console.log('passed');
+        $.ajax({
+            url: 'ManageDeploymentProcessor.php',
+            method: 'POST',
+            data: {deleteDistId: delDistId},
+            success: function (result) {
+                document.getElementById("distContent").innerHTML = "";
+                document.getElementById("distContent").innerHTML = result;
+            }
+        })
+
+    }
+
+    function deleteBarangay(barangayId) {
+        console.log(barangayId)
+        $.ajax({
+            url: 'ManageDeploymentProcessor.php',
+            method: 'POST',
+            data: {brgyId: barangayId},
+            success: function (result) {
+                document.getElementById('healthDContent').innerHTML = "";
+                document.getElementById('healthDContent').innerHTML = result;
+                console.log(result)
+
+            }
+        })
+    }
+
+    function deleteSite(siteId) {
+        console.log(siteId);
+        $.ajax({
+            url: 'ManageDeploymentProcessor.php',
+            method: 'POST',
+            data: {deleteSiteId: siteId},
+            success: function (result) {
+                document.getElementById('siteContent').innerHTML = result;
+            }
+        })
+    }
+
+    async function add(item, action) {
+        Swal.fire({
+            icon: 'info',
+            title: 'Do you want to add this ' + item + '?',
+            showDenyButton: true,
+            confirmButtonText: 'Yes',
+            denyButtonText: `No`,
+        }).then((result) => {
+            if (result.isConfirmed) {
+                action();
+                Swal.fire('Saved!', '', 'success')
+            } else if (result.isDenied) {
+                Swal.fire('Changes are not saved', '', 'info')
+            }
+        })
+    }
+
+    async function del(item, action) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Are You Sure you Want to Delete?',
+            showDenyButton: true,
+            confirmButtonText: 'Yes',
+            denyButtonText: `No`,
+        }).then((result) => {
+            if (result.isConfirmed) {
+                action(item);
+                Swal.fire('Saved!', '', 'success')
+            } else if (result.isDenied) {
+                Swal.fire('Changes are not saved', '', 'info')
+            }
+        })
+    }
+
+    async function archive(archive, action, drive) {
+        if (archive == 1) {
+            archiveText = "Archive";
+        } else {
+            archiveText = "UnArchive";
+        }
+        Swal.fire({
+            icon: 'info',
+            title: 'Are You Sure you Want to ' + archiveText + ' this item?',
+            showDenyButton: true,
+            confirmButtonText: 'Yes',
+            denyButtonText: `No`,
+        }).then((result) => {
+            if (result.isConfirmed) {
+                action(drive, archiveText);
+                Swal.fire('Saved!', '', 'success')
+            } else if (result.isDenied) {
+                Swal.fire('Changes are not saved', '', 'info')
+            }
+        })
+    }
+
+</script>
 </body>

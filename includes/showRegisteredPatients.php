@@ -12,7 +12,6 @@ $stmt->bind_result($patientID, $patientName, $category, $patientAddress, $contac
 while ($stmt->fetch()) {
     echo "
             <tr>
-            <td class='center'>$patientID</td>
             <td>$patientName</td>
             <td>$category</td>
             <td>$patientAddress</td>

@@ -96,47 +96,43 @@
         </div>
 
         <!--Table Part-->
-                <div class="tableBrgy shadow" id="patientTable">
-                    <div class="table-title">
-                        <div class="row">
-                            <div class="col my-auto">
-                                <div class="input-group">
-                                    <input type="search" class="form-control" placeholder="Search"/>
-                                    <button type="button" class="btn btn-primary">
-                                        <i class="fas fa-search"></i>
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="col-sm-auto">
-                                <button type="button" class="btn btn-outline-dark buttonTop3 float-right">
-                                    <i class="fas fa-sort-amount-down"></i>
-                                </button>
-                                <button type="button" class="btn btn-outline-dark buttonTop3 float-right">
-                                    <i class="fas fa-filter"></i>
-                                </button>
-                            </div>
+        <div class="tablePatient shadow" id="tablePadding">
+            <div class="table-title">
+                <div class="row">
+                    <div class="col my-auto">
+                        <div class="input-group">
+                            <input type="search" class="form-control" placeholder="Search"/>
+                            <button type="button" class="btn btn-primary">
+                                <i class="fas fa-search"></i>
+                            </button>
                         </div>
                     </div>
-
-                    <div class="table-responsive">
-                        <table class="table table-hover" id="patientTable1">
-                            <thead>
-                            <tr class="labelRow">
-                                <th> Patient ID</th>
-                                <th>Patient Name</th>
-                                <th>Category</th>
-                                <th>Complete Address</th>
-                                <th>Contact Number</th>
-                                <th>Action</th>
-                            </tr>
-                            </thead>
-                            <?php
-                            include '../includes/showRegisteredPatients.php';
-                            ?>
-                        </table>
+                    <div class="col-sm-auto">
+                        <button type="button" class="btn btn-outline-dark buttonTop3 float-right">
+                            <i class="fas fa-sort-amount-down"></i>
+                        </button>
+                        <button type="button" class="btn btn-outline-dark buttonTop3 float-right">
+                            <i class="fas fa-filter"></i>
+                        </button>
                     </div>
-
                 </div>
+            </div>
+
+            <table class="table table-hover" id="patientTable">
+                <thead>
+                <tr class="labelRow">
+                    <th>Patient Name</th>
+                    <th>Category</th>
+                    <th>Complete Address</th>
+                    <th>Contact Number</th>
+                    <th>Action</th>
+                </tr>
+                </thead>
+                <?php
+                include '../includes/showRegisteredPatients.php';
+                ?>
+            </table>
+        </div>
     </div>
 
     <!--MODALS-->
