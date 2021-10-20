@@ -1404,8 +1404,6 @@ input[name=vitals]{
     display: flex;
 }
 
-
-
 #tablePadding{
     padding: 2%;
 }
@@ -1417,6 +1415,7 @@ input[name=vitals]{
     border-radius: 12px;
 }
 
+/*Common EIR at HSO*/
 .personalInfo,.categoryInfo,.addressInfo,.medicalInfo{
     margin-left: 40px;
     margin-right: 40px;
@@ -1459,4 +1458,14 @@ input[name=vitals]{
 #otherTextField{
     display: none;
     margin-left: -70%;
+}
+
+/*CSS for HSO*/
+.reviewReport-PopUp{
+    padding-left: 2%;
+    padding-right: 2%;
+}
+
+.paddingLeft{
+    padding-left: 3%;
 }

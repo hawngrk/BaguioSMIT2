@@ -213,7 +213,7 @@ if (isset($_POST['report'])) {
     echo "
     <div class='content-modal'>
     <div class='modal-header'>
-        <h4 class='modal-title'>Review report - $patientName</h4>
+        <h4 class='modal-title'> Review Report - $patientName</h4>
         <button type='button' class='close' data-dismiss='modal' onclick='closeViewReport(\"$reportStatus\")'>
             &times;
         </button>
@@ -221,21 +221,21 @@ if (isset($_POST['report'])) {
 
     echo "
     <div class='modal-body'>
-    <div class='ReviewReport-PopUp '>
+    <div class='reviewReport-PopUp '>
     <div id='repInfo'>
-    <h3 class='reviewReport'>Report Information</h3>
-    <h7>Report ID: $reportId</h7>
+    <h5 class='reviewReport'>Report Information</h5>
+    <h7 class='paddingLeft'>Report ID: $reportId</h7>
     <br>
-    <h7>Report Type: $reportType</h7>
+    <h7 class='paddingLeft'>Report Type: $reportType</h7>
     <br>
-    <h7>Date of recent travel: $dateRecentTravel</h7>
+    <h7 class='paddingLeft'>Date of recent travel: $dateRecentTravel</h7>
     <br>
     <br>
     </div>
     <div id='sympExpr'>
-    <h3 class='reviewReport'>Symptoms Experienced</h3>
-    <div id='vacSideEffect'>
-    <h5>Vaccine Side Effect:</h5>
+    <h5 class='reviewReport'>Symptoms Experienced</h5>
+    <div id='vacSideEffect' class='paddingLeft'>
+    <h7> <b> Vaccine Side Effect: </b></h7>
     <ul>
     ";
     if ($vaccineSymptoms[0] === "") {
@@ -249,8 +249,8 @@ if (isset($_POST['report'])) {
     echo "
     </ul>
     </div>
-    <div id='covidSymp'>
     <h5>Applicable COVID-19 Symptoms:</h5>
+    <div id='covidSymp' class='paddingLeft'>
     <ul>";
     if ($covid19Symptoms[0] === "") {
         echo "<li>None</li>";
@@ -265,24 +265,25 @@ if (isset($_POST['report'])) {
     </div>
     <div id='repDetails'>
     <h5>Additional Details:</h5>
-    <h7>$reportDetails</h7>
+    <h7 class='paddingLeft'>$reportDetails</h7>
     <br>
     <br>
     </div>
     </div>
     <div id='patInfo'>
-    <h3 class='reviewReportH3'>Patient Information</h3>
-    <h7>Patient Address: $patientAddress</h7>
-    <h7>Contact Number: $patientNum</h7>
+    <h5 class='reviewReportH3 padd'>Patient Information</h5>
+    <h7 class='paddingLeft'><b> Patient Address: </b>   $patientAddress</h7>
+    <br>
+    <h7 class='paddingLeft'> <b> Contact Number: </b>   $patientNum</h7>
     </div>";
     if ($view == 1) {
-        echo "<h7>Report Status: $reportStatus</h7>
+        echo "<h7 class='paddingLeft'><b>Report Status: </b>   $reportStatus</h7>
         </div> ";
         if ($reportStatus === 'Invalidated') {
             echo "<button type='button' id='backInvalidatedReport' onclick='showInvalidatedReports()'>Back</button>";
         }
     } else if ($view == 2) {
-        echo "<p>Report Status: </p>";
+        echo "<p class='paddingLeft'> <b>Report Status: </b></p>";
         if ($reportStatus == 'Verified') {
             echo "
             <select class='form-select col-lg-12' id='statusSelection'>
