@@ -616,14 +616,11 @@ input[type=text1] {
 .tableReport {
     width: 100%!important;
     background-color: white;
-    border-radius: 12px;
-    margin-top: 1%;
 }
 
 .tableVax{
     background-color: white;
     border-radius: 12px;
-    margin-top: 1%;
 }
 
 .depSum h5{
@@ -743,12 +740,12 @@ img{
 .counterColumn{
     float: right;
     width: 100%;
-
+    margin: 2%;
+    margin-top: 4%;
 }
 
 .counterRow {
-    margin-left: 15%;
-    width: 85%;
+    width: 100%;
 }
 
 
@@ -880,19 +877,18 @@ input[type=text]:disabled{
     margin:2%;
 }
 
-.tableDep{
-    width: 100%!important;
-    height: 100%;
-}
+
 
 .tableScroll1{
     position: relative;
-    height: 65vh;
+    height: 70vh;
     overflow: auto;
     display: block;
     background-color: white;
     width: 100%;
-    margin: 0;
+    margin-left: 1%;
+    margin-top: 1%;
+    border-radius: 12px;
 }
 .tableScroll2{
     position: relative;
@@ -901,7 +897,8 @@ input[type=text]:disabled{
     display: block;
     background-color: white;
     width: 100%;
-    margin: 0;
+    margin-top: 1%;
+    border-radius: 12px;
 }
 
 .tableModal{
@@ -1262,7 +1259,8 @@ input[name=vitals]{
 }
 
 /*HSO*/
-.tablePatient,.tableVaccine{
+.tablePatient,.tableVaccine,{
+    width: 100%!important;
     background-color: white;
 }
 
@@ -1310,9 +1308,11 @@ input[name=vitals]{
     max-height: fit-content;
     min-height: 65vh;
     padding: 3%;
-    margin-top: 1%;
+    margin-top: 2%;
     background-color: #68A0B8;
     color: white;
+    margin: 2%;
+    margin-top: 4%;
 }
 .bold{
     font-weight: 800!important;
@@ -1404,10 +1404,7 @@ input[name=vitals]{
     display: flex;
 }
 
-/*CSS for Search bar div and table*/
-.table-title{
-    margin-bottom: 2%;
-}
+
 
 #tablePadding{
     padding: 2%;
@@ -1416,5 +1413,7 @@ input[name=vitals]{
 /*CSS for HSO*/
 .tableContainer{
     background-color: #ececec;
-    padding: 2%;
+    padding: 1%;
+    border-radius: 12px;
 }
+

@@ -92,7 +92,7 @@ include_once("../includes/database.php") ?>
 
                 </div>
                 <button type="button" class="btn btn-warning buttonTop3 float-right" onclick="openModal('archived')">
-                    <i class="fas fa-inbox fa-lg"></i>
+                    <i class="fas fa-inbox fa-lg"></i> Archive
                 </button>
             </div>
         </div>

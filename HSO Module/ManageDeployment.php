@@ -108,7 +108,7 @@ include_once("../includes/database.php") ?>
                 </div>
 
                 <button type="button" class="btn btn-warning buttonTop3" onclick="openModal('archived')">
-                    <i class="fas fa-inbox fa-lg"></i>
+                    <i class="fas fa-inbox fa-lg"></i> Archive
                 </button>
             </div>
         </div>
@@ -124,6 +124,7 @@ include_once("../includes/database.php") ?>
                             </button>
                         </div>
                     </div>
+
                     <div class="col-sm-auto">
                         <div class="row">
                             <div class="sfDiv col-md-1.5 my-auto">
@@ -148,42 +149,41 @@ include_once("../includes/database.php") ?>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
 
-            <div id="unarchiveContent" class="row">
-                <div class="tableScroll1 col">
-                    <table class="table table-hover tableDep" id="driveTable">
-                        <thead>
-                        <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Drive Id</th>
-                            <th scope="col">Location</th>
-                            <th scope="col">Date</th>
-                            <th scope="col">No. of Stubs</th>
-                            <th scope="col">Action</th>
-                        </tr>
-                        </thead>
-                        <?php
-                        require_once '../require/getVaccinationDrive.php';
-                        require_once '../require/getVaccinationSites.php';
+                    <div class="w-100 d-none d-md-block"></div>
 
-                        $count = 0;
-                        foreach ($vaccination_drive as $vd) {
-                            if ($vd->getArchive() == 0) {
-                                $count++;
-                                $driveId = $vd->getDriveId();
-                                $date = $vd->getVaccDate();
-                                $stubs = $vd->getVaccStubs();
+                    <div class="tableDep tableScroll1 col">
+                            <table class="table table-hover tableDep" id="driveTable">
+                                <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Drive Id</th>
+                                    <th scope="col">Location</th>
+                                    <th scope="col">Date</th>
+                                    <th scope="col">No. of Stubs</th>
+                                    <th scope="col">Action</th>
+                                </tr>
+                                </thead>
+                                <?php
+                                require_once '../require/getVaccinationDrive.php';
+                                require_once '../require/getVaccinationSites.php';
+
+                                $count = 0;
+                                foreach ($vaccination_drive as $vd) {
+                                    if ($vd->getArchive() == 0) {
+                                        $count++;
+                                        $driveId = $vd->getDriveId();
+                                        $date = $vd->getVaccDate();
+                                        $stubs = $vd->getVaccStubs();
 
 
-                                foreach ($vaccinationSites as $vs) {
-                                    if ($vs->getVaccinationSiteId() == $vd->getVaccDriveVaccSiteId()) {
-                                        $vaccinationSite = $vs->getVaccinationSiteLocation();
-                                    }
-                                }
+                                        foreach ($vaccinationSites as $vs) {
+                                            if ($vs->getVaccinationSiteId() == $vd->getVaccDriveVaccSiteId()) {
+                                                $vaccinationSite = $vs->getVaccinationSiteLocation();
+                                            }
+                                        }
 
-                                echo "<tr class='table-row' onclick='showDrive(this)'>
+                                        echo "<tr class='table-row' onclick='showDrive(this)'>
                         <td>$count</td>
                         <td>$driveId</td>
                         <td>$vaccinationSite</td>
@@ -196,25 +196,27 @@ include_once("../includes/database.php") ?>
                         </td>
              
                       </tr>";
-                            }
-                        }
-                        ?>
-                    </table>
-                </div>
-                <div class="col-sm-auto">
-                    <div class="depSummary">
-                        <div class="four listPatientRow">
-                            <div class="listPatient-box colored">
-                                <center><h3>Deployment Summary</h3></center>
+                                    }
+                                }
+                                ?>
+                            </table>
+                    </div>
+                    <div class="col-sm-auto">
+                        <div class="depSummary">
+                            <div class="four listPatientRow">
+                                <div class="listPatient-box colored">
+                                    <center><h3>Deployment Summary</h3></center>
+                                </div>
                             </div>
-                        </div>
-                        <div class="four listPatientRow row2">
-                            <div id="listPatientContent" class="listPatient-box colored">
+                            <div class="four listPatientRow row2">
+                                <div id="listPatientContent" class="listPatient-box colored">
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+
         </div>
 
 

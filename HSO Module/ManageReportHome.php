@@ -135,116 +135,119 @@ include_once("../includes/database.php") ?>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
+                    <div class="w-100 d-none d-md-block"></div>
 
-            <div class="tableReport shadow row">
-                <div class="tableScroll1 col">
-                    <table class="table table-hover tableReport" id="reportsTable">
-                        <thead>
-                        <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Report ID</th>
-                            <th scope="col">Name of Reporter</th>
-                            <th scope="col">Date Reported</th>
-                            <th scope="col">Report Verified</th>
-                            <th scope="col">Action</th>
-                        </tr>
-                        </thead>
-                        <?php
-                        require_once '../require/getReport.php';
-                        require_once '../require/getPatient.php';
+                    <div class="tableReport tableScroll1 col">
+                        <table class="table table-hover tableReport" id="reportsTable">
+                            <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Report ID</th>
+                                <th scope="col">Name of Reporter</th>
+                                <th scope="col">Date Reported</th>
+                                <th scope="col">Report Verified</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                            </thead>
+                            <?php
+                            require_once '../require/getReport.php';
+                            require_once '../require/getPatient.php';
 
-                        $count = 0;
-                        foreach ($reports as $rep) {
-                            $count++;
-                            $reportId = $rep->getReportId(); //replace this part based on the column name mentioned above in chronological order - NATIVIDAD HUDSON
-                            $patientId = $rep->getReportPatientId();
-                            $dateReported = $rep->getDateReported();
-                            $status = $rep->getReportStatus();
+                            $count = 0;
+                            foreach ($reports as $rep) {
+                                $count++;
+                                $reportId = $rep->getReportId(); //replace this part based on the column name mentioned above in chronological order - NATIVIDAD HUDSON
+                                $patientId = $rep->getReportPatientId();
+                                $dateReported = $rep->getDateReported();
+                                $status = $rep->getReportStatus();
 
-                            foreach ($patients as $pat) {
-                                if ($patientId == $pat->getPatientId()) {
-                                    $reporter = $pat->getPatientFullName();
+                                foreach ($patients as $pat) {
+                                    if ($patientId == $pat->getPatientId()) {
+                                        $reporter = $pat->getPatientFullName();
+                                    }
                                 }
-                            }
-                            echo "<tr>
+                                echo "<tr>
                 <td>$count</td>
                 <td>$reportId</td>
                 <td>$reporter</td>
                 <td>$dateReported</td>
                 <td>$status</td>
                 <td><button class='badge badge-secondary' type='submit' value='$reportId' onclick='viewReport($reportId)'>Review Report</button></td></tr>";
-                        }
-                        ?>
-                        <div id="invalidatedReportsModal" class="modal-window"></div>
-                        <div id="generateReportModal" class="modal-window"></div>
-                        <div id="viewReportModal" class="modal-window"></div>
-                    </table>
-                </div>
-                <div class="col-sm-auto">
-                    <div class="counterColumn">
-                        <div class="four counterRow">
-                            <div class="counter-box colored1">
-                                <?php
-                                $query = "SELECT COUNT(*) FROM report ";
-                                $stmt = $database->stmt_init();
-                                $stmt->prepare($query);
-                                $stmt->execute();
-                                $stmt->bind_result($totalReports);
-                                $stmt->fetch();
-                                echo "<span class='counter'> $totalReports </span>"
-                                ?>
-                                <p>Total Reports</p>
+                            }
+                            ?>
+                            <div id="invalidatedReportsModal" class="modal-window"></div>
+                            <div id="generateReportModal" class="modal-window"></div>
+                            <div id="viewReportModal" class="modal-window"></div>
+                        </table>
+                    </div>
+                    <div class="col-sm-auto">
+                        <div class="counterColumn">
+                            <div class="four counterRow">
+                                <div class="counter-box colored1">
+                                    <?php
+                                    $query = "SELECT COUNT(*) FROM report ";
+                                    $stmt = $database->stmt_init();
+                                    $stmt->prepare($query);
+                                    $stmt->execute();
+                                    $stmt->bind_result($totalReports);
+                                    $stmt->fetch();
+                                    echo "<span class='counter'> $totalReports </span>"
+                                    ?>
+                                    <p>Total Reports</p>
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="four counterRow">
-                            <div class="counter-box colored2">
-                                <?php
-                                $query = "SELECT COUNT(report_status) FROM report WHERE report_status = 'Pending'";
-                                $stmt = $database->stmt_init();
-                                $stmt->prepare($query);
-                                $stmt->execute();
-                                $stmt->bind_result($unverifiedReports);
-                                $stmt->fetch();
-                                echo "<span class='counter'>$unverifiedReports</span>"
-                                ?>
-                                <p>Total of Pending Reports</p>
+                            <div class="four counterRow">
+                                <div class="counter-box colored2">
+                                    <?php
+                                    $query = "SELECT COUNT(report_status) FROM report WHERE report_status = 'Pending'";
+                                    $stmt = $database->stmt_init();
+                                    $stmt->prepare($query);
+                                    $stmt->execute();
+                                    $stmt->bind_result($unverifiedReports);
+                                    $stmt->fetch();
+                                    echo "<span class='counter'>$unverifiedReports</span>"
+                                    ?>
+                                    <p>Total of Pending Reports</p>
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="four counterRow">
-                            <div class="counter-box colored3">
-                                <?php
-                                $query = "SELECT COUNT(report_status) FROM report WHERE report_status = 'Verified'";
-                                $stmt = $database->stmt_init();
-                                $stmt->prepare($query);
-                                $stmt->execute();
-                                $stmt->bind_result($verifiedReports);
-                                $stmt->fetch();
-                                echo "<span class='counter'>$verifiedReports</span>"
-                                ?>
-                                <p>Total of Verified Reports</p>
+                            <div class="four counterRow">
+                                <div class="counter-box colored3">
+                                    <?php
+                                    $query = "SELECT COUNT(report_status) FROM report WHERE report_status = 'Verified'";
+                                    $stmt = $database->stmt_init();
+                                    $stmt->prepare($query);
+                                    $stmt->execute();
+                                    $stmt->bind_result($verifiedReports);
+                                    $stmt->fetch();
+                                    echo "<span class='counter'>$verifiedReports</span>"
+                                    ?>
+                                    <p>Total of Verified Reports</p>
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="four counterRow">
-                            <div class="counter-box colored4">
-                                <?php
-                                $query = "SELECT COUNT(report_status) FROM report WHERE report_status = 'Invalidated'";
-                                $stmt = $database->stmt_init();
-                                $stmt->prepare($query);
-                                $stmt->execute();
-                                $stmt->bind_result($invalidatedReports);
-                                $stmt->fetch();
-                                echo "<span class='counter'>$invalidatedReports</span>"
-                                ?>
-                                <p>Total of Invalidated Reports</p>
+                            <div class="four counterRow">
+                                <div class="counter-box colored4">
+                                    <?php
+                                    $query = "SELECT COUNT(report_status) FROM report WHERE report_status = 'Invalidated'";
+                                    $stmt = $database->stmt_init();
+                                    $stmt->prepare($query);
+                                    $stmt->execute();
+                                    $stmt->bind_result($invalidatedReports);
+                                    $stmt->fetch();
+                                    echo "<span class='counter'>$invalidatedReports</span>"
+                                    ?>
+                                    <p>Total of Invalidated Reports</p>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
+
+            <div class="shadow row">
+
             </div>
         </div>
 
