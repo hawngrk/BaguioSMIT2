@@ -119,7 +119,7 @@
                     </div>
 
                     <div class="table-responsive">
-                        <table class="table table-hover" id="patientTable">
+                        <table class="table table-hover" id="patientTable1">
                             <thead>
                             <tr class="labelRow">
                                 <th> Patient ID</th>
@@ -593,7 +593,7 @@
 
             success: function (result) {
                 console.log(result);
-                Swal.fire('AddedPatient', '', 'success');
+                Swal.fire('Added Patient', '', 'success');
                 reloadPatient();
                 addButton.disabled = true;
             }
@@ -610,8 +610,8 @@
             url: '../includes/showRegisteredPatients.php',
             type: 'GET',
             success: function (result) {
-                document.getElementById("patientTable").innerHTML = "";
-                document.getElementById("patientTable").innerHTML = result;
+                document.getElementById("patientTable1").innerHTML = "";
+                document.getElementById("patientTable1").innerHTML = result;
             }
         });
     }
@@ -679,6 +679,8 @@
             data: formData,
             success: function (result) {
                 uploadFileModal.style.display = "none";
+                Swal.fire('Added Patient', '', 'success');
+                reloadPatient();
             }
         });
     }

@@ -45,7 +45,7 @@
     if (verifyPatient($firstname, $lastname, $contact) == '1') {
       echo "Patient already exist";  
     } else {
-        $patientID = insertPatient($firstname, $lastname);
+        $patientID = insertPatient($firstname, $lastname, $middlename, $suffix);
         insertDetails($patientID['patient_id'], $firstname, $lastname, $middlename, $suffix, $priorityGroup, $category, $categoryID, $philHealthID, $pwdID, $houseAddress, $barangay, $cmAddress, $province, $region, $birthdate, $age, $gender, $contact, $occupation);
         insertMedicalBackground($patientID['patient_id'], $allergyToVaccine, $hypertension, $heartDisease, $kidneyDisease, $diabetesMellitus, $bronchialAsthma, $immunodeficiency, $cancer, $otherCommorbidity);
         $accountDetails = createAccount($patientID['patient_id'], $firstname, $lastname, $email);
@@ -54,19 +54,20 @@
     }
     
 //Inserts full name in the patient table
-function insertPatient($firstname, $lastname) {
-    $query = "INSERT INTO patient (patient_full_name, first_dose_vaccination, second_dose_vaccination, for_queue) VALUES (CONCAT(?,' ',?), ?, ?, ?)";
+function insertPatient($firstname, $lastname, $middlename, $suffix) {
+    $query = "INSERT INTO patient (patient_full_name, first_dose_vaccination, second_dose_vaccination, for_queue) VALUES (?, ?, ?, ?)";
     try {        
         $stmtinsert = $GLOBALS['database']->prepare($query);
-        $result = $stmtinsert->execute([$firstname, $lastname, 0, 0, 0]);
+        $fullName = toFullName($firstname, $lastname, $middlename, $suffix);
+        $result = $stmtinsert->execute([$fullName, 0, 0, 0]);
         if($result) {
-            $id = getPatientId($firstname, $lastname);
+            $id = getPatientId($fullName);
             return $id;  
+
         }
     } catch (PDOException $e) {
         echo 'Error in insert patient', $e->getMessage();
     }
-    //Preparing statements to improve performance and avoid sql injection vulnerability
 }
 
 //Insert patient's personal details in patient details table
@@ -103,17 +104,32 @@ function insertPatientVitals($patientID) {
     }
 }
 
-
 //Searches for patient and returns patient_id
-function getPatientId($firstname, $lastname) {
-    $query = "SELECT patient_id FROM patient WHERE patient_full_name = CONCAT (?, ' ', ? )";
+function getPatientId($fullName) {
+    $query = "SELECT patient_id FROM patient WHERE patient_full_name = ?";
     try {
         $stmtselect = $GLOBALS['database']->prepare($query);
-        $result = $stmtselect->execute([$firstname, $lastname]);
+        $result = $stmtselect->execute([$fullName]);
         if($result) {
             return $stmtselect->fetch(PDO::FETCH_ASSOC);
         }
     } catch (PDOException $e) {
         echo 'Error in get patient ID: ', $e->getMessage();
+    }
+}
+
+function toFullName($firstName, $lastName, $middleName, $suffix) {
+    $name = $lastName . ", " . $firstName . " " . $middleName . " " . $suffix;
+    if ($middleName == " " && $suffix == "") {
+        $name = $lastName . ", " . $firstName;
+        return $name;
+    } else if ($suffix == " " && $middleName != "") {
+        $name = $lastName . ", " . $firstName . " " . $middleName;
+        return $name;
+    } else if ($middleName == "" && $suffix != "") {
+        $name = $lastName . ", " . $firstName . " " . $suffix;
+        return $name;
+    } else {
+        return $name;
     }
 }

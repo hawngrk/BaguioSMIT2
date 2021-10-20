@@ -52,7 +52,7 @@ if ($count > 1) {
                     $contact = $row[26];
                     $email = $row[27];
 
-                    $patientID = insertPatient($firstName, $lastName);
+                    $patientID = insertPatientUpload($fullName);
                     insertDetails($patientID['patient_id'], $firstName, $lastName, $middleName, $suffix, $priorityGroup, $category, $categoryID, $philHealthID, $pwdID, $houseAddress, $barangay, $cmAddress, $province, $region, $birthdate, $age, $gender, $contact, $occupation);
                     insertMedicalBackground($patientID['patient_id'], $allergyToVaccine, $hypertension, $heartDisease, $kidneyDisease, $diabetesMellitus, $bronchialAsthma, $immunodeficiency, $cancer, $otherCommorbidity);
                     $accountDetails = createAccount($patientID['patient_id'], $firstName, $lastName, $email);
@@ -109,10 +109,7 @@ if ($count > 1) {
                 $contact = $row[26];
                 $email = $row[27];
 
-                $createDate = date_create($row[6]);
-                echo date_format($createDate, 'Y-m-d');
-
-                $patientID = insertPatient($firstName, $lastName);
+                $patientID = insertPatientUpload($fullName);
                 insertDetails($patientID['patient_id'], $firstName, $lastName, $middleName, $suffix, $priorityGroup, $category, $categoryID, $philHealthID, $pwdID, $houseAddress, $barangay, $cmAddress, $province, $region, $birthdate, $age, $gender, $contact, $occupation);
                 insertMedicalBackground($patientID['patient_id'], $allergyToVaccine, $hypertension, $heartDisease, $kidneyDisease, $diabetesMellitus, $bronchialAsthma, $immunodeficiency, $cancer, $otherCommorbidity);
                 $accountDetails = createAccount($patientID['patient_id'], $firstName, $lastName, $email);
@@ -125,13 +122,13 @@ if ($count > 1) {
 function toFullName($firstName, $lastName, $middleName, $suffix) {
 
     $name = $lastName . ", " . $firstName . " " . $middleName . " " . $suffix;
-    if ($middleName == "" && $suffix == "") {
+    if ($middleName == " " && $suffix == " ") {
         $name = $lastName . ", " . $firstName;
         return $name;
-    } else if ($suffix == "" && $middleName != "") {
+    } else if ($suffix == " " && $middleName != " ") {
         $name = $lastName . ", " . $firstName . " " . $middleName;
         return $name;
-    } else if ($middleName == "" && $suffix != "") {
+    } else if ($middleName == " " && $suffix != " ") {
         $name = $lastName . ", " . $firstName . " " . $suffix;
         return $name;
     } else {
@@ -146,13 +143,13 @@ function calculateAge($birthdate) {
 }
 
 //Inserts full name in the patient table
-function insertPatient($firstName, $lastName) {
-    $query = "INSERT INTO patient (patient_full_name, first_dose_vaccination, second_dose_vaccination, for_queue) VALUES (CONCAT(?,' ',?), ?, ?, ?)";
+function insertPatientUpload($fullName) {
+    $query = "INSERT INTO patient (patient_full_name, first_dose_vaccination, second_dose_vaccination, for_queue) VALUES (?, ?, ?, ?)";
     try {        
         $stmtinsert = $GLOBALS['database']->prepare($query);
-        $result = $stmtinsert->execute([$firstName, $lastName, 0, 0, 0]);
+        $result = $stmtinsert->execute([$fullName, 0, 0, 0]);
         if($result) {
-            $id = getPatientId($firstName, $lastName);
+            $id = getPatientId($fullName);
             return $id;  
         }
     } catch (PDOException $e) {
@@ -162,13 +159,13 @@ function insertPatient($firstName, $lastName) {
 }
 
 //Insert patient's personal details in patient details table
-function insertDetails($patientID, $firstName, $lastName, $middleName, $suffix, $priorityGroup, $category, $categoryID, $philHealthID, $pwdID, $houseAddress, $barangay, $cmAddress, $province, $region, $birthdate, $age,$gender, $contact, $occupation) {
+function insertDetails($patientID, $firstName, $lastName, $middleName, $suffix, $priorityGroup, $category, $categoryID, $philHealthID, $pwdID, $houseAddress, $barangay, $cmAddress, $province, $region, $birthdate, $age, $gender, $contact, $occupation) {
 
     $query = "INSERT INTO patient_details (patient_id, patient_first_name, patient_last_name, patient_middle_name, patient_suffix, patient_priority_group, patient_category_id, patient_category_number, patient_philHealth, patient_pwd, patient_house_address, patient_barangay_address, patient_CM_address, patient_province, patient_region, patient_birthdate, patient_age, patient_gender, patient_contact_number, patient_occupation) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CAST(? AS DATE), ?, ?, ?, ?)";
 
     try {
         $stmtinsert = $GLOBALS['database']->prepare($query);
-        $result = $stmtinsert->execute([$patientID, $firstName, $lastName, $middleName, $suffix, $priorityGroup, $category, $categoryID, $philHealthID, $pwdID, $houseAddress, $barangay, $cmAddress, $province, $region, $birthdate, $age,$gender, $contact, $occupation]); 
+        $stmtinsert->execute([$patientID, $firstName, $lastName, $middleName, $suffix, $priorityGroup, $category, $categoryID, $philHealthID, $pwdID, $houseAddress, $barangay, $cmAddress, $province, $region, $birthdate, $age,$gender, $contact, $occupation]); 
     } catch (PDOException $e) {
         echo 'Error in patient details: ', $e->getMessage();
     }
@@ -195,13 +192,12 @@ function insertPatientVitals($patientID) {
     }
 }
 
-
 //Searches for patient and returns patient_id
-function getPatientId($firstName, $lastName) {
-    $query = "SELECT patient_id FROM patient WHERE patient_full_name = CONCAT (?, ' ', ? )";
+function getPatientId($fullName) {
+    $query = "SELECT patient_id FROM patient WHERE patient_full_name = ?";
     try {
         $stmtselect = $GLOBALS['database']->prepare($query);
-        $result = $stmtselect->execute([$firstName, $lastName]);
+        $result = $stmtselect->execute([$fullName]);
         if($result) {
             return $stmtselect->fetch(PDO::FETCH_ASSOC);
         }
@@ -210,29 +206,29 @@ function getPatientId($firstName, $lastName) {
     }
 }
 
-    //Insert patient account into the database
-    function createAccount($patientID, $firstName, $lastName, $email) {
-        $query = "INSERT INTO patient_account (patient_id, patient_username, patient_password, patient_email) VALUES(?,?,?,?)";
-        $credentials = generateCredentials($patientID, $firstName, $lastName);
+//Insert patient account into the database
+function createAccount($patientID, $firstName, $lastName, $email) {
+    $query = "INSERT INTO patient_account (patient_id, patient_username, patient_password, patient_email) VALUES(?,?,?,?)";
+    $credentials = generateCredentials($patientID, $firstName, $lastName);
 
-        $hashPassword = password_hash($credentials['password'], PASSWORD_DEFAULT);
+    $hashPassword = password_hash($credentials['password'], PASSWORD_DEFAULT);
 
-        $stmtinsert = $GLOBALS['database']->prepare($query);
-        $result = $stmtinsert->execute([$patientID, $credentials['username'], $hashPassword, $email]);
+    $stmtinsert = $GLOBALS['database']->prepare($query);
+    $result = $stmtinsert->execute([$patientID, $credentials['username'], $hashPassword, $email]);
 
-        return $result ? $credentials : '0';
-    }
+    return $result ? $credentials : '0';
+}
 
-    //Generate login credentials using entered details of the patient
-    function generateCredentials($patientID, $firstName, $lastName) {
-        $username = $firstName.$lastName;
-        $toShuffle = $firstName.$lastName.$patientID;
-        $password = str_shuffle($toShuffle);
-        $credentials = array('username' => $username, 'password' => $password);
-        return $credentials;
-    }
+//Generate login credentials using entered details of the patient
+function generateCredentials($patientID, $firstName, $lastName) {
+    $username = $firstName.$lastName;
+    $toShuffle = $firstName.$lastName.$patientID;
+    $password = str_shuffle($toShuffle);
+    $credentials = array('username' => $username, 'password' => $password);
+    return $credentials;
+}
 
-    //Check if the patient exists in the database
+//Check if the patient exists in the database
 function verifyPatient($firstName, $lastName, $contact) {
     $query = "SELECT * FROM patient_details WHERE patient_last_name = ? AND patient_first_name = ? AND patient_contact_number = ?";
 

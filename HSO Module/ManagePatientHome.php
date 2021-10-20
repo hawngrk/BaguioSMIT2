@@ -816,6 +816,7 @@ include_once("../includes/database.php") ?>
             data: formData,
             success: function (result) {
                 uploadFileModal.style.display = "none";
+                Swal.fire('Added Patient', '', 'success');
             }
         });
     }
