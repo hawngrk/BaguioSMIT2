@@ -61,11 +61,12 @@ include_once("../includes/database.php")
     <nav id="sidebar">
         <div class="sidebar-header">
             <div class="sidebar-brand-icon">
-                <img style="width:150px;" src="../img/SMIT+.png" alt="Baguio Logo">
+            <img src="../img/logoo.png" style="width: 104%; margin-bottom:-19%; margin-top:-5%;" alt="Baguio Logo">
             </div>
         </div>
 
         <ul class="list-unstyled components">
+            <hr>
             <h4 id="headingNav1">San Luis Village</h4>
             <hr>
             <h5 id="headingNav2">September 17, 2021 | 01:24 PM</h5>
@@ -177,8 +178,8 @@ include_once("../includes/database.php")
     <div id="content">
         <div class="topNav row">
             <div class="container-fluid">
-                <button id="buttonMarker" class="btnTop float-right" onclick="openNotif('notificationModal')">
-                    <span class="marker" id="marker"><i class="fas fa-circle"></i></span>
+                <button id="buttonMarker" class="notif float-right" onclick="openNotif('notificationModal')">
+                    <!-- <span class="marker" id="marker"><i class="fas fa-circle"></i></span> -->
                     <i class="fas fa-bell"></i>
                 </button>
             </div>
@@ -188,7 +189,7 @@ include_once("../includes/database.php")
         <!--Page Content-->
         <div>
            <div class="row">
-               <div id="selectDeployment">
+               <div id="selectDeployment" class="col-sm-auto">
                    <select class="form-select" id="selectHealthDistrict"
                        onchange="updateBarangayHome(this.value)">
                        <option value='' disabled selected hidden> Select Deployment</option>

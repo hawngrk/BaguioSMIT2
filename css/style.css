@@ -392,13 +392,17 @@ input[type=text]{
     border-radius: 8px;
 }
 
-
-
+#scannerTxt {
+    margin-top: 5%;
+}
+.patientLine {
+    width: 100%;
+}
 #searchPatientEIR, #searchPatientBrgy{
     width: 80%;
 }
 
-#searchPatientVaxPer{
+#searchPatientVaxPer, #searchPatientQueue{
     width: 95%;
 }
 
@@ -1197,6 +1201,13 @@ input[name=vitals]{
     color: #070101 !important;
 }
 
+.notif {
+    border-radius: 12px;
+    border: #000 solid 1px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
 /* ------------------------------------------------------------------- */
 /* ------------------------CSS for SSD MODULE ----------------------- */
 #selectHealthDistrict{
@@ -1209,9 +1220,10 @@ input[name=vitals]{
 }
 
 #selectDeployment{
-    width: 100%;
-    display: inline-block;
-    margin-left: 7%;
+    width: 95%;
+    display: flex;
+    margin-left: auto;
+    margin-right: auto;
     height: 20%;
 }
 
@@ -1357,7 +1369,7 @@ input[name=vitals]{
 }
 
 /*Monitoring*/
-.search-containerMonitoring{
+.search-containerMonitoring, .search-containerQueue{
     margin: bottom 0%!important;
     width: 205%;
     display: flex;

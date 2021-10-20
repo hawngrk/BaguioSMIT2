@@ -57,11 +57,12 @@ include_once("../includes/database.php")
     <nav id="sidebar">
         <div class="sidebar-header">
             <div class="sidebar-brand-icon">
-                <img style="width:150px;" src="../img/SMIT+.png" alt="Baguio Logo">
+            <img src="../img/logoo.png" style="width: 104%; margin-bottom:-19%; margin-top:-5%;" alt="Baguio Logo">
             </div>
         </div>
 
         <ul class="list-unstyled components">
+            <hr>
             <h4 id="headingNav1">Bakakeng North/Sur</h4>
             <hr>
             <h5 id="headingNav2">September 17, 2021 | 01:24 PM</h5>
@@ -101,13 +102,27 @@ include_once("../includes/database.php")
 
     <div id="content">
 
-        <!--Search Input and Button-->
-        <div class="search-container">
-            <input id="searchPatient" type="text" placeholder="Search" class="searchHome"name="searchPatient" onkeyup="searchPatient()">
-            <button type="submit" id="searchPatientBtn" name="searchPatientBtn" onclick="searchPatient()">
-                <i class="fa fa-search"></i>
-            </button>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light rounded-lg">
+        <div class="container-fluid">
+                <div class="search-containerQueue col">
+                    <input id="searchPatientQueue" type="text" placeholder="Search" class="searchHome"name="searchPatient" onkeyup="searchPatient()">
+                    
+                    <button type="submit" id="searchPatientBtn" name="searchPatientBtn" onclick="searchPatient()">
+                        <i class="fa fa-search"></i>
+                    </button>
+
+                </div>
+
+            <div class="col-sm-auto">
+                         <button type="button" class="btn btn-outline-dark buttonTop3 float-right">
+                            <i class="fas fa-sort-amount-down"></i>
+                        </button>
+                        <button type="button" class="btn btn-outline-dark buttonTop3 float-right">
+                            <i class="fas fa-filter"></i>
+                        </button>
+            </div>
         </div>
+        </nav>
 
 
         <!--Page Content-->

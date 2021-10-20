@@ -54,11 +54,12 @@
     <nav id="sidebar">
         <div class="sidebar-header">
             <div class="sidebar-brand-icon">
-                <img style="width:150px;" src="../img/SMIT+.png" alt="Baguio Logo">
+            <img src="../img/logoo.png" style="width: 104%; margin-bottom:-19%; margin-top:-5%;" alt="Baguio Logo">
             </div>
         </div>
 
         <ul class="list-unstyled components">
+            <hr>
             <h4 id="headingNav1">San Luis Village</h4>
             <hr>
             <h5 id="headingNav2"></h5>
@@ -110,13 +111,6 @@
             </div>
         </div>
 
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <div class="container-fluid">
-                <button type="button" id="sidebarCollapse" class="btn btn-info" onclick="Toggle()">
-                    <i class='fas fa-angle-left'></i> Menu
-                </button>
-            </div>
-        </nav>
         <h2 id="scannerTxt">Scan Patients QR Code</h2>
         <video id="preview"></video>
         <script type="text/javascript" src="../javascript/instascan.min.js"></script>
