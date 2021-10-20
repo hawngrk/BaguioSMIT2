@@ -1,431 +1,253 @@
-<?php
-include("../includes/database.php");
-if (isset($_POST['search'])) {
-    $search = $_POST['search'];
-    if ($search === "") {
-        $querySearch = "SELECT patient.patient_full_name, patient_details.patient_priority_group, CONCAT(patient_details.patient_house_address, ' ', patient_details.patient_barangay_address, ' ', patient_details.patient_CM_address, ' ', patient_details.patient_province) AS full_address, patient_contact_number FROM patient JOIN patient_details ON patient.patient_id = patient_details.patient_id;";
-    } else {
-        $querySearch = "SELECT patient.patient_full_name,  patient_details.patient_priority_group, CONCAT(patient_details.patient_house_address, ' ', patient_details.patient_barangay_address, ' ', patient_details.patient_CM_address, ' ', patient_details.patient_province) AS full_address, patient_contact_number FROM patient JOIN patient_details ON patient.patient_id = patient_details.patient_id WHERE patient.patient_id LIKE '$search%' OR patient.patient_full_name LIKE '$search%';";
-    }
-    echo "
-    <thead>
-            <tr>
-                <th scope='col'>Patient Name</th>
-                <th scope='col'>Category</th>
-                <th scope='col'>Complete Address</th>
-                <th scope='col'>Contact Number</th>
-            </tr>
-            </thead>";
+<!DOCTYPE html>
+<html lang="en">
 
-    $stmt = $database->stmt_init();
-    $stmt->prepare($querySearch);
-    $stmt->execute();
-    $stmt->bind_result($patientName, $category, $patientAddress, $contactNum);
-    while ($stmt->fetch()) {
-        echo "<tr>
-                <td>$patientName</td>
-                <td>$category</td>
-                <td>$patientAddress</td>
-                <td>$contactNum</td>
-                </tr>";
-    }
-}
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-if (isset($_POST['lastname'])) {
-    $lastName = $_POST['lastname'];
-    $firstName = $_POST['firstname'];
-    $middleName = $_POST['middlename'];
-    $suffix = $_POST['suffix'];
-    $group = $_POST['priority'];
-    $gender = $_POST['gender'];
-    $occupation = $_POST['occupation'];
-    $birthday = $_POST['birthday'];
-    $contactNumber = $_POST['contactnumber'];
-    $street = $_POST['street'];
-    $barangay = $_POST['barangay'];
-    $city = $_POST['city'];
-    $state = $_POST['state'];
-    $region = $_POST['region'];
+    <!-- Title -->
+    <title>SMIT+(Barangay) | ManagePatient</title>
 
-    $fullName = $lastName . " " . $firstName . " " . $middleName . " ";
+    <link rel="icon" href="../img/FaviSMIT+.png" type="image/jpg">
+    <!-- Our Custom CSS -->
+    <link href="../css/style.css" rel="stylesheet">
 
-//    $pet = $_POST['pet'];
-//    $bite = $_POST['bite'];
-//    $skin = $_POST['skin'];
-//    $food = $_POST['food'];
-//    $mold = $_POST['mold'];
-//    $latex = $_POST['latex'];
-//    $pollen = $_POST['pollen'];
-//    $insect = $_POST['insect'];
-//    $medication = $_POST['medication'];
-//    if (empty($_POST['othersAllergies'])) {
-//        $othersAllergies = "";
-//    } else {
-//        $othersAllergies = $_POST['othersAllergies'];
-//    }
-//
-//    $cancer = $_POST['cancer'];
-//    $asthma = $_POST['asthma'];
-//    $diabetes = $_POST['diabetes'];
-//    $hypertension = $_POST['hypertension'];
-//    $heart = $_POST['heartDiseases'];
-//    $kidney = $_POST['kidneyDiseases'];
-//    if (empty($_POST['othersComorbidities'])) {
-//        $othersComorbidities = "";
-//    } else {
-//        $othersComorbidities = $_POST['othersComorbidities'];
-//    }
+    <!-- Bootstrap-->
+    <script
+            crossorigin="anonymous"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script
+            crossorigin="anonymous"
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+            src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script
+            crossorigin="anonymous"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link
+            crossorigin="anonymous"
+            href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+            integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+            rel="stylesheet">
+    <!-- Font Awesome JS -->
+    <script src="https://kit.fontawesome.com/fcdb0fe9f3.js" crossorigin="anonymous"></script>
+    <script
+            defer="defer"
+            src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js"
+            integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ"
+            crossorigin="anonymous"></script>
+    <script
+            defer="defer"
+            src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js"
+            integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY"
+            crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script defer src="../javascript/showDateAndTime.js"> </script>
 
-    $patientTableQuery = "INSERT INTO patient (patient_full_name) VALUE ('$fullName');";
-    $database->query($patientTableQuery);
+</head>
 
-    $getPatientIdQuery = "SELECT patient_id FROM patient ORDER BY patient_id DESC LIMIT 1";
-    $dbase = $database->stmt_init();
-    $dbase->prepare($getPatientIdQuery);
-    $dbase->execute();
-    $dbase->bind_result($patientid);
-    $dbase->fetch();
-    $dbase->close();
-
-    $patient_detailsTableQuery = "INSERT INTO patient_details (patient_id, patient_first_name, patient_last_name, patient_middle_name, patient_suffix, patient_priority_group, patient_category_id, patient_category_number, patient_house_address, patient_barangay_address, patient_CM_address, patient_province, patient_region, patient_birthdate, patient_age, patient_gender, patient_contact_number, patient_occupation) VALUE ('$patientid', '$firstName', '$lastName', '$middleName', '$suffix', '$group', 'Other ID', '2191057', '$street', '$barangay', '$city', '$state', '$region', '$birthday', '20', '$gender', '$contactNumber', '$occupation');";
-    $database->query($patient_detailsTableQuery);
-
-
-//    $medical_backgroundTableQuery = "INSERT INTO medical_background (patient_id, skin_allergy, food_allergy, medication_allergy, insect_allergy, pollen_allergy, bite_allergy, latex_allergy, mold_allergy, pet_allergy, hypertension, heart_disease, kidney_disease, diabetes_mellitus, bronchial_asthma, immunodeficiency, cancer, other_commorbidity) VALUE ('$patientid', '$skin', '$food', '$medication', '$insect', '$pollen', '$bite', '$latex', '$mold', '$pet', '$hypertension', '$heart', '$kidney', '$diabetes', '$asthma', '0', '$cancer', '');";
-//    $database->query($medical_backgroundTableQuery);
-    echo'<thead>
-                <tr>
-                    <th scope="col">Patient Name</th>
-                    <th scope="col">Category</th>
-                    <th scope="col">Complete Address</th>
-                    <th scope="col">Contact Number</th>
-                </tr>
-                </thead>';
-
-    require_once '../require/getPatientDetails.php';
-
-    foreach ($patient_details as $pd) {
-        $id = $pd->getPatientDeetPatId();
-        $category = $pd->getPriorityGroup();
-        $fullAddress = $pd->getHouseAdd() . ", " . $pd->getBrgy() . ", " . $pd->getCity() . ", " . $pd->getProvince();
-        $contact = $pd->getContact();
-
-        if ($pd->getPatientMName() == null && $pd->getPatientSuffix() == null) {
-            $name = $pd->getPatientLName() . ", " . $pd->getPatientFName();
-        } else if ($pd->getPatientSuffix() == null) {
-            $name = $pd->getPatientLName() . ", " . $pd->getPatientFName() . " " . $pd->getPatientMName();
-        } else if ($pd->getPatientMName() == null) {
-            $name = $pd->getPatientLName() . ", " . $pd->getPatientFName() . " " . $pd->getPatientSuffix();
-        } else {
-            $name = $pd->getPatientLName() . ", " . $pd->getPatientFName() . " " . $pd->getPatientMName() . " " . $pd->getPatientSuffix();
-        }
-
-        echo "<tr>
-                        <td>$name</td>
-                        <td>$category</td>
-                        <td>$fullAddress</td>
-                        <td>$contact</td>
-                    </tr>";
-    }
-
-}
-
-if (isset($_POST['archive'])){
-    $archivedId = $_POST['archive'];
-    $option = $_POST['option'];
-
-    if ($option == "Archive"){
-        $query = "UPDATE `patient_details` SET `Archived`= 1 WHERE `patient_id` = '$archivedId'";
-        $database->query($query);
-
-    } else if ($option == "UnArchive") {
-        $query = "UPDATE `patient_details` SET `Archived`= 0 WHERE `patient_id` = '$archivedId'";
-        $database->query($query);
-
-
-        echo'<thead>
-                <tr>
-                    <th scope="col">Patient Name</th>
-                    <th scope="col">Category</th>
-                    <th scope="col">Complete Address</th>
-                    <th scope="col">Contact Number</th>
-                    <th scope="col">Action</th>
-                </tr>
-                </thead>';
-
-        require_once '../require/getPatientDetails.php';
-
-        foreach ($patient_details as $pd) {
-            if ($pd->getArchived() == 1) {
-                $id = $pd->getPatientDeetPatId();
-                $category = $pd->getPriorityGroup();
-                $fullAddress = $pd->getHouseAdd() . ", " . $pd->getBrgy() . ", " . $pd->getCity() . ", " . $pd->getProvince();
-                $contact = $pd->getContact();
-
-                if ($pd->getPatientMName() == null && $pd->getPatientSuffix() == null) {
-                    $name = $pd->getPatientLName() . ", " . $pd->getPatientFName();
-                } else if ($pd->getPatientSuffix() == null) {
-                    $name = $pd->getPatientLName() . ", " . $pd->getPatientFName() . " " . $pd->getPatientMName();
-                } else if ($pd->getPatientMName() == null) {
-                    $name = $pd->getPatientLName() . ", " . $pd->getPatientFName() . " " . $pd->getPatientSuffix();
-                } else {
-                    $name = $pd->getPatientLName() . ", " . $pd->getPatientFName() . " " . $pd->getPatientMName() . " " . $pd->getPatientSuffix();
-                }
-
-                echo "<tr>
-                        <td>$name</td>
-                        <td>$category</td>
-                        <td>$fullAddress</td>
-                        <td>$contact</td>
-                        <td>
-                            <div style='text-align: left;'>
-                                <button class='buttonTransparent hyperlink' onclick='archive(0, clickArchive, $id)'>unarchive<i class='fa fa-archive'></i></button>
-                            </div>
-                        </td>
-                    </tr>";
-            }
-        }
-
-    }
-}
-
-if (isset($_POST['patientId'])) {
-    require_once ('../require/getPatientDetails.php');
-    require_once ('../require/getPatient.php');
-
-    $patId = $_POST['patientId'];
-
-    foreach ($patient_details as $patient){
-        if($patient->getPatientDeetPatId() == $patId){
-            $group = $patient->getPriorityGroup();
-            $age = $patient->getAge();
-            $gender = $patient->getGender();
-            $contact = $patient->getContact();
-        }
-    }
-
-    foreach ($patients as $pat){
-        if ($pat->getPatientId() == $patId){
-            $name = $pat->getPatientFullName();
-        }
-    }
-
-    echo "      
-                <img style='width:150px;' src='../img/SMIT+.png' alt='Baguio Logo'><br>
-                
-                <h1> REGISTERED <i class='far fa-check-circle' style='color: green'></i></h1><br><br>
-                
-                <h5>Full Name: $name</h5><br>
-                <h5>Gender: $gender</h5><br>
-                <h5>Age: $age</h5><br>
-                <h5>Contact Number: $contact</h5><br>
-                
-                <button id='postVac' class='btn-success' type='submit' style='width: 50%; float: right' onclick='queuePatient($patId)'>Confirm Registration</button>";
-
-}
-
-if (isset($_POST['passport'])) {
-    require_once ('../require/getPatientDetails.php');
-    require_once ('../require/getPatient.php');
-
-    $passportId = $_POST['passport'];
-
-    foreach ($patient_details as $patient){
-        if($patient->getPatientDeetPatId() == $passportId){
-            $group = $patient->getPriorityGroup();
-            $age = $patient->getAge();
-            $gender = $patient->getGender();
-            $contact = $patient->getContact();
-        }
-    }
-
-    foreach ($patients as $pat){
-        if ($pat->getPatientId() == $passportId){
-            $patientId = $pat->getPatientId();
-            $name = $pat->getPatientFullName();
-        }
-    }
-
-    echo "      
-                <img style='width:150px;' src='../img/SMIT+.png' alt='Baguio Logo'><br>
-                
-                <h1> REGISTERED <i class='far fa-check-circle' style='color: green'></i></h1><br><br>
-                
-                <h5>Full Name: $name</h5><br>
-                <h5>Gender: $gender</h5><br>
-                <h5>Age: $age</h5><br>
-                <h5>Contact Number: $contact</h5><br>
-                
-                <button id='postVac' class='btn-success' type='submit' style='width: 50%; float: right' onclick='queuePatient($patientId)'>Confirm Registration</button>";
-
-}
-
-if (isset($_POST['queue'])){
-    $queuedId = $_POST['queue'];
-
-    $query = "UPDATE patient SET for_queue ='1' WHERE patient_id = $queuedId";
-    $database->query($query);
-
-    $priorityGroup = "SELECT patient_priority_group FROM patient_details WHERE patient_id = $queuedId";
-    $stmt = $database->stmt_init();
-    $stmt->prepare($priorityGroup);
-    $stmt->execute();
-    $stmt->bind_result($group);
-    $stmt->fetch();
-    $stmt->close();
-
-    $queryQueue = "SELECT first_dose_queue FROM patient_barangay_queue JOIN patient_details ON patient_barangay_queue.patient_id = patient_details.patient_id WHERE patient_barangay_queue.barangay_id = '113' AND patient_details.patient_priority_group = '$group' ORDER BY first_dose_queue LIMIT 1;";
-
-    $stmt = $database->stmt_init();
-    $stmt->prepare($queryQueue);
-    $stmt->execute();
-    $stmt->bind_result($last);
-    $stmt->fetch();
-    $stmt->close();
-
-    if ($last == null) {
-        $nextQueue = 1;
-    }else {
-        $nextQueue = $last + 1;
-    }
-
-    $query2 = "INSERT INTO patient_barangay_queue (patient_id, barangay_id, first_dose_queue, first_dose_vaccinated, second_dose_queue, second_dose_vaccinated) VALUES ('$queuedId','113','$nextQueue','0','0','0')";
-    $database->query($query2);
-}
-
-if (isset($_POST['notifStubs'])) {
-    $query = "SELECT barangay_stubs.A1_stubs, barangay_stubs.A2_stubs, barangay_stubs.A3_stubs, barangay_stubs.A4_stubs, barangay_stubs.A5_stubs, barangay_stubs.A6_stubs, barangay_stubs.notif_opened, vaccination_sites.location, vaccination_drive.vaccination_date FROM barangay_stubs JOIN vaccination_drive ON vaccination_drive.drive_id = barangay_stubs.drive_id JOIN vaccination_sites ON vaccination_sites.vaccination_site_id = vaccination_drive.vaccination_site_id WHERE barangay_id = '113';";
-    $stmt = $database->stmt_init();
-    $stmt->prepare($query);
-    $stmt->execute();
-    $stmt->bind_result($A1, $A2, $A3, $A4, $A5, $A6, $opened, $locName, $date);
-    while ($stmt->fetch()) {
-
-        $availableStubs = [$A1, $A2, $A3, $A4, $A5, $A6];
-        $priorityStub = [];
-        $values = [];
-
-        for ($i = 0; $i < 5; $i++) {
-            if ($availableStubs[$i] != 0) {
-                $priorityStub[] = "A" . $i + 1;
-                $values[] = $availableStubs[$i];
-            }
-        }
-
-        if ($opened == 1) {
-            echo "
-                                                        <div style='color: #9C9C9C'>
-                                                            <p>Stubs:<br>";
-            foreach ($priorityStub as $ps) {
-                foreach ($values as $value)
-                    echo " $ps: $value </p>";
-            }
-
-            echo "
-                                                            <p>Vaccination Location: $locName<br>
-                                                               Date: $date <br>
-                                                            </p>
-                                                        </div>
-                                                      <hr style='width: 100%; background: azure'>
-                                                      ";
-        } else {
-
-            echo "
-                                                   <script>document.getElementById('marker').setAttribute('style', 'color:#c10d0d!important');</script>
-
-                                                        <div style='background: lightgray'>
-                                                             <h4>Stubs:</h4>";
-
-            foreach ($priorityStub as $ps) {
-                foreach ($values as $value)
-                    echo " <h3>$ps: $value </h3> <br>";
-            }
-
-            echo "
-                                                            <p>Vaccination Location: $locName<br>
-                                                               Date: $date <br>
-                                                            </p>
-                                                        </div>
-                                                      <hr style='width: 100%; background: azure'>";
-        }
-    }
-}
-
-if (isset($_POST['delegation'])){
-
-    $drId = $_POST['delegation'];
-
-    $query = "SELECT A1_stubs, A2_stubs, A3_stubs, A4_stubs, A5_stubs, A6_stubs FROM barangay_stubs WHERE drive_id = '$drId' AND barangay_id = '113';";
-    $stmt = $database->stmt_init();
-    $stmt->prepare($query);
-    $stmt->execute();
-    $stmt->bind_result($A1, $A2, $A3, $A4, $A5, $A6);
-    $stmt->fetch();
-    $stmt->close();
-
-    echo '<div id="stubDelegationNotice">
-                <center>
-                    <h5>Stub Delegation Notice</h5>
-                </center>
-                <hr>
-                <p> Special Service Division has sent:</p>';
-
-    $availableStubs = [$A1, $A2, $A3, $A4, $A5, $A6];
-    $priorityStub = [];
-    $values = [];
-
-    for ($i = 0; $i < 5; $i++) {
-        if ($availableStubs[$i] != 0) {
-            $priorityStub[] = "A" . $i + 1;
-            $values[] = $availableStubs[$i];
-        }
-    }
-
-    foreach ($priorityStub as $ps) {
-        foreach ($values as $value)
-            echo "<p> $value $ps stubs</p><br>";
-    }
-
-    echo"
-             </div>
-            <div id='availableStubs'>
-                <center>
-                    <h5>Available Stubs</h5>
-                </center>
-                <hr>
-                <div class='priorityGroup'>
-                    <h5>A1</h5>
-                    <p>$A1</p>
-                </div>
-                <div class='priorityGroup'>
-                    <h5>A2</h5>
-                   <p>$A2</p>
-                </div>
-                <div class='priorityGroup'>
-                    <h5>A3</h5>
-                 <p>$A3</p>
-                </div>
-                <div class='priorityGroup'>
-                    <h5>A4</h5>
-                  <p>$A4</p>
-                </div>
-                <div class='priorityGroup'>
-                    <h5>A5</h5>
-                   <p>$A5</p>
-                </div>
-                <div class='priorityGroup'>
-                    <h5>A6</h5>
-                   <p>$A6</p>
-                </div>
+<body>
+<div class="wrapper">
+    <!-- Sidebar -->
+    <nav id="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-brand-icon">
+                <img style="width:150px;" src="../img/SMIT+.png" alt="Baguio Logo">
             </div>
-        </div>";
-}
+        </div>
 
-if (isset($_POST['open'])){
-    $query = "UPDATE barangay_stubs SET notif_opened = '1' WHERE notif_opened = '0'";
-    $stmt = $database->stmt_init();
-    $stmt->prepare($query);
-    $stmt->execute();
-    $stmt->fetch();
-    $stmt->close();
-}
+        <ul class="list-unstyled components">
+            <h4 id="headingNav1">San Luis Village</h4>
+            <hr>
+            <h5 id="headingNav2"></h5>
+            <hr>
+            <li>
+                <a href="../Barangay Module/homeBarangayModule.php">
+                    <i class="fas fa-home"></i>
+                    Home</a>
+            </li>
+            <li class="active">
+                <a href="../Barangay Module/managePatientBarangayModule.php">
+                    <i class="fas fa-user"></i>
+                    </i>
+                    Manage Patient</a>
+            </li>
+
+            <li>
+                <a href="../Barangay Module/patientQueueBarangayModule.php">
+                    <i class="fas fa-clipboard-list"></i>
+                    Patient Queue</a>
+            </li>
+            <li>
+                <a href="../Barangay Module/notificationSummaryBarangayModule.php">
+                    <i class="fas fa-envelope-open"></i>
+                    Notification Summary</a>
+            </li>
+        </ul>
+
+        <ul class="list-unstyled CTAs">
+            <button type="button" class="btn btn-info" onclick="signout">
+                <span>Sign Out</span>
+            </button>
+        </ul>
+    </nav>
+
+    <!-- Top Nav Bar -->
+
+
+
+    <div id="content">
+
+        <div id="qrView" class="modal-window">
+            <div class="content-modal">
+                <div class="modal-header">
+                    <h3 class="modal-title">Patient Information</h3>
+                    <button type="button" class="close" data-dismiss="modal" onclick="closeModal('qrView')">&times;</button>
+                </div>
+                <div class="modal-body" id="qr"></div>
+            </div>
+        </div>
+
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container-fluid">
+                <button type="button" id="sidebarCollapse" class="btn btn-info" onclick="Toggle()">
+                    <i class='fas fa-angle-left'></i> Menu
+                </button>
+            </div>
+        </nav>
+        <h2 id="scannerTxt">Scan Patients QR Code</h2>
+        <video id="preview"></video>
+        <script type="text/javascript" src="../javascript/instascan.min.js"></script>
+        <script type="text/javascript">
+            let scanner = new Instascan.Scanner({
+                video: document.getElementById('preview')
+            });
+
+            scanner.addListener('scan', function (content) {
+                qr(content);
+
+            });
+
+            Instascan.Camera.getCameras().then(function (cameras) {
+                if (cameras.length > 0) {
+                    scanner.start(cameras[0]);
+                } else {
+                    console.error('No cameras found.');
+                }
+            }).catch(function (e) {
+                console.error(e);
+            });
+        </script>
+        <div id="passportInt">
+            <h2 id="inputTxt"> Input Manually </h2>
+            <div>
+                <i class="fas fa-info-circle "></i>
+                <input id="passportId" type="text" placeholder="Passport ID">
+                <button class="buttonTransparent" onclick="passport(document.getElementById('passportId').value)"><i class="fas fa-sign-in-alt"></i></button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#sidebarCollapse').on('click', function () {
+            $('#sidebar').toggleClass('active');
+        });
+    });
+    var clicked = false;
+
+    function Toggle() {
+        var butt = document.getElementById('sidebarCollapse')
+        if (!clicked) {
+            clicked = true;
+            butt.innerHTML = "Menu <i class = 'fas fa-angle-double-right'><i>";
+        } else {
+            clicked = false;
+            butt.innerHTML = "<i class='fas fa-angle-left'></i> Menu";
+        }
+    }
+
+    function qr(content){
+        $.ajax({
+            url: 'ManagePatientProcessor.php',
+            method: 'POST',
+            data: {patientId: content},
+            success: function (result) {
+                document.getElementById('qrView').style.display = "block";
+                document.getElementById('qr').innerHTML = result;
+            }
+        })
+    }
+
+    function passport(passportId){
+        $.ajax({
+            url: 'ManagePatientProcessor.php',
+            method: 'POST',
+            data: {passport: passportId},
+            success: function (result) {
+                document.getElementById('qrView').style.display = "block";
+                document.getElementById('qr').innerHTML = result;
+            }
+        })
+    }
+
+    function queuePatient(id){
+        $.ajax({
+            url: 'ManagePatientProcessor.php',
+            method: 'POST',
+            data: {queue: id},
+            success: function (result) {
+                closeModal('qrView');
+            }
+        })
+    }
+
+    function closeModal(modal){
+        document.getElementById(modal).style.display = "none";
+    }
+</script>
+</body>
+
+</html>
+
+<style>
+
+    #passportInt {
+        width: 55%;
+        background-color: transparent;
+        margin-left: 23%;
+    }
+
+    #passportId{
+        border-bottom: solid black 1px;
+        width: 90%;
+    }
+
+    input[type='text']::placeholder
+    {
+        text-align: center;      /* for Chrome, Firefox, Opera */
+    }
+
+    #scannerTxt {
+        text-align: center;
+    }
+
+    #inputTxt{
+        text-align: center;
+        margin-top: 3%;
+    }
+
+    #preview {
+        border-radius: 12px;
+        width: 50%;
+        height: auto;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+</style>
