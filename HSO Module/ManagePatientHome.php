@@ -1,6 +1,5 @@
 <?php
 
-//include ("../AdminbackEnd/sessionHandling.php");
 include_once("../includes/database.php") ?>
 
 <head>
@@ -88,7 +87,7 @@ include_once("../includes/database.php") ?>
         <div class="navbar navbar-expand-lg navbar-light bg-light shadow-sm p-3 mb-4 rounded-lg">
             <div class="container-fluid">
                 <div>
-                    <button id="uploadFileBtn" type="button" class="buttonTop3"><i class="fas fa-upload"></i> Upload
+                    <button id="uploadFileBtn" type="button" class="buttonTop3 float-left"><i class="fas fa-upload"></i> Upload
                         File
                     </button>
                     <button id="addPatientBtn" type="button" class="buttonTop3"><i class="fas fa-plus"></i> Add User
@@ -158,7 +157,7 @@ include_once("../includes/database.php") ?>
                         if ($pd->getArchived() == 0) {
                             $id = $pd->getPatientDeetPatId();
                             $category = $pd->getPriorityGroup();
-                            $fullAddress = $pd->getHouseAdd() . ", " . $pd->getBrgy() . ", " . $pd->getCity() . ", " . $pd->getProvince();
+                            $fullAddress = $pd->getHouseAdd() . ", " . $pd->getBrgy();
                             $contact = $pd->getContact();
 
                             if ($pd->getPatientMName() == null && $pd->getPatientSuffix() == null) {
@@ -176,9 +175,9 @@ include_once("../includes/database.php") ?>
                         <td>$category</td>
                         <td>$fullAddress</td>
                         <td>$contact</td>
-                        <td>
-                            <div style='text-align: left;'>
-                                <button class='buttonTransparent' onclick='archive(1, clickArchive, $id)'><i class='fa fa-archive'></i></button>
+                        <td  style='text-align: center'>
+                            <div>
+                                <button class='buttonTransparent' style='text-align: center' onclick='archive(1, clickArchive, $id)'><i class='fa fa-archive'></i></button>
                             </div>
                         </td>
                     </tr>";
@@ -234,7 +233,7 @@ include_once("../includes/database.php") ?>
 
 
         <!--Button for Adding Patient Details-->
-        <div id="patientInformationModal" class="modal-window">
+        <div id="addPatientModal" class="modal-window">
             <div class="content-modal">
                 <div class="modal-header">
                     <h4 class="modal-title">Add User | Patient - Information</h4>
@@ -290,15 +289,21 @@ include_once("../includes/database.php") ?>
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-4">
+                                <div class="col">
                                     <label class="label1 required" for="occupation">Occupation </label>
                                     <input type="text3" id="occupation" class='input' name="middlename"
                                            placeholder="Input Answer Here" required>
                                 </div>
-                                <div class="col-4">
+                                <div class="col">
                                     <label class="label1 required" for="contactNum">Contact Number </label>
                                     <input type="text3" id="contactNum" class='input' name="contactNum"
                                            placeholder="09XX-XXX-XXXX" required>
+                                </div>
+
+                                <div class="col">
+                                    <label class="label1 required" for="email"> Email </label>
+                                    <input type="text3" id="email" class='input' name="email"
+                                           placeholder="@email.com" required>
                                 </div>
                             </div>
                         </div>
@@ -321,6 +326,7 @@ include_once("../includes/database.php") ?>
                                         </option>
                                         <option value="A5: Indigent">A5: Indigent Population</option>
                                         <option value="A6: ROP">A6: Rest of the Population</option>
+                                        <option value="A7: 12-17">A7: 12-17 Years Old</option>
                                     </select>
                                 </div>
                                 <div class="col">
@@ -360,8 +366,7 @@ include_once("../includes/database.php") ?>
                                 <div class="col-8">
                                     <label class="required" for="houseAddress">House Address </label>
                                     <input type="text3" id="houseAddress" class='input' name="houseAddress"
-                                           placeholder="Input House Number/Lot/Block Number, Street, Alley etc."
-                                           required>
+                                           placeholder="Input House Number/Lot/Block Number, Street, Alley etc." required>
                                 </div>
                                 <div class="col-4">
                                     <div id="barangayList">
@@ -405,8 +410,8 @@ include_once("../includes/database.php") ?>
                                     <label class="required" for="allergy"> Allergy with Vaccine?</label>
                                     <select class="formControl" id="allergy" name="allergy" required>
                                         <option selected disabled>Select Answer...</option>
-                                        <option value="none">None</option>
-                                        <option value="yes">Yes</option>
+                                        <option value="None">None</option>
+                                        <option value="Yes">Yes</option>
                                     </select>
                                 </div>
                                 <div class="col-4">
@@ -424,32 +429,30 @@ include_once("../includes/database.php") ?>
                             <div class="listOfComorbidity">
                                 <div class="row">
                                     <div class="col">
-                                        <input type="checkbox" name="hypertension" value="hypertension"
-                                               id="hypertension">
+                                        <input type="checkbox" name="hypertension" value="1" id="hypertension">
                                         <label> Hypertension</label>
                                     </div>
                                     <div class="col">
-                                        <input type="checkbox" name="heartDisease" value="heartDisease"
-                                               id="heartDisease">
+                                        <input type="checkbox" name="heartDisease" value="1" id="heartDisease">
                                         <label> Heart Disease</label>
                                     </div>
                                     <div class="col">
-                                        <input type="checkbox" name="kidneyDisease" value="kidneyDisease"
+                                        <input type="checkbox" name="kidneyDisease" value="1"
                                                id="kidneyDisease">
                                         <label> Kidney Disease </label>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col">
-                                        <input type="checkbox" name="diabetes" value="diabetes" id="diabetes">
+                                        <input type="checkbox" name="diabetes" value="1" id="diabetes">
                                         <label> Diabetes Mellitus </label>
                                     </div>
                                     <div class="col">
-                                        <input type="checkbox" name="asthma" value="asthma" id="asthma">
+                                        <input type="checkbox" name="asthma" value="1" id="asthma">
                                         <label> Bronchial Asthma </label>
                                     </div>
                                     <div class="col">
-                                        <input type="checkbox" name="immunodeficiency" value="immunodeficiency"
+                                        <input type="checkbox" name="immunodeficiency" value="1"
                                                id="immunodeficiency">
                                         <label> Immunodeficiency </label>
                                     </div>
@@ -460,30 +463,26 @@ include_once("../includes/database.php") ?>
                                         <label> Cancer </label>
                                     </div>
                                     <div class="col">
-                                        <input type="checkbox" name="others" value="others" id="others"
+                                        <input type="checkbox" name="other" value="other" id="other"
                                                onclick="showOthersInput(this)">
                                         <label> Others </label>
                                     </div>
                                     <div class="col">
                                         <div id="otherTextField">
-                                            <input type="text3" name="others" id="others"
+                                            <input type="text3" name="other" id="other" class="otherInput"
                                                    placeholder="Input Other Commorbidity">
                                         </div>
                                     </div>
-
                                 </div>
                             </div>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" id="addPatientInfoCancelBtn" class="btn btn-secondary"
-                            data-dismiss="modal">Cancel
-                    </button>
-                    <button type="button" id="addPatientNextBtn" class="btn btn-success">Add</button>
+                    <button type="button" id="cancel" class="btn btn-secondary">Cancel</button>
+                    <button type="button" id="addBtn" class="btn btn-success shadow-sm" onclick="addPatient()">Add</button>
                 </div>
             </div>
-
         </div>
 
         <!--Notification modal-->
@@ -500,12 +499,11 @@ include_once("../includes/database.php") ?>
                 </div>
                 <div class="modal-footer">
                     <button id='notificationDoneBtn' class="btn btn-primary" type="submit"> Done</button>
-                    <!--instead of close change to Done-->
                 </div>
             </div>
         </div>
 
-
+        <!--Archived Modal-->
         <div id="archived" class="modal-window">
             <div class="content-modal-table">
                 <div class="modal-header">
@@ -608,16 +606,13 @@ include_once("../includes/database.php") ?>
 
     // Add Patient
     var addPatientBtn = document.getElementById("addPatientBtn");
-    var patientInformationModal = document.getElementById("patientInformationModal");
-    var patientMedBackgroundModal = document.getElementById("patientMedBackgroundModal");
+    var patientInformationModal = document.getElementById("addPatientModal");
 
-    var addPatientNextBtn = document.getElementById("addPatientNextBtn");
-    var addPatientPrevBtn = document.getElementById("addPatientPrevBtn");
-    var addPatientInfoCancelBtn = document.getElementById("addPatientInfoCancelBtn");
-    var addPatientMedCancelBtn = document.getElementById("addPatientMedCancelBtn");
 
+    var addPatientInfoCancelBtn = document.getElementById("addPatientInfoClose");
     var addPatientInfoClose = document.getElementById("addPatientInfoClose");
-    var addPatientMedClose = document.getElementById("addPatientMedClose");
+    var cancel = document.getElementById("cancel");
+
 
     addPatientBtn.onclick = function () {
         patientInformationModal.style.display = "block";
@@ -628,6 +623,10 @@ include_once("../includes/database.php") ?>
     }
 
     addPatientInfoClose.onclick = function () {
+        patientInformationModal.style.display = "none";
+    }
+
+    cancel.onclick = function () {
         patientInformationModal.style.display = "none";
     }
 
@@ -700,8 +699,10 @@ include_once("../includes/database.php") ?>
     }
 
     function showOthersInput() {
-        var elem = document.getElementById('others');
+        var elem = document.getElementById('other');
         var others = document.getElementById('otherTextField');
+
+        elem.checked == !true;
 
         if (elem.checked == true) {
             others.style.display = "block";
@@ -718,48 +719,131 @@ include_once("../includes/database.php") ?>
         showList.style.display = (this.value == "none") ? "none" : "block";
     }
 
+    //Submit Button Clicked
     function addPatient() {
-        notificationModal.style.display = "block";
+        var addButton = document.getElementById("addBtn");
+
+        //Personal Information
         var last = document.getElementById("lname").value;
         var first = document.getElementById("fname").value;
         var middle = document.getElementById("mname").value;
         var suffix = document.getElementById("suffix").value;
-        var priority = document.getElementById("priority").value;
-        var gender = document.getElementById("gender").value;
         var occupation = document.getElementById("occupation").value;
-        var birthday = document.getElementById("date").value;
-        var contact = document.getElementById("number").value;
-        var street = document.getElementById("street").value;
+        var gender = document.getElementById("gender").value;
+        var birthdate = document.getElementById("date").value;
+        var dob = new Date(document.getElementById("date").value);
+        var age = getAge(dob);
+
+        //Contact Information
+        var contact = document.getElementById("contactNum").value;
+        var email = document.getElementById("email").value;
+
+        //Category Information
+        var priority = document.getElementById("priorityGroup").value;
+        var id = document.getElementById("categoryID").value;
+        var idNo = document.getElementById("categoryNo").value;
+        var philHealth = document.getElementById("philHealth").value;
+        var pwd = document.getElementById("pwdID").value;
+        //Address Information
+        var houseAddress = document.getElementById("houseAddress").value;
         var brgy = document.getElementById("barangay").value;
         var city = document.getElementById("city").value;
-        var state = document.getElementById("state").value;
+        var province = document.getElementById("province").value;
         var region = document.getElementById("region").value;
 
+        //Clinical Information
+        var allergyInput = document.getElementById("allergy").value;
+        allergy = allergyInput == "None" ? 0 : 1
+        var commorbidity = document.getElementById("comorbidity").value;
+
+        //Commorbidity Information
+        var hypertension = verifyCommorbidity($('#hypertension:checked').val());
+        var diabetes = verifyCommorbidity($('#diabetes:checked').val());
+        var cancer = verifyCommorbidity($('#cancer:checked').val());
+        var heartDisease = verifyCommorbidity($('#heartDisease:checked').val());
+        var asthma = verifyCommorbidity($('#asthma:checked').val());
+        var kidneyDisease = verifyCommorbidity($('#kidneyDisease:checked').val());
+        var immunodeficiency = verifyCommorbidity($('#immunodeficiency:checked').val());
+        var other = $('#other:checked').val();
+        var enteredCommorbidity = other ? document.querySelector('.otherInput').value : "";
+
         $.ajax({
-            url: '../Barangay Module/ManagePatientProcessor.php',
+            url: '../patient/flutter/authorization/pre_registration.php',
             type: 'POST',
             data: {
+                //Personal Information
                 lastname: last,
                 firstname: first,
                 middlename: middle,
                 suffix: suffix,
-                priority: priority,
                 gender: gender,
                 occupation: occupation,
-                birthday: birthday,
-                contactnumber: contact,
-                street: street,
+                birthdate: birthdate,
+                age: age,
+
+                //Contact Information
+                contact: contact,
+                email: email,
+
+                //Priority Group
+                priority: priority,
+                category: id,
+                categoryID: idNo,
+                philhealthID: philHealth,
+                pwdID: pwd,
+
+                //Address Information
+                houseAddress: houseAddress,
                 barangay: brgy,
-                city: city,
-                state: state,
-                region: region
+                cmAddress: city,
+                province: province,
+                region: region,
+
+                //Clinical Information
+                allergy: allergy,
+                commorbid: commorbidity,
+                hypertension: hypertension,
+                heartDisease: heartDisease,
+                kidneyDisease: kidneyDisease,
+                diabetesMellitus: diabetes,
+                bronchialAsthma: asthma,
+                immunodeficiency: immunodeficiency,
+                cancer: cancer,
+                otherCommorbidity: enteredCommorbidity
             },
+
             success: function (result) {
-                document.getElementById("patientMedBackgroundModal").style.display = "none";
-                document.getElementById("patientTable").innerHTML = "";
-                document.getElementById("patientTable").innerHTML = result;
+                console.log(result);
+                Swal.fire('Added Patient', '', 'success');
+                reloadPatient();
+                addButton.disabled = true;
             }
         });
+    }
+
+    //Change unchecked commorbidity to 0
+    function verifyCommorbidity(commorbidity) {
+        return !commorbidity ? 0 : 1;
+    }
+
+    function reloadPatient() {
+        $.ajax({
+            url: '../includes/showRegisteredPatients.php',
+            type: 'GET',
+            success: function (result) {
+                document.getElementById("patientTable1").innerHTML = "";
+                document.getElementById("patientTable1").innerHTML = result;
+            }
+        });
+    }
+
+    //Calculates the age of the patient using its birthday
+    function getAge(dob) {
+        var month_diff = Date.now() - dob.getTime();
+        var age_dt = new Date(month_diff);
+        var year = age_dt.getUTCFullYear();
+        var age = Math.abs(year - 1970);
+        return age;
     }
 
     async function archive(archive, action, drive) {
@@ -856,6 +940,38 @@ include_once("../includes/database.php") ?>
             }
         });
     }
+
+    function updateBarangayDetails(val) {
+        $.ajax({
+            url: '../EIR Module/EIRManageUserProcessor.php',
+            type: 'POST',
+            data: {"barangayName": val},
+            success: function (result) {
+                document.getElementById("barangayDetails").innerHTML = "";
+                document.getElementById("barangayDetails").innerHTML = result;
+            }
+        });
+    }
+
+    function showOthersInput() {
+        var elem = document.getElementById('other');
+        var other = document.getElementById('otherTextField');
+
+        if (elem.checked == true) {
+            other.style.display = "block";
+        } else {
+            var other = document.getElementById('otherTextField');
+            other.style.display = "none";
+        }
+    }
+
+    //Show Comorbidity List
+    var choice = document.getElementById("comorbidity");
+    choice.onchange = function () {
+        var showList = document.getElementById("comorbidityList");
+        showList.style.display = (this.value == "none") ? "none" : "block";
+    }
+
 </script>
 
 <!--

@@ -392,17 +392,13 @@ input[type=text]{
     border-radius: 8px;
 }
 
-#scannerTxt {
-    margin-top: 5%;
-}
-.patientLine {
-    width: 100%;
-}
+
+
 #searchPatientEIR, #searchPatientBrgy{
     width: 80%;
 }
 
-#searchPatientVaxPer, #searchPatientQueue{
+#searchPatientVaxPer{
     width: 95%;
 }
 
@@ -1101,15 +1097,15 @@ select.sortButton:focus, select.filterButton:focus {
     width: 89%;
 }
 
- h5~select {
-     border: 1px solid;
-     border-radius: 0.25em;
-     padding: 0.25em 0.5em;
-     font-size: 1rem;
-     cursor: pointer;
-     line-height: 1.1;
-     background-color: #fff;
-     background-image: linear-gradient(to top, #f9f9f9, #fff 33%);
+h5~select {
+    border: 1px solid;
+    border-radius: 0.25em;
+    padding: 0.25em 0.5em;
+    font-size: 1rem;
+    cursor: pointer;
+    line-height: 1.1;
+    background-color: #fff;
+    background-image: linear-gradient(to top, #f9f9f9, #fff 33%);
 }
 
 .patientQCounter {
@@ -1148,9 +1144,9 @@ h6 {
 }
 
 #patientRow p{
-		margin-left: 7%;
-        font-size: 90%;
-		color: black;
+    margin-left: 7%;
+    font-size: 90%;
+    color: black;
 }
 
 #patientRow form{
@@ -1201,13 +1197,6 @@ input[name=vitals]{
     color: #070101 !important;
 }
 
-.notif {
-    border-radius: 12px;
-    border: #000 solid 1px;
-    margin-right: auto;
-    margin-left: auto;
-}
-
 /* ------------------------------------------------------------------- */
 /* ------------------------CSS for SSD MODULE ----------------------- */
 #selectHealthDistrict{
@@ -1220,10 +1209,9 @@ input[name=vitals]{
 }
 
 #selectDeployment{
-    width: 95%;
-    display: flex;
-    margin-left: auto;
-    margin-right: auto;
+    width: 100%;
+    display: inline-block;
+    margin-left: 7%;
     height: 20%;
 }
 
@@ -1271,7 +1259,7 @@ input[name=vitals]{
 }
 
 /*HSO*/
-.tablePatient,.tableVaccine {
+.tablePatient,.tableVaccine,{
     width: 100%!important;
     background-color: white;
 }
@@ -1369,7 +1357,7 @@ input[name=vitals]{
 }
 
 /*Monitoring*/
-.search-containerMonitoring, .search-containerQueue{
+.search-containerMonitoring{
     margin: bottom 0%!important;
     width: 205%;
     display: flex;
@@ -1429,3 +1417,46 @@ input[name=vitals]{
     border-radius: 12px;
 }
 
+.personalInfo,.categoryInfo,.addressInfo,.medicalInfo{
+    margin-left: 40px;
+    margin-right: 40px;
+}
+
+#otherTextField{
+    display: none;
+    margin-left: -70%;
+}
+
+#comorbidityList{
+    margin-left: 3%;
+    margin-right: 3%;
+    margin-top: 4%;
+    display: none;
+    padding: 15px;
+    border: 2px solid;
+    border-radius: 3px;
+}
+
+.listOfComorbidity{
+    margin-left: 0.5%;
+    margin-right: 0.5%;
+}
+
+.perBarangay {
+    display: inline-block;
+    margin-left: 7%;
+    border-radius: 12px;
+    background-color: white;
+    width: 40%;
+    margin-top: 3%;
+}
+
+.required:after{
+    content: " *";
+    color: red;
+}
+
+#otherTextField{
+    display: none;
+    margin-left: -70%;
+}
