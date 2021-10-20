@@ -126,10 +126,10 @@ function toFullName($firstName, $lastName, $middleName, $suffix) {
         $name = $lastName . ", " . $firstName;
         return $name;
     } else if ($suffix == "" && $middleName != "") {
-        $name = $lastName . ", " . $firstName . "" . $middleName;
+        $name = $lastName . ", " . $firstName . " " . $middleName;
         return $name;
     } else if ($middleName == "" && $suffix != "") {
-        $name = $lastName . ", " . $firstName . "" . $suffix;
+        $name = $lastName . ", " . $firstName . " " . $suffix;
         return $name;
     } else {
         return $name;
