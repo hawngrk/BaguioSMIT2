@@ -55,9 +55,10 @@
             <h4 id="headingNav1">Entry Immunization Register</h4>
             <hr>
             <div class="timeBox">
-                    <p id="time"></p>  <p id="datee"></p>
-                    <script src="../javascript/detailedDateAndTime.js"></script>
-                    </div>
+                <p id="time"></p>
+                <p id="datee"></p>
+                <script src="../javascript/detailedDateAndTime.js"></script>
+            </div>
             <hr>
             <li>
                 <a href="../EIR Module/EIRHomeScreening.php"><i class="fas fa-home"></i></i> Home</a>
@@ -80,7 +81,7 @@
         <div class="navbar navbar-expand-lg navbar-light bg-light shadow-sm p-3 mb-4 rounded-lg">
             <div class="container-fluid">
                 <div>
-                    <button type="button" id="uploadFileButton" class="btn btn-primary buttonTop3"
+                    <button type="button" id="uploadFileButton" class="btn btn-primary buttonTop3 float-left"
                             onclick="document.getElementById('uploadFileModal').style.display = 'block'"><i
                                 class="fas fa-upload"></i> Upload File
                     </button>
@@ -90,16 +91,16 @@
                     </button>
                 </div>
                 <button type="button" class="btn btn-warning shadow-sm buttonTop3 float-right"
-                        onclick="openModal('archived')"><i class="fas fa-inbox fa-lg"> </i>      Archive
+                        onclick="openModal('archived')"><i class="fas fa-inbox fa-lg"> </i> Archive
                 </button>
             </div>
         </div>
 
         <!--Table Part-->
-        <div class="tablePatient shadow" id="tablePadding">
+        <div class="tableContainer">
             <div class="table-title">
                 <div class="row">
-                    <div class="col my-auto">
+                    <div class="col">
                         <div class="input-group">
                             <input type="search" class="form-control" placeholder="Search"/>
                             <button type="button" class="btn btn-primary">
@@ -108,16 +109,33 @@
                         </div>
                     </div>
                     <div class="col-sm-auto">
-                        <button type="button" class="btn btn-outline-dark buttonTop3 float-right">
-                            <i class="fas fa-sort-amount-down"></i>
-                        </button>
-                        <button type="button" class="btn btn-outline-dark buttonTop3 float-right">
-                            <i class="fas fa-filter"></i>
-                        </button>
+                        <div class="row">
+                            <div class="sfDiv col-md-1.5 my-auto">
+                                <select class="form-select filterButton" id="filterReports" name="filterReports"
+                                        onchange="filterReport(this)">
+                                    <option value="" selected disabled hidden>Filter By</option>
+                                    <option>All</option>
+                                    <option>Unverified</option>
+                                    <option>Verified</option>
+                                    <option>Invalidated</option>
+                                </select>
+                            </div>
+                            <div class="sfDiv col-md-1.5 my-auto">
+                                <select class="form-select sortButton" id="sortReports" name="sortReports"
+                                        onchange="sortReport(this)">
+                                    <option value="" selected disabled hidden>Sort By</option>
+                                    <option>Name Asc</option>
+                                    <option>Name Desc</option>
+                                    <option>Date Asc</option>
+                                    <option>Date Desc</option>
+                                </select>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
 
+            <div class="tablePatient shadow tableScroll2">
             <table class="table table-hover" id="patientTable">
                 <thead>
                 <tr class="labelRow">
@@ -135,298 +153,301 @@
         </div>
     </div>
 
-    <!--MODALS-->
-    <!--Patient Add User Modal-->
-    <div id="addPatientModal" class="modal-window">
-        <div class="content-modal">
-            <div class="modal-header">
-                <h4 class="modal-title">Add User | Patient - Information</h4>
-                <button type="button" id="addPatientInfoClose" class="close" data-dismiss="modal">&times;
-                </button>
-            </div>
-            <div class="modal-body">
-                <form id="registrationForm" name="registrationForm" action="/action_page.php"
-                      onsubmit="return validateForm()" method="post">
-                    <div class="personalInfo">
-                        <h5> Personal Information </h5>
-                        <div class="row">
-                            <div class="col">
-                                <label class="required" for="lname">Last Name</label>
-                                <input type="text3" id="lname" class='input' name="lastname"
-                                       placeholder="Input Answer Here" required>
-                            </div>
-                            <div class="col">
-                                <label class="required" for="fname">First Name </label>
-                                <input type="text3" id="fname" class='input' name="firstname"
-                                       placeholder="Input Answer Here" required>
+</div>
+</div>
 
-                            </div>
-                            <div class="col">
-                                <label class="required" for="mname">Middle Name </label>
-                                <input type="text3" id="mname" class='input' name="middlename"
-                                       placeholder="Input Answer Here" required>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col">
-                                <label class="label1 required" for="suffix">Suffix </label><br>
-                                <select id="suffix" name="suffix" required>
-                                    <option selected value="">None</option>
-                                    <option value="sr">Sr</option>
-                                    <option value="jr">Jr</option>
-                                    <option value="I">I</option>
-                                    <option value="II">II</option>
-                                    <option value="III">III</option>
-                                </select>
-                            </div>
-                            <div class="col">
-                                <label class="label1 required" for="gender"> Gender </label>
-                                <select class="formControl" id="gender" name="gender" required>
-                                    <option disabled selected>Select a Gender...</option>
-                                    <option value="male">Male</option>
-                                    <option value="female">Female</option>
-                                </select>
-                            </div>
-                            <div class="col">
-                                <label class="label1 required" for="date"> Birthdate </label>
-                                <input type="date" id="date" name="birthdate" required>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col">
-                                <label class="label1 required" for="occupation">Occupation </label>
-                                <input type="text3" id="occupation" class='input' name="middlename"
-                                       placeholder="Input Answer Here" required>
-                            </div>
-                            <div class="col">
-                                <label class="label1 required" for="contactNum">Contact Number </label>
-                                <input type="text3" id="contactNum" class='input' name="contactNum"
-                                       placeholder="09XX-XXX-XXXX" required>
-                            </div>
-
-                            <div class="col">
-                                <label class="label1 required" for="email"> Email </label>
-                                <input type="text3" id="email" class='input' name="email"
-                                       placeholder="@email.com" required>
-                            </div>
-                        </div>
-                    </div>
-                    <br>
-                    <hr>
-                    <div class="categoryInfo">
-                        <h5> Category Information </h5>
-                        <div class="row">
-                            <div class="col">
-                                <label class="required" for="priorityGroup">Priority Group </label>
-                                <select class="formControl" id="priorityGroup" name="priorityGroup" required>
-                                    <option disabled selected>Select a Category Group...</option>
-                                    <option value="A1: Health Care Workers">A1: Health Care Workers</option>
-                                    <option value="A2: Senior Citizens">A2: Senior Citizens</option>
-                                    <option value="A3: Adult with Comorbidity">A3: Adult with Comorbidity</option>
-                                    <option value="A4: Frontliner">A4: Frontline Personnel in Essential Sector,
-                                        including
-                                        Uniformed
-                                        Personnel
-                                    </option>
-                                    <option value="A5: Indigent">A5: Indigent Population</option>
-                                    <option value="A6: ROP">A6: Rest of the Population</option>
-                                    <option value="A7: 12-17">A7: 12-17 Years Old</option>
-                                </select>
-                            </div>
-                            <div class="col">
-                                <label class="required" for="categoryID">Category ID</label><br>
-                                <select id="categoryID" name="categoryID" required>
-                                    <option disabled selected>Select a Category ID...</option>
-                                    <option value="prc">Professional Regulation Commission ID</option>
-                                    <option value="senior">Office of Senior Citizen Affairs ID</option>
-                                    <option value="facility"> Facility ID</option>
-                                    <option value="others"> Other ID</option>
-                                </select>
-                            </div>
-                            <div class="col">
-                                <label class="required" for="categoryNo"> Category ID No.</label>
-                                <input type="text3" id="categoryNo" class='input' name="categoryNo"
-                                       placeholder="Input Answer Here" required>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-4">
-                                <label class="label1" for="philHealth"> PhilHealth ID No.</label>
-                                <input type="text3" id="philHealth" class='input' name="philHealth"
-                                       placeholder="Input Answer Here">
-                            </div>
-                            <div class="col-4">
-                                <label class="label1" for="pwdID"> PWD ID No.</label>
-                                <input type="text3" id="pwdID" class='input' name="pwdID"
-                                       placeholder="Input Answer Here">
-                            </div>
-                        </div>
-                    </div>
-                    <br>
-                    <hr>
-                    <div class="addressInfo">
-                        <h5> Address Information </h5>
-                        <div class="row">
-                            <div class="col-8">
-                                <label class="required" for="houseAddress">House Address </label>
-                                <input type="text3" id="houseAddress" class='input' name="houseAddress"
-                                       placeholder="Input House Number/Lot/Block Number, Street, Alley etc." required>
-                            </div>
-                            <div class="col-4">
-                                <div id="barangayList">
-                                    <label class="required" for="barangay"> Barangay </label>
-                                    <select id="barangay" onchange="updateBarangayDetails(this.value)">
-                                        <option value="" disabled selected> Select Barangay</option>
-                                        <?php
-                                        require_once("../require/getBarangay.php");
-                                        foreach ($barangays as $barangay) {
-                                            $id = $barangay->getBarangayId();
-                                            $name = $barangay->getBarangayName();
-                                            echo "<option value=$id>$name</option>";
-                                        }
-                                        ?>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row" id="barangayDetails">
-                            <div class="col">
-                                <label class="label1" for="city">City/Municipality</label>
-                                <input type="text3" id="city" class='input' name="city" disabled="disabled">
-                            </div>
-                            <div class="col">
-                                <label class="label1" for="province">Province</label>
-                                <input type="text3" id="province" class='input' name="province" disabled="disabled">
-                            </div>
-
-                            <div class="col">
-                                <label class="label1" for="region">Region</label>
-                                <input type="text3" id="region" class='input' name="region" disabled="disabled">
-                            </div>
-                        </div>
-                    </div>
-                    <br>
-                    <hr>
-                    <div class="medicalInfo">
-                        <h5> Medical Information </h5>
-                        <div class="row">
-                            <div class="col-4">
-                                <label class="required" for="allergy"> Allergy with Vaccine?</label>
-                                <select class="formControl" id="allergy" name="allergy" required>
-                                    <option selected disabled>Select Answer...</option>
-                                    <option value="None">None</option>
-                                    <option value="Yes">Yes</option>
-                                </select>
-                            </div>
-                            <div class="col-4">
-                                <label class="required" for="comorbidity"> With Comorbidity? </label>
-                                <select class="" id="comorbidity" name="comorbidity" required>
-                                    <option selected disabled>Select Answer...</option>
-                                    <option value="none"> None</option>
-                                    <option value="yes"> Yes</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div id="comorbidityList">
-                        <h5> Comorbidity Information</h5>
-                        <div class="listOfComorbidity">
-                            <div class="row">
-                                <div class="col">
-                                    <input type="checkbox" name="hypertension" value="1" id="hypertension">
-                                    <label> Hypertension</label>
-                                </div>
-                                <div class="col">
-                                    <input type="checkbox" name="heartDisease" value="1" id="heartDisease">
-                                    <label> Heart Disease</label>
-                                </div>
-                                <div class="col">
-                                    <input type="checkbox" name="kidneyDisease" value="1"
-                                           id="kidneyDisease">
-                                    <label> Kidney Disease </label>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col">
-                                    <input type="checkbox" name="diabetes" value="1" id="diabetes">
-                                    <label> Diabetes Mellitus </label>
-                                </div>
-                                <div class="col">
-                                    <input type="checkbox" name="asthma" value="1" id="asthma">
-                                    <label> Bronchial Asthma </label>
-                                </div>
-                                <div class="col">
-                                    <input type="checkbox" name="immunodeficiency" value="1"
-                                           id="immunodeficiency">
-                                    <label> Immunodeficiency </label>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-4">
-                                    <input type="checkbox" name="cancer" value="cancer" id="cancer">
-                                    <label> Cancer </label>
-                                </div>
-                                <div class="col">
-                                    <input type="checkbox" name="other" value="other" id="other"
-                                           onclick="showOthersInput(this)">
-                                    <label> Others </label>
-                                </div>
-                                <div class="col">
-                                    <div id="otherTextField">
-                                        <input type="text3" name="other" id="other" class="otherInput"
-                                               placeholder="Input Other Commorbidity">
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" id="addBtn" class="btn btn-success shadow-sm" onclick="addPatient()">Add</button>
-            </div>
+<!--MODALS-->
+<!--Patient Add User Modal-->
+<div id="addPatientModal" class="modal-window">
+    <div class="content-modal">
+        <div class="modal-header">
+            <h4 class="modal-title">Add User | Patient - Information</h4>
+            <button type="button" id="addPatientInfoClose" class="close" data-dismiss="modal">&times;
+            </button>
         </div>
-    </div>
+        <div class="modal-body">
+            <form id="registrationForm" name="registrationForm" action="/action_page.php"
+                  onsubmit="return validateForm()" method="post">
+                <div class="personalInfo">
+                    <h5> Personal Information </h5>
+                    <div class="row">
+                        <div class="col">
+                            <label class="required" for="lname">Last Name</label>
+                            <input type="text3" id="lname" class='input' name="lastname"
+                                   placeholder="Input Answer Here" required>
+                        </div>
+                        <div class="col">
+                            <label class="required" for="fname">First Name </label>
+                            <input type="text3" id="fname" class='input' name="firstname"
+                                   placeholder="Input Answer Here" required>
 
-    <div id="uploadFileModal" class="modal-window">
-        <div class="content-modal">
-            <div class="modal-header">
-                <button type="button" id="closeUploadModal" class="close"> &times;</button>
-            </div>
-            <div class="modal-body">
-                <div class="row" id="upload-content">
-                    <div class="col">
-                        <div class="col-md-12 text-center">
-                            <button class="button" id="iconBrowse"
-                                    onclick="document.getElementById('fileUpload').click()">
-                                <label for="fileUpload"><i class="fas fa-upload"></i></label>
-                            </button>
-                            <input id="fileUpload" type="file" style="display: none"
-                                   onchange="getUploadedFiles(this)" multiple/>
-                            <p><br> Upload a list of patients (.csv) </p>
+                        </div>
+                        <div class="col">
+                            <label class="required" for="mname">Middle Name </label>
+                            <input type="text3" id="mname" class='input' name="middlename"
+                                   placeholder="Input Answer Here" required>
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col">
+                            <label class="label1 required" for="suffix">Suffix </label><br>
+                            <select id="suffix" name="suffix" required>
+                                <option selected value="">None</option>
+                                <option value="sr">Sr</option>
+                                <option value="jr">Jr</option>
+                                <option value="I">I</option>
+                                <option value="II">II</option>
+                                <option value="III">III</option>
+                            </select>
+                        </div>
+                        <div class="col">
+                            <label class="label1 required" for="gender"> Gender </label>
+                            <select class="formControl" id="gender" name="gender" required>
+                                <option disabled selected>Select a Gender...</option>
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                            </select>
+                        </div>
+                        <div class="col">
+                            <label class="label1 required" for="date"> Birthdate </label>
+                            <input type="date" id="date" name="birthdate" required>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <label class="label1 required" for="occupation">Occupation </label>
+                            <input type="text3" id="occupation" class='input' name="middlename"
+                                   placeholder="Input Answer Here" required>
+                        </div>
+                        <div class="col">
+                            <label class="label1 required" for="contactNum">Contact Number </label>
+                            <input type="text3" id="contactNum" class='input' name="contactNum"
+                                   placeholder="09XX-XXX-XXXX" required>
+                        </div>
 
-                    <div class="col">
-                        <h6> Uploaded Files </h6>
-                        <div id="uploadedFiles">
+                        <div class="col">
+                            <label class="label1 required" for="email"> Email </label>
+                            <input type="text3" id="email" class='input' name="email"
+                                   placeholder="@email.com" required>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <hr>
+                <div class="categoryInfo">
+                    <h5> Category Information </h5>
+                    <div class="row">
+                        <div class="col">
+                            <label class="required" for="priorityGroup">Priority Group </label>
+                            <select class="formControl" id="priorityGroup" name="priorityGroup" required>
+                                <option disabled selected>Select a Category Group...</option>
+                                <option value="A1: Health Care Workers">A1: Health Care Workers</option>
+                                <option value="A2: Senior Citizens">A2: Senior Citizens</option>
+                                <option value="A3: Adult with Comorbidity">A3: Adult with Comorbidity</option>
+                                <option value="A4: Frontliner">A4: Frontline Personnel in Essential Sector,
+                                    including
+                                    Uniformed
+                                    Personnel
+                                </option>
+                                <option value="A5: Indigent">A5: Indigent Population</option>
+                                <option value="A6: ROP">A6: Rest of the Population</option>
+                                <option value="A7: 12-17">A7: 12-17 Years Old</option>
+                            </select>
+                        </div>
+                        <div class="col">
+                            <label class="required" for="categoryID">Category ID</label><br>
+                            <select id="categoryID" name="categoryID" required>
+                                <option disabled selected>Select a Category ID...</option>
+                                <option value="prc">Professional Regulation Commission ID</option>
+                                <option value="senior">Office of Senior Citizen Affairs ID</option>
+                                <option value="facility"> Facility ID</option>
+                                <option value="others"> Other ID</option>
+                            </select>
+                        </div>
+                        <div class="col">
+                            <label class="required" for="categoryNo"> Category ID No.</label>
+                            <input type="text3" id="categoryNo" class='input' name="categoryNo"
+                                   placeholder="Input Answer Here" required>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-4">
+                            <label class="label1" for="philHealth"> PhilHealth ID No.</label>
+                            <input type="text3" id="philHealth" class='input' name="philHealth"
+                                   placeholder="Input Answer Here">
+                        </div>
+                        <div class="col-4">
+                            <label class="label1" for="pwdID"> PWD ID No.</label>
+                            <input type="text3" id="pwdID" class='input' name="pwdID"
+                                   placeholder="Input Answer Here">
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <hr>
+                <div class="addressInfo">
+                    <h5> Address Information </h5>
+                    <div class="row">
+                        <div class="col-8">
+                            <label class="required" for="houseAddress">House Address </label>
+                            <input type="text3" id="houseAddress" class='input' name="houseAddress"
+                                   placeholder="Input House Number/Lot/Block Number, Street, Alley etc." required>
+                        </div>
+                        <div class="col-4">
+                            <div id="barangayList">
+                                <label class="required" for="barangay"> Barangay </label>
+                                <select id="barangay" onchange="updateBarangayDetails(this.value)">
+                                    <option value="" disabled selected> Select Barangay</option>
+                                    <?php
+                                    require_once("../require/getBarangay.php");
+                                    foreach ($barangays as $barangay) {
+                                        $id = $barangay->getBarangayId();
+                                        $name = $barangay->getBarangayName();
+                                        echo "<option value=$id>$name</option>";
+                                    }
+                                    ?>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" id="barangayDetails">
+                        <div class="col">
+                            <label class="label1" for="city">City/Municipality</label>
+                            <input type="text3" id="city" class='input' name="city" disabled="disabled">
+                        </div>
+                        <div class="col">
+                            <label class="label1" for="province">Province</label>
+                            <input type="text3" id="province" class='input' name="province" disabled="disabled">
+                        </div>
+
+                        <div class="col">
+                            <label class="label1" for="region">Region</label>
+                            <input type="text3" id="region" class='input' name="region" disabled="disabled">
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <hr>
+                <div class="medicalInfo">
+                    <h5> Medical Information </h5>
+                    <div class="row">
+                        <div class="col-4">
+                            <label class="required" for="allergy"> Allergy with Vaccine?</label>
+                            <select class="formControl" id="allergy" name="allergy" required>
+                                <option selected disabled>Select Answer...</option>
+                                <option value="None">None</option>
+                                <option value="Yes">Yes</option>
+                            </select>
+                        </div>
+                        <div class="col-4">
+                            <label class="required" for="comorbidity"> With Comorbidity? </label>
+                            <select class="" id="comorbidity" name="comorbidity" required>
+                                <option selected disabled>Select Answer...</option>
+                                <option value="none"> None</option>
+                                <option value="yes"> Yes</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div id="comorbidityList">
+                    <h5> Comorbidity Information</h5>
+                    <div class="listOfComorbidity">
+                        <div class="row">
+                            <div class="col">
+                                <input type="checkbox" name="hypertension" value="1" id="hypertension">
+                                <label> Hypertension</label>
+                            </div>
+                            <div class="col">
+                                <input type="checkbox" name="heartDisease" value="1" id="heartDisease">
+                                <label> Heart Disease</label>
+                            </div>
+                            <div class="col">
+                                <input type="checkbox" name="kidneyDisease" value="1"
+                                       id="kidneyDisease">
+                                <label> Kidney Disease </label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <input type="checkbox" name="diabetes" value="1" id="diabetes">
+                                <label> Diabetes Mellitus </label>
+                            </div>
+                            <div class="col">
+                                <input type="checkbox" name="asthma" value="1" id="asthma">
+                                <label> Bronchial Asthma </label>
+                            </div>
+                            <div class="col">
+                                <input type="checkbox" name="immunodeficiency" value="1"
+                                       id="immunodeficiency">
+                                <label> Immunodeficiency </label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-4">
+                                <input type="checkbox" name="cancer" value="cancer" id="cancer">
+                                <label> Cancer </label>
+                            </div>
+                            <div class="col">
+                                <input type="checkbox" name="other" value="other" id="other"
+                                       onclick="showOthersInput(this)">
+                                <label> Others </label>
+                            </div>
+                            <div class="col">
+                                <div id="otherTextField">
+                                    <input type="text3" name="other" id="other" class="otherInput"
+                                           placeholder="Input Other Commorbidity">
+                                </div>
+                            </div>
 
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" id="uploadFileCancelBtn" class="btn btn-secondary"
-                        onclick="document.getElementById('uploadFileModal').style.display= 'none'">
-                    Cancel
-                </button>
-                <button type="button" id="uploadFileConfirmBtn" class="btn btn-primary"
-                        name="patientUploadFile" onclick="uploadFiles()">Add
-                </button>
-            </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button type="button" id="addBtn" class="btn btn-success shadow-sm" onclick="addPatient()">Add</button>
         </div>
     </div>
+</div>
+
+<div id="uploadFileModal" class="modal-window">
+    <div class="content-modal">
+        <div class="modal-header">
+            <button type="button" id="closeUploadModal" class="close"> &times;</button>
+        </div>
+        <div class="modal-body">
+            <div class="row" id="upload-content">
+                <div class="col">
+                    <div class="col-md-12 text-center">
+                        <button class="button" id="iconBrowse"
+                                onclick="document.getElementById('fileUpload').click()">
+                            <label for="fileUpload"><i class="fas fa-upload"></i></label>
+                        </button>
+                        <input id="fileUpload" type="file" style="display: none"
+                               onchange="getUploadedFiles(this)" multiple/>
+                        <p><br> Upload a list of patients (.csv) </p>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <h6> Uploaded Files </h6>
+                    <div id="uploadedFiles">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" id="uploadFileCancelBtn" class="btn btn-secondary"
+                    onclick="document.getElementById('uploadFileModal').style.display= 'none'">
+                Cancel
+            </button>
+            <button type="button" id="uploadFileConfirmBtn" class="btn btn-primary"
+                    name="patientUploadFile" onclick="uploadFiles()">Add
+            </button>
+        </div>
+    </div>
+</div>
 </div>
 
 <!-- Popper.JS -->

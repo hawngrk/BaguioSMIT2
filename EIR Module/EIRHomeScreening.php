@@ -61,17 +61,12 @@
 
     <!-- Page Content  -->
     <div id="content">
-        <div class="topButtons">
-            <button class="btnTop btnBell float-right"> <i class="fas fa-cog"></i> </button>
-            <button class="btnTop float-right"> <i class="fas fa-bell"></i> </button>
-        </div>
-        <br>
         <!--Top Nav-->
         <div class="navbar navbar-expand-lg navbar-light bg-light shadow-sm p-3 mb-4 rounded-lg">
             <div class="container-fluid">
                 <div>
                     <button type="button" id="filter" class=" btn btn-primary btn-default shadow-lg rounded buttonTop3 float-right"> Filter </button>
-                    <!--                        <-- Filter by population, date of registration, per barangay-->
+                    <!--Filter by population, date of registration, per barangay-->
                 </div>
             </div>
 
