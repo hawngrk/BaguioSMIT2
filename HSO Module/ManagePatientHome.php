@@ -493,6 +493,7 @@ include_once("../includes/database.php") ?>
 
 
             <!--Table Part-->
+        <div class="tableScroll2">
             <table class="table table-row table-hover tableBrgy" id="patientTable">
                 <thead>
                 <tr>
@@ -503,28 +504,27 @@ include_once("../includes/database.php") ?>
                     <th scope="col">Action</th>
                 </tr>
                 </thead>
+                <?php
+                require_once '../require/getPatientDetails.php';
 
-                    <?php
-                    require_once '../require/getPatientDetails.php';
+                foreach ($patient_details as $pd) {
+                    if($pd->getArchived() == 0) {
+                        $id = $pd->getPatientDeetPatId();
+                        $category = $pd->getPriorityGroup();
+                        $fullAddress = $pd->getHouseAdd() . ", " . $pd->getBrgy() . ", " . $pd->getCity() . ", " . $pd->getProvince();
+                        $contact = $pd->getContact();
 
-                    foreach ($patient_details as $pd) {
-                        if($pd->getArchived() == 0) {
-                            $id = $pd->getPatientDeetPatId();
-                            $category = $pd->getPriorityGroup();
-                            $fullAddress = $pd->getHouseAdd() . ", " . $pd->getBrgy() . ", " . $pd->getCity() . ", " . $pd->getProvince();
-                            $contact = $pd->getContact();
+                        if ($pd->getPatientMName() == null && $pd->getPatientSuffix() == null) {
+                            $name = $pd->getPatientLName() . ", " . $pd->getPatientFName();
+                        } else if ($pd->getPatientSuffix() == null) {
+                            $name = $pd->getPatientLName() . ", " . $pd->getPatientFName() . " " . $pd->getPatientMName();
+                        } else if ($pd->getPatientMName() == null) {
+                            $name = $pd->getPatientLName() . ", " . $pd->getPatientFName() . " " . $pd->getPatientSuffix();
+                        } else {
+                            $name = $pd->getPatientLName() . ", " . $pd->getPatientFName() . " " . $pd->getPatientMName() . " " . $pd->getPatientSuffix();
+                        }
 
-                            if ($pd->getPatientMName() == null && $pd->getPatientSuffix() == null) {
-                                $name = $pd->getPatientLName() . ", " . $pd->getPatientFName();
-                            } else if ($pd->getPatientSuffix() == null) {
-                                $name = $pd->getPatientLName() . ", " . $pd->getPatientFName() . " " . $pd->getPatientMName();
-                            } else if ($pd->getPatientMName() == null) {
-                                $name = $pd->getPatientLName() . ", " . $pd->getPatientFName() . " " . $pd->getPatientSuffix();
-                            } else {
-                                $name = $pd->getPatientLName() . ", " . $pd->getPatientFName() . " " . $pd->getPatientMName() . " " . $pd->getPatientSuffix();
-                            }
-
-                            echo "<tr>
+                        echo "<tr>
                         <td>$name</td>
                         <td>$category</td>
                         <td>$fullAddress</td>
@@ -535,10 +535,12 @@ include_once("../includes/database.php") ?>
                             </div>
                         </td>
                     </tr>";
-                        }
                     }
-                    ?>
+                }
+                ?>
             </table>
+        </div>
+
         </div>
     </div>
 </div>

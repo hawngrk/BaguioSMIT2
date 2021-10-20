@@ -694,7 +694,6 @@ input[type=date]{
     /* Full width */
     height: 100%;
     /* Full height */
-    overflow: auto;
     /* Enable scroll if needed */
     background-color: rgb(0, 0, 0);
     /* Fallback color */
@@ -883,10 +882,26 @@ input[type=text]:disabled{
 
 .tableDep{
     width: 100%!important;
-    height: 60%;
-    margin: 1%;
+    height: 100%;
+}
+
+.tableScroll1{
+    position: relative;
+    height: 65vh;
+    overflow: auto;
+    display: block;
     background-color: white;
-    border-radius: 12px;
+    width: 100%;
+    margin: 0;
+}
+.tableScroll2{
+    position: relative;
+    height: 70vh;
+    overflow: auto;
+    display: block;
+    background-color: white;
+    width: 100%;
+    margin: 0;
 }
 
 .tableModal{
@@ -1294,7 +1309,7 @@ input[name=vitals]{
     border-radius: 10px;
     width: 100%;
     max-height: fit-content;
-    min-height: 50%;
+    min-height: 65vh;
     padding: 3%;
     margin-top: 1%;
     background-color: #68A0B8;
@@ -1328,6 +1343,7 @@ input[name=vitals]{
 
 #unarchiveContent{
     height: auto;
+    margin-top: 1%;
 }
 
 .depSummary .listPatientRow{

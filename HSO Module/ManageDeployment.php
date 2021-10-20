@@ -562,8 +562,8 @@ include_once("../includes/database.php") ?>
 <!--        </div>-->
 
         <div id="unarchiveContent" class="row">
-            <div class="col">
-                <table class="table table-row table-hover tableDep column" id = "driveTable">
+            <div class="tableScroll1 col ">
+                <table class="table table-row table-hover tableDep" id = "driveTable">
                     <thead>
                     <tr>
                         <th scope="col">#</th>

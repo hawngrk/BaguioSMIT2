@@ -320,44 +320,44 @@ include_once("../includes/database.php") ?>
 <!--            <button type="submit" id="searchVaccineBtn" name="searchVaccineBtn" onclick="searchVaccine()"><i class="fa fa-search"></i></button>-->
 <!--        </div>-->
 
+        <div class="tableScroll2">
+            <table class="table table-row table-hover tableVax" id="vaccineTable">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Vaccine Lot ID</th>
+                    <th scope="col">Vaccine Name</th>
+                    <th scope="col">Vaccine Source</th>
+                    <th scope="col">Date Received</th>
+                    <th scope="col">Expiration</th>
+                    <th scope="col">Bottle Quantity</th>
+                    <th scope="col">Action</th>
+                </tr>
+                </thead>
+                <?php
+                require_once '../require/getVaccine.php';
+                require_once '../require/getVaccineBatch.php';
+                require_once '../require/getVaccineLot.php';
 
-        <table class="table table-row table-hover tableVax" id="vaccineTable">
-            <thead>
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">Vaccine Lot ID</th>
-                <th scope="col">Vaccine Name</th>
-                <th scope="col">Vaccine Source</th>
-                <th scope="col">Date Received</th>
-                <th scope="col">Expiration</th>
-                <th scope="col">Bottle Quantity</th>
-                <th scope="col">Action</th>
-            </tr>
-            </thead>
-            <?php
-            require_once '../require/getVaccine.php';
-            require_once '../require/getVaccineBatch.php';
-            require_once '../require/getVaccineLot.php';
-
-            $count = 0;
-            foreach ($vaccineLots as $vl) {
-                if($vl->getArchived() == 0) {
-                    $count++;
-                    $vaccineLotId = $vl->getVaccLotId();
-                    $vaccLotVaccId = $vl->getVaccLotVaccId();
-                    $dateStored = $vl->getDateVaccStored();
-                    $batchQty = $vl->getVaccBatchQty();
-                    $source = $vl->getSource();
-                    $vaccExp = $vl->getExpiration();
+                $count = 0;
+                foreach ($vaccineLots as $vl) {
+                    if($vl->getArchived() == 0) {
+                        $count++;
+                        $vaccineLotId = $vl->getVaccLotId();
+                        $vaccLotVaccId = $vl->getVaccLotVaccId();
+                        $dateStored = $vl->getDateVaccStored();
+                        $batchQty = $vl->getVaccBatchQty();
+                        $source = $vl->getSource();
+                        $vaccExp = $vl->getExpiration();
 
 
-                    foreach ($vaccines as $vac) {
-                        if ($vaccLotVaccId == $vac->getVaccId()) {
-                            $vaccName = $vac->getVaccName();
+                        foreach ($vaccines as $vac) {
+                            if ($vaccLotVaccId == $vac->getVaccId()) {
+                                $vaccName = $vac->getVaccName();
+                            }
                         }
-                    }
 
-                    echo "<tr>
+                        echo "<tr>
                 <td>$count</td>
                 <td>$vaccineLotId</td>
                 <td>$vaccName</td>
@@ -371,10 +371,12 @@ include_once("../includes/database.php") ?>
                     </div>
                 </td>
                 </tr>";
+                    }
                 }
-            }
-            ?>
-        </table>
+                ?>
+            </table>
+        </div>
+
     </div>
 </div>
 

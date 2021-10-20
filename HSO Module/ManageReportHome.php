@@ -141,7 +141,7 @@ include_once("../includes/database.php") ?>
 
 
         <div class="row">
-            <div class="col">
+            <div class="tableScroll1 col">
                 <table class="table table-row table-hover tableReport" id="reportsTable">
                     <thead>
                     <tr>
