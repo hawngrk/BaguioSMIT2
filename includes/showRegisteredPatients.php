@@ -10,13 +10,14 @@ $stmt->bind_result($patientID, $patientName, $category, $patientAddress, $contac
 
 
 while ($stmt->fetch()) {
-    echo "<tr>
-            <td>$patientID</td>
+    echo "
+            <tr>
+            <td class='center'>$patientID</td>
             <td>$patientName</td>
             <td>$category</td>
             <td>$patientAddress</td>
-            <td>$contactNum</td>
-            <td><button id='postVac' class='viewReportBtn btn-success' type='submit' onclick=''>View Details</button></td></td>
+            <td class='center'>$contactNum</td>
+            <td class='center'> <button id='postVac' class='viewReportBtn buttonTransparent' onclick=''><i class='fas fa-eye'></i></td></td>
             </tr>";
 }
 ?><?php
