@@ -347,12 +347,12 @@ if (isset($_POST['generate'])) {
             <table class='table table-row table-hover'>
             <thead>
             <tr>
-                <th scope='col'>Select</th>
-                <th scope='col'>#</th>
-                <th scope='col'>Report ID</th>
-                <th scope='col'>Name of Reporter</th>
-                <th scope='col'>Date Reported</th>
-                <th scope='col'>Report Verified</th>
+                <th onclick=selectHighlight(this); scope='col'>Select</th>
+                <th onclick=selectHighlight(this); scope='col'>#</th>
+                <th onclick=selectHighlight(this); scope='col'>Report ID</th>
+                <th onclick=selectHighlight(this); scope='col'>Name of Reporter</th>
+                <th onclick=selectHighlight(this); scope='col'>Date Reported</th>
+                <th onclick=selectHighlight(this); scope='col'>Report Verified</th>
                 <th scope='col'>Action</th>
             </tr>
             </thead>
@@ -374,8 +374,9 @@ if (isset($_POST['generate'])) {
                 $reporter = $pat->getPatientFullName();
             }
         }
-        echo "<tr>
-                <td><input type='checkbox' class='reportList' value='$reportId'></td>
+        echo "
+            <tr>
+                <td><input type='checkbox' onclick='selectHighlight(this)' class='reportList' value='$reportId'></td>
                 <td>$count</td>
                 <td>$reportId</td>
                 <td>$reporter</td>

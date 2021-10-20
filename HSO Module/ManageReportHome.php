@@ -486,6 +486,15 @@ include_once("../includes/database.php") ?>
             butt.innerHTML = "<i class='fas fa-angle-left'></i> Menu";
         }
     }
+
+    function selectHighlight(row) {
+        if (row.checked == true) {
+           row.parentNode.parentNode.style.backgroundColor = "#b3b3b3";
+        }
+        else {
+            row.parentNode.parentNode.style.backgroundColor = "white";
+         }
+    }
 </script>
 </body>
 
