@@ -65,41 +65,40 @@
         <!-- Page Content  -->
         <div id="content">
 
-            <nav class="navbar navbar-expand-lg navbar-light bg-light upperBoxOG">
-                <div class="container-fluid upperBox">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light rounded-lg navbarScreening">
+                <div class="container-fluid">
 
                     <!-- <button type="button" id="sidebarCollapse" class="btn btn-info" onclick="Toggle()">
                         <i class='fas fa-angle-left'></i> Menu
                     </button> -->
-
-                    <button class="btnTop">
-                    <i class="fas fa-bell"></i>
-                    </button>
-
-                    <button class="btnTop">
-                    <i class="fas fa-cog"></i>
-                    </button>
-                </div>
-            </nav>
-
-             <!--Search Input and Button-->
-             <div class="search-container">
+                    <!--Search Input and Button-->
+                <div class="search-containerScreening col">
                     <input id="searchPatientVaxPer" type="text" placeholder="Search" class="searchHome"name="searchPatient" onkeyup="searchPatient()">
                     <button type="submit" id="searchPatientBtn" name="searchPatientBtn" onclick="searchPatient()">
                         <i class="fa fa-search"></i>
                     </button>
-            </div>
+                </div>
+                    <div class="col-sm-auto">
+                    <button type="button" class="btn btn-outline-dark buttonTop3 float-right">
+                            <i class="fas fa-sort-amount-down"></i>
+                        </button>
+                        <button type="button" class="btn btn-outline-dark buttonTop3 float-right">
+                            <i class="fas fa-filter"></i>
+                        </button>
+                    </div>
+                </div>
+            </nav>
 
             <!--Table Part-->
-            <table class="table table-row table-hover tableBrgy" id="patientTable">
+            <table class="table table-row table-hover tableBrgy tableScreening" id="patientTable">
                 <thead>
-                    <tr>
-                        <th scope="col">ID</th>
-                        <th scope="col">Patient Name</th>
-                        <th scope="col">Category</th>
-                        <th scope="col">Complete Address</th>
-                        <th scope="col">Contact Number</th>
-                        <th scope="col">Action</th>
+                    <tr class="labelRow">
+                        <th class="columnName" scope="col">ID</th>
+                        <th class="columnName" scope="col">Patient Name</th>
+                        <th class="columnName" scope="col">Category</th>
+                        <th class="columnName" scope="col">Complete Address</th>
+                        <th class="columnName fourthCol" scope="col">Contact Number</th>
+                        <th class="columnName" scope="col">Action</th>
                     </tr>
                 </thead>
                 <?php

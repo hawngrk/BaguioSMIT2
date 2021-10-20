@@ -30,7 +30,7 @@
     <nav id="sidebar">
         <div class="sidebar-header">
             <div class="sidebar-brand-icon">
-                <img style="width:150px;" src="../img/SMIT+.png" alt="Baguio Logo">
+            <img src="../img/logoo.png" style="width: 104%; margin-bottom:-19%; margin-top:-5%;" alt="Baguio Logo">
             </div>
         </div>
 
@@ -70,15 +70,6 @@
             </div>
         </div>
 
-        <nav class="navbar navbar-expand-lg navbar-light bg-light upperBoxOG">
-            <div class="container-fluid upperBox">
-
-                <button class="btnTop">
-                    <i class="fas fa-cog"></i>
-                </button>
-
-            </div>
-        </nav>
         <h2 id="scannerTxt">Scan Patients QR Code</h2>
         <video id="preview"></video>
         <script type="text/javascript" src="../javascript/instascan.min.js"></script>
@@ -200,5 +191,9 @@
         display: block;
         margin-left: auto;
         margin-right: auto;
+    }
+
+    #scannerTxt {
+        margin-top: 7%;
     }
 </style>

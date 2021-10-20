@@ -11,12 +11,12 @@ $stmt->bind_result($patientID, $patientName, $category, $patientAddress, $contac
 
 while ($stmt->fetch()) {
     echo "<tr>
-            <td>$patientID</td>
-            <td>$patientName</td>
-            <td>$category</td>
-            <td>$patientAddress</td>
-            <td>$contactNum</td>
-            <td><button id='postVac' class='viewReportBtn btn-success' type='submit' onclick='clickModalRow($patientID)'>Add Vitals</button></td></td>
+            <td class='columnName'>$patientID</td>
+            <td class='columnName'>$patientName</td>
+            <td class='columnName'>$category</td>
+            <td class='columnName'>$patientAddress</td>
+            <td class='columnName'>$contactNum</td>
+            <td class='columnName'><button id='postVac' class='viewReportBtn btn-success' type='submit' onclick='clickModalRow($patientID)'>Add Vitals</button></td></td>
             </tr>";
 }
 // require_once '../require/getPatientDetails.php';

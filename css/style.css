@@ -278,6 +278,7 @@ a.article:hover {
 
 .genButton{
     float: right;
+    margin-right: .5%;
 }
 
 
@@ -339,14 +340,15 @@ a.article:hover {
     background: rgb(165, 165, 165);
 }
 
+.search-container{
+    margin-bottom: 1%;
+}
 
 .searchDept{
     position: relative;
     float: left;
     width: 100%;
 }
-
-
 
 .buttonTransparent{
     background: transparent!important;
@@ -390,7 +392,7 @@ input[type=text]{
 }
 
 #searchPatientVaxPer{
-    width: 95%;
+    width: 100%;
 }
 
 hr {
@@ -584,6 +586,7 @@ input[type=text1] {
     margin-top: 1%;
 }
 
+
 .depSum h5{
     padding: 2%;
 }
@@ -678,16 +681,6 @@ input[type=date]{
     /* 15% from the top and centered */
     border: 1px solid #888;
     width: fit-content;
-    /*Could be more or less, depending on screen size */
-    border-radius: 12px;
-}
-
-.content-modal-table1{
-    background-color: #fefefe;
-    margin: 5% auto;
-    /* 15% from the top and centered */
-    border: 1px solid #888;
-    width: 70%;
     /*Could be more or less, depending on screen size */
     border-radius: 12px;
 }
@@ -856,7 +849,9 @@ input[type=text]:disabled{
     height: 60%;
     margin-top: 10%;
 }
-
+.tableVax{
+    margin-top: 10%;
+}
 
 h7~h8{
     margin-left: 4%;
@@ -972,8 +967,6 @@ h7~h8{
 }
 
 
-
-
 .sfDiv select {
     /* styling */
     background-color: white;
@@ -983,7 +976,6 @@ h7~h8{
     font: inherit;
     line-height: 1.5em;
     padding: 0.3em 3.5em 0.3em 1em;
-
     /* reset */
 
     margin: 0;
@@ -993,7 +985,6 @@ h7~h8{
     -webkit-appearance: none;
     -moz-appearance: none;
 }
-
 
 
 select.sortButton, select.filterButton {
@@ -1037,6 +1028,7 @@ select.sortButton:focus, select.filterButton:focus {
 .sortButton, .filterButton{
     width: 100%;
 }
+
 
  h5~select {
      border: 1px solid;
@@ -1209,14 +1201,12 @@ input[name=vitals]{
 }
 
 #deploymentSummary{
-    margin-top: 12%;
-    background-color: #f6f6f6;
-    padding: 2%;
-    width: 100%;
-    border-radius: 12px;
-    display: inline-block;
-    margin-left: 7%;
-    margin-right: 7%;
+    width: 25%;
+     max-height: fit-content;
+     min-height: 500px;
+     padding: 1%;
+     margin-top: 1%;
+     background-color: white;
 }
 
 .marker{
@@ -1250,10 +1240,10 @@ input[name=vitals]{
     border-radius: 5px;
     width: 25%;
     max-height: fit-content;
-    min-height: 500px;
+    min-height: 100%;
+    margin-left: 2%;
     padding: 1%;
-    margin-top: 1%;
-    background-color: white;
+    margin-top: 2%;
 }
 .bold{
     font-weight: 800!important;
@@ -1290,4 +1280,52 @@ input[name=vitals]{
 #barangayHomeContent{
     margin-left: -2%;
     margin-right: 5%;
+} 
+
+/*Monitoring*/
+.search-containerMonitoring{
+    margin: bottom 0%!important;
+    width: 205%;
+    display: flex;
+}
+
+.tableMonitoring {
+    margin-top:0%!important;
+    background-color: white;
+    border-radius: 12px;
+}
+
+.navbarMonitoring {
+    margin-bottom: 1%!important;
+}
+
+#searchPatientBtn {
+    border: none;
+    background-color: ghostwhite;
+    margin-left: 1%;
+}
+
+.columnName {
+    text-align: center;
+}
+
+.fourthCol {
+    font-size: 78%;
+}
+
+/*Screening*/
+.tableScreening {
+    margin-top:0%!important;
+    background-color: white;
+    border-radius: 12px;
+}
+
+.navbarScreening {
+    margin-bottom: 1%!important;
+}
+
+.search-containerScreening {
+    margin: bottom 0%!important;
+    width: 205%;
+    display: flex;
 }
