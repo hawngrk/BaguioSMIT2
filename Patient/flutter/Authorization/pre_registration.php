@@ -13,7 +13,6 @@
     $gender           = $_POST['gender'];
     $occupation       = $_POST['occupation'];
     
-
     //Category Information
     $priorityGroup    = $_POST['priority'];
     $category         = $_POST['category'];
@@ -36,7 +35,7 @@
     $allergyToVaccine  = $_POST['allergy'];
     $hypertension      = $_POST['hypertension'];
     $heartDisease      = $_POST['heartDisease'];
-    $kidneyDiesease    = $_POST['kidneyDisease'];
+    $kidneyDisease    = $_POST['kidneyDisease'];
     $diabetesMellitus  = $_POST['diabetesMellitus'];
     $bronchialAsthma   = $_POST['bronchialAsthma'];
     $immunodeficiency  = $_POST['immunodeficiency'];
@@ -48,7 +47,7 @@
     } else {
         $patientID = insertPatient($firstname, $lastname);
         insertDetails($patientID['patient_id'], $firstname, $lastname, $middlename, $suffix, $priorityGroup, $category, $categoryID, $philHealthID, $pwdID, $houseAddress, $barangay, $cmAddress, $province, $region, $birthdate, $age, $gender, $contact, $occupation);
-        insertMedicalBackground($patientID['patient_id'], $allergyToVaccine, $hypertension, $heartDisease, $kidneyDiesease, $diabetesMellitus, $bronchialAsthma, $immunodeficiency, $cancer, $otherCommorbidity);
+        insertMedicalBackground($patientID['patient_id'], $allergyToVaccine, $hypertension, $heartDisease, $kidneyDisease, $diabetesMellitus, $bronchialAsthma, $immunodeficiency, $cancer, $otherCommorbidity);
         $accountDetails = createAccount($patientID['patient_id'], $firstname, $lastname, $email);
         insertPatientVitals($patientID);
         echo json_encode($accountDetails);
@@ -84,11 +83,11 @@ function insertDetails($patientID, $firstname, $lastname, $middlename, $suffix, 
 }
 
 //Insert patient's personal details in medical_background table
-function insertMedicalBackground($patientID, $allergyToVaccine, $hypertension, $heartDisease, $kidneyDiesease, $diabetesMellitus, $bronchialAsthma, $immunodeficiency, $cancer, $otherCommorbidity) {
+function insertMedicalBackground($patientID, $allergyToVaccine, $hypertension, $heartDisease, $kidneyDisease, $diabetesMellitus, $bronchialAsthma, $immunodeficiency, $cancer, $otherCommorbidity) {
     $query = "INSERT INTO medical_background (patient_id, allergy_to_vaccine,hypertension, heart_disease, kidney_disease, diabetes_mellitus, bronchial_asthma, immunodeficiency, cancer, other_commorbidity) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     try {
         $stmtinsert = $GLOBALS['database']->prepare($query);
-        $result = $stmtinsert->execute([$patientID, $allergyToVaccine, $hypertension, $heartDisease, $kidneyDiesease, $diabetesMellitus, $bronchialAsthma, $immunodeficiency, $cancer, $otherCommorbidity]);
+        $result = $stmtinsert->execute([$patientID, $allergyToVaccine, $hypertension, $heartDisease, $kidneyDisease, $diabetesMellitus, $bronchialAsthma, $immunodeficiency, $cancer, $otherCommorbidity]);
     } catch (PDOException $e) {
         echo 'Error in patient Med background: ', $e->getMessage();
     }
