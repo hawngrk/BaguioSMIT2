@@ -47,6 +47,7 @@ include_once("../includes/database.php") ?>
         </div>
 
         <ul class="list-unstyled components">
+            <hr>
             <h4 id="headingNav1"> Health Service Office </h4>
             <hr>
             <h5 id="headingNav2"> September 17, 2021 | 01:24 PM</h5>
@@ -81,18 +82,6 @@ include_once("../includes/database.php") ?>
 
     <!-- Top Nav Bar  -->
     <div id="content">
-        <nav class="navbar navbar-expand-lg navbar-light bg-light upperBoxOG">
-            <div class="container-fluid upperBox">
-
-                <button class="btnTop ">
-                    <i class="fas fa-bell"></i>
-                </button>
-
-                <button class="btnTop btnBell ">
-                    <i class="fas fa-cog"></i>
-                </button>
-            </div>
-        </nav>
 
         <!-- Page Content  -->
         <div class="container-fluid">

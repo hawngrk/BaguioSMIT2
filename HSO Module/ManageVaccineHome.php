@@ -81,18 +81,6 @@ include_once("../includes/database.php") ?>
     <!-- Top Nav Bar  -->
     <div id="content">
 
-        <nav class="navbar navbar-expand-lg navbar-light bg-light upperBoxOG">
-            <div class="container-fluid upperBox">
-
-                <button class="btnTop">
-                    <i class="fas fa-bell"></i>
-                </button>
-
-                <button class="btnTop btnBell">
-                    <i class="fas fa-cog"></i>
-                </button>
-            </div>
-        </nav>
 
         <!-- Page Content  -->
 
