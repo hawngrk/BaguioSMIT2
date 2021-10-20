@@ -22,6 +22,10 @@
             src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" rel="stylesheet">
+    <!--Table Bootstrap-->
+    <script src="../assets/js/bootstrap-table.min.js"></script>
+    <script src="../assets/js/bootstrap-table-en-US.min.js"></script>
+
     <!--jQuery-->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <!-- Font Awesome JS -->
@@ -77,57 +81,62 @@
             <div class="container-fluid">
                 <div>
                     <button type="button" id="uploadFileButton" class="btn btn-primary buttonTop3"
-                            onclick="document.getElementById('uploadFileModal').style.display = 'block'"> <i class="fas fa-upload"></i> Upload File
+                            onclick="document.getElementById('uploadFileModal').style.display = 'block'"><i
+                                class="fas fa-upload"></i> Upload File
                     </button>
                     <button type="button" id="addPatientButton"
-                            class=" btn btn-primary btn-default shadow-lg rounded buttonTop3"> Add User Account
+                            class=" btn btn-primary btn-default shadow-lg rounded buttonTop3"><i
+                                class="fas fa-user-plus"></i> Add User Account
                     </button>
                 </div>
-                <button type="button" class="btn btn-outline-dark shadow-sm buttonTop3 float-right"
-                        onclick="openModal('archived')"><i class="fas fa-inbox fa-lg"></i>
+                <button type="button" class="btn btn-warning shadow-sm buttonTop3 float-right"
+                        onclick="openModal('archived')"><i class="fas fa-inbox fa-lg"> </i>      Archive
                 </button>
             </div>
         </div>
 
-        <div class="tableBrgy shadow" id="patientTable">
-            <!--Table Part-->
-            <div class="topPart">
-                <div class="row">
-                    <div class="col my-auto">
-                        <div class="input-group">
-                            <input type="search" class="form-control border-right-0" placeholder="Search"/>
-                            <button type="button" class="btn btn-primary border-left-0">
-                                <i class="fas fa-search"></i>
-                            </button>
+        <!--Table Part-->
+                <div class="tableBrgy shadow" id="patientTable">
+                    <div class="table-title">
+                        <div class="row">
+                            <div class="col my-auto">
+                                <div class="input-group">
+                                    <input type="search" class="form-control" placeholder="Search"/>
+                                    <button type="button" class="btn btn-primary">
+                                        <i class="fas fa-search"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="col-sm-auto">
+                                <button type="button" class="btn btn-outline-dark buttonTop3 float-right">
+                                    <i class="fas fa-sort-amount-down"></i>
+                                </button>
+                                <button type="button" class="btn btn-outline-dark buttonTop3 float-right">
+                                    <i class="fas fa-filter"></i>
+                                </button>
+                            </div>
                         </div>
                     </div>
-                    <div class="col-sm-auto">
-                        <button type="button" class="btn btn-outline-dark buttonTop3 float-right">
-                            <i class="fas fa-sort-amount-down"></i>
-                        </button>
-                        <button type="button" class="btn btn-outline-dark buttonTop3 float-right">
-                            <i class="fas fa-filter"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
 
-            <table class="table table-row table-hover" id="patientTable">
-                <thead>
-                <tr class="labelRow">
-                    <th scope="col"> Patient ID</th>
-                    <th scope="col">Patient Name</th>
-                    <th scope="col">Category</th>
-                    <th scope="col">Complete Address</th>
-                    <th scope="col">Contact Number</th>
-                    <th scope="col"></th>
-                </tr>
-                </thead>
-                <?php
-                include '../includes/showRegisteredPatients.php';
-                ?>
-            </table>
-        </div>
+                    <div class="table-responsive">
+                        <table class="table table-hover" id="patientTable">
+                            <thead>
+                            <tr class="labelRow">
+                                <th> Patient ID</th>
+                                <th>Patient Name</th>
+                                <th>Category</th>
+                                <th>Complete Address</th>
+                                <th>Contact Number</th>
+                                <th>Action</th>
+                            </tr>
+                            </thead>
+                            <?php
+                            include '../includes/showRegisteredPatients.php';
+                            ?>
+                        </table>
+                    </div>
+
+                </div>
     </div>
 
     <!--MODALS-->
