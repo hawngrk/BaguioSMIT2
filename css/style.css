@@ -296,9 +296,11 @@ input[type=text]{
     width: 100%;
     border-radius: 12px;
     display: inline-block;
-    border: 1px solid black;
 }
 
+#hDistrictContainer h2 {
+    margin-left: 2%;
+}
 #vaccineDeployments{
     padding-top: 2%;
     width: 95%;
@@ -1977,7 +1979,7 @@ input[name=vitals]{
 }
 
 #deploymentSummary{ /*ssd*/
-    margin-top: 12%;
+    margin-top: 5%;
     background-color: #f6f6f6;
     padding: 2%;
     width: 100%;

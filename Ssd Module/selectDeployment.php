@@ -19,15 +19,12 @@ if (isset($_POST['deploymentId'])) {
     $stmt->close();
 
     echo "
-            <h5> Site: $site </h5>
+            <h5> Site: </h5> <p> $site </p>
+            <h5> Brand: </h5> <p> $brand </p>
+            <h5> Schedule Date: </h5> <p> $schedule </p>
+            <h5> Priority Group: </h5> <p> $priority_group</p>
             <br>
-            <h5> Brand: $brand </h5>
-            <br>
-            <h5> Schedule Date: $schedule</h5>
-            <br>
-            <h5> Priority Group: $priority_group</h5>
-            <br>
-            <h5> Number Of Stubs: $stubs</h5>
+            <h5> Number Of Stubs: </h5> <p> $stubs </p>
             <br>
             <h5> Health Districts: </h5>";
 
@@ -39,7 +36,7 @@ if (isset($_POST['deploymentId'])) {
 
                     echo "
                                 <li>
-                                    <label>$hName</label>
+                                    <label><p>$hName</p></label>
                                 </li>
                                 ";
                 }
