@@ -1,5 +1,4 @@
 <?php 
-    session_start();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -41,7 +40,7 @@ Description: Login HTML Elements for receiving credentials from the users
     <div class="loginow">
         <h3 class="logInToText pt-5">Login to Baguio Vaccination SMIT+ System</h3>
         <!-- <div class="loginRow"> -->
-        <form id="login-form" class="form" action="EmployeeLoginAuthentication.php" method="post">
+        <form id="login-form" class="form">
             <img src="../img/SMIT+.png" class="logo" alt="">
             <!-- <div class="form-group">
                             <input type="text" name="username" id="username" class="form-control" placeholder="Username">
@@ -53,16 +52,16 @@ Description: Login HTML Elements for receiving credentials from the users
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="inputGroup-sizing-lg">Username</span>
                 </div>
-                <input type="text" id="userN" class="form-control" aria-label="Large" aria-describedby="inputGroup-sizing-sm">
+                <input type="text" id="userN" name="username"  class="form-control" aria-label="Large" aria-describedby="inputGroup-sizing-sm">
             </div>
             <div class="input-group input-group-lg">
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="inputGroup-sizing-lg">Password</span>
                 </div>
-                <input type="text" id="passW" class="form-control" aria-label="Large" aria-describedby="inputGroup-sizing-sm">
+                <input type="text" id="passW" name="password" class="form-control" aria-label="Large" aria-describedby="inputGroup-sizing-sm">
             </div>
             <div class="form-button">
-                <button id="login" name="loginButton" class="buttonLogin">Login</button>
+                <button type="button" id="login" name="loginButton" class="buttonLogin">Login</button>
             </div>
             <div class="form-link">
                 <a href="resetPW.html" id="forgot_pswd">Forget password?</a>
@@ -83,85 +82,85 @@ Description: Login HTML Elements for receiving credentials from the users
                 logout();
             });
            async function login() {
-                var userN = document.getElementById("username").value;
-                var passW = document.getElementById("password").value;
-                console.log("Data sent");
+                var userN = document.getElementById("userN").value;
+                var passW = document.getElementById("passW").value;
+                // console.log(userN);
+                // console.log(passW);
                 $.ajax({    
                     method: 'POST',              
                     url: '../AdminBackEnd/EmployeeLoginAuthentication.php',
                     data: {username: userN, password: passW},
                     success: function (results) {
+                        console.log(results);
                         if ($.trim(results) == 'Barangay') {
-                            message().success();
+                            success();
                             setTimeout("window.location.href = '../Barangay Module/homeBarangayModule.php'", 500);
                         } 
                         if ($.trim(results)  == 'Vaccinator') {
-                            message().success();
-                            setTimeout("windo`w.location.href = '../Vaccinator Module/ScanQR.php'", 500);
-                        } 
-                        if ($.trim(results)  == 'Monitoring') {
-                            message().success();
+                            success();
                             setTimeout("window.location.href = '../Vaccinator Module/ScanQR.php'", 500);
                         } 
-                        // if ($.trim(results)  == 'SSD') {
-                        //    successMessage();
-                        //     setTimeout("window.location.href = '../Vaccinator Module/ScanQR.php'", 500);
-                        // } 
-                        // if ($.trim(results)  == 'HSO') {
-                        //    successMessage();
-                        //     setTimeout("window.location.href = '../Vaccinator Module/ScanQR.php'", 500);
-                        // }
-                        // if ($.trim(results)  == 'EIR') {
-                        //    successMessage();
-                        //     setTimeout("window.location.href = '../Vaccinator Module/ScanQR.php'", 500);
-                        // }
-                        else {
-                            message().error();
-      
+                        if ($.trim(results)  == 'Monitoring') {
+                            success();
+                            setTimeout("window.location.href = '../Monitoring Module/ScanQR.php'", 500);
+                        } 
+                        if ($.trim(results)  == 'Screening') {
+                            success();
+                            setTimeout("window.location.href = '../Screening Module/ScanQR.php'", 500);
+                        } 
+                        if ($.trim(results)  == 'SSD') {
+                           success();
+                            setTimeout("window.location.href = '../Ssd Module/homeSsdModule.php'", 500);
+                        } 
+                        if ($.trim(results)  == 'HSO') {
+                           success();
+                            setTimeout("window.location.href = '../HSO Module/ManageVaccineHome.php'", 500);
+                        }
+                        if ($.trim(results)  == 'EIR') {
+                           success();
+                            setTimeout("window.location.href = '../EIR Module/EIRHomeScreening.php'", 500);
                         }
                     },
                     error: function(results) {
                         console.log('There was an error');
                     }
-                })
-                            }
+                });
+            }
             async function logout() {
                 var logoutPhp = "windows.location.href = '../includes/logout.php'";
                 message().confirmation(logoutPhp);
             }
+            function success() {
+                Swal.fire({
+                    icon: 'info',
+                    title: 'Successfully Logged in',
+                    showConfirmButton: false,
+                    timer: 1500
+                });    
+            }
+            function error() {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Invalid username or password',
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+            }
 
-            async function message() {
-                function success() {
-                    Swal.fire({
-                        icon: 'info',
-                        title: 'Successfully Logged in',
-                        showConfirmButton: false,
-                        timer: 1500
-                    });    
-                }
-                function error() {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Invalid username or password',
-                        showConfirmButton: false,
-                        timer: 1500
-                    });
-                }
-                function confirmation(link) {
-                    Swal.fire({
-                        title: 'Are you sure?',
-                        text: "You won't be able to revert this!",
-                        icon: 'warning',
-                        showCancelButton: true,
-                        confirmButtonColor: '#3085d6',
-                        cancelButtonColor: '#d33',
-                        confirmButtonText: 'Yes'
-                        }).then((result) => {
-                        if (result.isConfirmed) {
-                            setTimeout(link);
-                        }
-                    })
-                }
+            function confirmation(link) {
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes'
+                    }).then((result) => {
+                    if (result.isConfirmed) {
+                        setTimeout(link);
+                    }
+                })
             }
         </script>
         <div>

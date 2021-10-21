@@ -1,5 +1,5 @@
 <?php
-include_once("../includes/database.php")
+include_once("../includes/database.php");
 ?>
 
 <!DOCTYPE html>
@@ -67,7 +67,12 @@ include_once("../includes/database.php")
 
         <ul class="list-unstyled components">
             <hr>
-            <h4 id="headingNav1">San Luis Village</h4>
+            <?php
+                session_start();
+                $accountDetails = $_SESSION['account'];
+                $barangay = $accountDetails['barangay'];
+                echo "<h4 id='headingNav1'>$barangay</h4>";
+            ?>
             <hr>
             <h5 id="headingNav2">September 17, 2021 | 01:24 PM</h5>
             <hr>

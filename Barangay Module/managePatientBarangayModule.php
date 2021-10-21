@@ -60,7 +60,12 @@
 
         <ul class="list-unstyled components">
             <hr>
-            <h4 id="headingNav1">San Luis Village</h4>
+            <?php
+                session_start();
+                $accountDetails = $_SESSION['account'];
+                $barangay = $accountDetails['barangay'];
+                echo "<h4 id='headingNav1'>$barangay</h4>";
+            ?>
             <hr>
             <h5 id="headingNav2"></h5>
             <hr>
