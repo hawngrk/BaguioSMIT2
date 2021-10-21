@@ -522,13 +522,12 @@ img{
     width: 100%;
 }
 
-.contactWidth{
-    width: 75%!important;
+.contactWidth, .districtWidth{
+    width: 40%;
+    margin: 1%;
 }
 
-.districtWidth{
-    width: 75%!important;
-}
+
 
 #HealthDModalSort{
     margin: 2%;
@@ -823,6 +822,8 @@ a.article:hover {
     position: relative;
     float: right;
 }
+
+
 .timeBox {
     margin-bottom: -9%;
     margin-top: -6%;
@@ -945,6 +946,8 @@ a.article:hover {
     text-decoration: none;
     border-radius: 10px;
 }
+
+
 
 .buttontop4{
     display: block;
@@ -1217,8 +1220,8 @@ input[type=text1] {
     height: auto;
 }
 
-.vaccineType, #qty{
-    width: 95%;
+.vaccineType, #qty, .vaxSource{
+    width: 100%;
 }
 
 .viewReportBtn {
@@ -1244,7 +1247,8 @@ input[type=text1] {
     display: block;
     background: #f6f6f6;
     padding: 40px 20px 37px;
-    text-align: center
+    text-align: center;
+
 }
 
 .counter-box p { !*HSO*!
@@ -1666,7 +1670,7 @@ h7~h8{
     border-radius: 8px;
 }
 #dateStored, #dateExp {
-    width: 90%;
+    width: 70%;
 }
 
 
@@ -1674,6 +1678,18 @@ h7~h8{
     margin-left: 2%;
 }
 
+
+.buttonTop5{
+    float: right;
+    background-color: #1D7195;
+    border: none;
+    color: white;
+    padding: 10px;
+    text-align: center;
+    text-decoration: none;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+}
 .sortWidth{
     width: auto;
     height: auto;
@@ -1921,6 +1937,9 @@ input[name=vitals]{
     margin-left: 38%;
 }
 
+#distContent{
+    margin-top:2%;
+}
 #selectDeployment{
     width: 95%;
     display: flex;
@@ -2074,7 +2093,7 @@ input[name=vitals]{
 /*.search-containerMonitoring, .search-containerQueue{
 
 .search-containerMonitoring{
-    margin: bottom 0%!important;
+    margin-bottom: 0%!important;
     width: 205%;
     display: flex;
 }
@@ -2117,7 +2136,7 @@ input[name=vitals]{
 }
 
 .search-containerScreening {
-    margin: bottom 0%!important;
+    margin-bottom: 0%!important;
     width: 205%;
     display: flex;
 }

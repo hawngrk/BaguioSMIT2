@@ -31,6 +31,8 @@ include_once("../includes/database.php") ?>
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js"
             integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY"
             crossorigin="anonymous"></script>
+
+
 </head>
 
 <body>
@@ -104,7 +106,7 @@ include_once("../includes/database.php") ?>
                     <div class="col">
                         <div class="input-group">
                             <input type="search" class="form-control" placeholder="Search"/>
-                            <button type="button" class="btn btn-primary">
+                            <button type="button" class="buttonTop5">
                                 <i class="fas fa-search"></i>
                             </button>
                         </div>
@@ -170,7 +172,7 @@ include_once("../includes/database.php") ?>
                 <td>$reporter</td>
                 <td>$dateReported</td>
                 <td>$status</td>
-                <td><button class='badge badge-secondary' type='submit' value='$reportId' onclick='viewReport($reportId)'>Review Report</button></td></tr>";
+                <td><button class='btn btn-secondary btn-sm' type='submit' value='$reportId' onclick='viewReport($reportId)'>Review Report</button></td></tr>";
                             }
                             ?>
                             <div id="invalidatedReportsModal" class="modal-window"></div>

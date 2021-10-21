@@ -31,7 +31,7 @@ if (isset($_POST['search'])) {
                 <td>$reporter</td>
                 <td>$dateReported</td>
                 <td>$status</td>
-                <td><button class='badge badge-secondary' type='submit' value='$reportId' onclick='viewReport($reportId)'>Review Report</button></td>
+                <td><button class='btn btn-secondary btn-sm' type='submit' value='$reportId' onclick='viewReport($reportId)'>Review Report</button></td>
                 </tr>";
     }
 }
@@ -74,7 +74,7 @@ if (isset($_POST['sort'])) {
                 <td>$reporter</td>
                 <td>$dateReported</td>
                 <td>$status</td>
-                <td><button class='badge badge-secondary' type='submit' value='$reportId' onclick='viewReport($reportId)'>Review Report</button></td>
+                <td><button class='btn btn-secondary btn-sm' type='submit' value='$reportId' onclick='viewReport($reportId)'>Review Report</button></td>
                 </tr>";
     }
 }
@@ -117,7 +117,7 @@ if (isset($_POST['filter'])) {
                 <td>$reporter</td>
                 <td>$dateReported</td>
                 <td>$status</td>
-                <td><button class='badge badge-secondary' type='submit' value='$reportId' onclick='viewReport($reportId)'>Review Report</button></td>
+                <td><button class='btn btn-secondary btn-sm' type='submit' value='$reportId' onclick='viewReport($reportId)'>Review Report</button></td>
                 </tr>";
     }
 }
@@ -130,7 +130,7 @@ if (isset($_POST['invalidated'])) {
     <div class='modal-header'>
         <h4>Invalidated Reports</h4>
         <button type='button' class='close' data-dismiss='modal' onclick='closeInvalidatedReports()'>
-            &times;
+            <i class='fas fa-window-close'></i>
         </button>
     </div>
     
@@ -158,7 +158,7 @@ if (isset($_POST['invalidated'])) {
                 <td>$reportId</td>
                 <td>$reporter</td>
                 <td>$dateReported</td>
-                <td><button class='badge badge-secondary' type='submit' value='$reportId' onclick='viewInvalidatedReport($reportId)'>Review Report</button></td>
+                <td><button class='btn btn-secondary btn-sm' type='submit' value='$reportId' onclick='viewInvalidatedReport($reportId)'>Review Report</button></td>
                 </tr>";
     }
     echo "
@@ -215,7 +215,7 @@ if (isset($_POST['report'])) {
     <div class='modal-header'>
         <h4 class='modal-title'> Review Report - $patientName</h4>
         <button type='button' class='close' data-dismiss='modal' onclick='closeViewReport(\"$reportStatus\")'>
-            &times;
+            <i class='fas fa-window-close'></i>
         </button>
     </div>";
 
@@ -339,7 +339,7 @@ if (isset($_POST['generate'])) {
             <div class='modal-header'>
                 <h4>Generate Reports</h4>
                 <button type='button' class='close' data-dismiss='modal' onclick='closeGenerateReports()'>
-                    &times;
+                    <i class='fas fa-window-close'></i>
                 </button>
             </div>
     
@@ -383,7 +383,7 @@ if (isset($_POST['generate'])) {
                 <td>$reporter</td>
                 <td>$dateReported</td>
                 <td>$status</td>
-                <td><button class='badge badge-secondary' type='submit' value='$reportId' onclick='viewReport($reportId)'>Review Report</button></td>
+                <td><button class='btn btn-secondary' type='submit' value='$reportId' onclick='viewReport($reportId)'>Review Report</button></td>
                 </tr>";
     }
 
@@ -393,7 +393,7 @@ if (isset($_POST['generate'])) {
         <div class='modal-footer'>
         
         <h10 id='DlRepNote' class='mr-auto'>Note: select report/s you want to download</h10>
-        <button type='button' class='btn btn-secondary genButton' id='cancelGenerateReportBtn' onclick='closeGenerateReports()'>Cancel</button>
+        <button type='button' class='btn btn-danger genButton' id='cancelGenerateReportBtn' onclick='closeGenerateReports()'>Cancel</button>
         <button type='button' class='btn btn-success genButton' id='downloadGenerateReportBtn' onclick='downloadReports()'>Download Files</button>
         </div>
         </div>

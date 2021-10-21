@@ -106,7 +106,7 @@ include_once("../includes/database.php") ?>
                     <div class="col">
                         <div class="input-group">
                             <input type="search" class="form-control" placeholder="Search"/>
-                            <button type="button" class="btn btn-primary">
+                            <button type="button" class="buttonTop5">
                                 <i class="fas fa-search"></i>
                             </button>
                         </div>

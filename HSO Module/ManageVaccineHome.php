@@ -103,7 +103,7 @@ include_once("../includes/database.php") ?>
                     <div class="col">
                         <div class="input-group">
                             <input type="search" class="form-control" placeholder="Search"/>
-                            <button type="button" class="btn btn-primary">
+                            <button type="button" class="buttonTop5">
                                 <i class="fas fa-search"></i>
                             </button>
                         </div>
@@ -199,11 +199,11 @@ include_once("../includes/database.php") ?>
                 <div class="content-modal">
                     <div class="modal-header">
                         <h2 id="headerAddVaccine"> Add Vaccine </h2>
-                        <span id="addVaccineClose" class="close">&times;</span>
+                        <span id="addVaccineClose" class="close"><i class='fas fa-window-close'></i></span>
                     </div>
                     <div class="modal-body">
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-sm-6">
                                 <label for="selectedVaccine"> Select a Vaccine: </label>
                                 <select class="form-select vaccineType" id="selectedVaccine" name="selectedVaccine" onchange="updateVaccineInfo(this)">
                                     <?php
@@ -225,16 +225,16 @@ include_once("../includes/database.php") ?>
                                 <label for="qty"> Total Vial Quantity Received: </label>
                                 <input type="text" id="qty"><br>
                                 <label for="source"> Vaccine Source: </label>
-                                <select id="source">
+                                <select class= "vaxSource" id="source">
                                     <option selected disabled>Select Vaccine Source</option>
                                     <option value="National Government">National Government</option>
                                     <option value="Department Of Health">Department Of Health</option>
                                 </select>
                             </div>
-                            <div class="col-md-6">
-                                <label for="dateStored">Date Stored</label>
-                                <input type='date' id="dateStored" name="dateStored">
-                                <label for="dateExp">Date of Expiration</label>
+                            <div class="col-sm-6">
+                                <label for="dateStored">Date Stored</label><br>
+                                <input type='date' id="dateStored" name="dateStored"><br>
+                                <label for="dateExp">Date of Expiration</label><br>
                                 <input type='date' id="dateExp" name="dateExp">
                             </div>
                         </div>
@@ -242,7 +242,7 @@ include_once("../includes/database.php") ?>
 
                     </div>
                     <div class="modal-footer">
-                        <button id="cancelBtnVaccine" class="btn btn-secondary">Cancel</button>
+                        <button id="cancelBtnVaccine" class="btn btn-danger">Cancel</button>
                         <button id="addVaccineBtn" class="btn btn-success"type='submit' onclick="addVaccine()"> Add </button>
 
                     </div>
@@ -255,7 +255,7 @@ include_once("../includes/database.php") ?>
                 <div class="content-modal">
                     <div class="modal-header">
                         <h2 id="headerAddNewVaccine">Add New Vaccine</h2>
-                        <span id="newVaccineClose" class="close">&times;</span>
+                        <span id="newVaccineClose" class="close"><i class='fas fa-window-close'></i></span>
                     </div>
                     <div class="modal-body">
                         <div class="row">
@@ -299,7 +299,7 @@ include_once("../includes/database.php") ?>
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button id="cancelBtnNewVaccine" class="btn btn-secondary"> Cancel</button>
+                            <button id="cancelBtnNewVaccine" class="btn btn-danger"> Cancel</button>
                             <button type='submit' id='addBtnNewVaccine' class="btn btn-success" name='addBtnNewVaccine' onclick="addNewVaccine()"> Add </button>
                         </div>
                     </div>
@@ -312,7 +312,7 @@ include_once("../includes/database.php") ?>
                 <div class="modal-header">
                     <h4 class="modal-title">Archived Vaccination Drives</h4>
                     <button type="button" class="close" data-dismiss="modal" onclick="closeModal('archived')">
-                        &times;
+                        <i class='fas fa-window-close'></i>
                     </button>
                 </div>
                 <div id = 'archivedContent' class="modal-body">

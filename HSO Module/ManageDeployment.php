@@ -119,7 +119,7 @@ include_once("../includes/database.php") ?>
                     <div class="col">
                         <div class="input-group">
                             <input type="search" class="form-control" placeholder="Search"/>
-                            <button type="button" class="btn btn-primary">
+                            <button type="button" class="buttonTop5">
                                 <i class="fas fa-search"></i>
                             </button>
                         </div>
@@ -227,7 +227,7 @@ include_once("../includes/database.php") ?>
                     <div class="modal-header">
                         <h4 class="modal-title">Add Deployment</h4>
                         <button type="button" class="close" data-dismiss="modal" onclick="closeModal('DeployModal')">
-                            &times;
+                            <i class='fas fa-window-close'></i>
                         </button>
                     </div>
                     <div class="modal-body">
@@ -290,7 +290,7 @@ include_once("../includes/database.php") ?>
 
                         <hr>
                         <label for="district">Select Health District/s: </label>
-                        <div id="district" class="AddHealthD-option">
+                        <div id="district" class="AddHealthD-option tableScroll1">
                             <div id="districList">
                                 <div class="row">
                                     <ul>
@@ -315,7 +315,7 @@ include_once("../includes/database.php") ?>
 
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-outline-dark" onclick="closeModal('DeployModal')"> Cancel
+                        <button type="button" class="btn btn-danger" onclick="closeModal('DeployModal')"> Cancel
                         </button>
                         <button type="button" class="btn btn-success" onclick="add('Deployment', addDep)"> Add</button>
                     </div>
@@ -328,16 +328,13 @@ include_once("../includes/database.php") ?>
             <div class="content-modal">
                 <div class="modal-header">
                     <h4 class="modal-title">Health Districts</h4>
-                    <button type="button" class="close" data-dismiss="modal" onclick="closeModal('HealthD')">&times;
+                    <button type="button" class="close" data-dismiss="modal" onclick="closeModal('HealthD')">
+                        <i class='fas fa-window-close'></i>
                     </button>
                 </div>
 
                 <div id="healthDMain" class="modal-body">
-                    <button type="button" class="siteAddButton" onclick="openModal('HealthDModal')">
-                        <i class="fas fa-plus"></i>
-                        Add Health District
-                    </button>
-                    <div id="distContent">
+                    <div id="distContent" class="tableScroll2">
                         <table class="table table-hover">
                             <thead>
                             <tr>
@@ -375,7 +372,14 @@ include_once("../includes/database.php") ?>
                         </table>
                     </div>
                 </div>
-
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger float-right" onclick="closeModal('HealthD')">Cancel</button>
+                    <button type="button" class="btn btn-primary float-right" onclick="openModal('HealthDModal')">
+                        <i class="fas fa-plus"></i>
+                        Add Health District
+                    </button>
+                </div>
+<!--                id="AddHealthDCancelBtn"-->
             </div>
         </div>
 
@@ -384,17 +388,23 @@ include_once("../includes/database.php") ?>
                 <div class="modal-header">
                     <h4 class="modal-title">Add Health District</h4>
                     <button type="button" class="close" data-dismiss="modal" onclick="closeModal('HealthDModal')">
-                        &times;
+                        <i class='fas fa-window-close'></i>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <label>Name of Health District:</label>
-                    <input class="districtWidth" type="text" id="newHealthDistrict" name="newHealthDistrict">
-
-                    <label>Health District Contact Number:</label>
-                    <input class="contactWidth" type="text" id="contactNumber" name="contactNumber">
-
-                    <div>
+                    <div class="row">
+                        <div class="col-7">
+                        <label>Name of Health District:</label>
+                        <input class="districtWidth float-right" type="text" id="newHealthDistrict" name="newHealthDistrict">
+                        </div>
+                        <div class="w-100 d-none d-md-block"></div>
+                        <div class="col-7">
+                            <label>Health District Contact Number:</label>
+                            <input class="contactWidth float-right" type="text" id="contactNumber" name="contactNumber">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
                         <label for="optionBrgy">Select Barangay/s: </label>
                         <a href="#" class="w3-bar-item w3-button">All</a>
                         <a href="#" class="w3-bar-item w3-button">None</a>
@@ -403,10 +413,12 @@ include_once("../includes/database.php") ?>
                         <select class="sortWidth" id="sort">
                             <option value="brgy1">None</option>
                         </select>
+                        </div>
                     </div>
 
+
                     <div class="AddHealthD-option">
-                        <div class="row">
+                        <div class="row tableScroll2">
                             <ul>
                                 <?php
                                 require_once "../require/getBarangay.php";
@@ -427,7 +439,7 @@ include_once("../includes/database.php") ?>
 
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-outline-dark" onclick="closeModal(HealthDModal)"> Cancel
+                        <button type="button" class="btn btn-danger" onclick="closeModal('HealthDModal')"> Cancel
                         </button>
                         <button type="button" class="btn btn-success" onclick="add('Health District', addDistrict)">
                             Add
@@ -444,7 +456,7 @@ include_once("../includes/database.php") ?>
                 <div class="modal-header">
                     <h4 class="modal-title">Add Health District</h4>
                     <button type="button" class="close" data-dismiss="modal" onclick="closeModal('HealthDView')">
-                        &times;
+                        <i class='fas fa-window-close'></i>
                     </button>
                 </div>
 
@@ -460,7 +472,7 @@ include_once("../includes/database.php") ?>
                 <div class="modal-header">
                     <h4 class="modal-title">Add New Barangay</h4>
                     <button type="button" class="close" data-dismiss="modal" onclick="closeModal('HealthDBarangay')">
-                        &times;
+                        <i class='fas fa-window-close'></i>
                     </button>
                 </div>
 
@@ -477,15 +489,11 @@ include_once("../includes/database.php") ?>
             <div class="modal-header">
                 <h4 class="modal-title">Vaccination Sites</h4>
                 <button type="button" class="close" data-dismiss="modal" onclick="closeModal('vaccSiteModal')">
-                    &times;
+                    <i class='fas fa-window-close'></i>
                 </button>
             </div>
             <div class="modal-body">
-                <button type="button" class="siteAddButton" onclick=" openModal('addVaccSite')">
-                    <i class="fas fa-plus"></i>
-                    Add Vaccination Site
-                </button>
-                <div id="siteContent">
+                <div id="siteContent" class="tableScroll2">
                     <table class="table table-row table-hover">
                         <thead>
                         <tr>
@@ -520,6 +528,13 @@ include_once("../includes/database.php") ?>
                     </table>
                 </div>
             </div>
+            <div class="modal-footer">
+                <button type="button"  class="btn btn-danger float-right" onclick="closeModal('vaccSiteModal')">Cancel</button>
+                <button type="button" class="btn btn-primary float-right" onclick="openModal('addVaccSite')">
+                    <i class="fas fa-plus"></i>
+                    Add Vaccination Site
+                </button>
+            </div>
         </div>
     </div>
 
@@ -537,7 +552,7 @@ include_once("../includes/database.php") ?>
                 <input class="districtWidth" type="text" id="newVaccinationSite" name="newVaccinationSite">
 
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-dark" onclick="closeModal('addVaccSite')"> Cancel
+                    <button type="button" class="btn btn-danger"> Cancel
                     </button>
                     <button type="button" class="btn btn-success"
                             onclick='add("Vaccination Site",addSite, "vaccSiteModal")'> Add
@@ -552,7 +567,7 @@ include_once("../includes/database.php") ?>
             <div class="modal-header">
                 <h4 class="modal-title">Archived Vaccination Drives</h4>
                 <button type="button" class="close" data-dismiss="modal" onclick="closeModal('archived')">
-                    &times;
+                    <i class='fas fa-window-close'></i>
                 </button>
             </div>
             <div id='archivedContent' class="modal-body">
@@ -622,6 +637,7 @@ include_once("../includes/database.php") ?>
             $('#sidebar').toggleClass('active');
         });
     });
+
 
     window.onclick = function (event) {
         if (event.target == document.getElementById("DeployModal") || event.target == document.getElementById("HealthDModal") || event.target == document.getElementById("vaccSiteModal") || event.target == document.getElementById("HealthD")) {

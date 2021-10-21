@@ -133,7 +133,7 @@ include_once("../includes/database.php");
 
                     for ($i = 0; $i < 5; $i++) {
                         if ($availableStubs[$i] != 0) {
-                            $priorityStub[] = "A" . $i + 1;
+                            $priorityStub[] = "A" . ($i + 1);
                             $values[] = $availableStubs[$i];
                         }
                     }
