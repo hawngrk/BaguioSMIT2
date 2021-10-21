@@ -1,7 +1,10 @@
 @import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
+
+/* ---------------------------------------------------
+                    General CSS
+--------------------------------------------------- */
 body {
     font-family: 'Poppins', sans-serif;
-    /*hatodog;*/
 }
 
 p {
@@ -56,179 +59,6 @@ a:focus {
     margin: 40px 0;
 }
 
-
-/* ---------------------------------------------------
-    SIDEBAR STYLE
------------------------------------------------------ */
-
-.wrapper {
-    display: flex;
-    width: 100%;
-    align-items: stretch;
-    background-color: #ffffff;
-    position: relative;
-    overflow: hidden;
-}
-
-#sidebar {
-    min-width: 250px;
-    max-width: 250px;
-    background: #04628A;
-    color: #fff;
-    transition: all 0.3s;
-    padding: .5%;
-
-}
-
-#sidebar.active {
-    margin-left: -250px;
-}
-
-#sidebar .sidebar-header {
-    padding: 20px;
-    background: #04628A;
-}
-
-#sidebar ul.components {
-    padding: 20px 0;
-    border-bottom: 1px solid #47748b;
-}
-
-#sidebar ul p{
-    color: #fff;
-    padding: 10px;
-}
-
-#sidebar ul li a {
-    padding: 10px;
-    font-size: 1.1em;
-    display: block;
-}
-
-#sidebar ul li a:hover {
-    color: #fff !important;
-    background: #043D55;
-}
-
-#sidebar ul li a {
-    color: #fff !important;
-    background: #04628A;
-;
-}
-
-#sidebar ul li.active>a,
-a[aria-expanded="true"] {
-    color: #fff;
-    background: #06425b;
-}
-
-a[data-toggle="collapse"] {
-    position: relative;
-}
-
-.dropdown-toggle::after {
-    display: block;
-    position: absolute;
-    top: 50%;
-    right: 20px;
-    transform: translateY(-50%);
-}
-
-ul ul a {
-    font-size: 0.9em !important;
-    padding-left: 30px !important;
-    background: #04628A;
-}
-
-ul.CTAs {
-    padding: 20px;
-}
-
-ul.CTAs a {
-    text-align: center;
-    font-size: 0.9em !important;
-    display: block;
-    border-radius: 5px;
-    margin-bottom: 5px;
-}
-
-a.download {
-    background: #fff;
-    color: #04628A;
-}
-
-a.article,
-a.article:hover {
-    background: #04628a !important;
-    color: #fff !important;
-}
-
-.btnTop {
-    border: none;
-    background: #dae6ef;
-    padding: 1%;
-}
-
-.btnTop3{
-    position: relative;
-    float: right;
-}
-.timeBox {
-    margin-bottom: -9%;
-    margin-top: -6%;
-    font-size: 86%;
-}
-
-#time {
-    margin-bottom: -8%;
-    font-size: 195%!important;
-}
-
-
-.upperBox {
-    display: block !important;
-    padding-left: 94% !important;
-}
-
-.upperBoxOG {
-    margin-bottom: 1%;
-}
-
-
-
-/* ---------------------------------------------------
-    CONTENT STYLE
------------------------------------------------------ */
-
-#content {
-    background-color: #dae6ef;
-    width: 100%;
-    padding: 20px;
-    min-height: 100vh;
-    transition: all 0.3s;
-}
-
-
-/* ---------------------------------------------------
-    MEDIAQUERIES
------------------------------------------------------ */
-
-@media (max-width: 768px) {
-    #sidebar {
-        margin-left: -250px;
-    }
-    #sidebar.active {
-        margin-left: 0;
-    }
-    #sidebarCollapse span {
-        display: none;
-    }
-}
-
-
-/* ---------------------------------------------------
-    COMMON CSS
------------------------------------------------------ */
 
 .buttonTop {
     display: block;
@@ -393,13 +223,877 @@ input[type=text]{
     border-radius: 8px;
 }
 
+#postVacView .content-modal /*EIR, BARANGAY, HSO*/{
+    padding: 0%;
+    width: 81%;
+}
+
+#preVacView .content-modal /*EIR, BARANGAY, HSO*/{
+    padding: 0%;
+    width: 81%;
+}
+
+#postVacView h6, #preVacView h6{
+    display: inline;
+}
+
+#postVacView button, #preVacView button{
+    align-content: flex-end;
+}
+
+#postVac {
+    font-size: 110% ;
+    color: #070101 !important;
+}
 
 
+#tablePadding{
+    padding: 2%;
+}
+
+/*CSS for HSO*/
+.tableContainer{
+    background-color: #ececec;
+    padding: 1%;
+    border-radius: 12px;
+}
+
+
+/* Modal Header (BARANGAY, HSO)*/
+.modal-header{
+    color: #fafafa;
+    background-color: #04628A;
+}
+/* ---------------------------------------------------
+                    EIR MODULE CSS
+--------------------------------------------------- */
+
+/* ---------------------------------------------------
+                   SSD MODULE CSS
+--------------------------------------------------- */
+#selectHealthDistrict{
+    width: 100%;
+    border-radius: 7px;
+}
+
+#allocateButton{
+    margin-left: 38%;
+}
+
+#selectDeployment{
+    width: 95%;
+    display: flex;
+    margin-left: auto;
+    margin-right: auto;
+    height: 20%;
+}
+
+#hDistrictContainer{
+    margin-top: 5%;
+    margin-left: 7%;
+    padding-top: 2%;
+    background-color: white;
+    width: 100%;
+    border-radius: 12px;
+    display: inline-block;
+    border: 1px solid black;
+}
+
+#vaccineDeployments{
+    padding-top: 2%;
+    width: 95%;
+    border-radius: 12px;
+    display: inline-block;
+    margin-right: 7%;
+    padding: 2%;
+    background-color: #f6f6f6;
+}
+
+#totalPopulation,#totalPopulationPerHD{
+    padding: 2%;
+    background-color: #f6f6f6;
+    width: 100%;
+    border-radius: 12px;
+    display: inline-block;
+    margin-left: 7%;
+    margin-right: 7%;
+}
+
+#totalPopulation{
+    margin-bottom: 2%;
+}
+
+#vaccineDeploymentContent{
+    margin: 5%;
+}
+
+#labelling{
+    margin-left: 3%;
+}
+
+/* ---------------------------------------------------
+                    HSO MODULE CSS
+--------------------------------------------------- */
+.vaccineName,
+.vaccineManufacturer,
+.vaccineType,
+.vaccineEfficacy,
+.dosageRequired,
+.dosageInterval,
+.minimumTemperature,
+.maximumTemperature,
+.lifeSpan {
+    height: auto;
+}
+
+.AddHealthD-option > ul{
+    list-style-type: none;
+    column-count: 4;
+    column-gap: 2rem;
+}
+
+input[type=text1] {
+    margin-top: 8px;
+    font-size: 17px;
+    border: whitesmoke;
+    background: whitesmoke;
+    width: 75%;
+    height: auto;
+}
+
+.vaccineType, #qty{
+    width: 95%;
+}
+
+.viewReportBtn {
+    background: #DCF4FF;
+    border: 1px solid black;
+    width: 60%;
+    height: 40px;
+    color: #000!important;
+    margin-right: 10px;
+    border-radius: 12px;
+    font-size: 85%;
+}
+
+
+.CounterReportContainer {
+    margin-top: 10%;
+}
+
+.editRepBtn{
+    margin-top: 2%;
+}
+.counter-box { /*HSO*/
+    display: block;
+    background: #f6f6f6;
+    padding: 40px 20px 37px;
+    text-align: center
+}
+
+.counter-box p { /*HSO*/
+    margin: 5px 0 0;
+    padding: 0;
+    color: #ffffff;
+    font-size: 18px;
+    font-weight: 500
+}
+
+.counter-box i { /*HSO*/
+    font-size: 60px;
+    margin: 0 0 15px;
+    color: #d2d2d2
+}
+
+.counter {
+    display: block;
+    font-size: 32px;
+    font-weight: 700;
+    color: #ffffff;
+    line-height: 28px
+}
+
+.counter-box.colored1 {
+    background: #68A0B8
+}
+
+.counter-box.colored1 p,
+.counter-box.colored1 i,
+.counter-box.colored1 .counter {
+    color: #fff
+}
+
+.counter-box.colored2 {
+    background: #4F91AD
+}
+
+.counter-box.colored2 p,
+.counter-box.colored2 i,
+.counter-box.colored2 .counter {
+    color: #fff
+}
+.counter-box.colored3 {
+    background: #3681A1
+}
+
+.counter-box.colored3 p,
+.counter-box.colored3 i,
+.counter-box.colored3 .counter {
+    color: #fff
+}
+
+.counter-box.colored4 {
+    background: #1D7195
+}
+
+.counter-box.colored4 p,
+.counter-box.colored4 i,
+.counter-box.colored4 .counter {
+    color: #fff
+}
+
+
+
+.tableReport {
+    width: 100%!important;
+    background-color: white;
+    border-radius: 12px;
+    margin-top: 1%;
+}
+
+.tableVax{
+    background-color: white;
+    border-radius: 12px;
+    margin-top: 1%;
+}
+
+.depSum h5{
+    padding: 2%;
+}
+
+/* Modal Content/Box */ /*HSO*/
+.content-modal{ /*HSO*/
+    background-color: #fefefe;
+    margin: 5% auto;
+    /* 15% from the top and centered */
+    border: 1px solid #888;
+    width: 60%;
+    /*Could be more or less, depending on screen size */
+    border-radius: 12px;
+}
+
+.content-modal-table{
+    background-color: #fefefe;
+    margin: 5% auto;
+    /* 15% from the top and centered */
+    border: 1px solid #888;
+    width: fit-content;
+    /*Could be more or less, depending on screen size */
+    border-radius: 12px;
+}
+
+.content-modal-table1{
+    background-color: #fefefe;
+    margin: 5% auto;
+    /* 15% from the top and centered */
+    border: 1px solid #888;
+    width: 70%;
+    /*Could be more or less, depending on screen size */
+    border-radius: 12px;
+}
+
+img{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 20%;
+}
+
+.counterColumn{ /*HSO*/
+    float: right;
+    width: 100%;
+    margin: 2%;
+    margin-top: 4%;
+}
+
+.counterRow {
+    width: 100%;
+}
+
+.contactWidth{
+    width: 75%!important;
+}
+
+.districtWidth{
+    width: 75%!important;
+}
+
+#HealthDModalSort{
+    margin: 2%;
+}
+
+/* ---------------------------------------------------
+                    BARANGAY MODULE CSS
+--------------------------------------------------- */
+
+#barangayHomeContent{
+    margin-left: -2%;
+    margin-right: 5%;
+}
+
+/* -----Monitoring-----*/
+.search-containerMonitoring{
+    margin-bottom: 0%!important;
+    width: 205%;
+    display: flex;
+}
+
+.tableMonitoring {
+    margin-top:0%!important;
+    background-color: white;
+    border-radius: 12px;
+}
+
+.navbarMonitoring {
+    margin-bottom: 1%!important;
+}
+
+#searchPatientBtn {
+    border: none;
+    background-color: ghostwhite;
+    margin-left: 1%;
+}
+
+.columnName {
+    text-align: center;
+}
+
+.fourthCol {
+    font-size: 78%;
+}
+
+.patientQCounter {
+    background-color: white;
+    width: 18%;
+    height: auto;
+    margin-left: 2%;
+    border-radius: 12px;
+}
+
+.patientQueueButtons p,
+h6 {
+    text-align: center;
+}
+
+.patientQueueButtons h6 {
+    padding-top: 10%;
+}
+
+#confirmationNotif{
+    border-radius: 12px;
+    font-size: 25px;
+    text-align: left;
+    margin-left: 7%;
+}
+
+.patientQueueButtons {
+    display: flex;
+}
+
+#barangayHomeContent{
+    margin-left: -2%;
+    margin-right: 5%;
+}
+/* ---------------------------------------------------
+                   VACCINATION PERSONNEL MODULE
+--------------------------------------------------- */
+.tableScreening {
+    margin-top:0%!important;
+    background-color: white;
+    border-radius: 12px;
+}
+
+.navbarScreening {
+    margin-bottom: 1%!important;
+}
+
+.search-containerScreening {
+    margin-bottom: 0%!important;
+    width: 205%;
+    display: flex;
+}
+
+#patientRow h6, #patientRow form{
+    margin-left: 4%;
+}
+
+#patientRow p{
+    margin-left: 7%;
+    font-size: 90%;
+    color: black;
+}
+
+#patientRow form{
+    margin-bottom: 3%;
+}
+
+input[name=vitals]{
+    border-radius: 5px;
+    border: solid black 1px;
+    width: 70%;
+}
+#pulseR {
+    margin-left: 7%;
+}
+#tempR {
+    margin-left: 4%;
+}
+#bpRDias {
+    margin-left: 4%;
+}
+#bpRSys {
+    margin-left: 5%;
+}
+#patientRow h5 {
+    margin-left: 3%;
+}
+
+.tableScreening {
+    margin-top:0%!important;
+    background-color: white;
+    border-radius: 12px;
+}
+
+.navbarScreening {
+    margin-bottom: 1%!important;
+}
+
+.search-containerScreening {
+    margin-bottom: 0%!important;
+    width: 205%;
+    display: flex;
+}
+
+.search-containerMonitoring{
+    margin-bottom: 0%!important;
+    width: 205%;
+    display: flex;
+}
+
+.tableMonitoring {
+    margin-top:0%!important;
+    background-color: white;
+    border-radius: 12px;
+}
+
+.navbarMonitoring {
+    margin-bottom: 1%!important;
+}
+
+#searchPatientBtn {
+    border: none;
+    background-color: ghostwhite;
+    margin-left: 1%;
+}
+
+.columnName {
+    text-align: center;
+}
+
+.fourthCol {
+    font-size: 78%;
+}
+
+/*======================================================================
+
+
+!* SIDEBAR STYLE *!*/
+
+.wrapper {
+    display: flex;
+    width: 100%;
+    align-items: stretch;
+    background-color: #ffffff;
+    position: relative;
+    overflow: hidden;
+}
+
+#sidebar {
+    min-width: 250px;
+    max-width: 250px;
+    background: #04628A;
+    color: #fff;
+    transition: all 0.3s;
+    padding: .5%;
+
+}
+
+#sidebar.active {
+    margin-left: -250px;
+}
+
+#sidebar .sidebar-header {
+    padding: 20px;
+    background: #04628A;
+}
+
+#sidebar ul.components {
+    padding: 20px 0;
+    border-bottom: 1px solid #47748b;
+}
+
+#sidebar ul p{
+    color: #fff;
+    padding: 10px;
+}
+
+#sidebar ul li a {
+    padding: 10px;
+    font-size: 1.1em;
+    display: block;
+}
+
+#sidebar ul li a:hover {
+    color: #fff !important;
+    background: #043D55;
+}
+
+#sidebar ul li a {
+    color: #fff !important;
+    background: #04628A;
+;
+}
+
+#sidebar ul li.active>a,
+a[aria-expanded="true"] {
+    color: #fff;
+    background: #06425b;
+}
+
+a[data-toggle="collapse"] {
+    position: relative;
+}
+
+.dropdown-toggle::after {
+    display: block;
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
+}
+
+ul ul a {
+    font-size: 0.9em !important;
+    padding-left: 30px !important;
+    background: #04628A;
+}
+
+ul.CTAs {
+    padding: 20px;
+}
+
+ul.CTAs a {
+    text-align: center;
+    font-size: 0.9em !important;
+    display: block;
+    border-radius: 5px;
+    margin-bottom: 5px;
+}
+
+a.download {
+    background: #fff;
+    color: #04628A;
+}
+
+a.article,
+a.article:hover {
+    background: #04628a !important;
+    color: #fff !important;
+}
+
+.btnTop {
+    border: none;
+    background: #dae6ef;
+    padding: 1%;
+}
+
+.btnTop3{
+    position: relative;
+    float: right;
+}
+.timeBox {
+    margin-bottom: -9%;
+    margin-top: -6%;
+    font-size: 86%;
+}
+
+#time {
+    margin-bottom: -8%;
+    font-size: 195%!important;
+}
+
+
+.upperBox {
+    display: block !important;
+    padding-left: 94% !important;
+}
+
+.upperBoxOG {
+    margin-bottom: 1%;
+}
+
+
+
+/* ---------------------------------------------------
+    CONTENT STYLE
+----------------------------------------------------- */
+
+#content {
+    background-color: #dae6ef;
+    width: 100%;
+    padding: 20px;
+    min-height: 100vh;
+    transition: all 0.3s;
+}
+
+
+
+/*!* ---------------------------------------------------*/
+/*                    BARANGAY MODULE CSS*/
+/*--------------------------------------------------- *!*/
+/*#barangayHomeContent{*/
+/*    margin-left: -2%;*/
+/*    margin-right: 5%;*/
+/*}*/
+
+/*!* -----Monitoring-----*!*/
+/*.search-containerMonitoring{*/
+/*    margin: bottom 0%!important;*/
+/*    width: 205%;*/
+/*    display: flex;*/
+/*}*/
+
+/*.tableMonitoring {*/
+/*    margin-top:0%!important;*/
+/*    background-color: white;*/
+/*    border-radius: 12px;*/
+/*}*/
+
+/*.navbarMonitoring {*/
+/*    margin-bottom: 1%!important;*/
+/*}*/
+
+/*#searchPatientBtn {*/
+/*    border: none;*/
+/*    background-color: ghostwhite;*/
+/*    margin-left: 1%;*/
+/*}*/
+
+/*.columnName {*/
+/*    text-align: center;*/
+/*}*/
+
+/*.fourthCol {*/
+/*    font-size: 78%;*/
+/*}*/
+
+/*Screening*/
+/*.tableScreening {
+    margin-top:0%!important;
+    background-color: white;
+    border-radius: 12px;
+}
+
+.navbarScreening {
+    margin-bottom: 1%!important;
+}
+
+.search-containerScreening {
+    margin: bottom 0%!important;
+    width: 205%;
+    display: flex;
+}*/
+
+
+/* ---------------------------------------------------
+    COMMON CSS
+----------------------------------------------------- */
+/*
+
+.buttonTop {
+    display: block;
+    float: right;
+    background: ghostwhite;
+    border: 2px solid black;
+    width: 12%;
+    height: 40px;
+    color: black!important;
+    margin-right: 10px;
+    font-size: 80%;
+}
+
+.buttonTop3{
+    float: right;
+    margin: 5px;
+    background-color: #1D7195;
+    border: none;
+    color: white;
+    padding: 8px;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 10px;
+}
+
+.buttontop4{
+    display: block;
+    float: left;
+    margin-right: 10px;
+}
+
+.buttonTop2 {
+    display: block;
+    float: right;
+    background: ghostwhite;
+    border: 2px solid black;
+    width: 12%;
+    height: auto;
+    color: black!important;
+    margin-right: 10px;
+    font-size: 80%;
+    padding: .2%;
+    border-radius: 12px;
+}
+
+.buttonTop2:hover {
+    background: #e7e7e7;
+}
+
+.buttonTop2:visited {
+    background: white;
+}
+
+
+.genButton{
+    float: right;
+}
+
+
+#generateReportOptions{
+    height: fit-content;
+}
+
+
+#DlRepNote{
+    float: right;
+    margin-bottom: 1%;
+}
+
+.topContainer{
+    display: grid;
+    width: 100%;
+}
+
+
+
+.buttonTop {
+    border-radius: 12px;
+}
+
+.siteAddButton{
+    display: block;
+    float: right;
+    background: ghostwhite;
+    border: 2px solid black;
+    border-radius: 12px;
+    width: 30%;
+    height: 40px;
+    color: black!important;
+    margin-right: 10px;
+    font-size: 80%;
+    margin-bottom: 2%;
+}
+
+.buttonTop:hover {
+    background: #e7e7e7;
+}
+
+.buttonTop:visited {
+    background: white;
+}
+
+.search-container button {
+    display: inline-block;
+    padding: 6px 5px;
+    background: whitesmoke;
+    font-size: 17px;
+    border: none;
+    cursor: pointer;
+    width: 3%;
+    height: auto;
+}
+
+.search-container button:hover {
+    background: rgb(165, 165, 165);
+}
+
+.search-container{
+    margin-bottom: 1%;
+}
+
+.searchDept{
+    position: relative;
+    float: left;
+    width: 100%;
+}
+
+
+
+.buttonTransparent{
+    background: transparent!important;
+    border: transparent!important;
+    width: 5%;
+    height: 5%;
+}
+
+.hyperlink{
+    text-decoration: underline;
+    color: dodgerblue;
+    font-size: 12px;
+}
+
+.searchSite{
+    float: left;
+    width: 65%!important;
+}
+
+.siteSearchIcon{
+    width: 5% !important;
+}
+
+
+.editButton{
+    float: right;
+}
+
+input[type=text]{
+    font-size: 17px;
+    height: auto;
+    display: inline-block;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+}
+
+#scannerTxt {
+    margin-top: 5%;
+}
+.patientLine {
+    width: 100%;
+}
 #searchPatientEIR, #searchPatientBrgy{
     width: 80%;
 }
 
-#searchPatientVaxPer{
+#searchPatientVaxPer, #searchPatientQueue{
     width: 95%;
 }
 
@@ -452,17 +1146,14 @@ input[type=textDesc]{
 
 
 
-.AddHealthD-option{
+.AddHealthD-option{ /*HSO*/
     border: 3px solid lightgray;
     border-radius: 5px;
     margin: 1%;
     padding: 2%;
 }
 
-/* The Close Button */
-
-
-/* The Close Button */
+/* The Close Button (EIR, HSO)*/
 .close {
     color: #ffffff;
     float: right;
@@ -480,7 +1171,7 @@ input[type=textDesc]{
 #cancelBtn,
 #addBtn {
     float: right;
-    margin-right: 1 rem;
+    margin-right: 1rem;
 }
 
 .vaccineDescription {
@@ -488,6 +1179,8 @@ input[type=textDesc]{
     width: 5in;
 }
 
+/*
+!*__HSO*!
 .vaccineName,
 .vaccineManufacturer,
 .vaccineType,
@@ -500,18 +1193,19 @@ input[type=textDesc]{
     height: auto;
 }
 
-
-.AddHealthD-option > ul{
+.AddHealthD-option > ul{ !*HSO*!
     list-style-type: none;
     column-count: 4;
     column-gap: 2rem;
 }
+*/
 
 
 /* ---------------------------------------------------
     MANAGE REPORT
 ----------------------------------------------------- */
 
+/*
 input[type=text1] {
     margin-top: 8px;
     font-size: 17px;
@@ -544,14 +1238,14 @@ input[type=text1] {
 .editRepBtn{
     margin-top: 2%;
 }
-.counter-box {
+.counter-box { !*HSO*!
     display: block;
     background: #f6f6f6;
     padding: 40px 20px 37px;
     text-align: center
 }
 
-.counter-box p {
+.counter-box p { !*HSO*!
     margin: 5px 0 0;
     padding: 0;
     color: #ffffff;
@@ -559,7 +1253,7 @@ input[type=text1] {
     font-weight: 500
 }
 
-.counter-box i {
+.counter-box i { !*HSO*!
     font-size: 60px;
     margin: 0 0 15px;
     color: #d2d2d2
@@ -627,12 +1321,13 @@ input[type=text1] {
 .depSum h5{
     padding: 2%;
 }
+*/
 
-/* Modal Header */
-.modal-header{
+/* Modal Header (BARANGAY, HSO)*/
+/*.modal-header{
     color: #fafafa;
     background-color: #04628A;
-}
+}*/
 
 
 /*Text Inputs and drop down menu*/
@@ -677,7 +1372,7 @@ input[type=date]{
     padding-left: 15%;
 }
 
-.label1{
+.label1{ /*HSO*/
     margin-top: 3%;
 }
 
@@ -700,34 +1395,35 @@ input[type=date]{
 }
 
 
-/* Modal Content/Box */
-.content-modal{
+/*
+!* Modal Content/Box *! !*HSO*!
+.content-modal{ !*HSO*!
     background-color: #fefefe;
     margin: 5% auto;
-    /* 15% from the top and centered */
+    !* 15% from the top and centered *!
     border: 1px solid #888;
     width: 60%;
-    /*Could be more or less, depending on screen size */
+    !*Could be more or less, depending on screen size *!
     border-radius: 12px;
 }
 
 .content-modal-table{
     background-color: #fefefe;
     margin: 5% auto;
-    /* 15% from the top and centered */
+    !* 15% from the top and centered *!
     border: 1px solid #888;
     width: fit-content;
-    /*Could be more or less, depending on screen size */
+    !*Could be more or less, depending on screen size *!
     border-radius: 12px;
 }
 
 .content-modal-table1{
     background-color: #fefefe;
     margin: 5% auto;
-    /* 15% from the top and centered */
+    !* 15% from the top and centered *!
     border: 1px solid #888;
     width: 70%;
-    /*Could be more or less, depending on screen size */
+    !*Could be more or less, depending on screen size *!
     border-radius: 12px;
 }
 
@@ -738,7 +1434,7 @@ img{
     width: 20%;
 }
 
-.counterColumn{
+.counterColumn{ !*HSO*!
     float: right;
     width: 100%;
     margin: 2%;
@@ -748,9 +1444,10 @@ img{
 .counterRow {
     width: 100%;
 }
+*/
 
 
-/* Modal Header */
+/*!* Modal Header (HSO, SSD) *!*/
 
 .modal-header {
     color: #fafafa;
@@ -759,7 +1456,7 @@ img{
 
 
 
-/* Modal Footer */
+/*!* Modal Footer  (EIR, HSO)*!*/
 .modal-footer{
     border: none!important;
 }
@@ -810,7 +1507,7 @@ input[type=text]:disabled{
     z-index: 1;
 }
 
-.modal-window {
+.modal-window { /*EIR, BARANGAY, HSO*/
     display: none;
     /* Hidden by default */
     position: fixed;
@@ -980,17 +1677,17 @@ h7~h8{
     height: auto;
 }
 
-.contactWidth{
+/*.contactWidth{ !*HSO*!
     width: 75%!important;
 }
 
-.districtWidth{
+.districtWidth{ !*HSO*!
     width: 75%!important;
 }
 
-#HealthDModalSort{
+#HealthDModalSort{ !*HSO*!
     margin: 2%;
-}
+}*/
 
 
 .intendedVax {
@@ -1019,7 +1716,7 @@ h7~h8{
     margin-top: -2%;
 }
 
-#iconBrowse{
+#iconBrowse{ /*HSO*/
     display:inline-block;
     width: 40%;
     height: 80%;
@@ -1027,7 +1724,7 @@ h7~h8{
     text-align: center;
 }
 
-#upload-content{
+#upload-content{ /*HSO*/
     margin-top: 2%;
 }
 
@@ -1109,7 +1806,8 @@ h5~select {
     background-image: linear-gradient(to top, #f9f9f9, #fff 33%);
 }
 
-.patientQCounter {
+/*
+.patientQCounter { !*barangay*!
     background-color: white;
     width: 18%;
     height: auto;
@@ -1117,37 +1815,39 @@ h5~select {
     border-radius: 12px;
 }
 
-.patientQueueButtons p,
+.patientQueueButtons p,!*barangay*!
 h6 {
     text-align: center;
 }
 
-.patientQueueButtons h6 {
+.patientQueueButtons h6 {!*barangay*!
     padding-top: 10%;
 }
 
-#confirmationNotif{
+#confirmationNotif{ !*barangay*!
     border-radius: 12px;
     font-size: 25px;
     text-align: left;
     margin-left: 7%;
 }
 
-.patientQueueButtons {
+.patientQueueButtons { !*barangay*!
     display: flex;
 }
+*/
 
 /* ---------------------------------------------------------------------------------- */
 /*CSS For Personnel Vaccination*/
 /* ---------------------------------------------------------------------------------- */
+/*
 #patientRow h6, #patientRow form{
     margin-left: 4%;
 }
 
 #patientRow p{
-    margin-left: 7%;
-    font-size: 90%;
-    color: black;
+		margin-left: 7%;
+        font-size: 90%;
+		color: black;
 }
 
 #patientRow form{
@@ -1174,13 +1874,14 @@ input[name=vitals]{
 #patientRow h5 {
     margin-left: 3%;
 }
+*/
 
-#postVacView .content-modal {
+/*#postVacView .content-modal !*EIR, BARANGAY, HSO*!{
     padding: 0%;
     width: 81%;
 }
 
-#preVacView .content-modal {
+#preVacView .content-modal !*EIR, BARANGAY, HSO*!{
     padding: 0%;
     width: 81%;
 }
@@ -1196,10 +1897,19 @@ input[name=vitals]{
 #postVac {
     font-size: 110% ;
     color: #070101 !important;
+}*/
+
+.notif {
+    border-radius: 12px;
+    border: #000 solid 1px;
+    margin-right: auto;
+    margin-left: auto;
 }
 
 /* ------------------------------------------------------------------- */
 /* ------------------------CSS for SSD MODULE ----------------------- */
+/*
+!* CSS for SSD MODULE *!
 #selectHealthDistrict{
     width: 100%;
     border-radius: 7px;
@@ -1210,29 +1920,25 @@ input[name=vitals]{
 }
 
 #selectDeployment{
-    margin-right: auto;
-    width: 90%;
+    width: 95%;
+    display: flex;
     margin-left: auto;
-    display: inline-block;
+    margin-right: auto;
     height: 20%;
 }
 
 #hDistrictContainer{
-    margin-top: 6%;
+    margin-top: 5%;
     margin-left: 7%;
     padding-top: 2%;
     background-color: white;
     width: 100%;
     border-radius: 12px;
     display: inline-block;
-}
-
-#hDistrictContainer h2 {
-    margin-left: 2%;
+    border: 1px solid black;
 }
 
 #vaccineDeployments{
-    margin-top: -4%;
     padding-top: 2%;
     width: 95%;
     border-radius: 12px;
@@ -1270,8 +1976,8 @@ input[name=vitals]{
     background-color: white;
 }
 
-#deploymentSummary{
-    margin-top: 6%;
+#deploymentSummary{ /*ssd*/
+    margin-top: 12%;
     background-color: #f6f6f6;
     padding: 2%;
     width: 100%;
@@ -1336,7 +2042,7 @@ input[name=vitals]{
     margin-top: 1%;
 }
 
-.barangayList{
+.barangayList{ /*EIR*/
     margin-left: 3%;
     color: #9C9C9C;
 }
@@ -1357,19 +2063,14 @@ input[name=vitals]{
 
 /* ------------------------------------------------------------------- */
 /* ------------------------CSS for Barangay MODULE ----------------------- */
-#barangayHomeContent{
+/*#barangayHomeContent{
     margin-left: -2%;
     margin-right: 5%;
-}
-
-.notif {
-    border-radius: 12px;
-    border: #000 solid 1px;
-    margin-right: auto;
-    margin-left: auto;
-}
+}*/
 
 /*Monitoring*/
+/*.search-containerMonitoring, .search-containerQueue{
+
 .search-containerMonitoring{
     margin: bottom 0%!important;
     width: 205%;
@@ -1399,8 +2100,10 @@ input[name=vitals]{
 .fourthCol {
     font-size: 78%;
 }
+*/
 
 /*Screening*/
+/*
 .tableScreening {
     margin-top:0%!important;
     background-color: white;
@@ -1416,69 +2119,18 @@ input[name=vitals]{
     width: 205%;
     display: flex;
 }
+*/
+
+/*
 
 #tablePadding{
     padding: 2%;
 }
 
-/*CSS for HSO*/
+!*CSS for HSO*!
 .tableContainer{
     background-color: #ececec;
     padding: 1%;
     border-radius: 12px;
 }
 
-/*Common EIR at HSO*/
-.personalInfo,.categoryInfo,.addressInfo,.medicalInfo{
-    margin-left: 40px;
-    margin-right: 40px;
-}
-
-#otherTextField{
-    display: none;
-    margin-left: -70%;
-}
-
-#comorbidityList{
-    margin-left: 3%;
-    margin-right: 3%;
-    margin-top: 4%;
-    display: none;
-    padding: 15px;
-    border: 2px solid;
-    border-radius: 3px;
-}
-
-.listOfComorbidity{
-    margin-left: 0.5%;
-    margin-right: 0.5%;
-}
-
-.perBarangay {
-    display: inline-block;
-    margin-left: 7%;
-    border-radius: 12px;
-    background-color: white;
-    width: 40%;
-    margin-top: 3%;
-}
-
-.required:after{
-    content: " *";
-    color: red;
-}
-
-#otherTextField{
-    display: none;
-    margin-left: -70%;
-}
-
-/*CSS for HSO*/
-.reviewReport-PopUp{
-    padding-left: 2%;
-    padding-right: 2%;
-}
-
-.paddingLeft{
-    padding-left: 3%;
-}
