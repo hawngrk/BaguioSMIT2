@@ -184,7 +184,7 @@ include_once("../includes/database.php");
         <div class="topNav row">
             <div class="container-fluid">
                 <button id="buttonMarker" class="notif float-right" onclick="openNotif('notificationModal')">
-                    <!-- <span class="marker" id="marker"><i class="fas fa-circle"></i></span> -->
+                    <span class="marker" id="marker"><i class="fas fa-circle"></i></span>
                     <i class="fas fa-bell"></i>
                 </button>
             </div>
