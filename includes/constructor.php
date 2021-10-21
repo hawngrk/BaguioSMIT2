@@ -148,8 +148,9 @@ class patientInfo{
     private $notification;
     private $firstDoseVaccinator;
     private $secondDoseVaccinator;
+    private $token;
 
-    public function __construct($patId, $patFullName, $firstDate, $secondDate, $firstDosage, $secondDosage, $queue, $notif, $firstVaccinator, $secondVaccinator)
+    public function __construct($patId, $patFullName, $firstDate, $secondDate, $firstDosage, $secondDosage, $queue, $notif, $firstVaccinator, $secondVaccinator, $token)
     {
         $this->patientId = $patId;
         $this->patientFullName = $patFullName;
@@ -161,6 +162,7 @@ class patientInfo{
         $this->notification = $notif;
         $this->firstDoseVaccinator = $firstVaccinator;
         $this->secondDoseVaccinator = $secondVaccinator;
+        $this->token = $token;
     }
 
 
@@ -203,6 +205,11 @@ class patientInfo{
 
     public function getPatientId() {
         return $this->patientId;
+    }
+
+    public function getToken()
+    {
+        return $this->token;
     }
 }
 ?>

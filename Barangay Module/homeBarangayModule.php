@@ -131,7 +131,7 @@ include_once("../includes/database.php");
                     $priorityStub = [];
                     $values = [];
 
-                    for ($i = 0; $i < 5; $i++) {
+                    for ($i = 0; $i < 6; $i++) {
                         if ($availableStubs[$i] != 0) {
                             $priorityStub[] = "A" . ($i + 1);
                             $values[] = $availableStubs[$i];

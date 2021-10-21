@@ -1,4 +1,4 @@
-<?php
+a<?php
     include_once("../includes/database.php");
     include_once("../includes/constructor.php");
 
@@ -9,11 +9,11 @@
     $stmt->prepare($query);
     $stmt->execute();
     $stmt->bind_result($patientId, $patientFullName, $firstDoseDate, $secondDoseDate, $patientFirstDosage,
-        $patientSecondDosage, $forQueue, $notification, $firstDoseVaccinator, $secondDoseVaccinator);
+        $patientSecondDosage, $forQueue, $notification, $firstDoseVaccinator, $secondDoseVaccinator, $token);
 
     while ($stmt->fetch()){
         $patient = new patientInfo($patientId, $patientFullName, $firstDoseDate, $secondDoseDate, $patientFirstDosage,
-            $patientSecondDosage, $forQueue, $notification, $firstDoseVaccinator, $secondDoseVaccinator);
+            $patientSecondDosage, $forQueue, $notification, $firstDoseVaccinator, $secondDoseVaccinator, $token);
         $patients[] = $patient;
 
     }

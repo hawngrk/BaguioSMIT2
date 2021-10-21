@@ -144,13 +144,15 @@ include_once("../includes/database.php")
             <div class="patientQCounter">
                 <h6>Number of Available Stubs</h6>
                 <?php
-                $query = "SELECT drive_id, stubs FROM vaccination_drive WHERE vaccination_date = (SELECT min(vaccination_date) FROM vaccination_drive WHERE vaccination_date >= CURDATE());";
+                $query = "SELECT drive_id, A1_stubs, A2_stubs, A3_stubs, A4_stubs, A5_stubs, A6_stubs FROM barangay_stubs WHERE drive_id =(SELECT drive_id FROM vaccination_drive WHERE vaccination_date = (SELECT min(vaccination_date) FROM vaccination_drive WHERE vaccination_date >= CURDATE())) AND barangay_id = '113';";
                 $stmt = $database->stmt_init();
                 $stmt->prepare($query);
                 $stmt->execute();
-                $stmt->bind_result($drive, $stubs);
+                $stmt->bind_result($drive, $A1, $A2, $A3, $A4, $A5, $A6);
                 $stmt->fetch();
                 $stmt->close();
+
+                $stubs = $A1 + $A2 + $A3 + $A4 + $A5 + $A6;
 
                 echo "<p>$stubs</p>";
 

@@ -397,9 +397,5 @@ if (isset($_POST['delegation'])){
 
 if (isset($_POST['open'])){
     $query = "UPDATE barangay_stubs SET notif_opened = '1' WHERE notif_opened = '0'";
-    $stmt = $database->stmt_init();
-    $stmt->prepare($query);
-    $stmt->execute();
-    $stmt->fetch();
-    $stmt->close();
+    $database->query($query);
 }
