@@ -72,17 +72,15 @@
     <div id="content">
         <!-- Page Content  -->
             <div class="container-fluid">
-                <button id="buttonMarker" class="btnTop float-right" onclick="openNotif('notificationModal')">
-                    <span class="marker" id="marker"><i class="fas fa-circle"></i></span>
+                <button id="buttonMarker" class="notif float-right" onclick="openNotif('notificationModal')">
+                    <!-- <span class="marker" id="marker"><i class="fas fa-circle"></i></span> -->
                     <i class="fas fa-bell"></i>
                 </button>
             </div>
         <br>
         <br>
         <div class="row">
-            <div class="col">
-                <div class="row">
-                    <div id="selectDeployment">
+        <div id="selectDeployment">
                         <select class="form-select" id="selectHealthDistrict" onchange="updateDeploymentDetails(this.value)">
                             <option value='' disabled selected hidden> Select Deployment </option>
                             <?php
@@ -94,10 +92,10 @@
                             ?>
                         </select>
                     </div>
-                </div>
+            <div class="col">
                 <div class="row">
                     <div id="hDistrictContainer">
-                        <h2> Health Center Districts: </h2>
+                        <h2> Health Center Districts </h2>
                         <table class="table table-hover" id="healthDistrictTable">
                         </table>
                     </div>

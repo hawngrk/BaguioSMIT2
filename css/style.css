@@ -1209,24 +1209,29 @@ input[name=vitals]{
 }
 
 #selectDeployment{
-    width: 100%;
+    margin-right: auto;
+    width: 90%;
+    margin-left: auto;
     display: inline-block;
-    margin-left: 7%;
     height: 20%;
 }
 
 #hDistrictContainer{
-    margin-top: 5%;
+    margin-top: 6%;
     margin-left: 7%;
     padding-top: 2%;
     background-color: white;
     width: 100%;
     border-radius: 12px;
     display: inline-block;
-    border: 1px solid black;
+}
+
+#hDistrictContainer h2 {
+    margin-left: 2%;
 }
 
 #vaccineDeployments{
+    margin-top: -4%;
     padding-top: 2%;
     width: 95%;
     border-radius: 12px;
@@ -1259,13 +1264,13 @@ input[name=vitals]{
 }
 
 /*HSO*/
-.tablePatient,.tableVaccine,{
+.tablePatient,.tableVaccine {
     width: 100%!important;
     background-color: white;
 }
 
 #deploymentSummary{
-    margin-top: 12%;
+    margin-top: 6%;
     background-color: #f6f6f6;
     padding: 2%;
     width: 100%;
@@ -1354,6 +1359,13 @@ input[name=vitals]{
 #barangayHomeContent{
     margin-left: -2%;
     margin-right: 5%;
+}
+
+.notif {
+    border-radius: 12px;
+    border: #000 solid 1px;
+    margin-right: auto;
+    margin-left: auto;
 }
 
 /*Monitoring*/

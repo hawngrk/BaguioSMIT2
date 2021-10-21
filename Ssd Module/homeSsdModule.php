@@ -74,13 +74,14 @@ include_once("../includes/database.php")
     <!-- Whole Page  -->
     <div id="content">
         <!-- Top Nav Bar  -->
-
+        
             <div class="container-fluid">
-                <button id="buttonMarker" class="btnTop float-right" onclick="openNotif('notificationModal')">
-                    <span class="marker" id="marker"><i class="fas fa-circle"></i></span>
+                <button id="buttonMarker" class="float-right notif" onclick="openNotif('notificationModal')">
+                    <!-- <span class="marker" id="marker"><i class="fas fa-circle"></i></span> -->
                     <i class="fas fa-bell"></i>
                 </button>
             </div>
+
         <br>
         <br>
         <!-- Page Content  -->
