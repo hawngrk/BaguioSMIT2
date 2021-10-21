@@ -81,12 +81,12 @@
         <div class="navbar navbar-expand-lg navbar-light bg-light shadow-sm p-3 mb-4 rounded-lg">
             <div class="container-fluid">
                 <div>
-                    <button type="button" id="uploadFileButton" class="btn btn-primary buttonTop3 float-left"
+                    <button type="button" id="uploadFileButton" class="buttonTop3 float-left"
                             onclick="document.getElementById('uploadFileModal').style.display = 'block'"><i
                                 class="fas fa-upload"></i> Upload File
                     </button>
                     <button type="button" id="addPatientButton"
-                            class=" btn btn-primary btn-default shadow-lg rounded buttonTop3"><i
+                            class="buttonTop3"><i
                                 class="fas fa-user-plus"></i> Add User Account
                     </button>
                 </div>
@@ -103,10 +103,11 @@
                     <div class="col">
                         <div class="input-group">
                             <input type="search" class="form-control" placeholder="Search"/>
-                            <button type="button" class="btn btn-primary">
+                            <button type="button" class="buttonTop5">
                                 <i class="fas fa-search"></i>
                             </button>
                         </div>
+
                     </div>
                     <div class="col-sm-auto">
                         <div class="row">
