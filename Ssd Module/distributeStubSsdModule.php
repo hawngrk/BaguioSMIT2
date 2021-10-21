@@ -100,6 +100,7 @@
                 <div class="row">
                     <div id="hDistrictContainer">
                         <h2> Health Center Districts </h2>
+                        
                         <table class="table table-hover" id="healthDistrictTable">
                         </table>
                     </div>
@@ -109,6 +110,7 @@
                 <div class="row">
                     <div id="deploymentSummary">
                         <h2>Deployment Summary</h2>
+                        <hr>
                         <div id="labelling">
                             <h5> Site: </h5>
                             <br>
@@ -121,6 +123,7 @@
                             <h5> Number Of Stubs: </h5>
                             <br>
                             <h5> Health Districts: </h5>
+                            <br>
 
                         </div>
                     </div>

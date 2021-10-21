@@ -277,7 +277,7 @@ input[type=text]{
 }
 
 #allocateButton{
-    margin-left: 38%;
+    align-content: center;
 }
 
 #selectDeployment{

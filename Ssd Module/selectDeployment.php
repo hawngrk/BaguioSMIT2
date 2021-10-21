@@ -23,9 +23,7 @@ if (isset($_POST['deploymentId'])) {
             <h5> Brand: </h5> <p> $brand </p>
             <h5> Schedule Date: </h5> <p> $schedule </p>
             <h5> Priority Group: </h5> <p> $priority_group</p>
-            <br>
             <h5> Number Of Stubs: </h5> <p> $stubs </p>
-            <br>
             <h5> Health Districts: </h5>";
 
     foreach ($healthDistrictDrives as $hdd){
@@ -36,7 +34,7 @@ if (isset($_POST['deploymentId'])) {
 
                     echo "
                                 <li>
-                                    <label><p>$hName</p></label>
+                                    <label>$hName</label>
                                 </li>
                                 ";
                 }
@@ -57,20 +55,20 @@ if (isset($_POST['healthDistrict'])) {
         }
     }
 
-    echo "<tbody>";
+
     $stmt = $database->stmt_init();
     $stmt->prepare($query);
     $stmt->execute();
     $stmt->bind_result($healthDistrict, $healthDistrictId);
     while ($stmt->fetch()) {
         echo "<tr>
-                    <th scope='row' class='barangay'> $healthDistrict </th>
-                     <th scope='row'>
+                    <th scope='col' class='barangay'> $healthDistrict </th>
+                    <th scope='col-sm-auto' class='float-right'>
                       <button type='button' id='allocateButton' class='btn btn-info' onclick='viewBarangays( $healthDistrictId, $driveId, \"$chosen\", $stubs)'> ALLOCATE </button>
                       </th>
                       </tr>";
     }
-    echo "</tbody>";
+  
 }
 
 if (isset($_POST['viewBarangays'])) {
