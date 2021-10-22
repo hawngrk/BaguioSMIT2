@@ -518,7 +518,7 @@ include_once("../includes/database.php") ?>
                     </button>
                 </div>
                 <div id='archivedContent' class="modal-body">
-                    <table class="table table-row table-hover tableModal" id="patientTable">
+                    <table class="table table-row table-hover tableModal" id="patientTable1">
                         <thead>
                         <tr>
                             <th scope="col">Patient Name</th>
@@ -685,7 +685,7 @@ include_once("../includes/database.php") ?>
             type: 'POST',
             data: {"search": textSearch},
             success: function (result) {
-                document.getElementById("patientTable").innerHTML = result;
+                document.getElementById("patientTable1").innerHTML = result;
             }
         });
     }
@@ -759,8 +759,8 @@ include_once("../includes/database.php") ?>
             },
             success: function (result) {
                 document.getElementById("patientMedBackgroundModal").style.display = "none";
-                document.getElementById("patientTable").innerHTML = "";
-                document.getElementById("patientTable").innerHTML = result;
+                document.getElementById("patientTable1").innerHTML = "";
+                document.getElementById("patientTable1").innerHTML = result;
             }
         });
     }
@@ -819,8 +819,8 @@ include_once("../includes/database.php") ?>
                     window.location.href = "ManagePatientHome.php";
 
                 } else if (option == "UnArchive") {
-                    document.getElementById("patientTable").innerHTML = "";
-                    document.getElementById("patientTable").innerHTML = result;
+                    document.getElementById("patientTable1").innerHTML = "";
+                    document.getElementById("patientTable1").innerHTML = result;
                 }
             }
         })

@@ -628,8 +628,8 @@
             url: '../includes/showRegisteredPatients.php',
             type: 'GET',
             success: function (result) {
-                document.getElementById("patientTable1").innerHTML = "";
-                document.getElementById("patientTable1").innerHTML = result;
+                document.getElementById("patientTable").innerHTML = "";
+                document.getElementById("patientTable").innerHTML = result;
             }
         });
     }

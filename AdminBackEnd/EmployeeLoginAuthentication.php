@@ -1,4 +1,5 @@
 <?php
+session_start();
 include("../includes/configure.php");
 
 $username = $_POST["username"];
