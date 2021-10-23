@@ -1,4 +1,4 @@
-a<?php
+<?php
     include_once("../includes/database.php");
     include_once("../includes/constructor.php");
 

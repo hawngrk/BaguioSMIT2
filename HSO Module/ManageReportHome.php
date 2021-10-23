@@ -172,14 +172,16 @@ include_once("../includes/database.php") ?>
                 <td>$reporter</td>
                 <td>$dateReported</td>
                 <td>$status</td>
-                <td><button class='btn btn-secondary btn-sm' type='submit' value='$reportId' onclick='viewReport($reportId)'>Review Report</button></td></tr>";
-                            }
+                <td><button class='btn btn-secondary btn-sm' type='submit' value='$reportId' onclick='viewReport($reportId)'>Review Report</button></td></tr>"
+                                ;}
                             ?>
                             <div id="invalidatedReportsModal" class="modal-window"></div>
                             <div id="generateReportModal" class="modal-window"></div>
                             <div id="viewReportModal" class="modal-window"></div>
                         </table>
                     </div>
+
+                    
                     <div class="col-sm-auto">
                         <div class="counterColumn">
                             <div class="four counterRow">
@@ -246,9 +248,6 @@ include_once("../includes/database.php") ?>
                 </div>
             </div>
 
-            <div class="shadow row">
-
-            </div>
         </div>
 
 
