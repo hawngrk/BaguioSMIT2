@@ -230,67 +230,137 @@ include_once("../includes/database.php") ?>
                             <i class='fas fa-window-close'></i>
                         </button>
                     </div>
-                    <div class="modal-body">
-                        <div class="row">
-                            <div class="col">
-                                <div class="form-group">
+                    <div class="modal-body ">
+                        <nav class="navbar navbar-expand-lg navbar-light navbarDep">
+                            <div class="collapse navbar-collapse" id="navbarNav">
+                                <ul class="navbar-nav">
+                                    <li role="presentation" class="doseOption1 nav-item">
+                                        <a class="nav-link doseOption1 " id="FirstDose" role="tab" data-toggle="tab" href="#FirstDose">First Dose</a>
+                                    </li>
+                                    <li role="presentation" class="doseOption2 nav-item">
+                                        <a class="nav-link" role="tab" id="SecondDose" data-toggle="tab" href="#SecondDose">Second Dose</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </nav>
 
-                                    <label for="site">Select Vaccination Site: </label>
-                                    <select name="site" id="site">
-                                        <?php
-                                        require '../require/getVaccinationSites.php';
-                                        foreach ($vaccinationSites as $vs) {
-                                            $vacSite = $vs->getVaccinationSiteLocation();
-                                            $id = $vs->getVaccinationSiteId();
-                                            echo "<option value =$id>$vacSite</option>";
-                                        }
-                                        ?>
-                                    </select>
+                            <!-- Tab panes -->
+                            <div class="tab-content">
+                                <div role="tabpanel" class="tab-pane active" id="FirstDosePage">
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <h4>FIRST DOSE</h4>
+                                                <label for="site">Select Vaccination Site: </label>
+                                                <select name="site" id="site">
+                                                    <?php
+                                                    require '../require/getVaccinationSites.php';
+                                                    foreach ($vaccinationSites as $vs) {
+                                                        $vacSite = $vs->getVaccinationSiteLocation();
+                                                        $id = $vs->getVaccinationSiteId();
+                                                        echo "<option value =$id>$vacSite</option>";
+                                                    }
+                                                    ?>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="VaccineBr">Select Vaccine Brand: </label>
+                                                <select name="vaccineBrand" id="VaccineBr">
+                                                    <?php
+                                                    require '../require/getVaccine.php';
+                                                    foreach ($vaccines as $vac) {
+                                                        $vacName = $vac->getVaccName();
+                                                        $vacId = $vac->getVaccId();
+                                                        echo "<option value = $vacId>$vacName</option>";
+                                                    }
+                                                    ?>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <label for="PatientCateg">Category of patients: </label>
+                                                <select name="patientCategory" id="PatientCateg">
+                                                    <option value="A1: Health Care Workers">A1: Health Care Workers</option>
+                                                    <option value="A2: Senior Citizens">A2: Senior Citizens</option>
+                                                    <option value="A3: Adult with Comorbidity">A3: Adult with Comorbidity</option>
+                                                    <option value="A4: Frontline Personnel in Essential Sector">A4: Frontline
+                                                        Personnel
+                                                        in Essential Sector
+                                                    </option>
+                                                    <option value="A5: Indigent Population">A5: Indigent Population</option>
+                                                    <option value="A6: Rest Of The Population">A6: Rest Of The Population</option>
+                                                </select>
+                                            </div>
+
+                                            <div class="form-group ">
+                                                <label>Date: </label><br>
+                                                <input type="date" id="date" name="date" class="dateForm">
+                                            </div>
+                                        </div>
+
+                                    </div>
                                 </div>
-                                <div class="form-group">
-                                    <label for="VaccineBr">Select Vaccine Brand: </label>
-                                    <select name="vaccineBrand" id="VaccineBr">
-                                        <?php
-                                        require '../require/getVaccine.php';
-                                        foreach ($vaccines as $vac) {
-                                            $vacName = $vac->getVaccName();
-                                            $vacId = $vac->getVaccId();
-                                            echo "<option value = $vacId>$vacName</option>";
-                                        }
-                                        ?>
-                                    </select>
+                                <div role="tabpanel" class="tab-pane" id="SecondDosePage">
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <h4>SECOND DOSE</h4>
+                                                <label for="site">Select Vaccination Site: </label>
+                                                <select name="site" id="site">
+                                                    <?php
+                                                    require '../require/getVaccinationSites.php';
+                                                    foreach ($vaccinationSites as $vs) {
+                                                        $vacSite = $vs->getVaccinationSiteLocation();
+                                                        $id = $vs->getVaccinationSiteId();
+                                                        echo "<option value =$id>$vacSite</option>";
+                                                    }
+                                                    ?>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="VaccineBr">Select Vaccine Brand: </label>
+                                                <select name="vaccineBrand" id="VaccineBr">
+                                                    <?php
+                                                    require '../require/getVaccine.php';
+                                                    foreach ($vaccines as $vac) {
+                                                        $vacName = $vac->getVaccName();
+                                                        $vacId = $vac->getVaccId();
+                                                        echo "<option value = $vacId>$vacName</option>";
+                                                    }
+                                                    ?>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <label for="PatientCateg">Category of patients: </label>
+                                                <select name="patientCategory" id="PatientCateg">
+                                                    <option value="A1: Health Care Workers">A1: Health Care Workers</option>
+                                                    <option value="A2: Senior Citizens">A2: Senior Citizens</option>
+                                                    <option value="A3: Adult with Comorbidity">A3: Adult with Comorbidity</option>
+                                                    <option value="A4: Frontline Personnel in Essential Sector">A4: Frontline
+                                                        Personnel
+                                                        in Essential Sector
+                                                    </option>
+                                                    <option value="A5: Indigent Population">A5: Indigent Population</option>
+                                                    <option value="A6: Rest Of The Population">A6: Rest Of The Population</option>
+                                                </select>
+                                            </div>
+
+                                            <div class="form-group ">
+                                                <label>Date: </label><br>
+                                                <input type="date" id="date" name="date" class="dateForm">
+                                            </div>
+                                        </div>
+
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col">
-                                <div class="form-group">
-                                    <label for="PatientCateg">Category of patients: </label>
-                                    <select name="patientCategory" id="PatientCateg">
-                                        <option value="A1: Health Care Workers">A1: Health Care Workers</option>
-                                        <option value="A2: Senior Citizens">A2: Senior Citizens</option>
-                                        <option value="A3: Adult with Comorbidity">A3: Adult with Comorbidity</option>
-                                        <option value="A4: Frontline Personnel in Essential Sector">A4: Frontline
-                                            Personnel
-                                            in Essential Sector
-                                        </option>
-                                        <option value="A5: Indigent Population">A5: Indigent Population</option>
-                                        <option value="A6: Rest Of The Population">A6: Rest Of The Population</option>
-                                    </select>
-                                </div>
-
-                                <div class="form-group ">
-                                    <label>Date: </label><br>
-                                    <input type="date" id="date" name="date" class="dateForm">
-                                </div>
-                            </div>
-
-                        </div>
-
                         <label class='label' for="stubs">Number of Stubs: </label>
                         <input type="input" id="stubs" name="stubs" class="stubs" placeholder="ex. 100">
-
-                        <hr>
                         <label for="district">Select Health District/s: </label>
-                        <div id="district" class="AddHealthD-option tableScroll1">
+                        <div id="district" class="AddHealthD-option tableScroll3">
                             <div id="districList">
                                 <div class="row">
                                     <ul>
@@ -312,13 +382,16 @@ include_once("../includes/database.php") ?>
 
                             </div>
                         </div>
-
                     </div>
+                        <hr>
+
                     <div class="modal-footer">
                         <button type="button" class="btn btn-danger" onclick="closeModal('DeployModal')"> Cancel
                         </button>
                         <button type="button" class="btn btn-success" onclick="add('Deployment', addDep)"> Add</button>
                     </div>
+                    </div>
+
                 </div>
             </div>
         </form>
@@ -617,7 +690,6 @@ include_once("../includes/database.php") ?>
                       </tr>";
                         }
                     }
-
                     ?>
                 </table>
             </div>
@@ -626,7 +698,6 @@ include_once("../includes/database.php") ?>
 </div>
 
 <script>
-
     var list = document.getElementById("listPatientContent");
     var checkedValue = [];
     var id = "";
@@ -638,6 +709,36 @@ include_once("../includes/database.php") ?>
         });
     });
 
+    let btnopt1 = document.querySelector('.doseOption1');
+    let btnopt2 = document.querySelector('.doseOption2');
+    btnopt1.style.backgroundColor = "#1D7195";
+    btnopt1.style.color = "#FFFFFFFF";
+    btnopt2.style.backgroundColor = "rgba(49,51,53,0)"
+    btnopt1.style.borderRadius = "12px";
+    document.getElementById("FirstDose").style.color = "#FFFFFFFF";
+    document.getElementById("SecondDose").style.color = "#000000";
+
+    btnopt1.onclick = function () {
+        btnopt1.style.backgroundColor = "#1D7195";
+        btnopt1.style.fontcolor = "#FFFFFFFF";
+        btnopt2.style.backgroundColor = "rgba(49,51,53,0)"
+        btnopt1.style.borderRadius = "12px";
+        document.getElementById("FirstDosePage").style.display="block";
+        document.getElementById("SecondDosePage").style.display="none";
+        document.getElementById("FirstDose").style.color = "#FFFFFFFF";
+        document.getElementById("SecondDose").style.color = "#000000";
+    }
+
+    btnopt2.onclick = function () {
+        btnopt2.style.backgroundColor = "#1D7195";
+        btnopt2.style.fontStyle = "#FFFFFFFF";
+        btnopt1.style.backgroundColor = "rgba(49,51,53,0)";
+        btnopt2.style.borderRadius = "12px";
+        document.getElementById("FirstDosePage").style.display="none";
+        document.getElementById("SecondDosePage").style.display="block";
+        document.getElementById("SecondDose").style.color = "#FFFFFFFF";
+        document.getElementById("FirstDose").style.color = "#000000";
+    }
 
     window.onclick = function (event) {
         if (event.target == document.getElementById("DeployModal") || event.target == document.getElementById("HealthDModal") || event.target == document.getElementById("vaccSiteModal") || event.target == document.getElementById("HealthD")) {
@@ -645,7 +746,6 @@ include_once("../includes/database.php") ?>
             document.getElementById("HealthDModal").style.display = "none";
             document.getElementById("vaccSiteModal").style.display = "none";
             document.getElementById("HealthD").style.display = "none";
-
         }
     }
 
