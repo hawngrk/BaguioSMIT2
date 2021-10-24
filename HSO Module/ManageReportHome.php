@@ -247,7 +247,75 @@ include_once("../includes/database.php") ?>
                     </div>
                 </div>
             </div>
+            <div id="archived" class="modal-window">
+                <div class="content-modal-table">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Archived Vaccination Drives</h4>
+                        <button type="button" class="close" data-dismiss="modal" onclick="closeModal('archived')">
+                            <i class='fas fa-window-close'></i>
+                        </button>
+                    </div>
+                    <div id = 'archivedContent' class="modal-body">
 
+                        <table class="table table-row table-hover tableModal" id="vaccineTable">
+                            <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Vaccine Lot ID</th>
+                                <th scope="col">Vaccine Name</th>
+                                <th scope="col">Vaccine Source</th>
+                                <th scope="col">Date Received</th>
+                                <th scope="col">Expiration</th>
+                                <th scope="col">Bottle Quantity</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                            </thead>
+                            <div id="vaccineContent">
+                                <?php
+                                require_once '../require/getVaccine.php';
+                                require_once '../require/getVaccineBatch.php';
+                                require_once '../require/getVaccineLot.php';
+
+                                $count = 0;
+                                foreach ($vaccineLots as $vl) {
+                                    if($vl->getArchived() == 1) {
+                                        $count++;
+                                        $vaccineLotId = $vl->getVaccLotId();
+                                        $vaccLotVaccId = $vl->getVaccLotVaccId();
+                                        $dateStored = $vl->getDateVaccStored();
+                                        $batchQty = $vl->getVaccBatchQty();
+                                        $source = $vl->getSource();
+                                        $vaccExp = $vl->getExpiration();
+
+
+                                        foreach ($vaccines as $vac) {
+                                            if ($vaccLotVaccId == $vac->getVaccId()) {
+                                                $vaccName = $vac->getVaccName();
+                                            }
+                                        }
+
+                                        echo "<tr>
+                <td>$count</td>
+                <td>$vaccineLotId</td>
+                <td>$vaccName</td>
+                <td>$source</td>
+                <td>$dateStored</td>
+                <td>$vaccExp</td>
+                <td>$batchQty</td>
+                <td>
+                    <div style='text-align: center;'>
+                        <button class='btn btn-warning' onclick='archive(0, clickArchive, $vaccineLotId )'><i class='fas fa-box-open'></i> unarchive</button>
+                    </div>
+                </td>
+                </tr>";
+                                    }
+                                }
+                                ?>
+                            </div>
+                        </table>
+                    </div>
+                </div>
+            </div>
         </div>
 
 

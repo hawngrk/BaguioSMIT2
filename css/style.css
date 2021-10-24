@@ -585,9 +585,6 @@ img{
     border-radius: 12px;
 }
 
-.navbarMonitoring {
-    margin-bottom: 1%!important;
-}
 
 #searchPatientBtn {
     border: none;
@@ -888,11 +885,11 @@ a.article:hover {
     min-height: 100vh;
     transition: all 0.3s;
 }
-#searchPatientQueue{
+#searchPatientQueue, #searchUsersMayor{
     width: 95%;
 }
 
-.brgyNav{
+.brgyNav, .mayorNav{
     display: flex;
     justify-content: center;
     padding: 15px;

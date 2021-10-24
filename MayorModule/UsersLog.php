@@ -44,11 +44,11 @@
                 <script src="../javascript/detailedDateAndTime.js"></script>
             </div>
             <hr>
-            <li class="active">
-                <a href=""><i class="fas fa-warehouse"></i> Users Log</a>
+            <li  class="active">
+                <a href="UsersLog.php"><i class="fas fa-warehouse"></i> Users Log</a>
             </li>
             <li>
-                <a href=""><i class="fas fa-users"></i> Manage Users</a>
+                <a href="manageUsersMayor.php"><i class="fas fa-users"></i> Manage Users</a>
             </li>
         </ul>
 

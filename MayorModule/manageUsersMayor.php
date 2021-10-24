@@ -44,10 +44,10 @@
             </div>
             <hr>
             <li>
-                <a href=""><i class="fas fa-warehouse"></i> Users Log</a>
+                <a href="UsersLog.php"><i class="fas fa-warehouse"></i> Users Log</a>
             </li>
             <li  class="active">
-                <a href=""><i class="fas fa-users"></i> Manage Users</a>
+                <a href="manageUsersMayor.php"><i class="fas fa-users"></i> Manage Users</a>
             </li>
         </ul>
 
@@ -60,27 +60,29 @@
 
     <!-- Page Content  -->
     <div id="content">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light rounded-lg navbarMonitoring">
-                <div class="container-fluid">
-
-                 <!--Search Input and Button-->
-             <div class="search-containerMonitoring col">
-                    <input id="searchPatientVaxPer" type="text" placeholder="Search" class="searchHome" name="searchPatient" onkeyup="searchPatient()">
-                    <button type="submit" id="searchPatientBtn" name="searchPatientBtn" onclick="searchPatient()">
-                        <i class="fa fa-search"></i>
-                    </button>
-            </div>
-            <div class="col-sm-auto">
-                         <button type="button" class="btn btn-outline-dark buttonTop3 float-right">
-                            <i class="fas fa-sort-amount-down"></i>
+    <nav class="mayorNav navbar-light bg-light rounded-lg navbarMonitoring">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col  my-auto">
+                    <div class="input-group">
+                        <input id="searchUsersMayor" type="search" placeholder="Search" class="searchHome" name="searchPatient" onkeyup="searchPatient()">
+                        <button type="submit" class="buttonTop5" onclick="searchPatient()">
+                            <i class="fa fa-search"></i>
                         </button>
-                        <button type="button" class="btn btn-outline-dark buttonTop3 float-right">
-                            <i class="fas fa-filter"></i>
-                        </button>
-            </div>
+                    </div>
 
                 </div>
-            </nav>
+                <div class="col-sm-auto">
+                    <button type="button" class="btn btn-outline-dark buttonTop3 float-right">
+                        <i class="fas fa-sort-amount-down"></i>
+                    </button>
+                    <button type="button" class="btn btn-outline-dark buttonTop3 float-right">
+                        <i class="fas fa-filter"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
     <!-- Table Part -->
     <table class="table table-row table-hover mayorTable tableMonitoring" id="employeesTable">
                 <thead>
