@@ -21,7 +21,7 @@ if (isset($_POST['empDeets'])){
             </div>
             <div class='col'>
             <h5>Employee Credentials:</h5>
-            <button id='showEmpCreds' class='btn-success viewReportBtn' onclick='showCreds()'>Show Credentials</button>
+            <button id='showEmpCreds' class='btn btn-outline-primary' onclick='showCreds()'>Show Credentials</button>
             <div id='creds' style='display:none'>
             <h7>Username:</h7><p>$empUserName</p>
             <h7>Password:</h7><p>$empPW</p>
