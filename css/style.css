@@ -898,6 +898,31 @@ a.article:hover {
     padding: 15px;
 }
 
+/*Mayors Module*/
+
+.columnCnt{
+    margin-left: 15%!important;
+    color: #070101;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.mayorTable {
+    width: 90%!important;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.buttonTransparentMayors {
+    background: transparent!important;
+    border: transparent!important;
+}
+
+.mayorsCnt p{
+    color: #000;
+    margin-left: 3%;
+}
+
 
 /*!* ---------------------------------------------------*/
 /*                    BARANGAY MODULE CSS*/
