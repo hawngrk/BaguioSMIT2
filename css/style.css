@@ -502,6 +502,17 @@ input[type=text1] {
 }
 
 
+#navbarNav ul li{
+    width: 30vh;
+    margin: 3%;
+    text-align: center;
+}
+
+
+
+
+
+
 
 .content-modal-table{
     background-color: #fefefe;
@@ -877,7 +888,15 @@ a.article:hover {
     min-height: 100vh;
     transition: all 0.3s;
 }
+#searchPatientQueue{
+    width: 95%;
+}
 
+.brgyNav{
+    display: flex;
+    justify-content: center;
+    padding: 15px;
+}
 
 
 /*!* ---------------------------------------------------*/
@@ -1630,8 +1649,18 @@ input[type=text]:disabled{
     overflow-y: auto;
     display: block;
     background-color: white;
-    width: 80%;
+    width: 95%;
 }
+
+.tableScroll4{
+    position: relative;
+    height: 50vh;
+    overflow-y: auto;
+    display: block;
+    background-color: white;
+    width: 100%;
+}
+
 
 .tableModal{
     width: fit-content;
@@ -1656,6 +1685,12 @@ h7~h8{
     border-radius: 8px;
     padding: 2%;
 }
+
+.personalInfo,.categoryInfo,.addressInfo,.medicalInfo{
+    margin-left: 40px;
+    margin-right: 40px;
+}
+
 
 .position{
     width: 95%;
@@ -2110,6 +2145,10 @@ input[name=vitals]{
     margin-bottom: 5%;
 }
 
+
+.tablePatientQueue{
+    margin-top: 2%;
+}
 /* ------------------------------------------------------------------- */
 /* ------------------------CSS for Barangay MODULE ----------------------- */
 /*#barangayHomeContent{

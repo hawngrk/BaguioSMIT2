@@ -414,6 +414,7 @@
 <div id="uploadFileModal" class="modal-window">
     <div class="content-modal">
         <div class="modal-header">
+            <h4 class="modal-title">Upload files</h4>
             <button type="button" id="closeUploadModal" class="close"> &times;</button>
         </div>
         <div class="modal-body">

@@ -359,25 +359,28 @@ include_once("../includes/database.php") ?>
                             </div>
                         <label class='label' for="stubs">Number of Stubs: </label>
                         <input type="input" id="stubs" name="stubs" class="stubs" placeholder="ex. 100">
+                        <br>
+                        <br>
                         <label for="district">Select Health District/s: </label>
                         <div id="district" class="AddHealthD-option tableScroll3">
                             <div id="districList">
                                 <div class="row">
-                                    <ul>
-                                        <?php
-                                        require_once "../require/getHealthDistrict.php";
-
-
-                                        foreach ($health_district as $hd) {
-                                            $hdId = $hd->getHealthDistrictId();
-                                            $hdName = $hd->getHealthDistrictName();
-                                            echo " <li>
+                                    <div class="col">
+                                        <ul>
+                                            <?php
+                                            require_once "../require/getHealthDistrict.php";
+                                            foreach ($health_district as $hd) {
+                                                $hdId = $hd->getHealthDistrictId();
+                                                $hdName = $hd->getHealthDistrictName();
+                                                echo " <li>
                                     <input class = 'checkboxes' type='checkbox' onclick='selected($hdId)'>
                                     <label>$hdName</label><br>
                                 </li> ";
-                                        }
-                                        ?>
-                                    </ul>
+                                            }
+                                            ?>
+                                        </ul>
+                                    </div>
+
                                 </div>
 
                             </div>
@@ -717,6 +720,8 @@ include_once("../includes/database.php") ?>
     btnopt1.style.borderRadius = "12px";
     document.getElementById("FirstDose").style.color = "#FFFFFFFF";
     document.getElementById("SecondDose").style.color = "#000000";
+    document.getElementById("FirstDose").style.border = "solid 1px";
+    document.getElementById("SecondDose").style.border = "solid 1px";
 
     btnopt1.onclick = function () {
         btnopt1.style.backgroundColor = "#1D7195";
