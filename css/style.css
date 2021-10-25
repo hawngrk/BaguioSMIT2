@@ -757,7 +757,33 @@ img{
     margin-left: -2%;
     margin-right: 5%;
 }
+.patientQCounter {
+    background-color: white;
+    width: 18%;
+    height: auto;
+    margin-left: 2%;
+    border-radius: 12px;
+}
 
+.patientQueueButtons p,
+h6 {
+    text-align: center;
+}
+
+.patientQueueButtons h6 {
+    padding-top: 10%;
+}
+
+#confirmationNotif{
+    border-radius: 12px;
+    font-size: 25px;
+    text-align: left;
+    margin-left: 7%;
+}
+
+.patientQueueButtons {
+    display: flex;
+}
 /* -----Monitoring-----*/
 .search-containerMonitoring{
     margin-bottom: 0%!important;
@@ -1676,35 +1702,6 @@ h5~select {
     background-image: linear-gradient(to top, #f9f9f9, #fff 33%);
 }
 
-/*
-.patientQCounter { !*barangay*!
-    background-color: white;
-    width: 18%;
-    height: auto;
-    margin-left: 2%;
-    border-radius: 12px;
-}
-
-.patientQueueButtons p,!*barangay*!
-h6 {
-    text-align: center;
-}
-
-.patientQueueButtons h6 {!*barangay*!
-    padding-top: 10%;
-}
-
-#confirmationNotif{ !*barangay*!
-    border-radius: 12px;
-    font-size: 25px;
-    text-align: left;
-    margin-left: 7%;
-}
-
-.patientQueueButtons { !*barangay*!
-    display: flex;
-}
-*/
 
 /* ---------------------------------------------------------------------------------- */
 /*CSS For Personnel Vaccination*/
@@ -1942,12 +1939,6 @@ input[name=vitals]{
 .tablePatientQueue{
     margin-top: 2%;
 }
-/* ------------------------------------------------------------------- */
-/* ------------------------CSS for Barangay MODULE ----------------------- */
-/*#barangayHomeContent{
-    margin-left: -2%;
-    margin-right: 5%;
-}*/
 
 /*Monitoring*/
 /*.search-containerMonitoring, .search-containerQueue{
