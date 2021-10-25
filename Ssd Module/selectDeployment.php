@@ -93,10 +93,16 @@ if (isset($_POST['viewBarangays'])) {
     echo "
             <div id='stubsModal' class='content-modal'>
                 <div class='modal-header'>
-                <h3> $healthDistrict </h3>
+                <h3 style='padding-right:50%'> $healthDistrict </h3>
+                    <select name='Type' style='width: 14%' onchange='(this)'>
+                        <option value='percentage'>Percentage </option>
+                        <option value='whole'>Whole Number</option>
+                    </select>
                 <button id='closeModal' class='close' onclick='closeModal(\"barangayModal\")'> &times;</button>
                 </div>
                 <div class='modal-body' id='healthDStubs'>
+
+                
                     <div class='stubNumbersContainer'>
                     <div id='counter' class='bold'>
                                <center><p><i class='fas fa-ticket-alt'></i> number of Stubs Left: $stubs</p> </center>
@@ -133,12 +139,12 @@ if (isset($_POST['viewBarangays'])) {
     while ($stmt->fetch()) {
         echo "            <tr id='$barangay_id'>
                                 <th scope='row'> $barangay</th>
-                                <td><input class='A1: Health Care Workers' type='number' min='0' max='100' onchange='countStubs(this.value, this.oldValue, this); this.oldValue = this.value' onkeyup='checkZero(this)' value='0' disabled></td>
-                                <td><input class='A2: Senior Citizens' type='number' min='0' max='100' onchange='countStubs(this.value, this.oldValue); this.oldValue = this.value' onkeyup='checkZero(this)' value='0' disabled></td>
-                                <td><input class='A3: Adult with Comorbidity' type='number' min='0' max='100' onchange='countStubs(this.value, this.oldValue); this.oldValue = this.value' onkeyup='checkZero(this)' value='0' disabled></td>
-                                <td><input class='A4: Frontline Personnel in Essential Sector' type='number' min='0' max='100' onchange='countStubs(this.value, this.oldValue); this.oldValue = this.value' onkeyup='checkZero(this)' value='0' disabled></td>
-                                <td><input class='A5: Indigent Population' type='number' min='0' max='100' onchange='countStubs(this.value, this.oldValue); this.oldValue = this.value' onkeyup='checkZero(this)' value='0' disabled></td>
-                                <td><input class='A6: Rest Of The Population' type='number' min='0' max='100' onchange='countStubs(this.value, this.oldValue); this.oldValue = this.value' onkeyup='checkZero(this)' value='0' disabled></td>
+                                <td><input class='A1: Health Care Workers' type='number' min='0' max='100' onchange='countStubs(this.value, this.oldValue, this); this.oldValue = this.value' onkeyup='checkZero(this)' value='0' disabled><span id='percent' style='display: none'>%</span></td>
+                                <td><input class='A2: Senior Citizens' type='number' min='0' max='100' onchange='countStubs(this.value, this.oldValue, this); this.oldValue = this.value' onkeyup='checkZero(this)' value='0' disabled></td>
+                                <td><input class='A3: Adult with Comorbidity' type='number' min='0' max='100' onchange='countStubs(this.value, this.oldValue, this); this.oldValue = this.value' onkeyup='checkZero(this)' value='0' disabled></td>
+                                <td><input class='A4: Frontline Personnel in Essential Sector' type='number' min='0' max='100' onchange='countStubs(this.value, this.oldValue, this); this.oldValue = this.value' onkeyup='checkZero(this)' value='0' disabled></td>
+                                <td><input class='A5: Indigent Population' type='number' min='0' max='100' onchange='countStubs(this.value, this.oldValue, this); this.oldValue = this.value' onkeyup='checkZero(this)' value='0' disabled></td>
+                                <td><input class='A6: Rest Of The Population' type='number' min='0' max='100' onchange='countStubs(this.value, this.oldValue, this); this.oldValue = this.value' onkeyup='checkZero(this)' value='0' disabled></td>
                           </tr>";
     }
     $stmt->close();
