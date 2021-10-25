@@ -91,7 +91,8 @@ include_once("../includes/database.php") ?>
                     <button id="uploadFileBtn" type="button" class="buttonTop3"><i class="fas fa-upload"></i> Upload
                         File
                     </button>
-                    <button id="addPatientBtn" type="button" class="buttonTop3"><i class="fas fa-plus"></i> Add User
+
+                    <button id="addPatientBtn" type="button" class="buttonTop3 ml-50"><i class="fas fa-plus"></i> Add User
                     </button>
                 </div>
                 <button type="button" class="btn btn-warning buttonTop3 float-right" onclick="openModal('archived')">
@@ -140,7 +141,7 @@ include_once("../includes/database.php") ?>
 
             <div class="tablePatient shadow tableScroll2">
                 <!--Table Part-->
-                <table class="table table-row table-hover tableBrgy" id="patientTable">
+                <table class="table table table-hover tablePatient" id="">
                     <thead>
                     <tr class="labelRow">
                         <th>Patient Name</th>
@@ -179,6 +180,7 @@ include_once("../includes/database.php") ?>
                         <td>
                             <div style='text-align: left;'>
                                 <button class='buttonTransparent' onclick='archive(1, clickArchive, $id)'><i class='fa fa-archive'></i></button>
+                                <button type='button' class='viewReportBtn buttonTransparent' id='viewButton' onclick='viewPatient($id)'><i class='fas fa-eye'></i></button
                             </div>
                         </td>
                     </tr>";
@@ -187,6 +189,15 @@ include_once("../includes/database.php") ?>
                     ?>
                 </table>
             </div>
+        </div>
+
+
+        <!--MODALS-->
+        <!--View Modal-->
+        <div id="viewPatientDetails" class="modal-window">
+            <div class='content-modal' id="patientModalContent">
+            </div>
+
 
         </div>
 
@@ -293,15 +304,21 @@ include_once("../includes/database.php") ?>
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-4">
+                                <div class="col">
                                     <label class="label1 required" for="occupation">Occupation </label>
                                     <input type="text3" id="occupation" class='input' name="middlename"
                                            placeholder="Input Answer Here" required>
                                 </div>
-                                <div class="col-4">
+                                <div class="col">
                                     <label class="label1 required" for="contactNum">Contact Number </label>
                                     <input type="text3" id="contactNum" class='input' name="contactNum"
                                            placeholder="09XX-XXX-XXXX" required>
+                                </div>
+
+                                <div class="col">
+                                    <label class="label1 required" for="email"> Email Address </label>
+                                    <input type="text3" id="email" class='input' name="email"
+                                           placeholder="@email.com" required>
                                 </div>
                             </div>
                         </div>
@@ -473,7 +490,6 @@ include_once("../includes/database.php") ?>
                                                    placeholder="Input Other Commorbidity">
                                         </div>
                                     </div>
-
                                 </div>
                             </div>
                         </div>
@@ -858,6 +874,19 @@ include_once("../includes/database.php") ?>
                 Swal.fire('Added Patient', '', 'success');
             }
         });
+    }
+
+    function viewPatient(patientId){
+        $.ajax({
+            url:'ManagePatientProcessor.php',
+            type:'POST',
+            data:{"patient": patientId},
+            success:function (result){
+                document.getElementById("patientModalContent").innerHTML = result;
+                openModal('viewPatientDetails');
+                console.log(result)
+            }
+        })
     }
 </script>
 

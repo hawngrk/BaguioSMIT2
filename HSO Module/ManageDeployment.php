@@ -113,6 +113,7 @@ include_once("../includes/database.php") ?>
             </div>
         </div>
 
+        <!--Table Content-->
         <div class="tableContainer">
             <div class="table-title">
                 <div class="row">
@@ -153,37 +154,37 @@ include_once("../includes/database.php") ?>
                     <div class="w-100 d-none d-md-block"></div>
 
                     <div class="tableDep tableScroll1 col">
-                            <table class="table table-hover tableDep" id="driveTable">
-                                <thead>
-                                <tr>
-                                    <th scope="col">#</th>
-                                    <th scope="col">Drive Id</th>
-                                    <th scope="col">Location</th>
-                                    <th scope="col">Date</th>
-                                    <th scope="col">No. of Stubs</th>
-                                    <th scope="col">Action</th>
-                                </tr>
-                                </thead>
-                                <?php
-                                require_once '../require/getVaccinationDrive.php';
-                                require_once '../require/getVaccinationSites.php';
+                        <table class="table table-hover tableDep" id="driveTable">
+                            <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Drive Id</th>
+                                <th scope="col">Location</th>
+                                <th scope="col">Date</th>
+                                <th scope="col">No. of Stubs</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                            </thead>
+                            <?php
+                            require_once '../require/getVaccinationDrive.php';
+                            require_once '../require/getVaccinationSites.php';
 
-                                $count = 0;
-                                foreach ($vaccination_drive as $vd) {
-                                    if ($vd->getArchive() == 0) {
-                                        $count++;
-                                        $driveId = $vd->getDriveId();
-                                        $date = $vd->getVaccDate();
-                                        $stubs = $vd->getVaccStubs();
+                            $count = 0;
+                            foreach ($vaccination_drive as $vd) {
+                                if ($vd->getArchive() == 0) {
+                                    $count++;
+                                    $driveId = $vd->getDriveId();
+                                    $date = $vd->getVaccDate();
+                                    $stubs = $vd->getVaccStubs();
 
 
-                                        foreach ($vaccinationSites as $vs) {
-                                            if ($vs->getVaccinationSiteId() == $vd->getVaccDriveVaccSiteId()) {
-                                                $vaccinationSite = $vs->getVaccinationSiteLocation();
-                                            }
+                                    foreach ($vaccinationSites as $vs) {
+                                        if ($vs->getVaccinationSiteId() == $vd->getVaccDriveVaccSiteId()) {
+                                            $vaccinationSite = $vs->getVaccinationSiteLocation();
                                         }
+                                    }
 
-                                        echo "<tr class='table-row' onclick='showDrive(this)'>
+                                    echo "<tr class='table-row' onclick='showDrive(this)'>
                         <td>$count</td>
                         <td>$driveId</td>
                         <td>$vaccinationSite</td>
@@ -196,10 +197,10 @@ include_once("../includes/database.php") ?>
                         </td>
              
                       </tr>";
-                                    }
                                 }
-                                ?>
-                            </table>
+                            }
+                            ?>
+                        </table>
                     </div>
                     <div class="col-sm-auto">
                         <div class="depSummary">
@@ -219,7 +220,7 @@ include_once("../includes/database.php") ?>
 
         </div>
 
-
+        <!--MODALS-->
         <!--Deployment Form Modal-->
         <form id='newDeploymentForm' method="post" enctype="multipart/form-data">
             <div id="DeployModal" class="modal-window">
@@ -382,9 +383,9 @@ include_once("../includes/database.php") ?>
                                     </div>
 
                                 </div>
-
                             </div>
                         </div>
+
                     </div>
                         <hr>
 
@@ -455,7 +456,6 @@ include_once("../includes/database.php") ?>
                         Add Health District
                     </button>
                 </div>
-<!--                id="AddHealthDCancelBtn"-->
             </div>
         </div>
 
@@ -693,6 +693,7 @@ include_once("../includes/database.php") ?>
                       </tr>";
                         }
                     }
+
                     ?>
                 </table>
             </div>
@@ -701,6 +702,7 @@ include_once("../includes/database.php") ?>
 </div>
 
 <script>
+
     var list = document.getElementById("listPatientContent");
     var checkedValue = [];
     var id = "";
@@ -751,6 +753,7 @@ include_once("../includes/database.php") ?>
             document.getElementById("HealthDModal").style.display = "none";
             document.getElementById("vaccSiteModal").style.display = "none";
             document.getElementById("HealthD").style.display = "none";
+
         }
     }
 
@@ -794,7 +797,6 @@ include_once("../includes/database.php") ?>
     }
 
     function showDrive(val) {
-        console.log(val);
         var id = val.getElementsByTagName("td")[1].innerText;
         console.log(id);
         $.ajax({
@@ -802,7 +804,6 @@ include_once("../includes/database.php") ?>
             method: 'POST',
             data: {id: id},
             success: function (result) {
-                // console.log('passed');
                 document.getElementById("listPatientContent").innerHTML = result;
             }
         })

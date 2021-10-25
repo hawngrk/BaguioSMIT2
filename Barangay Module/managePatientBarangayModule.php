@@ -105,7 +105,6 @@
 
 
     <div id="content">
-
         <div id="qrView" class="modal-window">
             <div class="content-modal">
                 <div class="modal-header">

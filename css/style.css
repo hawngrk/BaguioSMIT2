@@ -336,15 +336,15 @@ input[type=text]{
 /* ---------------------------------------------------
                     HSO MODULE CSS
 --------------------------------------------------- */
-.vaccineName,
-.vaccineManufacturer,
-.vaccineType,
-.vaccineEfficacy,
-.dosageRequired,
-.dosageInterval,
-.minimumTemperature,
-.maximumTemperature,
-.lifeSpan {
+#vaccineName,
+#vaccineManufacturer,
+#vaccineType,
+#vaccineEfficacy,
+#dosageRequired,
+#dosageInterval,
+#minimumTemperature,
+#maximumTemperature,
+#lifeSpan {
     height: auto;
 }
 
@@ -365,6 +365,7 @@ input[type=text1] {
 
 .vaccineType, #qty{
     width: 95%;
+    height: 18%;
 }
 
 .viewReportBtn {
@@ -1525,6 +1526,7 @@ img{
 /*!* Modal Footer  (EIR, HSO)*!*/
 .modal-footer{
     border: none!important;
+    margin-top: 1%;
 }
 
 
@@ -1756,6 +1758,7 @@ h7~h8{
 }
 #dateStored, #dateExp {
     width: 70%;
+    height: 17%;
 }
 
 
@@ -2082,6 +2085,10 @@ input[name=vitals]{
     background-color: white;
 }
 
+#labelDosage{
+    margin-top: 9%;
+}
+
 #deploymentSummary{ /*ssd*/
     margin-top: 5%;
     background-color: #f6f6f6;
@@ -2220,6 +2227,64 @@ input[name=vitals]{
     border-radius: 12px;
 }
 
+
+.paddingLeft{
+    padding-left: 3%;
+}
+ */
+
+/*HSO*/
+#addVaccineModal{
+    margin-left: 4%;
+    margin-right: -10%;
+}
+
+#addNewVaccineModal{
+    margin-left: 4%;
+    margin-right: 4%;
+}
+
+#addDeploymentModal{
+    margin-left: 3%;
+    margin-right: 3%
+}
+
+#description{
+    margin-left:5%;
+    margin-right: 5%;
+    padding: 2%;
+}
+
+/*Common CSS for EIR and HSO*/
+.personalInfo,.categoryInfo,.addressInfo,.medicalInfo{
+    margin-left: 40px;
+    margin-right: 40px;
+}
+
+#otherTextField{
+    display: none;
+    margin-left: -70%;
+}
+
+#comorbidityList{
+    margin-left: 3%;
+    margin-right: 3%;
+    margin-top: 4%;
+    display: none;
+    padding: 15px;
+    border: 2px solid;
+    border-radius: 3px;
+}
+
+.listOfComorbidity{
+    margin-left: 0.5%;
+    margin-right: 0.5%;
+}
+
+.required:after{
+    content: " *";
+    color: red;
+}
 .navbarScreening {
     margin-bottom: 1%!important;
 }
