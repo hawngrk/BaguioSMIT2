@@ -235,7 +235,7 @@ if (isset($_POST['vaccine'])) {
     echo "
     <div class='content-modal'>
     <div class='modal-header'>
-        <h4 class='modal-title'> Vaccine Details - $vaccine_name </h4>
+        <h4 class='modal-title'> Vaccine Details </h4>
         <button type='button' class='close' data-dismiss='modal' onclick='closeModal(\"viewVaccineDetails\")'>
             <i class='fas fa-window-close'></i>
         </button>
@@ -244,7 +244,7 @@ if (isset($_POST['vaccine'])) {
     echo "
     <div class='modal-body'>
     <div class='vacinneInfo'>
-    <h3> Vaccine Information</h3>
+    <h4 class='ml-3'> $vaccine_name </h4>
     <hr>
     <div class='row'>
     <div class='col b'>
@@ -269,7 +269,7 @@ if (isset($_POST['vaccine'])) {
     <h5 class='ml-5 font-weight-bold'> Efficacy </h5>
     </div>
     <div class='col'>
-    <h5> $vaccine_efficacy %</h5>
+    <h5> $vaccine_efficacy%</h5>
     </div>
     </div>
     
@@ -296,7 +296,8 @@ if (isset($_POST['vaccine'])) {
     <h5 class='ml-5 font-weight-bold'> Life Span </h5>
     </div>
     <div class='col'>
-    <h5> $vaccine_lifespan_in_months months </h5>
+    
+    <h5> $vaccine_lifespan_in_months month/s </h5>
     </div>
     </div>
    
@@ -305,7 +306,7 @@ if (isset($_POST['vaccine'])) {
     <h5 class='ml-5 font-weight-bold'> Dosage Required </h5>
     </div>
     <div class='col'>
-    <h5> $vaccine_dosage_required dose </h5>
+    <h5> $vaccine_dosage_required doses </h5>
     </div>
     </div>
    

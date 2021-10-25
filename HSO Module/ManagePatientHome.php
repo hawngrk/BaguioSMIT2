@@ -144,6 +144,7 @@ include_once("../includes/database.php") ?>
                 <table class="table table table-hover tablePatient" id="">
                     <thead>
                     <tr class="labelRow">
+                        <th>Patient ID</th>
                         <th>Patient Name</th>
                         <th>Category</th>
                         <th>Complete Address</th>
@@ -172,7 +173,8 @@ include_once("../includes/database.php") ?>
                                 $name = $pd->getPatientLName() . ", " . $pd->getPatientFName() . " " . $pd->getPatientMName() . " " . $pd->getPatientSuffix();
                             }
 
-                            echo "<tr>
+                            echo "<tr class='table-row' onclick='showPatient(this)'>
+                        <td>$id</td>
                         <td>$name</td>
                         <td>$category</td>
                         <td>$fullAddress</td>
@@ -884,7 +886,20 @@ include_once("../includes/database.php") ?>
             success:function (result){
                 document.getElementById("patientModalContent").innerHTML = result;
                 openModal('viewPatientDetails');
-                console.log(result)
+            }
+        })
+    }
+
+    function showPatient(val) {
+        var id = val.getElementsByTagName("td")[0].innerText;
+        console.log(id)
+        $.ajax({
+            url: 'ManagePatientProcessor.php',
+            method: 'POST',
+            data: {patient: id},
+            success: function (result) {
+                document.getElementById("patientModalContent").innerHTML = result;
+                openModal('viewPatientDetails');
             }
         })
     }

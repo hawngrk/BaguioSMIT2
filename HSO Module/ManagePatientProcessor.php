@@ -193,27 +193,78 @@ if (isset($_POST['patient'])) {
 }
 
     echo "<div class='row'>
-                <h6 class='font-weight-bold ml-5'> First Dose </h7>
+                <h6 class='font-weight-bold ml-5'> First Dose </h6>
                 </div>
                 <div class='row'>
                 <div class='col'>
                 <h7 class='font-weight-bold ml-5'> First Dose Date </h7>
-                </div>";
+                </div>
+                ";
 
 if($first_dose_vaccination == 1) {
-    echo " <div class='col'>
-            <h7> $date_of_first_dosage</h7>
-             </div>";
-} else {
-    echo "<div class='col'>
-            <h7> Not Vaccinated  </h7>
-            </div>";
-};
-
-     echo" <div class='row'>
+    echo "  <div class='col'>
+                <h7> $date_of_first_dosage </h7>
+                </div>
+            </div>
+            </div>
+            <div class='row'>
             <div class='col'>
             <h7 class='font-weight-bold ml-5'> Vaccinator </h7>
-            </div>";
+            </div>
+            <div class='col'>
+            <h7> $first_dose_vaccinator </h7>
+            </div>
+            </div>
+            <div class='row'>
+            <div class='col'>
+            <h7 class='font-weight-bold ml-5'> Vaccine Type </h7>
+            </div>
+            <div class='col'>
+            <h7>  </h7>
+            </div>
+            </div>
+            
+            <br>
+            <div class='row'>
+            <h6 class='font-weight-bold ml-5'> Second Dose </h7>
+            </div>
+            
+            <div class='row'>
+            <div class='col'>
+            <h7 class='font-weight-bold ml-5'> Second Dose Date </h7>
+            </div>
+            <div class='col'>
+            <h7> $date_of_second_dosage </h7>
+            </div>
+            </div>
+            
+            <div class='row'>
+            <div class='col'>
+            <h7 class='font-weight-bold ml-5'> Vaccinator </h7>
+            </div>
+            <div class='col'>
+            <h7> $second_dose_vaccinator </h7>
+            </div>
+            </div>
+            
+            <div class='row'>
+            <div class='col'>
+            <h7 class='font-weight-bold ml-5'> Vaccine Type </h7>
+            </div>
+            <div class='col'>
+            <h7>  </h7>
+            </div>
+            </div>
+             ";
+} else {
+    echo "<div class='col'>
+          <h7> Not Vaccinated  </h7> 
+          </div>
+          </div>";
+};
+
+
+
 
 
 
