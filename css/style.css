@@ -255,18 +255,15 @@ input[type=text]{
     padding: 2%;
 }
 
-/*CSS for HSO*/
-.tableContainer{
-    background-color: #ececec;
-    padding: 1%;
-    border-radius: 12px;
-}
-
-
 /* Modal Header (BARANGAY, HSO)*/
 .modal-header{
     color: #fafafa;
     background-color: #04628A;
+}
+/*!* Modal Footer  (EIR, HSO)*!*/
+.modal-footer{
+    border: none!important;
+    margin-top: 1%;
 }
 
 /* SIDEBAR STYLE */
@@ -447,6 +444,31 @@ a.article:hover {
     margin-left: 3%;
 }
 
+/* The Close Button (EIR, HSO)*/
+.close {
+    color: #ffffff;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+#cancelBtn,
+#addBtn {
+    float: right;
+    margin-right: 1rem;
+}
+
+.vaccineDescription {
+    height: 2in;
+    width: 5in;
+}
 
 /* ---------------------------------------------------
                     EIR MODULE CSS
@@ -640,8 +662,6 @@ input[type=text1] {
     color: #fff
 }
 
-
-
 .tableReport {
     width: 100%!important;
     background-color: white;
@@ -694,12 +714,6 @@ input[type=text1] {
     text-align: center;
 }
 
-
-
-
-
-
-
 .content-modal-table{
     background-color: #fefefe;
     margin: 5% auto;
@@ -743,10 +757,21 @@ img{
     margin: 1%;
 }
 
-
-
 #HealthDModalSort{
     margin: 2%;
+}
+
+.tableContainer{
+    background-color: #ececec;
+    padding: 1%;
+    border-radius: 12px;
+}
+
+.AddHealthD-option{ /*HSO*/
+    border: 3px solid lightgray;
+    border-radius: 5px;
+    margin: 1%;
+    padding: 2%;
 }
 
 /* ---------------------------------------------------
@@ -785,61 +810,7 @@ h6 {
 .patientQueueButtons {
     display: flex;
 }
-/* -----Monitoring-----*/
-.search-containerMonitoring{
-    margin-bottom: 0%!important;
-    width: 205%;
-    display: flex;
-}
 
-.tableMonitoring {
-    margin-top:0%!important;
-    background-color: white;
-    border-radius: 12px;
-}
-
-
-#searchPatientBtn {
-    border: none;
-    background-color: ghostwhite;
-    margin-left: 1%;
-}
-
-.columnName {
-    text-align: center;
-}
-
-.fourthCol {
-    font-size: 78%;
-}
-
-.patientQCounter {
-    background-color: white;
-    width: 18%;
-    height: auto;
-    margin-left: 2%;
-    border-radius: 12px;
-}
-
-.patientQueueButtons p,
-h6 {
-    text-align: center;
-}
-
-.patientQueueButtons h6 {
-    padding-top: 10%;
-}
-
-#confirmationNotif{
-    border-radius: 12px;
-    font-size: 25px;
-    text-align: left;
-    margin-left: 7%;
-}
-
-.patientQueueButtons {
-    display: flex;
-}
 
 /* ---------------------------------------------------
                    VACCINATION PERSONNEL MODULE
@@ -896,7 +867,6 @@ input[name=vitals]{
 #patientRow h5 {
     margin-left: 3%;
 }
-
 
 .search-containerMonitoring{
     margin-bottom: 0%!important;
@@ -1003,189 +973,7 @@ input[type=textDesc]{
 
 
 
-.AddHealthD-option{ /*HSO*/
-    border: 3px solid lightgray;
-    border-radius: 5px;
-    margin: 1%;
-    padding: 2%;
-}
 
-/* The Close Button (EIR, HSO)*/
-.close {
-    color: #ffffff;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-}
-
-.close:hover,
-.close:focus {
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
-}
-
-#cancelBtn,
-#addBtn {
-    float: right;
-    margin-right: 1rem;
-}
-
-.vaccineDescription {
-    height: 2in;
-    width: 5in;
-}
-
-/*
-!*__HSO*!
-.vaccineName,
-.vaccineManufacturer,
-.vaccineType,
-.vaccineEfficacy,
-.dosageRequired,
-.dosageInterval,
-.minimumTemperature,
-.maximumTemperature,
-.lifeSpan {
-    height: auto;
-}
-
-.AddHealthD-option > ul{ !*HSO*!
-    list-style-type: none;
-    column-count: 4;
-    column-gap: 2rem;
-}
-*/
-
-
-/* ---------------------------------------------------
-    MANAGE REPORT
------------------------------------------------------ */
-
-/*
-input[type=text1] {
-    margin-top: 8px;
-    font-size: 17px;
-    border: whitesmoke;
-    background: whitesmoke;
-    width: 75%;
-    height: auto;
-}
-
-.vaccineType, #qty, .vaxSource{
-    width: 100%;
-}
-
-.viewReportBtn {
-    background: #DCF4FF;
-    border: 1px solid black;
-    width: 60%;
-    height: 40px;
-    color: #000!important;
-    margin-right: 10px;
-    border-radius: 12px;
-    font-size: 85%;
-}
-
-
-.CounterReportContainer {
-    margin-top: 10%;
-}
-
-.editRepBtn{
-    margin-top: 2%;
-}
-.counter-box { !*HSO*!
-    display: block;
-    background: #f6f6f6;
-    padding: 40px 20px 37px;
-    text-align: center;
-
-}
-
-.counter-box p { !*HSO*!
-    margin: 5px 0 0;
-    padding: 0;
-    color: #ffffff;
-    font-size: 18px;
-    font-weight: 500
-}
-
-.counter-box i { !*HSO*!
-    font-size: 60px;
-    margin: 0 0 15px;
-    color: #d2d2d2
-}
-
-.counter {
-    display: block;
-    font-size: 32px;
-    font-weight: 700;
-    color: #ffffff;
-    line-height: 28px
-}
-
-.counter-box.colored1 {
-    background: #68A0B8
-}
-
-.counter-box.colored1 p,
-.counter-box.colored1 i,
-.counter-box.colored1 .counter {
-    color: #fff
-}
-
-.counter-box.colored2 {
-    background: #4F91AD
-}
-
-.counter-box.colored2 p,
-.counter-box.colored2 i,
-.counter-box.colored2 .counter {
-    color: #fff
-}
-.counter-box.colored3 {
-    background: #3681A1
-}
-
-.counter-box.colored3 p,
-.counter-box.colored3 i,
-.counter-box.colored3 .counter {
-    color: #fff
-}
-
-.counter-box.colored4 {
-    background: #1D7195
-}
-
-.counter-box.colored4 p,
-.counter-box.colored4 i,
-.counter-box.colored4 .counter {
-    color: #fff
-}
-
-
-
-.tableReport {
-    width: 100%!important;
-    background-color: white;
-}
-
-.tableVax{
-    background-color: white;
-    border-radius: 12px;
-}
-
-.depSum h5{
-    padding: 2%;
-}
-*/
-
-/* Modal Header (BARANGAY, HSO)*/
-/*.modal-header{
-    color: #fafafa;
-    background-color: #04628A;
-}*/
 
 
 /*Text Inputs and drop down menu*/
@@ -1253,72 +1041,6 @@ input[type=date]{
 }
 
 
-/*
-!* Modal Content/Box *! !*HSO*!
-.content-modal{ !*HSO*!
-    background-color: #fefefe;
-    margin: 5% auto;
-    !* 15% from the top and centered *!
-    border: 1px solid #888;
-    width: 60%;
-    !*Could be more or less, depending on screen size *!
-    border-radius: 12px;
-}
-
-.content-modal-table{
-    background-color: #fefefe;
-    margin: 5% auto;
-    !* 15% from the top and centered *!
-    border: 1px solid #888;
-    width: fit-content;
-    !*Could be more or less, depending on screen size *!
-    border-radius: 12px;
-}
-
-.content-modal-table1{
-    background-color: #fefefe;
-    margin: 5% auto;
-    !* 15% from the top and centered *!
-    border: 1px solid #888;
-    width: 70%;
-    !*Could be more or less, depending on screen size *!
-    border-radius: 12px;
-}
-
-img{
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    width: 20%;
-}
-
-.counterColumn{ !*HSO*!
-    float: right;
-    width: 100%;
-    margin: 2%;
-    margin-top: 4%;
-}
-
-.counterRow {
-    width: 100%;
-}
-*/
-
-
-/*!* Modal Header (HSO, SSD) *!*/
-
-.modal-header {
-    color: #fafafa;
-    background-color: #04628A;
-}
-
-
-
-/*!* Modal Footer  (EIR, HSO)*!*/
-.modal-footer{
-    border: none!important;
-    margin-top: 1%;
-}
 
 
 /*Text Inputs*/
@@ -2052,16 +1774,4 @@ input[name=vitals]{
 }
 
 
-/*
-
-#tablePadding{
-    padding: 2%;
-}
-
-!*CSS for HSO*!
-.tableContainer{
-    background-color: #ececec;
-    padding: 1%;
-    border-radius: 12px;
-}
 
