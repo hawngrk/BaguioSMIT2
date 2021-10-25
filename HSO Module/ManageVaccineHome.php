@@ -85,10 +85,10 @@ include_once("../includes/database.php") ?>
         <div class="navbar navbar-expand-lg navbar-light bg-light shadow-sm p-3 mb-4 rounded-lg">
             <div class="container-fluid">
                 <div>
-                    <button id="addVaccineBtn" type="button" class="shadow-lg  buttonTop3 float-right"><i
+                    <button onclick="openModal('vaccineModal')" type="button" class="shadow-lg  buttonTop3 float-right"><i
                                 class="fas fa-plus"></i> Add Vaccine
                     </button>
-                    <button id="addNewVaccineBtn" type="button" class="shadow-lg  buttonTop3 float-right"><i
+                    <button onclick="openModal('newVaccineModal')" type="button" class="shadow-lg  buttonTop3 float-right"><i
                                 class="fas fa-syringe"></i> Add New Vaccine
                     </button>
 
@@ -203,7 +203,7 @@ include_once("../includes/database.php") ?>
             <div class="content-modal">
                 <div class="modal-header">
                     <h2 id="headerAddVaccine"> Add Vaccine </h2>
-                    <span id="addVaccineClose" class="close"><i class='fas fa-window-close'></i></span>
+                    <span onclick="closeModal('vaccineModal')"  class="close"><i class='fas fa-window-close'></i></span>
                 </div>
                 <div class="modal-body">
                     <div id="addVaccineModal">
@@ -247,7 +247,7 @@ include_once("../includes/database.php") ?>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button id="cancelBtnVaccine" class="btn btn-danger">Cancel</button>
+                    <button onclick="closeModal('vaccineModal')" class="btn btn-danger">Cancel</button>
                     <button id="addVaccineBtn" class="btn btn-success" type='submit' onclick="addVaccine()"> Add
                     </button>
 
@@ -262,7 +262,7 @@ include_once("../includes/database.php") ?>
             <div class="content-modal">
                 <div class="modal-header">
                     <h2 id="headerAddNewVaccine">Add New Vaccine</h2>
-                    <span id="newVaccineClose" class="close"><i class='fas fa-window-close'></i></span>
+                    <span onclick="closeModal('newVaccineModal')"  class="close"><i class='fas fa-window-close'></i></span>
                 </div>
                 <div class="modal-body">
                     <div id="addNewVaccineModal">
@@ -316,7 +316,7 @@ include_once("../includes/database.php") ?>
                     </div>
                     </div>
                     <div class="modal-footer">
-                        <button id="cancelBtnNewVaccine" class="btn btn-danger"> Cancel</button>
+                        <button onclick="closeModal('newVaccineModal')"  class="btn btn-danger"> Cancel</button>
                         <button type='submit' id='addBtnNewVaccine' class="btn btn-success" name='addBtnNewVaccine'
                                 onclick="addNewVaccine()"> Add
                         </button>
@@ -435,41 +435,41 @@ include_once("../includes/database.php") ?>
         });
     }
 
-    // Add Vaccine
-    var addVaccineModal = document.getElementById("vaccineModal");
-    var addVaccineBtn = document.getElementById("addVaccineBtn");
-    var addVaccineClose = document.getElementById("addVaccineClose");
-    var cancelAddVaccine = document.getElementById("cancelBtnVaccine");
-
-    addVaccineBtn.onclick = function () {
-        addVaccineModal.style.display = "block";
-    }
-
-    addVaccineClose.onclick = function () {
-        addVaccineModal.style.display = "none";
-    }
-
-    cancelAddVaccine.onclick = function () {
-        addVaccineModal.style.display = "none";
-    }
-
-    // Add New Vaccine
-    var newVaccineModal = document.getElementById("newVaccineModal");
-    var addNewVaccineBtn = document.getElementById("addNewVaccineBtn");
-    var newVaccineClose = document.getElementById("newVaccineClose");
-    var cancelNewVaccine = document.getElementById("cancelBtnNewVaccine");
-
-    addNewVaccineBtn.onclick = function () {
-        newVaccineModal.style.display = "block";
-    }
-
-    newVaccineClose.onclick = function () {
-        newVaccineModal.style.display = "none";
-    }
-
-    cancelNewVaccine.onclick = function () {
-        newVaccineModal.style.display = "none";
-    }
+    // // Add Vaccine
+    // var addVaccineModal = document.getElementById("vaccineModal");
+    // var addVaccineBtn = document.getElementById("addVaccineBtn");
+    // var addVaccineClose = document.getElementById("addVaccineClose");
+    // var cancelAddVaccine = document.getElementById("cancelBtnVaccine");
+    //
+    // addVaccineBtn.onclick = function () {
+    //     addVaccineModal.style.display = "block";
+    // }
+    //
+    // addVaccineClose.onclick = function () {
+    //     addVaccineModal.style.display = "none";
+    // }
+    //
+    // cancelAddVaccine.onclick = function () {
+    //     addVaccineModal.style.display = "none";
+    // }
+    //
+    // // Add New Vaccine
+    // var newVaccineModal = document.getElementById("newVaccineModal");
+    // var addNewVaccineBtn = document.getElementById("addNewVaccineBtn");
+    // var newVaccineClose = document.getElementById("newVaccineClose");
+    // var cancelNewVaccine = document.getElementById("cancelBtnNewVaccine");
+    //
+    // addNewVaccineBtn.onclick = function () {
+    //     newVaccineModal.style.display = "block";
+    // }
+    //
+    // newVaccineClose.onclick = function () {
+    //     newVaccineModal.style.display = "none";
+    // }
+    //
+    // cancelNewVaccine.onclick = function () {
+    //     newVaccineModal.style.display = "none";
+    // }
 
     window.onclick = function (event) {
         if (event.target === newVaccineModal) {

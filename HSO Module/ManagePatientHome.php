@@ -88,11 +88,11 @@ include_once("../includes/database.php") ?>
         <div class="navbar navbar-expand-lg navbar-light bg-light shadow-sm p-3 mb-4 rounded-lg">
             <div class="container-fluid">
                 <div>
-                    <button id="uploadFileBtn" type="button" class="buttonTop3"><i class="fas fa-upload"></i> Upload
+                    <button onclick="openModal('uploadFileModal')" type="button" class="buttonTop3"><i class="fas fa-upload"></i> Upload
                         File
                     </button>
 
-                    <button id="addPatientBtn" type="button" class="buttonTop3 ml-50"><i class="fas fa-plus"></i> Add User
+                    <button onclick="openModal('patientInformationModal')" type="button"  class="buttonTop3 ml-50"><i class="fas fa-plus"></i> Add User
                     </button>
                 </div>
                 <button type="button" class="btn btn-warning buttonTop3 float-right" onclick="openModal('archived')">
@@ -209,7 +209,7 @@ include_once("../includes/database.php") ?>
             <div class="content-modal">
                 <div class="modal-header">
                     <h3> Upload File/s </h3>
-                    <span id="uploadFileClose" class="close">
+                    <span onclick="closeModal('uploadFileModal')" class="close">
                         <i class='fas fa-window-close'></i>
                     </span>
                 </div>
@@ -237,7 +237,7 @@ include_once("../includes/database.php") ?>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" id="uploadFileCancelBtn" class="btn btn-danger" data-dismiss="modal">
+                    <button type="button" class="btn btn-danger" onclick="closeModal('uploadFileModal')" data-dismiss="modal">
                         Cancel
                     </button>
                     <button type="button" id="uploadFileConfirmBtn" class="btn btn-primary"
@@ -253,7 +253,7 @@ include_once("../includes/database.php") ?>
             <div class="content-modal">
                 <div class="modal-header">
                     <h4 class="modal-title">Add User | Patient - Information</h4>
-                    <button type="button" id="addPatientInfoClose" class="close" data-dismiss="modal">
+                    <button type="button" onclick="closeModal('patientInformationModal')" class="close" data-dismiss="modal">
                         <i class='fas fa-window-close'></i>
                     </button>
                 </div>
@@ -498,8 +498,8 @@ include_once("../includes/database.php") ?>
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" id="addPatientInfoCancelBtn" class="btn btn-danger"
-                            data-dismiss="modal">Cancel
+                    <button type="button" onclick="closeModal('patientInformationModal')" class="btn btn-danger"
+                            data-dismiss="modal" >Cancel
                     </button>
                     <button type="button" id="addPatientNextBtn" class="btn btn-success">Add</button>
                 </div>
@@ -511,7 +511,7 @@ include_once("../includes/database.php") ?>
         <div id="notifyModal" class="modal-window">
             <div class="content-modal">
                 <div class="modal-header">
-                    <span id="notificationClose" class="close"><i class='fas fa-window-close'></i></span>
+                    <span onclick="closeModal('patientInformationModal')" class="close"><i class='fas fa-window-close'></i></span>
                 </div>
                 <div class="modal-body">
                     <img src="../../img/checkmark.png" alt="confirm" id="confirm">
@@ -520,7 +520,7 @@ include_once("../includes/database.php") ?>
                     </p>
                 </div>
                 <div class="modal-footer">
-                    <button id='notificationDoneBtn' class="btn btn-primary" type="submit"> Done</button>
+                    <button onclick="closeModal('patientInformationModal')" class="btn btn-primary" type="submit"> Done</button>
                     <!--instead of close change to Done-->
                 </div>
             </div>
@@ -633,44 +633,16 @@ include_once("../includes/database.php") ?>
     var patientMedBackgroundModal = document.getElementById("patientMedBackgroundModal");
 
     var addPatientNextBtn = document.getElementById("addPatientNextBtn");
-    var addPatientPrevBtn = document.getElementById("addPatientPrevBtn");
-    var addPatientInfoCancelBtn = document.getElementById("addPatientInfoCancelBtn");
-    var addPatientMedCancelBtn = document.getElementById("addPatientMedCancelBtn");
 
-    var addPatientInfoClose = document.getElementById("addPatientInfoClose");
-    var addPatientMedClose = document.getElementById("addPatientMedClose");
-
-    addPatientBtn.onclick = function () {
-        patientInformationModal.style.display = "block";
-    }
-
-    addPatientInfoCancelBtn.onclick = function () {
-        patientInformationModal.style.display = "none";
-    }
-
-    addPatientInfoClose.onclick = function () {
-        patientInformationModal.style.display = "none";
-    }
 
 
     // Upload File
     var uploadFileBtn = document.getElementById("uploadFileBtn");
     var uploadFileModal = document.getElementById("uploadFileModal");
-    var uploadFileCancelBtn = document.getElementById("uploadFileCancelBtn");
-    var uploadFileConfirmBtn = document.getElementById("uploadFileConfirmBtn");
-    var uploadFileClose = document.getElementById("uploadFileClose");
 
     uploadFileBtn.onclick = function () {
         document.getElementById("uploadedFiles").innerHTML = '';
         uploadFileModal.style.display = "block";
-    }
-
-    uploadFileCancelBtn.onclick = function () {
-        uploadFileModal.style.display = "none";
-    }
-
-    uploadFileClose.onclick = function () {
-        uploadFileModal.style.display = "none";
     }
 
     // Add Patient Notification

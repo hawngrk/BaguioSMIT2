@@ -81,13 +81,12 @@
         <div class="navbar navbar-expand-lg navbar-light bg-light shadow-sm p-3 mb-4 rounded-lg">
             <div class="container-fluid">
                 <div>
-                    <button type="button" id="uploadFileButton" class="buttonTop3 float-left"
-                            onclick="document.getElementById('uploadFileModal').style.display = 'block'"><i
+                    <button type="button" class="buttonTop3 float-left"
+                            onclick="openModal('uploadFileModal')"><i
                                 class="fas fa-upload"></i> Upload File
                     </button>
-                    <button type="button" id="addPatientButton"
-                            class="buttonTop3"><i
-                                class="fas fa-user-plus"></i> Add User Account
+                    <button type="button" onclick="openModal('addPatientModal')"
+                            class="buttonTop3"><i class="fas fa-user-plus"></i> Add User Account
                     </button>
                 </div>
                 <button type="button" class="btn btn-warning shadow-sm buttonTop3 float-right"
@@ -163,7 +162,7 @@
     <div class="content-modal">
         <div class="modal-header">
             <h4 class="modal-title">Add User | Patient - Information</h4>
-            <button type="button" id="addPatientInfoClose" class="close" data-dismiss="modal">&times;
+            <button type="button" onclick="closeModal('addPatientModal')" class="close" data-dismiss="modal"><i class='fas fa-window-close'></i>
             </button>
         </div>
         <div class="modal-body">
@@ -406,6 +405,7 @@
             </form>
         </div>
         <div class="modal-footer">
+            <button type="button" onclick="closeModal('addPatientModal')" class="btn btn-danger shadow-sm" >Cancel</button>
             <button type="button" id="addBtn" class="btn btn-success shadow-sm" onclick="addPatient()">Add</button>
         </div>
     </div>
@@ -415,7 +415,7 @@
     <div class="content-modal">
         <div class="modal-header">
             <h4 class="modal-title">Upload files</h4>
-            <button type="button" id="closeUploadModal" class="close"> &times;</button>
+            <button type="button" onclick="closeModal('uploadFileModal')" class="close"><i class='fas fa-window-close'></i></button>
         </div>
         <div class="modal-body">
             <div class="row" id="upload-content">
@@ -618,6 +618,14 @@
             }
         });
     }
+    function openModal(modal) {
+        console.log(modal)
+        document.getElementById(modal).style.display = "block";
+    }
+
+    function closeModal(modal) {
+        document.getElementById(modal).style.display = "none";
+    }
 
     //Change unchecked commorbidity to 0
     function verifyCommorbidity(commorbidity) {
@@ -653,29 +661,29 @@
 
     //Displaying Modals
     //modals
-    var addPatientModal = document.getElementById("addPatientModal");
-    var notificationModal = document.getElementById("notifyModal");
-
-    //buttons
-    var addPatientAccountButton = document.getElementById("addPatientButton");
-    var closeAddPatientModal = document.getElementById("addPatientInfoClose");
-    var closeUploadModal = document.getElementById("closeUploadModal");
+    // var addPatientModal = document.getElementById("addPatientModal");
+    // var notificationModal = document.getElementById("notifyModal");
+    //
+    // //buttons
+    // var addPatientAccountButton = document.getElementById("addPatientButton");
+    // var closeAddPatientModal = document.getElementById("addPatientInfoClose");
+    // var closeUploadModal = document.getElementById("closeUploadModal");
 
     var sucess = document.getElementById("submit");
 
     //open
-    addPatientAccountButton.onclick = function () {
-        addPatientModal.style.display = "block";
-    }
-
-    //close
-    closeAddPatientModal.onclick = function () {
-        addPatientModal.style.display = "none";
-    }
-
-    closeUploadModal.onclick = function () {
-        document.getElementById("uploadFileModal").style.display = "none";
-    }
+    // addPatientAccountButton.onclick = function () {
+    //     addPatientModal.style.display = "block";
+    // }
+    //
+    // //close
+    // closeAddPatientModal.onclick = function () {
+    //     addPatientModal.style.display = "none";
+    // }
+    //
+    // closeUploadModal.onclick = function () {
+    //     document.getElementById("uploadFileModal").style.display = "none";
+    // }
 
     //uploading File
     function getUploadedFiles(item) {

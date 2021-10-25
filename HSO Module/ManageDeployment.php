@@ -110,6 +110,7 @@ include_once("../includes/database.php") ?>
                 <button type="button" class="btn btn-warning buttonTop3" onclick="openModal('archived')">
                     <i class="fas fa-inbox fa-lg"></i> Archive
                 </button>
+
             </div>
         </div>
 
@@ -192,7 +193,8 @@ include_once("../includes/database.php") ?>
                         <td>$stubs</td>
                         <td>
                             <div style='text-align: left;'>
-                                <button class='buttonTransparent' onclick='event.stopPropagation(); archive(1, clickArchive, $driveId)'><i class='fa fa-archive'></i></button>
+                                <button class='buttonTransparent actionButt' onclick='event.stopPropagation(); archive(1, clickArchive, $driveId)'><i class='fa fa-archive'></i></button>
+                  
                             </div>
                         </td>
              
@@ -628,7 +630,7 @@ include_once("../includes/database.php") ?>
                 <input class="districtWidth" type="text" id="newVaccinationSite" name="newVaccinationSite">
 
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger"> Cancel
+                    <button type="button" class="btn btn-danger" onclick="closeModal('addVaccSite')"> Cancel
                     </button>
                     <button type="button" class="btn btn-success"
                             onclick='add("Vaccination Site",addSite, "vaccSiteModal")'> Add
@@ -996,7 +998,7 @@ include_once("../includes/database.php") ?>
     async function del(item, action) {
         Swal.fire({
             icon: 'error',
-            title: 'Are You Sure you Want to Delete?',
+            title: 'Are You Sure you want to Delete?',
             showDenyButton: true,
             confirmButtonText: 'Yes',
             denyButtonText: `No`,
@@ -1018,7 +1020,7 @@ include_once("../includes/database.php") ?>
         }
         Swal.fire({
             icon: 'info',
-            title: 'Are You Sure you Want to ' + archiveText + ' this item?',
+            title: 'Are you sure you want to ' + archiveText + ' this item?',
             showDenyButton: true,
             confirmButtonText: 'Yes',
             denyButtonText: `No`,
