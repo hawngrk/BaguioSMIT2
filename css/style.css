@@ -1,5 +1,6 @@
 @import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
 
+/* ============================================== SORTED STYLE CSS ==============================================*/
 /* ---------------------------------------------------
                     General CSS
 --------------------------------------------------- */
@@ -223,6 +224,9 @@ input[type=text]{
     border-radius: 8px;
 }
 
+
+
+
 #postVacView .content-modal /*EIR, BARANGAY, HSO*/{
     padding: 0%;
     width: 81%;
@@ -264,6 +268,186 @@ input[type=text]{
     color: #fafafa;
     background-color: #04628A;
 }
+
+/* SIDEBAR STYLE */
+.wrapper {
+    display: flex;
+    width: 100%;
+    align-items: stretch;
+    background-color: #ffffff;
+    position: relative;
+    overflow: hidden;
+}
+
+#sidebar {
+    min-width: 250px;
+    max-width: 250px;
+    background: #04628A;
+    color: #fff;
+    transition: all 0.3s;
+    padding: .5%;
+
+}
+
+#sidebar.active {
+    margin-left: -250px;
+}
+
+#sidebar .sidebar-header {
+    padding: 20px;
+    background: #04628A;
+}
+
+#sidebar ul.components {
+    padding: 20px 0;
+    border-bottom: 1px solid #47748b;
+}
+
+#sidebar ul p{
+    color: #fff;
+    padding: 10px;
+}
+
+#sidebar ul li a {
+    padding: 10px;
+    font-size: 1.1em;
+    display: block;
+}
+
+#sidebar ul li a:hover {
+    color: #fff !important;
+    background: #043D55;
+}
+
+#sidebar ul li a {
+    color: #fff !important;
+    background: #04628A;
+;
+}
+
+#sidebar ul li.active>a,
+a[aria-expanded="true"] {
+    color: #fff;
+    background: #06425b;
+}
+
+a[data-toggle="collapse"] {
+    position: relative;
+}
+
+.dropdown-toggle::after {
+    display: block;
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
+}
+
+ul ul a {
+    font-size: 0.9em !important;
+    padding-left: 30px !important;
+    background: #04628A;
+}
+
+ul.CTAs {
+    padding: 20px;
+}
+
+ul.CTAs a {
+    text-align: center;
+    font-size: 0.9em !important;
+    display: block;
+    border-radius: 5px;
+    margin-bottom: 5px;
+}
+
+a.download {
+    background: #fff;
+    color: #04628A;
+}
+
+a.article,
+a.article:hover {
+    background: #04628a !important;
+    color: #fff !important;
+}
+
+.btnTop {
+    border: none;
+    background: #dae6ef;
+    padding: 1%;
+}
+
+.btnTop3{
+    position: relative;
+    float: right;
+}
+
+
+.timeBox {
+    margin-bottom: -9%;
+    margin-top: -6%;
+    font-size: 86%;
+}
+
+#time {
+    margin-bottom: -8%;
+    font-size: 195%!important;
+}
+
+
+.upperBox {
+    display: block !important;
+    padding-left: 94% !important;
+}
+
+.upperBoxOG {
+    margin-bottom: 1%;
+}
+/* Content Style */
+#content {
+    background-color: #dae6ef;
+    width: 100%;
+    padding: 20px;
+    min-height: 100vh;
+    transition: all 0.3s;
+}
+#searchPatientQueue, #searchUsersMayor{
+    width: 95%;
+}
+
+.brgyNav, .mayorNav{
+    display: flex;
+    justify-content: center;
+    padding: 15px;
+}
+
+/*Mayors Module*/
+
+.columnCnt{
+    margin-left: 15%!important;
+    color: #070101;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.mayorTable {
+    width: 90%!important;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.buttonTransparentMayors {
+    background: transparent!important;
+    border: transparent!important;
+}
+
+.mayorsCnt p{
+    color: #000;
+    margin-left: 3%;
+}
+
+
 /* ---------------------------------------------------
                     EIR MODULE CSS
 --------------------------------------------------- */
@@ -630,10 +814,6 @@ h6 {
     display: flex;
 }
 
-#barangayHomeContent{
-    margin-left: -2%;
-    margin-right: 5%;
-}
 /* ---------------------------------------------------
                    VACCINATION PERSONNEL MODULE
 --------------------------------------------------- */
@@ -652,6 +832,8 @@ h6 {
     width: 205%;
     display: flex;
 }
+
+
 
 #patientRow h6, #patientRow form{
     margin-left: 4%;
@@ -688,21 +870,6 @@ input[name=vitals]{
     margin-left: 3%;
 }
 
-.tableScreening {
-    margin-top:0%!important;
-    background-color: white;
-    border-radius: 12px;
-}
-
-.navbarScreening {
-    margin-bottom: 1%!important;
-}
-
-.search-containerScreening {
-    margin-bottom: 0%!important;
-    width: 205%;
-    display: flex;
-}
 
 .search-containerMonitoring{
     margin-bottom: 0%!important;
@@ -735,249 +902,8 @@ input[name=vitals]{
 }
 
 /*======================================================================
+/* ============================================== UNSORTED STYLE CSS ==============================================*/
 
-
-!* SIDEBAR STYLE *!*/
-
-.wrapper {
-    display: flex;
-    width: 100%;
-    align-items: stretch;
-    background-color: #ffffff;
-    position: relative;
-    overflow: hidden;
-}
-
-#sidebar {
-    min-width: 250px;
-    max-width: 250px;
-    background: #04628A;
-    color: #fff;
-    transition: all 0.3s;
-    padding: .5%;
-
-}
-
-#sidebar.active {
-    margin-left: -250px;
-}
-
-#sidebar .sidebar-header {
-    padding: 20px;
-    background: #04628A;
-}
-
-#sidebar ul.components {
-    padding: 20px 0;
-    border-bottom: 1px solid #47748b;
-}
-
-#sidebar ul p{
-    color: #fff;
-    padding: 10px;
-}
-
-#sidebar ul li a {
-    padding: 10px;
-    font-size: 1.1em;
-    display: block;
-}
-
-#sidebar ul li a:hover {
-    color: #fff !important;
-    background: #043D55;
-}
-
-#sidebar ul li a {
-    color: #fff !important;
-    background: #04628A;
-;
-}
-
-#sidebar ul li.active>a,
-a[aria-expanded="true"] {
-    color: #fff;
-    background: #06425b;
-}
-
-a[data-toggle="collapse"] {
-    position: relative;
-}
-
-.dropdown-toggle::after {
-    display: block;
-    position: absolute;
-    top: 50%;
-    right: 20px;
-    transform: translateY(-50%);
-}
-
-ul ul a {
-    font-size: 0.9em !important;
-    padding-left: 30px !important;
-    background: #04628A;
-}
-
-ul.CTAs {
-    padding: 20px;
-}
-
-ul.CTAs a {
-    text-align: center;
-    font-size: 0.9em !important;
-    display: block;
-    border-radius: 5px;
-    margin-bottom: 5px;
-}
-
-a.download {
-    background: #fff;
-    color: #04628A;
-}
-
-a.article,
-a.article:hover {
-    background: #04628a !important;
-    color: #fff !important;
-}
-
-.btnTop {
-    border: none;
-    background: #dae6ef;
-    padding: 1%;
-}
-
-.btnTop3{
-    position: relative;
-    float: right;
-}
-
-
-.timeBox {
-    margin-bottom: -9%;
-    margin-top: -6%;
-    font-size: 86%;
-}
-
-#time {
-    margin-bottom: -8%;
-    font-size: 195%!important;
-}
-
-
-.upperBox {
-    display: block !important;
-    padding-left: 94% !important;
-}
-
-.upperBoxOG {
-    margin-bottom: 1%;
-}
-
-
-
-/* ---------------------------------------------------
-    CONTENT STYLE
------------------------------------------------------ */
-
-#content {
-    background-color: #dae6ef;
-    width: 100%;
-    padding: 20px;
-    min-height: 100vh;
-    transition: all 0.3s;
-}
-#searchPatientQueue, #searchUsersMayor{
-    width: 95%;
-}
-
-.brgyNav, .mayorNav{
-    display: flex;
-    justify-content: center;
-    padding: 15px;
-}
-
-/*Mayors Module*/
-
-.columnCnt{
-    margin-left: 15%!important;
-    color: #070101;
-    margin-top: 0;
-    margin-bottom: 0;
-}
-
-.mayorTable {
-    width: 90%!important;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.buttonTransparentMayors {
-    background: transparent!important;
-    border: transparent!important;
-}
-
-.mayorsCnt p{
-    color: #000;
-    margin-left: 3%;
-}
-
-
-/*!* ---------------------------------------------------*/
-/*                    BARANGAY MODULE CSS*/
-/*--------------------------------------------------- *!*/
-/*#barangayHomeContent{*/
-/*    margin-left: -2%;*/
-/*    margin-right: 5%;*/
-/*}*/
-
-/*!* -----Monitoring-----*!*/
-/*.search-containerMonitoring{*/
-/*    margin: bottom 0%!important;*/
-/*    width: 205%;*/
-/*    display: flex;*/
-/*}*/
-
-/*.tableMonitoring {*/
-/*    margin-top:0%!important;*/
-/*    background-color: white;*/
-/*    border-radius: 12px;*/
-/*}*/
-
-/*.navbarMonitoring {*/
-/*    margin-bottom: 1%!important;*/
-/*}*/
-
-/*#searchPatientBtn {*/
-/*    border: none;*/
-/*    background-color: ghostwhite;*/
-/*    margin-left: 1%;*/
-/*}*/
-
-/*.columnName {*/
-/*    text-align: center;*/
-/*}*/
-
-/*.fourthCol {*/
-/*    font-size: 78%;*/
-/*}*/
-
-/*Screening*/
-/*.tableScreening {
-    margin-top:0%!important;
-    background-color: white;
-    border-radius: 12px;
-}
-
-.navbarScreening {
-    margin-bottom: 1%!important;
-}
-
-.search-containerScreening {
-    margin: bottom 0%!important;
-    width: 205%;
-    display: flex;
-}*/
 
 
 /* ---------------------------------------------------
@@ -985,170 +911,7 @@ a.article:hover {
 ----------------------------------------------------- */
 /*
 
-.buttonTop {
-    display: block;
-    float: right;
-    background: ghostwhite;
-    border: 2px solid black;
-    width: 12%;
-    height: 40px;
-    color: black!important;
-    margin-right: 10px;
-    font-size: 80%;
-}
 
-.buttonTop3{
-    float: right;
-    margin: 5px;
-    background-color: #1D7195;
-    border: none;
-    color: white;
-    padding: 8px;
-    text-align: center;
-    text-decoration: none;
-    border-radius: 10px;
-}
-
-
-
-.buttontop4{
-    display: block;
-    float: left;
-    margin-right: 10px;
-}
-
-.buttonTop2 {
-    display: block;
-    float: right;
-    background: ghostwhite;
-    border: 2px solid black;
-    width: 12%;
-    height: auto;
-    color: black!important;
-    margin-right: 10px;
-    font-size: 80%;
-    padding: .2%;
-    border-radius: 12px;
-}
-
-.buttonTop2:hover {
-    background: #e7e7e7;
-}
-
-.buttonTop2:visited {
-    background: white;
-}
-
-
-.genButton{
-    float: right;
-}
-
-
-#generateReportOptions{
-    height: fit-content;
-}
-
-
-#DlRepNote{
-    float: right;
-    margin-bottom: 1%;
-}
-
-.topContainer{
-    display: grid;
-    width: 100%;
-}
-
-
-
-.buttonTop {
-    border-radius: 12px;
-}
-
-.siteAddButton{
-    display: block;
-    float: right;
-    background: ghostwhite;
-    border: 2px solid black;
-    border-radius: 12px;
-    width: 30%;
-    height: 40px;
-    color: black!important;
-    margin-right: 10px;
-    font-size: 80%;
-    margin-bottom: 2%;
-}
-
-.buttonTop:hover {
-    background: #e7e7e7;
-}
-
-.buttonTop:visited {
-    background: white;
-}
-
-.search-container button {
-    display: inline-block;
-    padding: 6px 5px;
-    background: whitesmoke;
-    font-size: 17px;
-    border: none;
-    cursor: pointer;
-    width: 3%;
-    height: auto;
-}
-
-.search-container button:hover {
-    background: rgb(165, 165, 165);
-}
-
-.search-container{
-    margin-bottom: 1%;
-}
-
-.searchDept{
-    position: relative;
-    float: left;
-    width: 100%;
-}
-
-
-
-.buttonTransparent{
-    background: transparent!important;
-    border: transparent!important;
-    width: 5%;
-    height: 5%;
-}
-
-.hyperlink{
-    text-decoration: underline;
-    color: dodgerblue;
-    font-size: 12px;
-}
-
-.searchSite{
-    float: left;
-    width: 65%!important;
-}
-
-.siteSearchIcon{
-    width: 5% !important;
-}
-
-
-.editButton{
-    float: right;
-}
-
-input[type=text]{
-    font-size: 17px;
-    height: auto;
-    display: inline-block;
-    border: 2px solid #ccc;
-    border-radius: 8px;
-}
 
 #scannerTxt {
     margin-top: 5%;
