@@ -110,9 +110,11 @@ include_once("../includes/database.php") ?>
                 <button type="button" class="btn btn-warning buttonTop3" onclick="openModal('archived')">
                     <i class="fas fa-inbox fa-lg"></i> Archive
                 </button>
+
             </div>
         </div>
 
+        <!--Table Content-->
         <div class="tableContainer">
             <div class="table-title">
                 <div class="row">
@@ -153,37 +155,37 @@ include_once("../includes/database.php") ?>
                     <div class="w-100 d-none d-md-block"></div>
 
                     <div class="tableDep tableScroll1 col">
-                            <table class="table table-hover tableDep" id="driveTable">
-                                <thead>
-                                <tr>
-                                    <th scope="col">#</th>
-                                    <th scope="col">Drive Id</th>
-                                    <th scope="col">Location</th>
-                                    <th scope="col">Date</th>
-                                    <th scope="col">No. of Stubs</th>
-                                    <th scope="col">Action</th>
-                                </tr>
-                                </thead>
-                                <?php
-                                require_once '../require/getVaccinationDrive.php';
-                                require_once '../require/getVaccinationSites.php';
+                        <table class="table table-hover tableDep" id="driveTable">
+                            <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Drive Id</th>
+                                <th scope="col">Location</th>
+                                <th scope="col">Date</th>
+                                <th scope="col">No. of Stubs</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                            </thead>
+                            <?php
+                            require_once '../require/getVaccinationDrive.php';
+                            require_once '../require/getVaccinationSites.php';
 
-                                $count = 0;
-                                foreach ($vaccination_drive as $vd) {
-                                    if ($vd->getArchive() == 0) {
-                                        $count++;
-                                        $driveId = $vd->getDriveId();
-                                        $date = $vd->getVaccDate();
-                                        $stubs = $vd->getVaccStubs();
+                            $count = 0;
+                            foreach ($vaccination_drive as $vd) {
+                                if ($vd->getArchive() == 0) {
+                                    $count++;
+                                    $driveId = $vd->getDriveId();
+                                    $date = $vd->getVaccDate();
+                                    $stubs = $vd->getVaccStubs();
 
 
-                                        foreach ($vaccinationSites as $vs) {
-                                            if ($vs->getVaccinationSiteId() == $vd->getVaccDriveVaccSiteId()) {
-                                                $vaccinationSite = $vs->getVaccinationSiteLocation();
-                                            }
+                                    foreach ($vaccinationSites as $vs) {
+                                        if ($vs->getVaccinationSiteId() == $vd->getVaccDriveVaccSiteId()) {
+                                            $vaccinationSite = $vs->getVaccinationSiteLocation();
                                         }
+                                    }
 
-                                        echo "<tr class='table-row' onclick='showDrive(this)'>
+                                    echo "<tr class='table-row' onclick='showDrive(this)'>
                         <td>$count</td>
                         <td>$driveId</td>
                         <td>$vaccinationSite</td>
@@ -191,15 +193,16 @@ include_once("../includes/database.php") ?>
                         <td>$stubs</td>
                         <td>
                             <div style='text-align: left;'>
-                                <button class='buttonTransparent' onclick='event.stopPropagation(); archive(1, clickArchive, $driveId)'><i class='fa fa-archive'></i></button>
+                                <button class='buttonTransparent actionButt' onclick='event.stopPropagation(); archive(1, clickArchive, $driveId)'><i class='fa fa-archive'></i></button>
+                  
                             </div>
                         </td>
              
                       </tr>";
-                                    }
                                 }
-                                ?>
-                            </table>
+                            }
+                            ?>
+                        </table>
                     </div>
                     <div class="col-sm-auto">
                         <div class="depSummary">
@@ -219,7 +222,7 @@ include_once("../includes/database.php") ?>
 
         </div>
 
-
+        <!--MODALS-->
         <!--Deployment Form Modal-->
         <form id='newDeploymentForm' method="post" enctype="multipart/form-data">
             <div id="DeployModal" class="modal-window">
@@ -359,29 +362,32 @@ include_once("../includes/database.php") ?>
                             </div>
                         <label class='label' for="stubs">Number of Stubs: </label>
                         <input type="input" id="stubs" name="stubs" class="stubs" placeholder="ex. 100">
+                        <br>
+                        <br>
                         <label for="district">Select Health District/s: </label>
                         <div id="district" class="AddHealthD-option tableScroll3">
                             <div id="districList">
                                 <div class="row">
-                                    <ul>
-                                        <?php
-                                        require_once "../require/getHealthDistrict.php";
-
-
-                                        foreach ($health_district as $hd) {
-                                            $hdId = $hd->getHealthDistrictId();
-                                            $hdName = $hd->getHealthDistrictName();
-                                            echo " <li>
+                                    <div class="col">
+                                        <ul>
+                                            <?php
+                                            require_once "../require/getHealthDistrict.php";
+                                            foreach ($health_district as $hd) {
+                                                $hdId = $hd->getHealthDistrictId();
+                                                $hdName = $hd->getHealthDistrictName();
+                                                echo " <li>
                                     <input class = 'checkboxes' type='checkbox' onclick='selected($hdId)'>
                                     <label>$hdName</label><br>
                                 </li> ";
-                                        }
-                                        ?>
-                                    </ul>
-                                </div>
+                                            }
+                                            ?>
+                                        </ul>
+                                    </div>
 
+                                </div>
                             </div>
                         </div>
+
                     </div>
                         <hr>
 
@@ -452,7 +458,6 @@ include_once("../includes/database.php") ?>
                         Add Health District
                     </button>
                 </div>
-<!--                id="AddHealthDCancelBtn"-->
             </div>
         </div>
 
@@ -625,7 +630,7 @@ include_once("../includes/database.php") ?>
                 <input class="districtWidth" type="text" id="newVaccinationSite" name="newVaccinationSite">
 
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger"> Cancel
+                    <button type="button" class="btn btn-danger" onclick="closeModal('addVaccSite')"> Cancel
                     </button>
                     <button type="button" class="btn btn-success"
                             onclick='add("Vaccination Site",addSite, "vaccSiteModal")'> Add
@@ -690,6 +695,7 @@ include_once("../includes/database.php") ?>
                       </tr>";
                         }
                     }
+
                     ?>
                 </table>
             </div>
@@ -698,6 +704,7 @@ include_once("../includes/database.php") ?>
 </div>
 
 <script>
+
     var list = document.getElementById("listPatientContent");
     var checkedValue = [];
     var id = "";
@@ -717,6 +724,8 @@ include_once("../includes/database.php") ?>
     btnopt1.style.borderRadius = "12px";
     document.getElementById("FirstDose").style.color = "#FFFFFFFF";
     document.getElementById("SecondDose").style.color = "#000000";
+    document.getElementById("FirstDose").style.border = "solid 1px";
+    document.getElementById("SecondDose").style.border = "solid 1px";
 
     btnopt1.onclick = function () {
         btnopt1.style.backgroundColor = "#1D7195";
@@ -746,6 +755,7 @@ include_once("../includes/database.php") ?>
             document.getElementById("HealthDModal").style.display = "none";
             document.getElementById("vaccSiteModal").style.display = "none";
             document.getElementById("HealthD").style.display = "none";
+
         }
     }
 
@@ -789,7 +799,6 @@ include_once("../includes/database.php") ?>
     }
 
     function showDrive(val) {
-        console.log(val);
         var id = val.getElementsByTagName("td")[1].innerText;
         console.log(id);
         $.ajax({
@@ -797,7 +806,6 @@ include_once("../includes/database.php") ?>
             method: 'POST',
             data: {id: id},
             success: function (result) {
-                // console.log('passed');
                 document.getElementById("listPatientContent").innerHTML = result;
             }
         })
@@ -990,7 +998,7 @@ include_once("../includes/database.php") ?>
     async function del(item, action) {
         Swal.fire({
             icon: 'error',
-            title: 'Are You Sure you Want to Delete?',
+            title: 'Are You Sure you want to Delete?',
             showDenyButton: true,
             confirmButtonText: 'Yes',
             denyButtonText: `No`,
@@ -1012,7 +1020,7 @@ include_once("../includes/database.php") ?>
         }
         Swal.fire({
             icon: 'info',
-            title: 'Are You Sure you Want to ' + archiveText + ' this item?',
+            title: 'Are you sure you want to ' + archiveText + ' this item?',
             showDenyButton: true,
             confirmButtonText: 'Yes',
             denyButtonText: `No`,

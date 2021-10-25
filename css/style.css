@@ -336,15 +336,15 @@ input[type=text]{
 /* ---------------------------------------------------
                     HSO MODULE CSS
 --------------------------------------------------- */
-.vaccineName,
-.vaccineManufacturer,
-.vaccineType,
-.vaccineEfficacy,
-.dosageRequired,
-.dosageInterval,
-.minimumTemperature,
-.maximumTemperature,
-.lifeSpan {
+#vaccineName,
+#vaccineManufacturer,
+#vaccineType,
+#vaccineEfficacy,
+#dosageRequired,
+#dosageInterval,
+#minimumTemperature,
+#maximumTemperature,
+#lifeSpan {
     height: auto;
 }
 
@@ -365,6 +365,7 @@ input[type=text1] {
 
 .vaccineType, #qty{
     width: 95%;
+    height: 18%;
 }
 
 .viewReportBtn {
@@ -406,6 +407,7 @@ input[type=text1] {
     margin: 0 0 15px;
     color: #d2d2d2
 }
+
 
 .counter {
     display: block;
@@ -502,6 +504,17 @@ input[type=text1] {
 }
 
 
+#navbarNav ul li{
+    width: 30vh;
+    margin: 3%;
+    text-align: center;
+}
+
+
+
+
+
+
 
 .content-modal-table{
     background-color: #fefefe;
@@ -574,9 +587,6 @@ img{
     border-radius: 12px;
 }
 
-.navbarMonitoring {
-    margin-bottom: 1%!important;
-}
 
 #searchPatientBtn {
     border: none;
@@ -877,7 +887,40 @@ a.article:hover {
     min-height: 100vh;
     transition: all 0.3s;
 }
+#searchPatientQueue, #searchUsersMayor{
+    width: 95%;
+}
 
+.brgyNav, .mayorNav{
+    display: flex;
+    justify-content: center;
+    padding: 15px;
+}
+
+/*Mayors Module*/
+
+.columnCnt{
+    margin-left: 15%!important;
+    color: #070101;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.mayorTable {
+    width: 90%!important;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.buttonTransparentMayors {
+    background: transparent!important;
+    border: transparent!important;
+}
+
+.mayorsCnt p{
+    color: #000;
+    margin-left: 3%;
+}
 
 
 /*!* ---------------------------------------------------*/
@@ -1484,6 +1527,7 @@ img{
 /*!* Modal Footer  (EIR, HSO)*!*/
 .modal-footer{
     border: none!important;
+    margin-top: 1%;
 }
 
 
@@ -1630,8 +1674,18 @@ input[type=text]:disabled{
     overflow-y: auto;
     display: block;
     background-color: white;
-    width: 80%;
+    width: 95%;
 }
+
+.tableScroll4{
+    position: relative;
+    height: 50vh;
+    overflow-y: auto;
+    display: block;
+    background-color: white;
+    width: 100%;
+}
+
 
 .tableModal{
     width: fit-content;
@@ -1656,6 +1710,12 @@ h7~h8{
     border-radius: 8px;
     padding: 2%;
 }
+
+.personalInfo,.categoryInfo,.addressInfo,.medicalInfo{
+    margin-left: 40px;
+    margin-right: 40px;
+}
+
 
 .position{
     width: 95%;
@@ -1699,6 +1759,7 @@ h7~h8{
 }
 #dateStored, #dateExp {
     width: 70%;
+    height: 17%;
 }
 
 
@@ -2025,6 +2086,10 @@ input[name=vitals]{
     background-color: white;
 }
 
+#labelDosage{
+    margin-top: 9%;
+}
+
 #deploymentSummary{ /*ssd*/
     margin-top: 5%;
     background-color: #f6f6f6;
@@ -2110,6 +2175,10 @@ input[name=vitals]{
     margin-bottom: 5%;
 }
 
+
+.tablePatientQueue{
+    margin-top: 2%;
+}
 /* ------------------------------------------------------------------- */
 /* ------------------------CSS for Barangay MODULE ----------------------- */
 /*#barangayHomeContent{
@@ -2159,6 +2228,64 @@ input[name=vitals]{
     border-radius: 12px;
 }
 
+
+.paddingLeft{
+    padding-left: 3%;
+}
+ */
+
+/*HSO*/
+#addVaccineModal{
+    margin-left: 4%;
+    margin-right: -10%;
+}
+
+#addNewVaccineModal{
+    margin-left: 4%;
+    margin-right: 4%;
+}
+
+#addDeploymentModal{
+    margin-left: 3%;
+    margin-right: 3%
+}
+
+#description{
+    margin-left:5%;
+    margin-right: 5%;
+    padding: 2%;
+}
+
+/*Common CSS for EIR and HSO*/
+.personalInfo,.categoryInfo,.addressInfo,.medicalInfo{
+    margin-left: 40px;
+    margin-right: 40px;
+}
+
+#otherTextField{
+    display: none;
+    margin-left: -70%;
+}
+
+#comorbidityList{
+    margin-left: 3%;
+    margin-right: 3%;
+    margin-top: 4%;
+    display: none;
+    padding: 15px;
+    border: 2px solid;
+    border-radius: 3px;
+}
+
+.listOfComorbidity{
+    margin-left: 0.5%;
+    margin-right: 0.5%;
+}
+
+.required:after{
+    content: " *";
+    color: red;
+}
 .navbarScreening {
     margin-bottom: 1%!important;
 }
@@ -2168,7 +2295,7 @@ input[name=vitals]{
     width: 205%;
     display: flex;
 }
-*/
+
 
 /*
 

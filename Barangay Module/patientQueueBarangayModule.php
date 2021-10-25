@@ -105,79 +105,92 @@ include_once("../includes/database.php")
 
     <div id="content">
         <!--Search Input and Button-->
-        <nav class="navbar navbar-expand-lg navbar-light bg-light rounded-lg">
+        <nav class="brgyNav navbar-light bg-light rounded-lg">
         <div class="container-fluid">
-                <div class="search-containerQueue col">
-                    <input id="searchPatientQueue" type="text" placeholder="Search" class="searchHome"name="searchPatient" onkeyup="searchPatient()">
-                    
-                    <button type="submit" id="searchPatientBtn" name="searchPatientBtn" onclick="searchPatient()">
-                        <i class="fa fa-search"></i>
-                    </button>
+            <div class="row">
+                <div class="col my-auto">
+                    <div class="input-group">
+                        <input id="searchPatientQueue" type="search" placeholder="Search" class="searchHome"name="searchPatient" onkeyup="searchPatient()">
+                        <button type="submit" class="buttonTop5" name="searchPatientBtn" onclick="searchPatient()">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
 
                 </div>
-
-            <div class="col-sm-auto">
-                         <button type="button" class="btn btn-outline-dark buttonTop3 float-right">
-                            <i class="fas fa-sort-amount-down"></i>
-                        </button>
-                        <button type="button" class="btn btn-outline-dark buttonTop3 float-right">
-                            <i class="fas fa-filter"></i>
-                        </button>
+                <div class="col-sm-auto">
+                    <button type="button" class="btn btn-outline-dark buttonTop3 float-right">
+                        <i class="fas fa-sort-amount-down"></i>
+                    </button>
+                    <button type="button" class="btn btn-outline-dark buttonTop3 float-right">
+                        <i class="fas fa-filter"></i>
+                    </button>
+                </div>
             </div>
+
         </div>
         </nav>
         <br>
 
         <!--Page Content-->
-        <table class="table table-row table-hover tableBrgy" id="patientTable">
-            <thead>
-            <tr class="labelRow">
-                <th scope="col">Patient Name</th>
-                <th scope="col">Contact Number</th>
-            </tr>
-            </thead>
-            <?php
-            require_once "PHP Processes/showPatientInLine.php";
-            ?>
-        </table>
-        <div class="patientQueueButtons">
-            <div class="patientQCounter">
-                <h6>Number of Available Stubs</h6>
-                <?php
-                $query = "SELECT drive_id, A1_stubs, A2_stubs, A3_stubs, A4_stubs, A5_stubs, A6_stubs FROM barangay_stubs WHERE drive_id =(SELECT drive_id FROM vaccination_drive WHERE vaccination_date = (SELECT min(vaccination_date) FROM vaccination_drive WHERE vaccination_date >= CURDATE())) AND barangay_id = '113';";
-                $stmt = $database->stmt_init();
-                $stmt->prepare($query);
-                $stmt->execute();
-                $stmt->bind_result($drive, $A1, $A2, $A3, $A4, $A5, $A6);
-                $stmt->fetch();
-                $stmt->close();
+        <div class="tableContainer">
+            <div class="patientQueueButtons">
+                <div class="patientQCounter">
+                    <h6>Number of Available Stubs</h6>
+                    <?php
+                    $query = "SELECT drive_id, A1_stubs, A2_stubs, A3_stubs, A4_stubs, A5_stubs, A6_stubs FROM barangay_stubs WHERE drive_id =(SELECT drive_id FROM vaccination_drive WHERE vaccination_date = (SELECT min(vaccination_date) FROM vaccination_drive WHERE vaccination_date >= CURDATE())) AND barangay_id = '113';";
+                    $stmt = $database->stmt_init();
+                    $stmt->prepare($query);
+                    $stmt->execute();
+                    $stmt->bind_result($drive, $A1, $A2, $A3, $A4, $A5, $A6);
+                    $stmt->fetch();
+                    $stmt->close();
 
-                $stubs = $A1 + $A2 + $A3 + $A4 + $A5 + $A6;
+                    $stubs = $A1 + $A2 + $A3 + $A4 + $A5 + $A6;
 
-                echo "<p>$stubs</p>";
+                    echo "<p>$stubs</p>";
 
-                ?>
+                    ?>
+                </div>
+                <div class="patientQCounter">
+                    <h6>Number of Sent Confirmation</h6>
+                    <p>0</p>
+                </div>
+                <div class="patientQCounter">
+                    <h6>Number of Claimed Stub</h6>
+                    <p>0</p>
+                </div>
+                <div class="patientQCounter">
+                    <h6>Number of Redirected Stub</h6>
+                    <p>0</p>
+                </div>
+                <div>
+                    <button id="confirmationNotif" onclick="sendNotification()">
+                        Send<br>
+                        Confirmation
+                        <br>Notification
+                    </button>
+                </div>
             </div>
-            <div class="patientQCounter">
-                <h6>Number of Sent Confirmation</h6>
-                <p>0</p>
+
+            <div class="tablePatientQueue tableScroll4 shadow">
+                <table class="table table-row table-hover tableBrgy" id="patientTable">
+                    <thead>
+                    <tr class="labelRow">
+                        <th scope="col">Patient Name</th>
+                        <th scope="col">Contact Number</th>
+                    </tr>
+                    </thead>
+                    <?php
+                    require_once "PHP Processes/showPatientInLine.php";
+                    ?>
+                </table>
             </div>
-            <div class="patientQCounter">
-                <h6>Number of Claimed Stub</h6>
-                <p>0</p>
-            </div>
-            <div class="patientQCounter">
-                <h6>Number of Redirected Stub</h6>
-                <p>0</p>
-            </div>
-            <div>
-                <button id="confirmationNotif" onclick="sendNotification()">
-                    Send<br>
-                    Confirmation
-                    <br>Notification
-                </button>
-            </div>
+
+
         </div>
+
+
+
     </div>
 </div>
 </body>
