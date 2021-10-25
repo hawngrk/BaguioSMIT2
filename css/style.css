@@ -470,6 +470,86 @@ a.article:hover {
     width: 5in;
 }
 
+/*Common CSS for EIR and HSO*/
+.personalInfo,.categoryInfo,.addressInfo,.medicalInfo{
+    margin-left: 40px;
+    margin-right: 40px;
+}
+
+#otherTextField{
+    display: none;
+    margin-left: -70%;
+}
+
+#comorbidityList{
+    margin-left: 3%;
+    margin-right: 3%;
+    margin-top: 4%;
+    display: none;
+    padding: 15px;
+    border: 2px solid;
+    border-radius: 3px;
+}
+
+.listOfComorbidity{
+    margin-left: 0.5%;
+    margin-right: 0.5%;
+}
+
+.required:after{
+    content: " *";
+    color: red;
+}
+.navbarScreening {
+    margin-bottom: 1%!important;
+}
+
+.search-containerScreening {
+    margin-bottom: 0%!important;
+    width: 205%;
+    display: flex;
+}
+
+.modal-window { /*EIR, BARANGAY, HSO*/
+    display: none;
+    /* Hidden by default */
+    position: fixed;
+    /* Stay in place */
+    z-index: 1;
+    /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%;
+    /* Full width */
+    height: 100%;
+    /* Full height */
+    overflow: auto;
+    /* Enable scroll if needed */
+    background-color: rgb(0, 0, 0);
+    /* Fallback color */
+    background-color: rgba(0, 0, 0, 0.4);
+    /* Black w/ opacity */
+}
+
+#deploymentSummary{ /*ssd*/
+    margin-top: 5%;
+    background-color: #f6f6f6;
+    padding: 2%;
+    width: 100%;
+    border-radius: 12px;
+    display: inline-block;
+    margin-left: 7%;
+    margin-right: 7%;
+}
+
+barangayList{ /*EIR*/
+    margin-left: 3%;
+    color: #9C9C9C;
+}
+
+.depSummary .listPatientRow{
+    margin-bottom: 5%;
+}
 /* ---------------------------------------------------
                     EIR MODULE CSS
 --------------------------------------------------- */
@@ -539,6 +619,9 @@ a.article:hover {
     margin-left: 3%;
 }
 
+#distContent{
+    margin-top:2%;
+}
 /* ---------------------------------------------------
                     HSO MODULE CSS
 --------------------------------------------------- */
@@ -613,7 +696,6 @@ input[type=text1] {
     margin: 0 0 15px;
     color: #d2d2d2
 }
-
 
 .counter {
     display: block;
@@ -774,6 +856,121 @@ img{
     padding: 2%;
 }
 
+#iconBrowse{ /*HSO*/
+    display:inline-block;
+    width: 40%;
+    height: 80%;
+    border-radius: 8px;
+    text-align: center;
+}
+
+#upload-content{ /*HSO*/
+    margin-top: 2%;
+}
+
+/*HSO*/
+#addVaccineModal{
+    margin-left: 4%;
+    margin-right: -10%;
+}
+
+#addNewVaccineModal{
+    margin-left: 4%;
+    margin-right: 4%;
+}
+
+#addDeploymentModal{
+    margin-left: 3%;
+    margin-right: 3%
+}
+
+#description{
+    margin-left:5%;
+    margin-right: 5%;
+    padding: 2%;
+}
+
+.tablePatient,.tableVaccine {
+    width: 100%!important;
+    background-color: white;
+}
+
+#labelDosage{
+    margin-top: 9%;
+}
+
+.marker{
+    color: transparent!important;
+    font-size: 40%;
+}
+
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link{
+    background-color: #17A2B8;
+}
+.dropdown-menu{
+    top: 60px;
+    right: 0px;
+    left: unset;
+    width: 460px;
+    box-shadow: 0px 5px 7px -1px #c1c1c1;
+    padding-bottom: 0px;
+    padding: 0px;
+}
+.dropdown-menu:before{
+    content: "";
+    position: absolute;
+    top: -20px;
+    right: 12px;
+    border:10px solid #343A40;
+    border-color: transparent transparent #343A40 transparent;
+}
+
+.depSummary {
+    float: right;
+    border-radius: 10px;
+    width: 100%;
+    max-height: fit-content;
+    min-height: 65vh;
+    padding: 3%;
+    margin-top: 2%;
+    background-color: #68A0B8;
+    color: white;
+    margin: 2%;
+    margin-top: 4%;
+}
+.bold{
+    font-weight: 800!important;
+}
+
+.listPatient-box h3{
+    color: white;
+}
+
+#counter{
+    width: 26%;
+    font-size: 60%;
+    float: right;
+    color: cadetblue;
+    margin-top: 1%;
+}
+
+.
+
+.closeModal{
+    background-color: rgb(0, 0, 0);
+    background-color: rgba(0, 0, 0, 0);
+}
+
+#unarchiveContent{
+    height: auto;
+    margin-top: 1%;
+}
+
+.tablePatientQueue{
+    margin-top: 2%;
+}
+
+
 /* ---------------------------------------------------
                     BARANGAY MODULE CSS
 --------------------------------------------------- */
@@ -821,6 +1018,10 @@ h6 {
     border-radius: 12px;
 }
 
+.paddingLeft{
+    padding-left: 3%;
+}
+
 .navbarScreening {
     margin-bottom: 1%!important;
 }
@@ -830,8 +1031,6 @@ h6 {
     width: 205%;
     display: flex;
 }
-
-
 
 #patientRow h6, #patientRow form{
     margin-left: 4%;
@@ -969,11 +1168,6 @@ input[type=textDesc]{
     width: 100% !important;
 }
 
-/* Modal Content/Box */
-
-
-
-
 
 
 /*Text Inputs and drop down menu*/
@@ -1088,26 +1282,6 @@ input[type=text]:disabled{
     z-index: 1;
 }
 
-.modal-window { /*EIR, BARANGAY, HSO*/
-    display: none;
-    /* Hidden by default */
-    position: fixed;
-    /* Stay in place */
-    z-index: 1;
-    /* Sit on top */
-    left: 0;
-    top: 0;
-    width: 100%;
-    /* Full width */
-    height: 100%;
-    /* Full height */
-    overflow: auto;
-    /* Enable scroll if needed */
-    background-color: rgb(0, 0, 0);
-    /* Fallback color */
-    background-color: rgba(0, 0, 0, 0.4);
-    /* Black w/ opacity */
-}
 
 
 .AddHealthD-option ul{
@@ -1223,10 +1397,6 @@ h7~h8{
     padding: 2%;
 }
 
-.personalInfo,.categoryInfo,.addressInfo,.medicalInfo{
-    margin-left: 40px;
-    margin-right: 40px;
-}
 
 
 .position{
@@ -1296,18 +1466,6 @@ h7~h8{
     height: auto;
 }
 
-/*.contactWidth{ !*HSO*!
-    width: 75%!important;
-}
-
-.districtWidth{ !*HSO*!
-    width: 75%!important;
-}
-
-#HealthDModalSort{ !*HSO*!
-    margin: 2%;
-}*/
-
 
 .intendedVax {
     text-align: center;
@@ -1335,17 +1493,7 @@ h7~h8{
     margin-top: -2%;
 }
 
-#iconBrowse{ /*HSO*/
-    display:inline-block;
-    width: 40%;
-    height: 80%;
-    border-radius: 8px;
-    text-align: center;
-}
 
-#upload-content{ /*HSO*/
-    margin-top: 2%;
-}
 
 
 
@@ -1426,68 +1574,7 @@ h5~select {
 }
 
 
-/* ---------------------------------------------------------------------------------- */
-/*CSS For Personnel Vaccination*/
-/* ---------------------------------------------------------------------------------- */
-/*
-#patientRow h6, #patientRow form{
-    margin-left: 4%;
-}
 
-#patientRow p{
-		margin-left: 7%;
-        font-size: 90%;
-		color: black;
-}
-
-#patientRow form{
-    margin-bottom: 3%;
-}
-
-input[name=vitals]{
-    border-radius: 5px;
-    border: solid black 1px;
-    width: 70%;
-}
-#pulseR {
-    margin-left: 7%;
-}
-#tempR {
-    margin-left: 4%;
-}
-#bpRDias {
-    margin-left: 4%;
-}
-#bpRSys {
-    margin-left: 5%;
-}
-#patientRow h5 {
-    margin-left: 3%;
-}
-*/
-
-/*#postVacView .content-modal !*EIR, BARANGAY, HSO*!{
-    padding: 0%;
-    width: 81%;
-}
-
-#preVacView .content-modal !*EIR, BARANGAY, HSO*!{
-    padding: 0%;
-    width: 81%;
-}
-
-#postVacView h6, #preVacView h6{
-    display: inline;
-}
-
-#postVacView button, #preVacView button{
-    align-content: flex-end;
-}
-
-#postVac {
-    font-size: 110% ;
-    color: #070101 !important;
-}*/
 
 .notif {
     border-radius: 12px;
@@ -1496,282 +1583,9 @@ input[name=vitals]{
     margin-left: auto;
 }
 
-/* ------------------------------------------------------------------- */
-/* ------------------------CSS for SSD MODULE ----------------------- */
-/*
-!* CSS for SSD MODULE *!
-#selectHealthDistrict{
-    width: 100%;
-    border-radius: 7px;
-}
-
-#allocateButton{
-    margin-left: 38%;
-}
-
-#distContent{
-    margin-top:2%;
-}
-#selectDeployment{
-    width: 95%;
-    display: flex;
-    margin-left: auto;
-    margin-right: auto;
-    height: 20%;
-}
-
-#hDistrictContainer{
-    margin-top: 5%;
-    margin-left: 7%;
-    padding-top: 2%;
-    background-color: white;
-    width: 100%;
-    border-radius: 12px;
-    display: inline-block;
-    border: 1px solid black;
-}
-
-#vaccineDeployments{
-    padding-top: 2%;
-    width: 95%;
-    border-radius: 12px;
-    display: inline-block;
-    margin-right: 7%;
-    padding: 2%;
-    background-color: #f6f6f6;
-}
-
-#totalPopulation,#totalPopulationPerHD{
-    padding: 2%;
-    background-color: #f6f6f6;
-    width: 100%;
-    border-radius: 12px;
-    display: inline-block;
-    margin-left: 7%;
-    margin-right: 7%;
-}
-
-#totalPopulation{
-    margin-bottom: 2%;
-}
-
-#vaccineDeploymentContent{
-    margin: 5%;
-}
-
-#labelling{
-    margin-left: 3%;
-}
-
-/*HSO*/
-.tablePatient,.tableVaccine {
-    width: 100%!important;
-    background-color: white;
-}
-
-#labelDosage{
-    margin-top: 9%;
-}
-
-#deploymentSummary{ /*ssd*/
-    margin-top: 5%;
-    background-color: #f6f6f6;
-    padding: 2%;
-    width: 100%;
-    border-radius: 12px;
-    display: inline-block;
-    margin-left: 7%;
-    margin-right: 7%;
-}
-
-.marker{
-    color: transparent!important;
-    font-size: 40%;
-}
-
-.nav-pills .nav-link.active, .nav-pills .show > .nav-link{
-    background-color: #17A2B8;
-}
-.dropdown-menu{
-    top: 60px;
-    right: 0px;
-    left: unset;
-    width: 460px;
-    box-shadow: 0px 5px 7px -1px #c1c1c1;
-    padding-bottom: 0px;
-    padding: 0px;
-}
-.dropdown-menu:before{
-    content: "";
-    position: absolute;
-    top: -20px;
-    right: 12px;
-    border:10px solid #343A40;
-    border-color: transparent transparent #343A40 transparent;
-}
-
-.depSummary {
-    float: right;
-    border-radius: 10px;
-    width: 100%;
-    max-height: fit-content;
-    min-height: 65vh;
-    padding: 3%;
-    margin-top: 2%;
-    background-color: #68A0B8;
-    color: white;
-    margin: 2%;
-    margin-top: 4%;
-}
-.bold{
-    font-weight: 800!important;
-}
-
-.listPatient-box h3{
-    color: white;
-}
-
-#counter{
-    width: 26%;
-    font-size: 60%;
-    float: right;
-    color: cadetblue;
-    margin-top: 1%;
-}
-
-.barangayList{ /*EIR*/
-    margin-left: 3%;
-    color: #9C9C9C;
-}
-
-.closeModal{
-    background-color: rgb(0, 0, 0);
-    background-color: rgba(0, 0, 0, 0);
-}
-
-#unarchiveContent{
-    height: auto;
-    margin-top: 1%;
-}
-
-.depSummary .listPatientRow{
-    margin-bottom: 5%;
-}
 
 
-.tablePatientQueue{
-    margin-top: 2%;
-}
 
-/*Monitoring*/
-/*.search-containerMonitoring, .search-containerQueue{
-
-.search-containerMonitoring{
-    margin-bottom: 0%!important;
-    width: 205%;
-    display: flex;
-}
-
-.tableMonitoring {
-    margin-top:0%!important;
-    background-color: white;
-    border-radius: 12px;
-}
-
-.navbarMonitoring {
-    margin-bottom: 1%!important;
-}
-
-#searchPatientBtn {
-    border: none;
-    background-color: ghostwhite;
-    margin-left: 1%;
-}
-
-.columnName {
-    text-align: center;
-}
-
-.fourthCol {
-    font-size: 78%;
-}
-*/
-
-/*Screening*/
-/*
-.tableScreening {
-    margin-top:0%!important;
-    background-color: white;
-    border-radius: 12px;
-}
-
-
-.paddingLeft{
-    padding-left: 3%;
-}
- */
-
-/*HSO*/
-#addVaccineModal{
-    margin-left: 4%;
-    margin-right: -10%;
-}
-
-#addNewVaccineModal{
-    margin-left: 4%;
-    margin-right: 4%;
-}
-
-#addDeploymentModal{
-    margin-left: 3%;
-    margin-right: 3%
-}
-
-#description{
-    margin-left:5%;
-    margin-right: 5%;
-    padding: 2%;
-}
-
-/*Common CSS for EIR and HSO*/
-.personalInfo,.categoryInfo,.addressInfo,.medicalInfo{
-    margin-left: 40px;
-    margin-right: 40px;
-}
-
-#otherTextField{
-    display: none;
-    margin-left: -70%;
-}
-
-#comorbidityList{
-    margin-left: 3%;
-    margin-right: 3%;
-    margin-top: 4%;
-    display: none;
-    padding: 15px;
-    border: 2px solid;
-    border-radius: 3px;
-}
-
-.listOfComorbidity{
-    margin-left: 0.5%;
-    margin-right: 0.5%;
-}
-
-.required:after{
-    content: " *";
-    color: red;
-}
-.navbarScreening {
-    margin-bottom: 1%!important;
-}
-
-.search-containerScreening {
-    margin-bottom: 0%!important;
-    width: 205%;
-    display: flex;
-}
 
 
 
