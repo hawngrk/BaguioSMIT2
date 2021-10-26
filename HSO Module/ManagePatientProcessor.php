@@ -142,24 +142,35 @@ if (isset($_POST['patient'])) {
                 </div>
                 </div>
                 
-                <div class='row'>
+                ";
+
+    if($patient_philHealth == "") {
+        echo "";
+    } else {
+        echo "<div class='row'>
                 <div class='col'>
                 <h7 class='font-weight-bold ml-5'> PhilHealth ID No. </h7>
                 </div>
                 <div class='col'>
                 <h7> $patient_philHealth </h7>
                 </div>
-                </div>
-                
-                <div class='row'>
+                </div>";
+    }
+
+    if($patient_pwd == "") {
+        echo "";
+    } else {
+        echo "<div class='row'>
                 <div class='col'>
                 <h7 class='font-weight-bold ml-5'> PWD ID No. </h7>
                 </div>
                 <div class='col'>
-                <h7> $patient_pwd </h7>
+                <h7>  </h7>
                 </div>
-                </div>
-                <br>
+                </div>";
+    }
+
+    echo "      <br>
                 <h5 class='ml-3'> Address Information </h5>
                 <div class='row'>
                 <div class='col'>

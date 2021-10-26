@@ -161,19 +161,21 @@ include_once("../includes/database.php") ?>
                                 $dateReported = $rep->getDateReported();
                                 $status = $rep->getReportStatus();
 
-                                foreach ($patients as $pat) {
-                                    if ($patientId == $pat->getPatientId()) {
-                                        $reporter = $pat->getPatientFullName();
+                                if ($status !== 'Invalidated') {
+                                    foreach ($patients as $pat) {
+                                        if ($patientId == $pat->getPatientId()) {
+                                            $reporter = $pat->getPatientFullName();
+                                        }
                                     }
+                                    echo "<tr>
+                                          <td>$count</td>
+                                          <td>$reportId</td>
+                                          <td>$reporter</td>
+                                          <td>$dateReported</td>
+                                          <td>$status</td>
+                                          <td><button class='btn btn-secondary btn-sm' type='submit' value='$reportId' onclick='viewReport($reportId)'>Review Report</button></td></tr>";
                                 }
-                                echo "<tr>
-                <td>$count</td>
-                <td>$reportId</td>
-                <td>$reporter</td>
-                <td>$dateReported</td>
-                <td>$status</td>
-                <td><button class='btn btn-secondary btn-sm' type='submit' value='$reportId' onclick='viewReport($reportId)'>Review Report</button></td></tr>"
-                                ;}
+                            }
                             ?>
                             <div id="invalidatedReportsModal" class="modal-window"></div>
                             <div id="generateReportModal" class="modal-window"></div>
@@ -181,7 +183,7 @@ include_once("../includes/database.php") ?>
                         </table>
                     </div>
 
-                    
+
                     <div class="col-sm-auto">
                         <div class="counterColumn">
                             <div class="four counterRow">
@@ -255,7 +257,7 @@ include_once("../includes/database.php") ?>
                             <i class='fas fa-window-close'></i>
                         </button>
                     </div>
-                    <div id = 'archivedContent' class="modal-body">
+                    <div id='archivedContent' class="modal-body">
 
                         <table class="table table-row table-hover tableModal" id="vaccineTable">
                             <thead>
@@ -278,7 +280,7 @@ include_once("../includes/database.php") ?>
 
                                 $count = 0;
                                 foreach ($vaccineLots as $vl) {
-                                    if($vl->getArchived() == 1) {
+                                    if ($vl->getArchived() == 1) {
                                         $count++;
                                         $vaccineLotId = $vl->getVaccLotId();
                                         $vaccLotVaccId = $vl->getVaccLotVaccId();

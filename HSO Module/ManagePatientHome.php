@@ -88,7 +88,7 @@ include_once("../includes/database.php") ?>
         <div class="navbar navbar-expand-lg navbar-light bg-light shadow-sm p-3 mb-4 rounded-lg">
             <div class="container-fluid">
                 <div>
-                    <button onclick="openModal('uploadFileModal')" type="button" class="buttonTop3"><i class="fas fa-upload"></i> Upload
+                    <button id="uploadFileBtn" onclick="openModal('uploadFileModal')" type="button" class="buttonTop3"><i class="fas fa-upload"></i> Upload
                         File
                     </button>
 
@@ -511,7 +511,7 @@ include_once("../includes/database.php") ?>
         <div id="notifyModal" class="modal-window">
             <div class="content-modal">
                 <div class="modal-header">
-                    <span onclick="closeModal('patientInformationModal')" class="close"><i class='fas fa-window-close'></i></span>
+                    <span id="notificationClose" onclick="closeModal('patientInformationModal')" class="close"><i class='fas fa-window-close'></i></span>
                 </div>
                 <div class="modal-body">
                     <img src="../../img/checkmark.png" alt="confirm" id="confirm">
@@ -520,7 +520,7 @@ include_once("../includes/database.php") ?>
                     </p>
                 </div>
                 <div class="modal-footer">
-                    <button onclick="closeModal('patientInformationModal')" class="btn btn-primary" type="submit"> Done</button>
+                    <button id='notificationDoneBtn' onclick="closeModal('patientInformationModal')" class="btn btn-primary" type="submit"> Done</button>
                     <!--instead of close change to Done-->
                 </div>
             </div>

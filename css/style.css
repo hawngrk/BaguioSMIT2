@@ -620,7 +620,7 @@ barangayList{ /*EIR*/
 }
 
 #distContent{
-    margin-top:2%;
+    margin-top: -2%;
 }
 /* ---------------------------------------------------
                     HSO MODULE CSS
@@ -838,6 +838,8 @@ img{
     width: 40%;
     margin: 1%;
 }
+
+
 
 #HealthDModalSort{
     margin: 2%;
@@ -1583,9 +1585,39 @@ h5~select {
     margin-left: auto;
 }
 
+.required:after{
+    content: " *";
+    color: red;
+}
+.navbarScreening {
+    margin-bottom: 1%!important;
+}
 
+.search-containerScreening {
+    margin-bottom: 0%!important;
+    width: 205%;
+    display: flex;
+}
 
+/*HSO MODULE*/
+#deploymentModal{
+    margin-left: 3%;
+    margin-right: 3%;
+}
 
+#healthDMain{
+    margin-left: 3%;
+    margin-top: 3%;
+    margin-right: 3%;
+}
 
+#siteModal{
+    margin-left: 3%;
+    margin-right: 3%;
+    margin-top: 1%;
+}
 
-
+.tableHeader{
+    background-color: #034E6E;
+    color: #fafafa;
+}

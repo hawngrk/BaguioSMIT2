@@ -194,7 +194,8 @@ include_once("../includes/database.php") ?>
                         <td>
                             <div style='text-align: left;'>
                                 <button class='buttonTransparent actionButt' onclick='event.stopPropagation(); archive(1, clickArchive, $driveId)'><i class='fa fa-archive'></i></button>
-                  
+                                <button class='buttonTransparent ml-2' onclick=''><i class='far fa-edit'></i></button>
+                           
                             </div>
                         </td>
              
@@ -219,7 +220,6 @@ include_once("../includes/database.php") ?>
                     </div>
                 </div>
             </div>
-
         </div>
 
         <!--MODALS-->
@@ -233,7 +233,7 @@ include_once("../includes/database.php") ?>
                             <i class='fas fa-window-close'></i>
                         </button>
                     </div>
-                    <div class="modal-body ">
+                    <div class="modal-body" id="deploymentModal">
                         <nav class="navbar navbar-expand-lg navbar-light navbarDep">
                             <div class="collapse navbar-collapse" id="navbarNav">
                                 <ul class="navbar-nav">
@@ -403,6 +403,7 @@ include_once("../includes/database.php") ?>
         </form>
 
 
+        <!--Add Health District Modal-->
         <div id="HealthD" class="modal-window">
             <div class="content-modal">
                 <div class="modal-header">
@@ -413,11 +414,10 @@ include_once("../includes/database.php") ?>
                 </div>
 
                 <div id="healthDMain" class="modal-body">
-                    <div id="distContent" class="tableScroll2">
+                    <div id="distContent" class="tableScroll2 border">
                         <table class="table table-hover">
-                            <thead>
+                            <thead class="tableHeader">
                             <tr>
-                                <th scope="col">#</th>
                                 <th scope="col">Health District Id</th>
                                 <th scope="col">District Name</th>
                                 <th scope="col">Contact Number</th>
@@ -436,7 +436,6 @@ include_once("../includes/database.php") ?>
                                 $number = $hd->getContact();
 
                                 echo "<tr class='table-row' onclick='showDistrict(this)'>
-                                    <td>$count</td>
                                     <td>$districtId</td>
                                     <td>$districtName</td>
                                     <td>$number</td>
@@ -562,6 +561,7 @@ include_once("../includes/database.php") ?>
         </div>
     </div>
 
+<!--Add Vaccination Sites Modal-->
     <div id="vaccSiteModal" class="modal-window">
         <div class="content-modal">
             <div class="modal-header">
@@ -570,10 +570,10 @@ include_once("../includes/database.php") ?>
                     <i class='fas fa-window-close'></i>
                 </button>
             </div>
-            <div class="modal-body">
-                <div id="siteContent" class="tableScroll2">
+            <div class="modal-body" id="siteModal">
+                <div id="siteContent" class="tableScroll2 border">
                     <table class="table table-row table-hover">
-                        <thead>
+                        <thead class="tableHeader">
                         <tr>
                             <th scope="col">#</th>
                             <th scope="col">Vaccination Site Id</th>
@@ -710,11 +710,11 @@ include_once("../includes/database.php") ?>
     var id = "";
     var clicked = false;
 
-    $(document).ready(function () {
-        $('#sidebarCollapse').on('click', function () {
-            $('#sidebar').toggleClass('active');
-        });
-    });
+    // $(document).ready(function () {
+    //     $('#sidebarCollapse').on('click', function () {
+    //         $('#sidebar').toggleClass('active');
+    //     });
+    // });
 
     let btnopt1 = document.querySelector('.doseOption1');
     let btnopt2 = document.querySelector('.doseOption2');
@@ -916,16 +916,16 @@ include_once("../includes/database.php") ?>
         })
     }
 
-    function Toggle() {
-        var butt = document.getElementById('sidebarCollapse')
-        if (!clicked) {
-            clicked = true;
-            butt.innerHTML = "Menu <i class = 'fas fa-angle-double-right'><i>";
-        } else {
-            clicked = false;
-            butt.innerHTML = "<i class='fas fa-angle-left'></i> Menu";
-        }
-    }
+    // function Toggle() {
+    //     var butt = document.getElementById('sidebarCollapse')
+    //     if (!clicked) {
+    //         clicked = true;
+    //         butt.innerHTML = "Menu <i class = 'fas fa-angle-double-right'><i>";
+    //     } else {
+    //         clicked = false;
+    //         butt.innerHTML = "<i class='fas fa-angle-left'></i> Menu";
+    //     }
+    // }
 
     function selected(id) {
         console.log(id);
