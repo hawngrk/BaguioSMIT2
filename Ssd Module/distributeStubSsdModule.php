@@ -261,6 +261,11 @@
 
         var counter = 500;
         function countStubs(num, oldnum, item){
+            if (num.includes("%")) {
+                num = num.replace(/%/g, '');
+                num = (counter / 100) * num;
+            }
+
             if (num == undefined || num == "") {
                 num = 0;
             }
@@ -272,14 +277,11 @@
 
             if (num > counter){
                 alert('Number Exceeds Number Of Left Stubs!');
+                counter += parseInt(oldnum);
                 item.value = 0;
-            }else if (num < oldnum){
+            } else {
                 counter = counter + parseInt(oldnum);
                 counter = counter - parseInt(num);
-                console.log('if',counter);
-            }else{
-                counter = counter - parseInt(num);
-                console.log('else',counter);
             }
 
             document.getElementById('counter').innerHTML = "";
