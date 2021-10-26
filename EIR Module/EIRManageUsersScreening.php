@@ -139,6 +139,7 @@
             <table class="table table-hover" id="patientTable">
                 <thead>
                 <tr class="labelRow">
+                    <th>Patient Id No.</th>
                     <th>Patient Name</th>
                     <th>Category</th>
                     <th>Complete Address</th>
@@ -146,8 +147,44 @@
                     <th>Action</th>
                 </tr>
                 </thead>
+<!--                --><?php
+//                include '../includes/showRegisteredPatients.php';
+//                ?>
                 <?php
-                include '../includes/showRegisteredPatients.php';
+                require_once '../require/getPatientDetails.php';
+
+                foreach ($patient_details as $pd) {
+                    if ($pd->getArchived() == 0) {
+                        $id = $pd->getPatientDeetPatId();
+                        $category = $pd->getPriorityGroup();
+                        $fullAddress = $pd->getHouseAdd() . ", " . $pd->getBrgy() . ", " . $pd->getCity() . ", " . $pd->getProvince();
+                        $contact = $pd->getContact();
+
+                        if ($pd->getPatientMName() == null && $pd->getPatientSuffix() == null) {
+                            $name = $pd->getPatientLName() . ", " . $pd->getPatientFName();
+                        } else if ($pd->getPatientSuffix() == null) {
+                            $name = $pd->getPatientLName() . ", " . $pd->getPatientFName() . " " . $pd->getPatientMName();
+                        } else if ($pd->getPatientMName() == null) {
+                            $name = $pd->getPatientLName() . ", " . $pd->getPatientFName() . " " . $pd->getPatientSuffix();
+                        } else {
+                            $name = $pd->getPatientLName() . ", " . $pd->getPatientFName() . " " . $pd->getPatientMName() . " " . $pd->getPatientSuffix();
+                        }
+
+                        echo "<tr class='table-row' onclick='showPatient(this)'>
+                        <td>$id</td>
+                        <td>$name</td>
+                        <td>$category</td>
+                        <td>$fullAddress</td>
+                        <td>$contact</td>
+                        <td>
+                            <div style='text-align: left;'>
+                                <button class='buttonTransparent' onclick='archive(1, clickArchive, $id)'><i class='fa fa-archive'></i></button>
+                                <button type='button' class='viewReportBtn buttonTransparent' id='viewButton' onclick='viewPatient($id)'><i class='fas fa-eye'></i></button
+                            </div>
+                        </td>
+                    </tr>";
+                    }
+                }
                 ?>
             </table>
         </div>
@@ -157,6 +194,12 @@
 </div>
 
 <!--MODALS-->
+<!--View Modal-->
+<div id="viewPatientDetails" class="modal-window">
+    <div class='content-modal' id="patientModalContent">
+    </div>
+</div>
+
 <!--Patient Add User Modal-->
 <div id="addPatientModal" class="modal-window">
     <div class="content-modal">
@@ -710,6 +753,20 @@
                 reloadPatient();
             }
         });
+    }
+
+    function showPatient(val) {
+        var id = val.getElementsByTagName("td")[0].innerText;
+        console.log(id)
+        $.ajax({
+            url: '../HSO Module/ManagePatientProcessor.php',
+            method: 'POST',
+            data: {patient: id},
+            success: function (result) {
+                document.getElementById("patientModalContent").innerHTML = result;
+                openModal('viewPatientDetails');
+            }
+        })
     }
 </script>
 </body>
