@@ -8,7 +8,7 @@ include_once("../includes/database.php")
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
     <!-- Title -->
-    <title>SMIT+(Ssd) | Home</title>
+    <title>SSD | Home</title>
 
     <link rel="icon" href="../img/FaviSMIT+.png" type="image/jpg">
     <!-- Our Custom CSS -->
