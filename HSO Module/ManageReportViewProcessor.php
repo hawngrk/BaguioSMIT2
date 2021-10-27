@@ -4,7 +4,7 @@ if (isset($_POST['search'])) {
     $search = $_POST['search'];
     echo "
       <thead>
-            <tr>
+            <tr class='tableCenterCont'>
                 <th scope='col'>Report ID</th>
                 <th scope='col'>Name of Reporter</th>
                 <th scope='col'>Date Reported</th>
@@ -24,7 +24,7 @@ if (isset($_POST['search'])) {
     $stmt->bind_result($reportId, $reporter, $dateReported, $status);
 
     while ($stmt->fetch()) {
-        echo "<tr onclick='viewReport($reportId)'>
+        echo "<tr class='tableCenterCont' onclick='viewReport($reportId)'>
                 <td>$reportId</td>
                 <td>$reporter</td>
                 <td>$dateReported</td>
@@ -40,7 +40,7 @@ if (isset($_POST['sort'])) {
     $sort = $_POST['sort'];
     echo "
       <thead>
-            <tr>
+            <tr class='tableCenterCont'>
                 <th scope='col'>Report ID</th>
                 <th scope='col'>Name of Reporter</th>
                 <th scope='col'>Date Reported</th>
@@ -65,7 +65,7 @@ if (isset($_POST['sort'])) {
     $stmt->bind_result($reportId, $reporter, $dateReported, $status);
 
     while ($stmt->fetch()) {
-        echo "<tr>
+        echo "<tr class='tableCenterCont'>
                 <td>$reportId</td>
                 <td>$reporter</td>
                 <td>$dateReported</td>
@@ -81,7 +81,7 @@ if (isset($_POST['filter'])) {
     $queryFilter = '';
     echo "
       <thead>
-            <tr>
+            <tr class='tableCenterCont'>
                 <th scope='col'>Report ID</th>
                 <th scope='col'>Name of Reporter</th>
                 <th scope='col'>Date Reported</th>
@@ -106,7 +106,7 @@ if (isset($_POST['filter'])) {
     $stmt->bind_result($reportId, $reporter, $dateReported, $status);
 
     while ($stmt->fetch()) {
-        echo "<tr>
+        echo "<tr class='tableCenterCont'>
                 <td>$reportId</td>
                 <td>$reporter</td>
                 <td>$dateReported</td>
@@ -132,7 +132,7 @@ if (isset($_POST['invalidated'])) {
     <div class='modal-body'>
       <table class='table table-row table-hover'>
       <thead>
-            <tr>
+            <tr class='tableCenterCont'>
                 <th scope='col'>Report ID</th>
                 <th scope='col'>Name of Reporter</th>
                 <th scope='col'>Date Reported</th>
@@ -146,7 +146,7 @@ if (isset($_POST['invalidated'])) {
     $stmt->bind_result($reportId, $reporter, $dateReported);
 
     while ($stmt->fetch()) {
-        echo "<tr>
+        echo "<tr class='tableCenterCont'>
                 <td>$reportId</td>
                 <td>$reporter</td>
                 <td>$dateReported</td>
@@ -386,7 +386,7 @@ if (isset($_POST['generate'])) {
         <div class='modal-body'>
             <table class='table table-row table-hover'>
             <thead>
-            <tr>
+            <tr class='tableCenterCont'>
                 <th onclick=selectHighlight(this); scope='col'>Select</th>
                 <th onclick=selectHighlight(this); scope='col'>#</th>
                 <th onclick=selectHighlight(this); scope='col'>Report ID</th>
@@ -415,7 +415,7 @@ if (isset($_POST['generate'])) {
             }
         }
         echo "
-            <tr>
+            <tr class='tableCenterCont'>
                 <td><input type='checkbox' onclick='selectHighlight(this)' class='reportList' value='$reportId'></td>
                 <td>$count</td>
                 <td>$reportId</td>
