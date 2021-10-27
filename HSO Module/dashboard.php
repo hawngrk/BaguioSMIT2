@@ -77,27 +77,28 @@
 
         <!-- Page Content  -->
         <div id="content">
-            <div class="container container-fluid displayDash">
-            <div class="row">
+            <div class="container container-fluid">
+            <div class="row dashboardCont">
                 <div class="col">
-                    <div class="col firstRowDash secondDash firstDash">
-                        <h4 class="dashHeads">Vaccination Jabs / <strong>Today</strong></h4>
+                    <div class="row">
+                        <div class="col portionDash jabsPortion">
+                            <h4 class="dashHeads">Vaccination Jabs / <strong>Today</strong></h4>
+                        </div>
                     </div>
-                        <div class="col displayDashSecond">
-                            <div class="col secondRow firstRowDash">
-                            <h4 class="dashHeads">Vaccination Status / <strong>per District</strong></h4>
+                    <div class="row">
+                            <div class="col portionDash vaxStats">
+                                <h4 class="dashHeads">Vaccination Status / <strong>per District</strong></h4>
                             </div>
-                            <div class="col secondRow firstRowDash">
-                            <h4 class="dashHeads"><strong>per Priority Group</strong></h4>
-
+                            <div class="col-sm-auto portionDash vaxStats">
+                                <h4 class="dashHeads"><strong>per Priority Group</strong></h4>
                             </div>
-                        </div>    
+                    </div>
                 </div>
-            <div class="col-md-auto">
-                <div class="col-md-auto secondCol firstRowDash">
+            <div class="col-sm-auto">
+                <div class="col-md-auto portionDash vaxInv">
                     <h4 class="dashHeads">Vaccines <strong>Inventory</strong> </h4>
                 </div>
-                <div class="displayDash2 firstRowDash">
+                <div class="displayDash2 portionDash vaxCount">
                     <h4 class="dashHeads smallBoxDash">Total Vaccines Administered</h4>
                     <br>
                     <h4 class="dashHeads smallBoxDash">Fully Vaccinated</h4>
@@ -110,44 +111,3 @@
     </body>
 
 </html>
-
-<style>
-    .displayDash2{
-        height: 16.5em;
-    }
-    .smallBoxDash {
-        padding-top: 5%;
-        text-align: center;
-        font-size: 20px;
-    }
-    .secondRow {
-        height: 29.8em;
-    }
-    .secondCol{
-        height: 24em;
-    }
-    .firstDash {
-        height: 10em;
-        padding: 0;
-    }
-
-    .firstRowDash {
-        border-radius: 12px;
-        background-color: white;
-        margin: 0.1em;
-    }
-
-    .dashHeads {
-        margin-left: 1%;
-        margin-top: 0.5%;
-    }
-
-    .displayDash {
-        display: inline-block;
-    }
-
-    .displayDashSecond{
-        margin-top: 1%;
-        display: inline-flex;
-    }
-</style>

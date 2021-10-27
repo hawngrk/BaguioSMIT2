@@ -1624,3 +1624,26 @@ h5~select {
     background-color: #034E6E;
     color: #fafafa;
 }
+.portionDash{
+    border-radius: 12px;
+    background-color: white;
+    margin: .3em;
+    padding: 3%;
+}
+
+
+.jabsPortion{
+    height: 30vh;
+}
+
+.vaxStats{
+    height: 60vh;
+}
+
+.vaxInv{
+    height: 60vh;
+}
+
+.vaxCount{
+    height: 30vh;
+}

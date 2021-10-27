@@ -94,7 +94,7 @@
 
             </nav>
 
-            <div class = "tableMonitoring shadow tableScroll4">
+            <div class = "tableMonitoring tableScroll4">
                 <!--Table Part-->
                 <table class="table table table-hover" id="patientTable">
                     <thead>
