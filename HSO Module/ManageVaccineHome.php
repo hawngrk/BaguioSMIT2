@@ -337,8 +337,7 @@ include_once("../includes/database.php") ?>
 
                 <table class="table table-row table-hover tableModal" id="vaccineTable">
                     <thead>
-                    <tr>
-                        <th scope="col">#</th>
+                    <tr class="tableCenterCont">
                         <th scope="col">Vaccine Lot ID</th>
                         <th scope="col">Vaccine Name</th>
                         <th scope="col">Vaccine Source</th>
@@ -357,7 +356,6 @@ include_once("../includes/database.php") ?>
                         $count = 0;
                         foreach ($vaccineLots as $vl) {
                             if ($vl->getArchived() == 1) {
-                                $count++;
                                 $vaccineLotId = $vl->getVaccLotId();
                                 $vaccLotVaccId = $vl->getVaccLotVaccId();
                                 $dateStored = $vl->getDateVaccStored();
@@ -372,8 +370,7 @@ include_once("../includes/database.php") ?>
                                     }
                                 }
 
-                                echo "<tr>
-                <td>$count</td>
+                                echo "<tr class='tableCenterCont'>
                 <td>$vaccineLotId</td>
                 <td>$vaccName</td>
                 <td>$source</td>

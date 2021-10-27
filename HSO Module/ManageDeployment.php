@@ -653,9 +653,11 @@ include_once("../includes/database.php") ?>
             <table class="table table-row table-hover tableModal">
                 <thead>
                 <tr>
+                    <th scope="col">#</th>
                     <th scope="col">Drive Id</th>
                     <th scope="col">Location</th>
                     <th scope="col">Date</th>
+                    <th scope="col">No. of Stubs</th>
                     <th scope="col">Action</th>
                 </tr>
                 </thead>

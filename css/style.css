@@ -989,10 +989,10 @@ img{
 
 .patientQCounter {
     background-color: white;
-    width: 100%;
-    height: 100%;
+    width: 18%;
+    height: auto;
+    margin-left: 2%;
     border-radius: 12px;
-    padding: 2%;
 }
 
 .patientQueueButtons p,

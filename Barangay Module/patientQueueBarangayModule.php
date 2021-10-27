@@ -133,18 +133,17 @@ include_once("../includes/database.php")
 
         <!--Page Content-->
         <div class="tableContainer">
-            <div class="row">
-                <div class="col patientQueueButtons">
-                        <div class="patientQCounter">
-                            <h6>Number of Available Stubs</h6>
-                            <?php
-                            $query = "SELECT drive_id, A1_stubs, A2_stubs, A3_stubs, A4_stubs, A5_stubs, A6_stubs FROM barangay_stubs WHERE drive_id =(SELECT drive_id FROM vaccination_drive WHERE vaccination_date = (SELECT min(vaccination_date) FROM vaccination_drive WHERE vaccination_date >= CURDATE())) AND barangay_id = '113';";
-                            $stmt = $database->stmt_init();
-                            $stmt->prepare($query);
-                            $stmt->execute();
-                            $stmt->bind_result($drive, $A1, $A2, $A3, $A4, $A5, $A6);
-                            $stmt->fetch();
-                            $stmt->close();
+            <div class="patientQueueButtons">
+                <div class="patientQCounter" id="availableStubs">
+                    <h6>Number of Available Stubs</h6>
+                    <?php
+                    $query = "SELECT drive_id, A1_stubs, A2_stubs, A3_stubs, A4_stubs, A5_stubs, A6_stubs FROM barangay_stubs WHERE drive_id =(SELECT drive_id FROM vaccination_drive WHERE vaccination_date = (SELECT min(vaccination_date) FROM vaccination_drive WHERE vaccination_date >= CURDATE())) AND barangay_id = '113';";
+                    $stmt = $database->stmt_init();
+                    $stmt->prepare($query);
+                    $stmt->execute();
+                    $stmt->bind_result($drive, $A1, $A2, $A3, $A4, $A5, $A6);
+                    $stmt->fetch();
+                    $stmt->close();
 
                             $stubs = $A1 + $A2 + $A3 + $A4 + $A5 + $A6;
 
@@ -153,13 +152,19 @@ include_once("../includes/database.php")
                             ?>
                         </div>
                 </div>
+                <div class="patientQCounter" id="sentConfirm">
+                    <h6>Number of Sent Confirmation</h6>
+                    <p>0</p>
 
                 <div class="col patientQueueButtons">
-                    <div class="patientQCounter">
+                    <div class="patientQCounter" id="sentConfirm">
                         <h6>Number of Sent Confirmation</h6>
                         <p>0</p>
                     </div>
                 </div>
+                <div class="patientQCounter" id="claimedStub">
+                    <h6>Number of Claimed Stub</h6>
+                    <p>0</p>
 
                 <div class="col patientQueueButtons">
                     <div class="patientQCounter">
@@ -167,12 +172,17 @@ include_once("../includes/database.php")
                         <p>0</p>
                     </div>
                 </div>
+                <div class="patientQCounter" id="redirectStub">
+                    <h6>Number of Redirected Stub</h6>
+                    <p>0</p>
                 <div class="col patientQueueButtons">
                     <div class="patientQCounter">
                         <h6>Number of Redirected Stub</h6>
                         <p>0</p>
                     </div>
                 </div>
+                <div>
+                    <button id="confirmationNotif" onclick="sendNotification()" class="btn btn-success">
                 <div class="col">
                     <button id="confirmationNotif" onclick="sendNotification()">
                         Send<br>
@@ -200,6 +210,7 @@ include_once("../includes/database.php")
                 </div>
 
             </div>
+
 
         </div>
 

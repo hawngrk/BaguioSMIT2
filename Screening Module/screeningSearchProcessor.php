@@ -1,8 +1,9 @@
 <?php
+include("../includes/database.php");
 if (isset($_POST['search'])) {
-    include("../includes/database.php");
+
     $search = $_POST['search'];
-    if ($search === "") {
+    if ($search == "") {
         $querySearch = "SELECT patient.patient_id, patient.patient_full_name, patient_details.patient_priority_group, CONCAT(patient_details.patient_house_address, ' ', patient_details.patient_barangay_address, ' ', patient_details.patient_CM_address, ' ', patient_details.patient_province) AS full_address, patient_contact_number FROM patient JOIN patient_details ON patient.patient_id = patient_details.patient_id;";
     } else {
         $querySearch = "SELECT patient.patient_id, patient.patient_full_name,  patient_details.patient_priority_group, CONCAT(patient_details.patient_house_address, ' ', patient_details.patient_barangay_address, ' ', patient_details.patient_CM_address, ' ', patient_details.patient_province) AS full_address, patient_contact_number FROM patient JOIN patient_details ON patient.patient_id = patient_details.patient_id WHERE patient.patient_id LIKE '$search%' OR patient.patient_full_name LIKE '$search%';";
@@ -48,11 +49,11 @@ if (isset($_POST['modalScreening'])) {
             $FullAddress = $ps->getHouseAdd() . $ps->getBrgy() .  $ps->getCity() .  $ps->getProvince() .  $ps->getRegion();
             $category = $ps->getPriorityGroup();
 
-            echo "<h4>$FName $LName</h4>
+            echo "<h4 class='ml-4'>$FName $LName</h4>
             <hr>
             <div class='row'>
             <div class='col'>
-            <h6>Address: </h6><p>$FullAddress<p>
+            <h6 class='ml-6'>Address: </h6> <p>$FullAddress<p>
             <h6>Category:</h6><p>$category</p>
             <hr>
             <h5>Medical Background</h5>

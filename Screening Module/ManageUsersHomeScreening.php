@@ -74,7 +74,7 @@
                     <!--Search Input and Button-->
                 <div class="search-containerScreening col">
                     <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Search" onkeyup="searchPatient()">
+                        <input id="searchPatientVaxPer" type="text" class="form-control" placeholder="Search" onkeyup="searchPatient()">
                         <button type="submit" class="buttonTop5" name="searchPatientBtn" onclick="searchPatient()">
                             <i class="fa fa-search"></i>
                         </button>
@@ -92,7 +92,7 @@
                 </div>
             </nav>
 
-
+            <!--Table Part-->
             <div class="tableScreening shadow tableScroll4">
                 <table class="table table-row table-hover" id="patientTable">
                     <thead>
@@ -110,8 +110,6 @@
                     ?>
                 </table>
             </div>
-            <!--Table Part-->
-
 
             <div id="preVacView" class="modal-window">
                 <div class="content-modal">

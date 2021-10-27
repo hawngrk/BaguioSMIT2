@@ -68,13 +68,12 @@
 
         <!-- Page Content  -->
         <div id="content">
-
             <nav class="navbar navbar-expand-lg navbar-light bg-light rounded-lg navbarMonitoring">
                 <div class="container-fluid">
                     <!--Search Input and Button-->
                     <div class="search-containerMonitoring col">
                         <div class="input-group">
-                            <input type="text" placeholder="Search" class="form-control" onkeyup="searchPatient()">
+                            <input id="searchPatientVaxPer" type="text" placeholder="Search" class="form-control" onkeyup="searchPatient()">
                             <button type="submit" class="buttonTop5" name="searchPatientBtn" onclick="searchPatient()">
                                 <i class="fa fa-search"></i>
                             </button>

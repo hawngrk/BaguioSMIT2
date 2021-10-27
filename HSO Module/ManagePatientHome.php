@@ -536,7 +536,7 @@ include_once("../includes/database.php") ?>
                 <div id='archivedContent' class="modal-body">
                     <table class="table table-row table-hover tableModal" id="patientTable1">
                         <thead>
-                        <tr>
+                        <tr class="tableCenterCont">
                             <th scope="col">Patient Name</th>
                             <th scope="col">Category</th>
                             <th scope="col">Complete Address</th>
@@ -565,13 +565,13 @@ include_once("../includes/database.php") ?>
                                     $name = $pd->getPatientLName() . ", " . $pd->getPatientFName() . " " . $pd->getPatientMName() . " " . $pd->getPatientSuffix();
                                 }
 
-                                echo "<tr>
+                                echo "<tr class='tableCenterCont'>
                         <td>$name</td>
                         <td>$category</td>
                         <td>$fullAddress</td>
                         <td>$contact</td>
                         <td>
-                            <div style='text-align: left;'>
+                            <div>
                                 <button class='btn btn-warning' onclick='archive(0, clickArchive, $id)'><i class='fa fa-archive'></i> unarchive</button>
                             </div>
                         </td>

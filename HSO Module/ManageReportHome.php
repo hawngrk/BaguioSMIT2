@@ -260,8 +260,7 @@ include_once("../includes/database.php") ?>
 
                         <table class="table table-row table-hover tableModal" id="vaccineTable">
                             <thead>
-                            <tr>
-                                <th scope="col">#</th>
+                            <tr class="tableCenterCont">
                                 <th scope="col">Report ID</th>
                                 <th scope="col">Name of Reporter</th>
                                 <th scope="col">Date Reported</th>
@@ -278,7 +277,6 @@ include_once("../includes/database.php") ?>
                                 $count = 0;
                                 foreach ($vaccineLots as $vl) {
                                     if ($vl->getArchived() == 1) {
-                                        $count++;
                                         $vaccineLotId = $vl->getVaccLotId();
                                         $vaccLotVaccId = $vl->getVaccLotVaccId();
                                         $dateStored = $vl->getDateVaccStored();
@@ -293,8 +291,8 @@ include_once("../includes/database.php") ?>
                                             }
                                         }
 
-                                        echo "<tr>
-                <td>$count</td>
+                                        echo "<tr class='tableCenterCont'>
+             
                 <td>$vaccineLotId</td>
                 <td>$vaccName</td>
                 <td>$source</td>
@@ -302,7 +300,7 @@ include_once("../includes/database.php") ?>
                 <td>$vaccExp</td>
                 <td>$batchQty</td>
                 <td>
-                    <div style='text-align: center;'>
+                    <div>
                         <button class='btn btn-warning' onclick='archive(0, clickArchive, $vaccineLotId )'><i class='fas fa-box-open'></i> unarchive</button>
                     </div>
                 </td>
