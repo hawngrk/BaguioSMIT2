@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
     <!-- Title -->
-    <title>SMIT+(Barangay) | ManagePatient</title>
+    <title>Barangay | ManagePatient</title>
 
     <link rel="icon" href="../img/FaviSMIT+.png" type="image/jpg">
     <!-- Our Custom CSS -->
