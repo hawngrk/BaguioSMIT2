@@ -16,12 +16,11 @@ while ($stmt->fetch()) {
             <td class='columnName'>$category</td>
             <td class='columnName'>$patientAddress</td>
             <td class='columnName'>$contactNum</td>
-            <td class='columnName'><button class='btn-success addVButt' type='submit' onclick='clickModalRow($patientID)'>Add Vitals</button></td></td>
+            <td class='columnName'><button class='btn-success addVButt btn-sm' type='submit' onclick='clickModalRow($patientID)'>Add Vitals</button></td></td>
             </tr>";
 }
 // require_once '../require/getPatientDetails.php';
 // require_once '../require/getPatient.php';
-               
 //                 foreach ($patient_details as $pd) {
 //                     $id = $pd->getPatientDeetPatId();
 //                     $name = $pd->getPatientFName()." ".$pd->getPatientMName()." ".$pd->getPatientLName()." ".$pd->getPatientSuffix();

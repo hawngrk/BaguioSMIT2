@@ -1080,9 +1080,8 @@ input[name=vitals]{
 }
 
 .tableMonitoring {
-    margin-top:0%!important;
-    background-color: white;
-    border-radius: 12px;
+    width: 100%!important;
+    height: 60%;
 }
 
 .navbarMonitoring {

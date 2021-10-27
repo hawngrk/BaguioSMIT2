@@ -92,9 +92,10 @@
                 </div>
             </nav>
 
-            <!--Table Part-->
-            <table class="table table-row table-hover tableBrgy tableScreening tableScroll4" id="patientTable">
-                <thead>
+
+            <div class="tableScreening shadow tableScroll4">
+                <table class="table table-row table-hover" id="patientTable">
+                    <thead>
                     <tr class="labelRow">
                         <th class="columnName" scope="col">ID</th>
                         <th class="columnName" scope="col">Patient Name</th>
@@ -103,11 +104,14 @@
                         <th class="columnName fourthCol" scope="col">Contact Number</th>
                         <th class="columnName" scope="col">Action</th>
                     </tr>
-                </thead>
-                <?php
-                include '../includes/showPatientDeets.php';
-                ?>
-            </table>
+                    </thead>
+                    <?php
+                    include '../includes/showPatientDeets.php';
+                    ?>
+                </table>
+            </div>
+            <!--Table Part-->
+
 
             <div id="preVacView" class="modal-window">
                 <div class="content-modal">
