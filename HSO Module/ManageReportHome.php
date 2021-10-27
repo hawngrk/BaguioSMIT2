@@ -8,7 +8,7 @@ include_once("../includes/database.php") ?>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <title>SMIT+ | Manage Reports</title>
+    <title>HSO | Manage Reports</title>
     <!--Favicon-->
     <link rel="icon" href="../img/FaviSMIT+.png" type="image/jpg">
     <!-- Our Custom CSS -->
