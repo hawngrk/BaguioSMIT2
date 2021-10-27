@@ -137,7 +137,6 @@ include_once("../includes/database.php") ?>
                 </div>
             </div>
 
-
             <div class="tablePatient shadow tableScroll2">
                 <!--Table Part-->
                 <table class="table table table-hover tablePatient" id="patientTable1">

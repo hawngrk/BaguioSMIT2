@@ -133,59 +133,73 @@ include_once("../includes/database.php")
 
         <!--Page Content-->
         <div class="tableContainer">
-            <div class="patientQueueButtons">
-                <div class="patientQCounter">
-                    <h6>Number of Available Stubs</h6>
-                    <?php
-                    $query = "SELECT drive_id, A1_stubs, A2_stubs, A3_stubs, A4_stubs, A5_stubs, A6_stubs FROM barangay_stubs WHERE drive_id =(SELECT drive_id FROM vaccination_drive WHERE vaccination_date = (SELECT min(vaccination_date) FROM vaccination_drive WHERE vaccination_date >= CURDATE())) AND barangay_id = '113';";
-                    $stmt = $database->stmt_init();
-                    $stmt->prepare($query);
-                    $stmt->execute();
-                    $stmt->bind_result($drive, $A1, $A2, $A3, $A4, $A5, $A6);
-                    $stmt->fetch();
-                    $stmt->close();
+            <div class="row">
+                <div class="col patientQueueButtons">
+                        <div class="patientQCounter">
+                            <h6>Number of Available Stubs</h6>
+                            <?php
+                            $query = "SELECT drive_id, A1_stubs, A2_stubs, A3_stubs, A4_stubs, A5_stubs, A6_stubs FROM barangay_stubs WHERE drive_id =(SELECT drive_id FROM vaccination_drive WHERE vaccination_date = (SELECT min(vaccination_date) FROM vaccination_drive WHERE vaccination_date >= CURDATE())) AND barangay_id = '113';";
+                            $stmt = $database->stmt_init();
+                            $stmt->prepare($query);
+                            $stmt->execute();
+                            $stmt->bind_result($drive, $A1, $A2, $A3, $A4, $A5, $A6);
+                            $stmt->fetch();
+                            $stmt->close();
 
-                    $stubs = $A1 + $A2 + $A3 + $A4 + $A5 + $A6;
+                            $stubs = $A1 + $A2 + $A3 + $A4 + $A5 + $A6;
 
-                    echo "<p>$stubs</p>";
+                            echo "<p>$stubs</p>";
 
-                    ?>
+                            ?>
+                        </div>
                 </div>
-                <div class="patientQCounter">
-                    <h6>Number of Sent Confirmation</h6>
-                    <p>0</p>
+
+                <div class="col patientQueueButtons">
+                    <div class="patientQCounter">
+                        <h6>Number of Sent Confirmation</h6>
+                        <p>0</p>
+                    </div>
                 </div>
-                <div class="patientQCounter">
-                    <h6>Number of Claimed Stub</h6>
-                    <p>0</p>
+
+                <div class="col patientQueueButtons">
+                    <div class="patientQCounter">
+                        <h6>Number of Claimed Stub</h6>
+                        <p>0</p>
+                    </div>
                 </div>
-                <div class="patientQCounter">
-                    <h6>Number of Redirected Stub</h6>
-                    <p>0</p>
+                <div class="col patientQueueButtons">
+                    <div class="patientQCounter">
+                        <h6>Number of Redirected Stub</h6>
+                        <p>0</p>
+                    </div>
                 </div>
-                <div>
+                <div class="col">
                     <button id="confirmationNotif" onclick="sendNotification()">
                         Send<br>
                         Confirmation
                         <br>Notification
                     </button>
                 </div>
-            </div>
 
-            <div class="tablePatientQueue tableScroll4 shadow">
-                <table class="table table-row table-hover tableBrgy" id="patientTable">
-                    <thead>
-                    <tr class="labelRow">
-                        <th scope="col">Patient Name</th>
-                        <th scope="col">Contact Number</th>
-                    </tr>
-                    </thead>
-                    <?php
-                    require_once "PHP Processes/showPatientInLine.php";
-                    ?>
-                </table>
-            </div>
+                <div class="w-100 d-none d-md-block"></div>
 
+                <div class="col">
+                    <div class="tablePatientQueue tableScroll4 shadow">
+                        <table class="table table-row table-hover tableBrgy" id="patientTable">
+                            <thead>
+                            <tr class="labelRow">
+                                <th scope="col">Patient Name</th>
+                                <th scope="col">Contact Number</th>
+                            </tr>
+                            </thead>
+                            <?php
+                            require_once "PHP Processes/showPatientInLine.php";
+                            ?>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
 
         </div>
 
