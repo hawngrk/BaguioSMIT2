@@ -55,17 +55,17 @@ include_once("../includes/database.php")
     <nav id="sidebar">
         <div class="sidebar-header">
             <div class="sidebar-brand-icon">
-            <img src="../img/logoo.png" style="width: 104%; margin-bottom:-19%; margin-top:-5%;" alt="Baguio Logo">
+                <img src="../img/logoo.png" style="width: 104%; margin-bottom:-19%; margin-top:-5%;" alt="Baguio Logo">
             </div>
         </div>
 
         <ul class="list-unstyled components">
             <hr>
             <?php
-                session_start();
-                $accountDetails = $_SESSION['account'];
-                $barangay = $accountDetails['barangay'];
-                echo "<h4 id='headingNav1'>$barangay</h4>";
+            session_start();
+            $accountDetails = $_SESSION['account'];
+            $barangay = $accountDetails['barangay'];
+            echo "<h4 id='headingNav1'>$barangay</h4>";
             ?>
             <hr>
             <h5 id="headingNav2">September 17, 2021 | 01:24 PM</h5>
@@ -106,83 +106,73 @@ include_once("../includes/database.php")
     <div id="content">
         <!--Search Input and Button-->
         <nav class="brgyNav navbar-light bg-light rounded-lg">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col my-auto">
-                    <div class="input-group">
-                        <input id="searchPatientQueue" type="search" placeholder="Search" class="form-control" name="searchPatient" onkeyup="searchPatient()">
-                        <button type="submit" class="buttonTop5" name="searchPatientBtn" onclick="searchPatient()">
-                            <i class="fa fa-search"></i>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col my-auto">
+                        <div class="input-group">
+                            <input id="searchPatientQueue" type="search" placeholder="Search" class="form-control" name="searchPatient" onkeyup="searchPatient()">
+                            <button type="submit" class="buttonTop5" name="searchPatientBtn" onclick="searchPatient()">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </div>
+
+                    </div>
+                    <div class="col-sm-auto">
+                        <button type="button" class="btn btn-outline-dark buttonTop3 float-right">
+                            <i class="fas fa-sort-amount-down"></i>
+                        </button>
+                        <button type="button" class="btn btn-outline-dark buttonTop3 float-right">
+                            <i class="fas fa-filter"></i>
                         </button>
                     </div>
+                </div>
 
-                </div>
-                <div class="col-sm-auto">
-                    <button type="button" class="btn btn-outline-dark buttonTop3 float-right">
-                        <i class="fas fa-sort-amount-down"></i>
-                    </button>
-                    <button type="button" class="btn btn-outline-dark buttonTop3 float-right">
-                        <i class="fas fa-filter"></i>
-                    </button>
-                </div>
             </div>
-
-        </div>
         </nav>
         <br>
 
         <!--Page Content-->
         <div class="tableContainer">
-            <div class="patientQueueButtons">
-                <div class="patientQCounter" id="availableStubs">
-                    <h6>Number of Available Stubs</h6>
-                    <?php
-                    $query = "SELECT drive_id, A1_stubs, A2_stubs, A3_stubs, A4_stubs, A5_stubs, A6_stubs FROM barangay_stubs WHERE drive_id =(SELECT drive_id FROM vaccination_drive WHERE vaccination_date = (SELECT min(vaccination_date) FROM vaccination_drive WHERE vaccination_date >= CURDATE())) AND barangay_id = '113';";
-                    $stmt = $database->stmt_init();
-                    $stmt->prepare($query);
-                    $stmt->execute();
-                    $stmt->bind_result($drive, $A1, $A2, $A3, $A4, $A5, $A6);
-                    $stmt->fetch();
-                    $stmt->close();
+            <div class="row">
+                <div class="col patientQueueButtons">
+                    <div class="patientQCounter" id="numberAvailable">
+                        <h6>Number of Available Stubs</h6>
+                        <?php
+                        $query = "SELECT drive_id, A1_stubs, A2_stubs, A3_stubs, A4_stubs, A5_stubs, A6_stubs FROM barangay_stubs WHERE drive_id =(SELECT drive_id FROM vaccination_drive WHERE vaccination_date = (SELECT min(vaccination_date) FROM vaccination_drive WHERE vaccination_date >= CURDATE())) AND barangay_id = '113';";
+                        $stmt = $database->stmt_init();
+                        $stmt->prepare($query);
+                        $stmt->execute();
+                        $stmt->bind_result($drive, $A1, $A2, $A3, $A4, $A5, $A6);
+                        $stmt->fetch();
+                        $stmt->close();
 
-                            $stubs = $A1 + $A2 + $A3 + $A4 + $A5 + $A6;
+                        $stubs = $A1 + $A2 + $A3 + $A4 + $A5 + $A6;
 
-                            echo "<p>$stubs</p>";
+                        echo "<p>$stubs</p>";
 
-                            ?>
-                        </div>
+                        ?>
+                    </div>
                 </div>
-                <div class="patientQCounter" id="sentConfirm">
-                    <h6>Number of Sent Confirmation</h6>
-                    <p>0</p>
 
                 <div class="col patientQueueButtons">
-                    <div class="patientQCounter" id="sentConfirm">
+                    <div class="patientQCounter" id="numberSent">
                         <h6>Number of Sent Confirmation</h6>
                         <p>0</p>
                     </div>
                 </div>
-                <div class="patientQCounter" id="claimedStub">
-                    <h6>Number of Claimed Stub</h6>
-                    <p>0</p>
 
                 <div class="col patientQueueButtons">
-                    <div class="patientQCounter">
+                    <div class="patientQCounter" id="claimedStubs">
                         <h6>Number of Claimed Stub</h6>
                         <p>0</p>
                     </div>
                 </div>
-                <div class="patientQCounter" id="redirectStub">
-                    <h6>Number of Redirected Stub</h6>
-                    <p>0</p>
                 <div class="col patientQueueButtons">
-                    <div class="patientQCounter">
+                    <div class="patientQCounter" id="redirectStub">
                         <h6>Number of Redirected Stub</h6>
                         <p>0</p>
                     </div>
                 </div>
-                <div>
-                    <button id="confirmationNotif" onclick="sendNotification()" class="btn btn-success">
                 <div class="col">
                     <button id="confirmationNotif" onclick="sendNotification()">
                         Send<br>
@@ -210,7 +200,6 @@ include_once("../includes/database.php")
                 </div>
 
             </div>
-
 
         </div>
 
