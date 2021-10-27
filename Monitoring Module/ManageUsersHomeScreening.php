@@ -71,28 +71,31 @@
 
             <nav class="navbar navbar-expand-lg navbar-light bg-light rounded-lg navbarMonitoring">
                 <div class="container-fluid">
+                    <!--Search Input and Button-->
+                    <div class="search-containerMonitoring col">
+                        <div class="input-group">
+                            <input type="text" placeholder="Search" class="form-control" onkeyup="searchPatient()">
+                            <button type="submit" class="buttonTop5" name="searchPatientBtn" onclick="searchPatient()">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </div>
 
-                 <!--Search Input and Button-->
-             <div class="search-containerMonitoring col">
-                    <input id="searchPatientVaxPer" type="text" placeholder="Search" class="searchHome" name="searchPatient" onkeyup="searchPatient()">
-                    <button type="submit" id="searchPatientBtn" name="searchPatientBtn" onclick="searchPatient()">
-                        <i class="fa fa-search"></i>
-                    </button>
-            </div>
-            <div class="col-sm-auto">
-                         <button type="button" class="btn btn-outline-dark buttonTop3 float-right">
-                            <i class="fas fa-sort-amount-down"></i>
-                        </button>
-                        <button type="button" class="btn btn-outline-dark buttonTop3 float-right">
-                            <i class="fas fa-filter"></i>
-                        </button>
-            </div>
+                    </div>
+                    <div class="col-sm-auto">
+                                <button type="button" class="btn btn-outline-dark buttonTop3 float-right">
+                                    <i class="fas fa-sort-amount-down"></i>
+                                </button>
+                                <button type="button" class="btn btn-outline-dark buttonTop3 float-right">
+                                    <i class="fas fa-filter"></i>
+                                </button>
 
+                    </div>
                 </div>
+
             </nav>
 
             <!--Table Part-->
-            <table class="table table-row table-hover tableMonitoring" id="patientTable">
+            <table class="table table-row table-hover tableMonitoring tableScroll4" id="patientTable">
                 <thead>
                     <tr class="labelRow">
                         <th class="columnName" scope="col">ID</th>

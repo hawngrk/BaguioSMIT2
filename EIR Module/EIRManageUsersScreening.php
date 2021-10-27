@@ -453,7 +453,6 @@
         </div>
     </div>
 </div>
-
 <div id="uploadFileModal" class="modal-window">
     <div class="content-modal">
         <div class="modal-header">
@@ -492,7 +491,66 @@
             </button>
         </div>
     </div>
-</div>
+</div></div>
+<div id="archived" class="modal-window">
+    <div class="content-modal-table">
+        <div class="modal-header">
+            <h4 class="modal-title">Archived Users</h4>
+            <button type="button" class="close" data-dismiss="modal" onclick="closeModal('archived')">
+                <i class='fas fa-window-close'></i>
+            </button>
+        </div>
+        <div id='archivedContent' class="modal-body">
+            <table class="table table-row table-hover tableModal">
+                <thead>
+                <tr>
+                    <th scope="col">Patient Name</th>
+                    <th scope="col">Category</th>
+                    <th scope="col">Complete Address</th>
+                    <th scope="col">Contact Number</th>
+                    <th scope="col">Action</th>
+                </tr>
+                </thead>
+
+                <?php
+                require_once '../require/getVaccinationDrive.php';
+                require_once '../require/getVaccinationSites.php';
+
+                $count = 0;
+                foreach ($vaccination_drive as $vd) {
+                    if ($vd->getArchive() == 1) {
+                        $count++;
+                        $driveId = $vd->getDriveId();
+                        $date = $vd->getVaccDate();
+                        $stubs = $vd->getVaccStubs();
+
+
+                        foreach ($vaccinationSites as $vs) {
+                            if ($vs->getVaccinationSiteId() == $vd->getVaccDriveVaccSiteId()) {
+                                $vaccinationSite = $vs->getVaccinationSiteLocation();
+                            }
+                        }
+
+                        echo "<tr class='table-row'>
+                        <td>$count</td>
+                        <td>$driveId</td>
+                        <td>$vaccinationSite</td>
+                        <td>$date</td>
+                        <td>$stubs</td>
+                        <td>
+                            <div style='text-align: left;'>
+                                <button class='btn btn-warning' onclick='archive(0, clickArchive, $driveId )'>unarchive <i class='fas fa-box-open'></i></button>
+                            </div>
+                        </td>
+             
+                      </tr>";
+                    }
+                }
+
+                ?>
+            </table>
+        </div>
+    </div>
 </div>
 
 <!-- Popper.JS -->

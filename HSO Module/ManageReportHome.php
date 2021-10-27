@@ -31,7 +31,7 @@ include_once("../includes/database.php") ?>
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js"
             integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY"
             crossorigin="anonymous"></script>
-
+    <script src="//code.jquery.com/jquery-latest.min.js"></script>
 
 </head>
 
@@ -173,7 +173,7 @@ include_once("../includes/database.php") ?>
                                           <td>$reporter</td>
                                           <td>$dateReported</td>
                                           <td>$status</td>
-                                          <td><button class='btn btn-secondary btn-sm' type='submit' value='$reportId' onclick='viewReport($reportId)'>Review Report</button></td></tr>";
+                                          <td><button class='btn btn-success btn-sm' type='submit' value='$reportId' onclick='viewReport($reportId)'>Review Report</button></td></tr>";
                                 }
                             }
                             ?>
@@ -252,7 +252,7 @@ include_once("../includes/database.php") ?>
             <div id="archived" class="modal-window">
                 <div class="content-modal-table">
                     <div class="modal-header">
-                        <h4 class="modal-title">Archived Vaccination Drives</h4>
+                        <h4 class="modal-title">Archived Reports</h4>
                         <button type="button" class="close" data-dismiss="modal" onclick="closeModal('archived')">
                             <i class='fas fa-window-close'></i>
                         </button>
@@ -263,12 +263,10 @@ include_once("../includes/database.php") ?>
                             <thead>
                             <tr>
                                 <th scope="col">#</th>
-                                <th scope="col">Vaccine Lot ID</th>
-                                <th scope="col">Vaccine Name</th>
-                                <th scope="col">Vaccine Source</th>
-                                <th scope="col">Date Received</th>
-                                <th scope="col">Expiration</th>
-                                <th scope="col">Bottle Quantity</th>
+                                <th scope="col">Report ID</th>
+                                <th scope="col">Name of Reporter</th>
+                                <th scope="col">Date Reported</th>
+                                <th scope="col">Report Verified</th>
                                 <th scope="col">Action</th>
                             </tr>
                             </thead>
@@ -346,6 +344,17 @@ include_once("../includes/database.php") ?>
         </script>
 
         <script>
+
+            function openModal(modal) {
+                console.log(modal)
+                document.getElementById(modal).style.display = "block";
+                document.getElementById(modal).removeClass('hidden');
+                overlay.trigger('show');
+            }
+
+            function closeModal(modal) {
+                document.getElementById(modal).style.display = "none";
+            }
             function searchReport() {
                 var textSearch = document.getElementById("searchReportHSO").value;
                 if (textSearch === "") {
@@ -478,7 +487,7 @@ include_once("../includes/database.php") ?>
                         type: 'POST',
                         data: {"changeStatus": selectedStatus, "reportid": reportid},
                         success: function (result) {
-                            showInvalidatedReports();
+                            viewReportModal.style.display = "none";
                         }
                     });
                 } else {

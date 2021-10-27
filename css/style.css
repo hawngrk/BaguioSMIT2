@@ -116,6 +116,7 @@ a:focus {
 
 .genButton{
     float: right;
+    position: relative;
 }
 
 
@@ -246,9 +247,12 @@ input[type=text]{
 }
 
 #postVac {
-    font-size: 110% ;
     color: #070101 !important;
 }
+.addVButt{
+    border-radius: 5px;
+}
+
 
 
 #tablePadding{
@@ -660,10 +664,10 @@ input[type=text1] {
 .viewReportBtn {
     background: #DCF4FF;
     border: 1px solid black;
-    width: 60%;
+    width: fit-content;
     height: 40px;
     color: #000!important;
-    margin-right: 10px;
+    margin: 5%;
     border-radius: 12px;
     font-size: 85%;
 }
@@ -1069,10 +1073,10 @@ input[name=vitals]{
     margin-left: 3%;
 }
 
-.search-containerMonitoring{
-    margin-bottom: 0%!important;
-    width: 205%;
-    display: flex;
+
+
+#searchPatientVaxPer{
+    width: 95%;
 }
 
 .tableMonitoring {
@@ -1367,7 +1371,7 @@ input[type=text]:disabled{
 
 .tableScroll4{
     position: relative;
-    height: 50vh;
+    height: 80vh;
     overflow-y: auto;
     display: block;
     background-color: white;
@@ -1593,7 +1597,7 @@ h5~select {
     margin-bottom: 1%!important;
 }
 
-.search-containerScreening {
+.search-containerScreening, .search-containerMonitoring {
     margin-bottom: 0%!important;
     width: 205%;
     display: flex;

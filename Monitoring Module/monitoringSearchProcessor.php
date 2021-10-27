@@ -34,7 +34,7 @@ if (isset($_POST['search'])) {
                 <td>$category</td>
                 <td>$patientAddress</td>
                 <td>$contactNum</td>
-                <td><button id='postVac' class='viewReportBtn btn-success' type='submit' onclick='clickModalRow($patientID)'>Add Vitals</button></td></td>
+                <td><button id='postVac' class='btn-success' type='submit' onclick='clickModalRow($patientID)'>Add Vitals</button></td></td>
                 </tr>";
     }
 }

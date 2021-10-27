@@ -31,7 +31,7 @@ if (isset($_POST['search'])) {
                 <td>$reporter</td>
                 <td>$dateReported</td>
                 <td>$status</td>
-                <td><button class='btn btn-secondary btn-sm' type='submit' value='$reportId' onclick='viewReport($reportId)'>Review Report</button></td>
+                <td><button class='btn btn-success btn-sm' type='submit' value='$reportId' onclick='viewReport($reportId)'>Review Report</button></td>
                 </tr>";
     }
 }
@@ -74,7 +74,7 @@ if (isset($_POST['sort'])) {
                 <td>$reporter</td>
                 <td>$dateReported</td>
                 <td>$status</td>
-                <td><button class='btn btn-secondary btn-sm' type='submit' value='$reportId' onclick='viewReport($reportId)'>Review Report</button></td>
+                <td><button class='btn btn-success btn-sm' type='submit' value='$reportId' onclick='viewReport($reportId)'>Review Report</button></td>
                 </tr>";
     }
 }
@@ -117,7 +117,7 @@ if (isset($_POST['filter'])) {
                 <td>$reporter</td>
                 <td>$dateReported</td>
                 <td>$status</td>
-                <td><button class='btn btn-secondary btn-sm' type='submit' value='$reportId' onclick='viewReport($reportId)'>Review Report</button></td>
+                <td><button class='btn btn-success btn-sm' type='submit' value='$reportId' onclick='viewReport($reportId)'>Review Report</button></td>
                 </tr>";
     }
 }
@@ -158,7 +158,7 @@ if (isset($_POST['invalidated'])) {
                 <td>$reportId</td>
                 <td>$reporter</td>
                 <td>$dateReported</td>
-                <td><button class='btn btn-secondary btn-sm' type='submit' value='$reportId' onclick='viewInvalidatedReport($reportId)'>Review Report</button></td>
+                <td><button class='btn btn-success btn-sm' type='submit' value='$reportId' onclick='viewInvalidatedReport($reportId)'>Review Report</button></td>
                 </tr>";
     }
     echo "
@@ -221,104 +221,150 @@ if (isset($_POST['report'])) {
 
     echo "
     <div class='modal-body'>
-    <div class='reviewReport-PopUp '>
-    <div id='repInfo'>
-    <h5 class='reviewReport'>Report Information</h5>
-    <h7 class='paddingLeft'>Report ID: $reportId</h7>
-    <br>
-    <h7 class='paddingLeft'>Report Type: $reportType</h7>
-    <br>
-    <h7 class='paddingLeft'>Date of recent travel: $dateRecentTravel</h7>
-    <br>
-    <br>
-    </div>
-    <div id='sympExpr'>
-    <h5 class='reviewReport'>Symptoms Experienced</h5>
-    <div id='vacSideEffect' class='paddingLeft'>
-    <h7> <b> Vaccine Side Effect: </b></h7>
-    <ul>
-    ";
-    if ($vaccineSymptoms[0] === "") {
-        echo "<li>None</li>";
-    } else {
-        foreach ($vaccineSymptoms as $vacSymp) {
-            echo "<li>$vacSymp</li>";
+    <div class='container-fluid'>
+    <div class='row'>
+        <div class='col'>
+            <h5 class='reviewReport'>Report Information</h5>
+            <h7 class='paddingLeft'>Report ID: $reportId</h7>
+            <br>
+            <h7 class='paddingLeft'>Report Type: $reportType</h7>
+            <br>
+            <h7 class='paddingLeft'>Date of recent travel: $dateRecentTravel</h7>
+            <br>
+            </div>
+        <div class='col'>
+        <h5 class='reviewReport'>Symptoms Experienced</h5>
+        <h7> <b> Vaccine Side Effect: </b></h7>
+        <ul>
+        ";
+        if ($vaccineSymptoms[0] === "") {
+            echo "<li>None</li>";
+        } else {
+            foreach ($vaccineSymptoms as $vacSymp) {
+                echo "<li>$vacSymp</li>";
+            }
         }
-    }
 
-    echo "
+        echo "
+        </ul>
+        </div>
+        </div>
+        <br>
+    <div class='row'>
+    <div class='col'>
+        <h5>Applicable COVID-19 Symptoms:</h5>
+        <div id='covidSymp'>
+        <ul>";
+        if ($covid19Symptoms[0] === "") {
+            echo "<li>None</li>";
+        } else {
+            foreach ($covid19Symptoms as $covSymp) {
+                echo "<li>$covSymp</li>";
+            }
+        }
+
+        echo "
     </ul>
     </div>
-    <h5>Applicable COVID-19 Symptoms:</h5>
-    <div id='covidSymp' class='paddingLeft'>
-    <ul>";
-    if ($covid19Symptoms[0] === "") {
-        echo "<li>None</li>";
-    } else {
-        foreach ($covid19Symptoms as $covSymp) {
-            echo "<li>$covSymp</li>";
-        }
-    }
-
-    echo "
-    </ul>
     </div>
-    <div id='repDetails'>
-    <h5>Additional Details:</h5>
-    <h7 class='paddingLeft'>$reportDetails</h7>
+    
+    <div class='col'>
+        <h5>Additional Details:</h5>
+        <h7 class='paddingLeft'>$reportDetails</h7>
+    </div>
+    </div>
     <br>
-    <br>
-    </div>
-    </div>
-    <div id='patInfo'>
+    <div class='row'>
+    <div class='col-6'>
     <h5 class='reviewReportH3 padd'>Patient Information</h5>
-    <h7 class='paddingLeft'><b> Patient Address: </b>   $patientAddress</h7>
+    <h7 class='paddingLeft'><b> Patient Address: </b>   <br> $patientAddress</h7>
     <br>
-    <h7 class='paddingLeft'> <b> Contact Number: </b>   $patientNum</h7>
-    </div>";
+    <h7 class='paddingLeft'> <b> Contact Number: </b> <br>  $patientNum</h7>
+    <br>
+    <h7 class='paddingLeft'><b> Report Status: </b> <br> $reportStatus</h7>
+    </div> 
+    </div>
+    ";
     if ($view == 1) {
-        echo "<h7 class='paddingLeft'><b> Report Status: </b> $reportStatus</h7>
-        </div> ";
         if ($reportStatus === 'Invalidated') {
             echo "
-             <div class='modal-footer'><button type='button' class='btn btn-secondary' id='backInvalidatedReport' onclick='showInvalidatedReports()'> Back </button></div>";
+             <div class='modal-footer'>
+             <button type='button' class='btn btn-secondary' id='backInvalidatedReport' onclick='showInvalidatedReports()'> Back </button></div>";
         }
     } else if ($view == 2) {
-        echo "<br> <h7 class='paddingLeft'> <b>Report Status: </b> </h7>";
+        echo "<br> 
+            <div class='col'>
+            <h7 class='paddingLeft'> <b>Report Status: </b> </h7>";
         if ($reportStatus == 'Verified') {
             echo "
             <select id='statusSelection' style='margin-left: 3%; margin-top:1%;'>
             <option value='Verified' selected>Verify</option>
             <option value='Invalidate'>Invalidate</option>
-            </select>";
+            </select>
+            </div>
+            </div>";
         } else if ($reportStatus == 'Invalidated') {
             echo "
             <select class='form-select col-lg-12' id='statusSelection'>
             <option value='Invalidate' selected>Invalidate</option>
             <option value='Verify'> Verify</option>
-            </select>";
+            </select>
+            </div>
+            </div>";
         }
         echo"
         </div>";
         if ($reportStatus === 'Invalidated') {
-            echo "<button type='button' class='btn btn-secondary reportButton mt-4' id='cancelBtnEditReport' onclick='viewInvalidatedReport($reportId)'> Cancel </button>";
+            echo "
+                <div class='modal-footer'>
+                
+                <button type='button' class='btn btn-secondary reportButtongenButton' id='cancelBtnEditReport' onclick='viewInvalidatedReport($reportId)'> Cancel </button>
+                ";
         } else {
-            echo "<button type='button' class='btn btn-secondary reportButton mt-4' id='cancelBtnEditReport' onclick='viewReport($reportId)'> Cancel </button>";
+            echo "
+                <div class='modal-footer'>
+                <button type='button' class='btn btn-secondary reportButton genButton' id='cancelBtnEditReport' onclick='viewReport($reportId)'> Cancel </button>
+                ";
         }
         echo "
-        <button type='button' class='btn btn-success mt-4 mr-3' id='confirmBtnEditReport' name='confirmBtnEditReport' onclick='changeRepStatus($reportId, \"$reportStatus\")'> Confirm </button>
-        </div>";
+        <button type='button' class='btn btn-success genButton' id='confirmBtnEditReport' name='confirmBtnEditReport' onclick='changeRepStatus($reportId, \"$reportStatus\")'> Confirm </button>
+        
+    </div>
+    </div>
+   
+    <br>
+    </div>
+    
+    <div id='sympExpr'>
+    
+    </div>
+    
+    </div>
+    <div id='repDetails'>
+
+    <br>
+    <br>
+    </div>
+    </div>
+    <div id='patInfo'>
+    </div>";
     }
 
 
 echo"
-    <div class='modal-footer'>
+    
     ";
 if ($view == 1) {
     if ($reportStatus === 'Invalidated') {
-       // echo "<button class='btn btn-primary editRepBtn' value='$reportId' onclick='editInvalidatedReport($reportId)'>Change report status</button>";
+       // echo "
+        //<div class='modal-footer'>
+        //<button class='btn btn-primary editRepBtn' value='$reportId' onclick='editInvalidatedReport($reportId)'>Change report status</button>";
     } else {
-        echo "<button class='btn btn-primary editRepBtn' value='$reportId' onclick='editReport($reportId)'> Change report status</button>";
+        echo "
+<div class='modal-footer'>
+<button class='btn btn-primary editRepBtn' value='$reportId' onclick='editReport($reportId)'> Change report status</button>
+</div>";
+
     }
 }
 echo"

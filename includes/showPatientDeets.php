@@ -16,7 +16,7 @@ while ($stmt->fetch()) {
             <td class='columnName'>$category</td>
             <td class='columnName'>$patientAddress</td>
             <td class='columnName'>$contactNum</td>
-            <td class='columnName'><button id='postVac' class='viewReportBtn btn-success' type='submit' onclick='clickModalRow($patientID)'>Add Vitals</button></td></td>
+            <td class='columnName'><button class='btn-success addVButt' type='submit' onclick='clickModalRow($patientID)'>Add Vitals</button></td></td>
             </tr>";
 }
 // require_once '../require/getPatientDetails.php';

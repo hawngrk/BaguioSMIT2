@@ -616,7 +616,6 @@ include_once("../includes/database.php") ?>
         </div>
     </div>
 
-
     <div id="addVaccSite" class="modal-window">
         <div class="content-modal">
             <div class="modal-header">

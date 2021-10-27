@@ -73,10 +73,13 @@
                     </button> -->
                     <!--Search Input and Button-->
                 <div class="search-containerScreening col">
-                    <input id="searchPatientVaxPer" type="text" placeholder="Search" class="searchHome"name="searchPatient" onkeyup="searchPatient()">
-                    <button type="submit" id="searchPatientBtn" name="searchPatientBtn" onclick="searchPatient()">
-                        <i class="fa fa-search"></i>
-                    </button>
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search" onkeyup="searchPatient()">
+                        <button type="submit" class="buttonTop5" name="searchPatientBtn" onclick="searchPatient()">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
                 </div>
                     <div class="col-sm-auto">
                     <button type="button" class="btn btn-outline-dark buttonTop3 float-right">
@@ -90,7 +93,7 @@
             </nav>
 
             <!--Table Part-->
-            <table class="table table-row table-hover tableBrgy tableScreening" id="patientTable">
+            <table class="table table-row table-hover tableBrgy tableScreening tableScroll4" id="patientTable">
                 <thead>
                     <tr class="labelRow">
                         <th class="columnName" scope="col">ID</th>
