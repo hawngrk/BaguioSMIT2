@@ -180,8 +180,8 @@ include_once("../includes/database.php") ?>
                         <td>$contact</td>
                         <td>
                             <div class='tableCenterCont'>
-                                <button class='buttonTransparent' onclick='event.stopPropagation();archive(1, clickArchive, $id)'><i class='fa fa-archive'></i></button>
-                                <button type='button' class='viewReportBtn buttonTransparent' id='viewButton' onclick='viewPatient($id)'><i class='fas fa-eye'></i></button
+                                <button class='actionButt buttonTransparent' onclick='event.stopPropagation();archive(1, clickArchive, $id)'><i class='fa fa-archive'></i></button>
+                                <button type='button' class='actionButt viewReportBtn buttonTransparent' id='viewButton' onclick='viewPatient($id)'><i class='fas fa-eye'></i></button
                             </div>
                         </td>
                     </tr>";

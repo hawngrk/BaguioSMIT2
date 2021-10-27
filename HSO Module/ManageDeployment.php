@@ -191,9 +191,9 @@ include_once("../includes/database.php") ?>
                         <td>$date</td>
                         <td>$stubs</td>
                         <td>
-                            <div style='text-align: left;'>
+                            <div class='tableCenterCont'>
                                 <button class='buttonTransparent actionButt' onclick='event.stopPropagation(); archive(1, clickArchive, $driveId)'><i class='fa fa-archive'></i></button>
-                                <button class='buttonTransparent ml-2' onclick=''><i class='far fa-edit'></i></button>
+                                <button class='buttonTransparent actionButt' onclick=''><i class='far fa-edit'></i></button>
                            
                             </div>
                         </td>
@@ -246,119 +246,119 @@ include_once("../includes/database.php") ?>
                             </div>
                         </nav>
 
-                            <!-- Tab panes -->
-                            <div class="tab-content">
-                                <div role="tabpanel" class="tab-pane active" id="FirstDosePage">
-                                    <div class="row">
-                                        <div class="col">
-                                            <div class="form-group">
-                                                <h4>FIRST DOSE</h4>
-                                                <label for="site">Select Vaccination Site: </label>
-                                                <select name="site" id="site">
-                                                    <?php
-                                                    require '../require/getVaccinationSites.php';
-                                                    foreach ($vaccinationSites as $vs) {
-                                                        $vacSite = $vs->getVaccinationSiteLocation();
-                                                        $id = $vs->getVaccinationSiteId();
-                                                        echo "<option value =$id>$vacSite</option>";
-                                                    }
-                                                    ?>
-                                                </select>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="VaccineBr">Select Vaccine Brand: </label>
-                                                <select name="vaccineBrand" id="VaccineBr">
-                                                    <?php
-                                                    require '../require/getVaccine.php';
-                                                    foreach ($vaccines as $vac) {
-                                                        $vacName = $vac->getVaccName();
-                                                        $vacId = $vac->getVaccId();
-                                                        echo "<option value = $vacId>$vacName</option>";
-                                                    }
-                                                    ?>
-                                                </select>
-                                            </div>
+                        <!-- Tab panes -->
+                        <div class="tab-content">
+                            <div role="tabpanel" class="tab-pane active" id="FirstDosePage">
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <h4>FIRST DOSE</h4>
+                                            <label for="site">Select Vaccination Site: </label>
+                                            <select name="site" id="site">
+                                                <?php
+                                                require '../require/getVaccinationSites.php';
+                                                foreach ($vaccinationSites as $vs) {
+                                                    $vacSite = $vs->getVaccinationSiteLocation();
+                                                    $id = $vs->getVaccinationSiteId();
+                                                    echo "<option value =$id>$vacSite</option>";
+                                                }
+                                                ?>
+                                            </select>
                                         </div>
-                                        <div class="col">
-                                            <div class="form-group">
-                                                <label for="PatientCateg">Category of patients: </label>
-                                                <select name="patientCategory" id="PatientCateg">
-                                                    <option value="A1: Health Care Workers">A1: Health Care Workers</option>
-                                                    <option value="A2: Senior Citizens">A2: Senior Citizens</option>
-                                                    <option value="A3: Adult with Comorbidity">A3: Adult with Comorbidity</option>
-                                                    <option value="A4: Frontline Personnel in Essential Sector">A4: Frontline
-                                                        Personnel
-                                                        in Essential Sector
-                                                    </option>
-                                                    <option value="A5: Indigent Population">A5: Indigent Population</option>
-                                                    <option value="A6: Rest Of The Population">A6: Rest Of The Population</option>
-                                                </select>
-                                            </div>
-
-                                            <div class="form-group ">
-                                                <label>Date: </label><br>
-                                                <input type="date" id="date" name="date" class="dateForm">
-                                            </div>
+                                        <div class="form-group">
+                                            <label for="VaccineBr">Select Vaccine Brand: </label>
+                                            <select name="vaccineBrand" id="VaccineBr">
+                                                <?php
+                                                require '../require/getVaccine.php';
+                                                foreach ($vaccines as $vac) {
+                                                    $vacName = $vac->getVaccName();
+                                                    $vacId = $vac->getVaccId();
+                                                    echo "<option value = $vacId>$vacName</option>";
+                                                }
+                                                ?>
+                                            </select>
                                         </div>
-
                                     </div>
-                                </div>
-                                <div role="tabpanel" class="tab-pane" id="SecondDosePage">
-                                    <div class="row">
-                                        <div class="col">
-                                            <div class="form-group">
-                                                <h4>SECOND DOSE</h4>
-                                                <label for="site">Select Vaccination Site: </label>
-                                                <select name="site" id="site">
-                                                    <?php
-                                                    require '../require/getVaccinationSites.php';
-                                                    foreach ($vaccinationSites as $vs) {
-                                                        $vacSite = $vs->getVaccinationSiteLocation();
-                                                        $id = $vs->getVaccinationSiteId();
-                                                        echo "<option value =$id>$vacSite</option>";
-                                                    }
-                                                    ?>
-                                                </select>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="VaccineBr">Select Vaccine Brand: </label>
-                                                <select name="vaccineBrand" id="VaccineBr">
-                                                    <?php
-                                                    require '../require/getVaccine.php';
-                                                    foreach ($vaccines as $vac) {
-                                                        $vacName = $vac->getVaccName();
-                                                        $vacId = $vac->getVaccId();
-                                                        echo "<option value = $vacId>$vacName</option>";
-                                                    }
-                                                    ?>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col">
-                                            <div class="form-group">
-                                                <label for="PatientCateg">Category of patients: </label>
-                                                <select name="patientCategory" id="PatientCateg">
-                                                    <option value="A1: Health Care Workers">A1: Health Care Workers</option>
-                                                    <option value="A2: Senior Citizens">A2: Senior Citizens</option>
-                                                    <option value="A3: Adult with Comorbidity">A3: Adult with Comorbidity</option>
-                                                    <option value="A4: Frontline Personnel in Essential Sector">A4: Frontline
-                                                        Personnel
-                                                        in Essential Sector
-                                                    </option>
-                                                    <option value="A5: Indigent Population">A5: Indigent Population</option>
-                                                    <option value="A6: Rest Of The Population">A6: Rest Of The Population</option>
-                                                </select>
-                                            </div>
-
-                                            <div class="form-group ">
-                                                <label>Date: </label><br>
-                                                <input type="date" id="date" name="date" class="dateForm">
-                                            </div>
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label for="PatientCateg">Category of patients: </label>
+                                            <select name="patientCategory" id="PatientCateg">
+                                                <option value="A1: Health Care Workers">A1: Health Care Workers</option>
+                                                <option value="A2: Senior Citizens">A2: Senior Citizens</option>
+                                                <option value="A3: Adult with Comorbidity">A3: Adult with Comorbidity</option>
+                                                <option value="A4: Frontline Personnel in Essential Sector">A4: Frontline
+                                                    Personnel
+                                                    in Essential Sector
+                                                </option>
+                                                <option value="A5: Indigent Population">A5: Indigent Population</option>
+                                                <option value="A6: Rest Of The Population">A6: Rest Of The Population</option>
+                                            </select>
                                         </div>
 
+                                        <div class="form-group ">
+                                            <label>Date: </label><br>
+                                            <input type="date" id="date" name="date" class="dateForm">
+                                        </div>
                                     </div>
+
                                 </div>
                             </div>
+                            <div role="tabpanel" class="tab-pane" id="SecondDosePage">
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <h4>SECOND DOSE</h4>
+                                            <label for="site">Select Vaccination Site: </label>
+                                            <select name="site" id="site">
+                                                <?php
+                                                require '../require/getVaccinationSites.php';
+                                                foreach ($vaccinationSites as $vs) {
+                                                    $vacSite = $vs->getVaccinationSiteLocation();
+                                                    $id = $vs->getVaccinationSiteId();
+                                                    echo "<option value =$id>$vacSite</option>";
+                                                }
+                                                ?>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="VaccineBr">Select Vaccine Brand: </label>
+                                            <select name="vaccineBrand" id="VaccineBr">
+                                                <?php
+                                                require '../require/getVaccine.php';
+                                                foreach ($vaccines as $vac) {
+                                                    $vacName = $vac->getVaccName();
+                                                    $vacId = $vac->getVaccId();
+                                                    echo "<option value = $vacId>$vacName</option>";
+                                                }
+                                                ?>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label for="PatientCateg">Category of patients: </label>
+                                            <select name="patientCategory" id="PatientCateg">
+                                                <option value="A1: Health Care Workers">A1: Health Care Workers</option>
+                                                <option value="A2: Senior Citizens">A2: Senior Citizens</option>
+                                                <option value="A3: Adult with Comorbidity">A3: Adult with Comorbidity</option>
+                                                <option value="A4: Frontline Personnel in Essential Sector">A4: Frontline
+                                                    Personnel
+                                                    in Essential Sector
+                                                </option>
+                                                <option value="A5: Indigent Population">A5: Indigent Population</option>
+                                                <option value="A6: Rest Of The Population">A6: Rest Of The Population</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="form-group ">
+                                            <label>Date: </label><br>
+                                            <input type="date" id="date" name="date" class="dateForm">
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
                         <label class='label' for="stubs">Number of Stubs: </label>
                         <input type="input" id="stubs" name="stubs" class="stubs" placeholder="ex. 100">
                         <br>
@@ -388,53 +388,53 @@ include_once("../includes/database.php") ?>
                         </div>
 
                     </div>
-                        <hr>
+                    <hr>
 
                     <div class="modal-footer">
                         <button type="button" class="btn btn-danger" onclick="closeModal('DeployModal')"> Cancel
                         </button>
                         <button type="button" class="btn btn-success" onclick="add('Deployment', addDep)"> Add</button>
                     </div>
-                    </div>
-
                 </div>
+
             </div>
-        </form>
+    </div>
+    </form>
 
 
-        <!--Add Health District Modal-->
-        <div id="HealthD" class="modal-window">
-            <div class="content-modal">
-                <div class="modal-header">
-                    <h4 class="modal-title">Health Districts</h4>
-                    <button type="button" class="close" data-dismiss="modal" onclick="closeModal('HealthD')">
-                        <i class='fas fa-window-close'></i>
-                    </button>
-                </div>
+    <!--Add Health District Modal-->
+    <div id="HealthD" class="modal-window">
+        <div class="content-modal">
+            <div class="modal-header">
+                <h4 class="modal-title">Health Districts</h4>
+                <button type="button" class="close" data-dismiss="modal" onclick="closeModal('HealthD')">
+                    <i class='fas fa-window-close'></i>
+                </button>
+            </div>
 
-                <div id="healthDMain" class="modal-body">
-                    <div id="distContent" class="tableScroll2 border">
-                        <table class="table table-hover">
-                            <thead class="tableHeader">
-                            <tr>
-                                <th scope="col">Health District Id</th>
-                                <th scope="col">District Name</th>
-                                <th scope="col">Contact Number</th>
-                                <th scope="col">Action</th>
-                            </tr>
-                            </thead>
+            <div id="healthDMain" class="modal-body">
+                <div id="distContent" class="tableScroll2 border">
+                    <table class="table table-hover">
+                        <thead class="tableHeader">
+                        <tr>
+                            <th scope="col">Health District Id</th>
+                            <th scope="col">District Name</th>
+                            <th scope="col">Contact Number</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                        </thead>
 
-                            <?php
-                            require_once '../require/getHealthDistrict.php';
+                        <?php
+                        require_once '../require/getHealthDistrict.php';
 
-                            $count = 0;
-                            foreach ($health_district as $hd) {
-                                $count++;
-                                $districtId = $hd->getHealthDistrictId();
-                                $districtName = $hd->getHealthDistrictName();
-                                $number = $hd->getContact();
+                        $count = 0;
+                        foreach ($health_district as $hd) {
+                            $count++;
+                            $districtId = $hd->getHealthDistrictId();
+                            $districtName = $hd->getHealthDistrictName();
+                            $number = $hd->getContact();
 
-                                echo "<tr class='table-row' onclick='showDistrict(this)'>
+                            echo "<tr class='table-row' onclick='showDistrict(this)'>
                                     <td>$districtId</td>
                                     <td>$districtName</td>
                                     <td>$number</td>
@@ -444,43 +444,43 @@ include_once("../includes/database.php") ?>
                                         </div>
                                     </td>
                                   </tr>";
-                            }
-                            ?>
-                        </table>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger float-right" onclick="closeModal('HealthD')">Cancel</button>
-                    <button type="button" class="btn btn-primary float-right" onclick="openModal('HealthDModal')">
-                        <i class="fas fa-plus"></i>
-                        Add Health District
-                    </button>
+                        }
+                        ?>
+                    </table>
                 </div>
             </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger float-right" onclick="closeModal('HealthD')">Cancel</button>
+                <button type="button" class="btn btn-primary float-right" onclick="openModal('HealthDModal')">
+                    <i class="fas fa-plus"></i>
+                    Add Health District
+                </button>
+            </div>
         </div>
+    </div>
 
-        <div id="HealthDModal" class="modal-window">
-            <div class="content-modal">
-                <div class="modal-header">
-                    <h4 class="modal-title">Add Health District</h4>
-                    <button type="button" class="close" data-dismiss="modal" onclick="closeModal('HealthDModal')">
-                        <i class='fas fa-window-close'></i>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-7">
+    <div id="HealthDModal" class="modal-window">
+        <div class="content-modal">
+            <div class="modal-header">
+                <h4 class="modal-title">Add Health District</h4>
+                <button type="button" class="close" data-dismiss="modal" onclick="closeModal('HealthDModal')">
+                    <i class='fas fa-window-close'></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-7">
                         <label>Name of Health District:</label>
                         <input class="districtWidth float-right" type="text" id="newHealthDistrict" name="newHealthDistrict">
-                        </div>
-                        <div class="w-100 d-none d-md-block"></div>
-                        <div class="col-7">
-                            <label>Health District Contact Number:</label>
-                            <input class="contactWidth float-right" type="text" id="contactNumber" name="contactNumber">
-                        </div>
                     </div>
-                    <div class="row">
-                        <div class="col">
+                    <div class="w-100 d-none d-md-block"></div>
+                    <div class="col-7">
+                        <label>Health District Contact Number:</label>
+                        <input class="contactWidth float-right" type="text" id="contactNumber" name="contactNumber">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
                         <label for="optionBrgy">Select Barangay/s: </label>
                         <a href="#" class="w3-bar-item w3-button">All</a>
                         <a href="#" class="w3-bar-item w3-button">None</a>
@@ -489,108 +489,108 @@ include_once("../includes/database.php") ?>
                         <select class="sortWidth" id="sort">
                             <option value="brgy1">None</option>
                         </select>
-                        </div>
                     </div>
+                </div>
 
 
-                    <div class="AddHealthD-option">
-                        <div class="row tableScroll2">
-                            <ul>
-                                <?php
-                                require_once "../require/getBarangay.php";
+                <div class="AddHealthD-option">
+                    <div class="row tableScroll2">
+                        <ul>
+                            <?php
+                            require_once "../require/getBarangay.php";
 
 
-                                foreach ($barangays as $b) {
-                                    $id = $b->getBarangayId();
-                                    $name = $b->getBarangayName();
-                                    echo " <li>
+                            foreach ($barangays as $b) {
+                                $id = $b->getBarangayId();
+                                $name = $b->getBarangayName();
+                                echo " <li>
                                     <input class = 'checkboxes' type='checkbox' onclick='selected($id)'>
                                     <label>$name</label><br>
                                 </li> ";
-                                }
-                                ?>
-                            </ul>
-
-                        </div>
+                            }
+                            ?>
+                        </ul>
 
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" onclick="closeModal('HealthDModal')"> Cancel
-                        </button>
-                        <button type="button" class="btn btn-success" onclick="add('Health District', addDistrict)">
-                            Add
-                        </button>
 
-                    </div>
                 </div>
-            </div>
-        </div>
-
-
-        <div id="HealthDView" class="modal-window">
-            <div class="content-modal">
-                <div class="modal-header">
-                    <h4 class="modal-title">Add Health District</h4>
-                    <button type="button" class="close" data-dismiss="modal" onclick="closeModal('HealthDView')">
-                        <i class='fas fa-window-close'></i>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" onclick="closeModal('HealthDModal')"> Cancel
                     </button>
-                </div>
-
-                <div id="healthDContent" class="modal-body">
-
-                </div>
-
-            </div>
-        </div>
-
-        <div id="HealthDBarangay" class="modal-window">
-            <div class="content-modal">
-                <div class="modal-header">
-                    <h4 class="modal-title">Add New Barangay</h4>
-                    <button type="button" class="close" data-dismiss="modal" onclick="closeModal('HealthDBarangay')">
-                        <i class='fas fa-window-close'></i>
+                    <button type="button" class="btn btn-success" onclick="add('Health District', addDistrict)">
+                        Add
                     </button>
-                </div>
-
-                <div id="healthDBarangayContent" class="modal-body">
 
                 </div>
-
             </div>
         </div>
     </div>
 
-<!--Add Vaccination Sites Modal-->
-    <div id="vaccSiteModal" class="modal-window">
+
+    <div id="HealthDView" class="modal-window">
         <div class="content-modal">
             <div class="modal-header">
-                <h4 class="modal-title">Vaccination Sites</h4>
-                <button type="button" class="close" data-dismiss="modal" onclick="closeModal('vaccSiteModal')">
+                <h4 class="modal-title">Add Health District</h4>
+                <button type="button" class="close" data-dismiss="modal" onclick="closeModal('HealthDView')">
                     <i class='fas fa-window-close'></i>
                 </button>
             </div>
-            <div class="modal-body" id="siteModal">
-                <div id="siteContent" class="tableScroll2 border">
-                    <table class="table table-row table-hover">
-                        <thead class="tableHeader">
-                        <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Vaccination Site Id</th>
-                            <th scope="col">Location</th>
-                            <th scope="col">Action</th>
-                        </tr>
-                        </thead>
 
-                        <?php
-                        require_once '../require/getVaccinationSites.php';
+            <div id="healthDContent" class="modal-body">
 
-                        $count = 0;
-                        foreach ($vaccinationSites as $vs) {
-                            $count++;
-                            $siteId = $vs->getVaccinationSiteId();
-                            $vaccinationSite = $vs->getVaccinationSiteLocation();
+            </div>
 
-                            echo "<tr class='table-row''>
+        </div>
+    </div>
+
+    <div id="HealthDBarangay" class="modal-window">
+        <div class="content-modal">
+            <div class="modal-header">
+                <h4 class="modal-title">Add New Barangay</h4>
+                <button type="button" class="close" data-dismiss="modal" onclick="closeModal('HealthDBarangay')">
+                    <i class='fas fa-window-close'></i>
+                </button>
+            </div>
+
+            <div id="healthDBarangayContent" class="modal-body">
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!--Add Vaccination Sites Modal-->
+<div id="vaccSiteModal" class="modal-window">
+    <div class="content-modal">
+        <div class="modal-header">
+            <h4 class="modal-title">Vaccination Sites</h4>
+            <button type="button" class="close" data-dismiss="modal" onclick="closeModal('vaccSiteModal')">
+                <i class='fas fa-window-close'></i>
+            </button>
+        </div>
+        <div class="modal-body" id="siteModal">
+            <div id="siteContent" class="tableScroll2 border">
+                <table class="table table-row table-hover">
+                    <thead class="tableHeader">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Vaccination Site Id</th>
+                        <th scope="col">Location</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                    </thead>
+
+                    <?php
+                    require_once '../require/getVaccinationSites.php';
+
+                    $count = 0;
+                    foreach ($vaccinationSites as $vs) {
+                        $count++;
+                        $siteId = $vs->getVaccinationSiteId();
+                        $vaccinationSite = $vs->getVaccinationSiteLocation();
+
+                        echo "<tr class='table-row''>
                                     <td>$count</td>
                                     <td>$siteId</td>
                                     <td>$vaccinationSite</td>
@@ -600,85 +600,85 @@ include_once("../includes/database.php") ?>
                                         </div>
                                     </td>
                                   </tr>";
-                        }
-                        ?>
-                    </table>
-                </div>
+                    }
+                    ?>
+                </table>
             </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button"  class="btn btn-danger float-right" onclick="closeModal('vaccSiteModal')">Cancel</button>
+            <button type="button" class="btn btn-primary float-right" onclick="openModal('addVaccSite')">
+                <i class="fas fa-plus"></i>
+                Add Vaccination Site
+            </button>
+        </div>
+    </div>
+</div>
+
+<div id="addVaccSite" class="modal-window">
+    <div class="content-modal">
+        <div class="modal-header">
+            <h4 class="modal-title">Add Vaccination Site</h4>
+            <button type="button" class="close" data-dismiss="modal" onclick="closeModal('addVaccSite')">
+                &times;
+            </button>
+        </div>
+        <div class="modal-body">
+            <label>Vaccine Site Location:</label>
+            <input class="districtWidth" type="text" id="newVaccinationSite" name="newVaccinationSite">
+
             <div class="modal-footer">
-                <button type="button"  class="btn btn-danger float-right" onclick="closeModal('vaccSiteModal')">Cancel</button>
-                <button type="button" class="btn btn-primary float-right" onclick="openModal('addVaccSite')">
-                    <i class="fas fa-plus"></i>
-                    Add Vaccination Site
+                <button type="button" class="btn btn-danger" onclick="closeModal('addVaccSite')"> Cancel
+                </button>
+                <button type="button" class="btn btn-success"
+                        onclick='add("Vaccination Site",addSite, "vaccSiteModal")'> Add
                 </button>
             </div>
         </div>
     </div>
+</div>
 
-    <div id="addVaccSite" class="modal-window">
-        <div class="content-modal">
-            <div class="modal-header">
-                <h4 class="modal-title">Add Vaccination Site</h4>
-                <button type="button" class="close" data-dismiss="modal" onclick="closeModal('addVaccSite')">
-                    &times;
-                </button>
-            </div>
-            <div class="modal-body">
-                <label>Vaccine Site Location:</label>
-                <input class="districtWidth" type="text" id="newVaccinationSite" name="newVaccinationSite">
-
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" onclick="closeModal('addVaccSite')"> Cancel
-                    </button>
-                    <button type="button" class="btn btn-success"
-                            onclick='add("Vaccination Site",addSite, "vaccSiteModal")'> Add
-                    </button>
-                </div>
-            </div>
+<div id="archived" class="modal-window">
+    <div class="content-modal-table">
+        <div class="modal-header">
+            <h4 class="modal-title">Archived Vaccination Drives</h4>
+            <button type="button" class="close" data-dismiss="modal" onclick="closeModal('archived')">
+                <i class='fas fa-window-close'></i>
+            </button>
         </div>
-    </div>
+        <div id='archivedContent' class="modal-body">
+            <table class="table table-row table-hover tableModal">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Drive Id</th>
+                    <th scope="col">Location</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">No. of Stubs</th>
+                    <th scope="col">Action</th>
+                </tr>
+                </thead>
 
-    <div id="archived" class="modal-window">
-        <div class="content-modal-table">
-            <div class="modal-header">
-                <h4 class="modal-title">Archived Vaccination Drives</h4>
-                <button type="button" class="close" data-dismiss="modal" onclick="closeModal('archived')">
-                    <i class='fas fa-window-close'></i>
-                </button>
-            </div>
-            <div id='archivedContent' class="modal-body">
-                <table class="table table-row table-hover tableModal">
-                    <thead>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Drive Id</th>
-                        <th scope="col">Location</th>
-                        <th scope="col">Date</th>
-                        <th scope="col">No. of Stubs</th>
-                        <th scope="col">Action</th>
-                    </tr>
-                    </thead>
+                <?php
+                require_once '../require/getVaccinationDrive.php';
+                require_once '../require/getVaccinationSites.php';
 
-                    <?php
-                    require_once '../require/getVaccinationDrive.php';
-                    require_once '../require/getVaccinationSites.php';
-
-                    $count = 0;
-                    foreach ($vaccination_drive as $vd) {
-                        if ($vd->getArchive() == 1) {
-                            $count++;
-                            $driveId = $vd->getDriveId();
-                            $date = $vd->getVaccDate();
-                            $stubs = $vd->getVaccStubs();
+                $count = 0;
+                foreach ($vaccination_drive as $vd) {
+                    if ($vd->getArchive() == 1) {
+                        $count++;
+                        $driveId = $vd->getDriveId();
+                        $date = $vd->getVaccDate();
+                        $stubs = $vd->getVaccStubs();
 
 
-                            foreach ($vaccinationSites as $vs) {
-                                if ($vs->getVaccinationSiteId() == $vd->getVaccDriveVaccSiteId()) {
-                                    $vaccinationSite = $vs->getVaccinationSiteLocation();
-                                }
+                        foreach ($vaccinationSites as $vs) {
+                            if ($vs->getVaccinationSiteId() == $vd->getVaccDriveVaccSiteId()) {
+                                $vaccinationSite = $vs->getVaccinationSiteLocation();
                             }
+                        }
 
-                            echo "<tr class='table-row'>
+                        echo "<tr class='table-row'>
                         <td>$count</td>
                         <td>$driveId</td>
                         <td>$vaccinationSite</td>
@@ -691,14 +691,14 @@ include_once("../includes/database.php") ?>
                         </td>
              
                       </tr>";
-                        }
                     }
+                }
 
-                    ?>
-                </table>
-            </div>
+                ?>
+            </table>
         </div>
     </div>
+</div>
 </div>
 
 <script>

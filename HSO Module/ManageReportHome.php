@@ -139,7 +139,7 @@ include_once("../includes/database.php") ?>
                     <div class="tableReport tableScroll1 col">
                         <table class="table table-hover tableReport" id="reportsTable">
                             <thead>
-                            <tr>
+                            <tr class="tableCenterCont">
                                 <th scope="col">#</th>
                                 <th scope="col">Report ID</th>
                                 <th scope="col">Name of Reporter</th>
@@ -166,7 +166,7 @@ include_once("../includes/database.php") ?>
                                             $reporter = $pat->getPatientFullName();
                                         }
                                     }
-                                    echo "<tr>
+                                    echo "<tr class='tableCenterCont'>
                                           <td>$count</td>
                                           <td>$reportId</td>
                                           <td>$reporter</td>
