@@ -166,7 +166,7 @@ include_once("../includes/database.php") ?>
                                             $reporter = $pat->getPatientFullName();
                                         }
                                     }
-                                    echo "<tr class='tableCenterCont'>
+                                    echo "<tr class='tableCenterCont' onclick='viewReport($reportId)'>
                                           <td>$count</td>
                                           <td>$reportId</td>
                                           <td>$reporter</td>

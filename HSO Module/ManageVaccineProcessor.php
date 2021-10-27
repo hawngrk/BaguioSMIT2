@@ -15,7 +15,7 @@ if (isset($_POST['search'])) {
 
     echo "
      <thead>
-            <tr>
+            <tr class='tableCenterCont'>
                 <th scope='col'>Vaccine Lot ID</th>
                 <th scope='col'>Vaccine Name</th>
                 <th scope='col'>Date Received</th>
@@ -32,16 +32,16 @@ if (isset($_POST['search'])) {
     $stmt->execute();
     $stmt->bind_result($vaccineLotId, $vaccName, $dateStored, $vaccExp, $batchQty, $vaccQty);
     while ($stmt->fetch()) {
-        echo "<tr onclick='showVaccine(this)'>
+        echo "<tr class='tableCenterCont' onclick='showVaccine(this)'>
                 <td>$vaccineLotId</td>
                 <td>$vaccName</td>
                 <td>$dateStored</td>
                 <td>$vaccExp</td>
                 <td>$batchQty</td>
                 <td>$vaccQty</td>
-                <td>   <div style='text-align: left;'>
-                                      <button type='button' class='buttonTransparent' onclick='event.stopPropagation();archive(1, clickArchive, $vaccineLotId)'><i class='fa fa-archive'></i></button>
-                                      <button type='button' class='viewReportBtn buttonTransparent' id='viewButton' onclick='viewVaccineDetails($vaccineLotId)'><i class='fas fa-eye'></i></button>
+                <td>   <div>
+                                      <button type='button' class='buttonTransparent actionButt' onclick='event.stopPropagation();archive(1, clickArchive, $vaccineLotId)'><i class='fa fa-archive'></i></button>
+                                      <button type='button' class='viewReportBtn buttonTransparent actionButt' id='viewButton' onclick='viewVaccineDetails($vaccineLotId)'><i class='fas fa-eye'></i></button>
                                 </div> </td>
                 </tr>";
         $count++;
