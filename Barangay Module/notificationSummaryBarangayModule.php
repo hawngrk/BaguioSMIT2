@@ -112,7 +112,7 @@ include_once("../includes/database.php")
             <div class="row">
                 <div class="col my-auto">
                     <div class="input-group">
-                        <input id="searchPatientQueue" type="search" placeholder="Search" class="searchHome"name="searchPatient" onkeyup="searchPatient()">
+                        <input id="searchPatientQueue" type="search" placeholder="Search" class="form-control" name="searchPatient" onkeyup="searchPatient()">
                         <button type="submit" class="buttonTop5" name="searchPatientBtn" onclick="searchPatient()">
                             <i class="fa fa-search"></i>
                         </button>
