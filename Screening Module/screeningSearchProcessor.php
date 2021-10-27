@@ -49,42 +49,44 @@ if (isset($_POST['modalScreening'])) {
             $FullAddress = $ps->getHouseAdd() . $ps->getBrgy() .  $ps->getCity() .  $ps->getProvince() .  $ps->getRegion();
             $category = $ps->getPriorityGroup();
 
-            echo "<h4 class='ml-4'>$FName $LName</h4>
+            echo "<h3>$FName $LName</h3>
             <hr>
             <div class='row'>
             <div class='col'>
-            <h6 class='ml-6'>Address: </h6> <p>$FullAddress<p>
-            <h6>Category:</h6><p>$category</p>
-            <hr>
-            <h5>Medical Background</h5>
-            <h6>Allergies:</h6>
-            <h6>Commorbidities::</h6>
-            <hr>
-            <h5>Vaccination Details</h5>
-            <h6>Schedule:</h6>
-            <h6>Vax Site:</h6>
-            <h6>Vaccine:</h6>
-            <h6>Lot No.:</h6>
-            <hr>
+                <h5>Address: </h5> <p>$FullAddress<p>
+                <hr>
+                <h5>Category:</h5><p>$category</p>
+                <hr>
+                <h5>Medical Background</h5>
+                <h6>Allergies:</h6>
+                <h6>Commorbidities::</h6>
+                <hr>
+                <h5>Vaccination Details</h5>
+                <h6>Schedule:</h6>
+                <h6>Vax Site:</h6>
+                <h6>Vaccine:</h6>
+                <h6>Lot No.:</h6>
+                <hr>
             </div>
-            <div class='col'>
+            <div class='col-md-6'>
             <h5>Pre-Vaccine Vitals:</h5>
             <form>
-            Pulse Rate: <input id='pulseR' type='text' placeholder='Beats Per Minute' name='vitals'>
+            Pulse Rate: <br><input class='textInp'type='text' placeholder='Beats Per Minute' name='vitals'>
             <br>
-            Temperature: <input id='tempR' type='text' placeholder='in Celcius' name='vitals'>
+            Temperature: <br> <input class='textInp' type='text' placeholder='in Celcius' name='vitals'>
+            <br>
             <br>
             <strong>Blood Pressure</strong>
             <br>
-            Diastolic: <input id='bpRDias' type='text' placeholder='millimetres of mercury' name='vitals'>
+            Diastolic: <br><input class='textInp' type='text' placeholder='millimetres of mercury' name='vitals'>
             <br>
-            Systolic: <input id='bpRSys' type='text' placeholder='millimetres of mercury' name='vitals'>
+            Systolic: <br><input class='textInp' type='text' placeholder='millimetres of mercury' name='vitals'>
             </form>
             </div>
             </div>
             <div class='modal-footer'>
+            <button onclick=btnViewPostVac('close') type='button' class='btn btn-danger'> Cancel</button>            
             <button onclick=btnViewPostVac('add') id='addButtonId' type='button' class='btn btn-success' value=$id> Add</button>
-            <button onclick=btnViewPostVac('close') type='button' class='btn btn-danger'> Cancel</button>
             </div>
             </div>
             ";

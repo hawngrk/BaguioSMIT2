@@ -786,8 +786,8 @@ include_once("../includes/database.php") ?>
         active.style.backgroundColor = "#1D7195";
         active.style.fontcolor = "#FFFFFFFF";
         active.style.borderRadius = "12px";
-        idle1.style.backgroundColor = "rgba(49,51,53,0)"
-        idle2.style.backgroundColor = "rgba(49,51,53,0)"
+        idle1.style.backgroundColor = "rgba(49,51,53,0)";
+        idle2.style.backgroundColor = "rgba(49,51,53,0)";
         document.getElementById(pageBlock).style.display = "block";
         document.getElementById(pageNone1).style.display = "none";
         document.getElementById(pageNone2).style.display = "none";

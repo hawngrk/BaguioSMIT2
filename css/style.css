@@ -1071,18 +1071,7 @@ input[name=vitals]{
     border: solid black 1px;
     width: 70%;
 }
-#pulseR {
-    margin-left: 7%;
-}
-#tempR {
-    margin-left: 4%;
-}
-#bpRDias {
-    margin-left: 4%;
-}
-#bpRSys {
-    margin-left: 5%;
-}
+
 #patientRow h5 {
     margin-left: 3%;
 }
@@ -1614,6 +1603,10 @@ h5~select {
 }
 .navbarScreening {
     margin-bottom: 1%!important;
+}
+
+.textInp{
+    margin-bottom: 2%;
 }
 
 .search-containerScreening, .search-containerMonitoring {
