@@ -120,7 +120,7 @@ include_once("../includes/database.php") ?>
                 <div class="row">
                     <div class="col">
                         <div class="input-group">
-                            <input id='searchDeployment' type="search" class="form-control" placeholder="Search" name="searchDeployment" onkeyup="searchDeployment()"/>
+                            <input id='searchDeployment' type="search" class="form-control" placeholder="Search" name="searchDeployment"/>
                             <button type="button" class="buttonTop5">
                                 <i class="fas fa-search"></i>
                             </button>
@@ -184,15 +184,16 @@ include_once("../includes/database.php") ?>
                                         }
                                     }
 
-                                    echo "<tr class='tableCenterCont' style='text-align: center' onclick='showDrive(this)'>
+                                    echo "<tr class='table-row' onclick='showDrive(this)'>
+                        <td>$count</td>
                         <td>$driveId</td>
                         <td>$vaccinationSite</td>
                         <td>$date</td>
                         <td>$stubs</td>
                         <td>
-                            <div class='tableCenterCont'>
+                            <div style='text-align: left;'>
                                 <button class='buttonTransparent actionButt' onclick='event.stopPropagation(); archive(1, clickArchive, $driveId)'><i class='fa fa-archive'></i></button>
-                                <button class='buttonTransparent actionButt' onclick=''><i class='far fa-edit'></i></button>
+                                <button class='buttonTransparent ml-2' onclick=''><i class='far fa-edit'></i></button>
                            
                             </div>
                         </td>

@@ -180,7 +180,7 @@ include_once("../includes/database.php") ?>
                             <td>$batchQty</td>
                             <td>
                                 <div>
-                                      <button type='button' class='archiveVaxtBtn buttonTransparent' onclick='archive(1, clickArchive, $vaccineLotId)'><i class='fa fa-archive'></i></button>
+                                      <button type='button' class='archiveVaxtBtn buttonTransparent' onclick='event.stopPropagation();archive(1, clickArchive, $vaccineLotId)'><i class='fa fa-archive'></i></button>
                                       <button type='button' class='viewReportBtn buttonTransparent' id='viewButton' onclick='viewVaccineDetails($vaccineLotId)'><i class='fas fa-eye'></i></button>
                                 </div>
                             </td>
