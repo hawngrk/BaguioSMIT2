@@ -106,10 +106,8 @@ include_once("../includes/database.php") ?>
                 <div class="row">
                     <div class="col">
                         <div class="input-group">
-                            <input type="search" class="form-control" placeholder="Search"/>
-                            <button type="button" class="buttonTop5">
-                                <i class="fas fa-search"></i>
-                            </button>
+                            <input id="searchPatientHSO" type="search" name="searchPatient" class="form-control" placeholder="Search" onkeyup="searchPatient()"/>
+                            <button type="submit" class="buttonTop5" name="managePatientBtn" onclick="searchPatient()">  <i class="fas fa-search"></i> </button>
                         </div>
                     </div>
                     <div class="col-sm-auto">
@@ -139,9 +137,10 @@ include_once("../includes/database.php") ?>
                 </div>
             </div>
 
+
             <div class="tablePatient shadow tableScroll2">
                 <!--Table Part-->
-                <table class="table table table-hover tablePatient" id="">
+                <table class="table table table-hover tablePatient" id="patientTable1">
                     <thead>
                     <tr class="labelRow">
                         <th>Patient ID</th>
@@ -181,7 +180,7 @@ include_once("../includes/database.php") ?>
                         <td>$contact</td>
                         <td>
                             <div style='text-align: left;'>
-                                <button class='buttonTransparent' onclick='archive(1, clickArchive, $id)'><i class='fa fa-archive'></i></button>
+                                <button class='buttonTransparent' onclick='event.stopPropagation();archive(1, clickArchive, $id)'><i class='fa fa-archive'></i></button>
                                 <button type='button' class='viewReportBtn buttonTransparent' id='viewButton' onclick='viewPatient($id)'><i class='fas fa-eye'></i></button
                             </div>
                         </td>
@@ -671,7 +670,7 @@ include_once("../includes/database.php") ?>
     function searchPatient() {
         var textSearch = document.getElementById("searchPatientHSO").value;
         $.ajax({
-            url: '../Barangay Module/ManagePatientProcessor.php',
+            url: 'ManagePatientProcessor.php',
             type: 'POST',
             data: {"search": textSearch},
             success: function (result) {

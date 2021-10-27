@@ -5,7 +5,6 @@ if (isset($_POST['search'])) {
     echo "
       <thead>
             <tr>
-                <th scope='col'>#</th>
                 <th scope='col'>Report ID</th>
                 <th scope='col'>Name of Reporter</th>
                 <th scope='col'>Date Reported</th>
@@ -25,8 +24,7 @@ if (isset($_POST['search'])) {
     $stmt->bind_result($reportId, $reporter, $dateReported, $status);
 
     while ($stmt->fetch()) {
-        echo "<tr>
-                <td>$reportId</td>
+        echo "<tr onclick='viewReport($reportId)'>
                 <td>$reportId</td>
                 <td>$reporter</td>
                 <td>$dateReported</td>
@@ -43,7 +41,6 @@ if (isset($_POST['sort'])) {
     echo "
       <thead>
             <tr>
-                <th scope='col'>#</th>
                 <th scope='col'>Report ID</th>
                 <th scope='col'>Name of Reporter</th>
                 <th scope='col'>Date Reported</th>
@@ -70,7 +67,6 @@ if (isset($_POST['sort'])) {
     while ($stmt->fetch()) {
         echo "<tr>
                 <td>$reportId</td>
-                <td>$reportId</td>
                 <td>$reporter</td>
                 <td>$dateReported</td>
                 <td>$status</td>
@@ -86,7 +82,6 @@ if (isset($_POST['filter'])) {
     echo "
       <thead>
             <tr>
-                <th scope='col'>#</th>
                 <th scope='col'>Report ID</th>
                 <th scope='col'>Name of Reporter</th>
                 <th scope='col'>Date Reported</th>
@@ -113,7 +108,6 @@ if (isset($_POST['filter'])) {
     while ($stmt->fetch()) {
         echo "<tr>
                 <td>$reportId</td>
-                <td>$reportId</td>
                 <td>$reporter</td>
                 <td>$dateReported</td>
                 <td>$status</td>
@@ -139,7 +133,6 @@ if (isset($_POST['invalidated'])) {
       <table class='table table-row table-hover'>
       <thead>
             <tr>
-                <th scope='col'>#</th>
                 <th scope='col'>Report ID</th>
                 <th scope='col'>Name of Reporter</th>
                 <th scope='col'>Date Reported</th>
@@ -154,7 +147,6 @@ if (isset($_POST['invalidated'])) {
 
     while ($stmt->fetch()) {
         echo "<tr>
-                <td>$reportId</td>
                 <td>$reportId</td>
                 <td>$reporter</td>
                 <td>$dateReported</td>

@@ -120,7 +120,7 @@ include_once("../includes/database.php") ?>
                 <div class="row">
                     <div class="col">
                         <div class="input-group">
-                            <input type="search" class="form-control" placeholder="Search"/>
+                            <input id='searchDeployment' type="search" class="form-control" placeholder="Search" name="searchDeployment" onkeyup="searchDeployment()"/>
                             <button type="button" class="buttonTop5">
                                 <i class="fas fa-search"></i>
                             </button>
@@ -158,7 +158,6 @@ include_once("../includes/database.php") ?>
                         <table class="table table-hover tableDep" id="driveTable">
                             <thead>
                             <tr>
-                                <th scope="col">#</th>
                                 <th scope="col">Drive Id</th>
                                 <th scope="col">Location</th>
                                 <th scope="col">Date</th>
@@ -186,7 +185,6 @@ include_once("../includes/database.php") ?>
                                     }
 
                                     echo "<tr class='table-row' onclick='showDrive(this)'>
-                        <td>$count</td>
                         <td>$driveId</td>
                         <td>$vaccinationSite</td>
                         <td>$date</td>
@@ -709,12 +707,6 @@ include_once("../includes/database.php") ?>
     var id = "";
     var clicked = false;
 
-    // $(document).ready(function () {
-    //     $('#sidebarCollapse').on('click', function () {
-    //         $('#sidebar').toggleClass('active');
-    //     });
-    // });
-
     let btnopt1 = document.querySelector('.doseOption1');
     let btnopt2 = document.querySelector('.doseOption2');
     btnopt1.style.backgroundColor = "#1D7195";
@@ -756,6 +748,18 @@ include_once("../includes/database.php") ?>
             document.getElementById("HealthD").style.display = "none";
 
         }
+    }
+
+    function searchDeployment(){
+        var textSearch = document.getElementById("searchDeployment").value;
+        $.ajax({
+            url: 'ManageDeploymentProcessor.php',
+            type: 'POST',
+            data: {"search": textSearch},
+            success: function (result) {
+                document.getElementById("driveTable").innerHTML = result;
+            }
+        });
     }
 
     function clickArchive(drive, option) {

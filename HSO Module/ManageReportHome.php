@@ -105,9 +105,8 @@ include_once("../includes/database.php") ?>
                 <div class="row">
                     <div class="col">
                         <div class="input-group">
-                            <input type="search" class="form-control" placeholder="Search"/>
-                            <button type="button" class="buttonTop5">
-                                <i class="fas fa-search"></i>
+                            <input id="searchReportHSO" type="search" class="form-control" placeholder="Search" onkeyup="searchReport()"/>
+                            <button type="submit" class="buttonTop5" name="searchReportBtn" onclick="searchReport()"> <i class="fas fa-search"></i>
                             </button>
                         </div>
                     </div>
@@ -141,7 +140,6 @@ include_once("../includes/database.php") ?>
                         <table class="table table-hover tableReport" id="reportsTable">
                             <thead>
                             <tr>
-                                <th scope="col">#</th>
                                 <th scope="col">Report ID</th>
                                 <th scope="col">Name of Reporter</th>
                                 <th scope="col">Date Reported</th>
@@ -167,8 +165,7 @@ include_once("../includes/database.php") ?>
                                             $reporter = $pat->getPatientFullName();
                                         }
                                     }
-                                    echo "<tr>
-                                          <td>$count</td>
+                                    echo "<tr onclick='viewReport($reportId)'>
                                           <td>$reportId</td>
                                           <td>$reporter</td>
                                           <td>$dateReported</td>
@@ -355,6 +352,7 @@ include_once("../includes/database.php") ?>
             function closeModal(modal) {
                 document.getElementById(modal).style.display = "none";
             }
+
             function searchReport() {
                 var textSearch = document.getElementById("searchReportHSO").value;
                 if (textSearch === "") {

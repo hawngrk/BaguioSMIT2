@@ -7,16 +7,15 @@ require_once '../require/getVaccineLot.php';
 if (isset($_POST['search'])) {
     include("../includes/database.php");
     $search = $_POST['search'];
-    if ($search === "") {
-        $querySearch = "SELECT vaccine_lot.vaccine_lot_id, vaccine.vaccine_name, vaccine_lot.date_stored, vaccine_batch.date_of_expiration, vaccine_lot.vaccine_batch_quantity, SUM(vaccine_batch.vaccine_quantity) FROM vaccine_lot JOIN vaccine ON vaccine_lot.vaccine_id = vaccine.vaccine_id JOIN vaccine_batch ON vaccine_lot.vaccine_lot_id = vaccine_batch.vaccine_lot_id GROUP BY vaccine_lot.vaccine_lot_id;";
+    if ($search == "") {
+        $querySearch = "SELECT vaccine_lot.vaccine_lot_id, vaccine.vaccine_name,vaccine_lot.date_stored, vaccine_lot.date_stored, vaccine_lot.vaccine_expiration, vaccine_lot.total_vaccine_vial_quantity FROM vaccine_lot JOIN vaccine ON vaccine_lot.vaccine_id = vaccine.vaccine_id;";
     } else {
-        $querySearch = "SELECT vaccine_lot.vaccine_lot_id, vaccine.vaccine_name, vaccine_lot.date_stored, vaccine_batch.date_of_expiration, vaccine_lot.vaccine_batch_quantity, SUM(vaccine_batch.vaccine_quantity) FROM vaccine_lot JOIN vaccine ON vaccine_lot.vaccine_id = vaccine.vaccine_id JOIN vaccine_batch ON vaccine_lot.vaccine_lot_id = vaccine_batch.vaccine_lot_id WHERE vaccine_lot.vaccine_lot_id LIKE '$search%' OR vaccine.vaccine_name LIKE '$search%' GROUP BY vaccine_lot.vaccine_lot_id;";
+        $querySearch = "SELECT vaccine_lot.vaccine_lot_id, vaccine.vaccine_name,vaccine_lot.date_stored, vaccine_lot.date_stored, vaccine_lot.vaccine_expiration, vaccine_lot.total_vaccine_vial_quantity FROM vaccine_lot JOIN vaccine ON vaccine_lot.vaccine_id = vaccine.vaccine_id WHERE vaccine_lot.vaccine_lot_id LIKE '$search%' OR vaccine.vaccine_name LIKE '$search%';";
     }
 
     echo "
      <thead>
             <tr>
-                <th scope='col'>#</th>
                 <th scope='col'>Vaccine Lot ID</th>
                 <th scope='col'>Vaccine Name</th>
                 <th scope='col'>Date Received</th>
@@ -33,47 +32,23 @@ if (isset($_POST['search'])) {
     $stmt->execute();
     $stmt->bind_result($vaccineLotId, $vaccName, $dateStored, $vaccExp, $batchQty, $vaccQty);
     while ($stmt->fetch()) {
-        echo "<tr>
-                <td>$count</td>
+        echo "<tr onclick='showVaccine(this)'>
                 <td>$vaccineLotId</td>
                 <td>$vaccName</td>
                 <td>$dateStored</td>
                 <td>$vaccExp</td>
                 <td>$batchQty</td>
                 <td>$vaccQty</td>
+                <td>   <div style='text-align: left;'>
+                                      <button type='button' class='buttonTransparent' onclick='archive(1, clickArchive, $vaccineLotId)'><i class='fa fa-archive'></i></button>
+                                      <button type='button' class='viewReportBtn buttonTransparent' id='viewButton' onclick='viewVaccineDetails($vaccineLotId)'><i class='fas fa-eye'></i></button>
+                                </div> </td>
                 </tr>";
         $count++;
     }
 }
 
-//if (isset($_POST['vaccine'])) {
-//    $vacName = $_POST['vaccine'];
-//    $vacID = '';
-//    $vacType = '';
-//    $vacEff = '';
-//    $vacLife = '';
-//    foreach ($vaccines as $vac) {
-//        if ($vac->getVaccName() == $vacName) {
-//            $vacID = $vac->getVaccId();
-//            $vacType = $vac->getVaccType();
-//            $vacEff = $vac->getVaccEfficacy();
-//            $vacLife = $vac->getVaccLifeSpan();
-//        }
-//    }
-//    $getManuQuery = "SELECT vaccine_manufacturer FROM vaccine_information WHERE vaccine_id = '$vacID';";
-//    $dbase = $database->stmt_init();
-//    $dbase->prepare($getManuQuery);
-//    $dbase->execute();
-//    $dbase->bind_result($vacManu);
-//    $dbase->fetch();
-//    $dbase->close();
-//    echo "
-//<p>Vaccine Comapany: $vacManu</p>
-//<p>Vaccine Type: $vacType</p>
-//<p>Vaccine Efficacy: $vacEff %</p>
-//<p>Vaccine Lifespan: $vacLife months</p>";
-//}
-
+// return vaccine batch
 if (isset($_POST['batch'])) {
     $batchNo = (int)$_POST['batch'];
     $counter = 1;
@@ -96,30 +71,6 @@ if (isset($_POST['batch'])) {
     echo "</table>";
 }
 
-//if (isset($_POST['viewVaccine'])) {
-//    include '../includes/database.php';
-//    $lot = $_POST['viewVaccine'];
-//    $getVaccineLotQuery = "SELECT vaccine_lot.vaccine_lot_id, vaccine.vaccine_name, vaccine_lot.date_stored, vaccine_batch.date_of_expiration, vaccine_lot.vaccine_batch_quantity, SUM(vaccine_batch.vaccine_quantity) FROM vaccine_lot JOIN vaccine ON vaccine_lot.vaccine_id = vaccine.vaccine_id JOIN vaccine_batch ON vaccine_lot.vaccine_lot_id = vaccine_batch.vaccine_lot_id WHERE vaccine_lot.vaccine_lot_id = $lot GROUP BY vaccine_lot.vaccine_lot_id;";
-//
-//    $stmt = $database->stmt_init();
-//    $stmt->prepare($getVaccineLotQuery);
-//    $stmt->execute();
-//    $stmt->bind_result($vaccineLotId, $vaccName, $dateStored, $vaccExp, $batchQty, $vaccQty);
-//    $stmt->fetch();
-//
-//    echo "
-//    <div class='modal-content container'>
-//    <h2 id='headerReviewVaccine'>EDIT VACCINE - $vaccineLotId . " - ". $vaccName <span id='viewReportClose' class='close' onclick='viewVaccineClose()'>&times;</span></h2>
-//    <div class='ReviewVaccine-PopUp'>
-//    <h4>Vaccine Lot Information</h4>
-//    <p>Vaccine Lot ID: $vaccineLotId</p>
-//    <p>Vaccine Name: $vaccName</p>
-//    <p>Date Received: $dateStored</p>
-//    <p>Date of Expiration: $vaccExp</p>
-//    <p>Batch Quantity: $batchQty</p>
-//    <p>Bottle Quantity: $vaccQty</p>
-//    </div>";
-//}
 
 if (isset($_POST['vaccId'])) {
     include '../includes/database.php';
@@ -174,6 +125,7 @@ if (isset($_POST['vaccId'])) {
 
 }
 
+//add new vaccine
 if (isset($_POST['vaccineName'])) {
     $vaccineName = $_POST['vaccineName'];
     $vaccineManufacturer = $_POST['vaccineManufacturer'];
@@ -204,6 +156,7 @@ if (isset($_POST['vaccineName'])) {
 
 }
 
+//archive feature
 if (isset($_POST['archive'])){
     $archivedId = $_POST['archive'];
     $option = $_POST['option'];
@@ -220,6 +173,8 @@ if (isset($_POST['archive'])){
     }
 }
 
+
+//view vaccine details
 if (isset($_POST['vaccine'])) {
 
     $vacccineId = $_POST['vaccine'];

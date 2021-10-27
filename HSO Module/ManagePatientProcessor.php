@@ -3,7 +3,7 @@ include("../includes/database.php");
 if (isset($_POST['search'])) {
 
     $search = $_POST['search'];
-    if ($search === "") {
+    if ($search == "") {
         $querySearch = "SELECT patient.patient_id, patient.patient_full_name, CONCAT(patient_details.patient_house_address, ' ', patient_details.patient_barangay_address, ' ', patient_details.patient_CM_address, ' ', patient_details.patient_province) AS full_address, patient_contact_number FROM patient JOIN patient_details ON patient.patient_id = patient_details.patient_id;";
     } else {
         $querySearch = "SELECT patient.patient_id, patient.patient_full_name, CONCAT(patient_details.patient_house_address, ' ', patient_details.patient_barangay_address, ' ', patient_details.patient_CM_address, ' ', patient_details.patient_province) AS full_address, patient_contact_number FROM patient JOIN patient_details ON patient.patient_id = patient_details.patient_id WHERE patient.patient_id LIKE '$search%' OR patient.patient_full_name LIKE '$search%';";
@@ -11,7 +11,7 @@ if (isset($_POST['search'])) {
     echo "
     <thead>
             <tr>
-                <th scope='col'>#</th>
+           
                 <th scope='col'>Patient ID</th>
                 <th scope='col'>Patient Name</th>
                 <th scope='col'>Complete Address</th>
@@ -26,12 +26,16 @@ if (isset($_POST['search'])) {
     $stmt->execute();
     $stmt->bind_result($patientId, $patientName, $patientAddress, $contactNum);
     while ($stmt->fetch()) {
-        echo "<tr>
-                <td>$count</td>
+        echo "<tr onclick='showPatient(this)'>
                 <td>$patientId</td>
                 <td>$patientName</td>
                 <td>$patientAddress</td>
                 <td>$contactNum</td>
+                <td> <div style='text-align: left;'>
+                                <button class='buttonTransparent' onclick='archive(1, clickArchive, $patientId)'><i class='fa fa-archive'></i></button>
+                                <button type='button' class='viewReportBtn buttonTransparent' id='viewButton' onclick='viewPatient($patientId)'><i class='fas fa-eye'></i></button
+                            </div>
+                            </td>
                 </tr>";
         $count++;
     }
@@ -48,8 +52,6 @@ if (isset($_POST['patient'])) {
     $stmt->bind_result($patient_id, $patient_first_name, $patient_last_name, $patient_middle_name, $patient_suffix, $patient_priority_group, $patient_category_id, $patient_category_number, $patient_philHealth, $patient_pwd, $patient_house_address, $patient_barangay_address, $patient_CM_address, $patient_province, $patient_region, $patient_birthdate, $patient_age, $patient_gender, $patient_contact_number, $patient_occupation, $archived, $patient_id, $patient_full_name, $date_of_first_dosage, $date_of_second_dosage, $first_dose_vaccination, $second_dose_vaccination, $for_queue, $notification, $first_dose_vaccinator, $second_dose_vaccinator, $token);
     $stmt->fetch();
     $stmt->close();
-
-
     echo "
      
                 <div class='modal-header'>
@@ -144,7 +146,7 @@ if (isset($_POST['patient'])) {
                 
                 ";
 
-    if($patient_philHealth == "") {
+    if ($patient_philHealth == "") {
         echo "";
     } else {
         echo "<div class='row'>
@@ -157,7 +159,7 @@ if (isset($_POST['patient'])) {
                 </div>";
     }
 
-    if($patient_pwd == "") {
+    if ($patient_pwd == "") {
         echo "";
     } else {
         echo "<div class='row'>
@@ -201,7 +203,7 @@ if (isset($_POST['patient'])) {
                 <br>
                 <h5 class='ml-3'> Vaccine Information </h5>
                     ";
-}
+
 
     echo "<div class='row'>
                 <h6 class='font-weight-bold ml-5'> First Dose </h6>
@@ -212,8 +214,8 @@ if (isset($_POST['patient'])) {
                 </div>
                 ";
 
-if($first_dose_vaccination == 1) {
-    echo "  <div class='col'>
+    if ($first_dose_vaccination == 1) {
+        echo "  <div class='col'>
                 <h7> $date_of_first_dosage </h7>
                 </div>
             </div>
@@ -267,11 +269,12 @@ if($first_dose_vaccination == 1) {
             </div>
             </div>
              ";
-} else {
-    echo "<div class='col'>
+    } else {
+        echo "<div class='col'>
           <h7> Not Vaccinated  </h7> 
           </div>
           </div>";
+    }
 };
 
 

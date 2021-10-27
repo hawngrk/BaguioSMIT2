@@ -49,32 +49,6 @@ if (isset($_POST['lastname'])) {
 
     $fullName = $lastName . " " . $firstName . " " . $middleName . " ";
 
-//    $pet = $_POST['pet'];
-//    $bite = $_POST['bite'];
-//    $skin = $_POST['skin'];
-//    $food = $_POST['food'];
-//    $mold = $_POST['mold'];
-//    $latex = $_POST['latex'];
-//    $pollen = $_POST['pollen'];
-//    $insect = $_POST['insect'];
-//    $medication = $_POST['medication'];
-//    if (empty($_POST['othersAllergies'])) {
-//        $othersAllergies = "";
-//    } else {
-//        $othersAllergies = $_POST['othersAllergies'];
-//    }
-//
-//    $cancer = $_POST['cancer'];
-//    $asthma = $_POST['asthma'];
-//    $diabetes = $_POST['diabetes'];
-//    $hypertension = $_POST['hypertension'];
-//    $heart = $_POST['heartDiseases'];
-//    $kidney = $_POST['kidneyDiseases'];
-//    if (empty($_POST['othersComorbidities'])) {
-//        $othersComorbidities = "";
-//    } else {
-//        $othersComorbidities = $_POST['othersComorbidities'];
-//    }
 
     $patientTableQuery = "INSERT INTO patient (patient_full_name) VALUE ('$fullName');";
     $database->query($patientTableQuery);
@@ -90,9 +64,6 @@ if (isset($_POST['lastname'])) {
     $patient_detailsTableQuery = "INSERT INTO patient_details (patient_id, patient_first_name, patient_last_name, patient_middle_name, patient_suffix, patient_priority_group, patient_category_id, patient_category_number, patient_house_address, patient_barangay_address, patient_CM_address, patient_province, patient_region, patient_birthdate, patient_age, patient_gender, patient_contact_number, patient_occupation) VALUE ('$patientid', '$firstName', '$lastName', '$middleName', '$suffix', '$group', 'Other ID', '2191057', '$street', '$barangay', '$city', '$state', '$region', '$birthday', '20', '$gender', '$contactNumber', '$occupation');";
     $database->query($patient_detailsTableQuery);
 
-
-//    $medical_backgroundTableQuery = "INSERT INTO medical_background (patient_id, skin_allergy, food_allergy, medication_allergy, insect_allergy, pollen_allergy, bite_allergy, latex_allergy, mold_allergy, pet_allergy, hypertension, heart_disease, kidney_disease, diabetes_mellitus, bronchial_asthma, immunodeficiency, cancer, other_commorbidity) VALUE ('$patientid', '$skin', '$food', '$medication', '$insect', '$pollen', '$bite', '$latex', '$mold', '$pet', '$hypertension', '$heart', '$kidney', '$diabetes', '$asthma', '0', '$cancer', '');";
-//    $database->query($medical_backgroundTableQuery);
     echo'<thead>
                 <tr>
                     <th scope="col">Patient Name</th>

@@ -104,10 +104,8 @@ include_once("../includes/database.php") ?>
                 <div class="row">
                     <div class="col">
                         <div class="input-group">
-                            <input type="search" class="form-control" placeholder="Search"/>
-                            <button type="button" class="buttonTop5">
-                                <i class="fas fa-search"></i>
-                            </button>
+                            <input id="searchVaccine" type="search" placeholder="Search" class="form-control" name="searchVaccine" onkeyup="searchVaccine()"/>
+                            <button type="submit" class="buttonTop5" name="serachVaccineBtn" onclick="searchVaccine()"> <i class="fas fa-search"></i> </button>
                         </div>
                     </div>
                     <div class="col-sm-auto">
@@ -182,7 +180,7 @@ include_once("../includes/database.php") ?>
                             <td style='text-align: center;'>$batchQty</td>
                             <td>
                                 <div style='text-align: left;'>
-                                      <button type='button' class='buttonTransparent' onclick='archive(1, clickArchive, $vaccineLotId)'><i class='fa fa-archive'></i></button>
+                                      <button type='button' class='buttonTransparent' onclick='event.stopPropagation();archive(1, clickArchive, $vaccineLotId)'><i class='fa fa-archive'></i></button>
                                       <button type='button' class='viewReportBtn buttonTransparent' id='viewButton' onclick='viewVaccineDetails($vaccineLotId)'><i class='fas fa-eye'></i></button>
                                 </div>
                             </td>
@@ -435,42 +433,6 @@ include_once("../includes/database.php") ?>
         });
     }
 
-    // // Add Vaccine
-    // var addVaccineModal = document.getElementById("vaccineModal");
-    // var addVaccineBtn = document.getElementById("addVaccineBtn");
-    // var addVaccineClose = document.getElementById("addVaccineClose");
-    // var cancelAddVaccine = document.getElementById("cancelBtnVaccine");
-    //
-    // addVaccineBtn.onclick = function () {
-    //     addVaccineModal.style.display = "block";
-    // }
-    //
-    // addVaccineClose.onclick = function () {
-    //     addVaccineModal.style.display = "none";
-    // }
-    //
-    // cancelAddVaccine.onclick = function () {
-    //     addVaccineModal.style.display = "none";
-    // }
-    //
-    // // Add New Vaccine
-    // var newVaccineModal = document.getElementById("newVaccineModal");
-    // var addNewVaccineBtn = document.getElementById("addNewVaccineBtn");
-    // var newVaccineClose = document.getElementById("newVaccineClose");
-    // var cancelNewVaccine = document.getElementById("cancelBtnNewVaccine");
-    //
-    // addNewVaccineBtn.onclick = function () {
-    //     newVaccineModal.style.display = "block";
-    // }
-    //
-    // newVaccineClose.onclick = function () {
-    //     newVaccineModal.style.display = "none";
-    // }
-    //
-    // cancelNewVaccine.onclick = function () {
-    //     newVaccineModal.style.display = "none";
-    // }
-
     window.onclick = function (event) {
         if (event.target === newVaccineModal) {
             newVaccineModal.style.display = "none";
@@ -635,20 +597,21 @@ include_once("../includes/database.php") ?>
             }
         })
     }
+
 </script>
 
-<script>
-    var clicked = false;
-
-    function Toggle() {
-        var butt = document.getElementById('sidebarCollapse')
-        if (!clicked) {
-            clicked = true;
-            butt.innerHTML = "Menu <i class = 'fas fa-angle-double-right'><i>";
-        } else {
-            clicked = false;
-            butt.innerHTML = "<i class='fas fa-angle-left'></i> Menu";
-        }
-    }
-</script>
+<!--<script>-->
+<!--    var clicked = false;-->
+<!---->
+<!--    function Toggle() {-->
+<!--        var butt = document.getElementById('sidebarCollapse')-->
+<!--        if (!clicked) {-->
+<!--            clicked = true;-->
+<!--            butt.innerHTML = "Menu <i class = 'fas fa-angle-double-right'><i>";-->
+<!--        } else {-->
+<!--            clicked = false;-->
+<!--            butt.innerHTML = "<i class='fas fa-angle-left'></i> Menu";-->
+<!--        }-->
+<!--    }-->
+<!--</script>-->
 </body>

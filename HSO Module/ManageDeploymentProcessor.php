@@ -1,6 +1,44 @@
 <?php
 
 include_once "../includes/database.php";
+if (isset($_POST['search'])) {
+
+    $search = $_POST['search'];
+    if ($search == "") {
+        $querySearch = "SELECT patient.patient_id, patient.patient_full_name, CONCAT(patient_details.patient_house_address, ' ', patient_details.patient_barangay_address, ' ', patient_details.patient_CM_address, ' ', patient_details.patient_province) AS full_address, patient_contact_number FROM patient JOIN patient_details ON patient.patient_id = patient_details.patient_id;";
+    } else {
+        $querySearch = "SELECT patient.patient_id, patient.patient_full_name, CONCAT(patient_details.patient_house_address, ' ', patient_details.patient_barangay_address, ' ', patient_details.patient_CM_address, ' ', patient_details.patient_province) AS full_address, patient_contact_number FROM patient JOIN patient_details ON patient.patient_id = patient_details.patient_id WHERE patient.patient_id LIKE '$search%' OR patient.patient_full_name LIKE '$search%';";
+    }
+    echo "
+    <thead>
+            <tr>
+              <th scope='col'>Drive Id</th>
+                                <th scope='col'>Location</th>
+                                <th scope='col'>Date</th>
+                                <th scope='col'>No. of Stubs</th>
+                                <th scope='col'>Action</th>
+            </tr>
+            </thead>";
+
+    $count = 1;
+    $stmt = $database->stmt_init();
+    $stmt->prepare($querySearch);
+    $stmt->execute();
+    $stmt->bind_result($driveId, $vaccinationSite, $date, $stub);
+    while ($stmt->fetch()) {
+        echo "<tr onclick='showDrive(this)'>
+                <td>$driveId</td>
+                <td>$vaccinationSite</td>
+                <td>$date</td>
+                <td>$stub</td>
+                <td> <button class='buttonTransparent actionButt' onclick='event.stopPropagation(); archive(1, clickArchive, $driveId)'><i class='fa fa-archive'></i></button>
+                                <button class='buttonTransparent ml-2' onclick=''><i class='far fa-edit'></i></button>
+                           
+                            </td>
+                </tr>";
+        $count++;
+    }
+}
 
 if (isset($_POST['id'])) {
     $drive = $_POST['id'];
