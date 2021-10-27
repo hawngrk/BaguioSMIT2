@@ -22,9 +22,6 @@
             src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" rel="stylesheet">
-    <!--Table Bootstrap-->
-    <script src="../assets/js/bootstrap-table.min.js"></script>
-    <script src="../assets/js/bootstrap-table-en-US.min.js"></script>
 
     <!--jQuery-->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
@@ -101,8 +98,8 @@
                 <div class="row">
                     <div class="col">
                         <div class="input-group">
-                            <input type="search" class="form-control" placeholder="Search"/>
-                            <button type="button" class="buttonTop5">
+                            <input id="searchPatient" type="search" class="form-control" placeholder="Search" name="searchPatient" onkeyup="searchPatient()"/>
+                            <button type="submit" class="buttonTop5" name="searchPatientBtn" onclick="searchPatient()">
                                 <i class="fas fa-search"></i>
                             </button>
                         </div>
@@ -585,7 +582,7 @@
     function searchPatient() {
         var textSearch = document.getElementById("searchPatient").value;
         $.ajax({
-            url: 'EIRSearchProcessor.php',
+            url: 'EIRManageUserProcessor.php',
             type: 'POST',
             data: {"search": textSearch},
             success: function (result) {
@@ -760,33 +757,7 @@
         showList.style.display = (this.value == "none") ? "none" : "block";
     }
 
-    //Displaying Modals
-    //modals
-    // var addPatientModal = document.getElementById("addPatientModal");
-    // var notificationModal = document.getElementById("notifyModal");
-    //
-    // //buttons
-    // var addPatientAccountButton = document.getElementById("addPatientButton");
-    // var closeAddPatientModal = document.getElementById("addPatientInfoClose");
-    // var closeUploadModal = document.getElementById("closeUploadModal");
-
     var sucess = document.getElementById("submit");
-
-    //open
-    // addPatientAccountButton.onclick = function () {
-    //     addPatientModal.style.display = "block";
-    // }
-    //
-    // //close
-    // closeAddPatientModal.onclick = function () {
-    //     addPatientModal.style.display = "none";
-    // }
-    //
-    // closeUploadModal.onclick = function () {
-    //     document.getElementById("uploadFileModal").style.display = "none";
-    // }
-
-    //uploading File
     function getUploadedFiles(item) {
         for (var i = 0; i < item.files.length; i++) {
             var element = document.createElement('p');
@@ -815,12 +786,23 @@
 
     function showPatient(val) {
         var id = val.getElementsByTagName("td")[0].innerText;
-        console.log(id)
         $.ajax({
-            url: '../HSO Module/ManagePatientProcessor.php',
+            url: 'EIRManageUserProcessor.php',
             method: 'POST',
             data: {patient: id},
             success: function (result) {
+                document.getElementById("patientModalContent").innerHTML = result;
+                openModal('viewPatientDetails');
+            }
+        })
+    }
+
+    function viewPatient(patientId){
+        $.ajax({
+            url:'EIRManageUserProcessor.php',
+            type:'POST',
+            data:{"patient": patientId},
+            success:function (result){
                 document.getElementById("patientModalContent").innerHTML = result;
                 openModal('viewPatientDetails');
             }

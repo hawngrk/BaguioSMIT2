@@ -32,7 +32,7 @@ if (isset($_POST['search'])) {
                 <td>$patientAddress</td>
                 <td>$contactNum</td>
                 <td> <div style='text-align: left;'>
-                                <button class='buttonTransparent' onclick='archive(1, clickArchive, $patientId)'><i class='fa fa-archive'></i></button>
+                                <button class='buttonTransparent' onclick='event.stopPropagation();archive(1, clickArchive, $patientId)'><i class='fa fa-archive'></i></button>
                                 <button type='button' class='viewReportBtn buttonTransparent' id='viewButton' onclick='viewPatient($patientId)'><i class='fas fa-eye'></i></button
                             </div>
                             </td>

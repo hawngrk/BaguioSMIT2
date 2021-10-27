@@ -863,7 +863,6 @@ include_once("../includes/database.php") ?>
 
     function showPatient(val) {
         var id = val.getElementsByTagName("td")[0].innerText;
-        console.log(id)
         $.ajax({
             url: 'ManagePatientProcessor.php',
             method: 'POST',

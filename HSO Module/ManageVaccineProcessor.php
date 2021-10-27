@@ -40,7 +40,7 @@ if (isset($_POST['search'])) {
                 <td>$batchQty</td>
                 <td>$vaccQty</td>
                 <td>   <div style='text-align: left;'>
-                                      <button type='button' class='buttonTransparent' onclick='archive(1, clickArchive, $vaccineLotId)'><i class='fa fa-archive'></i></button>
+                                      <button type='button' class='buttonTransparent' onclick='event.stopPropagation();archive(1, clickArchive, $vaccineLotId)'><i class='fa fa-archive'></i></button>
                                       <button type='button' class='viewReportBtn buttonTransparent' id='viewButton' onclick='viewVaccineDetails($vaccineLotId)'><i class='fas fa-eye'></i></button>
                                 </div> </td>
                 </tr>";

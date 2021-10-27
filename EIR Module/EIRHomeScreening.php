@@ -98,24 +98,6 @@
 <!-- Bootstrap JS -->
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
 
-<script type="text/javascript">
-    $(document).ready(function () {
-        $('#sidebarCollapse').on('click', function () {
-            $('#sidebar').toggleClass('active');
-        });
-    });
-    var clicked = false;
-
-    // function Toggle() {
-    //     var butt = document.getElementById('sidebarCollapse')
-    //     if (!clicked) {
-    //         clicked = true;
-    //         butt.innerHTML = "Menu <i class = 'fas fa-angle-double-right'><i>";
-    //     } else {
-    //         clicked = false;
-    //         butt.innerHTML = "<i class='fas fa-angle-left'></i> Menu";
-    //     }
-    // }
 </script>
 </body>
 
