@@ -1,4 +1,7 @@
-<!DOCTYPE html>
+<?php
+include "../includes/database.php";
+?>
+
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -84,7 +87,7 @@
         <br>
         <br>
         <div class="row">
-        <div id="selectDeployment">
+                    <div id="selectDeployment">
                         <select class="form-select" id="selectHealthDistrict" onchange="updateDeploymentDetails(this.value)">
                             <option value='' disabled selected hidden> Select Deployment </option>
                             <?php
@@ -109,18 +112,18 @@
             <div class="col">
                 <div class="row">
                     <div id="deploymentSummary">
-                        <h2>Deployment Summary</h2>
+                        <h2>Vaccination Deployment Summary</h2>
                         <hr>
                         <div id="labelling">
-                            <h5> Site: </h5>
-                            <br>
-                            <h5> Brand: </h5>
+                            <h5> Vaccination Site/Location: </h5>
                             <br>
                             <h5> Scheduled Date: </h5>
                             <br>
-                            <h5> Priority Group: </h5>
+                            <h5> Priority Groups: </h5>
                             <br>
-                            <h5> Number Of Stubs: </h5>
+                            <h5> First Dose Number Of Stubs: </h5>
+                            <br>
+                            <h5> Second Dose Number Of Stubs: </h5>
                             <br>
                             <h5> Health Districts: </h5>
                             <br>
@@ -145,13 +148,13 @@
             </div>
             <div class="modal-body" id="notificationContent">
                 <?php
-                $query = "SELECT vaccination_drive.drive_id, vaccination_sites.location, vaccination_drive.vaccination_date, vaccination_drive.stubs, vaccination_drive.notif_opened FROM vaccination_sites JOIN vaccination_drive ON vaccination_sites.vaccination_site_id = vaccination_drive.vaccination_site_id ORDER BY drive_id desc;";
+                $query = "SELECT vaccination_drive.drive_id, vaccination_sites.location, vaccination_drive.vaccination_date, vaccination_drive.first_dose_stubs, vaccination_drive.second_dose_stubs, vaccination_drive.notif_opened FROM vaccination_sites JOIN vaccination_drive ON vaccination_sites.vaccination_site_id = vaccination_drive.vaccination_site_id ORDER BY vaccination_drive.drive_id desc;";
                 $vaccination_drive = [];
 
                 $stmt = $database->stmt_init();
                 $stmt->prepare($query);
                 $stmt->execute();
-                $stmt->bind_result($driveId, $locName, $date, $stubs, $opened);
+                $stmt->bind_result($driveId, $locName, $date, $firstStubs, $secondStubs, $opened);
 
                 while ($stmt->fetch()) {
                     if ($opened== 1){
@@ -161,7 +164,8 @@
                                                         <div id='$driveId' style='color: #9C9C9C'>
                                                             <p>Vaccination Location: $locName<br>
                                                                Date: $date <br>
-                                                               Number of Stubs: $stubs <br>
+                                                               Number of First Stubs: $firstStubs <br>
+                                                               Number of Second Stubs: $secondStubs <br>
                                                             </p>
                                                         </div>
                                                       <hr style='width: 100%; background: azure'>
@@ -175,7 +179,8 @@
                                                         <div id='$driveId' style='background: lightgray'>
                                                             <p>Vaccination Location: $locName<br>
                                                                Date: $date <br>
-                                                               Number of Stubs: $stubs <br>
+                                                               Number of First Stubs: $firstStubs <br>
+                                                               Number of Second Stubs: $secondStubs <br>
                                                             </p>
                                                         </div>
                                                       <hr style='width: 100%; background: azure'>
@@ -259,7 +264,7 @@
 
         }
 
-        var counter = 500;
+        var counter = 0;
         function countStubs(num, oldnum, item){
             if (num.includes("%")) {
                 num = num.replace(/%/g, '');
@@ -274,6 +279,15 @@
 
                 oldnum = 0;
             }
+
+            // if (num < 1 )){
+            //     num = (counter/100) * num;
+            //
+            // }
+            //
+            // if (oldnum < 1)){
+            //     oldnum = (counter/100) * num;
+            // }
 
             if (num > counter){
                 alert('Number Exceeds Number Of Left Stubs!');
@@ -316,26 +330,42 @@
             });
         }
 
-        function viewBarangays(id, driveId, prioGroup, stubs){
-            console.log('passed')
-            counter = stubs;
+        function viewBarangays(id, driveId, priorities, firstDoseStubs, secondDoseStubs){
+            counter = firstDoseStubs;
             $.ajax({
                 url: 'selectDeployment.php',
                 type: 'POST',
-                data: {"viewBarangays": id, drive: driveId},
+                data: {"viewBarangays": id, "drive": driveId, "firstStubs": firstDoseStubs, "secondStubs": secondDoseStubs},
                 success: function (result) {
                     document.getElementById("barangayModal").innerHTML = result;
                     document.getElementById("barangayModal").style.display ="block";
-                    disable(prioGroup);
+                    disable(priorities);
 
                 }
             });
         }
 
-        function disable(group){
-            var input =  document.getElementsByClassName(group);
-            for (var i = 0; i < input.length; i++) {
-                input[i].disabled = false;
+        function disable(group) {
+            for (var idx = 0; idx < group.length; idx++) {
+                var input = document.getElementsByClassName(group[idx]);
+                for (var i = 0; i < input.length; i++) {
+                    input[i].disabled = false;
+                }
+            }
+        }
+
+        function chooseInput(type) {
+            console.log('In')
+            if (type.value == 'percentage') {
+                console.log('passed');
+                var trs = document.getElementById('healthDStubs').getElementsByTagName("tr");
+                for (var idx = 1; idx < trs.length; idx++) {
+                    var tds = trs[idx].getElementsByTagName("td");
+                    for (var index = 0; index < tds.length; index++) {
+                        tds[index].children[2].style.display = "block";
+                    }
+
+                }
             }
         }
 

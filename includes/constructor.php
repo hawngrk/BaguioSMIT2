@@ -618,21 +618,21 @@ class vaccinationDrive
     private $driveId;
     private $vaccDriveVaccSiteId;
     private $vaccDate;
-    private $vaccStubs;
-    private $priorityGroup;
-    private $archive;
-    private $opened;
+    private $archived;
+    private $notifOpened;
+    private $firstDoseStubs;
+    private $secondDoseStubs;
 
 
-    public function __construct($driveId, $siteId, $vaccinationDate, $vaccinationStubs, $group, $archive, $opened)
+    public function __construct($driveId, $siteId, $vaccinationDate, $archived, $notifOpened, $firstDoseStubs, $secondDoseStubs)
     {
         $this->driveId = $driveId;
         $this->vaccDriveVaccSiteId = $siteId;
         $this->vaccDate= $vaccinationDate;
-        $this->vaccStubs = $vaccinationStubs;
-        $this->priorityGroup = $group;
-        $this->archive = $archive;
-        $this->opened = $opened;
+        $this->archived = $archived;
+        $this->notifOpened = $notifOpened;
+        $this->firstDoseStubs = $firstDoseStubs;
+        $this->secondDoseStubs = $secondDoseStubs;
 
     }
 
@@ -651,52 +651,145 @@ class vaccinationDrive
         return $this->vaccDate;
     }
 
-    public function getVaccStubs()
+    public function getArchived()
     {
-        return $this->vaccStubs;
+        return $this->archived;
     }
 
-    public function getPriorityGroup()
+    public function getNotifOpened()
     {
-        return $this->priorityGroup;
+        return $this->notifOpened;
     }
 
-    public function getArchive()
+    public function getFirstDoseStubs()
     {
-        return $this->archive;
+        return $this->firstDoseStubs;
     }
 
-    public function getOpened()
+    public function getSecondDoseStubs()
     {
-        return $this->opened;
+        return $this->secondDoseStubs;
     }
 }
 
 ?>
 
 <?php
-class vaccineDeployment
+class vaccineDrive1
 {
-    private $deploymentDriveId;
-    private $deploymentVaccId;
+    private $driveId;
+    private $vaccineId;
 
 
-    public function __construct($deploymentDriveId, $deploymentVaccineId)
+    public function __construct($driveId, $vaccineId)
     {
-        $this->deploymentDriveId = $deploymentDriveId;
-        $this->deploymentVaccId = $deploymentVaccineId;
+        $this->driveId = $driveId;
+        $this->vaccineId = $vaccineId;
 
 
     }
 
-    public function getDeploymentDriveId()
+
+    public function getDriveId()
     {
-        return $this->deploymentDriveId;
+        return $this->driveId;
     }
 
-    public function getDeploymentVaccId()
+
+    public function getVaccineId()
     {
-        return $this->deploymentVaccId;
+        return $this->vaccineId;
+    }
+}
+
+?>
+
+<?php
+class vaccineDrive2
+{
+    private $driveId;
+    private $vaccineId;
+    private $firstDoseDate;
+
+
+    public function __construct($driveId, $vaccineId, $firstDoseDate)
+    {
+        $this->driveId = $driveId;
+        $this->vaccineId = $vaccineId;
+        $this->firstDoseDate = $firstDoseDate;
+
+    }
+
+
+    public function getDriveId()
+    {
+        return $this->driveId;
+    }
+
+
+    public function getVaccineId()
+    {
+        return $this->vaccineId;
+    }
+
+    public function getFirstDoseDate()
+    {
+        return $this->firstDoseDate;
+    }
+}
+
+?>
+
+<?php
+class priorityDrive
+{
+    private $driveId;
+    private $priorityId;
+
+
+    public function __construct($driveId, $priorityId)
+    {
+        $this->driveId = $driveId;
+        $this->priorityId = $priorityId;
+
+    }
+
+
+    public function getDriveId()
+    {
+        return $this->driveId;
+    }
+
+    public function getPriorityId()
+    {
+        return $this->priorityId;
+    }
+}
+
+?>
+
+<?php
+class priorityGroup
+{
+    private $priorityGroupId;
+    private $priorityGroup;
+
+
+    public function __construct($priorityGroupId, $priorityGroup)
+    {
+        $this->priorityGroupId = $priorityGroupId;
+        $this->priorityGroup = $priorityGroup;
+
+    }
+
+    public function getPriorityGroupId()
+    {
+        return $this->priorityGroupId;
+    }
+
+    public function getPriorityGroup()
+    {
+        return $this->priorityGroup;
     }
 }
 
@@ -769,8 +862,6 @@ class patientDrive
 }
 
 ?>
-
-
 
 <?php
 class barangay

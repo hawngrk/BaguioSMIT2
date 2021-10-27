@@ -9,21 +9,34 @@ if (isset($_POST['deploymentId'])) {
     require "../require/getHealthDistrictDrives.php";
     require "../require/getHealthDistrict.php";
     $driveId = $_POST['deploymentId'];
-    $query = "SELECT vaccination_date,location,vaccine_name, priority_group, stubs FROM vaccination_drive JOIN vaccination_sites ON vaccination_drive.vaccination_site_id = vaccination_sites.vaccination_site_id JOIN vaccine_deployment ON vaccine_deployment.drive_id = vaccination_drive.drive_id JOIN vaccine ON vaccine_deployment.vaccine_id = vaccine.vaccine_id WHERE vaccination_drive.drive_id = $driveId ";
+
+    $query = "SELECT vaccination_drive.vaccination_date, vaccination_sites.location, vaccination_drive.first_dose_stubs, vaccination_drive.second_dose_stubs FROM vaccination_drive JOIN vaccination_sites ON vaccination_drive.vaccination_site_id = vaccination_sites.vaccination_site_id WHERE vaccination_drive.drive_id = $driveId ";
 
     $stmt = $database->stmt_init();
     $stmt->prepare($query);
     $stmt->execute();
-    $stmt->bind_result($schedule, $site, $brand, $priority_group, $stubs);
+    $stmt->bind_result($schedule, $site, $firstStubs, $secondStubs);
     $stmt->fetch();
     $stmt->close();
 
+
     echo "
-            <h5> Site: </h5> <p> $site </p>
-            <h5> Brand: </h5> <p> $brand </p>
-            <h5> Schedule Date: </h5> <p> $schedule </p>
-            <h5> Priority Group: </h5> <p> $priority_group</p>
-            <h5> Number Of Stubs: </h5> <p> $stubs </p>
+            <h5> Vaccination Site/Location: </h5> <p> $site </p>
+            <h5> Scheduled Date: </h5> <p> $schedule </p>
+            <h5>Priority Group: </h5> ";
+
+    $query2 = "SELECT priority_groups.priority_group FROM priority_drive JOIN priority_groups ON priority_drive.priority_id = priority_groups.priority_group_id WHERE priority_drive.drive_id = $driveId";
+
+    $stmt = $database->stmt_init();
+    $stmt->prepare($query2);
+    $stmt->execute();
+    $stmt->bind_result($group);
+    while ($stmt->fetch()) {
+
+        echo"<p> $group</p><br>";
+    }
+            echo"<h5> First Dose Number of Stubs: </h5> <p> $firstStubs </p>
+                <h5> Second Dose Number of Stubs: </h5> <p> $secondStubs </p>
             <h5> Health Districts: </h5>";
 
     foreach ($healthDistrictDrives as $hdd){
@@ -45,17 +58,32 @@ if (isset($_POST['deploymentId'])) {
 }
 
 if (isset($_POST['healthDistrict'])) {
+    include "../require/getVaccinationDrive.php";
     $driveId = $_POST['healthDistrict'];
-    $query = "SELECT health_district_name,health_district.health_district_id FROM vaccination_drive JOIN health_district_drives ON vaccination_drive.drive_id = health_district_drives.drive_id JOIN health_district ON health_district_drives.health_district_id = health_district.health_district_id WHERE vaccination_drive.drive_id = $driveId";
+    $priorities = [];
 
     foreach ($vaccination_drive as $vd){
         if($vd->getDriveId() == $driveId){
-            $stubs = $vd->getVaccStubs();
-            $chosen = $vd->getPriorityGroup();
+            $firstDoseStubs = $vd->getFirstDoseStubs();
+            $secondDoseStubs = $vd->getSecondDoseStubs();
         }
     }
 
 
+
+    $query2 = "SELECT priority_groups.priority_group FROM priority_groups JOIN priority_drive ON priority_groups.priority_group_id = priority_drive.priority_id WHERE priority_drive.drive_id = $driveId";
+    $stmt = $database->stmt_init();
+    $stmt->prepare($query2);
+    $stmt->execute();
+    $stmt->bind_result($priorityGroup);
+    while ($stmt->fetch()){
+        $priorities[] = $priorityGroup;
+    }
+
+    $priorityGroups = json_encode($priorities);
+
+
+    $query = "SELECT health_district.health_district_name, health_district.health_district_id FROM vaccination_drive JOIN health_district_drives ON vaccination_drive.drive_id = health_district_drives.drive_id JOIN health_district ON health_district_drives.health_district_id = health_district.health_district_id WHERE vaccination_drive.drive_id = $driveId";
     $stmt = $database->stmt_init();
     $stmt->prepare($query);
     $stmt->execute();
@@ -64,29 +92,24 @@ if (isset($_POST['healthDistrict'])) {
         echo "<tr>
                     <th scope='col' class='barangay'> $healthDistrict </th>
                     <th scope='col-sm-auto' class='float-right'>
-                      <button type='button' id='allocateButton' class='btn btn-info' onclick='viewBarangays( $healthDistrictId, $driveId, \"$chosen\", $stubs)'> ALLOCATE </button>
+                      <button type='button' id='allocateButton' class='btn btn-info' onclick='viewBarangays( $healthDistrictId, $driveId, $priorityGroups, $firstDoseStubs, $secondDoseStubs)'> ALLOCATE </button>
                       </th>
                       </tr>";
     }
-  
+
 }
 
 if (isset($_POST['viewBarangays'])) {
     require '../require/getHealthDistrict.php';
-    require '../require/getVaccinationDrive.php';
 
     $healthDistrictId = $_POST['viewBarangays'];
     $vaccDrive = $_POST['drive'];
+    $first_dose = $_POST['firstStubs'];
+    $second_dose = $_POST['secondStubs'];
 
     foreach ($health_district as $hd){
         if($hd->getHealthDistrictId() == $healthDistrictId){
             $healthDistrict = $hd->getHealthDistrictName();
-        }
-    }
-
-    foreach ($vaccination_drive as $vd){
-        if($vd->getDriveId() == $vaccDrive){
-            $stubs = $vd->getVaccStubs();
         }
     }
 
@@ -102,11 +125,11 @@ if (isset($_POST['viewBarangays'])) {
                 </div>
                 <div class='modal-body' id='healthDStubs'>
 
-                
+
                     <div class='stubNumbersContainer'>
                     <div id='counter' class='bold'>
-                               <center><p><i class='fas fa-ticket-alt'></i> number of Stubs Left: $stubs</p> </center>
-                            </div>                 
+                               <center><p><i class='fas fa-ticket-alt'></i> number of Stubs Left: $first_dose</p> </center>
+                            </div>
                         <div class='row'>
                             <div class='col bold barangayList'>
                                  <p> BARANGAY LIST </p>
@@ -115,17 +138,17 @@ if (isset($_POST['viewBarangays'])) {
                                 <p> Priority Groups </p>
                             </div>
                         </div>
-                        
+
                         <table class='table table-borderless'>
                             <thead>
                                 <tr>
                                     <th scope='col'> Covered Barangays </th>
-                                    <th scope='col'> A1 </th> 
+                                    <th scope='col'> A1 </th>
                                     <th scope='col'> A2 </th>
                                     <th scope='col'> A3 </th>
                                     <th scope='col'> A4 </th>
-                                    <th scope='col'> A5 </th> 
-                                    <th scope='col'> ROP </th>   
+                                    <th scope='col'> A5 </th>
+                                    <th scope='col'> ROP </th>
                                 </tr>
                             </thead> ";
 
