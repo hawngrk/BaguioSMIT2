@@ -103,7 +103,7 @@
                         <th class="columnName" scope="col">Patient Name</th>
                         <th class="columnName" scope="col">Category</th>
                         <th class="columnName" scope="col">Complete Address</th>
-                        <th class="columnName fourthCol" scope="col">Contact Number</th>
+                        <th class="columnName " scope="col">Contact Number</th>
                         <th class="columnName" scope="col">Action</th>
                     </tr>
                     </thead>

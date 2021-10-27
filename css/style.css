@@ -249,9 +249,7 @@ input[type=text]{
 #postVac {
     color: #070101 !important;
 }
-.addVButt{
-    border-radius: 5px;
-}
+
 
 
 
@@ -661,7 +659,7 @@ input[type=text1] {
     height: 18%;
 }
 
-.viewReportBtn {
+.viewReportBtn, .archiveVaxBtn {
     background: #DCF4FF;
     border: 1px solid black;
     width: fit-content;
@@ -671,6 +669,9 @@ input[type=text1] {
     border-radius: 12px;
     font-size: 85%;
 }
+
+
+
 
 
 .CounterReportContainer {
@@ -890,6 +891,10 @@ img{
     margin-right: 3%
 }
 
+.actionButt{
+    padding: 2vh;
+}
+
 #description{
     margin-left:5%;
     margin-right: 5%;
@@ -1082,6 +1087,10 @@ input[name=vitals]{
 .tableMonitoring {
     width: 100%!important;
     height: 60%;
+}
+
+.addVitals{
+    border: none;
 }
 
 .navbarMonitoring {
@@ -1335,7 +1344,9 @@ input[type=text]:disabled{
     margin:2%;
 }
 
-
+.tableCenterCont{
+    text-align: center;
+}
 
 .tableScroll1{
     position: relative;

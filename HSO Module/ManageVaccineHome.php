@@ -137,7 +137,7 @@ include_once("../includes/database.php") ?>
 
             <div class="tableVaccine tableScroll2 shadow">
                 <table class="table table-hover" id="vaccineTable">
-                    <thead>
+                    <thead class='tableCenterCont'>
                     <tr>
                         <th>Vaccine Lot ID</th>
                         <th>Vaccine Name</th>
@@ -171,16 +171,16 @@ include_once("../includes/database.php") ?>
                                 }
                             }
 
-                            echo "<tr class='table-row' onclick='showVaccine(this)'>
+                            echo "<tr class='table-row tableCenterCont' onclick='showVaccine(this)'>
                             <td>$vaccineLotId</td>
                             <td>$vaccName</td>
                             <td>$source</td>
                             <td>$dateStored</td>
                             <td>$vaccExp</td>
-                            <td style='text-align: center;'>$batchQty</td>
+                            <td>$batchQty</td>
                             <td>
-                                <div style='text-align: left;'>
-                                      <button type='button' class='buttonTransparent' onclick='event.stopPropagation();archive(1, clickArchive, $vaccineLotId)'><i class='fa fa-archive'></i></button>
+                                <div>
+                                      <button type='button' class='archiveVaxtBtn buttonTransparent' onclick='archive(1, clickArchive, $vaccineLotId)'><i class='fa fa-archive'></i></button>
                                       <button type='button' class='viewReportBtn buttonTransparent' id='viewButton' onclick='viewVaccineDetails($vaccineLotId)'><i class='fas fa-eye'></i></button>
                                 </div>
                             </td>

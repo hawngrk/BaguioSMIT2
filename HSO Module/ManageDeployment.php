@@ -157,7 +157,7 @@ include_once("../includes/database.php") ?>
                     <div class="tableDep tableScroll1 col">
                         <table class="table table-hover tableDep" id="driveTable">
                             <thead>
-                            <tr>
+                            <tr class='tableCenterCont'>
                                 <th scope="col">Drive Id</th>
                                 <th scope="col">Location</th>
                                 <th scope="col">Date</th>
@@ -184,15 +184,15 @@ include_once("../includes/database.php") ?>
                                         }
                                     }
 
-                                    echo "<tr class='table-row' onclick='showDrive(this)'>
+                                    echo "<tr class='tableCenterCont' style='text-align: center' onclick='showDrive(this)'>
                         <td>$driveId</td>
                         <td>$vaccinationSite</td>
                         <td>$date</td>
                         <td>$stubs</td>
                         <td>
-                            <div style='text-align: left;'>
+                            <div class='tableCenterCont'>
                                 <button class='buttonTransparent actionButt' onclick='event.stopPropagation(); archive(1, clickArchive, $driveId)'><i class='fa fa-archive'></i></button>
-                                <button class='buttonTransparent ml-2' onclick=''><i class='far fa-edit'></i></button>
+                                <button class='buttonTransparent actionButt' onclick=''><i class='far fa-edit'></i></button>
                            
                             </div>
                         </td>

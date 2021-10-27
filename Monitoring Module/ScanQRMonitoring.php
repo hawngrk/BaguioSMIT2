@@ -200,7 +200,7 @@
     }
 
     #scannerTxt {
-        margin-top: 7%;
+        margin-top: 3%;
     }
 </style>
 

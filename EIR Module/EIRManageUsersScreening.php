@@ -138,7 +138,7 @@
             <div class="tablePatient shadow tableScroll2">
             <table class="table table-hover" id="patientTable">
                 <thead>
-                <tr class="labelRow">
+                <tr class="labelRow tableCenterCont">
                     <th>Patient Id No.</th>
                     <th>Patient Name</th>
                     <th>Category</th>
@@ -170,14 +170,14 @@
                             $name = $pd->getPatientLName() . ", " . $pd->getPatientFName() . " " . $pd->getPatientMName() . " " . $pd->getPatientSuffix();
                         }
 
-                        echo "<tr class='table-row' onclick='showPatient(this)'>
+                        echo "<tr class='table-row tableCenterCont' onclick='showPatient(this)'>
                         <td>$id</td>
                         <td>$name</td>
                         <td>$category</td>
                         <td>$fullAddress</td>
                         <td>$contact</td>
                         <td>
-                            <div style='text-align: left;'>
+                            <div>
                                 <button class='buttonTransparent' onclick='archive(1, clickArchive, $id)'><i class='fa fa-archive'></i></button>
                                 <button type='button' class='viewReportBtn buttonTransparent' id='viewButton' onclick='viewPatient($id)'><i class='fas fa-eye'></i></button
                             </div>

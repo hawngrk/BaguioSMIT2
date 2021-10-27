@@ -140,6 +140,7 @@ include_once("../includes/database.php") ?>
                         <table class="table table-hover tableReport" id="reportsTable">
                             <thead>
                             <tr>
+                                <th scope="col">#</th>
                                 <th scope="col">Report ID</th>
                                 <th scope="col">Name of Reporter</th>
                                 <th scope="col">Date Reported</th>
@@ -165,7 +166,8 @@ include_once("../includes/database.php") ?>
                                             $reporter = $pat->getPatientFullName();
                                         }
                                     }
-                                    echo "<tr onclick='viewReport($reportId)'>
+                                    echo "<tr>
+                                          <td>$count</td>
                                           <td>$reportId</td>
                                           <td>$reporter</td>
                                           <td>$dateReported</td>
@@ -352,7 +354,6 @@ include_once("../includes/database.php") ?>
             function closeModal(modal) {
                 document.getElementById(modal).style.display = "none";
             }
-
             function searchReport() {
                 var textSearch = document.getElementById("searchReportHSO").value;
                 if (textSearch === "") {
