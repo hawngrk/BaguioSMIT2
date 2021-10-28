@@ -45,6 +45,7 @@ include_once("../includes/database.php")
             integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY"
             crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script defer src="../javascript/showDateAndTime.js"> </script>
 
 </head>
@@ -174,7 +175,7 @@ include_once("../includes/database.php")
                     </div>
                 </div>
                 <div class="col">
-                    <button id="confirmationNotif" onclick="sendNotification()">
+                    <button id="confirmationNotif" onclick="confirmSending()">
                         Send<br>
                         Confirmation
                         <br>Notification
@@ -220,6 +221,23 @@ include_once("../includes/database.php")
                 document.getElementById("patientTable").innerHTML = result;
             }
         });
+    }
+
+    async function confirmSending() {
+        Swal.fire({
+            icon: 'info',
+            title: 'Send Notification?',
+            showDenyButton: true,
+            confirmButtonText: 'Yes',
+            denyButtonText: `No`,
+        }).then((result) => {
+            if (result.isConfirmed) {
+                sendNotification();
+                Swal.fire('Notification Sent!', '', 'success')
+            } else if (result.isDenied) {
+                Swal.fire('Notification Cancelled', '', 'info')
+            }
+        })
     }
 
     function sendNotification() {
