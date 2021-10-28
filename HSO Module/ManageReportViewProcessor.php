@@ -303,6 +303,15 @@ if (isset($_POST['report'])) {
             </select>
             </div>
             </div>";
+        } else {
+            echo "
+            <select class='form-select col-lg-12' id='statusSelection'>
+            <option value='Pending' selected disabled>Pending</option>
+            <option value='Invalidate'>Invalidate</option>
+            <option value='Verify'> Verify</option>
+            </select>
+            </div>
+            </div>";
         }
         echo"
         </div>";
@@ -368,8 +377,11 @@ echo"
 
 
 if (isset($_POST['changeStatus'])) {
+    include ('../includes/database.php');
     $reportId = $_POST['reportid'];
     $status = $_POST['changeStatus'];
+
+    $database->query("UPDATE report SET report_status = '$status' WHERE report_id = '$reportId';");
 }
 
 if (isset($_POST['generate'])) {

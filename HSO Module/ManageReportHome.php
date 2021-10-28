@@ -479,8 +479,15 @@ include_once("../includes/database.php") ?>
             function changeRepStatus(reportid, status) {
                 var selectedStatus = document.getElementById('statusSelection').value;
                 if (selectedStatus !== status) {
+                    if (selectedStatus === 'Verify') {
+                        selectedStatus = 'Verified';
+                    } else {
+                        selectedStatus = 'Invalidated';
+                    }
+                    console.log(reportid);
+                    console.log(selectedStatus);
                     $.ajax({
-                        url: 'manageReportViewProcessor.php',
+                        url: 'ManageReportViewProcessor.php',
                         type: 'POST',
                         data: {"changeStatus": selectedStatus, "reportid": reportid},
                         success: function (result) {
@@ -488,7 +495,7 @@ include_once("../includes/database.php") ?>
                         }
                     });
                 } else {
-                    showInvalidatedReports();
+                    viewReportModal.style.display = "none";
                 }
             }
 
