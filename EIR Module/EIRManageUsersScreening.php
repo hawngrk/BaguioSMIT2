@@ -488,7 +488,8 @@
             </button>
         </div>
     </div>
-</div></div>
+</div>
+</div>
 <div id="archived" class="modal-window">
     <div class="content-modal-table">
         <div class="modal-header">
@@ -515,12 +516,11 @@
 
                 $count = 0;
                 foreach ($vaccination_drive as $vd) {
-                    if ($vd->getArchive() == 1) {
+                    if ($vd->getArchived() == 1) {
                         $count++;
                         $driveId = $vd->getDriveId();
                         $date = $vd->getVaccDate();
                         $stubs = $vd->getVaccStubs();
-
 
                         foreach ($vaccinationSites as $vs) {
                             if ($vs->getVaccinationSiteId() == $vd->getVaccDriveVaccSiteId()) {

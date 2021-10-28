@@ -17,10 +17,11 @@ if ($count > 1) {
                     $suffix = trim($row[3]);
                     $occupation = $row[4];
                     $gender = $row[5];
-                    $createDate = date_create($row[6]);
-                    $birthdate = date_format($createDate, 'Y-m-d');
+                    $unformattedDate= $row[6];
+                    $formattedBirthdate = date('Y-m-d',strtotime($unformattedDate));
+                    $birthdate = $formattedBirthdate;
                     
-                    $age = calculateAge($row[6]);
+                    $age = calculateAge($formattedBirthdate);
                     $fullName = toFullName($firstName, $lastName, $middleName, $suffix);
 
                     //category Information
@@ -74,10 +75,11 @@ if ($count > 1) {
                 $suffix = trim($row[3]);
                 $occupation = $row[4];
                 $gender = $row[5];
-                $createDate = date_create($row[6]);
-                $birthdate = date_format($createDate, 'Y-m-d');
-                    
-                $age = calculateAge($row[6]);
+                $unformattedDate= $row[6];
+                $formattedBirthdate = date('Y-m-d',strtotime($unformattedDate));
+                $birthdate = $formattedBirthdate;
+                
+                $age = calculateAge($formattedBirthdate);
                 $fullName = toFullName($firstName, $lastName, $middleName, $suffix);
 
                 //category Information

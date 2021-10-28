@@ -58,7 +58,7 @@ Description: Login HTML Elements for receiving credentials from the users
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="inputGroup-sizing-lg">Password</span>
                 </div>
-                <input type="text" id="passW" name="password" class="form-control" aria-label="Large" aria-describedby="inputGroup-sizing-sm">
+                <input type="password" id="passW" name="password" class="form-control" aria-label="Large" aria-describedby="inputGroup-sizing-sm">
             </div>
             <div class="form-button">
                 <button type="button" id="login" name="loginButton" class="buttonLogin">Login</button>
