@@ -1,5 +1,14 @@
 <?php
 include("../includes/database.php");
+include("../includes/recordActivityLog.php");
+
+//Starting session to access SESSION data
+session_start();
+
+$accountDetails = $_SESSION['account'];
+$employeeID = $accountDetails['empId'];
+$employeeRole = $accountDetails['role'];
+
 if (isset($_POST['search'])) {
     $search = $_POST['search'];
     if ($search === "") {
@@ -108,11 +117,12 @@ if (isset($_POST['archive'])){
     if ($option == "Archive"){
         $query = "UPDATE `patient_details` SET `Archived`= 1 WHERE `patient_id` = '$archivedId'";
         $database->query($query);
+        insertLogs($employeeID, $employeeRole, 'Archive', 'Archived patient ID: '.$archivedId);
 
     } else if ($option == "UnArchive") {
         $query = "UPDATE `patient_details` SET `Archived`= 0 WHERE `patient_id` = '$archivedId'";
         $database->query($query);
-
+        insertLogs($employeeID, $employeeRole, 'Unarchive', 'Unarchived patient ID: '.$archivedId);
 
         echo'<thead>
                 <tr>
@@ -156,7 +166,6 @@ if (isset($_POST['archive'])){
                     </tr>";
             }
         }
-
     }
 }
 

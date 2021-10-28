@@ -1,5 +1,13 @@
 <?php
-include '../includes/configure.php';
+require_once('../includes/configure.php');
+require_once('../includes/recordActivityLog.php');
+session_start();
+
+//Starting session to access SESSION data
+$accountDetails = $_SESSION['account'];
+$employeeID = $accountDetails['empId'];
+$employeeRole = $accountDetails['role'];
+
 //include '../Patient/flutter/Authorization/generate_credentials.php';
 $csvMimes = array('text/x-comma-separated-values', 'text/comma-separated-values', 'application/octet-stream', 'application/vnd.ms-excel', 'application/x-csv', 'text/x-csv', 'text/csv', 'application/csv', 'application/excel', 'application/vnd.msexcel', 'text/plain');
 $count = count($_FILES['file']['name']);
@@ -62,6 +70,7 @@ if ($count > 1) {
             }
         }
     }
+    insertLogs($employeeID, $employeeRole, 'Upload', 'Uploaded patient csv files');
 } else {
     if (!empty($_FILES['file']['name']) && in_array($_FILES['file']['type'], $csvMimes)) {
         if (is_uploaded_file($_FILES['file']['tmp_name'])) {
@@ -116,7 +125,9 @@ if ($count > 1) {
                 insertMedicalBackground($patientID['patient_id'], $allergyToVaccine, $hypertension, $heartDisease, $kidneyDisease, $diabetesMellitus, $bronchialAsthma, $immunodeficiency, $cancer, $otherCommorbidity);
                 $accountDetails = createAccount($patientID['patient_id'], $firstName, $lastName, $email);
                 insertPatientVitals($patientID);
+                
             }
+            insertLogs($employeeID, $employeeRole, 'Upload', 'Uploaded patient csv file');
         }
     }
 }

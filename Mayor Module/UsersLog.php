@@ -92,10 +92,30 @@
                         <th class="columnName" scope="col">Log Description</th>
                         <th class="columnName" scope="col">Actions</th>
                     </tr>
-                </thead>
+
                 <?php
-               
+                    require_once '../require/getActivityLogs.php';
+
+                    foreach ($activityLogs as $al) {
+                        $date = $al->getLogEntryDate();
+                        $ID = $al->getEmployeeId();
+                        $role = $al->getEmployeeRole();
+                        $type = $al->getLogType();
+                        $description = $al->getLogDescription();
+
+                        echo "<tr class='table-row tableCenterCont'>
+                            <td>$date</td>
+                            <td>$ID</td>
+                            <td>$role</td>
+                            <td>$type</td>
+                            <td>$description</td>
+                            <td>
+                                <button class='buttonTransparentMayors' onclick=''><i class='fas fa-eye'></i></button>
+                            </td>
+                        </tr>";
+                    }
                 ?>
+                </thead>
     </table>
     </div>
 </div>

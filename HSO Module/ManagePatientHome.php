@@ -499,7 +499,7 @@ include_once("../includes/database.php") ?>
                     <button type="button" onclick="closeModal('patientInformationModal')" class="btn btn-danger"
                             data-dismiss="modal" >Cancel
                     </button>
-                    <button type="button" id="addPatientNextBtn" class="btn btn-success">Add</button>
+                    <button type="button" id="addPatientNextBtn" onclick="addPatient()" class="btn btn-success">Add</button>
                 </div>
             </div>
 
@@ -629,7 +629,6 @@ include_once("../includes/database.php") ?>
     var addPatientBtn = document.getElementById("addPatientBtn");
     var patientInformationModal = document.getElementById("patientInformationModal");
     var patientMedBackgroundModal = document.getElementById("patientMedBackgroundModal");
-
     var addPatientNextBtn = document.getElementById("addPatientNextBtn");
 
 
@@ -710,69 +709,127 @@ include_once("../includes/database.php") ?>
     }
 
     function addPatient() {
-        notificationModal.style.display = "block";
+
+        //Personal Information
         var last = document.getElementById("lname").value;
         var first = document.getElementById("fname").value;
         var middle = document.getElementById("mname").value;
         var suffix = document.getElementById("suffix").value;
-        var priority = document.getElementById("priority").value;
-        var gender = document.getElementById("gender").value;
         var occupation = document.getElementById("occupation").value;
-        var birthday = document.getElementById("date").value;
-        var contact = document.getElementById("number").value;
-        var street = document.getElementById("street").value;
+        var gender = document.getElementById("gender").value;
+        var birthdate = document.getElementById("date").value;
+        var dob = new Date(document.getElementById("date").value);
+        var age = getAge(dob);
+
+        //Contact Information
+        var contact = document.getElementById("contactNum").value;
+        var email = document.getElementById("email").value;
+
+        //Category Information
+        var priority = document.getElementById("priorityGroup").value;
+        var id = document.getElementById("categoryID").value;
+        var idNo = document.getElementById("categoryNo").value;
+        var philHealth = document.getElementById("philHealth").value;
+        var pwd = document.getElementById("pwdID").value;
+        //Address Information
+        var houseAddress = document.getElementById("houseAddress").value;
         var brgy = document.getElementById("barangay").value;
         var city = document.getElementById("city").value;
-        var state = document.getElementById("state").value;
+        var province = document.getElementById("province").value;
         var region = document.getElementById("region").value;
 
+        //Clinical Information
+        var allergyInput = document.getElementById("allergy").value;
+        allergy = allergyInput == "None" ? 0 : 1
+        var commorbidity = document.getElementById("comorbidity").value;
+
+        //Commorbidity Information
+        var hypertension = verifyCommorbidity($('#hypertension:checked').val());
+        var diabetes = verifyCommorbidity($('#diabetes:checked').val());
+        var cancer = verifyCommorbidity($('#cancer:checked').val());
+        var heartDisease = verifyCommorbidity($('#heartDisease:checked').val());
+        var asthma = verifyCommorbidity($('#asthma:checked').val());
+        var kidneyDisease = verifyCommorbidity($('#kidneyDisease:checked').val());
+        var immunodeficiency = verifyCommorbidity($('#immunodeficiency:checked').val());
+        var other = $('#other:checked').val();
+        var enteredCommorbidity = other ? document.querySelector('.otherInput').value : "";
+
         $.ajax({
-            url: '../Barangay Module/ManagePatientProcessor.php',
+            url: '../EIR Module/EIRAddPatient.php',
             type: 'POST',
             data: {
+                //Personal Information
                 lastname: last,
                 firstname: first,
                 middlename: middle,
                 suffix: suffix,
-                priority: priority,
                 gender: gender,
                 occupation: occupation,
-                birthday: birthday,
-                contactnumber: contact,
-                street: street,
+                birthdate: birthdate,
+                age: age,
+
+                //Contact Information
+                contact: contact,
+                email: email,
+
+                //Priority Group
+                priority: priority,
+                category: id,
+                categoryID: idNo,
+                philhealthID: philHealth,
+                pwdID: pwd,
+
+                //Address Information
+                houseAddress: houseAddress,
                 barangay: brgy,
-                city: city,
-                state: state,
-                region: region
+                cmAddress: city,
+                province: province,
+                region: region,
+
+                //Clinical Information
+                allergy: allergy,
+                commorbid: commorbidity,
+                hypertension: hypertension,
+                heartDisease: heartDisease,
+                kidneyDisease: kidneyDisease,
+                diabetesMellitus: diabetes,
+                bronchialAsthma: asthma,
+                immunodeficiency: immunodeficiency,
+                cancer: cancer,
+                otherCommorbidity: enteredCommorbidity
             },
+
             success: function (result) {
-                document.getElementById("patientMedBackgroundModal").style.display = "none";
-                document.getElementById("patientTable1").innerHTML = "";
-                document.getElementById("patientTable1").innerHTML = result;
+                console.log(result);
+                Swal.fire('Added Patient', '', 'success');
+                reloadPatient();
+                addButton.disabled = true;
             }
         });
     }
+    //Change unchecked commorbidity to 0
+    function verifyCommorbidity(commorbidity) {
+    return !commorbidity ? 0 : 1;
+    }
 
-    async function archive(archive, action, drive) {
-        if (archive == 1) {
-            archiveText = "Archive";
-        } else {
-            archiveText = "UnArchive";
-        }
-        Swal.fire({
-            icon: 'info',
-            title: 'Are You Sure you Want to ' + archiveText + ' this item?',
-            showDenyButton: true,
-            confirmButtonText: 'Yes',
-            denyButtonText: `No`,
-        }).then((result) => {
-            if (result.isConfirmed) {
-                action(drive, archiveText);
-                Swal.fire('Saved!', '', 'success')
-            } else if (result.isDenied) {
-                Swal.fire('Changes are not saved', '', 'info')
+    //Calculates the age of the patient using its birthday
+    function getAge(dob) {
+    var month_diff = Date.now() - dob.getTime();
+    var age_dt = new Date(month_diff);
+    var year = age_dt.getUTCFullYear();
+    var age = Math.abs(year - 1970);
+    return age;
+    }
+
+    function reloadPatient() {
+        $.ajax({
+            url: '../includes/showRegisteredPatients.php',
+            type: 'GET',
+            success: function (result) {
+                document.getElementById("patientTable").innerHTML = "";
+                document.getElementById("patientTable").innerHTML = result;
             }
-        })
+        });
     }
 
     async function archive(archive, action, drive) {
@@ -842,6 +899,7 @@ include_once("../includes/database.php") ?>
             processData: false,
             data: formData,
             success: function (result) {
+                console.log(result);
                 uploadFileModal.style.display = "none";
                 Swal.fire('Added Patient', '', 'success');
             }

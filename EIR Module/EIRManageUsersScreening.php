@@ -664,7 +664,7 @@
         var enteredCommorbidity = other ? document.querySelector('.otherInput').value : "";
 
         $.ajax({
-            url: '../patient/flutter/authorization/pre_registration.php',
+            url: 'EIRAddPatient.php',
             type: 'POST',
             data: {
                 //Personal Information

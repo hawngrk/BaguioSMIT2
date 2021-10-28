@@ -12,7 +12,7 @@
             $this->empPassword = $empPass;
             $this->empAccountType = $empAccType;
             $this->empPicture = "data:image;base64," . base64_encode($empPic);
-        }
+        } 
 
         public function getEmpPassword()
         {
@@ -966,8 +966,54 @@ class healthDistrictDrive
         return $this->districtId;
     }
 }
+
+class activityLogs
+{
+    private $logId;
+    private $logEntryDate;
+    private $employeeId;
+    private $employeeRole;
+    private $logType;
+    private $logDescription;
+
+    public function __construct($logId, $logEntryDate, $employeeId, $employeeRole, $logType, $logDescription)
+    {
+        $this->logId = $logId;
+        $this->logEntryDate = $logEntryDate;
+        $this->employeeId = $employeeId;
+        $this->employeeRole = $employeeRole;
+        $this->logType = $logType;
+        $this->logDescription = $logDescription;
+    }
+
+    public function getLogId()
+    {
+        return $this->logId;
+    }
+
+    public function getLogEntryDate()
+    {
+        return $this->logEntryDate;
+    }
+
+    public function getEmployeeId()
+    {
+        return $this->employeeId;
+    }
+
+    public function getEmployeeRole()
+    {
+        return $this->employeeRole;
+    }
+
+    public function getLogType()
+    {
+        return $this->logType;
+    }
+
+    public function getLogDescription()
+    {
+        return $this->logDescription;
+    }
+}
 ?>
-
-
-
-

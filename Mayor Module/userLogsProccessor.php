@@ -1,22 +1,32 @@
 <?php
-include("../includes/database.php");
+include "../includes/database.php";
+if (isset($_POST['empDeets'])){
+    $empModal = $_POST['empDeets'];
+    
+    $query = "SELECT * FROM `employee` JOIN employee_account ON employee.employee_id = employee_account.employee_id WHERE employee.employee_id = $empModal";
 
-
-$querySearch = "SELECT employee.employee_id, employee.employee_first_name, employee.employee_middle_name, employee.employee_last_name ,employee.employee_role, employee_account.employee_account_type FROM `employee` JOIN employee_account ON employee.employee_id = employee_account.employee_id";
-
-$stmt = $database->stmt_init();
-$stmt->prepare($querySearch);
-$stmt->execute();
-$stmt->bind_result($empID,$empFName,$empMName,$empLName, $empRole,$empAccType);
-
-while($stmt->fetch()) {
-    echo"<tr class='labelRow'>
-            <td><p class='columnCnt'>$empFName $empMName $empLName</p></td>
-            <td class='columnName'>$empRole </td>
-            <td class='columnName'>$empAccType</td>
-            <td class='columnName'><button class='buttonTransparentMayors' onclick='showEmployeeDeets($empID)'><i class='fas fa-eye'></i></button</td>
-</tr>";
+    $stmt = $database->stmt_init();
+    $stmt->prepare($query);
+    $stmt->execute();
+    $stmt->bind_result($empID, $empFName, $empLName, $empMName, $empSuffix, $empRole, $brgyID, $empContactNumber, $empNumID, $empAccID, $empUserName, $empPW, $empType, $empPic);
+    $stmt->fetch();
+    $stmt->close();
+        echo "<h4> $empFName $empMName $empLName </h4>
+        <hr>
+        <div class='row mayorsCnt'>
+            <div class='col'>
+            <h5>Employee Role:</h5><p>$empRole</p>
+            <h5>Contact Number:</h5><p>$empContactNumber</p>
+            <h5>Account Type:</h5><p>$empType</p>
+            </div>
+            <div class='col'>
+            <h5>Employee Credentials:</h5>
+            <button id='showEmpCreds' class='btn btn-outline-primary' onclick='showCreds()'>Show Credentials</button>
+            <div id='creds' style='display:none'>
+            <h7>Username:</h7><p>$empUserName</p>
+            <h7>Password:</h7><p>$empPW</p>
+            </div>
+            </div>
+        </div>";
 }
-
-
 ?>
