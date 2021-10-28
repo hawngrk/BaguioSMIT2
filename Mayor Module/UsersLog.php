@@ -85,19 +85,18 @@
     <table class="table table-row table-hover mayorTable tableMonitoring" id="employeesTable">
                 <thead>
                     <tr class="labelRow">
-                        <th class="columnName" scope="col">Employee Name</th>
-                        <th class="columnName" scope="col">Role</th>
-                        <th class="columnName" scope="col">Last Login</th>
-                        <th class="columnName" scope="col">Action</th>
+                        <th class="columnName" scope="col">Log Entry Date</th>
+                        <th class="columnName" scope="col">Employee ID</th>
+                        <th class="columnName" scope="col">Employee Role</th>
+                        <th class="columnName" scope="col">Log type</th>
+                        <th class="columnName" scope="col">Log Description</th>
+                        <th class="columnName" scope="col">Actions</th>
                     </tr>
                 </thead>
                 <?php
                
                 ?>
     </table>
-       
-
-
     </div>
 </div>
 </body>

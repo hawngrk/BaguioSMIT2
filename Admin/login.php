@@ -96,17 +96,13 @@ Description: Login HTML Elements for receiving credentials from the users
                             success();
                             setTimeout("window.location.href = '../Barangay Module/homeBarangayModule.php'", 500);
                         } 
-                        if ($.trim(results)  == 'Vaccinator') {
-                            success();
-                            setTimeout("window.location.href = '../Vaccinator Module/ScanQR.php'", 500);
-                        } 
                         if ($.trim(results)  == 'Monitoring') {
                             success();
-                            setTimeout("window.location.href = '../Monitoring Module/ScanQR.php'", 500);
+                            setTimeout("window.location.href = '../Monitoring Module/ScanQRScreening.php'", 500);
                         } 
                         if ($.trim(results)  == 'Screening') {
                             success();
-                            setTimeout("window.location.href = '../Screening Module/ScanQR.php'", 500);
+                            setTimeout("window.location.href = '../Screening Module/ScanQRScreening.php'", 500);
                         } 
                         if ($.trim(results)  == 'SSD') {
                            success();
@@ -120,6 +116,10 @@ Description: Login HTML Elements for receiving credentials from the users
                            success();
                             setTimeout("window.location.href = '../EIR Module/EIRHomeScreening.php'", 500);
                         }
+                        if (results  == "Mayor's Office") {
+                            success();
+                            setTimeout("window.location.href = '../Mayor Module/UsersLog.php'", 500);
+                        } 
                     },
                     error: function(results) {
                         console.log('There was an error');

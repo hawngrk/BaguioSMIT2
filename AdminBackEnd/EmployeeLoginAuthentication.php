@@ -1,11 +1,10 @@
 <?php
 session_start();
-include("../includes/configure.php");
+require_once("../includes/configure.php");
+require_once("../includes/recordActivityLog.php");
 
 $username = $_POST["username"];
 $password = $_POST["password"];
-// $username = 'EmployeeMonica';
-// $password = 'employee1';
 
 $accountData = "SELECT * FROM employee_account WHERE employee_username = ?";
 
@@ -34,6 +33,10 @@ try {
 
         $_SESSION['account'] = $accountInformation;
         
+        $logType = 'Login';
+        $logDescription = 'Successfully logged in';
+
+        insertLogs($accountInformation['empId'], $accountInformation['role'], $logType, $logDescription);
         //Returns the role of the employee for redirection to its designated page
         echo $accountInformation['role'];
 
