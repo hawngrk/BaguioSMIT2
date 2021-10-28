@@ -226,6 +226,7 @@ include_once("../includes/database.php")
         $.ajax({
             url: 'Sendnotification.php',
             type: 'POST',
+            data: {"type": "many"},
             success: function (result) {
                 console.log(result);
             }
