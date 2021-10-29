@@ -92,7 +92,7 @@ if (isset($_POST['healthDistrict'])) {
         echo "<tr>
                     <th scope='col' class='barangay'> $healthDistrict </th>
                     <th scope='col-sm-auto' class='float-right'>
-                      <button type='button' id='allocateButton' class='btn btn-info' onclick='viewBarangays( $healthDistrictId, $driveId, $priorityGroups, $firstDoseStubs, $secondDoseStubs)'> ALLOCATE </button>
+                      <button type='button' id='allocateButton' class='btn btn-info' onclick='viewBarangays( $healthDistrictId, \"$healthDistrict\", $driveId, $priorityGroups, $firstDoseStubs, $secondDoseStubs)'> ALLOCATE </button>
                       </th>
                       </tr>";
     }
@@ -105,7 +105,6 @@ if (isset($_POST['viewBarangays'])) {
     $healthDistrictId = $_POST['viewBarangays'];
     $vaccDrive = $_POST['drive'];
     $first_dose = $_POST['firstStubs'];
-    $second_dose = $_POST['secondStubs'];
 
     foreach ($health_district as $hd){
         if($hd->getHealthDistrictId() == $healthDistrictId){
@@ -114,21 +113,10 @@ if (isset($_POST['viewBarangays'])) {
     }
 
     echo "
-            <div id='stubsModal' class='content-modal'>
-                <div class='modal-header'>
-                <h3 style='padding-right:50%'> $healthDistrict </h3>
-                    <select name='Type' style='width: 14%' onchange='(this)'>
-                        <option value='percentage'>Percentage </option>
-                        <option value='whole'>Whole Number</option>
-                    </select>
-                <button id='closeModal' class='close' onclick='closeModal(\"barangayModal\")'> &times;</button>
-                </div>
-                <div class='modal-body' id='healthDStubs'>
-
-
+                                       
                     <div class='stubNumbersContainer'>
-                    <div id='counter' class='bold'>
-                               <center><p><i class='fas fa-ticket-alt'></i> number of Stubs Left: $first_dose</p> </center>
+                    <div id='firstCounter' class='bold counter'>
+                               <center><p><i class='fas fa-ticket-alt'></i> Number of Stubs Left: $first_dose</p> </center>
                             </div>
                         <div class='row'>
                             <div class='col bold barangayList'>
@@ -162,12 +150,12 @@ if (isset($_POST['viewBarangays'])) {
     while ($stmt->fetch()) {
         echo "            <tr id='$barangay_id'>
                                 <th scope='row'> $barangay</th>
-                                <td><input class='A1: Health Care Workers' type='number' min='0' max='100' onchange='countStubs(this.value, this.oldValue, this); this.oldValue = this.value' onkeypress='checkZero(this) ' oninput='this.value = this.value.replace(/[^0-9.\%]/g, \"\").replace(/(\..*)\./g, \"$1\");' value='0' disabled><span id='percent' style='display: none'>%</span></td>
-                                <td><input class='A2: Senior Citizens' type='number' min='0' max='100' onchange='countStubs(this.value, this.oldValue, this); this.oldValue = this.value' onkeypress='checkZero(this) ' oninput='this.value = this.value.replace(/[^0-9.\%]/g, \"\").replace(/(\..*)\./g, \"$1\");' value='0' disabled></td>
-                                <td><input class='A3: Adult with Comorbidity' type='number' min='0' max='100' onchange='countStubs(this.value, this.oldValue, this); this.oldValue = this.value' onkeypress='checkZero(this) ' oninput='this.value = this.value.replace(/[^0-9.\%]/g, \"\").replace(/(\..*)\./g, \"$1\");' value='0' disabled></td>
-                                <td><input class='A4: Frontline Personnel in Essential Sector' type='number' min='0' max='100' onchange='countStubs(this.value, this.oldValue, this); this.oldValue = this.value' onkeypress='checkZero(this) ' oninput='this.value = this.value.replace(/[^0-9.\%]/g, \"\").replace(/(\..*)\./g, \"$1\");' value='0' disabled></td>
-                                <td><input class='A5: Indigent Population' type='number' min='0' max='100' onchange='countStubs(this.value, this.oldValue, this); this.oldValue = this.value' onkeypress='checkZero(this) ' oninput='this.value = this.value.replace(/[^0-9.\%]/g, \"\").replace(/(\..*)\./g, \"$1\");' value='0' disabled></td>
-                                <td><input class='A6: Rest Of The Population' type='number' min='0' max='100' onchange='countStubs(this.value, this.oldValue, this); this.oldValue = this.value' onkeypress='checkZero(this) ' oninput='this.value = this.value.replace(/[^0-9.\%]/g, \"\").replace(/(\..*)\./g, \"$1\");' value='0' disabled></td>
+                                <td><input class='A1: Health Care Workers' type='number' min='0' max='100' onchange='countStubs(this.value, this.oldValue, this, \"firstCounter\", \"first\"); this.oldValue = this.value' onkeypress='checkZero(this, \"first\")' oninput='this.value = this.value.replace(/[^0-9.\%]/g, \"\").replace(/(\..*)\./g, \"$1\");' value='0' disabled><span id='percent' style='display: none'>%</span></td>
+                                <td><input class='A2: Senior Citizens' type='number' min='0' max='100' onchange='countStubs(this.value, this.oldValue, this, \"firstCounter\", \"first\"); this.oldValue = this.value' onkeypress='checkZero(this, \"first\") ' oninput='this.value = this.value.replace(/[^0-9.\%]/g, \"\").replace(/(\..*)\./g, \"$1\");' value='0' disabled></td>
+                                <td><input class='A3: Adult with Comorbidity' type='number' min='0' max='100' onchange='countStubs(this.value, this.oldValue, this, \"firstCounter\", \"first\"); this.oldValue = this.value' onkeypress='checkZero(this,\"first\")' oninput='this.value = this.value.replace(/[^0-9.\%]/g, \"\").replace(/(\..*)\./g, \"$1\");' value='0' disabled></td>
+                                <td><input class='A4: Frontline Personnel in Essential Sector' type='number' min='0' max='100' onchange='countStubs(this.value, this.oldValue, this, \"firstCounter\", \"first\"); this.oldValue = this.value' onkeypress='checkZero(this, \"first\")' oninput='this.value = this.value.replace(/[^0-9.\%]/g, \"\").replace(/(\..*)\./g, \"$1\");' value='0' disabled></td>
+                                <td><input class='A5: Indigent Population' type='number' min='0' max='100' onchange='countStubs(this.value, this.oldValue, this, \"firstCounter\", \"first\"); this.oldValue = this.value' onkeypress='checkZero(this, \"first\")' oninput='this.value = this.value.replace(/[^0-9.\%]/g, \"\").replace(/(\..*)\./g, \"$1\");' value='0' disabled></td>
+                                <td><input class='A6: Rest Of The Population' type='number' min='0' max='100' onchange='countStubs(this.value, this.oldValue, this, \"firstCounter\", \"first\"); this.oldValue = this.value' onkeypress='checkZero(this, \"first\")' oninput='this.value = this.value.replace(/[^0-9.\%]/g, \"\").replace(/(\..*)\./g, \"$1\");' value='0' disabled></td>
                           </tr>";
     }
     $stmt->close();
@@ -176,51 +164,108 @@ if (isset($_POST['viewBarangays'])) {
                         </table>
                     </div>
                 </div>
-                <div class='modal-footer'>
-                <button id='sendStubs' type='button' class='btn btn-success' onclick='sendStubs($vaccDrive)'>
-                <i class='fas fa-paper-plane'></i> Send Stubs </button>
-                </div>
             </div>";
 
 
 }
 
+if (isset($_POST['viewBarangays2'])) {
+    require '../require/getHealthDistrict.php';
+
+    $healthDistrictId = $_POST['viewBarangays2'];
+    $vaccDrive = $_POST['drive'];
+    $second_dose = $_POST['secondStubs'];
+
+    foreach ($health_district as $hd){
+        if($hd->getHealthDistrictId() == $healthDistrictId){
+            $healthDistrict = $hd->getHealthDistrictName();
+        }
+    }
+
+    echo "
+
+                    <div class='stubNumbersContainer'>
+                    <div id='secondCounter' class='bold counter'>
+                               <center><p><i class='fas fa-ticket-alt'></i> Number of Stubs Left: $second_dose</p> </center>
+                            </div>
+                        <div class='row'>
+                            <div class='col bold barangayList'>
+                                 <p> BARANGAY LIST </p>
+                            </div>
+                        </div>
+
+                        <table class='table table-borderless'>
+                            <thead>
+                                <tr>
+                                    <th scope='col'> Covered Barangays </th>
+                                    <th scope='col'> Number Of Stubs </th>
+                                </tr>
+                            </thead> ";
+
+    echo "<tbody>";
+
+    $query = "SELECT barangay_id, barangay_name FROM barangay WHERE health_district_id = $healthDistrictId";
+    $stmt = $database->stmt_init();
+    $stmt->prepare($query);
+    $stmt->execute();
+    $stmt->bind_result($barangay_id, $barangay);
+    while ($stmt->fetch()) {
+        echo "            <tr id='$barangay_id'>
+                                <td> $barangay</td>
+                                <td><input type='number' min='0' max='100' onchange='countStubs(this.value, this.oldValue, this, \"secondCounter\", \"second\"); this.oldValue = this.value' onkeypress='checkZero(this, \"second\") ' oninput='this.value = this.value.replace(/[^0-9.\%]/g, \"\").replace(/(\..*)\./g, \"$1\");' value='0'><span id='percent' style='display: none'>%</span></td>
+                          </tr>";
+    }
+    $stmt->close();
+
+   echo"    </tbody>
+                        </table>
+                  </div>
+                </div>
+                <div class='modal-footer'>
+                <button id='sendStubs' type='button' class='btn btn-success' onclick='sendStubs($vaccDrive)'>
+                <i class='fas fa-paper-plane'></i> Send Stubs </button>
+                </div>
+            </div>";
+}
+
 if (isset($_POST['notifDrive'])) {
-    $query = "SELECT vaccination_drive.drive_id, vaccination_sites.location, vaccination_drive.vaccination_date, vaccination_drive.stubs, vaccination_drive.notif_opened FROM vaccination_sites JOIN vaccination_drive ON vaccination_sites.vaccination_site_id = vaccination_drive.vaccination_site_id ORDER BY drive_id desc;";
+    $query = "SELECT vaccination_drive.drive_id, vaccination_sites.location, vaccination_drive.vaccination_date, vaccination_drive.first_dose_stubs, vaccination_drive.second_dose_stubs, vaccination_drive.notif_opened FROM vaccination_sites JOIN vaccination_drive ON vaccination_sites.vaccination_site_id = vaccination_drive.vaccination_site_id ORDER BY vaccination_drive.drive_id desc;";
     $vaccination_drive = [];
 
     $stmt = $database->stmt_init();
     $stmt->prepare($query);
     $stmt->execute();
-    $stmt->bind_result($driveId, $locName, $date, $stubs, $opened);
+    $stmt->bind_result($driveId, $locName, $date, $firstStubs, $secondStubs, $opened);
 
     while ($stmt->fetch()) {
         if ($opened== 1){
             echo "
-
-
+                                                   
+                                                      
                                                         <div id='$driveId' style='color: #9C9C9C'>
                                                             <p>Vaccination Location: $locName<br>
                                                                Date: $date <br>
-                                                               Number of Stubs: $stubs <br>
+                                                               Number of First Stubs: $firstStubs <br>
+                                                               Number of Second Stubs: $secondStubs <br>
                                                             </p>
                                                         </div>
                                                       <hr style='width: 100%; background: azure'>
-
+                                                 
                                                       ";
         } else{
 
             echo "
                                                    <script>document.getElementById('marker').setAttribute('style', 'color:#c10d0d!important');</script>
-
+                                                      
                                                         <div id='$driveId' style='background: lightgray'>
                                                             <p>Vaccination Location: $locName<br>
                                                                Date: $date <br>
-                                                               Number of Stubs: $stubs <br>
+                                                               Number of First Stubs: $firstStubs <br>
+                                                               Number of Second Stubs: $secondStubs <br>
                                                             </p>
                                                         </div>
                                                       <hr style='width: 100%; background: azure'>
-
+                                                 
                                                       ";
 
         }

@@ -128,7 +128,7 @@ if (isset($_POST['districts'])){
     $date = $_POST['date'];
     $location = $_POST['location'];
 
-    $query1 = "INSERT INTO vaccination_drive (vaccination_site_id, vaccination_date, Archived, notif_opened, first_dose_stubs, second_dose_stubs) VALUE ('$location', '$date', 0, 1, '$firstDoseStubs', '$secondDoseStubs');";
+    $query1 = "INSERT INTO vaccination_drive (vaccination_site_id, vaccination_date, Archived, notif_opened, first_dose_stubs, second_dose_stubs) VALUE ('$location', '$date', 0, 0, '$firstDoseStubs', '$secondDoseStubs');";
     $database->query($query1);
 
     $getDrive = "SELECT drive_id from vaccination_drive ORDER BY drive_id DESC LIMIT 1";

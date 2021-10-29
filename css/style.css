@@ -953,7 +953,7 @@ img{
     color: white;
 }
 
-#counter{
+.counter{
     width: 26%;
     font-size: 60%;
     float: right;
