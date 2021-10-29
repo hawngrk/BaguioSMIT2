@@ -848,7 +848,7 @@ img{
 
 .tableContainer{
     background-color: #ececec;
-    padding: 1%;
+    padding: 2%;
     border-radius: 12px;
 }
 
@@ -999,7 +999,6 @@ img{
 .patientQueueButtons p,
 h6 {
     text-align: center;
-    color: #ffffff;
 }
 
 .patientQueueButtons h6 {
@@ -1013,6 +1012,10 @@ h6 {
     width: 100%;
 }
 
+.fontColor{
+    color: #ffffff;
+}
+
 #numberAvailable{
     background: #68A0B8;
 }
@@ -1022,6 +1025,7 @@ h6 {
 }
 
 #claimedStubs{
+    padding: 5%;
     background: #3681A1;
 }
 
