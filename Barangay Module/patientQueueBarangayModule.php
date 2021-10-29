@@ -136,7 +136,7 @@ include_once("../includes/database.php")
             <div class="row">
                 <div class="col patientQueueButtons">
                     <div class="patientQCounter" id="numberAvailable">
-                        <h6>Number of Available Stubs</h6>
+                        <h6 class="fontColor">Number of Available Stubs</h6>
                         <?php
                         $query = "SELECT drive_id, A1_stubs, A2_stubs, A3_stubs, A4_stubs, A5_stubs, A6_stubs FROM barangay_stubs WHERE drive_id =(SELECT drive_id FROM vaccination_drive WHERE vaccination_date = (SELECT min(vaccination_date) FROM vaccination_drive WHERE vaccination_date >= CURDATE())) AND barangay_id = '113';";
                         $stmt = $database->stmt_init();
@@ -148,7 +148,7 @@ include_once("../includes/database.php")
 
                         $stubs = $A1 + $A2 + $A3 + $A4 + $A5 + $A6;
 
-                        echo "<p>$stubs</p>";
+                        echo "<p class='fontColor'>$stubs</p>";
 
                         ?>
                     </div>
@@ -156,21 +156,21 @@ include_once("../includes/database.php")
 
                 <div class="col patientQueueButtons">
                     <div class="patientQCounter" id="numberSent">
-                        <h6>Number of Sent Confirmation</h6>
-                        <p>0</p>
+                        <h6 class="fontColor">Number of Sent Confirmation</h6>
+                        <p class="fontColor">0</p>
                     </div>
                 </div>
 
                 <div class="col patientQueueButtons">
                     <div class="patientQCounter" id="claimedStubs">
-                        <h6>Number of Claimed Stub</h6>
-                        <p>0</p>
+                        <h6 class="fontColor">Number of Claimed Stub</h6>
+                        <p class="fontColor">0</p>
                     </div>
                 </div>
                 <div class="col patientQueueButtons">
                     <div class="patientQCounter" id="redirectStub">
-                        <h6>Number of Redirected Stub</h6>
-                        <p>0</p>
+                        <h6 class="fontColor">Number of Redirected Stub</h6>
+                        <p class="fontColor">0</p>
                     </div>
                 </div>
                 <div class="col">
