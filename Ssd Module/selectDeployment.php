@@ -92,7 +92,10 @@ if (isset($_POST['healthDistrict'])) {
         echo "<tr>
                     <th scope='col' class='barangay'> $healthDistrict </th>
                     <th scope='col-sm-auto' class='float-right'>
-                      <button type='button' id='allocateButton' class='btn btn-info' onclick='viewBarangays( $healthDistrictId, \"$healthDistrict\", $driveId, $priorityGroups, $firstDoseStubs, $secondDoseStubs)'> ALLOCATE </button>
+                      <button type='button' id='allocateButton' class='btn btn-info' onclick='viewBarangays( $healthDistrictId, \"$healthDistrict\", $driveId, 
+                      $priorityGroups, $firstDoseStubs, $secondDoseStubs); 
+                      shiftTab(document.getElementById(\"firstDose\"), document.getElementById(\"secondDose\") 
+                      ,\"firstDosePage\", \"secondDosePage\")'> ALLOCATE </button>
                       </th>
                       </tr>";
     }
@@ -116,29 +119,23 @@ if (isset($_POST['viewBarangays'])) {
                                        
                     <div class='stubNumbersContainer'>
                     <div id='firstCounter' class='bold counter'>
-                               <center><p><i class='fas fa-ticket-alt'></i> Number of Stubs Left: $first_dose</p> </center>
+                               <h5 ><i class='fas fa-ticket-alt'></i> Number of Stubs Left: $first_dose</h5>
                             </div>
-                        <div class='row'>
-                            <div class='col bold barangayList'>
-                                 <p> BARANGAY LIST </p>
-                            </div>
-                            <div class='col bold barangayList'>
-                                <p> Priority Groups </p>
-                            </div>
-                        </div>
-
-                        <table class='table table-borderless'>
+                    <div class='tableAllocate'>
+                    <table class='table table-borderless tableModal'>
                             <thead>
                                 <tr>
-                                    <th scope='col'> Covered Barangays </th>
-                                    <th scope='col'> A1 </th>
-                                    <th scope='col'> A2 </th>
-                                    <th scope='col'> A3 </th>
-                                    <th scope='col'> A4 </th>
-                                    <th scope='col'> A5 </th>
-                                    <th scope='col'> ROP </th>
+                                    <th> Covered Barangays </th>
+                                    <th> A1 </th>
+                                    <th> A2 </th>
+                                    <th> A3 </th>
+                                    <th> A4 </th>
+                                    <th> A5 </th>
+                                    <th> ROP </th>
                                 </tr>
-                            </thead> ";
+                            </thead> 
+                    
+                        ";
 
     echo "<tbody>";
 
@@ -162,7 +159,13 @@ if (isset($_POST['viewBarangays'])) {
 
     echo "             </tbody>
                         </table>
+                        </div>
                     </div>
+                    
+                <div class='modal-footer'>
+                <button id='sendStubs' type='button' class='btn btn-primary' onclick='shiftTab(secondDose, firstDose, \"secondDosePage\", \"firstDosePage\")'>
+                 Next </button>
+                </div>
                 </div>
             </div>";
 
@@ -186,13 +189,8 @@ if (isset($_POST['viewBarangays2'])) {
 
                     <div class='stubNumbersContainer'>
                     <div id='secondCounter' class='bold counter'>
-                               <center><p><i class='fas fa-ticket-alt'></i> Number of Stubs Left: $second_dose</p> </center>
+                               <center><h5><i class='fas fa-ticket-alt'></i> Number of Stubs Left: $second_dose</h5> </center>
                             </div>
-                        <div class='row'>
-                            <div class='col bold barangayList'>
-                                 <p> BARANGAY LIST </p>
-                            </div>
-                        </div>
 
                         <table class='table table-borderless'>
                             <thead>
@@ -222,6 +220,7 @@ if (isset($_POST['viewBarangays2'])) {
                   </div>
                 </div>
                 <div class='modal-footer'>
+                <button class='btn btn-secondary mr-auto' onclick='shiftTab(firstDose, secondDose, \"firstDosePage\", \"secondDosePage\")'>Back</button>
                 <button id='sendStubs' type='button' class='btn btn-success' onclick='sendStubs($vaccDrive)'>
                 <i class='fas fa-paper-plane'></i> Send Stubs </button>
                 </div>

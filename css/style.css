@@ -780,16 +780,6 @@ input[type=text1] {
     font-size: 18px;
 }
 
-#navbarNav ul li.active>a, a[aria-expanded="true"]{
-    color: #fff;
-    background: #06425b;
-}
-
-#navbarNav ul li a:hover {
-    color: #fff !important;
-    background: #1D7195;
-}
-
 
 #navbarNav ul li{
     width: 30vh;
@@ -954,7 +944,7 @@ img{
 }
 
 .counter{
-    width: 26%;
+    width: fit-content;
     font-size: 60%;
     float: right;
     color: cadetblue;

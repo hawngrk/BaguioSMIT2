@@ -146,23 +146,31 @@ include "../includes/database.php";
                     <div class='modal-body' id='healthDStubs'>
                         <nav class="navbar navbar-expand-lg navbar-light navbarDep">
                             <div class="collapse navbar-collapse" id="navbarNav">
-                                <ul class="nav nav-tabs">
-                                    <li role="presentation" class="doseOption1 nav-item active">
-                                        <a class="nav-link" role="tab" id="firstDose" data-toggle="tab" href="#firstDose"
-                                           onclick="shiftTab(firstDose, secondDose,'firstDosePage', 'secondDosePage')">First Dose</a>
-                                    </li>
-                                    <li role="presentation" class="doseOption2 nav-item">
-                                        <a class="nav-link" id="secondDose" role="tab" data-toggle="tab"
-                                           href="#secondDose"
-                                           onclick="shiftTab(secondDose, firstDose, 'secondDosePage', 'firstDosePage')">Second Dose</a>
-                                    </li>
+                                <ul class="navbar-nav">
+                                    <div class="row">
+                                        <div class="col-sm-auto">
+                                            <li role="presentation" class="doseOption1 nav-item">
+                                                <a class="nav-link" role="tab" id="firstDose" data-toggle="tab" href="#firstDose"
+                                                   onclick="shiftTab(firstDose, secondDose,'firstDosePage', 'secondDosePage')">First Dose</a>
+                                            </li>
+                                        </div>
+                                        <div class="col-sm-auto">
+                                            <li role="presentation" class="doseOption2 nav-item">
+                                                <a class="nav-link" id="secondDose" role="tab" data-toggle="tab"
+                                                   href="#secondDose"
+                                                   onclick="shiftTab(secondDose, firstDose, 'secondDosePage', 'firstDosePage')">Second Dose</a>
+                                            </li>
+                                        </div>
+                                    </div>
+
+
                                 </ul>
                             </div>
                         </nav>
 
                         <!-- Tab panes -->
                         <div class="tab-content">
-                            <div role="tabpanel" class="tab-pane active" id="firstDosePage">
+                            <div role="tabpanel" class="tab-pane" id="firstDosePage">
                             </div>
                             <div role="tabpanel" class="tab-pane" id="secondDosePage">
                             </div>
@@ -264,17 +272,6 @@ include "../includes/database.php";
                 }
             });
         });
-
-        function shiftTab(active, idle, pageBlock, pageNone) {
-            active.style.backgroundColor = "#1D7195";
-            active.style.fontcolor = "#FFFFFFFF";
-            active.style.borderRadius = "12px";
-            idle.style.backgroundColor = "rgba(49,51,53,0)"
-            document.getElementById(pageBlock).style.display = "block";
-            document.getElementById(pageNone).style.display = "none";
-            document.getElementById(active).style.color = "#FFFFFFFF";
-            document.getElementById(idle).style.color = "#000000";
-        }
 
         function openNotif(modal){
             document.getElementById(modal).style.display = "block";
@@ -437,6 +434,16 @@ include "../includes/database.php";
 
         function openModal(modal) {
             document.getElementById(modal).style.display = "block";
+        }
+        function shiftTab(active, idle1, pageBlock, pageNone1) {
+            active.style.backgroundColor = "#1D7195";
+            active.style.color = "#ffffff";
+            active.style.borderRadius = "12px";
+            idle1.style.backgroundColor = "rgba(162,176,162,0)";
+            idle1.style.color = "#000000";
+            idle1.style.border = "thin solid black";
+            document.getElementById(pageBlock).style.display = "block";
+            document.getElementById(pageNone1).style.display = "none";
         }
     </script>
 
