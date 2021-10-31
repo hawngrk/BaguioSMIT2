@@ -441,7 +441,6 @@ include "../includes/database.php";
             active.style.borderRadius = "12px";
             idle1.style.backgroundColor = "rgba(162,176,162,0)";
             idle1.style.color = "#000000";
-            idle1.style.border = "thin solid black";
             document.getElementById(pageBlock).style.display = "block";
             document.getElementById(pageNone1).style.display = "none";
         }

@@ -8,6 +8,13 @@ body {
     font-family: 'Poppins', sans-serif;
 }
 
+.scrollBody{
+    height: 100%;
+    overflow-y: hidden;
+    overflow-x: hidden;
+}
+
+
 p {
     font-family: 'Poppins', sans-serif;
     font-size: 1.1em;
@@ -775,7 +782,7 @@ input[type=text1] {
 
 .navbarDep{
     background: #ececec;
-    margin-bottom: 1%;
+    margin-bottom: 2%;
     border-radius: 5px;
     font-size: 18px;
 }
@@ -1469,6 +1476,7 @@ h7~h8{
     border-top-right-radius: 3px;
     border-bottom-right-radius: 3px;
 }
+
 .sortWidth{
     width: auto;
     height: auto;
@@ -1613,6 +1621,11 @@ h5~select {
 #deploymentModal{
     margin-left: 3%;
     margin-right: 3%;
+}
+
+#delButt {
+    float: right;
+    margin: 0px;
 }
 
 #healthDMain{
