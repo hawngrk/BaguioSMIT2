@@ -447,10 +447,35 @@ a.article:hover {
     width: 95%;
 }
 
-.brgyNav, .mayorNav{ /*barangay, mayor*/
+.brgyNav, .mayorNav{
     display: flex;
     justify-content: center;
     padding: 15px;
+}
+
+/*Mayors Module*/
+
+.columnCnt{
+    margin-left: 15%!important;
+    color: #070101;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.mayorTable {
+    width: 90%!important;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.buttonTransparentMayors {
+    background: transparent!important;
+    border: transparent!important;
+}
+
+.mayorsCnt p{
+    color: #000;
+    margin-left: 3%;
 }
 
 /* The Close Button (EIR, HSO)*/
@@ -546,7 +571,7 @@ a.article:hover {
     margin-right: 7%;
 }
 
-barangayList{ /*EIR, HSO, ssd*/
+barangayList{ /*EIR*/
     margin-left: 3%;
     color: #9C9C9C;
 }
@@ -613,7 +638,7 @@ barangayList{ /*EIR, HSO, ssd*/
 
 .tableMonitoring { /*mayor, personnel*/
     width: 100%!important;
-    height: 60%;
+    /*height: 60%;*/
 }
 
 .navbarMonitoring { /*mayor*/

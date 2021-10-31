@@ -40,14 +40,15 @@
             <h4 id="headingNav1">Mayor's Office</h4>
             <hr>
             <div class="timeBox">
-                <p id="time"></p>  <p id="datee"></p>
+                <p id="time"></p>
+                <p id="datee"></p>
                 <script src="../javascript/detailedDateAndTime.js"></script>
             </div>
             <hr>
             <li>
                 <a href="UsersLog.php"><i class="fas fa-warehouse"></i> Users Log</a>
             </li>
-            <li  class="active">
+            <li class="active">
                 <a href="manageUsersMayor.php"><i class="fas fa-users"></i> Manage Users</a>
             </li>
         </ul>
@@ -61,70 +62,101 @@
 
     <!-- Page Content  -->
     <div id="content">
-    <nav class="mayorNav navbar-light bg-light rounded-lg navbarMonitoring">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col  my-auto">
-                    <div class="input-group">
-                        <input id="searchUsersMayor" type="search" placeholder="Search" class="searchHome" name="searchPatient" onkeyup="searchPatient()">
-                        <button type="submit" class="buttonTop5" onclick="searchPatient()">
-                            <i class="fa fa-search"></i>
-                        </button>
-                    </div>
 
-                </div>
-                <div class="col-sm-auto">
-                    <button type="button" class="btn btn-outline-dark buttonTop3 float-right">
-                        <i class="fas fa-sort-amount-down"></i>
-                    </button>
-                    <button type="button" class="btn btn-outline-dark buttonTop3 float-right">
-                        <i class="fas fa-filter"></i>
-                    </button>
+        <!-- Table Part -->
+        <div class="tableContainer">
+            <div class="table-title">
+                <div class="row">
+                    <div class="col">
+                        <div class="input-group">
+                            <input id="searchPersonnelInput" type="search" name="searchPersonnelInput" class="form-control"
+                                   placeholder="Search" onkeyup="employeeSearch()"/>
+                            <button type="submit" class="buttonTop5" name="searchPersonnelInput" onclick="employeeSearch()">
+                                <i class="fas fa-search"></i></button>
+                        </div>
+                    </div>
+                    <div class="col-sm-auto">
+                        <div class="row">
+                            <div class="sfDiv col-md-1.5 my-auto">
+                                <select class="form-select filterButton" id="filterEmp" name="filterEmployees"
+                                        onchange="filterEmployee(this)">
+                                    <option value="" selected disabled hidden>Filter By</option>
+                                    <option value="" disabled>Select Role Category</option>
+                                    <option value="None"> None</option>
+                                    <option value="HSO"> HSO </option>
+                                    <option value="EIR"> EIR </option>
+                                    <option value="SSD"> SSD </option>
+                                    <option value="Screening"> Screening </option>
+                                    <option value="Monitoring"> Monitoring </option>
+                                    <option value="Vaccinator"> Vaccinator </option>
+                                    <option value="Barangay"> Barangay </option>
+                                    <option value="Mayor"> Mayor's Office </option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </nav>
-    <!-- Table Part -->
-    <table class="table table-row table-hover mayorTable tableMonitoring" id="employeesTable">
-                <thead>
-                    <tr class="labelRow">
-                        <th class="columnName" scope="col">Employee Name</th>
-                        <th class="columnName" scope="col">Role</th>
-                        <th class="columnName" scope="col">Account Type</th>
-                        <th class="columnName" scope="col">Action</th>
-                    </tr>
-                </thead>
-                <?php
-                include 'mayorsModuleProcessor.php';
-                ?>
-    </table>
-    <div id="employeeView" class="modal-window">
-        <div class="content-modal">
-            <div class="modal-header">
-            <h3 class="modal-title">Employee Details</h3>
-            <span id="empClose" class="close">&times;</span>  
-        </div>
-        <div class="modal-body" id="employeeDeets"></div>
-        </div>
-    </div>
 
+            <div class="tableContainer">
+                <div class="tablePatient shadow tableScroll2">
+                    <table class="table table-row table-hover mayorTable tableMonitoring" id="employeesTable">
+                        <thead>
+                        <tr class="tableCenterCont">
+                            <th data-field="name">Employee Name</th>
+                            <th data-field="role">Role</th>
+                            <th data-field="account">Account Type</th>
+                            <th data-field="action">Action</th>
+                        </tr>
+                        </thead>
+                        <?php
+                        include("../includes/database.php");
+                        $querySearch = "SELECT employee.employee_id, employee.employee_first_name, employee.employee_middle_name, employee.employee_last_name ,employee.employee_role, employee_account.employee_account_type FROM `employee` JOIN employee_account ON employee.employee_id = employee_account.employee_id";
+
+                        $stmt = $database->stmt_init();
+                        $stmt->prepare($querySearch);
+                        $stmt->execute();
+                        $stmt->bind_result($empID, $empFName, $empMName, $empLName, $empRole, $empAccType);
+                        while ($stmt->fetch()) {
+                        echo "<tr class='tableCenterCont'>
+                                 <td>$empFName $empMName $empLName</td>
+                                 <td>$empRole </td>
+                                 <td>$empAccType</td>
+                                 <td><button class='buttonTransparentMayors' onclick='showEmployeeDeets($empID)'><i class='fas fa-eye'></i></button</td>
+                                 </tr>";
+                        }
+                        ?>
+                    </table>
+                </div>
+            </div>
+            <div id="employeeView" class="modal-window">
+                <div class="content-modal">
+                    <div class="modal-header">
+                        <h3 class="modal-title">Employee Details</h3>
+                        <span id="empClose" class="close">&times;</span>
+                    </div>
+                    <div class="modal-body" id="employeeDeets"></div>
+                </div>
+            </div>
+
+        </div>
     </div>
-</div>
 </body>
-
 </html>
-<script>
 
+<!--<script src="https://unpkg.com/bootstrap-table@1.18.3/dist/bootstrap-table.min.js"></script>-->
+
+<script>
     function showEmployeeDeets(empID) {
         document.getElementById("employeeView").style.display = "block";
-        empClose.onclick = function(){
+        empClose.onclick = function () {
             employeeView.style.display = "none";
         }
         $.ajax({
-            url: 'mayorsShowProcessor.php',
+            url: 'mayorsModuleProcessor.php',
             type: 'POST',
             data: {"empDeets": empID},
-            success: function (data){
+            success: function (data) {
                 document.getElementById('employeeDeets').innerHTML = data;
             }
         })
@@ -135,12 +167,48 @@
         var content = document.getElementById("creds");
         var pword = prompt("Please enter your password:");
         var realPW = "hudsonPogi";
-    if (realPW == pword){
-        if (content.style.display === "none")  {
-        content.style.display = "block";
-    } else {
-        content.style.display = "none";
+        if (realPW == pword) {
+            if (content.style.display === "none") {
+                content.style.display = "block";
+            } else {
+                content.style.display = "none";
+            }
         }
     }
+
+    function employeeSearch(){
+        var textSearch = document.getElementById("searchPersonnelInput").value;
+        $.ajax({
+            url: 'mayorsModuleProcessor.php',
+            type: 'POST',
+            data: {"search": textSearch},
+            success: function (result) {
+                document.getElementById("employeesTable").innerHTML = result;
+            }
+        });
     }
+
+    // $(document).on("change",'#filterEmp',function () {
+    //     var filterAlgorithm = $(this).val()
+    //     $('#table').bootstrapTable('filterBy',{role: filterAlgorithm})
+    // })
+
+
+    function filterEmployee(filterEmp){
+        var selectedFilter = filterEmp.value;
+        $.ajax({
+            url: 'mayorsModuleProcessor.php',
+            type: 'POST',
+            data: {"filter": selectedFilter},
+            success: function (result) {
+                document.getElementById("employeesTable").innerHTML = result;
+            }
+        })
+    }
+
+
+
+
 </script>
+
+

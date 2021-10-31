@@ -114,23 +114,27 @@ include_once("../includes/database.php") ?>
                     <div class="col-sm-auto">
                         <div class="row">
                             <div class="sfDiv col-md-1.5 my-auto">
-                                <select class="form-select filterButton" id="filterReports" name="filterReports"
-                                        onchange="filterReport(this)">
+                                <select class="form-select filterButton" id="filterCat" name="filterCategory"
+                                        onchange="filterCategoryGroup(this)">
                                     <option value="" selected disabled hidden>Filter By</option>
-                                    <option>All</option>
-                                    <option>Unverified</option>
-                                    <option>Verified</option>
-                                    <option>Invalidated</option>
+                                    <option value="" disabled >Select Category Group</option>
+                                    <option value="None"> None </option>
+                                    <option value="A1"> A1 </option>
+                                    <option value="A2"> A2 </option>
+                                    <option value="A3"> A3 </option>
+                                    <option value="A4"> A4 </option>
+                                    <option value="A5"> A5 </option>
+                                    <option value="A6"> ROP </option>
+                                    <option value="A7"> A7 </option>
                                 </select>
                             </div>
                             <div class="sfDiv col-md-1.5 my-auto">
-                                <select class="form-select sortButton" id="sortReports" name="sortReports"
-                                        onchange="sortReport(this)">
+                                <select class="form-select sortButton" id="sortPatientName" name="sortPatient"
+                                        onchange="sortByName(this)">
                                     <option value="" selected disabled hidden>Sort By</option>
-                                    <option>Name Asc</option>
-                                    <option>Name Desc</option>
-                                    <option>Date Asc</option>
-                                    <option>Date Desc</option>
+                                    <option value="" disabled >Select Category Group</option>
+                                    <option value="Asc">Name Asc</option>
+                                    <option value="Desc">Name Desc</option>
                                 </select>
                             </div>
                         </div>
@@ -672,13 +676,62 @@ include_once("../includes/database.php") ?>
     function searchPatient() {
         var textSearch = document.getElementById("searchPatientHSO").value;
         $.ajax({
-            url: 'ManagePatientProcessor.php',
+            url: '../includes/managePatientProcessor.php',
             type: 'POST',
             data: {"search": textSearch},
             success: function (result) {
                 document.getElementById("patientTable1").innerHTML = result;
             }
         });
+    }
+
+    function filterCategoryGroup(filter){
+        var selectedFilter = filter.value;
+        $.ajax({
+            url: '../includes/managePatientProcessor.php',
+            type: 'POST',
+            data: {"filter": selectedFilter},
+            success: function (result) {
+                document.getElementById("patientTable1").innerHTML = result;
+            }
+        })
+    }
+
+    function sortByName(sort){
+        var selectedSort = sort.value;
+        $.ajax({
+            url: '../includes/managePatientProcessor.php',
+            type: 'POST',
+            data: {"sort": selectedSort},
+            success: function (result) {
+                document.getElementById("patientTable1").innerHTML = result;
+            }
+        })
+    }
+
+    function viewPatient(patientId){
+        $.ajax({
+            url:'../includes/managePatientProcessor.php',
+            type:'POST',
+            data:{"patient": patientId},
+            success:function (result){
+                document.getElementById("patientModalContent").innerHTML = result;
+                openModal('viewPatientDetails');
+            }
+        })
+    }
+
+    function showPatient(val) {
+        var id = val.getElementsByTagName("td")[0].innerText;
+        $.ajax({
+            url: '../includes/managePatientProcessor.php',
+            method: 'POST',
+            data: {patient: id},
+            success: function (result) {
+                document.getElementById("patientModalContent").innerHTML = result;
+                openModal('viewPatientDetails');
+            }
+        })
     }
 
     function updateBarangayDetails(val) {
@@ -908,31 +961,6 @@ include_once("../includes/database.php") ?>
                 Swal.fire('Added Patient', '', 'success');
             }
         });
-    }
-
-    function viewPatient(patientId){
-        $.ajax({
-            url:'ManagePatientProcessor.php',
-            type:'POST',
-            data:{"patient": patientId},
-            success:function (result){
-                document.getElementById("patientModalContent").innerHTML = result;
-                openModal('viewPatientDetails');
-            }
-        })
-    }
-
-    function showPatient(val) {
-        var id = val.getElementsByTagName("td")[0].innerText;
-        $.ajax({
-            url: 'ManagePatientProcessor.php',
-            method: 'POST',
-            data: {patient: id},
-            success: function (result) {
-                document.getElementById("patientModalContent").innerHTML = result;
-                openModal('viewPatientDetails');
-            }
-        })
     }
 </script>
 

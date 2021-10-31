@@ -126,8 +126,9 @@
                                 <select class="form-select sortButton" id="sortPatientName" name="sortPatient"
                                         onchange="sortByName(this)">
                                     <option value="" selected disabled hidden>Sort By</option>
-                                    <option>Name Asc</option>
-                                    <option>Name Desc</option>
+                                    <option value="" disabled >Select Category Group</option>
+                                    <option value="Asc">Name Asc</option>
+                                    <option value="Desc">Name Desc</option>
                                 </select>
                             </div>
                         </div>
@@ -147,12 +148,8 @@
                     <th>Action</th>
                 </tr>
                 </thead>
-<!--                --><?php
-//                include '../includes/showRegisteredPatients.php';
-//                ?>
                 <?php
                 require_once '../require/getPatientDetails.php';
-
                 foreach ($patient_details as $pd) {
                     if ($pd->getArchived() == 0) {
                         $id = $pd->getPatientDeetPatId();
@@ -567,7 +564,7 @@
     function search() {
         var textSearch = document.getElementById("searchPatient").value;
         $.ajax({
-            url: 'EIRManageUserProcessor.php',
+            url: '../includes/managePatientProcessor.php',
             type: 'POST',
             data: {"search": textSearch},
             success: function (result) {
@@ -579,7 +576,7 @@
     function filterCategoryGroup(filter){
         var selectedFilter = filter.value;
         $.ajax({
-            url: 'EIRManageUserProcessor.php',
+            url: '../includes/managePatientProcessor.php',
             type: 'POST',
             data: {"filter": selectedFilter},
             success: function (result) {
@@ -591,11 +588,36 @@
     function sortByName(sort){
         var selectedSort = sort.value;
         $.ajax({
-            url: 'EIRManageUserProcessor.php',
+            url: '../includes/managePatientProcessor.php',
             type: 'POST',
             data: {"sort": selectedSort},
             success: function (result) {
                 document.getElementById("patientTable").innerHTML = result;
+            }
+        })
+    }
+
+    function showPatient(val) {
+        var id = val.getElementsByTagName("td")[0].innerText;
+        $.ajax({
+            url: '../includes/managePatientProcessor.php',
+            method: 'POST',
+            data: {patient: id},
+            success: function (result) {
+                document.getElementById("patientModalContent").innerHTML = result;
+                openModal('viewPatientDetails');
+            }
+        })
+    }
+
+    function viewPatient(patientId){
+        $.ajax({
+            url:'../includes/managePatientProcessor.phpp',
+            type:'POST',
+            data:{"patient": patientId},
+            success:function (result){
+                document.getElementById("patientModalContent").innerHTML = result;
+                openModal('viewPatientDetails');
             }
         })
     }
@@ -791,31 +813,6 @@
                 reloadPatient();
             }
         });
-    }
-
-    function showPatient(val) {
-        var id = val.getElementsByTagName("td")[0].innerText;
-        $.ajax({
-            url: 'EIRManageUserProcessor.php',
-            method: 'POST',
-            data: {patient: id},
-            success: function (result) {
-                document.getElementById("patientModalContent").innerHTML = result;
-                openModal('viewPatientDetails');
-            }
-        })
-    }
-
-    function viewPatient(patientId){
-        $.ajax({
-            url:'EIRManageUserProcessor.php',
-            type:'POST',
-            data:{"patient": patientId},
-            success:function (result){
-                document.getElementById("patientModalContent").innerHTML = result;
-                openModal('viewPatientDetails');
-            }
-        })
     }
 </script>
 </body>

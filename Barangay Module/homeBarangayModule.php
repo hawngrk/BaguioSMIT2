@@ -75,7 +75,12 @@ include_once("../includes/database.php");
                 echo "<h4 id='headingNav1'>$barangay</h4>";
             ?>
             <hr>
-            <h5 id="headingNav2">September 17, 2021 | 01:24 PM</h5>
+
+            <div class="timeBox">
+                <p id="time"></p>  <p id="datee"></p>
+                <script src="../javascript/detailedDateAndTime.js"></script>
+            </div>
+
             <hr>
             <li class="active">
                 <a href="../Barangay Module/homeBarangayModule.php">

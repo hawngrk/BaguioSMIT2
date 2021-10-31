@@ -102,9 +102,6 @@
     </nav>
 
     <!-- Top Nav Bar -->
-
-
-
     <div id="content">
         <div id="qrView" class="modal-window">
             <div class="content-modal">
@@ -153,23 +150,6 @@
 
 
 <script type="text/javascript">
-    $(document).ready(function () {
-        $('#sidebarCollapse').on('click', function () {
-            $('#sidebar').toggleClass('active');
-        });
-    });
-    var clicked = false;
-
-    function Toggle() {
-        var butt = document.getElementById('sidebarCollapse')
-        if (!clicked) {
-            clicked = true;
-            butt.innerHTML = "Menu <i class = 'fas fa-angle-double-right'><i>";
-        } else {
-            clicked = false;
-            butt.innerHTML = "<i class='fas fa-angle-left'></i> Menu";
-        }
-    }
 
     function qr(content){
         $.ajax({

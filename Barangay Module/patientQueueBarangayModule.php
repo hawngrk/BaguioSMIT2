@@ -69,7 +69,11 @@ include_once("../includes/database.php")
             echo "<h4 id='headingNav1'>$barangay</h4>";
             ?>
             <hr>
-            <h5 id="headingNav2">September 17, 2021 | 01:24 PM</h5>
+            <div class="timeBox">
+                <p id="time"></p>  <p id="datee"></p>
+                <script src="../javascript/detailedDateAndTime.js"></script>
+            </div>
+
             <hr>
             <li>
                 <a href="../Barangay Module/homeBarangayModule.php">
@@ -103,7 +107,6 @@ include_once("../includes/database.php")
     </nav>
 
     <!-- Top Nav Bar -->
-
     <div id="content">
         <!--Search Input and Button-->
         <nav class="brgyNav navbar-light bg-light rounded-lg">
@@ -111,8 +114,8 @@ include_once("../includes/database.php")
                 <div class="row">
                     <div class="col my-auto">
                         <div class="input-group">
-                            <input id="searchPatientQueue" type="search" placeholder="Search" class="form-control" name="searchPatient" onkeyup="searchPatient()">
-                            <button type="submit" class="buttonTop5" name="searchPatientBtn" onclick="searchPatient()">
+                            <input id="searchPatientQueueInput" type="search" placeholder="Search" class="form-control" name="searchPatient" onkeyup="searchPatientQueue()">
+                            <button type="submit" class="buttonTop5" name="searchPatientBtn" onclick="search()">
                                 <i class="fa fa-search"></i>
                             </button>
                         </div>
@@ -211,8 +214,8 @@ include_once("../includes/database.php")
 </body>
 </html>
 <script>
-    function searchPatient() {
-        var textSearch = document.getElementById("searchPatientQueue").value;
+    function searchPatientQueue() {
+        var textSearch = document.getElementById("searchPatientQueueInput").value;
         $.ajax({
             url: 'ManagePatientProcessor.php',
             type: 'POST',
@@ -233,23 +236,5 @@ include_once("../includes/database.php")
             }
         });
     }
-</script>
-<script type="text/javascript">
-    $(document).ready(function () {
-        $('#sidebarCollapse').on('click', function () {
-            $('#sidebar').toggleClass('active');
-        });
-    });
-    var clicked = false;
 
-    function Toggle() {
-        var butt = document.getElementById('sidebarCollapse')
-        if (!clicked) {
-            clicked = true;
-            butt.innerHTML = "Menu <i class = 'fas fa-angle-double-right'><i>";
-        } else {
-            clicked = false;
-            butt.innerHTML = "<i class='fas fa-angle-left'></i> Menu";
-        }
-    }
 </script>
