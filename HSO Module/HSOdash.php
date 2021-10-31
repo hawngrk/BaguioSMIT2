@@ -78,7 +78,7 @@
 
         <!-- Page Content  -->
         <div id="content">
-            <div class="container container-fluid">
+            <div class="container-fluid">
             <div class="row dashboardCont">
                 <div class="col">
                     <div class="row">
@@ -90,12 +90,12 @@
                             <div class="col portionDash vaxStats">
                                 <h4 class="dashHeads">Vaccination Status / <strong>per District</strong></h4>
                             </div>
-                            <div class="col-sm-auto portionDash vaxStats">
+                            <div class="col-sm-4 portionDash vaxStats">
                                 <h4 class="dashHeads"><strong>per Priority Group</strong></h4>
                             </div>
                     </div>
                 </div>
-            <div class="col-sm-auto">
+            <div class="col-sm-4">
                 <div class="col-md-auto portionDash vaxInv">
                     <h4 class="dashHeads">Vaccines <strong>Inventory</strong> </h4>
                 </div>

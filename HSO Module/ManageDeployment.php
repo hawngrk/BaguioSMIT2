@@ -59,7 +59,7 @@ include_once("../includes/database.php") ?>
             <hr>
 
             <li>
-                <a href="#"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+                <a href="HSOdash.php"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
             </li>
             <li>
                 <a href="ManageVaccineHome.php"><i class="fas fa-syringe"></i> Manage Vaccine</a>
@@ -222,7 +222,7 @@ include_once("../includes/database.php") ?>
         <!--Deployment Form Modal-->
         <form id='newDeploymentForm' method="post" enctype="multipart/form-data">
             <div id="DeployModal" class="modal-window">
-                <div class="content-modal">
+                <div class="content-modal modal-fit">
                     <div class="modal-header">
                         <h4 class="modal-title">Add Deployment</h4>
                         <button type="button" class="close" data-dismiss="modal" onclick="closeModal('DeployModal')">
@@ -344,6 +344,7 @@ include_once("../includes/database.php") ?>
                                         </div>
                                     </div>
                                 </div>
+                                <hr>
                                 <div class="row">
                                     <div class="col">
                                         <div class="form-group">
@@ -375,7 +376,7 @@ include_once("../includes/database.php") ?>
                                         </div>
                                     </div>
                                 </div>
-
+                                <hr>
                                 <div class='modal-footer'>
                                     <button id='sendStubs' type='button' class='btn btn-secondary mr-auto' onclick='shiftTab(General, FirstDose,  SecondDose, "GeneralPage", "FirstDosePage", "SecondDosePage")'>
                                         Back </button>

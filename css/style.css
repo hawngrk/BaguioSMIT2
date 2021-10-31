@@ -1082,15 +1082,15 @@ input[type=text1] {
 .counter-box { /*HSO*/
     display: block;
     background: #f6f6f6;
-    padding: 40px 20px 37px;
+    padding: 30px 12px 37px;
     text-align: center
 }
 
-.counter-box p { /*HSO*/
+.counter-box p, .counter-box span { /*HSO*/
     margin: 5px 0 0;
     padding: 0;
     color: #ffffff;
-    font-size: 18px;
+    font-size: 22px;
     font-weight: 500
 }
 
@@ -1100,12 +1100,8 @@ input[type=text1] {
     color: #d2d2d2
 }
 
-.counter {
-    display: block;
-    font-size: 32px;
-    font-weight: 700;
-    color: #ffffff;
-    line-height: 28px
+.counter-box span{
+    font-size: 20px;
 }
 
 .counter-box.colored1 {
@@ -1173,6 +1169,10 @@ input[type=text1] {
     width: 60%;
     /*Could be more or less, depending on screen size */
     border-radius: 12px;
+}
+
+.modal-fit{
+    width: fit-content;
 }
 
 .navbarDep{
@@ -1317,10 +1317,9 @@ img{
 
 .counter{
     width: fit-content;
-    font-size: 60%;
-    float: right;
     color: cadetblue;
     margin-top: 1%;
+    text-align: center;
 }
 
 .closeModal{
@@ -1682,6 +1681,8 @@ h6 {
 #patientRow form{
     margin-bottom: 3%;
 }
+
+
 
 #delButt {
     float: right;

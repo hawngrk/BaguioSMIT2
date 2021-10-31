@@ -53,7 +53,7 @@ include_once("../includes/database.php") ?>
             </h5>
             <hr>
             <li>
-                <a href="#"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+                <a href="HSOdash.php"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
             </li>
             <li class="active">
                 <a href="ManageVaccineHome.php"><i class="fas fa-syringe"></i> Manage Vaccine</a>

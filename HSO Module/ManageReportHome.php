@@ -57,7 +57,7 @@ include_once("../includes/database.php") ?>
             <hr>
 
             <li>
-                <a href="#"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+                <a href="HSOdash.php"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
             </li>
             <li>
                 <a href="ManageVaccineHome.php"><i class="fas fa-syringe"></i> Manage Vaccine</a>
@@ -189,6 +189,8 @@ include_once("../includes/database.php") ?>
                         <div class="counterColumn">
                             <div class="four counterRow">
                                 <div class="counter-box colored1">
+
+                                    <p>Total Reports</p>
                                     <?php
                                     $query = "SELECT COUNT(*) FROM report ";
                                     $stmt = $database->stmt_init();
@@ -198,12 +200,12 @@ include_once("../includes/database.php") ?>
                                     $stmt->fetch();
                                     echo "<span class='counter'> $totalReports </span>"
                                     ?>
-                                    <p>Total Reports</p>
                                 </div>
                             </div>
 
                             <div class="four counterRow">
                                 <div class="counter-box colored2">
+                                    <p>Total of Pending Reports</p>
                                     <?php
                                     $query = "SELECT COUNT(report_status) FROM report WHERE report_status = 'Pending'";
                                     $stmt = $database->stmt_init();
@@ -213,12 +215,13 @@ include_once("../includes/database.php") ?>
                                     $stmt->fetch();
                                     echo "<span class='counter'>$unverifiedReports</span>"
                                     ?>
-                                    <p>Total of Pending Reports</p>
+
                                 </div>
                             </div>
 
                             <div class="four counterRow">
                                 <div class="counter-box colored3">
+                                    <p>Total of Verified Reports</p>
                                     <?php
                                     $query = "SELECT COUNT(report_status) FROM report WHERE report_status = 'Verified'";
                                     $stmt = $database->stmt_init();
@@ -228,12 +231,12 @@ include_once("../includes/database.php") ?>
                                     $stmt->fetch();
                                     echo "<span class='counter'>$verifiedReports</span>"
                                     ?>
-                                    <p>Total of Verified Reports</p>
                                 </div>
                             </div>
 
                             <div class="four counterRow">
                                 <div class="counter-box colored4">
+                                    <p>Total of Invalidated Reports</p>
                                     <?php
                                     $query = "SELECT COUNT(report_status) FROM report WHERE report_status = 'Invalidated'";
                                     $stmt = $database->stmt_init();
@@ -243,7 +246,6 @@ include_once("../includes/database.php") ?>
                                     $stmt->fetch();
                                     echo "<span class='counter'>$invalidatedReports</span>"
                                     ?>
-                                    <p>Total of Invalidated Reports</p>
                                 </div>
                             </div>
                         </div>
