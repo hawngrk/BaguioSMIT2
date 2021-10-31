@@ -13,7 +13,7 @@ include_once("../includes/database.php") ?>
     <link rel="icon" href="../img/FaviSMIT+.png" type="image/jpg">
     <!-- Our Custom CSS -->
     <link href="../css/style.css" rel="stylesheet">
-   <!-- <link href="../css/HSO-style.css" rel="stylesheet">-->
+    <link href="../css/HSOModule.css" rel="stylesheet">
 
 
     <!-- Bootstrap-->
@@ -107,7 +107,7 @@ include_once("../includes/database.php") ?>
                 <div class="row">
                     <div class="col">
                         <div class="input-group">
-                            <input id="searchReportHSO" type="search" class="form-control" placeholder="Search" onkeyup="searchReport()"/>
+                            <input type="search" class="form-control" placeholder="Search" onkeyup="searchReport()"/>
                             <button type="submit" class="buttonTop5" name="searchReportBtn" onclick="searchReport()"> <i class="fas fa-search"></i>
                             </button>
                         </div>

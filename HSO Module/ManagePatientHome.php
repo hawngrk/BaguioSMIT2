@@ -14,6 +14,7 @@ include_once("../includes/database.php") ?>
     <link rel="icon" href="../img/FaviSMIT+.png" type="image/jpg">
     <!-- Our Custom CSS -->
     <link href="../css/style.css" rel="stylesheet">
+    <link href="../css/HSOModule.css" rel="stylesheet">
 
     <!-- Bootstrap-->
     <script crossorigin="anonymous" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
@@ -106,7 +107,7 @@ include_once("../includes/database.php") ?>
                 <div class="row">
                     <div class="col">
                         <div class="input-group">
-                            <input id="searchPatientHSO" type="search" name="searchPatient" class="form-control" placeholder="Search" onkeyup="searchPatient()"/>
+                            <input type="search" name="searchPatient" class="form-control" placeholder="Search" onkeyup="searchPatient()"/>
                             <button type="submit" class="buttonTop5" name="managePatientBtn" onclick="searchPatient()">  <i class="fas fa-search"></i> </button>
                         </div>
                     </div>
@@ -178,9 +179,12 @@ include_once("../includes/database.php") ?>
                         <td>$fullAddress</td>
                         <td>$contact</td>
                         <td>
-                            <div class='tableCenterCont'>
-                                <button class='actionButt buttonTransparent' onclick='event.stopPropagation();archive(1, clickArchive, $id)'><i class='fa fa-archive'></i></button>
-                                <button type='button' class='actionButt viewReportBtn buttonTransparent' id='viewButton' onclick='viewPatient($id)'><i class='fas fa-eye'></i></button
+                           <!-- <div class='tableCenterCont'> -->
+                           <div class='d-flex justify-content-center'>
+                               <!-- <button class='actionButt buttonTransparent' onclick='event.stopPropagation();archive(1, clickArchive, $id)'><i class='fa fa-archive'></i></button>-->
+                                <button class='btn btn-sm bg-none' onclick='event.stopPropagation();archive(1, clickArchive, $id)'><i class='fa fa-archive'></i></button>
+                                <!--<button type='button' class='actionButt viewReportBtn buttonTransparent' id='viewButton' onclick='viewPatient($id)'><i class='fas fa-eye'></i></button> -->
+                                <button type='button' class='btn btn-sm bg-none' id='viewButton' onclick='viewPatient($id)'><i class='fas fa-eye'></i></button>
                             </div>
                         </td>
                     </tr>";

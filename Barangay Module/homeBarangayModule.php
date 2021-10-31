@@ -16,8 +16,8 @@ include_once("../includes/database.php");
 
     <link rel="icon" href="../img/FaviSMIT+.png" type="image/jpg">
     <!-- Our Custom CSS -->
+    <link href="../css/BarangayModule.css" rel="stylesheet">
     <link href="../css/style.css" rel="stylesheet">
-
     <!-- Bootstrap-->
     <script
             crossorigin="anonymous"

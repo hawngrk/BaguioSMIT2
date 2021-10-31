@@ -242,6 +242,16 @@ input[type=text]{
     border: 2px solid #ccc;
     border-radius: 8px;
 }
+/* Modal Content/Box */ /*HSO*/
+.content-modal{ /*HSO*/
+    background-color: #fefefe;
+    margin: 5% auto;
+    /* 15% from the top and centered */
+    border: 1px solid #888;
+    width: 60%;
+    /*Could be more or less, depending on screen size */
+    border-radius: 12px;
+}
 
 #postVacView .content-modal /*EIR, BARANGAY, HSO, personnel*/{
     padding: 0%;
@@ -1695,26 +1705,7 @@ input[name=vitals]{
     width: 70%;
 }
 
-#patientRow h5 {
-    margin-left: 3%;
-}
 
-.addVitals{
-    border: none;
-}
-
-
-.columnName {
-    text-align: center;
-}
-
-.fourthCol {
-    font-size: 78%;
-}
-
-.navbarScreening {
-    margin-bottom: 1%!important;
-}
 /* ---------------------------------------------------
     MAYOR'S MODULE CSS
 ----------------------------------------------------- */
