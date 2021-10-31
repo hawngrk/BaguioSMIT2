@@ -275,7 +275,7 @@ include_once("../includes/database.php") ?>
                                    placeholder="Enter Manufacturer">
 
                             <label class="label1"for="vaccineDescription"> Vaccine Description </label>
-                            <input type="textDesc" class="form-control" id="vaccineDescription"
+                            <input type="text3" class="form-control" id="vaccineDescription"
                                    placeholder="Enter Description">
 
                             <h5 class="addNewVaccineH3 label1">Vaccine Characteristics</h5>
