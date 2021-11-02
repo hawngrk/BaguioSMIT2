@@ -1,0 +1,55 @@
+/* ---------------------------------------------------
+                   SSD MODULE CSS
+--------------------------------------------------- */
+#allocateButton{
+    align-content: center;
+}
+
+#hDistrictContainer{ /*ssd*/
+    margin-top: 5%;
+    margin-left: 7%;
+    padding-top: 2%;
+    background-color: white;
+    width: 100%;
+    border-radius: 12px;
+    display: inline-block;
+}
+
+#hDistrictContainer h2 {/*ssd*/
+    margin-left: 2%;
+}
+#vaccineDeployments{ /*ssd*/
+    padding-top: 2%;
+    width: 95%;
+    border-radius: 12px;
+    display: inline-block;
+    margin-right: 7%;
+    padding: 2%;
+    background-color: #f6f6f6;
+}
+
+#totalPopulation,#totalPopulationPerHD{ /*ssd*/
+    padding: 2%;
+    background-color: #f6f6f6;
+    width: 100%;
+    border-radius: 12px;
+    display: inline-block;
+    margin-left: 7%;
+    margin-right: 7%;
+}
+
+#totalPopulation{ /*ssd*/
+    margin-bottom: 2%;
+}
+
+#vaccineDeploymentContent{ /*ssd*/
+    margin: 5%;
+}
+
+#labelling{ /*ssd*/
+    margin-left: 3%;
+}
+
+#distContent{
+    margin-top: -2%;
+}
