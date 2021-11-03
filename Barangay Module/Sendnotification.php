@@ -38,7 +38,7 @@ for ($index = 0; $index < sizeof($priorityStub); $index++) {
     if ($type == "many") {
         $patientQuery = "SELECT patient.patient_id, patient.token, patient_details.patient_contact_number FROM patient JOIN patient_details ON patient_details.patient_id = patient.patient_id JOIN patient_barangay_queue ON patient_barangay_queue.patient_id = patient.patient_id WHERE patient.for_queue = 1 AND patient_details.patient_priority_group = '$priorityStub[$index]' AND patient_details.patient_barangay_address = 'San Luis Village' AND patient.first_dose_vaccination = 0 AND patient.notification = 0 ORDER BY patient_barangay_queue.first_dose_queue ASC LIMIT $values[$index];";
     } else {
-        $patientQuery = "SELECT patient.patient_id, patient.token, patient_details.patient_contact_number FROM patient JOIN patient_details ON patient_details.patient_id = patient.patient_id JOIN patient_barangay_queue ON patient_barangay_queue.patient_id = patient.patient_id WHERE patient.for_queue = 1 AND patient_details.patient_priority_group = '$priorityStub[$index]' AND patient_details.patient_barangay_address = 'San Luis Village' AND patient.first_dose_vaccination = 0 AND patient.notification = 0 ORDER BY patient_barangay_queue.first_dose_queue LIMIT 1;";
+        $patientQuery = "SELECT patient.patient_id, patient.token, patient_details.patient_contact_number FROM patient JOIN patient_details ON patient_details.patient_id = patient.patient_id JOIN patient_barangay_queue ON patient_barangay_queue.patient_id = patient.patient_id WHERE patient.for_queue = 1 AND patient_details.patient_priority_group = '$priorityStub[$index]' AND patient_details.patient_barangay_address = 'San Luis Village' AND patient.first_dose_vaccination = 0 AND patient.notification = 0 ORDER BY patient_barangay_queue.first_dose_queue ASC LIMIT 1;";
     }
 
     $stmt = $database->stmt_init();
@@ -52,7 +52,7 @@ for ($index = 0; $index < sizeof($priorityStub); $index++) {
 
             $msg = array
             (
-                'body' 	=> 'You have been assigned to a vaccination on October 21, 2021 on Saint Louis University Gym.',
+                'body' 	=> 'You have been assigned to a vaccination on ' . $date . ' on '.  $location .'',
                 'title'	=> 'First Dose Vaccination',
                 'icon'	=> 'myicon',/*Default Icon*/
                 'sound' => 'mySound'/*Default sound*/
@@ -92,12 +92,13 @@ for ($index = 0; $index < sizeof($priorityStub); $index++) {
             echo $result;
 
             array_push($patients, $patientId);
+
             /*
             $ch2 = curl_init();
             $parameters = array(
-                'apikey' => '4d32cb6dd36d9e6a0d143c8ed9dbedb5',
-                'number' => '09552896129',
-                'message' => 'You have been assigned to a vaccination on October 21, 2021 on Saint Louis University Gym.',
+                'apikey' => '95544f613ef48df7a05012fd0b86b4ff',
+                'number' => $number,
+                'message' => 'You have been assigned to a vaccination on ' . $date . ' on '.  $location .'',
             );
             curl_setopt( $ch2, CURLOPT_URL,'https://api.semaphore.co/api/v4/messages' );
             curl_setopt( $ch2, CURLOPT_POST, 1 );

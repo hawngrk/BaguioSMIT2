@@ -69,8 +69,6 @@ if (isset($_POST['healthDistrict'])) {
         }
     }
 
-
-
     $query2 = "SELECT priority_groups.priority_group FROM priority_groups JOIN priority_drive ON priority_groups.priority_group_id = priority_drive.priority_id WHERE priority_drive.drive_id = $driveId";
     $stmt = $database->stmt_init();
     $stmt->prepare($query2);

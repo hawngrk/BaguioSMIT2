@@ -83,9 +83,9 @@ include_once("../includes/database.php") ?>
         </ul>
     </nav>
 
-
+    <!-- Page Content  -->
     <div id="content">
-        <!-- Page Content  -->
+        <!-- Top Nav  -->
         <div class="navbar navbar-expand-lg navbar-light bg-light shadow-sm p-3 mb-4 rounded-lg">
             <div class="container-fluid">
                 <div>
@@ -102,47 +102,49 @@ include_once("../includes/database.php") ?>
             </div>
         </div>
 
+        <!-- Table Part-->
         <div class="tableContainer">
             <div class="table-title">
                 <div class="row">
                     <div class="col">
                         <div class="input-group">
-                            <input type="search" class="form-control" placeholder="Search" onkeyup="searchReport()"/>
-                            <button type="submit" class="buttonTop5" name="searchReportBtn" onclick="searchReport()"> <i class="fas fa-search"></i>
-                            </button>
+                            <input id="searchReportHSO" type="search" name="searchReport" class="form-control" placeholder="Search" onkeyup="searchReport()"/>
                         </div>
                     </div>
                     <div class="col-sm-auto">
                         <div class="row">
                             <div class="sfDiv col-md-1.5 my-auto">
-                                <select class="form-select filterButton" id="filterReports" name="filterReports"
+                                <select class="form-select filterButton" id="filterReportsInput" name="filterReports"
                                         onchange="filterReport(this)">
                                     <option value="" selected disabled hidden>Filter By</option>
-                                    <option>All</option>
-                                    <option>Unverified</option>
-                                    <option>Verified</option>
-                                    <option>Invalidated</option>
+                                    <option value='' disabled >Select Status</option>
+                                    <option value="All">All</option>
+                                    <option value="Unverified">Unverified</option>
+                                    <option value="Verified">Verified</option>
+                                    <option value="Pending">Pending</option>
                                 </select>
                             </div>
                             <div class="sfDiv col-md-1.5 my-auto">
                                 <select class="form-select sortButton" id="sortReports" name="sortReports"
                                         onchange="sortReport(this)">
                                     <option value="" selected disabled hidden>Sort By</option>
-                                    <option>Name Asc</option>
-                                    <option>Name Desc</option>
-                                    <option>Date Asc</option>
-                                    <option>Date Desc</option>
+                                    <option value="" disabled >Select Sort By </option>
+                                    <option value="None"> None </option>
+                                    <option value="nameAsc">Name Asc</option>
+                                    <option value="nameDesc">Name Desc</option>
+                                    <option value="dateAsc">Date Asc</option>
+                                    <option value="dateDesc">Date Desc</option>
                                 </select>
                             </div>
                         </div>
                     </div>
-                    <div class="w-100 d-none d-md-block"></div>
 
+                    <div class="w-100 d-none d-md-block"></div>
+                    <!--Table Content-->
                     <div class="tableReport tableScroll1 col">
                         <table class="table table-hover tableReport" id="reportsTable">
                             <thead>
                             <tr class="tableCenterCont">
-                                <th scope="col">#</th>
                                 <th scope="col">Report ID</th>
                                 <th scope="col">Name of Reporter</th>
                                 <th scope="col">Date Reported</th>
@@ -154,22 +156,20 @@ include_once("../includes/database.php") ?>
                             require_once '../require/getReport.php';
                             require_once '../require/getPatient.php';
 
-                            $count = 0;
                             foreach ($reports as $rep) {
-                                $count++;
+
                                 $reportId = $rep->getReportId(); //replace this part based on the column name mentioned above in chronological order - NATIVIDAD HUDSON
                                 $patientId = $rep->getReportPatientId();
                                 $dateReported = $rep->getDateReported();
                                 $status = $rep->getReportStatus();
 
-                                if ($status !== 'Invalidated') {
+                                if ($status != 'Invalidated') {
                                     foreach ($patients as $pat) {
                                         if ($patientId == $pat->getPatientId()) {
                                             $reporter = $pat->getPatientFullName();
                                         }
                                     }
                                     echo "<tr class='tableCenterCont' onclick='viewReport($reportId)'>
-                                          <td>$count</td>
                                           <td>$reportId</td>
                                           <td>$reporter</td>
                                           <td>$dateReported</td>
@@ -184,11 +184,11 @@ include_once("../includes/database.php") ?>
                         </table>
                     </div>
 
-
+                    <!--Counter Container-->
                     <div class="col-sm-auto">
                         <div class="counterColumn">
                             <div class="four counterRow">
-                                <div class="counter-box colored1">
+                                <div class="counter-box colored1" style="align-content: center">
 
                                     <p>Total Reports</p>
                                     <?php
@@ -198,14 +198,14 @@ include_once("../includes/database.php") ?>
                                     $stmt->execute();
                                     $stmt->bind_result($totalReports);
                                     $stmt->fetch();
-                                    echo "<span class='counter'> $totalReports </span>"
+                                    echo "<span class='d-flex justify-content-center'> $totalReports </span>"
                                     ?>
                                 </div>
                             </div>
 
                             <div class="four counterRow">
                                 <div class="counter-box colored2">
-                                    <p>Total of Pending Reports</p>
+                                    <p class="p-0">Total of Pending Reports</p>
                                     <?php
                                     $query = "SELECT COUNT(report_status) FROM report WHERE report_status = 'Pending'";
                                     $stmt = $database->stmt_init();
@@ -213,7 +213,7 @@ include_once("../includes/database.php") ?>
                                     $stmt->execute();
                                     $stmt->bind_result($unverifiedReports);
                                     $stmt->fetch();
-                                    echo "<span class='counter'>$unverifiedReports</span>"
+                                    echo "<span class='d-flex justify-content-center'>$unverifiedReports</span>"
                                     ?>
 
                                 </div>
@@ -229,7 +229,7 @@ include_once("../includes/database.php") ?>
                                     $stmt->execute();
                                     $stmt->bind_result($verifiedReports);
                                     $stmt->fetch();
-                                    echo "<span class='counter'>$verifiedReports</span>"
+                                    echo "<span class='d-flex justify-content-center'>$verifiedReports</span>"
                                     ?>
                                 </div>
                             </div>
@@ -244,7 +244,7 @@ include_once("../includes/database.php") ?>
                                     $stmt->execute();
                                     $stmt->bind_result($invalidatedReports);
                                     $stmt->fetch();
-                                    echo "<span class='counter'>$invalidatedReports</span>"
+                                    echo "<span class='d-flex justify-content-center'>$invalidatedReports</span>"
                                     ?>
                                 </div>
                             </div>
@@ -252,50 +252,54 @@ include_once("../includes/database.php") ?>
                     </div>
                 </div>
             </div>
-            <div id="archived" class="modal-window">
-                <div class="content-modal-table">
-                    <div class="modal-header">
-                        <h4 class="modal-title">Archived Reports</h4>
-                        <button type="button" class="close" data-dismiss="modal" onclick="closeModal('archived')">
-                            <i class='fas fa-window-close'></i>
-                        </button>
-                    </div>
-                    <div id='archivedContent' class="modal-body">
 
-                        <table class="table table-row table-hover tableModal" id="vaccineTable">
-                            <thead>
-                            <tr class="tableCenterCont">
-                                <th scope="col">Report ID</th>
-                                <th scope="col">Name of Reporter</th>
-                                <th scope="col">Date Reported</th>
-                                <th scope="col">Report Verified</th>
-                                <th scope="col">Action</th>
-                            </tr>
-                            </thead>
-                            <div id="vaccineContent">
-                                <?php
-                                require_once '../require/getVaccine.php';
-                                require_once '../require/getVaccineBatch.php';
-                                require_once '../require/getVaccineLot.php';
+        </div>
 
-                                $count = 0;
-                                foreach ($vaccineLots as $vl) {
-                                    if ($vl->getArchived() == 1) {
-                                        $vaccineLotId = $vl->getVaccLotId();
-                                        $vaccLotVaccId = $vl->getVaccLotVaccId();
-                                        $dateStored = $vl->getDateVaccStored();
-                                        $batchQty = $vl->getVaccBatchQty();
-                                        $source = $vl->getSource();
-                                        $vaccExp = $vl->getExpiration();
+        <!-- Archive Modal  -->
+        <div id="archived" class="modal-window">
+            <div class="content-modal-table">
+                <div class="modal-header">
+                    <h4 class="modal-title">Archived Reports</h4>
+                    <button type="button" class="close" data-dismiss="modal" onclick="closeModal('archived')">
+                        <i class='fas fa-window-close'></i>
+                    </button>
+                </div>
+                <div id='archivedContent' class="modal-body">
+
+                    <table class="table table-row table-hover tableModal" id="vaccineTable">
+                        <thead>
+                        <tr class="tableCenterCont">
+                            <th scope="col">Report ID</th>
+                            <th scope="col">Name of Reporter</th>
+                            <th scope="col">Date Reported</th>
+                            <th scope="col">Report Verified</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                        </thead>
+                        <div id="vaccineContent">
+                            <?php
+                            require_once '../require/getVaccine.php';
+                            require_once '../require/getVaccineBatch.php';
+                            require_once '../require/getVaccineLot.php';
+
+                            $count = 0;
+                            foreach ($vaccineLots as $vl) {
+                                if ($vl->getArchived() == 1) {
+                                    $vaccineLotId = $vl->getVaccLotId();
+                                    $vaccLotVaccId = $vl->getVaccLotVaccId();
+                                    $dateStored = $vl->getDateVaccStored();
+                                    $batchQty = $vl->getVaccBatchQty();
+                                    $source = $vl->getSource();
+                                    $vaccExp = $vl->getExpiration();
 
 
-                                        foreach ($vaccines as $vac) {
-                                            if ($vaccLotVaccId == $vac->getVaccId()) {
-                                                $vaccName = $vac->getVaccName();
-                                            }
+                                    foreach ($vaccines as $vac) {
+                                        if ($vaccLotVaccId == $vac->getVaccId()) {
+                                            $vaccName = $vac->getVaccName();
                                         }
+                                    }
 
-                                        echo "<tr class='tableCenterCont'>
+                                    echo "<tr class='tableCenterCont'>
              
                 <td>$vaccineLotId</td>
                 <td>$vaccName</td>
@@ -309,12 +313,11 @@ include_once("../includes/database.php") ?>
                     </div>
                 </td>
                 </tr>";
-                                    }
                                 }
-                                ?>
-                            </div>
-                        </table>
-                    </div>
+                            }
+                            ?>
+                        </div>
+                    </table>
                 </div>
             </div>
         </div>
@@ -336,16 +339,9 @@ include_once("../includes/database.php") ?>
         <!-- AJAX -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
-        <script type="text/javascript">
-            $(document).ready(function () {
-                $('#sidebarCollapse').on('click', function () {
-                    $('#sidebar').toggleClass('active');
-                });
-            });
-        </script>
 
         <script>
-
+            //opening modal
             function openModal(modal) {
                 console.log(modal)
                 document.getElementById(modal).style.display = "block";
@@ -353,56 +349,65 @@ include_once("../includes/database.php") ?>
                 overlay.trigger('show');
             }
 
+            //close modal
             function closeModal(modal) {
                 document.getElementById(modal).style.display = "none";
             }
-            function searchReport() {
-                var textSearch = document.getElementById("searchReportHSO").value;
-                if (textSearch === "") {
+
+            //clear search text field
+            $('#searchReportHSO').on('input', function(e) {
+                if('' == this.value) {
                     $.ajax({
-                        url: 'ManageReportViewProcessor.php',
+                        url: '../includes/searchProcessor.php',
                         type: 'POST',
-                        data: {"search": textSearch},
-                        success: function (result) {
-                            document.getElementById("reportsTable").innerHTML = result;
-                        }
-                    });
-                } else {
-                    $.ajax({
-                        url: 'ManageReportViewProcessor.php',
-                        type: 'POST',
-                        data: {"search": textSearch},
+                        data: {"searchReport": ""},
                         success: function (result) {
                             document.getElementById("reportsTable").innerHTML = result;
                         }
                     });
                 }
+            });
+
+            //search report
+            function searchReport() {
+                var textSearch = document.getElementById("searchReportHSO").value;
+                $.ajax({
+                    url: '../includes/searchProcessor.php',
+                    type: 'POST',
+                    data: {"searchReport": textSearch},
+                    success: function (result) {
+                        document.getElementById("reportsTable").innerHTML = result;
+                    }
+                })
             }
 
+            //sort report
             function sortReport(sort) {
                 var selectedSort = sort.value;
                 $.ajax({
-                    url: 'ManageReportViewProcessor.php',
+                    url: '../includes/sortingProcessor.php',
                     type: 'POST',
-                    data: {"sort": selectedSort},
+                    data: {"sortReport": selectedSort},
                     success: function (result) {
                         document.getElementById("reportsTable").innerHTML = result;
                     }
                 })
             }
 
+            //filter report
             function filterReport(filter) {
                 var selectedFilter = filter.value;
                 $.ajax({
-                    url: 'ManageReportViewProcessor.php',
+                    url: '../includes/filterProcessor.php',
                     type: 'POST',
-                    data: {"filter": selectedFilter},
+                    data: {"filterReport": selectedFilter},
                     success: function (result) {
                         document.getElementById("reportsTable").innerHTML = result;
                     }
                 })
             }
 
+            //show invalidated reports
             var invalidatedReportsModal = document.getElementById("invalidatedReportsModal");
 
             function showInvalidatedReports() {
@@ -417,7 +422,7 @@ include_once("../includes/database.php") ?>
                 });
             }
 
-
+            // view invalidated report
             function viewInvalidatedReport(reportId) {
                 $.ajax({
                     url: 'manageReportViewProcessor.php',
@@ -430,6 +435,7 @@ include_once("../includes/database.php") ?>
                 });
             }
 
+            //edit invalidated report
             function editInvalidatedReport(reportId) {
                 $.ajax({
                     url: 'manageReportViewProcessor.php',
@@ -442,12 +448,13 @@ include_once("../includes/database.php") ?>
                 });
             }
 
+            //close invalidated reports
             function closeInvalidatedReports() {
                 invalidatedReportsModal.style.display = "none";
             }
 
+            //view report
             var viewReportModal = document.getElementById("viewReportModal");
-
             function viewReport(reportId) {
                 $.ajax({
                     url: 'manageReportViewProcessor.php',
@@ -460,6 +467,7 @@ include_once("../includes/database.php") ?>
                 });
             }
 
+            //edit report
             function editReport(reportId) {
                 $.ajax({
                     url: 'manageReportViewProcessor.php',
@@ -472,6 +480,7 @@ include_once("../includes/database.php") ?>
                 });
             }
 
+            //close view report
             function closeViewReport(status) {
                 if (status === 'Invalidated') {
                     invalidatedReportsModal.style.display = "none";
@@ -480,6 +489,7 @@ include_once("../includes/database.php") ?>
                 }
             }
 
+            //change status
             function changeRepStatus(reportid, status) {
                 var selectedStatus = document.getElementById('statusSelection').value;
                 if (selectedStatus !== status) {
@@ -503,8 +513,8 @@ include_once("../includes/database.php") ?>
                 }
             }
 
+            //generate report
             var generateReportsModal = document.getElementById("generateReportModal");
-
             function generateReport() {
                 $.ajax({
                     url: 'manageReportViewProcessor.php',
@@ -517,10 +527,12 @@ include_once("../includes/database.php") ?>
                 });
             }
 
+            //close generate report
             function closeGenerateReports() {
                 generateReportsModal.style.display = "none";
             }
 
+            //download report
             function downloadReports() {
                 var reports = document.getElementsByClassName("reportList");
                 var reportsIds = [];
@@ -542,6 +554,7 @@ include_once("../includes/database.php") ?>
                 });
             }
 
+            //close window
             window.onclick = function (event) {
                 if (event.target === viewReportModal) {
                     viewReportModal.style.display = "none";
@@ -552,19 +565,7 @@ include_once("../includes/database.php") ?>
                 }
             }
 
-            var clicked = false;
-
-            function Toggle() {
-                var butt = document.getElementById('sidebarCollapse')
-                if (!clicked) {
-                    clicked = true;
-                    butt.innerHTML = "Menu <i class = 'fas fa-angle-double-right'><i>";
-                } else {
-                    clicked = false;
-                    butt.innerHTML = "<i class='fas fa-angle-left'></i> Menu";
-                }
-            }
-
+            // highlight selected row
             function selectHighlight(row) {
                 if (row.checked == true) {
                     row.parentNode.parentNode.style.backgroundColor = "#b3b3b3";
