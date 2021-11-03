@@ -216,12 +216,12 @@ if (isset($_POST['report'])) {
     <div class='container-fluid'>
     <div class='row'>
         <div class='col'>
-            <h5 class='reviewReport'>Report Information</h5>
-            <h7 class='paddingLeft'>Report ID: $reportId</h7>
+            <h5 class='reviewReport'><b>Report Information</b></h5>
+            <h7 class='paddingLeft'><b>Report ID:</b> $reportId</h7>
             <br>
-            <h7 class='paddingLeft'>Report Type: $reportType</h7>
+            <h7 class='paddingLeft'><b>Report Type:</b> $reportType</h7>
             <br>
-            <h7 class='paddingLeft'>Date of recent travel: $dateRecentTravel</h7>
+            <h7 class='paddingLeft'><b>Date of recent travel:</b> $dateRecentTravel</h7>
             <br>
             </div>
         <div class='col'>
@@ -267,13 +267,13 @@ if (isset($_POST['report'])) {
     </div>
     <br>
     <div class='row'>
-    <div class='col-6'>
+    <div class='col-12'>
     <h5 class='reviewReportH3 padd'>Patient Information</h5>
-    <h7 class='paddingLeft'><b> Patient Address: </b>   <br> $patientAddress</h7>
+    <h7 class='paddingLeft'><b> Patient Address: </b>   $patientAddress</h7>
     <br>
-    <h7 class='paddingLeft'> <b> Contact Number: </b> <br>  $patientNum</h7>
+    <h7 class='paddingLeft'> <b> Contact Number: </b>  $patientNum</h7>
     <br>
-    <h7 class='paddingLeft'><b> Report Status: </b> <br> $reportStatus</h7>
+    <h7 class='paddingLeft'><b> Report Status: </b>  $reportStatus</h7>
     </div> 
     </div>
     ";
@@ -284,7 +284,7 @@ if (isset($_POST['report'])) {
              <button type='button' class='btn btn-secondary' id='backInvalidatedReport' onclick='showInvalidatedReports()'> Back </button></div>";
         }
     } else if ($view == 2) {
-        echo "<br> 
+        echo "<hr>
             <div class='col'>
             <h7 class='paddingLeft'> <b>Report Status: </b> </h7>";
         if ($reportStatus == 'Verified') {

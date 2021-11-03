@@ -174,9 +174,9 @@
                         <td>$fullAddress</td>
                         <td>$contact</td>
                         <td>
-                            <div>
-                                <button class='buttonTransparent' onclick='archive(1, clickArchive, $id)'><i class='fa fa-archive'></i></button>
-                                <button type='button' class='viewReportBtn buttonTransparent' id='viewButton' onclick='viewPatient($id)'><i class='fas fa-eye'></i></button
+                            <div class='d-flex justify-content-center'>
+                                <button class='btn btn-sm bg-none' onclick='archive(1, clickArchive, $id)'><i class='fa fa-archive'></i></button>
+                                <button type='button' class='btn btn-sm bg-none' id='viewButton' onclick='viewPatient($id)'><i class='fas fa-eye'></i></button
                             </div>
                         </td>
                     </tr>";
@@ -750,6 +750,7 @@
     function openModal(modal) {
         console.log(modal)
         document.getElementById(modal).style.display = "block";
+        document.body.classList.add("scrollBody");
     }
 
     function closeModal(modal) {

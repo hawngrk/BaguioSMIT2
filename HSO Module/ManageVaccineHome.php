@@ -179,9 +179,9 @@ include_once("../includes/database.php") ?>
                             <td>$vaccExp</td>
                             <td>$batchQty</td>
                             <td>
-                                <div>
-                                      <button type='button' class='actionButt archiveVaxtBtn buttonTransparent' onclick='event.stopPropagation();archive(1, clickArchive, $vaccineLotId)'><i class='fa fa-archive'></i></button>
-                                      <button type='button' class='actionButt viewReportBtn buttonTransparent' id='viewButton' onclick='viewVaccineDetails($vaccineLotId)'><i class='fas fa-eye'></i></button>
+                                <div class='d-flex justify-content-center'>
+                                      <button type='button' class='btn btn-sm bg-none' onclick='event.stopPropagation();archive(1, clickArchive, $vaccineLotId)'><i class='fa fa-archive'></i></button>
+                                      <button type='button' class='btn btn-sm bg-none' id='viewButton' onclick='viewVaccineDetails($vaccineLotId)'><i class='fas fa-eye'></i></button>
                                 </div>
                             </td>
                             </tr>";
@@ -564,6 +564,7 @@ include_once("../includes/database.php") ?>
     function openModal(modal) {
         console.log(modal)
         document.getElementById(modal).style.display = "block";
+        document.body.classList.add("scrollBody");
     }
 
     var viewVaccineModal = document.getElementById("viewVaccineDetails");

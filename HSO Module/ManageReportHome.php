@@ -188,7 +188,7 @@ include_once("../includes/database.php") ?>
                     <div class="col-sm-auto">
                         <div class="counterColumn">
                             <div class="four counterRow">
-                                <div class="counter-box colored1">
+                                <div class="counter-box colored1" style="align-content: center">
 
                                     <p>Total Reports</p>
                                     <?php
@@ -198,14 +198,14 @@ include_once("../includes/database.php") ?>
                                     $stmt->execute();
                                     $stmt->bind_result($totalReports);
                                     $stmt->fetch();
-                                    echo "<span class='counter'> $totalReports </span>"
+                                    echo "<span class='d-flex justify-content-center'> $totalReports </span>"
                                     ?>
                                 </div>
                             </div>
 
                             <div class="four counterRow">
                                 <div class="counter-box colored2">
-                                    <p>Total of Pending Reports</p>
+                                    <p class="p-0">Total of Pending Reports</p>
                                     <?php
                                     $query = "SELECT COUNT(report_status) FROM report WHERE report_status = 'Pending'";
                                     $stmt = $database->stmt_init();
@@ -213,7 +213,7 @@ include_once("../includes/database.php") ?>
                                     $stmt->execute();
                                     $stmt->bind_result($unverifiedReports);
                                     $stmt->fetch();
-                                    echo "<span class='counter'>$unverifiedReports</span>"
+                                    echo "<span class='d-flex justify-content-center'>$unverifiedReports</span>"
                                     ?>
 
                                 </div>
@@ -229,7 +229,7 @@ include_once("../includes/database.php") ?>
                                     $stmt->execute();
                                     $stmt->bind_result($verifiedReports);
                                     $stmt->fetch();
-                                    echo "<span class='counter'>$verifiedReports</span>"
+                                    echo "<span class='d-flex justify-content-center'>$verifiedReports</span>"
                                     ?>
                                 </div>
                             </div>
@@ -244,7 +244,7 @@ include_once("../includes/database.php") ?>
                                     $stmt->execute();
                                     $stmt->bind_result($invalidatedReports);
                                     $stmt->fetch();
-                                    echo "<span class='counter'>$invalidatedReports</span>"
+                                    echo "<span class='d-flex justify-content-center'>$invalidatedReports</span>"
                                     ?>
                                 </div>
                             </div>
@@ -349,8 +349,7 @@ include_once("../includes/database.php") ?>
             function openModal(modal) {
                 console.log(modal)
                 document.getElementById(modal).style.display = "block";
-                document.getElementById(modal).removeClass('hidden');
-                overlay.trigger('show');
+                document.body.classList.add("scrollBody");
             }
 
             function closeModal(modal) {
@@ -506,6 +505,7 @@ include_once("../includes/database.php") ?>
             var generateReportsModal = document.getElementById("generateReportModal");
 
             function generateReport() {
+                document.body.classList.add("scrollBody");
                 $.ajax({
                     url: 'manageReportViewProcessor.php',
                     type: 'POST',

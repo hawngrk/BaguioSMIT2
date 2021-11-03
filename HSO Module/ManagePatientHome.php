@@ -183,12 +183,9 @@ include_once("../includes/database.php") ?>
                         <td>$fullAddress</td>
                         <td>$contact</td>
                         <td>
-                           <!-- <div class='tableCenterCont'> -->
-                           <div class='d-flex justify-content-center'>
-                               <!-- <button class='actionButt buttonTransparent' onclick='event.stopPropagation();archive(1, clickArchive, $id)'><i class='fa fa-archive'></i></button>-->
+                            <div class='d-flex justify-content-center'>
                                 <button class='btn btn-sm bg-none' onclick='event.stopPropagation();archive(1, clickArchive, $id)'><i class='fa fa-archive'></i></button>
-                                <!--<button type='button' class='actionButt viewReportBtn buttonTransparent' id='viewButton' onclick='viewPatient($id)'><i class='fas fa-eye'></i></button> -->
-                                <button type='button' class='btn btn-sm bg-none' id='viewButton' onclick='viewPatient($id)'><i class='fas fa-eye'></i></button>
+                                <button type='button' class='btn btn-sm bg-none' id='viewButton' onclick='viewPatient($id)'><i class='fas fa-eye'></i></button
                             </div>
                         </td>
                     </tr>";
@@ -935,6 +932,7 @@ include_once("../includes/database.php") ?>
     function openModal(modal) {
         console.log(modal);
         document.getElementById(modal).style.display = "block";
+        document.body.classList.add("scrollBody");
     }
 
     function getUploadedFiles(item) {
