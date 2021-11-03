@@ -11,6 +11,7 @@
     <!-- Our Custom CSS -->
     <link rel="icon" href="../img/FaviSMIT+.png" type="image/jpg">
     <link href="../css/style.css" rel="stylesheet">
+    <!--<link href="../css/HSOModule.css" rel="stylesheet">-->
 
     <!-- Bootstrap-->
     <script crossorigin="anonymous" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
@@ -77,7 +78,7 @@
 
         <!-- Page Content  -->
         <div id="content">
-            <div class="container container-fluid">
+            <div class="container-fluid">
             <div class="row dashboardCont">
                 <div class="col">
                     <div class="row">
@@ -89,12 +90,12 @@
                             <div class="col portionDash vaxStats">
                                 <h4 class="dashHeads">Vaccination Status / <strong>per District</strong></h4>
                             </div>
-                            <div class="col-sm-auto portionDash vaxStats">
+                            <div class="col-sm-4 portionDash vaxStats">
                                 <h4 class="dashHeads"><strong>per Priority Group</strong></h4>
                             </div>
                     </div>
                 </div>
-            <div class="col-sm-auto">
+            <div class="col-sm-4">
                 <div class="col-md-auto portionDash vaxInv">
                     <h4 class="dashHeads">Vaccines <strong>Inventory</strong> </h4>
                 </div>

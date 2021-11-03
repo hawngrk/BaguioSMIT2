@@ -61,39 +61,61 @@
 
     <!-- Page Content  -->
     <div id="content">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light rounded-lg navbarMonitoring">
-                <div class="container-fluid">
-
-                 <!--Search Input and Button-->
-             <div class="search-containerMonitoring col">
-                    <input id="searchPatientVaxPer" type="text" placeholder="Search" class="searchHome" name="searchPatient" onkeyup="searchPatient()">
-                    <button type="submit" id="searchPatientBtn" name="searchPatientBtn" onclick="searchPatient()">
-                        <i class="fa fa-search"></i>
-                    </button>
-            </div>
-            <div class="col-sm-auto">
-                         <button type="button" class="btn btn-outline-dark buttonTop3 float-right">
-                            <i class="fas fa-sort-amount-down"></i>
-                        </button>
-                        <button type="button" class="btn btn-outline-dark buttonTop3 float-right">
-                            <i class="fas fa-filter"></i>
-                        </button>
-            </div>
-
+        <div class="tableContainer">
+            <div class="table-tile">
+                <div class="row">
+                    <div class="col">
+                        <div class="input-group">
+                            <input id="searchUserLog" type="search" class="form-control" placeholder="Search"
+                                   onkeyup="searchUsers()"/>
+                            <button type="submit" class="buttonTop5" onclick="searchUsers()"><i
+                                        class="fas fa-search"></i></button>
+                        </div>
+                    </div>
+                    <div class="col-sm-auto">
+                        <div class="row">
+                            <div class="sfDiv col-md-1.5 my-auto">
+                                <select class="form-select filterButton" id="filterEmp" name="filterEmployees"
+                                        onchange="filterUsers(this)">
+                                    <option value="" selected disabled hidden>Filter By</option>
+                                    <option value="" disabled>Select Role Category</option>
+                                    <option value="None"> None</option>
+                                    <option value="HSO"> HSO</option>
+                                    <option value="EIR"> EIR</option>
+                                    <option value="SSD"> SSD</option>
+                                    <option value="Screening"> Screening</option>
+                                    <option value="Monitoring"> Monitoring</option>
+                                    <option value="Vaccinator"> Vaccinator</option>
+                                    <option value="Barangay"> Barangay</option>
+                                    <option value="Mayor's"> Mayor's Office</option>
+                                </select>
+                            </div>
+                            <div class="sfDiv col-md-1.5 my-auto">
+                                <select class="form-select sortButton" id="sortPatientName" name="sortPatient"
+                                        onchange="sortByLog(this)">
+                                    <option value="" selected disabled hidden>Sort By</option>
+                                    <option value="" disabled>Select Category Group</option>
+                                    <option value="Asc">Date and Time Asc</option>
+                                    <option value="Desc">Date and Time Desc</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </nav>
-    <table class="table table-row table-hover mayorTable tableMonitoring" id="employeesTable">
-                <thead>
-                    <tr class="labelRow">
-                        <th class="columnName" scope="col">Log Entry Date</th>
-                        <th class="columnName" scope="col">Employee ID</th>
-                        <th class="columnName" scope="col">Employee Role</th>
-                        <th class="columnName" scope="col">Log type</th>
-                        <th class="columnName" scope="col">Log Description</th>
-                        <th class="columnName" scope="col">Actions</th>
+
+            </div>
+            <div class="tablePatient shadow tableScroll2">
+                <table class="table table-row table-hover mayorTable tableMonitoring" id="employeesTable">
+                    <thead>
+                    <tr class="tableCenterCont">
+                        <th>Log Entry Date</th>
+                        <th>Employee ID</th>
+                        <th>Employee Role</th>
+                        <th>Log type</th>
+                        <th>Log Description</th>
                     </tr>
 
-                <?php
+                    <?php
                     require_once '../require/getActivityLogs.php';
 
                     foreach ($activityLogs as $al) {
@@ -104,21 +126,57 @@
                         $description = $al->getLogDescription();
 
                         echo "<tr class='table-row tableCenterCont'>
-                            <td>$date</td>
-                            <td>$ID</td>
-                            <td>$role</td>
-                            <td>$type</td>
-                            <td>$description</td>
-                            <td>
-                                <button class='buttonTransparentMayors' onclick=''><i class='fas fa-eye'></i></button>
-                            </td>
-                        </tr>";
+                                <td>$date</td>
+                                <td>$ID</td>
+                                <td>$role</td>
+                                <td>$type</td>
+                                <td>$description</td>
+                              </tr>";
                     }
-                ?>
-                </thead>
-    </table>
+                    ?>
+                    </thead>
+                </table>
+            </div>
+        </div>
     </div>
 </div>
 </body>
-
 </html>
+
+<script>
+    function searchUsers() {
+        var textSearch = document.getElementById("searchUserLog").value;
+        $.ajax({
+            url: 'mayorsModuleProcessor.php',
+            type: 'POST',
+            data: {"searchLog": textSearch},
+            success: function (result) {
+                document.getElementById("employeesTable").innerHTML = result;
+            }
+        });
+    }
+
+    function filterUsers(filterUser) {
+        var selectedFilter = filterUser.value;
+        $.ajax({
+            url: 'mayorsModuleProcessor.php',
+            type: 'POST',
+            data: {"filterUser": selectedFilter},
+            success: function (result) {
+                document.getElementById("employeesTable").innerHTML = result;
+            }
+        })
+    }
+
+    function sortByLog(sortLog){
+        var selectedSort = sortLog.value;
+        $.ajax({
+            url: 'mayorsModuleProcessor.php',
+            type: 'POST',
+            data: {"sort": selectedSort},
+            success: function (result) {
+                document.getElementById("employeesTable").innerHTML = result;
+            }
+        })
+    }
+</script>

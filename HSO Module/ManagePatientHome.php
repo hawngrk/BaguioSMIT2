@@ -14,6 +14,7 @@ include_once("../includes/database.php") ?>
     <link rel="icon" href="../img/FaviSMIT+.png" type="image/jpg">
     <!-- Our Custom CSS -->
     <link href="../css/style.css" rel="stylesheet">
+    <link href="../css/HSOModule.css" rel="stylesheet">
 
     <!-- Bootstrap-->
     <script crossorigin="anonymous" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
@@ -57,7 +58,7 @@ include_once("../includes/database.php") ?>
             <hr>
 
             <li>
-                <a href="#"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+                <a href="HSOdash.php"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
             </li>
             <li>
                 <a href="ManageVaccineHome.php"><i class="fas fa-syringe"></i> Manage Vaccine</a>
@@ -106,30 +107,35 @@ include_once("../includes/database.php") ?>
                 <div class="row">
                     <div class="col">
                         <div class="input-group">
-                            <input id="searchPatientHSO" type="search" name="searchPatient" class="form-control" placeholder="Search" onkeyup="searchPatient()"/>
-                            <button type="submit" class="buttonTop5" name="managePatientBtn" onclick="searchPatient()">  <i class="fas fa-search"></i> </button>
+                            <input  id="searchPatientInput" type="search" name="searchPatient" class="form-control" placeholder="Search" onkeyup="searchPatient()"/>
                         </div>
                     </div>
                     <div class="col-sm-auto">
                         <div class="row">
                             <div class="sfDiv col-md-1.5 my-auto">
-                                <select class="form-select filterButton" id="filterReports" name="filterReports"
-                                        onchange="filterReport(this)">
-                                    <option value="" selected disabled hidden>Filter By</option>
-                                    <option>All</option>
-                                    <option>Unverified</option>
-                                    <option>Verified</option>
-                                    <option>Invalidated</option>
+                                <select class="form-select filterButton" id="filterCat" name="filterCategory"
+                                        onchange="filterCategoryGroup(this)">
+                                    <option value='' selected disabled hidden>Filter By</option>
+                                    <option value='' disabled >Select Category Group</option>
+                                    <option value="All"> All </option>
+                                    <?php
+                                    require_once("../require/getPriorityGroup.php");
+                                    foreach ($priorityGroups as $pg) {
+                                        $id = $pg->getPriorityGroupId();
+                                        $category = $pg->getPriorityGroup();
+                                        echo "<option value=$category> $category </option>";
+                                    }
+                                    ?>
                                 </select>
                             </div>
                             <div class="sfDiv col-md-1.5 my-auto">
-                                <select class="form-select sortButton" id="sortReports" name="sortReports"
-                                        onchange="sortReport(this)">
+                                <select class="form-select sortButton" id="sortPatientName" name="sortPatient"
+                                        onchange="sortByName(this)">
                                     <option value="" selected disabled hidden>Sort By</option>
-                                    <option>Name Asc</option>
-                                    <option>Name Desc</option>
-                                    <option>Date Asc</option>
-                                    <option>Date Desc</option>
+                                    <option value="" disabled >Select Name Sort </option>
+                                    <option value="None"> None </option>
+                                    <option value="Asc">Name ↑</option>
+                                    <option value="Desc">Name ↓</option>
                                 </select>
                             </div>
                         </div>
@@ -141,7 +147,7 @@ include_once("../includes/database.php") ?>
                 <!--Table Part-->
                 <table class="table table table-hover tablePatient" id="patientTable1">
                     <thead>
-                    <tr class="labelRow tableCenterCont">
+                    <tr class="tableCenterCont">
                         <th>Patient ID</th>
                         <th>Patient Name</th>
                         <th>Category</th>
@@ -153,38 +159,27 @@ include_once("../includes/database.php") ?>
 
                     <?php
                     require_once '../require/getPatientDetails.php';
+                    $query = "SELECT patient.patient_id, CONCAT(patient_details.patient_last_name,', ',patient_details.patient_first_name,' ',COALESCE(patient_details.patient_middle_name,''),' ',COALESCE(patient_details.patient_suffix,'')) AS full_name, patient_details.patient_priority_group, CONCAT(patient_details.patient_house_address, ' ', patient_details.patient_barangay_address, ' ', patient_details.patient_CM_address, ' ', patient_details.patient_province) AS full_address, patient_contact_number FROM patient JOIN patient_details ON patient.patient_id = patient_details.patient_id;";
+                    $patient_details = [];
 
-                    foreach ($patient_details as $pd) {
-                        if ($pd->getArchived() == 0) {
-                            $id = $pd->getPatientDeetPatId();
-                            $category = $pd->getPriorityGroup();
-                            $fullAddress = $pd->getHouseAdd() . ", " . $pd->getBrgy() . ", " . $pd->getCity() . ", " . $pd->getProvince();
-                            $contact = $pd->getContact();
-
-                            if ($pd->getPatientMName() == null && $pd->getPatientSuffix() == null) {
-                                $name = $pd->getPatientLName() . ", " . $pd->getPatientFName();
-                            } else if ($pd->getPatientSuffix() == null) {
-                                $name = $pd->getPatientLName() . ", " . $pd->getPatientFName() . " " . $pd->getPatientMName();
-                            } else if ($pd->getPatientMName() == null) {
-                                $name = $pd->getPatientLName() . ", " . $pd->getPatientFName() . " " . $pd->getPatientSuffix();
-                            } else {
-                                $name = $pd->getPatientLName() . ", " . $pd->getPatientFName() . " " . $pd->getPatientMName() . " " . $pd->getPatientSuffix();
-                            }
-
-                            echo "<tr class='table-row tableCenterCont' onclick='showPatient(this)'>
-                        <td>$id</td>
-                        <td>$name</td>
-                        <td>$category</td>
-                        <td>$fullAddress</td>
-                        <td>$contact</td>
-                        <td>
-                            <div class='tableCenterCont'>
-                                <button class='actionButt buttonTransparent' onclick='event.stopPropagation();archive(1, clickArchive, $id)'><i class='fa fa-archive'></i></button>
-                                <button type='button' class='actionButt viewReportBtn buttonTransparent' id='viewButton' onclick='viewPatient($id)'><i class='fas fa-eye'></i></button
-                            </div>
-                        </td>
-                    </tr>";
-                        }
+                    $stmt = $database->stmt_init();
+                    $stmt->prepare($query);
+                    $stmt->execute();
+                    $stmt->bind_result($patientId, $fullname, $category, $patientAddress, $contactNum);
+                    while ($stmt->fetch()) {
+                    echo "<tr onclick='showPatient(this)' class='tableCenterCont'>
+                                <td>$patientId</td>
+                                <td>$fullname</td>
+                                <td>$category</td>
+                                <td>$patientAddress</td>
+                                <td>$contactNum</td>
+                                <td>
+                                    <div class='d-flex justify-content-center'>
+                                        <button class='btn btn-sm bg-none' onclick='event.stopPropagation();archive(1, clickArchive, $id)'><i class='fa fa-archive'></i></button>
+                                        <button type='button' class='btn btn-sm bg-none' id='viewButton' onclick='viewPatient($id)'><i class='fas fa-eye'></i></button
+                                    </div>
+                                </td>
+                            </tr>";
                     }
                     ?>
                 </table>
@@ -197,8 +192,6 @@ include_once("../includes/database.php") ?>
         <div id="viewPatientDetails" class="modal-window">
             <div class='content-modal' id="patientModalContent">
             </div>
-
-
         </div>
 
         <!--Modal for uploading patient csv-->
@@ -318,7 +311,7 @@ include_once("../includes/database.php") ?>
                                 <div class="col">
                                     <label class="label1 required" for="email"> Email Address </label>
                                     <input type="text3" id="email" class='input' name="email"
-                                           placeholder="@email.com" required>
+                                           placeholder="email@example.org" required>
                                 </div>
                             </div>
                         </div>
@@ -602,28 +595,7 @@ include_once("../includes/database.php") ?>
 <!-- AJAX -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
-<script type="text/javascript">
-    $(document).ready(function () {
-        $('#sidebarCollapse').on('click', function () {
-            $('#sidebar').toggleClass('active');
-        });
-    });
-</script>
-
 <script>
-    // Sidebar
-    var clicked = false;
-
-    function Toggle() {
-        var butt = document.getElementById('sidebarCollapse')
-        if (!clicked) {
-            clicked = true;
-            butt.innerHTML = "Menu <i class = 'fas fa-angle-double-right'><i>";
-        } else {
-            clicked = false;
-            butt.innerHTML = "<i class='fas fa-angle-left'></i> Menu";
-        }
-    }
 
     // Add Patient
     var addPatientBtn = document.getElementById("addPatientBtn");
@@ -664,17 +636,81 @@ include_once("../includes/database.php") ?>
         }
     }
 
+    //clear search text field
+    $('#searchPatientInput').on('input', function(e) {
+        if('' == this.value) {
+            $.ajax({
+                url: '../includes/searchProcessor.php',
+                type: 'POST',
+                data: {"searchPatient": ""},
+                success: function (result) {
+                    document.getElementById("patientTable1").innerHTML = result;
+                }
+            });
+        }
+    });
 
+    //search patient
     function searchPatient() {
-        var textSearch = document.getElementById("searchPatientHSO").value;
+        var textSearch = document.getElementById("searchPatientInput").value;
         $.ajax({
-            url: 'ManagePatientProcessor.php',
+            url: '../includes/searchProcessor.php',
             type: 'POST',
-            data: {"search": textSearch},
+            data: {"searchPatient": textSearch},
             success: function (result) {
                 document.getElementById("patientTable1").innerHTML = result;
             }
         });
+    }
+
+    //filter category group
+    function filterCategoryGroup(filter){
+        var selectedFilter = filter.value;
+        $.ajax({
+            url: '../includes/filterProcessor.php',
+            type: 'POST',
+            data: {"filterPatient": selectedFilter},
+            success: function (result) {
+                document.getElementById("patientTable1").innerHTML = result;
+            }
+        })
+    }
+
+    function sortByName(sort){
+        var selectedSort = sort.value;
+        $.ajax({
+            url: '../includes/sortingProcessor.php',
+            type: 'POST',
+            data: {"sortPatient": selectedSort},
+            success: function (result) {
+                document.getElementById("patientTable1").innerHTML = result;
+            }
+        })
+    }
+
+    function viewPatient(patientId){
+        $.ajax({
+            url:'../includes/managePatientProcessor.php',
+            type:'POST',
+            data:{"patient": patientId},
+            success:function (result){
+                document.getElementById("patientModalContent").innerHTML = result;
+                openModal('viewPatientDetails');
+            }
+        })
+    }
+
+    function showPatient(val) {
+        var id = val.getElementsByTagName("td")[0].innerText;
+        $.ajax({
+            url: '../includes/managePatientProcessor.php',
+            method: 'POST',
+            data: {patient: id},
+            success: function (result) {
+                document.getElementById("patientModalContent").innerHTML = result;
+                openModal('viewPatientDetails');
+            }
+        })
     }
 
     function updateBarangayDetails(val) {
@@ -878,6 +914,7 @@ include_once("../includes/database.php") ?>
     function openModal(modal) {
         console.log(modal);
         document.getElementById(modal).style.display = "block";
+        document.body.classList.add("scrollBody");
     }
 
     function getUploadedFiles(item) {
@@ -906,39 +943,6 @@ include_once("../includes/database.php") ?>
         });
     }
 
-    function viewPatient(patientId){
-        $.ajax({
-            url:'ManagePatientProcessor.php',
-            type:'POST',
-            data:{"patient": patientId},
-            success:function (result){
-                document.getElementById("patientModalContent").innerHTML = result;
-                openModal('viewPatientDetails');
-            }
-        })
-    }
-
-    function showPatient(val) {
-        var id = val.getElementsByTagName("td")[0].innerText;
-        $.ajax({
-            url: 'ManagePatientProcessor.php',
-            method: 'POST',
-            data: {patient: id},
-            success: function (result) {
-                document.getElementById("patientModalContent").innerHTML = result;
-                openModal('viewPatientDetails');
-            }
-        })
-    }
 </script>
 
-<!--
-<script>
-    $(document).ready(function ($) {
-        $(".table-row").click(function () {
-            window.document.location = $(this).data("href");
-        });
-    });
-</script>
--->
 </body>

@@ -1,7 +1,8 @@
 <?php
 include("../includes/database.php");
-if (isset($_POST['search'])) {
 
+
+if (isset($_POST['search'])) {
     $search = $_POST['search'];
     if ($search == "") {
         $querySearch = "SELECT patient.patient_id, patient.patient_full_name, patient_details.patient_priority_group, CONCAT(patient_details.patient_house_address, ' ', patient_details.patient_barangay_address, ' ', patient_details.patient_CM_address, ' ', patient_details.patient_province) AS full_address, patient_contact_number FROM patient JOIN patient_details ON patient.patient_id = patient_details.patient_id;";
@@ -10,13 +11,13 @@ if (isset($_POST['search'])) {
     }
     echo "
     <thead>
-            <tr>
-                <th scope='col'>ID</th>
-                <th scope='col'>Patient Name</th>
-                <th scope='col'>Category</th>
-                <th scope='col'>Complete Address</th>
-                <th scope='col'>Contact Number</th>
-                <th scope='col'>Action</th>
+            <tr class='tableCenterCont'>
+                <th>ID</th>
+                <th>Patient Name</th>
+                <th>Category</th>
+                <th>Complete Address</th>
+                <th>Contact Number</th>
+                <th>Action</th>
             </tr>
             </thead>";
             
@@ -25,7 +26,7 @@ if (isset($_POST['search'])) {
     $stmt->execute();
     $stmt->bind_result($patientID, $patientName, $category, $patientAddress, $contactNum);
     while ($stmt->fetch()) {
-        echo "<tr>
+        echo "<tr class='tableCenterCont'>
                 <td>$patientID</td>
                 <td>$patientName</td>
                 <td>$category</td>
@@ -34,6 +35,11 @@ if (isset($_POST['search'])) {
                 <td><button id='postVac' class='viewReportBtn btn-success' type='submit' onclick='clickModalRow($patientID)'>Add Vitals</button></td></td>
                 </tr>";
     }
+}
+
+//filter
+if (isset($_POST['filter'])) {
+    echo "passed";
 }
 
 if (isset($_POST['modalScreening'])) {

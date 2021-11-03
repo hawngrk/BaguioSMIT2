@@ -13,7 +13,7 @@ include_once("../includes/database.php") ?>
     <link rel="icon" href="../img/FaviSMIT+.png" type="image/jpg">
     <!-- Our Custom CSS -->
     <link href="../css/style.css" rel="stylesheet">
-
+    <link href="../css/HSOModule.css" rel="stylesheet">
     <!-- Bootstrap-->
     <script crossorigin="anonymous" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
             src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
@@ -53,7 +53,7 @@ include_once("../includes/database.php") ?>
             </h5>
             <hr>
             <li>
-                <a href="#"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+                <a href="HSOdash.php"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
             </li>
             <li class="active">
                 <a href="ManageVaccineHome.php"><i class="fas fa-syringe"></i> Manage Vaccine</a>
@@ -79,16 +79,18 @@ include_once("../includes/database.php") ?>
         </ul>
     </nav>
 
-    <!-- Top Nav Bar  -->
+    <!-- Page Content -->
     <div id="content">
         <!--Top Nav-->
         <div class="navbar navbar-expand-lg navbar-light bg-light shadow-sm p-3 mb-4 rounded-lg">
             <div class="container-fluid">
                 <div>
-                    <button onclick="openModal('vaccineModal')" type="button" class="shadow-lg  buttonTop3 float-right"><i
+                    <button onclick="openModal('vaccineModal')" type="button" class="shadow-lg  buttonTop3 float-right">
+                        <i
                                 class="fas fa-plus"></i> Add Vaccine
                     </button>
-                    <button onclick="openModal('newVaccineModal')" type="button" class="shadow-lg  buttonTop3 float-right"><i
+                    <button onclick="openModal('newVaccineModal')" type="button"
+                            class="shadow-lg  buttonTop3 float-right"><i
                                 class="fas fa-syringe"></i> Add New Vaccine
                     </button>
 
@@ -99,35 +101,41 @@ include_once("../includes/database.php") ?>
             </div>
         </div>
 
+        <!--Table Part-->
         <div class="tableContainer">
             <div class="table-title">
                 <div class="row">
                     <div class="col">
                         <div class="input-group">
-                            <input id="searchVaccine" type="search" placeholder="Search" class="form-control" name="searchVaccine" onkeyup="searchVaccine()"/>
-                            <button type="submit" class="buttonTop5" name="serachVaccineBtn" onclick="searchVaccine()"> <i class="fas fa-search"></i> </button>
+                            <input id="searchVacc" type="search" placeholder="Search" class="form-control"
+                                   name="searchVaccine" onkeyup="searchVaccine()"/>
+                            <!--                            <button type="submit" class="buttonTop5" name="serachVaccineBtn" onclick="searchVaccine()"> <i class="fas fa-search"></i> </button>-->
                         </div>
                     </div>
                     <div class="col-sm-auto">
                         <div class="row">
                             <div class="sfDiv col-md-1.5 my-auto">
-                                <select class="form-select filterButton" id="filterReports" name="filterReports"
-                                        onchange="filterReport(this)">
+                                <select class="form-select filterButton" id="filterVac" name="filterVaccines"
+                                        onchange="filterVaccine(this)">
                                     <option value="" selected disabled hidden>Filter By</option>
-                                    <option>All</option>
-                                    <option>Unverified</option>
-                                    <option>Verified</option>
-                                    <option>Invalidated</option>
+                                    <option value="" disabled>Select Source Group</option>
+                                    <option value="All"> All</option>
+                                    <option value="National Government"> National Government</option>
+                                    <option value="Department Of Health"> Department of Health</option>
                                 </select>
                             </div>
                             <div class="sfDiv col-md-1.5 my-auto">
                                 <select class="form-select sortButton" id="sortReports" name="sortReports"
-                                        onchange="sortReport(this)">
+                                        onchange="sortVaccine(this)">
                                     <option value="" selected disabled hidden>Sort By</option>
-                                    <option>Name Asc</option>
-                                    <option>Name Desc</option>
-                                    <option>Date Asc</option>
-                                    <option>Date Desc</option>
+                                    <option value="" disabled>Select Sort By</option>
+                                    <option value="None"> None </option>
+                                    <option value="dateAsc">Date Received ↑</option>
+                                    <option value="dateDesc">Date Received ↓</option>
+                                    <option value="expirationAsc">Expiration Date ↑</option>
+                                    <option value="expirationDesc">Expiration Date ↓</option>
+                                    <option value="bottleQAsc">Bottle Quantity ↑</option>
+                                     <option value="bottleQDesc">Bottle Quantity ↓</option>
                                 </select>
                             </div>
                         </div>
@@ -135,6 +143,7 @@ include_once("../includes/database.php") ?>
                 </div>
             </div>
 
+            <!--Table Content-->
             <div class="tableVaccine tableScroll2 shadow">
                 <table class="table table-hover" id="vaccineTable">
                     <thead class='tableCenterCont'>
@@ -143,7 +152,7 @@ include_once("../includes/database.php") ?>
                         <th>Vaccine Name</th>
                         <th>Vaccine Source</th>
                         <th>Date Received</th>
-                        <th>Expiration</th>
+                        <th>Expiration Date</th>
                         <th>Bottle Quantity</th>
                         <th>Action</th>
                     </tr>
@@ -179,9 +188,9 @@ include_once("../includes/database.php") ?>
                             <td>$vaccExp</td>
                             <td>$batchQty</td>
                             <td>
-                                <div>
-                                      <button type='button' class='actionButt archiveVaxtBtn buttonTransparent' onclick='event.stopPropagation();archive(1, clickArchive, $vaccineLotId)'><i class='fa fa-archive'></i></button>
-                                      <button type='button' class='actionButt viewReportBtn buttonTransparent' id='viewButton' onclick='viewVaccineDetails($vaccineLotId)'><i class='fas fa-eye'></i></button>
+                                <div class='d-flex justify-content-center'>
+                                      <button type='button' class='btn btn-sm bg-none' onclick='event.stopPropagation();archive(1, clickArchive, $vaccineLotId)'><i class='fa fa-archive'></i></button>
+                                      <button type='button' class='btn btn-sm bg-none' id='viewButton' onclick='viewVaccineDetails($vaccineLotId)'><i class='fas fa-eye'></i></button>
                                 </div>
                             </td>
                             </tr>";
@@ -201,15 +210,16 @@ include_once("../includes/database.php") ?>
             <div class="content-modal">
                 <div class="modal-header">
                     <h2 id="headerAddVaccine"> Add Vaccine </h2>
-                    <span onclick="closeModal('vaccineModal')"  class="close"><i class='fas fa-window-close'></i></span>
+                    <span onclick="closeModal('vaccineModal')" class="close"><i class='fas fa-window-close'></i></span>
                 </div>
                 <div class="modal-body">
                     <div id="addVaccineModal">
                         <div class="row">
                             <div class="col-sm-6">
-                                <label for="selectedVaccine"> Select a Vaccine: </label>
+                                <label for="selectedVaccine" class="required"> Select a Vaccine: </label>
                                 <select class="form-select vaccineType" id="selectedVaccine" name="selectedVaccine"
                                         onchange="updateVaccineInfo(this)">
+                                    <option selected disabled> Select Vaccine Efficacy</option>
                                     <?php
                                     include '../includes/database.php';
                                     $getVaccinesQuery = "SELECT vaccine_name FROM vaccine";
@@ -226,19 +236,19 @@ include_once("../includes/database.php") ?>
                                     }
                                     ?>
                                 </select>
-                                <label class="label1" for="qty"> Total Vial Quantity Received: </label>
+                                <label class="label1 required" for="qty"> Total Vial Quantity Received: </label>
                                 <input type="text" id="qty"><br>
-                                <label class="label1" for="source"> Vaccine Source: </label>
-                                <select class="vaxSource" id="source">
+                                <label class="label1 required" for="source"> Vaccine Source: </label>
+                                <select class="vaxSource required" id="source">
                                     <option selected disabled>Select Vaccine Source</option>
                                     <option value="National Government">National Government</option>
                                     <option value="Department Of Health">Department Of Health</option>
                                 </select>
                             </div>
                             <div class="col-sm-6">
-                                <label for="dateStored">Date Stored</label><br>
+                                <label for="dateStored" class="required">Date Stored</label><br>
                                 <input type='date' id="dateStored" name="dateStored"><br>
-                                <label class="label1" for="dateExp">Date of Expiration</label><br>
+                                <label class="label1 required" for="dateExp">Date of Expiration</label><br>
                                 <input type='date' id="dateExp" name="dateExp">
                             </div>
                         </div>
@@ -251,8 +261,8 @@ include_once("../includes/database.php") ?>
 
                 </div>
             </div>
+        </form>
     </div>
-    </form>
 
     <!-- Add New Vaccine Modal-->
     <div id="newVaccineModal" class="modal-window">
@@ -260,69 +270,73 @@ include_once("../includes/database.php") ?>
             <div class="content-modal">
                 <div class="modal-header">
                     <h2 id="headerAddNewVaccine">Add New Vaccine</h2>
-                    <span onclick="closeModal('newVaccineModal')"  class="close"><i class='fas fa-window-close'></i></span>
+                    <span onclick="closeModal('newVaccineModal')" class="close"><i
+                                class='fas fa-window-close'></i></span>
                 </div>
                 <div class="modal-body">
                     <div id="addNewVaccineModal">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <h5>Vaccine Details</h5>
-                            <label for="vaccineName"> Vaccine Name </label>
-                            <input type="text3" class="form-control" id="vaccineName" placeholder="Ex. Sinovac">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h5>Vaccine Details</h5>
+                                <label for="vaccineName" class="required"> Vaccine Name </label>
+                                <input type="text3" class="form-control" id="vaccineName" placeholder="Ex. Sinovac">
 
-                            <label class="label1" for="vaccineManufacturer"> Vaccine Manufacturer </label>
-                            <input type="text3" class="form-control" id="vaccineManufacturer"
-                                   placeholder="Enter Manufacturer">
+                                <label class="label1 required" for="vaccineManufacturer"> Vaccine Manufacturer </label>
+                                <input type="text3" class="form-control" id="vaccineManufacturer"
+                                       placeholder="Enter Manufacturer">
 
-                            <label class="label1"for="vaccineDescription"> Vaccine Description </label>
-                            <input type="textDesc" class="form-control" id="vaccineDescription"
-                                   placeholder="Enter Description">
+                                <label class="label1 required" for="vaccineDescription"> Vaccine Description </label>
+                                <input type="text3" class="form-control" id="vaccineDescription"
+                                       placeholder="Enter Description">
 
-                            <h5 class="addNewVaccineH3 label1">Vaccine Characteristics</h5>
-                            <label  for="vaccineType"> Vaccine Type: </label>
-                            <select id="vaccineType">
-                                <option selected disabled>Select Vaccine Type</option>
-                                <option value="Inactivated Virus">Inactivated Vaccine</option>
-                                <option value="Viral vector">Viral vector Vaccine</option>
-                            </select>
-                            <label class="label1" for="vaccineEfficacy"> Vaccine Efficacy: </label>
-                            <select id="vaccineEfficacy">
-                                <option selected disabled>Select Vaccine Efficacy</option>
-                                <option value="90">90%</option>
-                                <option value="70">70%</option>
-                                <option value="50">50%</option>
-                            </select>
+                                <h5 class="addNewVaccineH3 label1">Vaccine Characteristics</h5>
+                                <label for="vaccineType" class="required"> Vaccine Type: </label>
+                                <select id="vaccineType">
+                                    <option selected disabled>Select Vaccine Type</option>
+                                    <option value="Inactivated Virus">Inactivated Vaccine</option>
+                                    <option value="Viral vector">Viral vector Vaccine</option>
+                                </select>
+                                <label class="label1 required" for="vaccineEfficacy"> Vaccine Efficacy: </label>
+                                <select id="vaccineEfficacy">
+                                    <option selected disabled>Select Vaccine Efficacy</option>
+                                    <option value="90">90%</option>
+                                    <option value="70">70%</option>
+                                    <option value="50">50%</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="label1 required" for="dosageRequired" id="labelDosage"> Dosage
+                                    Required </label>
+                                <input type="text3" class="form-control" id="dosageRequired"
+                                       placeholder="Enter Dosage Required">
+                                <label class="label1 required" for="dosageInterval"> Dosage Interval (Days) </label>
+                                <input type="text3" class="form-control" id="dosageInterval"
+                                       placeholder="Enter Dosage Interval">
+
+                                <h5 class="label1"> Storage and Handling</h5>
+                                <label for="minimumTemperature" class="required"> Minimum Temperature (Degree
+                                    Celcius) </label>
+                                <input type="text3" class="form-control" id="minimumTemperature"
+                                       placeholder="Minimum Temperature">
+                                <label class="label1 required" for="maximumTemperature"> Maximum Temperature (Degree
+                                    Celcius) </label>
+                                <input type="text3" class="form-control" id="maximumTemperature"
+                                       placeholder="Maximum Temperature">
+                                <label class="label1 required" for="lifeSpan"> Life Span (Months) </label>
+                                <input type="text3" class="form-control" id="lifeSpan" placeholder="Life Span">
+                            </div>
                         </div>
-                        <div class="col-md-6">
-                            <label class="label1" for="dosageRequired" id="labelDosage"> Dosage Required </label>
-                            <input type="text3" class="form-control" id="dosageRequired"
-                                   placeholder="Enter Dosage Required">
-                            <label class="label1" for="dosageInterval"> Dosage Interval(Days) </label>
-                            <input type="text3" class="form-control" id="dosageInterval"
-                                   placeholder="Enter Dosage Interval">
-
-                            <h5 class="label1"> Storage and Handling</h5>
-                            <label for="minimumTemperature"> Minimum Temperature (Degree Celcius) </label>
-                            <input type="text3" class="form-control" id="minimumTemperature"
-                                   placeholder="Minimum Temperature">
-                            <label class="label1" for="maximumTemperature"> Maximum Temperature (Degree Celcius) </label>
-                            <input type="text3" class="form-control" id="maximumTemperature"
-                                   placeholder="Maximum Temperature">
-                            <label class="label1" for="lifeSpan"> Life Span (Months) </label>
-                            <input type="text3" class="form-control" id="lifeSpan" placeholder="Life Span">
-                        </div>
-                    </div>
                     </div>
                     <div class="modal-footer">
-                        <button onclick="closeModal('newVaccineModal')"  class="btn btn-danger"> Cancel</button>
+                        <button onclick="closeModal('newVaccineModal')" class="btn btn-danger"> Cancel</button>
                         <button type='submit' id='addBtnNewVaccine' class="btn btn-success" name='addBtnNewVaccine'
                                 onclick="addNewVaccine()"> Add
                         </button>
                     </div>
                 </div>
             </div>
+        </form>
     </div>
-    </form>
 
     <!--Archived Modal-->
     <div id="archived" class="modal-window">
@@ -336,7 +350,7 @@ include_once("../includes/database.php") ?>
             <div id='archivedContent' class="modal-body">
 
                 <table class="table table-row table-hover tableModal" id="vaccineTable">
-                    <thead>
+                    <thead class="tableHeader">
                     <tr class="tableCenterCont">
                         <th scope="col">Vaccine Lot ID</th>
                         <th scope="col">Vaccine Name</th>
@@ -409,25 +423,59 @@ include_once("../includes/database.php") ?>
 <!-- AJAX -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
-<script type="text/javascript">
-    $(document).ready(function () {
-        $('#sidebarCollapse').on('click', function () {
-            $('#sidebar').toggleClass('active');
-        });
-    });
-</script>
-
 <script>
+
+    //clear search text field
+    $('#searchVacc').on('input', function (e) {
+        if ('' == this.value) {
+            $.ajax({
+                url: '../includes/searchProcessor.php',
+                type: 'POST',
+                data: {"searchVaccine": ""},
+                success: function (result) {
+                    document.getElementById("vaccineTable").innerHTML = result;
+                }
+            });
+        }
+    });
+
+    //search vaccine
     function searchVaccine() {
-        var textSearch = document.getElementById("searchVaccine").value;
+        var textSearch = document.getElementById("searchVacc").value;
         $.ajax({
-            url: 'ManageVaccineProcessor.php',
+            url: '../includes/searchProcessor.php',
             type: 'POST',
-            data: {"search": textSearch},
+            data: {"searchVaccine": textSearch},
             success: function (result) {
                 document.getElementById("vaccineTable").innerHTML = result;
             }
         });
+    }
+
+    //filter vaccine source
+    function filterVaccine(filterVac) {
+        var selectedFilter = filterVac.value;
+        $.ajax({
+            url: '../includes/filterProcessor.php',
+            type: 'POST',
+            data: {"filterVaccine": selectedFilter},
+            success: function (result) {
+                document.getElementById("vaccineTable").innerHTML = result;
+            }
+        })
+    }
+
+    //sort vaccine
+    function sortVaccine(sort) {
+        var selectedSort = sort.value;
+        $.ajax({
+            url: '../includes/sortingProcessor.php',
+            type: 'POST',
+            data: {"sortVaccine": selectedSort},
+            success: function (result) {
+                document.getElementById("vaccineTable").innerHTML = result;
+            }
+        })
     }
 
     window.onclick = function (event) {
@@ -438,6 +486,7 @@ include_once("../includes/database.php") ?>
         }
     }
 
+    //update vaccine info
     function updateVaccineInfo(vaccine) {
         $.ajax({
             url: 'ManageVaccineProcessor.php',
@@ -449,6 +498,7 @@ include_once("../includes/database.php") ?>
         });
     }
 
+    //update batch list
     function updateBatchList(batch) {
         $.ajax({
             url: 'ManageVaccineProcessor.php',
@@ -460,6 +510,7 @@ include_once("../includes/database.php") ?>
         });
     }
 
+    //add vaccine
     function addVaccine() {
         var vaccId = document.getElementById("selectedVaccine").value;
         var qty = document.getElementById('qty').value;
@@ -476,6 +527,7 @@ include_once("../includes/database.php") ?>
         });
     }
 
+    //add new vaccine
     function addNewVaccine() {
         var vaccName = document.getElementById("vaccineName").value;
         var manu = document.getElementById('vaccineManufacturer').value;
@@ -488,16 +540,16 @@ include_once("../includes/database.php") ?>
         var maxTemp = document.getElementById('maximumTemperature').value;
         var lifeSpan = document.getElementById('lifeSpan').value;
 
-        console.log(vaccName);
-        console.log(manu);
-        console.log(desc);
-        console.log(type);
-        console.log(efficacy);
-        console.log(dosage);
-        console.log(interval);
-        console.log(minTemp);
-        console.log(maxTemp);
-        console.log(lifeSpan);
+        // console.log(vaccName);
+        // console.log(manu);
+        // console.log(desc);
+        // console.log(type);
+        // console.log(efficacy);
+        // console.log(dosage);
+        // console.log(interval);
+        // console.log(minTemp);
+        // console.log(maxTemp);
+        // console.log(lifeSpan);
         $.ajax({
             url: 'ManageVaccineProcessor.php',
             type: 'POST',
@@ -518,6 +570,7 @@ include_once("../includes/database.php") ?>
         });
     }
 
+    //archive
     async function archive(archive, action, drive) {
         if (archive == 1) {
             archiveText = "Archive";
@@ -540,6 +593,7 @@ include_once("../includes/database.php") ?>
         })
     }
 
+    //click archive
     function clickArchive(drive, option) {
         $.ajax({
             url: 'ManageVaccineProcessor.php',
@@ -557,23 +611,26 @@ include_once("../includes/database.php") ?>
         })
     }
 
+    //close modal
     function closeModal(modal) {
         document.getElementById(modal).style.display = "none";
     }
 
+    //open modal
     function openModal(modal) {
         console.log(modal)
         document.getElementById(modal).style.display = "block";
+        document.body.classList.add("scrollBody");
     }
 
+    //view vaccine details
     var viewVaccineModal = document.getElementById("viewVaccineDetails");
-
-    function viewVaccineDetails(vaccineId){
+    function viewVaccineDetails(vaccineId) {
         $.ajax({
-            url:'ManageVaccineProcessor.php',
-            type:'POST',
-            data:{"vaccine": vaccineId},
-            success:function (result){
+            url: 'ManageVaccineProcessor.php',
+            type: 'POST',
+            data: {"vaccine": vaccineId},
+            success: function (result) {
                 document.getElementById("viewVaccineDetails").innerHTML = result;
                 viewVaccineModal.style.display = "block";
             }
@@ -581,6 +638,7 @@ include_once("../includes/database.php") ?>
     }
 
 
+    //show vaccine - row
     function showVaccine(val) {
         var id = val.getElementsByTagName("td")[0].innerText;
         console.log(id)
@@ -596,19 +654,4 @@ include_once("../includes/database.php") ?>
     }
 
 </script>
-
-<!--<script>-->
-<!--    var clicked = false;-->
-<!---->
-<!--    function Toggle() {-->
-<!--        var butt = document.getElementById('sidebarCollapse')-->
-<!--        if (!clicked) {-->
-<!--            clicked = true;-->
-<!--            butt.innerHTML = "Menu <i class = 'fas fa-angle-double-right'><i>";-->
-<!--        } else {-->
-<!--            clicked = false;-->
-<!--            butt.innerHTML = "<i class='fas fa-angle-left'></i> Menu";-->
-<!--        }-->
-<!--    }-->
-<!--</script>-->
 </body>

@@ -13,6 +13,7 @@ include_once("../includes/database.php")
     <link rel="icon" href="../img/FaviSMIT+.png" type="image/jpg">
     <!-- Our Custom CSS -->
     <link href="../css/style.css" rel="stylesheet">
+    <link href="../css/SSDModule.css" rel="stylesheet">
 
     <!-- Bootstrap-->
     <script crossorigin="anonymous" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
@@ -152,41 +153,43 @@ include_once("../includes/database.php")
                 </div>
                 <div class="modal-body" id="notificationContent">
                     <?php
-                    $query = "SELECT vaccination_drive.drive_id, vaccination_sites.location, vaccination_drive.vaccination_date, vaccination_drive.stubs, vaccination_drive.notif_opened FROM vaccination_sites JOIN vaccination_drive ON vaccination_sites.vaccination_site_id = vaccination_drive.vaccination_site_id ORDER BY drive_id desc;";
+                    $query = "SELECT vaccination_drive.drive_id, vaccination_sites.location, vaccination_drive.vaccination_date, vaccination_drive.first_dose_stubs, vaccination_drive.second_dose_stubs, vaccination_drive.notif_opened FROM vaccination_sites JOIN vaccination_drive ON vaccination_sites.vaccination_site_id = vaccination_drive.vaccination_site_id ORDER BY vaccination_drive.drive_id desc;";
                     $vaccination_drive = [];
 
                     $stmt = $database->stmt_init();
                     $stmt->prepare($query);
                     $stmt->execute();
-                    $stmt->bind_result($driveId, $locName, $date, $stubs, $opened);
+                    $stmt->bind_result($driveId, $locName, $date, $firstStubs, $secondStubs, $opened);
 
                     while ($stmt->fetch()) {
-                        if ($opened== 1){
+                        if ($opened == 1){
                             echo "
-
-
+                                                   
+                                                      
                                                         <div id='$driveId' style='color: #9C9C9C'>
                                                             <p>Vaccination Location: $locName<br>
                                                                Date: $date <br>
-                                                               Number of Stubs: $stubs <br>
+                                                               Number of First Stubs: $firstStubs <br>
+                                                               Number of Second Stubs: $secondStubs <br>
                                                             </p>
                                                         </div>
                                                       <hr style='width: 100%; background: azure'>
-
+                                                 
                                                       ";
                         } else{
 
                             echo "
                                                    <script>document.getElementById('marker').setAttribute('style', 'color:#c10d0d!important');</script>
-
+                                                      
                                                         <div id='$driveId' style='background: lightgray'>
                                                             <p>Vaccination Location: $locName<br>
                                                                Date: $date <br>
-                                                               Number of Stubs: $stubs <br>
+                                                               Number of First Stubs: $firstStubs <br>
+                                                               Number of Second Stubs: $secondStubs <br>
                                                             </p>
                                                         </div>
                                                       <hr style='width: 100%; background: azure'>
-
+                                                 
                                                       ";
 
                         }

@@ -14,6 +14,7 @@ include "../includes/database.php";
     <link rel="icon" href="../img/FaviSMIT+.png" type="image/jpg">
     <!-- Our Custom CSS -->
     <link href="../css/style.css" rel="stylesheet">
+    <link href="../css/SSDModule.css" rel="stylesheet">
 
     <!-- Bootstrap-->
     <script crossorigin="anonymous" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
@@ -134,6 +135,49 @@ include "../includes/database.php";
             </div>
 
             <div id="barangayModal" class="modal-window">
+                <div id='stubsModal' class='content-modal'>
+                    <div class='modal-header' >
+                        <h3 style='padding-right:50%' id="header">  </h3>
+                        <select name='Type' style='width: 14%' onchange='(this)'>
+                            <option value='percentage'>Percentage </option>
+                            <option value='whole'>Whole Number</option>
+                        </select>
+                        <button id='closeModal' class='close' onclick='closeModal("barangayModal")'> &times;</button>
+                    </div>
+                    <div class='modal-body' id='healthDStubs'>
+                        <nav class="navbar navbar-expand-lg navbar-light navbarDep">
+                            <div class="collapse navbar-collapse" id="navbarNav">
+                                <ul class="navbar-nav">
+                                    <div class="row">
+                                        <div class="col-sm-auto">
+                                            <li role="presentation" class="doseOption1 nav-item">
+                                                <a class="nav-link" role="tab" id="firstDose" data-toggle="tab" href="#firstDose"
+                                                   onclick="shiftTab(firstDose, secondDose,'firstDosePage', 'secondDosePage')">First Dose</a>
+                                            </li>
+                                        </div>
+                                        <div class="col-sm-auto">
+                                            <li role="presentation" class="doseOption2 nav-item">
+                                                <a class="nav-link" id="secondDose" role="tab" data-toggle="tab"
+                                                   href="#secondDose"
+                                                   onclick="shiftTab(secondDose, firstDose, 'secondDosePage', 'firstDosePage')">Second Dose</a>
+                                            </li>
+                                        </div>
+                                    </div>
+
+
+                                </ul>
+                            </div>
+                        </nav>
+
+                        <!-- Tab panes -->
+                        <div class="tab-content">
+                            <div role="tabpanel" class="tab-pane" id="firstDosePage">
+                            </div>
+                            <div role="tabpanel" class="tab-pane" id="secondDosePage">
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -157,7 +201,7 @@ include "../includes/database.php";
                 $stmt->bind_result($driveId, $locName, $date, $firstStubs, $secondStubs, $opened);
 
                 while ($stmt->fetch()) {
-                    if ($opened== 1){
+                    if ($opened == 1){
                         echo "
                                                    
                                                       
@@ -264,8 +308,15 @@ include "../includes/database.php";
 
         }
 
-        var counter = 0;
-        function countStubs(num, oldnum, item){
+        var firstCounter = 0;
+        var secondCounter = 0;
+        function countStubs(num, oldnum, item, counterId, type){
+            if(type == 'first'){
+                var counter = firstCounter;
+            }else {
+                var counter = secondCounter
+            }
+
             if (num.includes("%")) {
                 num = num.replace(/%/g, '');
                 num = (counter / 100) * num;
@@ -280,14 +331,6 @@ include "../includes/database.php";
                 oldnum = 0;
             }
 
-            // if (num < 1 )){
-            //     num = (counter/100) * num;
-            //
-            // }
-            //
-            // if (oldnum < 1)){
-            //     oldnum = (counter/100) * num;
-            // }
 
             if (num > counter){
                 alert('Number Exceeds Number Of Left Stubs!');
@@ -298,11 +341,17 @@ include "../includes/database.php";
                 counter = counter - parseInt(num);
             }
 
-            document.getElementById('counter').innerHTML = "";
-            document.getElementById('counter').innerHTML = "<center><p><i class='fas fa-ticket-alt'></i> number of Stubs Left: " + counter + "</p> </center>";
+            document.getElementById(counterId).innerHTML = "";
+            document.getElementById(counterId).innerHTML = "<center><p><i class='fas fa-ticket-alt'></i> number of Stubs Left: " + counter + "</p> </center>";
         }
 
         function checkZero(item){
+            if(type == 'first'){
+                var counter = firstCounter;
+            }else {
+                var counter = secondCounter
+            }
+
             if(counter == 0){
                 alert('No more stubs');
                 item.value = 0;
@@ -330,17 +379,28 @@ include "../includes/database.php";
             });
         }
 
-        function viewBarangays(id, driveId, priorities, firstDoseStubs, secondDoseStubs){
-            counter = firstDoseStubs;
+        function viewBarangays(id, district, driveId, priorities, firstDoseStubs, secondDoseStubs){
+            firstCounter = firstDoseStubs;
+            secondCounter = secondDoseStubs;
+
+            document.getElementById('header').innerText = district;
             $.ajax({
                 url: 'selectDeployment.php',
                 type: 'POST',
-                data: {"viewBarangays": id, "drive": driveId, "firstStubs": firstDoseStubs, "secondStubs": secondDoseStubs},
+                data: {"viewBarangays": id, "drive": driveId, "firstStubs": firstDoseStubs},
                 success: function (result) {
-                    document.getElementById("barangayModal").innerHTML = result;
-                    document.getElementById("barangayModal").style.display ="block";
+                    document.getElementById("firstDosePage").innerHTML = result;
                     disable(priorities);
 
+                }
+            });
+            $.ajax({
+                url: 'selectDeployment.php',
+                type: 'POST',
+                data: {"viewBarangays2": id, "drive": driveId, "secondStubs": secondDoseStubs},
+                success: function (result) {
+                    document.getElementById("secondDosePage").innerHTML = result;
+                    document.getElementById("barangayModal").style.display ="block";
                 }
             });
         }
@@ -375,6 +435,15 @@ include "../includes/database.php";
 
         function openModal(modal) {
             document.getElementById(modal).style.display = "block";
+        }
+        function shiftTab(active, idle1, pageBlock, pageNone1) {
+            active.style.backgroundColor = "#1D7195";
+            active.style.color = "#ffffff";
+            active.style.borderRadius = "12px";
+            idle1.style.backgroundColor = "rgba(162,176,162,0)";
+            idle1.style.color = "#000000";
+            document.getElementById(pageBlock).style.display = "block";
+            document.getElementById(pageNone1).style.display = "none";
         }
     </script>
 

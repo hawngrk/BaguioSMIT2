@@ -98,7 +98,7 @@
                 <div class="row">
                     <div class="col">
                         <div class="input-group">
-                            <input id="searchPatient" type="search" class="form-control" placeholder="Search" name="searchPatient" onkeyup="searchPatient()"/>
+                            <input id="searchPatient" type="search" class="form-control" placeholder="Search" name="searchPatient" onkeyup="search()"/>
                             <button type="submit" class="buttonTop5" name="searchPatientBtn" onclick="searchPatient()">
                                 <i class="fas fa-search"></i>
                             </button>
@@ -108,23 +108,27 @@
                     <div class="col-sm-auto">
                         <div class="row">
                             <div class="sfDiv col-md-1.5 my-auto">
-                                <select class="form-select filterButton" id="filterReports" name="filterReports"
-                                        onchange="filterReport(this)">
+                                <select class="form-select filterButton" id="filterCat" name="filterCategory"
+                                        onchange="filterCategoryGroup(this)">
                                     <option value="" selected disabled hidden>Filter By</option>
-                                    <option>All</option>
-                                    <option>Unverified</option>
-                                    <option>Verified</option>
-                                    <option>Invalidated</option>
+                                    <option value="" disabled >Select Category Group</option>
+                                    <option value="None"> None </option>
+                                    <option value="A1"> A1 </option>
+                                    <option value="A2"> A2 </option>
+                                    <option value="A3"> A3 </option>
+                                    <option value="A4"> A4 </option>
+                                    <option value="A5"> A5 </option>
+                                    <option value="A6"> ROP </option>
+                                    <option value="A7"> A7 </option>
                                 </select>
                             </div>
                             <div class="sfDiv col-md-1.5 my-auto">
-                                <select class="form-select sortButton" id="sortReports" name="sortReports"
-                                        onchange="sortReport(this)">
+                                <select class="form-select sortButton" id="sortPatientName" name="sortPatient"
+                                        onchange="sortByName(this)">
                                     <option value="" selected disabled hidden>Sort By</option>
-                                    <option>Name Asc</option>
-                                    <option>Name Desc</option>
-                                    <option>Date Asc</option>
-                                    <option>Date Desc</option>
+                                    <option value="" disabled >Select Category Group</option>
+                                    <option value="Asc">Name Asc</option>
+                                    <option value="Desc">Name Desc</option>
                                 </select>
                             </div>
                         </div>
@@ -144,12 +148,8 @@
                     <th>Action</th>
                 </tr>
                 </thead>
-<!--                --><?php
-//                include '../includes/showRegisteredPatients.php';
-//                ?>
                 <?php
                 require_once '../require/getPatientDetails.php';
-
                 foreach ($patient_details as $pd) {
                     if ($pd->getArchived() == 0) {
                         $id = $pd->getPatientDeetPatId();
@@ -174,9 +174,9 @@
                         <td>$fullAddress</td>
                         <td>$contact</td>
                         <td>
-                            <div>
-                                <button class='buttonTransparent' onclick='archive(1, clickArchive, $id)'><i class='fa fa-archive'></i></button>
-                                <button type='button' class='viewReportBtn buttonTransparent' id='viewButton' onclick='viewPatient($id)'><i class='fas fa-eye'></i></button
+                            <div class='d-flex justify-content-center'>
+                                <button class='btn btn-sm bg-none' onclick='archive(1, clickArchive, $id)'><i class='fa fa-archive'></i></button>
+                                <button type='button' class='btn btn-sm bg-none' id='viewButton' onclick='viewPatient($id)'><i class='fas fa-eye'></i></button
                             </div>
                         </td>
                     </tr>";
@@ -561,34 +561,65 @@
 
 <script type="text/javascript">
 
-    $(document).ready(function () {
-        $('#sidebarCollapse').on('click', function () {
-            $('#sidebar').toggleClass('active');
-        });
-    });
-    var clicked = false;
-
-    function Toggle() {
-        var butt = document.getElementById('sidebarCollapse')
-        if (!clicked) {
-            clicked = true;
-            butt.innerHTML = "Menu <i class = 'fas fa-angle-double-right'><i>";
-        } else {
-            clicked = false;
-            butt.innerHTML = "<i class='fas fa-angle-left'></i> Menu";
-        }
-    }
-
-    function searchPatient() {
+    function search() {
         var textSearch = document.getElementById("searchPatient").value;
         $.ajax({
-            url: 'EIRManageUserProcessor.php',
+            url: '../includes/managePatientProcessor.php',
             type: 'POST',
             data: {"search": textSearch},
             success: function (result) {
                 document.getElementById("patientTable").innerHTML = result;
             }
         });
+    }
+
+    function filterCategoryGroup(filter){
+        var selectedFilter = filter.value;
+        $.ajax({
+            url: '../includes/managePatientProcessor.php',
+            type: 'POST',
+            data: {"filter": selectedFilter},
+            success: function (result) {
+                document.getElementById("patientTable").innerHTML = result;
+            }
+        })
+    }
+
+    function sortByName(sort){
+        var selectedSort = sort.value;
+        $.ajax({
+            url: '../includes/managePatientProcessor.php',
+            type: 'POST',
+            data: {"sort": selectedSort},
+            success: function (result) {
+                document.getElementById("patientTable").innerHTML = result;
+            }
+        })
+    }
+
+    function showPatient(val) {
+        var id = val.getElementsByTagName("td")[0].innerText;
+        $.ajax({
+            url: '../includes/managePatientProcessor.php',
+            method: 'POST',
+            data: {patient: id},
+            success: function (result) {
+                document.getElementById("patientModalContent").innerHTML = result;
+                openModal('viewPatientDetails');
+            }
+        })
+    }
+
+    function viewPatient(patientId){
+        $.ajax({
+            url:'../includes/managePatientProcessor.phpp',
+            type:'POST',
+            data:{"patient": patientId},
+            success:function (result){
+                document.getElementById("patientModalContent").innerHTML = result;
+                openModal('viewPatientDetails');
+            }
+        })
     }
 
     function updateBarangayDetails(val) {
@@ -719,6 +750,7 @@
     function openModal(modal) {
         console.log(modal)
         document.getElementById(modal).style.display = "block";
+        document.body.classList.add("scrollBody");
     }
 
     function closeModal(modal) {
@@ -782,31 +814,6 @@
                 reloadPatient();
             }
         });
-    }
-
-    function showPatient(val) {
-        var id = val.getElementsByTagName("td")[0].innerText;
-        $.ajax({
-            url: 'EIRManageUserProcessor.php',
-            method: 'POST',
-            data: {patient: id},
-            success: function (result) {
-                document.getElementById("patientModalContent").innerHTML = result;
-                openModal('viewPatientDetails');
-            }
-        })
-    }
-
-    function viewPatient(patientId){
-        $.ajax({
-            url:'EIRManageUserProcessor.php',
-            type:'POST',
-            data:{"patient": patientId},
-            success:function (result){
-                document.getElementById("patientModalContent").innerHTML = result;
-                openModal('viewPatientDetails');
-            }
-        })
     }
 </script>
 </body>

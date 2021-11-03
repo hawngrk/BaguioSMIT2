@@ -14,6 +14,7 @@ include_once("../includes/database.php") ?>
     <link rel="icon" href="../img/FaviSMIT+.png" type="image/jpg">
     <!-- Our Custom CSS -->
     <link href="../css/style.css" rel="stylesheet">
+    <link href="../css/HSOModule.css" rel="stylesheet">
 
     <!-- Bootstrap-->
     <script crossorigin="anonymous" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
@@ -59,7 +60,7 @@ include_once("../includes/database.php") ?>
             <hr>
 
             <li>
-                <a href="#"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+                <a href="HSOdash.php"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
             </li>
             <li>
                 <a href="ManageVaccineHome.php"><i class="fas fa-syringe"></i> Manage Vaccine</a>
@@ -85,13 +86,15 @@ include_once("../includes/database.php") ?>
         </ul>
     </nav>
 
-    <!-- Top Nav Bar  -->
+    <!-- Page Content  -->
     <div id="content">
-        <!-- Page Content  -->
+
+        <!-- Top Nav Bar  -->
         <div class="navbar navbar-expand-lg navbar-light bg-light shadow-sm p-3 mb-4 rounded-lg">
             <div class="container-fluid">
                 <div>
-                    <button type="button" class="buttonTop3 float-left" onclick="openModal('DeployModal')">
+                    <button type="button" class="buttonTop3 float-left" onclick="openModal('DeployModal');
+                            shiftTab(General, FirstDose, SecondDose, 'GeneralPage', 'FirstDosePage', 'SecondDosePage')">
                         <i class="fas fa-plus"></i>
                         Add Deployment
                     </button>
@@ -119,33 +122,36 @@ include_once("../includes/database.php") ?>
                 <div class="row">
                     <div class="col">
                         <div class="input-group">
-                            <input id='searchDeployment' type="search" class="form-control" placeholder="Search" name="searchDeployment"/>
-                            <button type="button" class="buttonTop5">
-                                <i class="fas fa-search"></i>
-                            </button>
+                            <input id='searchDeploymentInput' type="search" class="form-control" placeholder="Search"
+                                   name="searchDeployment" onkeyup="searchDeployment()"/>
                         </div>
                     </div>
 
                     <div class="col-sm-auto">
                         <div class="row">
                             <div class="sfDiv col-md-1.5 my-auto">
-                                <select class="form-select filterButton" id="filterReports" name="filterReports"
-                                        onchange="filterReport(this)">
+                                <select class="form-select filterButton" id="filterSites" name="filterSite"
+                                        onchange="filterVaccinationSites(this)">
                                     <option value="" selected disabled hidden>Filter By</option>
-                                    <option>All</option>
-                                    <option>Unverified</option>
-                                    <option>Verified</option>
-                                    <option>Invalidated</option>
+                                    <option value=""  disabled >Select Location</option>
+                                    <option value="All">All</option>
+                                    <?php
+                                    require_once("../require/getVaccinationSites.php");
+                                    foreach ($vaccinationSites as $vaccinationSite) {
+                                        $id = $vaccinationSite->getVaccinationSiteId();
+                                        $location = $vaccinationSite->getVaccinationSiteLocation();
+                                        echo "<option value=$location> $location </option>";
+                                    }
+                                    ?>
                                 </select>
                             </div>
                             <div class="sfDiv col-md-1.5 my-auto">
                                 <select class="form-select sortButton" id="sortReports" name="sortReports"
-                                        onchange="sortReport(this)">
-                                    <option value="" selected disabled hidden>Sort By</option>
-                                    <option>Name Asc</option>
-                                    <option>Name Desc</option>
-                                    <option>Date Asc</option>
-                                    <option>Date Desc</option>
+                                        onchange="sortDeploymentDate(this)">
+                                    <option value="" disabled >Select Date Sort </option>
+                                    <option value="None"> None </option>
+                                    <option value="Asc">Date ↑</option>
+                                    <option value="Desc">Date ↓</option>
                                 </select>
                             </div>
                         </div>
@@ -157,20 +163,18 @@ include_once("../includes/database.php") ?>
                         <table class="table table-hover tableDep" id="driveTable">
                             <thead>
                             <tr class='tableCenterCont'>
-                                <th scope="col">Drive Id</th>
-                                <th scope="col">Location</th>
-                                <th scope="col">Date</th>
-                                <th scope="col">Action</th>
+                                <th>Drive Id</th>
+                                <th>Location</th>
+                                <th>Date</th>
+                                <th>Action</th>
                             </tr>
                             </thead>
                             <?php
                             require_once '../require/getVaccinationDrive.php';
                             require_once '../require/getVaccinationSites.php';
 
-                            $count = 0;
                             foreach ($vaccination_drive as $vd) {
                                 if ($vd->getArchived() == 0) {
-                                    $count++;
                                     $driveId = $vd->getDriveId();
                                     $date = $vd->getVaccDate();
 
@@ -181,15 +185,15 @@ include_once("../includes/database.php") ?>
                                         }
                                     }
 
-                                    echo "<tr class='table-row' onclick='showDrive(this)'>
+                                    echo "<tr class='table-row tableCenterCont' onclick='showDrive(this)'>
                       
                         <td>$driveId</td>
                         <td>$vaccinationSite</td>
                         <td>$date</td>
                         <td>
-                            <div class='tableCenterCont'>
-                                <button class='buttonTransparent actionButt' onclick='event.stopPropagation(); archive(1, clickArchive, $driveId)'><i class='fa fa-archive'></i></button>
-                                <button class='buttonTransparent actionButt' onclick=''><i class='far fa-edit'></i></button>
+                            <div class='d-flex justify-content-center'>
+                                <button class='btn btn-sm bg-none' onclick='event.stopPropagation(); archive(1, clickArchive, $driveId)'><i class='fa fa-archive'></i></button>
+                                <button class='btn btn-sm bg-none' onclick=''><i class='far fa-edit'></i></button>
                            
                             </div>
                         </td>
@@ -201,7 +205,7 @@ include_once("../includes/database.php") ?>
                         </table>
                     </div>
                     <div class="col-sm-auto">
-                        <div class="depSummary">
+                        <div class="depSummary" id="deploymentSummaryContainer">
                             <div class="four listPatientRow">
                                 <div class="listPatient-box colored">
                                     <center><h3>Deployment Summary</h3></center>
@@ -216,49 +220,61 @@ include_once("../includes/database.php") ?>
                 </div>
             </div>
         </div>
+    </div>
 
-        <!--MODALS-->
-        <!--Deployment Form Modal-->
-        <form id='newDeploymentForm' method="post" enctype="multipart/form-data">
-            <div id="DeployModal" class="modal-window">
-                <div class="content-modal">
-                    <div class="modal-header">
-                        <h4 class="modal-title">Add Deployment</h4>
-                        <button type="button" class="close" data-dismiss="modal" onclick="closeModal('DeployModal')">
-                            <i class='fas fa-window-close'></i>
-                        </button>
-                    </div>
-                    <div class="modal-body ">
-                        <nav class="navbar navbar-expand-lg navbar-light navbarDep">
-                            <div class="collapse navbar-collapse" id="navbarNav">
-                                <ul class="nav nav-tabs">
-                                    <li id="GeneralList" role="presentation" class="doseOption1 nav-item active">
-                                        <a class="nav-link" role="tab" id="General" data-toggle="tab" href="#General"
-                                           onclick="shiftTab(General, FirstDose, SecondDose, 'GeneralPage', 'FirstDosePage', 'SecondDosePage')">General</a>
-                                    </li>
-                                    <li role="presentation" class="doseOption2 nav-item">
-                                        <a class="nav-link" id="FirstDose" role="tab" data-toggle="tab"
-                                           href="#FirstDose"
-                                           onclick="shiftTab(FirstDose, General, SecondDose, 'FirstDosePage', 'GeneralPage', 'SecondDosePage')">First
-                                            Dose</a>
-                                    </li>
-                                    <li role="presentation" class="doseOption3 nav-item">
-                                        <a class="nav-link" role="tab" id="SecondDose" data-toggle="tab"
-                                           href="#SecondDose"
-                                           onclick="shiftTab(SecondDose, FirstDose, General, 'SecondDosePage', 'GeneralPage', 'FirstDosePage')">Second
-                                            Dose</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </nav>
+    <!--MODALS-->
+    <!--Deployment Form Modal-->
+    <form id='newDeploymentForm' method="post" enctype="multipart/form-data">
+        <div id="DeployModal" class="modal-window">
+            <div class="content-modal modal-fit">
+                <div class="modal-header">
+                    <h4 class="modal-title">Add Deployment</h4>
+                    <button type="button" class="close" data-dismiss="modal" onclick="closeModal('DeployModal')">
+                        <i class='fas fa-window-close'></i>
+                    </button>
+                </div>
+                <div class="modal-body ">
+                    <nav class="navbar navbar-expand-lg navbar-light navbarDep">
+                        <div class="collapse navbar-collapse" id="navbarNav">
+                            <ul class="navbar-nav">
+                                <div class="row">
+                                    <div class="col-sm-auto">
+                                        <li id="GeneralList" role="presentation"
+                                            class="doseOption1 nav-item active">
+                                            <a class="nav-link" role="tab" id="General" data-toggle="tab"
+                                               href="#General"
+                                               onclick="shiftTab(General, FirstDose, SecondDose, 'GeneralPage', 'FirstDosePage', 'SecondDosePage')">General</a>
+                                        </li>
+                                    </div>
+                                    <div class="col-sm-auto">
+                                        <li role="presentation" class="doseOption2 nav-item">
+                                            <a class="nav-link" id="FirstDose" role="tab" data-toggle="tab"
+                                               href="#FirstDose"
+                                               onclick="shiftTab(FirstDose, General, SecondDose, 'FirstDosePage', 'GeneralPage', 'SecondDosePage')">First
+                                                Dose</a>
+                                        </li>
+                                    </div>
+                                    <div class="col-sm-auto">
+                                        <li role="presentation" class="doseOption3 nav-item">
+                                            <a class="nav-link" role="tab" id="SecondDose" data-toggle="tab"
+                                               href="#SecondDose"
+                                               onclick="shiftTab(SecondDose, FirstDose, General, 'SecondDosePage', 'GeneralPage', 'FirstDosePage')">Second
+                                                Dose</a>
+                                        </li>
+                                    </div>
+                                </div>
+                            </ul>
+                        </div>
+                    </nav>
 
                         <!-- Tab panes -->
                         <div class="tab-content">
-                            <div role="tabpanel" class="tab-pane active" id="GeneralPage">
-                                <div class="row">
+                            <div role="tabpanel" class="tab-pane active" id="GeneralPage" style="padding: 3%">
+                                <h3 style="padding-bottom: 1%">General</h3>
+                                <div class="row" style="padding-bottom: 1%">
                                     <div class="col">
                                         <div class="form-group">
-                                            <label for="site">Select Vaccination Site: </label>
+                                            <label for="site"><h6>Select Vaccination Site: </h6></label>
                                             <select name="site" id="site">
                                                 <?php
                                                 require '../require/getVaccinationSites.php';
@@ -274,44 +290,53 @@ include_once("../includes/database.php") ?>
                                     <div class="col">
 
                                         <div class="form-group ">
-                                            <label>Date: </label><br>
+                                            <label><h6>Date: </h6></label><br>
                                             <input type="date" id="date" name="date" class="dateForm">
                                         </div>
                                     </div>
-
                                 </div>
-                                <label for="district">Select Health District/s: </label>
-                                <div id="district" class="AddHealthD-option tableScroll3">
-                                    <div id="districList">
+                                <label for="district"><h6>Select Health District/s: </h6></label>
+                                <div id="district" style="padding: 2%" class="AddHealthD-option tableScroll3 border border-dark rounded">
+                                    <div id="districList" >
                                         <div class="row">
                                             <ul>
                                                 <?php
                                                 require_once "../require/getHealthDistrict.php";
 
 
-                                                foreach ($health_district as $hd) {
-                                                    $hdId = $hd->getHealthDistrictId();
-                                                    $hdName = $hd->getHealthDistrictName();
-                                                    echo " <li>
+                                            foreach ($health_district as $hd) {
+                                                $hdId = $hd->getHealthDistrictId();
+                                                $hdName = $hd->getHealthDistrictName();
+                                                echo " <li>
                                                             <input class = 'checkboxes' type='checkbox' onclick='selected(\"healthDistricts\", $hdId)'>
                                                             <label>$hdName</label><br>
                                                           </li> ";
-                                                }
-                                                ?>
-                                            </ul>
-                                        </div>
-
+                                            }
+                                            ?>
+                                        </ul>
                                     </div>
+
                                 </div>
                             </div>
-                            <div role="tabpanel" class="tab-pane" id="FirstDosePage">
+
+                            <div class='modal-footer'>
+                                <button id='sendStubs' type='button' class='btn btn-primary'
+                                        onclick='shiftTab(FirstDose, General, SecondDose, "FirstDosePage", "GeneralPage",  "SecondDosePage")'>
+                                    Next
+                                </button>
+                            </div>
+                        </div>
+
+
+                            <div role="tabpanel" class="tab-pane" id="FirstDosePage" style="padding: 3%">
+                                <h3>First Dose</h3>
                                 <div class="row">
                                     <div class="col">
                                         <div class="form-group">
-                                            <label for="VaccineBr">Select Vaccine Brand/s: </label>
-                                            <div class=" tableScroll3"
-                                                 style="columns:2; list-style-type: none; height: auto!important">
-                                                <ul>
+                                            <h6 style="float: left">Select Vaccine Brand/s: </h6>
+                                            <div class="border border-dark tableScroll3 rounded"
+                                                 style="columns:2; padding: 2%; list-style-type: none; height: auto!important">
+                                                <li>
                                                     <?php
                                                     require '../require/getVaccine.php';
                                                     foreach ($vaccines as $vac) {
@@ -323,18 +348,19 @@ include_once("../includes/database.php") ?>
                                                                            </li> ";
                                                     }
                                                     ?>
-                                                </ul>
+                                                </li>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+                                <hr>
                                 <div class="row">
                                     <div class="col">
                                         <div class="form-group">
-                                            <label for="VaccineBr">Select Priority Group/s: </label>
-                                            <div class=" tableScroll3"
-                                                 style="columns:2; list-style-type: none; height: auto!important">
-                                                <ul>
+                                            <h6 style="float: left">Select Priority Group/s: </h6>
+                                            <div class="border border-dark tableScroll3 rounded"
+                                                 style="columns:2; padding: 2%; list-style-type: none; height: auto!important">
+                                                <li>
                                                     <?php
                                                     require '../require/getPriorityGroup.php';
                                                     foreach ($priorityGroups as $group) {
@@ -346,22 +372,36 @@ include_once("../includes/database.php") ?>
                                                                            </li> ";
                                                     }
                                                     ?>
-                                                </ul>
+                                                </li>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <label class='label' for="stubs">First Dose Number of Stubs: </label>
-                                <input type="input" id="firstDoseStubs" name="firstDoseStubs" class="stubs" placeholder="ex. 100">
-
+                                <hr>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="input-group">
+                                            <label class='label' for="stubs">First Dose Number of Stubs: </label>
+                                            <input type="input" id="firstDoseStubs" name="firstDoseStubs" class="stubs" placeholder="ex. 100">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class='modal-footer'>
+                                    <button id='sendStubs' type='button' class='btn btn-secondary mr-auto' onclick='shiftTab(General, FirstDose,  SecondDose, "GeneralPage", "FirstDosePage", "SecondDosePage")'>
+                                        Back </button>
+                                    <button id='sendStubs' type='button' class='btn btn-primary' onclick='shiftTab(SecondDose, FirstDose, General, "SecondDosePage", "FirstDosePage", "GeneralPage")'>
+                                        Next </button>
+                                </div>
                             </div>
-                            <div role="tabpanel" class="tab-pane" id="SecondDosePage">
+
+                            <div role="tabpanel" class="tab-pane" id="SecondDosePage" style="padding: 3%">
+                                <h3>Second Dose</h3>
                                 <div class="AddHealthD-option">
                                             <table id="secondDoseTable">
                                                 <tr>
                                                     <td>
-                                                    <label for="VaccineBr">Select First Dose Vaccine Brand: </label>
-                                                    <select name="secondDoseVaccineBrand" id="secondDoseVaccineBrand">
+                                                        <label for="VaccineBr"><h6>Select First Dose Vaccine Brand:</h6></label>
+                                                    <select style="width: 72%" name="secondDoseVaccineBrand" id="secondDoseVaccineBrand">
                                                 <?php
                                                 require '../require/getVaccine.php';
                                                 foreach ($vaccines as $vac) {
@@ -372,37 +412,45 @@ include_once("../includes/database.php") ?>
                                                 ?>
                                                 </select>
                                                     </td>
-
-
                                             <td>
-                                                <label>Select First Dose Date: </label><br>
-                                            <input type="date" id="secondDoseDate" name="secondDoseDate" class="dateForm">
+                                                <label><h6>Select First Dose Date: </h6></label>
+                                                <div class="form-inline">
+                                                    <input type="date" id="secondDoseDate" name="secondDoseDate" class="dateForm form-control">
+                                                    <button class="buttonTransparent delButt"><i class="fas fa-trash"></i></button>
+                                                </div>
                                             </td>
-                                                    <td>
-                                                        <button class="buttonTransparent"><i class="fas fa-trash"></i></button>
-                                                    </td>
+
                                                 </tr>
                                     </table>
-                                    <button class="hyperlink add_another" style="background-color: transparent; border-color: transparent">+Add New Classification</button>
-                            </div>
-                                <label class='label' for="stubs">Second Dose Number of Stubs: </label>
-                                <input type="input" id="secondDoseStubs" name="secondDoseStubs" class="stubs" placeholder="ex. 100">
+                                    <button class="hyperlink add_another" style="font-size: 15px; background-color: transparent; border-color: transparent">+Add New Classification</button>
+                                    <br>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <label class='label' for="stubs"><h6>Second Dose Number of Stubs: </h6></label>
+                                            <input type="input" id="secondDoseStubs" name="secondDoseStubs" class="stubs" placeholder="ex. 100">
+                                        </div>
+                                    </div>
+                                </div>
+
+
 
                                 <div class="modal-footer">
+                                    <button id='sendStubs' type='button' class='btn btn-secondary mr-auto' onclick='shiftTab(FirstDose, General, SecondDose, "FirstDosePage", "GeneralPage",  "SecondDosePage")'>
+                                            Back </button>
                                     <button type="button" class="btn btn-danger" onclick="closeModal('DeployModal')"> Cancel
                                     </button>
                                     <button type="button" class="btn btn-success" onclick="add('Deployment', addDep)"> Add</button>
                                 </div>
                         </div>
                     </div>
-                    <hr>
                 </div>
 
             </div>
     </div>
     </form>
 
-
+    <!--Health District Modal-->
     <div id="HealthD" class="modal-window">
         <div class="content-modal">
             <div class="modal-header">
@@ -416,31 +464,28 @@ include_once("../includes/database.php") ?>
                 <div id="distContent" class="tableScroll2">
                     <table class="table table-hover">
                         <thead>
-                        <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Health District Id</th>
-                            <th scope="col">District Name</th>
-                            <th scope="col">Contact Number</th>
-                            <th scope="col">Action</th>
+                        <tr class="tableCenterCont tableHeader">
+                            <th>Health District Id</th>
+                            <th>District Name</th>
+                            <th>Contact Number</th>
+                            <th>Action</th>
                         </tr>
                         </thead>
 
                         <?php
                         require_once '../require/getHealthDistrict.php';
 
-                        $count = 0;
                         foreach ($health_district as $hd) {
-                            $count++;
                             $districtId = $hd->getHealthDistrictId();
                             $districtName = $hd->getHealthDistrictName();
                             $number = $hd->getContact();
 
-                            echo "<tr class='table-row' onclick='showDistrict(this)'>
+                            echo "<tr class='table-row tableCenterCont' onclick='showDistrict(this)'>
                                     <td>$districtId</td>
                                     <td>$districtName</td>
                                     <td>$number</td>
-                                    <td style= 'vertical-align: middle;'>
-                                        <div style='text-align: left;'>
+                                    <td>
+                                        <div >
                                             <button class='buttonTransparent' onclick='event.stopPropagation(); del($districtId ,deleteDistrict)'><i class='fas fa-trash-alt'></i></button>
                                         </div>
                                     </td>
@@ -451,7 +496,8 @@ include_once("../includes/database.php") ?>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger float-right" onclick="closeModal('HealthD')">Cancel</button>
+                <button type="button" class="btn btn-danger float-right" onclick="closeModal('HealthD')">Cancel
+                </button>
                 <button type="button" class="btn btn-primary float-right" onclick="openModal('HealthDModal')">
                     <i class="fas fa-plus"></i>
                     Add Health District
@@ -460,6 +506,7 @@ include_once("../includes/database.php") ?>
         </div>
     </div>
 
+    <!--Add Health district modal-->
     <div id="HealthDModal" class="modal-window">
         <div class="content-modal">
             <div class="modal-header">
@@ -528,7 +575,7 @@ include_once("../includes/database.php") ?>
         </div>
     </div>
 
-
+    <!--View Health district modal-->
     <div id="HealthDView" class="modal-window">
         <div class="content-modal">
             <div class="modal-header">
@@ -545,6 +592,7 @@ include_once("../includes/database.php") ?>
         </div>
     </div>
 
+    <!--Add Health district modal-->
     <div id="HealthDBarangay" class="modal-window">
         <div class="content-modal">
             <div class="modal-header">
@@ -560,9 +608,8 @@ include_once("../includes/database.php") ?>
 
         </div>
     </div>
-</div>
 
-<!--Add Vaccination Sites Modal-->
+    <!--Vaccination Sites Modal-->
     <div id="vaccSiteModal" class="modal-window">
         <div class="content-modal">
             <div class="modal-header">
@@ -575,25 +622,22 @@ include_once("../includes/database.php") ?>
                 <div id="siteContent" class="tableScroll2 border">
                     <table class="table table-row table-hover">
                         <thead class="tableHeader">
-                        <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Vaccination Site Id</th>
-                            <th scope="col">Location</th>
-                            <th scope="col">Action</th>
+                        <tr class="tableCenterCont">
+                            <th>Vaccination Site Id</th>
+                            <th>Location</th>
+                            <th>Action</th>
                         </tr>
                         </thead>
 
-                    <?php
-                    require_once '../require/getVaccinationSites.php';
+                        <?php
+                        require_once '../require/getVaccinationSites.php';
 
-                    $count = 0;
-                    foreach ($vaccinationSites as $vs) {
-                        $count++;
-                        $siteId = $vs->getVaccinationSiteId();
-                        $vaccinationSite = $vs->getVaccinationSiteLocation();
+                        foreach ($vaccinationSites as $vs) {
+                            $count++;
+                            $siteId = $vs->getVaccinationSiteId();
+                            $vaccinationSite = $vs->getVaccinationSiteLocation();
 
-                        echo "<tr class='table-row''>
-                                    <td>$count</td>
+                            echo "<tr class='table-row tableCenterCont'>
                                     <td>$siteId</td>
                                     <td>$vaccinationSite</td>
                                     <td style= 'vertical-align: middle;'>
@@ -680,7 +724,7 @@ include_once("../includes/database.php") ?>
                             }
                         }
 
-                        echo "<tr class='table-row'>
+                            echo "<tr class='table-row tableCenterCont'>
                         <td>$driveId</td>
                         <td>$vaccinationSite</td>
                         <td>$date</td>
@@ -711,67 +755,12 @@ include_once("../includes/database.php") ?>
     $(document).ready(function () {
         $('.add_another').click(function(event) {
             event.preventDefault();
-            $("#secondDoseTable").append('<tr><td> <label for="VaccineBr">Select First Dose Vaccine Brand: </label> <select name="vaccineBrand" id="VaccineBr"> <?php require '../require/getVaccine.php'; foreach ($vaccines as $vac) { $vacName = $vac->getVaccName(); $vacId = $vac->getVaccId(); echo "<option value = $vacId>$vacName</option>";}?> </select></td><td><label>Select First Dose Date: </label><br><input type="date" id="date" name="date" class="dateForm"></td> <td><button class="buttonTransparent"><i class="fas fa-trash"></i></button></td></tr>');
+            $("#secondDoseTable").append('<tr><td><br> <label for="VaccineBr"><h6>Select First Dose Vaccine Brand: </h6></label> <select name="vaccineBrand" id="VaccineBr"> <?php require '../require/getVaccine.php'; foreach ($vaccines as $vac) { $vacName = $vac->getVaccName(); $vacId = $vac->getVaccId(); echo "<option value = $vacId>$vacName</option>";}?> </select></td><td><label><h6>Select First Dose Date: </h6></label><div class="form-inline"> <input type="date" id="secondDoseDate" name="secondDoseDate" class="dateForm form-control"> <button class="buttonTransparent delButt"><i class="fas fa-trash"></i></button> </div>');
         });
 
     });
 
 
-
-    // let btnopt1 = document.querySelector('.doseOption1');
-    // let btnopt2 = document.querySelector('.doseOption2');
-    // let btnopt3 = document.querySelector('.doseOption3')
-    // btnopt1.style.backgroundColor = "#1D7195";
-    // btnopt1.style.color = "#FFFFFFFF";
-    // btnopt1.style.borderRadius = "12px";
-    // btnopt2.style.backgroundColor = "rgba(49,51,53,0)"
-    // btnopt3.style.backgroundColor = "rgba(49,51,53,0)"
-    // document.getElementById("SecondDose").style.color = "#FFFFFFFF";
-    // document.getElementById("SecondDose").style.color = "#000000";
-    // document.getElementById("FirstDose").style.color = "#000000";
-    //
-    // btnopt1.onclick = function () {
-    //     btnopt1.style.backgroundColor = "#1D7195";
-    //     btnopt1.style.fontcolor = "#FFFFFFFF";
-    //     btnopt1.style.borderRadius = "12px";
-    //     btnopt2.style.backgroundColor = "rgba(49,51,53,0)"
-    //     btnopt3.style.backgroundColor = "rgba(49,51,53,0)"
-    //     document.getElementById("GeneralPage").style.display="block";
-    //     document.getElementById("FirstDosePage").style.display="none";
-    //     document.getElementById("SecondDosePage").style.display="none";
-    //     document.getElementById("General").style.color = "#FFFFFFFF";
-    //     document.getElementById("FirstDose").style.color = "#000000";
-    //     document.getElementById("SecondDose").style.color = "#000000";
-    // }
-    //
-    // btnopt2.onclick = function () {
-    //     btnopt2.style.backgroundColor = "#1D7195";
-    //     btnopt2.style.fontcolor = "#FFFFFFFF";
-    //     btnopt2.style.borderRadius = "12px";
-    //     btnopt1.style.backgroundColor = "rgba(49,51,53,0)"
-    //     btnopt3.style.backgroundColor = "rgba(49,51,53,0)"
-    //     document.getElementById("GeneralPage").style.display="none";
-    //     document.getElementById("FirstDosePage").style.display="block";
-    //     document.getElementById("SecondDosePage").style.display="none";
-    //     document.getElementById("General").style.color = "#000000";
-    //     document.getElementById("FirstDose").style.color = "#FFFFFFFF";
-    //     document.getElementById("SecondDose").style.color = "#000000";
-    // }
-    //
-    // btnopt3.onclick = function () {
-    //     btnopt3.style.backgroundColor = "#1D7195";
-    //     btnopt3.style.fontcolor = "#FFFFFFFF";
-    //     btnopt3.style.borderRadius = "12px";
-    //     btnopt1.style.backgroundColor = "rgba(49,51,53,0)"
-    //     btnopt2.style.backgroundColor = "rgba(49,51,53,0)"
-    //     document.getElementById("GeneralPage").style.display="none";
-    //     document.getElementById("FirstDosePage").style.display="none";
-    //     document.getElementById("SecondDosePage").style.display="block";
-    //     document.getElementById("General").style.color = "#000000";
-    //     document.getElementById("FirstDose").style.color = "#000000";
-    //     document.getElementById("SecondDose").style.color = "#FFFFFFFF";
-    // }
-    //
     window.onclick = function (event) {
         if (event.target == document.getElementById("DeployModal") || event.target == document.getElementById("HealthDModal") || event.target == document.getElementById("vaccSiteModal") || event.target == document.getElementById("HealthD")) {
             document.getElementById("DeployModal").style.display = "none";
@@ -784,10 +773,12 @@ include_once("../includes/database.php") ?>
 
     function shiftTab(active, idle1, idle2, pageBlock, pageNone1, pageNone2) {
         active.style.backgroundColor = "#1D7195";
-        active.style.fontcolor = "#FFFFFFFF";
+        active.style.color = "#FFFFFFFF";
         active.style.borderRadius = "12px";
         idle1.style.backgroundColor = "rgba(49,51,53,0)";
         idle2.style.backgroundColor = "rgba(49,51,53,0)";
+        idle1.style.color = "#000000";
+        idle2.style.color = "#000000";
         document.getElementById(pageBlock).style.display = "block";
         document.getElementById(pageNone1).style.display = "none";
         document.getElementById(pageNone2).style.display = "none";
@@ -796,17 +787,64 @@ include_once("../includes/database.php") ?>
         document.getElementById(idle2).style.color = "#000000";
     }
 
-    function searchDeployment(){
-        var textSearch = document.getElementById("searchDeployment").value;
+    function filterDeployment(filter){
+        //filterDeployment
+    }
+
+    //clear search text field
+    $('#searchDeploymentInput').on('input', function(e) {
+        if('' == this.value) {
+            $.ajax({
+                url: '../includes/searchProcessor.php',
+                type: 'POST',
+                data: {"searchDeployment": ""},
+                success: function (result) {
+                    document.getElementById("driveTable").innerHTML = result;
+                    document.getElementById("listPatientContent").innerText = '';
+                }
+            });
+        }
+    });
+
+    //search deployment
+    function searchDeployment() {
+        var textSearch = document.getElementById("searchDeploymentInput").value;
         $.ajax({
-            url: 'ManageDeploymentProcessor.php',
+            url: '../includes/searchProcessor.php',
             type: 'POST',
-            data: {"search": textSearch},
+            data: {"searchDeployment": textSearch},
             success: function (result) {
                 document.getElementById("driveTable").innerHTML = result;
             }
         });
     }
+
+    //filter vaccination sites
+    function filterVaccinationSites(filter){
+        var selectedFilter = filter.value;
+        $.ajax({
+            url: '../includes/filterProcessor.php',
+            type: 'POST',
+            data: {"filterDeployment": selectedFilter},
+            success: function (result) {
+                document.getElementById("driveTable").innerHTML = result;
+            }
+        })
+    }
+
+    //sort date deployment
+    function sortDeploymentDate(sort){
+        var selectedSort = sort.value;
+        $.ajax({
+            url: '../includes/sortingProcessor.php',
+            type: 'POST',
+            data: {"sortDeployment": selectedSort},
+            success: function (result) {
+                document.getElementById("driveTable").innerHTML = result;
+            }
+        })
+    }
+
 
     function clickArchive(drive, option) {
         console.log(drive)
@@ -826,10 +864,6 @@ include_once("../includes/database.php") ?>
         })
     }
 
-    function openModal(modal) {
-        console.log(modal)
-        document.getElementById(modal).style.display = "block";
-    }
 
     function openList(val) {
         $.ajax({
@@ -845,6 +879,13 @@ include_once("../includes/database.php") ?>
 
     function closeModal(modal) {
         document.getElementById(modal).style.display = "none";
+        document.body.classList.remove("scrollBody");
+    }
+
+    function openModal(modal) {
+        console.log(modal)
+        document.getElementById(modal).style.display = "block";
+        document.body.classList.add("scrollBody");
     }
 
     function showDrive(val) {
@@ -977,17 +1018,6 @@ include_once("../includes/database.php") ?>
             }
         })
     }
-
-    // function Toggle() {
-    //     var butt = document.getElementById('sidebarCollapse')
-    //     if (!clicked) {
-    //         clicked = true;
-    //         butt.innerHTML = "Menu <i class = 'fas fa-angle-double-right'><i>";
-    //     } else {
-    //         clicked = false;
-    //         butt.innerHTML = "<i class='fas fa-angle-left'></i> Menu";
-    //     }
-    // }
 
     function deleteDistrict(delDistId) {
         console.log('passed');
