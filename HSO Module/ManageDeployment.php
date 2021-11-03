@@ -191,7 +191,7 @@ include_once("../includes/database.php") ?>
                         </td>
 
                       </tr>";
-                                }
+
                             }
                             ?>
                         </table>
