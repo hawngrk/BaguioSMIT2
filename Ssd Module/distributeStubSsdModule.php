@@ -93,9 +93,19 @@ include "../includes/database.php";
                             <option value='' disabled selected hidden> Select Deployment </option>
                             <?php
                             require_once("../require/getVaccinationDrive.php");
+                            require_once("../require/getVaccinationSites.php");
                             foreach ($vaccination_drive  as $vaccinationDrive) {
                                 $id = $vaccinationDrive->getDriveId();
-                                echo "<option value=$id> $id </option>";
+                                $location = $vaccinationDrive->getVaccDriveVaccSiteId();
+                                $date = date("d-m-Y", strtotime($vaccinationDrive->getVaccDate()));
+                                foreach ($vaccinationSites as $site) {
+                                    if ($site->getVaccinationSiteId() == $location) {
+                                        $locName = $site->getVaccinationSiteLocation();
+
+
+                                        echo "<option value=$id> $date - $locName </option>";
+                                    }
+                                }
                             }
                             ?>
                         </select>
@@ -190,7 +200,9 @@ include "../includes/database.php";
                     &times;
                 </button>
             </div>
+            <table>
             <div class="modal-body" id="notificationContent">
+
                 <?php
                 $query = "SELECT vaccination_drive.drive_id, vaccination_sites.location, vaccination_drive.vaccination_date, vaccination_drive.first_dose_stubs, vaccination_drive.second_dose_stubs, vaccination_drive.notif_opened FROM vaccination_sites JOIN vaccination_drive ON vaccination_sites.vaccination_site_id = vaccination_drive.vaccination_site_id ORDER BY vaccination_drive.drive_id desc;";
                 $vaccination_drive = [];
@@ -202,34 +214,37 @@ include "../includes/database.php";
 
                 while ($stmt->fetch()) {
                     if ($opened == 1){
-                        echo "
+                        echo "<tr>
                                                    
-                                                      
-                                                        <div id='$driveId' style='color: #9C9C9C'>
-                                                            <p>Vaccination Location: $locName<br>
+                                                       
+                                                            <td>
+                                                               Location: $locName
                                                                Date: $date <br>
                                                                Number of First Stubs: $firstStubs <br>
                                                                Number of Second Stubs: $secondStubs <br>
-                                                            </p>
-                                                        </div>
-                                                      <hr style='width: 100%; background: azure'>
-                                                 
+                                                               <br>
+                                                               <hr>
+                                                            </td>       
+                                                 </tr>
                                                       ";
                     } else{
 
-                        echo "
+                        echo "<tr onclick='updateDeploymentDetails($driveId); closeModal(\"notificationModal\") '>
                                                    <script>document.getElementById('marker').setAttribute('style', 'color:#c10d0d!important');</script>
                                                       
-                                                        <div id='$driveId' style='background: lightgray'>
-                                                            <p>Vaccination Location: $locName<br>
-                                                               Date: $date <br>
+                                                      
+                                                           <td  style='background: lightgray'>Vaccination Location: $locName<br>
+                                                               Date: $date<br>
                                                                Number of First Stubs: $firstStubs <br>
-                                                               Number of Second Stubs: $secondStubs <br>
-                                                            </p>
-                                                        </div>
-                                                      <hr style='width: 100%; background: azure'>
+                                                               Number of Second Stubs: $secondStubs<br>
+                                                           <hr>
+                                                       
+                                                  </td>
+                                                      
+                                                 </tr>
                                                  
                                                       ";
+
 
                     }
 
@@ -237,6 +252,7 @@ include "../includes/database.php";
                 ?>
 
             </div>
+            </table>
         </div>
     </div>
     <script>
@@ -287,21 +303,31 @@ include "../includes/database.php";
         }
 
         function sendStubs(drive){
-            var result = {};
-            var trs = document.getElementById('healthDStubs').getElementsByTagName("tr");
+            var result1 = {};
+            var trs = document.getElementById('firstDosePage').getElementsByTagName("tr");
             for(var idx = 1; idx < trs.length; idx++) {
                 var tds = trs[idx].getElementsByTagName("td");
-                result[trs[idx].id] = [];
+                result1[trs[idx].id] = [];
                 for (var index = 0; index < tds.length; index++) {
                     var val = tds[index].firstChild.value;
-                    result[trs[idx].id].push(val);
+                    result1[trs[idx].id].push(val);
                 }
             }
+            var result2 = [];
+            var trs2 = document.getElementById('secondDosePage').getElementsByTagName("tr");
+            for(var i = 1; i < trs2.length; i++) {
+                var tds2 = trs2[i].getElementsByTagName("td");
+                for (var ind = 0; ind < tds2.length; ind++) {
+                    var val2 = tds2[ind].firstChild.value;
+                    result2.push(val2);
+                }
+            }
+            console.log(result2);
             $.ajax({
                 url: 'selectDeployment.php',
                 type: 'POST',
-                data: {"sendStubs": result, "stubsDrive": drive },
-                success: function (result) {
+                data: {"sendStubs": result1, "stubsDrive": drive, "second_dose": result2 },
+                success: function () {
                     closeModal('barangayModal');
                 }
             });
@@ -309,17 +335,11 @@ include "../includes/database.php";
         }
 
         var firstCounter = 0;
-        var secondCounter = 0;
-        function countStubs(num, oldnum, item, counterId, type){
-            if(type == 'first'){
-                var counter = firstCounter;
-            }else {
-                var counter = secondCounter
-            }
+        function countStubs(num, oldnum, item){
 
             if (num.includes("%")) {
                 num = num.replace(/%/g, '');
-                num = (counter / 100) * num;
+                num = (firstCounter/ 100) * num;
             }
 
             if (num == undefined || num == "") {
@@ -332,20 +352,51 @@ include "../includes/database.php";
             }
 
 
-            if (num > counter){
+            if (num > firstCounter){
                 alert('Number Exceeds Number Of Left Stubs!');
-                counter += parseInt(oldnum);
+                firstCounter += parseInt(oldnum);
                 item.value = 0;
             } else {
-                counter = counter + parseInt(oldnum);
-                counter = counter - parseInt(num);
+                firstCounter = firstCounter + parseInt(oldnum);
+                firstCounter = firstCounter - parseInt(num);
             }
 
-            document.getElementById(counterId).innerHTML = "";
-            document.getElementById(counterId).innerHTML = "<center><p><i class='fas fa-ticket-alt'></i> number of Stubs Left: " + counter + "</p> </center>";
+            document.getElementById('firstCounter').innerHTML = "";
+            document.getElementById('firstCounter').innerHTML = "<center><p><i class='fas fa-ticket-alt'></i> Number of Stubs Left: " + firstCounter + "</p> </center>";
         }
 
-        function checkZero(item){
+        var secondCounter = 0;
+        function countStubs2(num, oldnum, item){
+
+            if (num.includes("%")) {
+                num = num.replace(/%/g, '');
+                num = (secondCounter/ 100) * num;
+            }
+
+            if (num == undefined || num == "") {
+                num = 0;
+            }
+
+            if(oldnum == undefined || oldnum == ""){
+
+                oldnum = 0;
+            }
+
+
+            if (num >  secondCounter){
+                alert('Number Exceeds Number Of Left Stubs!');
+                secondCounter += parseInt(oldnum);
+                item.value = 0;
+            } else {
+                secondCounter =  secondCounter + parseInt(oldnum);
+                secondCounter =  secondCounter - parseInt(num);
+            }
+
+            document.getElementById('secondCounter').innerHTML = "";
+            document.getElementById('secondCounter').innerHTML = "<center><p><i class='fas fa-ticket-alt'></i> Number of Stubs Left: " +  secondCounter + "</p> </center>";
+        }
+
+        function checkZero(item, type){
             if(type == 'first'){
                 var counter = firstCounter;
             }else {
@@ -444,26 +495,6 @@ include "../includes/database.php";
             idle1.style.color = "#000000";
             document.getElementById(pageBlock).style.display = "block";
             document.getElementById(pageNone1).style.display = "none";
-        }
-    </script>
-
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $('#sidebarCollapse').on('click', function () {
-                $('#sidebar').toggleClass('active');
-            });
-        });
-        var clicked = false;
-
-        function Toggle() {
-            var butt = document.getElementById('sidebarCollapse')
-            if (!clicked) {
-                clicked = true;
-                butt.innerHTML = "Menu <i class = 'fas fa-angle-double-right'><i>";
-            } else {
-                clicked = false;
-                butt.innerHTML = "<i class='fas fa-angle-left'></i> Menu";
-            }
         }
     </script>
 

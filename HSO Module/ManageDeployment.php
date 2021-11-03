@@ -35,7 +35,6 @@ include_once("../includes/database.php") ?>
             crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
     <script defer src="../javascript/showDateAndTime.js"></script>
 
 </head>
@@ -155,7 +154,7 @@ include_once("../includes/database.php") ?>
 
                     <div class="w-100 d-none d-md-block"></div>
 
-                    <div class="tableDep tableScroll1 col">
+                    <div id="mainDrive" class="tableDep tableScroll1 col">
                         <table class="table table-hover tableDep" id="driveTable">
                             <thead>
                             <tr class='tableCenterCont'>
@@ -166,25 +165,15 @@ include_once("../includes/database.php") ?>
                             </tr>
                             </thead>
                             <?php
-                            require_once '../require/getVaccinationDrive.php';
-                            require_once '../require/getVaccinationSites.php';
-
-                            $count = 0;
-                            foreach ($vaccination_drive as $vd) {
-                                if ($vd->getArchived() == 0) {
-                                    $count++;
-                                    $driveId = $vd->getDriveId();
-                                    $date = $vd->getVaccDate();
-
-
-                                    foreach ($vaccinationSites as $vs) {
-                                        if ($vs->getVaccinationSiteId() == $vd->getVaccDriveVaccSiteId()) {
-                                            $vaccinationSite = $vs->getVaccinationSiteLocation();
-                                        }
-                                    }
+                            $query = "SELECT vaccination_drive.drive_id, vaccination_drive.vaccination_date, vaccination_sites.location FROM vaccination_drive JOIN vaccination_sites ON vaccination_drive.vaccination_site_id = vaccination_sites.vaccination_site_id WHERE vaccination_drive.Archived = 0";
+                $dbase = $database->stmt_init();
+                $dbase->prepare($query);
+                $dbase->execute();
+                $dbase->bind_result($driveId, $date, $vaccinationSite);
+                while($dbase->fetch()){
 
                                     echo "<tr class='table-row' onclick='showDrive(this)'>
-                      
+
                         <td>$driveId</td>
                         <td>$vaccinationSite</td>
                         <td>$date</td>
@@ -192,12 +181,11 @@ include_once("../includes/database.php") ?>
                             <div class='tableCenterCont'>
                                 <button class='buttonTransparent actionButt' onclick='event.stopPropagation(); archive(1, clickArchive, $driveId)'><i class='fa fa-archive'></i></button>
                                 <button class='buttonTransparent actionButt' onclick=''><i class='far fa-edit'></i></button>
-                           
+
                             </div>
                         </td>
-             
+
                       </tr>";
-                                }
                             }
                             ?>
                         </table>
@@ -245,16 +233,14 @@ include_once("../includes/database.php") ?>
                                             <li role="presentation" class="doseOption2 nav-item">
                                                 <a class="nav-link" id="FirstDose" role="tab" data-toggle="tab"
                                                    href="#FirstDose"
-                                                   onclick="shiftTab(FirstDose, General, SecondDose, 'FirstDosePage', 'GeneralPage', 'SecondDosePage')">First
-                                                    Dose</a>
+                                                   onclick="shiftTab(FirstDose, General, SecondDose, 'FirstDosePage', 'GeneralPage', 'SecondDosePage')">First Dose</a>
                                             </li>
                                         </div>
                                         <div class="col-sm-auto">
                                             <li role="presentation" class="doseOption3 nav-item">
                                                 <a class="nav-link" role="tab" id="SecondDose" data-toggle="tab"
                                                    href="#SecondDose"
-                                                   onclick="shiftTab(SecondDose, FirstDose, General, 'SecondDosePage', 'GeneralPage', 'FirstDosePage')">Second
-                                                    Dose</a>
+                                                   onclick="shiftTab(SecondDose, FirstDose, General, 'SecondDosePage', 'GeneralPage', 'FirstDosePage')">Second Dose</a>
                                             </li>
                                         </div>
                                     </div>
@@ -298,7 +284,6 @@ include_once("../includes/database.php") ?>
                                                 <?php
                                                 require_once "../require/getHealthDistrict.php";
 
-
                                                 foreach ($health_district as $hd) {
                                                     $hdId = $hd->getHealthDistrictId();
                                                     $hdName = $hd->getHealthDistrictName();
@@ -339,7 +324,7 @@ include_once("../includes/database.php") ?>
                                                                             <label>$vacName</label><br>
                                                                            </li> ";
                                                     }
-                                                    ?>
+//                                                    ?>
                                                 </li>
                                             </div>
                                         </div>
@@ -402,8 +387,6 @@ include_once("../includes/database.php") ?>
                                                 ?>
                                                 </select>
                                                     </td>
-
-
                                             <td>
                                                 <label>Select First Dose Date: </label><br>
                                                 <div class="form-inline">
@@ -441,7 +424,6 @@ include_once("../includes/database.php") ?>
     </div>
     </form>
 
-
     <div id="HealthD" class="modal-window">
         <div class="content-modal">
             <div class="modal-header">
@@ -452,11 +434,13 @@ include_once("../includes/database.php") ?>
             </div>
 
             <div id="healthDMain" class="modal-body">
+                <button type="button" class="btn btn-warning buttonTop3" onclick="openModal('archivedDistricts')">
+                    <i class="fas fa-inbox fa-lg"></i> Archive
+                </button>
                 <div id="distContent" class="tableScroll2">
                     <table class="table table-hover">
                         <thead>
                         <tr>
-                            <th scope="col">#</th>
                             <th scope="col">Health District Id</th>
                             <th scope="col">District Name</th>
                             <th scope="col">Contact Number</th>
@@ -467,23 +451,25 @@ include_once("../includes/database.php") ?>
                         <?php
                         require_once '../require/getHealthDistrict.php';
 
-                        $count = 0;
                         foreach ($health_district as $hd) {
-                            $count++;
                             $districtId = $hd->getHealthDistrictId();
                             $districtName = $hd->getHealthDistrictName();
                             $number = $hd->getContact();
+                            $archived = $hd->getArchived();
 
-                            echo "<tr class='table-row' onclick='showDistrict(this)'>
+                            if($archived == 0) {
+
+                                echo "<tr class='table-row' onclick='showDistrict(this)'>
                                     <td>$districtId</td>
                                     <td>$districtName</td>
                                     <td>$number</td>
                                     <td style= 'vertical-align: middle;'>
                                         <div style='text-align: left;'>
-                                            <button class='buttonTransparent' onclick='event.stopPropagation(); del($districtId ,deleteDistrict)'><i class='fas fa-trash-alt'></i></button>
+                                           <button class='buttonTransparent actionButt' onclick='event.stopPropagation(); archive(1,archiveDistrict, $districtId)'><i class='fa fa-archive'></i></button>
                                         </div>
                                     </td>
                                   </tr>";
+                            }
                         }
                         ?>
                     </table>
@@ -498,6 +484,54 @@ include_once("../includes/database.php") ?>
             </div>
         </div>
     </div>
+
+        <div id="archivedDistricts" class="modal-window">
+            <div class="content-modal-table">
+                <div class="modal-header">
+                    <h4 class="modal-title">Archived Health Districts</h4>
+                    <button type="button" class="close" data-dismiss="modal" onclick="closeModal('archivedDistricts')">
+                        <i class='fas fa-window-close'></i>
+                    </button>
+                </div>
+                <div id='archivedDistrictContent' class="modal-body">
+                    <table class="table table-row table-hover tableModal">
+                        <thead>
+                        <tr>
+                            <th scope="col">Health District Id</th>
+                            <th scope="col">District Name</th>
+                            <th scope="col">Contact Number</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                        </thead>
+
+                        <?php
+                        require_once '../require/getHealthDistrict.php';
+
+                        foreach ($health_district as $hd) {
+                            $districtId = $hd->getHealthDistrictId();
+                            $districtName = $hd->getHealthDistrictName();
+                            $number = $hd->getContact();
+                            $archived = $hd->getArchived();
+
+                            if($archived == 1) {
+
+                                echo "<tr class='table-row' onclick='showDistrict(this)'>
+                                    <td>$districtId</td>
+                                    <td>$districtName</td>
+                                    <td>$number</td>
+                                    <td style= 'vertical-align: middle;'>
+                                        <div style='text-align: left;'>
+                                            <button class='btn btn-warning' onclick='event.stopPropagation(); archive(0, archiveDistrict, $districtId )'>unarchive <i class='fas fa-box-open'></i></button>
+                                         </div>
+                                    </td>
+                                  </tr>";
+                            }
+                        }
+                        ?>
+                    </table>
+                </div>
+            </div>
+        </div>
 
     <div id="HealthDModal" class="modal-window">
         <div class="content-modal">
@@ -692,32 +726,20 @@ include_once("../includes/database.php") ?>
             <table class="table table-row table-hover tableModal">
                 <thead>
                 <tr>
-                    <th scope="col">#</th>
                     <th scope="col">Drive Id</th>
                     <th scope="col">Location</th>
                     <th scope="col">Date</th>
-                    <th scope="col">No. of Stubs</th>
                     <th scope="col">Action</th>
                 </tr>
                 </thead>
 
                 <?php
-                require_once '../require/getVaccinationDrive.php';
-                require_once '../require/getVaccinationSites.php';
-
-                $count = 0;
-                foreach ($vaccination_drive as $vd) {
-                    if ($vd->getArchived() == 1) {
-                        $count++;
-                        $driveId = $vd->getDriveId();
-                        $date = $vd->getVaccDate();
-
-
-                        foreach ($vaccinationSites as $vs) {
-                            if ($vs->getVaccinationSiteId() == $vd->getVaccDriveVaccSiteId()) {
-                                $vaccinationSite = $vs->getVaccinationSiteLocation();
-                            }
-                        }
+               $query = "SELECT vaccination_drive.drive_id, vaccination_drive.vaccination_date, vaccination_sites.location FROM vaccination_drive JOIN vaccination_sites ON vaccination_drive.vaccination_site_id = vaccination_sites.vaccination_site_id WHERE vaccination_drive.Archived = 1";
+                $dbase = $database->stmt_init();
+                $dbase->prepare($query);
+                $dbase->execute();
+                $dbase->bind_result($driveId, $date, $vaccinationSite);
+                while($dbase->fetch()){
 
                         echo "<tr class='table-row'>
                         <td>$driveId</td>
@@ -728,9 +750,8 @@ include_once("../includes/database.php") ?>
                                 <button class='btn btn-warning' onclick='archive(0, clickArchive, $driveId )'>unarchive <i class='fas fa-box-open'></i></button>
                             </div>
                         </td>
-             
+
                       </tr>";
-                    }
                 }
                 ?>
             </table>
@@ -755,64 +776,6 @@ include_once("../includes/database.php") ?>
 
     });
 
-
-
-
-
-    // let btnopt1 = document.querySelector('.doseOption1');
-    // let btnopt2 = document.querySelector('.doseOption2');
-    // let btnopt3 = document.querySelector('.doseOption3')
-    // btnopt1.style.backgroundColor = "#1D7195";
-    // btnopt1.style.color = "#FFFFFFFF";
-    // btnopt1.style.borderRadius = "12px";
-    // btnopt2.style.backgroundColor = "rgba(49,51,53,0)"
-    // btnopt3.style.backgroundColor = "rgba(49,51,53,0)"
-    // document.getElementById("SecondDose").style.color = "#FFFFFFFF";
-    // document.getElementById("SecondDose").style.color = "#000000";
-    // document.getElementById("FirstDose").style.color = "#000000";
-    //
-    // btnopt1.onclick = function () {
-    //     btnopt1.style.backgroundColor = "#1D7195";
-    //     btnopt1.style.fontcolor = "#FFFFFFFF";
-    //     btnopt1.style.borderRadius = "12px";
-    //     btnopt2.style.backgroundColor = "rgba(49,51,53,0)"
-    //     btnopt3.style.backgroundColor = "rgba(49,51,53,0)"
-    //     document.getElementById("GeneralPage").style.display="block";
-    //     document.getElementById("FirstDosePage").style.display="none";
-    //     document.getElementById("SecondDosePage").style.display="none";
-    //     document.getElementById("General").style.color = "#FFFFFFFF";
-    //     document.getElementById("FirstDose").style.color = "#000000";
-    //     document.getElementById("SecondDose").style.color = "#000000";
-    // }
-    //
-    // btnopt2.onclick = function () {
-    //     btnopt2.style.backgroundColor = "#1D7195";
-    //     btnopt2.style.fontcolor = "#FFFFFFFF";
-    //     btnopt2.style.borderRadius = "12px";
-    //     btnopt1.style.backgroundColor = "rgba(49,51,53,0)"
-    //     btnopt3.style.backgroundColor = "rgba(49,51,53,0)"
-    //     document.getElementById("GeneralPage").style.display="none";
-    //     document.getElementById("FirstDosePage").style.display="block";
-    //     document.getElementById("SecondDosePage").style.display="none";
-    //     document.getElementById("General").style.color = "#000000";
-    //     document.getElementById("FirstDose").style.color = "#FFFFFFFF";
-    //     document.getElementById("SecondDose").style.color = "#000000";
-    // }
-    //
-    // btnopt3.onclick = function () {
-    //     btnopt3.style.backgroundColor = "#1D7195";
-    //     btnopt3.style.fontcolor = "#FFFFFFFF";
-    //     btnopt3.style.borderRadius = "12px";
-    //     btnopt1.style.backgroundColor = "rgba(49,51,53,0)"
-    //     btnopt2.style.backgroundColor = "rgba(49,51,53,0)"
-    //     document.getElementById("GeneralPage").style.display="none";
-    //     document.getElementById("FirstDosePage").style.display="none";
-    //     document.getElementById("SecondDosePage").style.display="block";
-    //     document.getElementById("General").style.color = "#000000";
-    //     document.getElementById("FirstDose").style.color = "#000000";
-    //     document.getElementById("SecondDose").style.color = "#FFFFFFFF";
-    // }
-    //
     window.onclick = function (event) {
         if (event.target == document.getElementById("DeployModal") || event.target == document.getElementById("HealthDModal") || event.target == document.getElementById("vaccSiteModal") || event.target == document.getElementById("HealthD")) {
             document.getElementById("DeployModal").style.display = "none";
@@ -852,23 +815,68 @@ include_once("../includes/database.php") ?>
     }
 
     function clickArchive(drive, option) {
-        console.log(drive)
-        console.log(option)
         $.ajax({
             url: 'ManageDeploymentProcessor.php',
             method: 'POST',
             data: {archive: drive, option: option},
             success: function (result) {
                 if (option == "Archive") {
-                    window.location.href = "ManageDeployment.php";
+                    document.getElementById('mainDrive').innerHTML = result;
+                    $.ajax({
+                        url: 'ManageDeploymentProcessor.php',
+                        method: 'POST',
+                        data: {showUpdatedArchive: ""},
+                        success: function (result) {
+                            document.getElementById('archivedContent').innerHTML = result;
+                        }
+                    })
 
                 } else if (option == "UnArchive") {
                     document.getElementById("archivedContent").innerHTML = result;
+                    $.ajax({
+                        url: 'ManageDeploymentProcessor.php',
+                        method: 'POST',
+                        data: {showUpdatedDrive: ""},
+                        success: function (result) {
+                            document.getElementById('mainDrive').innerHTML = result;
+                        }
+                    })
                 }
             }
         })
     }
 
+    function archiveDistrict(id, option) {
+        $.ajax({
+            url: 'ManageDeploymentProcessor.php',
+            method: 'POST',
+            data: {distArchive: id, option: option},
+            success: function (result) {
+                if (option == "Archive") {
+                    document.getElementById('distContent').innerHTML = result;
+                    $.ajax({
+                        url: 'ManageDeploymentProcessor.php',
+                        method: 'POST',
+                        data: {showUpdatedDistArchive: ""},
+                        success: function (result) {
+                            document.getElementById('archivedDistrictContent').innerHTML = result;
+                        }
+                    })
+
+                } else if (option == "UnArchive") {
+                    document.getElementById("archivedDistrictContent").innerHTML = result;
+                    $.ajax({
+                        url: 'ManageDeploymentProcessor.php',
+                        method: 'POST',
+                        data: {showUpdatedDist: ""},
+                        success: function (result) {
+                            document.getElementById('distContent').innerHTML = result;
+                        }
+                    })
+                }
+            }
+        })
+    }
 
 
     function openList(val) {
@@ -889,14 +897,12 @@ include_once("../includes/database.php") ?>
     }
 
     function openModal(modal) {
-        console.log(modal)
         document.getElementById(modal).style.display = "block";
         document.body.classList.add("scrollBody");
     }
 
     function showDrive(val) {
         var id = val.getElementsByTagName("td")[0].innerText;
-        console.log(id);
         $.ajax({
             url: 'ManageDeploymentProcessor.php',
             method: 'POST',
@@ -1012,7 +1018,6 @@ include_once("../includes/database.php") ?>
 
     function addSite() {
         var siteName = document.getElementById("newVaccinationSite").value;
-        console.log(siteName);
         $.ajax({
             url: 'ManageDeploymentProcessor.php',
             method: 'POST',
@@ -1024,17 +1029,6 @@ include_once("../includes/database.php") ?>
             }
         })
     }
-
-    // function Toggle() {
-    //     var butt = document.getElementById('sidebarCollapse')
-    //     if (!clicked) {
-    //         clicked = true;
-    //         butt.innerHTML = "Menu <i class = 'fas fa-angle-double-right'><i>";
-    //     } else {
-    //         clicked = false;
-    //         butt.innerHTML = "<i class='fas fa-angle-left'></i> Menu";
-    //     }
-    // }
 
     function deleteDistrict(delDistId) {
         console.log('passed');
@@ -1149,13 +1143,6 @@ include_once("../includes/database.php") ?>
             var idx = array.indexOf(id);
             array.splice(idx, 1);
         }
-
-        console.log("priority:")
-        console.log(priorityGroups)
-        console.log("health:" + healthDistricts)
-        console.log(healthDistricts)
-        console.log("First Dose:" + firstDoseVaccineBrands)
-        console.log(firstDoseVaccineBrands)
     }
 
 

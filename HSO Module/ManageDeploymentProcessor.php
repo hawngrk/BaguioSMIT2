@@ -1,6 +1,7 @@
 <?php
 
 include_once "../includes/database.php";
+require_once '../require/getHealthDistrict.php';
 if (isset($_POST['search'])) {
 
     $search = $_POST['search'];
@@ -590,57 +591,302 @@ if (isset($_POST['archive'])){
         $query = "UPDATE `vaccination_drive` SET `Archived`= 1 WHERE `drive_id` = '$archivedId'";
         $database->query($query);
 
+        echo' <table class="table table-hover tableDep" id="driveTable">
+                            <thead>
+                            <tr class="tableCenterCont">
+                                <th scope="col">Drive Id</th>
+                                <th scope="col">Location</th>
+                                <th scope="col">Date</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                            </thead>';
+
+                            $query1 = "SELECT vaccination_drive.drive_id, vaccination_drive.vaccination_date, vaccination_sites.location FROM vaccination_drive JOIN vaccination_sites ON vaccination_drive.vaccination_site_id = vaccination_sites.vaccination_site_id WHERE vaccination_drive.Archived = 0";
+                $dbase = $database->stmt_init();
+                $dbase->prepare($query1);
+                $dbase->execute();
+                $dbase->bind_result($driveId, $date, $vaccinationSite);
+                while($dbase->fetch()){
+
+                                    echo "<tr class='table-row' onclick='showDrive(this)'>
+
+                        <td>$driveId</td>
+                        <td>$vaccinationSite</td>
+                        <td>$date</td>
+                        <td>
+                            <div class='tableCenterCont'>
+                                <button class='buttonTransparent actionButt' onclick='event.stopPropagation(); archive(1, clickArchive, $driveId)'><i class='fa fa-archive'></i></button>
+                                <button class='buttonTransparent actionButt' onclick=''><i class='far fa-edit'></i></button>
+                            </div>
+                        </td>
+                      </tr>";
+                            }
+
+                        echo"</table>";
+
     } else if ($option == "UnArchive") {
         $query = "UPDATE `vaccination_drive` SET `Archived`= 0 WHERE `drive_id` = '$archivedId'";
         $database->query($query);
 
-        echo'
-                    <table class="table table-row table-hover">
+        echo'<table class="table table-row table-hover tableModal">
+                <thead>
+                <tr>
+                    <th scope="col">Drive Id</th>
+                    <th scope="col">Location</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Action</th>
+                </tr>
+                </thead>';
+
+               $query = "SELECT vaccination_drive.drive_id, vaccination_drive.vaccination_date, vaccination_sites.location FROM vaccination_drive JOIN vaccination_sites ON vaccination_drive.vaccination_site_id = vaccination_sites.vaccination_site_id WHERE vaccination_drive.Archived = 1";
+                $dbase = $database->stmt_init();
+                $dbase->prepare($query);
+                $dbase->execute();
+                $dbase->bind_result($driveId, $date, $vaccinationSite);
+                while($dbase->fetch()){
+
+                        echo "<tr class='table-row'>
+                        <td>$driveId</td>
+                        <td>$vaccinationSite</td>
+                        <td>$date</td>
+                        <td>
+                            <div style='text-align: left;'>
+                                <button class='btn btn-warning' onclick='archive(0, clickArchive, $driveId )'>unarchive <i class='fas fa-box-open'></i></button>
+                            </div>
+                        </td>
+
+                      </tr>";
+                }
+                echo'
+            </table>';
+
+        }
+
+        echo "</table>";
+}
+
+if (isset($_POST['showUpdatedDrive'])){
+    echo ' <table class="table table-hover tableDep" id="driveTable">
+                            <thead>
+                            <tr class="tableCenterCont">
+                                <th scope="col">Drive Id</th>
+                                <th scope="col">Location</th>
+                                <th scope="col">Date</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                            </thead>';
+
+    $query1 = "SELECT vaccination_drive.drive_id, vaccination_drive.vaccination_date, vaccination_sites.location FROM vaccination_drive JOIN vaccination_sites ON vaccination_drive.vaccination_site_id = vaccination_sites.vaccination_site_id WHERE vaccination_drive.Archived = 0";
+    $dbase = $database->stmt_init();
+    $dbase->prepare($query1);
+    $dbase->execute();
+    $dbase->bind_result($driveId, $date, $vaccinationSite);
+    while ($dbase->fetch()) {
+
+        echo "<tr class='table-row' onclick='showDrive(this)'>
+
+                        <td>$driveId</td>
+                        <td>$vaccinationSite</td>
+                        <td>$date</td>
+                        <td>
+                            <div class='tableCenterCont'>
+                                <button class='buttonTransparent actionButt' onclick='event.stopPropagation(); archive(1, clickArchive, $driveId)'><i class='fa fa-archive'></i></button>
+                                <button class='buttonTransparent actionButt' onclick=''><i class='far fa-edit'></i></button>
+                            </div>
+                        </td>
+                      </tr>";
+    }
+
+    echo "</table>";
+}
+
+if (isset($_POST['showUpdatedArchive'])){
+    echo ' <table class="table table-hover tableDep" id="driveTable">
+                            <thead>
+                            <tr class="tableCenterCont">
+                                <th scope="col">Drive Id</th>
+                                <th scope="col">Location</th>
+                                <th scope="col">Date</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                            </thead>';
+
+    $query1 = "SELECT vaccination_drive.drive_id, vaccination_drive.vaccination_date, vaccination_sites.location FROM vaccination_drive JOIN vaccination_sites ON vaccination_drive.vaccination_site_id = vaccination_sites.vaccination_site_id WHERE vaccination_drive.Archived = 1";
+    $dbase = $database->stmt_init();
+    $dbase->prepare($query1);
+    $dbase->execute();
+    $dbase->bind_result($driveId, $date, $vaccinationSite);
+    while ($dbase->fetch()) {
+
+        echo "<tr class='table-row' onclick='showDrive(this)'>
+
+                        <td>$driveId</td>
+                        <td>$vaccinationSite</td>
+                        <td>$date</td>
+                         <td>
+                            <div style='text-align: left;'>
+                                <button class='btn btn-warning' onclick='archive(0, clickArchive, $driveId )'>unarchive <i class='fas fa-box-open'></i></button>
+                            </div>
+                        </td>
+                      </tr>";
+    }
+
+    echo "</table>";
+}
+
+if (isset($_POST['distArchive'])){
+    $archivedDist = $_POST['distArchive'];
+    $optionDist = $_POST['option'];
+
+    if ($optionDist == "Archive"){
+        $query = "UPDATE `health_district` SET `Archived`= 1 WHERE `health_district_id` = '$archivedDist'";
+        $database->query($query);
+
+        echo' 
+                    <table class="table table-row table-hover tableModal">
                         <thead>
                         <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Drive Id</th>
-                            <th scope="col">Location</th>
-                            <th scope="col">Date</th>
-                            <th scope="col">No. of Stubs</th>
+                            <th scope="col">Health District Id</th>
+                            <th scope="col">District Name</th>
+                            <th scope="col">Contact Number</th>
                             <th scope="col">Action</th>
                         </tr>
                         </thead>';
 
-        require_once '../require/getVaccinationDrive.php';
-        require_once '../require/getVaccinationSites.php';
 
-        $count = 0;
-        foreach ($vaccination_drive as $vd) {
-            if ($vd->getArchive() == 1) {
-                $count++;
-                $driveId = $vd->getDriveId();
-                $date = $vd->getVaccDate();
-                $stubs = $vd->getVaccStubs();
+        $query1 = "SELECT health_district_id, health_district_name, hd_contact_number FROM health_district WHERE Archived = 0";
+        $dbase = $database->stmt_init();
+        $dbase->prepare($query1);
+        $dbase->execute();
+        $dbase->bind_result($districtId, $districtName, $number);
+        while ($dbase->fetch()) {
 
-
-                foreach ($vaccinationSites as $vs) {
-                    if ($vs->getVaccinationSiteId() == $vd->getVaccDriveVaccSiteId()) {
-                        $vaccinationSite = $vs->getVaccinationSiteLocation();
-                    }
-                }
-
-                echo "<tr class='table-row' >
-                        <td>$count</td>
-                        <td>$driveId</td>
-                        <td>$vaccinationSite</td>
-                        <td>$date</td>
-                        <td>$stubs</td>
-                        <td>
-                            <div style='text-align: left;'>
-                                <button class='buttonTransparent hyperlink' onclick='archive(0, clickArchive, $driveId )'>unarchive <i class='fas fa-box-open'></i></button>
-                            </div>
-                        </td>
-             
-                      </tr>";
-            }
+                echo "<tr class='table-row' onclick='showDistrict(this)'>
+                                    <td>$districtId</td>
+                                    <td>$districtName</td>
+                                    <td>$number</td>
+                                    <td style= 'vertical-align: middle;'>
+                                        <div style='text-align: left;'>
+                                           <button class='buttonTransparent actionButt' onclick='event.stopPropagation(); archive(1,archiveDistrict, $districtId)'><i class='fa fa-archive'></i></button>
+                                        </div>
+                                    </td>
+                                  </tr>";
         }
 
-        echo "</table>";
+        echo"</table>";
+
+    } else if ($optionDist == "UnArchive") {
+        $query = "UPDATE `health_district` SET `Archived`= 0 WHERE `health_district_id` = '$archivedDist'";
+        $database->query($query);
+
+        echo' <table class="table table-row table-hover tableModal">
+                        <thead>
+                        <tr>
+                            <th scope="col">Health District Id</th>
+                            <th scope="col">District Name</th>
+                            <th scope="col">Contact Number</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                        </thead>';
+
+
+        $query1 = "SELECT health_district_id, health_district_name, hd_contact_number FROM health_district WHERE Archived = 1";
+        $dbase = $database->stmt_init();
+        $dbase->prepare($query1);
+        $dbase->execute();
+        $dbase->bind_result($districtId, $districtName, $number);
+        while ($dbase->fetch()) {
+
+                echo "<tr class='table-row' onclick='showDistrict(this)'>
+                                    <td>$districtId</td>
+                                    <td>$districtName</td>
+                                    <td>$number</td>
+                                    <td style= 'vertical-align: middle;'>
+                                         <div style='text-align: left;'>
+                                            <button class='btn btn-warning' onclick='event.stopPropagation(); archive(0, archiveDistrict, $districtId )'>unarchive <i class='fas fa-box-open'></i></button>
+                                         </div>
+                                    </td>
+                                  </tr>";
+        }
+
+        echo'
+            </table>';
+
     }
+
+    echo "</table>";
+}
+
+if (isset($_POST['showUpdatedDistArchive'])){
+    echo"
+     <table class='table table-row table-hover tableModal'>
+                        <thead>
+                        <tr>
+                            <th scope='col'>Health District Id</th>
+                            <th scope='col'>District Name</th>
+                            <th scope='col'>Contact Number</th>
+                            <th scope='col'>Action</th>
+                        </tr>
+                        </thead>";
+
+                        foreach ($health_district as $hd) {
+                            $districtId = $hd->getHealthDistrictId();
+                            $districtName = $hd->getHealthDistrictName();
+                            $number = $hd->getContact();
+                            $archived = $hd->getArchived();
+
+                            if($archived == 1) {
+
+                                echo "<tr class='table-row' onclick='showDistrict(this)'>
+                                    <td>$districtId</td>
+                                    <td>$districtName</td>
+                                    <td>$number</td>
+                                    <td style= 'vertical-align: middle;'>
+                                         <div style='text-align: left;'>
+                                            <button class='btn btn-warning' onclick='event.stopPropagation();archive(0, archiveDistrict, $districtId )'>unarchive <i class='fas fa-box-open'></i></button>
+                                         </div>
+                                    </td>
+                                  </tr>";
+                            }
+                        }
+                    echo"    
+                    </table>";
+
+}
+
+if (isset($_POST['showUpdatedDist'])){
+    echo"
+                
+                    <table class='table table-hover'>
+                        <thead>
+                        <tr>
+                            <th scope='col'>Health District Id</th>
+                            <th scope='col'>District Name</th>
+                            <th scope='col'>Contact Number</th>
+                            <th scope='col'>Action</th>
+                        </tr>
+                        </thead>";
+
+                        foreach ($health_district as $hd) {
+                            $districtId = $hd->getHealthDistrictId();
+                            $districtName = $hd->getHealthDistrictName();
+                            $number = $hd->getContact();
+                            $archived = $hd->getArchived();
+
+                            if($archived == 0) {
+
+                                echo "<tr class='table-row' onclick='showDistrict(this)'>
+                                    <td>$districtId</td>
+                                    <td>$districtName</td>
+                                    <td>$number</td>
+                                    <td style= 'vertical-align: middle;'>
+                                        <div style='text-align: left;'>
+                                           <button class='buttonTransparent actionButt' onclick='event.stopPropagation(); archive(1,archiveDistrict, $districtId)'><i class='fa fa-archive'></i></button>
+                                        </div>
+                                    </td>
+                                  </tr>";
+                            }
+                        }
+                    echo"</table>";
+
 }

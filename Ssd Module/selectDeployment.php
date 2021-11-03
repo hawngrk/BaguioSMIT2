@@ -147,12 +147,12 @@ if (isset($_POST['viewBarangays'])) {
     while ($stmt->fetch()) {
         echo "            <tr id='$barangay_id'>
                                 <th scope='row'> $barangay</th>
-                                <td><input class='A1: Health Care Workers' type='number' min='0' max='100' onchange='countStubs(this.value, this.oldValue, this, \"firstCounter\", \"first\"); this.oldValue = this.value' onkeypress='checkZero(this, \"first\")' oninput='this.value = this.value.replace(/[^0-9.\%]/g, \"\").replace(/(\..*)\./g, \"$1\");' value='0' disabled><span id='percent' style='display: none'>%</span></td>
-                                <td><input class='A2: Senior Citizens' type='number' min='0' max='100' onchange='countStubs(this.value, this.oldValue, this, \"firstCounter\", \"first\"); this.oldValue = this.value' onkeypress='checkZero(this, \"first\") ' oninput='this.value = this.value.replace(/[^0-9.\%]/g, \"\").replace(/(\..*)\./g, \"$1\");' value='0' disabled></td>
-                                <td><input class='A3: Adult with Comorbidity' type='number' min='0' max='100' onchange='countStubs(this.value, this.oldValue, this, \"firstCounter\", \"first\"); this.oldValue = this.value' onkeypress='checkZero(this,\"first\")' oninput='this.value = this.value.replace(/[^0-9.\%]/g, \"\").replace(/(\..*)\./g, \"$1\");' value='0' disabled></td>
-                                <td><input class='A4: Frontline Personnel in Essential Sector' type='number' min='0' max='100' onchange='countStubs(this.value, this.oldValue, this, \"firstCounter\", \"first\"); this.oldValue = this.value' onkeypress='checkZero(this, \"first\")' oninput='this.value = this.value.replace(/[^0-9.\%]/g, \"\").replace(/(\..*)\./g, \"$1\");' value='0' disabled></td>
-                                <td><input class='A5: Indigent Population' type='number' min='0' max='100' onchange='countStubs(this.value, this.oldValue, this, \"firstCounter\", \"first\"); this.oldValue = this.value' onkeypress='checkZero(this, \"first\")' oninput='this.value = this.value.replace(/[^0-9.\%]/g, \"\").replace(/(\..*)\./g, \"$1\");' value='0' disabled></td>
-                                <td><input class='A6: Rest Of The Population' type='number' min='0' max='100' onchange='countStubs(this.value, this.oldValue, this, \"firstCounter\", \"first\"); this.oldValue = this.value' onkeypress='checkZero(this, \"first\")' oninput='this.value = this.value.replace(/[^0-9.\%]/g, \"\").replace(/(\..*)\./g, \"$1\");' value='0' disabled></td>
+                                <td><input class='A1: Health Care Workers' type='number' min='0' max='100' onchange='countStubs(this.value, this.oldValue, this); this.oldValue = this.value' onkeypress='checkZero(this, \"first\")' oninput='this.value = this.value.replace(/[^0-9.\%]/g, \"\").replace(/(\..*)\./g, \"$1\");' value='0' disabled><span id='percent' style='display: none'>%</span></td>
+                                <td><input class='A2: Senior Citizens' type='number' min='0' max='100' onchange='countStubs(this.value, this.oldValue, this); this.oldValue = this.value' onkeypress='checkZero(this, \"first\") ' oninput='this.value = this.value.replace(/[^0-9.\%]/g, \"\").replace(/(\..*)\./g, \"$1\");' value='0' disabled></td>
+                                <td><input class='A3: Adult with Comorbidity' type='number' min='0' max='100' onchange='countStubs(this.value, this.oldValue, this); this.oldValue = this.value' onkeypress='checkZero(this,\"first\")' oninput='this.value = this.value.replace(/[^0-9.\%]/g, \"\").replace(/(\..*)\./g, \"$1\");' value='0' disabled></td>
+                                <td><input class='A4: Frontline Personnel in Essential Sector' type='number' min='0' max='100' onchange='countStubs(this.value, this.oldValue, this); this.oldValue = this.value' onkeypress='checkZero(this, \"first\")' oninput='this.value = this.value.replace(/[^0-9.\%]/g, \"\").replace(/(\..*)\./g, \"$1\");' value='0' disabled></td>
+                                <td><input class='A5: Indigent Population' type='number' min='0' max='100' onchange='countStubs(this.value, this.oldValue, this); this.oldValue = this.value' onkeypress='checkZero(this, \"first\")' oninput='this.value = this.value.replace(/[^0-9.\%]/g, \"\").replace(/(\..*)\./g, \"$1\");' value='0' disabled></td>
+                                <td><input class='A6: Rest Of The Population' type='number' min='0' max='100' onchange='countStubs(this.value, this.oldValue, this); this.oldValue = this.value' onkeypress='checkZero(this, \"first\")' oninput='this.value = this.value.replace(/[^0-9.\%]/g, \"\").replace(/(\..*)\./g, \"$1\");' value='0' disabled></td>
                           </tr>";
     }
     $stmt->close();
@@ -175,8 +175,8 @@ if (isset($_POST['viewBarangays'])) {
 if (isset($_POST['viewBarangays2'])) {
     require '../require/getHealthDistrict.php';
 
-    $healthDistrictId = $_POST['viewBarangays2'];
-    $vaccDrive = $_POST['drive'];
+    $hId = $_POST['viewBarangays2'];
+    $vDrive = $_POST['drive'];
     $second_dose = $_POST['secondStubs'];
 
     foreach ($health_district as $hd){
@@ -202,15 +202,15 @@ if (isset($_POST['viewBarangays2'])) {
 
     echo "<tbody>";
 
-    $query = "SELECT barangay_id, barangay_name FROM barangay WHERE health_district_id = $healthDistrictId";
+    $query = "SELECT barangay_id, barangay_name FROM barangay WHERE health_district_id = $hId";
     $stmt = $database->stmt_init();
     $stmt->prepare($query);
     $stmt->execute();
-    $stmt->bind_result($barangay_id, $barangay);
+    $stmt->bind_result($b_id, $brgy);
     while ($stmt->fetch()) {
-        echo "            <tr id='$barangay_id'>
-                                <td> $barangay</td>
-                                <td><input type='number' min='0' max='100' onchange='countStubs(this.value, this.oldValue, this, \"secondCounter\", \"second\"); this.oldValue = this.value' onkeypress='checkZero(this, \"second\") ' oninput='this.value = this.value.replace(/[^0-9.\%]/g, \"\").replace(/(\..*)\./g, \"$1\");' value='0'><span id='percent' style='display: none'>%</span></td>
+        echo "            <tr id='$b_id'>
+                                <th row='scope'> $brgy</th>
+                                <td><input type='number' min='0' max='100' onchange='countStubs2(this.value, this.oldValue, this); this.oldValue = this.value' onkeypress='checkZero(this, \"second\") ' oninput='this.value = this.value.replace(/[^0-9.\%]/g, \"\").replace(/(\..*)\./g, \"$1\");' value='0'><span id='percent' style='display: none'>%</span></td>
                           </tr>";
     }
     $stmt->close();
@@ -221,7 +221,7 @@ if (isset($_POST['viewBarangays2'])) {
                 </div>
                 <div class='modal-footer'>
                 <button class='btn btn-secondary mr-auto' onclick='shiftTab(firstDose, secondDose, \"firstDosePage\", \"secondDosePage\")'>Back</button>
-                <button id='sendStubs' type='button' class='btn btn-success' onclick='sendStubs($vaccDrive)'>
+                <button id='sendStubs' type='button' class='btn btn-success' onclick='sendStubs($vDrive)'>
                 <i class='fas fa-paper-plane'></i> Send Stubs </button>
                 </div>
             </div>";
@@ -235,41 +235,45 @@ if (isset($_POST['notifDrive'])) {
     $stmt->prepare($query);
     $stmt->execute();
     $stmt->bind_result($driveId, $locName, $date, $firstStubs, $secondStubs, $opened);
-
+    echo"<table>";
     while ($stmt->fetch()) {
-        if ($opened== 1){
-            echo "
+        if ($opened == 1){
+            echo "<tr>
                                                    
-                                                      
-                                                        <div id='$driveId' style='color: #9C9C9C'>
-                                                            <p>Vaccination Location: $locName<br>
+                                                       
+                                                            <td>
+                                                               Location: $locName
                                                                Date: $date <br>
                                                                Number of First Stubs: $firstStubs <br>
                                                                Number of Second Stubs: $secondStubs <br>
-                                                            </p>
-                                                        </div>
-                                                      <hr style='width: 100%; background: azure'>
-                                                 
+                                                               <br>
+                                                               <hr>
+                                                            </td>
+                                                      
+                                                  
+                                                 </tr>
                                                       ";
         } else{
 
-            echo "
+            echo "<tr onclick='updateDeploymentDetails($driveId); closeModal(\"notificationModal\") '>
                                                    <script>document.getElementById('marker').setAttribute('style', 'color:#c10d0d!important');</script>
                                                       
-                                                        <div id='$driveId' style='background: lightgray'>
-                                                            <p>Vaccination Location: $locName<br>
-                                                               Date: $date <br>
+                                                      
+                                                           <td  style='background: lightgray'>Vaccination Location: $locName<br>
+                                                               Date: $date<br>
                                                                Number of First Stubs: $firstStubs <br>
-                                                               Number of Second Stubs: $secondStubs <br>
-                                                            </p>
-                                                        </div>
-                                                      <hr style='width: 100%; background: azure'>
-                                                 
+                                                               Number of Second Stubs: $secondStubs<br>
+                                                           <hr>
+                                                       
+                                                  </td>
+                                                      
+                                                 </tr>
                                                       ";
 
-        }
 
+        }
     }
+    echo"</table>";
 
 
 }
@@ -304,10 +308,13 @@ if (isset($_POST['sendStubs'])){
 
     $result = $_POST['sendStubs'];
     $driveStubs = $_POST['stubsDrive'];
+    $second = $_POST['second_dose'];
 
     foreach ($result as $key => $value){
-        $query = "INSERT into barangay_stubs (barangay_id, drive_id, A1_stubs, A2_stubs, A3_stubs, A4_stubs, A5_stubs, A6_stubs, notif_opened) VALUE ($key, $driveStubs,$value[0], $value[1], $value[2], $value[3], $value[4], $value[5], 0)";
-        $database->query($query);
+        foreach ($second as $secondStub) {
+            $query = "INSERT into barangay_stubs (barangay_id, drive_id, A1_stubs, A2_stubs, A3_stubs, A4_stubs, A5_stubs, A6_stubs, second_dose, notif_opened) VALUE ($key, $driveStubs,$value[0], $value[1], $value[2], $value[3], $value[4], $value[5], $secondStub, 0)";
+            $database->query($query);
+        }
     }
 
     require '../vendor/autoload.php';

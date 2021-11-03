@@ -124,13 +124,14 @@ include_once("../includes/database.php");
                     &times;
                 </button>
             </div>
+            <table>
             <div class="modal-body" id="notificationContent">
                 <?php
-                $query = "SELECT barangay_stubs.A1_stubs, barangay_stubs.A2_stubs, barangay_stubs.A3_stubs, barangay_stubs.A4_stubs, barangay_stubs.A5_stubs, barangay_stubs.A6_stubs, barangay_stubs.notif_opened, vaccination_sites.location, vaccination_drive.vaccination_date FROM barangay_stubs JOIN vaccination_drive ON vaccination_drive.drive_id = barangay_stubs.drive_id JOIN vaccination_sites ON vaccination_sites.vaccination_site_id = vaccination_drive.vaccination_site_id WHERE barangay_id = '113';";
+                $query = "SELECT barangay_stubs.drive_id, barangay_stubs.A1_stubs, barangay_stubs.A2_stubs, barangay_stubs.A3_stubs, barangay_stubs.A4_stubs, barangay_stubs.A5_stubs, barangay_stubs.A6_stubs, barangay_stubs.notif_opened, vaccination_sites.location, vaccination_drive.vaccination_date FROM barangay_stubs JOIN vaccination_drive ON vaccination_drive.drive_id = barangay_stubs.drive_id JOIN vaccination_sites ON vaccination_sites.vaccination_site_id = vaccination_drive.vaccination_site_id WHERE barangay_id = '113';";
                 $stmt = $database->stmt_init();
                 $stmt->prepare($query);
                 $stmt->execute();
-                $stmt->bind_result($A1, $A2, $A3, $A4, $A5, $A6, $opened, $locName, $date);
+                $stmt->bind_result($driveId,$A1, $A2, $A3, $A4, $A5, $A6, $opened, $locName, $date);
                 while ($stmt->fetch()) {
 
                     $availableStubs = [$A1, $A2, $A3, $A4, $A5, $A6];
@@ -145,44 +146,49 @@ include_once("../includes/database.php");
                     }
 
                     if ($opened == 1) {
-                        echo "
-                                                        <div style='color: #9C9C9C'>
-                                                            <p>Stubs:<br>";
+                        echo "<tr>
+                                                        <td style='color: #9C9C9C'>
+                                                            Stubs:<br>";
                         foreach ($priorityStub as $ps) {
                             foreach ($values as $value)
-                                echo " $ps: $value </p>";
+                                echo " $ps: $value";
                         }
 
                         echo "
-                                                            <p>Vaccination Location: $locName<br>
+                                                            Vaccination Location: $locName<br>
                                                                Date: $date <br>
-                                                            </p>
-                                                        </div>
+                                                            
+                                                       
                                                       <hr style='width: 100%; background: azure'>
+                                                     </td>
+                                                      </tr>
                                                       ";
                     } else {
 
-                        echo "
+                        echo "<tr onclick='updateBarangayHome($driveId); ; closeModal(\"notificationModal\")'>
                                                    <script>document.getElementById('marker').setAttribute('style', 'color:#c10d0d!important');</script>
-
-                                                        <div style='background: lightgray'>
-                                                             <h4>Stubs:</h4>";
+                                                  
+                                                        <td style='background: lightgray'>
+                                                             Stubs:";
 
                         foreach ($priorityStub as $ps) {
                             foreach ($values as $value)
-                                echo " <h3>$ps: $value </h3> <br>";
+                                echo "$ps: $value<br>";
                         }
 
                         echo "
-                                                            <p>Vaccination Location: $locName<br>
+                                                            Vaccination Location: $locName<br>
                                                                Date: $date <br>
-                                                            </p>
-                                                        </div>
-                                                      <hr style='width: 100%; background: azure'>";
+                                                           
+                                                       
+                                                      <hr style='width: 100%; background: azure'>
+                                                      </td>
+                                                      </tr>";
                     }
                 }
                 ?>
             </div>
+            </table>
         </div>
     </div>
 
@@ -269,6 +275,10 @@ include_once("../includes/database.php");
                         <h5>A6</h5>
                         <p>0</p>
                     </div>
+                    <div class="priorityGroup">
+                        <h5>Second Dose</h5>
+                        <p>0</p>
+                    </div>
                 </div>
             </div>
             <div class="row">
@@ -304,33 +314,7 @@ include_once("../includes/database.php");
 </body>
 </html>
 <script type="text/javascript">
-    $(document).ready(function () {
-        $('#sidebarCollapse').on('click', function () {
-            $('#sidebar').toggleClass('active');
-        });
-
-        $.ajax({
-            url: 'ManagePatientProcessor.php',
-            type: 'POST',
-            data: {"ready": ""},
-            success: function (result) {
-
-            }
-        });
-
-    });
     var clicked = false;
-
-    function Toggle() {
-        var butt = document.getElementById('sidebarCollapse')
-        if (!clicked) {
-            clicked = true;
-            butt.innerHTML = "Menu <i class = 'fas fa-angle-double-right'><i>";
-        } else {
-            clicked = false;
-            butt.innerHTML = "<i class='fas fa-angle-left'></i> Menu";
-        }
-    }
 
     var pusher = new Pusher('8bde1d2aef3f7c91d16a', {
         cluster: 'ap1'
@@ -361,10 +345,11 @@ include_once("../includes/database.php");
             url: 'ManagePatientProcessor.php',
             type: 'POST',
             data: {"open": "opened"},
-            success: function () {
+            success: function (result) {
                 setTimeout(function () {
                     document.getElementById('marker').setAttribute('style', 'color:transparent!important');
                 }, 2000);
+                console.log(result)
             }
         });
     }
@@ -383,14 +368,13 @@ include_once("../includes/database.php");
             }
         });
 
-
     }
 
-    function updateBarangayHome(id){
+    function updateBarangayHome(driveId){
         $.ajax({
             url: 'ManagePatientProcessor.php',
             type: 'POST',
-            data: {"delegation": id},
+            data: {"delegations": driveId},
             success: function (result) {
                 document.getElementById("barangayHomeContent").innerHTML = result;
             }
