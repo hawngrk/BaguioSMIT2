@@ -1,4 +1,5 @@
 <?php 
+    header("Access-Control-Allow-Origin: *");
     require_once("validate_details.php");
     require_once("generate_credentials.php");
     require_once("../../../includes/configure.php");
