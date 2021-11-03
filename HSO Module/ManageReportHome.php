@@ -145,7 +145,6 @@ include_once("../includes/database.php") ?>
                         <table class="table table-hover tableReport" id="reportsTable">
                             <thead>
                             <tr class="tableCenterCont">
-<!--                                <th scope="col">#</th>-->
                                 <th scope="col">Report ID</th>
                                 <th scope="col">Name of Reporter</th>
                                 <th scope="col">Date Reported</th>
@@ -171,6 +170,7 @@ include_once("../includes/database.php") ?>
                                         }
                                     }
                                     echo "<tr class='tableCenterCont' onclick='viewReport($reportId)'>
+                                          <td>$reportId</td>
                                           <td>$reporter</td>
                                           <td>$dateReported</td>
                                           <td>$status</td>
