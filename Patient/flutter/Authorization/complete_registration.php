@@ -1,14 +1,8 @@
 <?php
+header("Access-Control-Allow-Origin: *");
 require_once("validate_details.php");
 require_once("generate_credentials.php");
 require_once("pre_registration.php");
-
-// Test variables
-// $firstname = 'Josh'; 
-// $lastname = 'Radnor';
-// $contact = '+6923003948';
-// $email = 'JoshRadnor@gmail.com';
-
 
 //Instantiate variable from user inputs 
 $firstname = $_POST['John']; 
