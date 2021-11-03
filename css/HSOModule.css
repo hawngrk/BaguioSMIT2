@@ -4,8 +4,6 @@
 --------------------------------------------------- */
 #vaccineName,
 #vaccineManufacturer,
-#vaccineType,
-#vaccineEfficacy,
 #dosageRequired,
 #dosageInterval,
 #minimumTemperature,
@@ -13,6 +11,11 @@
 #lifeSpan {
     height: auto;
 }
+
+#vaccineType,#vaccineEfficacy{
+    height: 8%;
+}
+
 
 .AddHealthD-option > ul{
     list-style-type: none;
@@ -29,7 +32,7 @@ input[type=text1] {
     height: auto;
 }
 
-.vaccineType, #qty{
+.vaccineType, #qty,#source{
     width: 95%;
     height: 18%;
 }

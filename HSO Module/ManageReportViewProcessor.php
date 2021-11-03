@@ -1,120 +1,120 @@
 <?php
-if (isset($_POST['search'])) {
-    include '../includes/database.php';
-    $search = $_POST['search'];
-    echo "
-      <thead>
-            <tr class='tableCenterCont'>
-                <th scope='col'>Report ID</th>
-                <th scope='col'>Name of Reporter</th>
-                <th scope='col'>Date Reported</th>
-                <th scope='col'>Report Verified</th>
-                <th scope='col'>Action</th>
-            </tr>
-            </thead>
-            ";
-    if (empty($search)) {
-        $querySearch = "SELECT report.report_id, patient.patient_full_name, report.date_reported, report.report_status FROM report JOIN patient ON report.report_id = patient.patient_id JOIN patient_details ON patient.patient_id = patient_details.patient_id;";
-    } else {
-        $querySearch = "SELECT report.report_id, patient.patient_full_name, report.date_reported, report.report_status FROM report JOIN patient ON report.report_id = patient.patient_id JOIN patient_details ON patient.patient_id = patient_details.patient_id WHERE report.report_id LIKE '$search%' OR patient_details.patient_last_name LIKE '$search%' OR patient_details.patient_first_name LIKE '$search%' OR patient_details.patient_middle_name LIKE '$search%';";
-    }
-    $stmt = $database->stmt_init();
-    $stmt->prepare($querySearch);
-    $stmt->execute();
-    $stmt->bind_result($reportId, $reporter, $dateReported, $status);
+//if (isset($_POST['search'])) {
+//    include '../includes/database.php';
+//    $search = $_POST['search'];
+//    echo "
+//      <thead>
+//            <tr class='tableCenterCont'>
+//                <th scope='col'>Report ID</th>
+//                <th scope='col'>Name of Reporter</th>
+//                <th scope='col'>Date Reported</th>
+//                <th scope='col'>Report Verified</th>
+//                <th scope='col'>Action</th>
+//            </tr>
+//            </thead>
+//            ";
+//    if (empty($search)) {
+//        $querySearch = "SELECT report.report_id, patient.patient_full_name, report.date_reported, report.report_status FROM report JOIN patient ON report.report_id = patient.patient_id JOIN patient_details ON patient.patient_id = patient_details.patient_id;";
+//    } else {
+//        $querySearch = "SELECT report.report_id, patient.patient_full_name, report.date_reported, report.report_status FROM report JOIN patient ON report.report_id = patient.patient_id JOIN patient_details ON patient.patient_id = patient_details.patient_id WHERE report.report_id LIKE '$search%' OR patient_details.patient_last_name LIKE '$search%' OR patient_details.patient_first_name LIKE '$search%' OR patient_details.patient_middle_name LIKE '$search%';";
+//    }
+//    $stmt = $database->stmt_init();
+//    $stmt->prepare($querySearch);
+//    $stmt->execute();
+//    $stmt->bind_result($reportId, $reporter, $dateReported, $status);
+//
+//    while ($stmt->fetch()) {
+//        echo "<tr class='tableCenterCont' onclick='viewReport($reportId)'>
+//                <td>$reportId</td>
+//                <td>$reporter</td>
+//                <td>$dateReported</td>
+//                <td>$status</td>
+//                <td><button class='btn btn-success btn-sm' type='submit' value='$reportId' onclick='viewReport($reportId)'>Review Report</button></td>
+//                </tr>";
+//    }
+//}
 
-    while ($stmt->fetch()) {
-        echo "<tr class='tableCenterCont' onclick='viewReport($reportId)'>
-                <td>$reportId</td>
-                <td>$reporter</td>
-                <td>$dateReported</td>
-                <td>$status</td>
-                <td><button class='btn btn-success btn-sm' type='submit' value='$reportId' onclick='viewReport($reportId)'>Review Report</button></td>
-                </tr>";
-    }
-}
-
-if (isset($_POST['sort'])) {
-    include '../includes/database.php';
-    $querySort = '';
-    $sort = $_POST['sort'];
-    echo "
-      <thead>
-            <tr class='tableCenterCont'>
-                <th scope='col'>Report ID</th>
-                <th scope='col'>Name of Reporter</th>
-                <th scope='col'>Date Reported</th>
-                <th scope='col'>Report Verified</th>
-                <th scope='col'>Action</th>
-            </tr>
-            </thead>
-            ";
-
-    if ($sort == 'Name Asc') {
-        $querySort = "SELECT report.report_id, patient.patient_full_name, report.date_reported, report.report_status FROM report JOIN patient ON report.report_id = patient.patient_id JOIN patient_details ON patient.patient_id = patient_details.patient_id ORDER BY patient_details.patient_last_name ASC;";
-    } else if ($sort == 'Name Desc') {
-        $querySort = "SELECT report.report_id, patient.patient_full_name, report.date_reported, report.report_status FROM report JOIN patient ON report.report_id = patient.patient_id JOIN patient_details ON patient.patient_id = patient_details.patient_id ORDER BY patient_details.patient_last_name DESC;";
-    } else if ($sort == 'Date Asc') {
-        $querySort = "SELECT report.report_id, patient.patient_full_name, report.date_reported, report.report_status FROM report JOIN patient ON report.report_id = patient.patient_id JOIN patient_details ON patient.patient_id = patient_details.patient_id ORDER BY report.date_reported ASC;";
-    } else if ($sort == 'Date Desc') {
-        $querySort = "SELECT report.report_id, patient.patient_full_name, report.date_reported, report.report_status FROM report JOIN patient ON report.report_id = patient.patient_id JOIN patient_details ON patient.patient_id = patient_details.patient_id ORDER BY report.date_reported DESC;";
-    }
-    $stmt = $database->stmt_init();
-    $stmt->prepare($querySort);
-    $stmt->execute();
-    $stmt->bind_result($reportId, $reporter, $dateReported, $status);
-
-    while ($stmt->fetch()) {
-        echo "<tr class='tableCenterCont'>
-                <td>$reportId</td>
-                <td>$reporter</td>
-                <td>$dateReported</td>
-                <td>$status</td>
-                <td><button class='btn btn-success btn-sm' type='submit' value='$reportId' onclick='viewReport($reportId)'>Review Report</button></td>
-                </tr>";
-    }
-}
-
-if (isset($_POST['filter'])) {
-    include '../includes/database.php';
-    $filter = $_POST['filter'];
-    $queryFilter = '';
-    echo "
-      <thead>
-            <tr class='tableCenterCont'>
-                <th scope='col'>Report ID</th>
-                <th scope='col'>Name of Reporter</th>
-                <th scope='col'>Date Reported</th>
-                <th scope='col'>Report Verified</th>
-                <th scope='col'>Action</th>
-            </tr>
-            </thead>
-            ";
-
-    if ($filter == 'All') {
-        $queryFilter = "SELECT report.report_id, patient.patient_full_name, report.date_reported, report.report_status FROM report JOIN patient ON report.report_id = patient.patient_id JOIN patient_details ON patient.patient_id = patient_details.patient_id;";
-    } else if ($filter == 'Unverified') {
-        $queryFilter = "SELECT report.report_id, patient.patient_full_name, report.date_reported, report.report_status FROM report JOIN patient ON report.report_id = patient.patient_id JOIN patient_details ON patient.patient_id = patient_details.patient_id WHERE report.report_status = 'Unverified';";
-    } else if ($filter == 'Verified') {
-        $queryFilter = "SELECT report.report_id, patient.patient_full_name, report.date_reported, report.report_status FROM report JOIN patient ON report.report_id = patient.patient_id JOIN patient_details ON patient.patient_id = patient_details.patient_id WHERE report.report_status = 'Verified';";
-    } else if ($filter == 'Invalidated') {
-        $queryFilter = "SELECT report.report_id, patient.patient_full_name, report.date_reported, report.report_status FROM report JOIN patient ON report.report_id = patient.patient_id JOIN patient_details ON patient.patient_id = patient_details.patient_id WHERE report.report_status = 'Invalidated';";
-    }
-    $stmt = $database->stmt_init();
-    $stmt->prepare($queryFilter);
-    $stmt->execute();
-    $stmt->bind_result($reportId, $reporter, $dateReported, $status);
-
-    while ($stmt->fetch()) {
-        echo "<tr class='tableCenterCont'>
-                <td>$reportId</td>
-                <td>$reporter</td>
-                <td>$dateReported</td>
-                <td>$status</td>
-                <td><button class='btn btn-success btn-sm' type='submit' value='$reportId' onclick='viewReport($reportId)'>Review Report</button></td>
-                </tr>";
-    }
-}
+//if (isset($_POST['sort'])) {
+//    include '../includes/database.php';
+//    $querySort = '';
+//    $sort = $_POST['sort'];
+//    echo "
+//      <thead>
+//            <tr class='tableCenterCont'>
+//                <th scope='col'>Report ID</th>
+//                <th scope='col'>Name of Reporter</th>
+//                <th scope='col'>Date Reported</th>
+//                <th scope='col'>Report Verified</th>
+//                <th scope='col'>Action</th>
+//            </tr>
+//            </thead>
+//            ";
+//
+//    if ($sort == 'Name Asc') {
+//        $querySort = "SELECT report.report_id, patient.patient_full_name, report.date_reported, report.report_status FROM report JOIN patient ON report.report_id = patient.patient_id JOIN patient_details ON patient.patient_id = patient_details.patient_id ORDER BY patient_details.patient_last_name ASC;";
+//    } else if ($sort == 'Name Desc') {
+//        $querySort = "SELECT report.report_id, patient.patient_full_name, report.date_reported, report.report_status FROM report JOIN patient ON report.report_id = patient.patient_id JOIN patient_details ON patient.patient_id = patient_details.patient_id ORDER BY patient_details.patient_last_name DESC;";
+//    } else if ($sort == 'Date Asc') {
+//        $querySort = "SELECT report.report_id, patient.patient_full_name, report.date_reported, report.report_status FROM report JOIN patient ON report.report_id = patient.patient_id JOIN patient_details ON patient.patient_id = patient_details.patient_id ORDER BY report.date_reported ASC;";
+//    } else if ($sort == 'Date Desc') {
+//        $querySort = "SELECT report.report_id, patient.patient_full_name, report.date_reported, report.report_status FROM report JOIN patient ON report.report_id = patient.patient_id JOIN patient_details ON patient.patient_id = patient_details.patient_id ORDER BY report.date_reported DESC;";
+//    }
+//    $stmt = $database->stmt_init();
+//    $stmt->prepare($querySort);
+//    $stmt->execute();
+//    $stmt->bind_result($reportId, $reporter, $dateReported, $status);
+//
+//    while ($stmt->fetch()) {
+//        echo "<tr class='tableCenterCont'>
+//                <td>$reportId</td>
+//                <td>$reporter</td>
+//                <td>$dateReported</td>
+//                <td>$status</td>
+//                <td><button class='btn btn-success btn-sm' type='submit' value='$reportId' onclick='viewReport($reportId)'>Review Report</button></td>
+//                </tr>";
+//    }
+//}
+//
+//if (isset($_POST['filter'])) {
+//    include '../includes/database.php';
+//    $filter = $_POST['filter'];
+//    $queryFilter = '';
+//    echo "
+//      <thead>
+//            <tr class='tableCenterCont'>
+//                <th scope='col'>Report ID</th>
+//                <th scope='col'>Name of Reporter</th>
+//                <th scope='col'>Date Reported</th>
+//                <th scope='col'>Report Verified</th>
+//                <th scope='col'>Action</th>
+//            </tr>
+//            </thead>
+//            ";
+//
+//    if ($filter == 'All') {
+//        $queryFilter = "SELECT report.report_id, patient.patient_full_name, report.date_reported, report.report_status FROM report JOIN patient ON report.report_id = patient.patient_id JOIN patient_details ON patient.patient_id = patient_details.patient_id;";
+//    } else if ($filter == 'Unverified') {
+//        $queryFilter = "SELECT report.report_id, patient.patient_full_name, report.date_reported, report.report_status FROM report JOIN patient ON report.report_id = patient.patient_id JOIN patient_details ON patient.patient_id = patient_details.patient_id WHERE report.report_status = 'Unverified';";
+//    } else if ($filter == 'Verified') {
+//        $queryFilter = "SELECT report.report_id, patient.patient_full_name, report.date_reported, report.report_status FROM report JOIN patient ON report.report_id = patient.patient_id JOIN patient_details ON patient.patient_id = patient_details.patient_id WHERE report.report_status = 'Verified';";
+//    } else if ($filter == 'Invalidated') {
+//        $queryFilter = "SELECT report.report_id, patient.patient_full_name, report.date_reported, report.report_status FROM report JOIN patient ON report.report_id = patient.patient_id JOIN patient_details ON patient.patient_id = patient_details.patient_id WHERE report.report_status = 'Invalidated';";
+//    }
+//    $stmt = $database->stmt_init();
+//    $stmt->prepare($queryFilter);
+//    $stmt->execute();
+//    $stmt->bind_result($reportId, $reporter, $dateReported, $status);
+//
+//    while ($stmt->fetch()) {
+//        echo "<tr class='tableCenterCont'>
+//                <td>$reportId</td>
+//                <td>$reporter</td>
+//                <td>$dateReported</td>
+//                <td>$status</td>
+//                <td><button class='btn btn-success btn-sm' type='submit' value='$reportId' onclick='viewReport($reportId)'>Review Report</button></td>
+//                </tr>";
+//    }
+//}
 
 if (isset($_POST['invalidated'])) {
     include '../includes/database.php';
@@ -131,12 +131,12 @@ if (isset($_POST['invalidated'])) {
     
     <div class='modal-body'>
       <table class='table table-row table-hover'>
-      <thead>
+      <thead class='tableHeader'>
             <tr class='tableCenterCont'>
-                <th scope='col'>Report ID</th>
-                <th scope='col'>Name of Reporter</th>
-                <th scope='col'>Date Reported</th>
-                <th scope='col'>Action</th>
+                <th>Report ID</th>
+                <th>Name of Reporter</th>
+                <th>Date Reported</th>
+                <th>Action</th>
             </tr>
             </thead>
             ";
@@ -397,10 +397,10 @@ if (isset($_POST['generate'])) {
     
         <div class='modal-body'>
             <table class='table table-row table-hover'>
-            <thead>
+            <thead class='tableHeader'>
             <tr class='tableCenterCont'>
                 <th onclick=selectHighlight(this); scope='col'>Select</th>
-                <th onclick=selectHighlight(this); scope='col'>#</th>
+                <th onclick=selectHighlight(this); scope='col'></th>
                 <th onclick=selectHighlight(this); scope='col'>Report ID</th>
                 <th onclick=selectHighlight(this); scope='col'>Name of Reporter</th>
                 <th onclick=selectHighlight(this); scope='col'>Date Reported</th>

@@ -659,7 +659,8 @@ barangayList{ /*EIR*/
 
 
 /*Text Inputs and drop down menu*/
-input[type=text3],select{
+/*input[type=text3],*/
+select{
     display: inline-block;
     border-radius: 8px;
     margin-top: -1%;
@@ -1011,8 +1012,6 @@ h5~select {
 --------------------------------------------------- */
 #vaccineName,
 #vaccineManufacturer,
-#vaccineType,
-#vaccineEfficacy,
 #dosageRequired,
 #dosageInterval,
 #minimumTemperature,
@@ -1398,7 +1397,6 @@ img{
     background-color: white;
     width: 100%;
 }
-
 
 .tableModal{
     width: fit-content;
