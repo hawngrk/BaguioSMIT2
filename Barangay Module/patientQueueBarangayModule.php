@@ -233,13 +233,14 @@ include_once("../includes/database.php")
             title: 'Send Notification?',
             showDenyButton: true,
             confirmButtonText: 'Yes',
-            denyButtonText: `No`,
+            confirmButtonColor: '#28a745',
+            denyButtonText: `No`
         }).then((result) => {
             if (result.isConfirmed) {
                 sendNotification();
-                Swal.fire('Notification Sent!', '', 'success')
+                Swal.fire({icon: 'success', title: 'Notification Sent!', confirmButtonText: 'OK', confirmButtonColor: '#007bff'})
             } else if (result.isDenied) {
-                Swal.fire('Notification Cancelled', '', 'info')
+                Swal.fire({icon: 'info', title: 'Notification Cancelled', confirmButtonText: 'OK', confirmButtonColor: '#007bff'})
             }
         })
     }
