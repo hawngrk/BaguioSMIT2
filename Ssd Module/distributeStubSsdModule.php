@@ -148,10 +148,6 @@ include "../includes/database.php";
                 <div id='stubsModal' class='content-modal'>
                     <div class='modal-header' >
                         <h3 style='padding-right:50%' id="header">  </h3>
-                        <select name='Type' style='width: 14%' onchange='(this)'>
-                            <option value='percentage'>Percentage </option>
-                            <option value='whole'>Whole Number</option>
-                        </select>
                         <button id='closeModal' class='close' onclick='closeModal("barangayModal")'> &times;</button>
                     </div>
                     <div class='modal-body' id='healthDStubs'>
