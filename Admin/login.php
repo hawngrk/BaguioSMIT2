@@ -85,13 +85,13 @@ Description: Login HTML Elements for receiving credentials from the users
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="inputGroup-sizing-lg">Username</span>
                 </div>
-                <input type="text" id="userN" name="username"  class="form-control" aria-label="Large" aria-describedby="inputGroup-sizing-sm">
+                <input type="text" id="userN" name="username"  class="form-control" aria-label="Large" aria-describedby="inputGroup-sizing-sm" placeholder="Enter username" required>
             </div>
             <div class="input-group input-group-lg">
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="inputGroup-sizing-lg">Password</span>
                 </div>
-                <input type="password" id="passW" name="password" class="form-control" aria-label="Large" aria-describedby="inputGroup-sizing-sm">
+                <input type="password" id="passW" name="password" class="form-control" aria-label="Large" aria-describedby="inputGroup-sizing-sm" placeholder="Enter password" required>
             </div>
             <div class="form-button">
                 <button type="button" id="login" name="loginButton" class="buttonLogin">Login</button>
@@ -104,21 +104,30 @@ Description: Login HTML Elements for receiving credentials from the users
         <!-- </div> -->
     </div>
     <footer>
-    
         <script>
-            $('#login').click(async function(e) {
-                login();
+            var forms = document.getElementById('login-form');
+            var userN = document.getElementById("userN");
+            var passW = document.getElementById("passW");
 
+            $('#login').click(async function(e) {
+                if(forms.checkValidity() && passW.value.trim() != "") {
+                    login();
+                } else {
+                    Swal.fire('Please fill the required fields');
+                    !userN.value.trim() ?  errorBorder(userN) : userN.style.border = null;
+                    !passW.value.trim() ? errorBorder(passW) : passW.style.border = null;     
+                }
             }); 
 
-            $('#logout').click(async function(e){
-                logout();
-            });
+            function errorBorder(element) {
+                element.style.border = "0.8px groove #E52B50";
+                element.value = element.value.trim();
+            }
+
            async function login() {
                 var userN = document.getElementById("userN").value;
                 var passW = document.getElementById("passW").value;
-                // console.log(userN);
-                // console.log(passW);
+
                 $.ajax({    
                     method: 'POST',              
                     url: '../AdminBackEnd/EmployeeLoginAuthentication.php',
@@ -158,42 +167,6 @@ Description: Login HTML Elements for receiving credentials from the users
                         console.log('There was an error');
                     }
                 });
-            }
-            async function logout() {
-                var logoutPhp = "windows.location.href = '../includes/logout.php'";
-                message().confirmation(logoutPhp);
-            }
-            function success() {
-                Swal.fire({
-                    icon: 'info',
-                    title: 'Successfully Logged in',
-                    showConfirmButton: false,
-                    timer: 1500
-                });    
-            }
-            function error() {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Invalid username or password',
-                    showConfirmButton: false,
-                    timer: 1500
-                });
-            }
-
-            function confirmation(link) {
-                Swal.fire({
-                    title: 'Are you sure?',
-                    text: "You won't be able to revert this!",
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Yes'
-                    }).then((result) => {
-                    if (result.isConfirmed) {
-                        setTimeout(link);
-                    }
-                })
             }
         </script>
         <div>
