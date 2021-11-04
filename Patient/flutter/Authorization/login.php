@@ -2,12 +2,12 @@
 header("Access-Control-Allow-Origin: *");
 require_once("../../../includes/configure.php");
 
-//$username = $_POST['username'];
-//$passswrd = $_POST['password'];
+$username = $_POST['username'];
+$passswrd = $_POST['password'];
 
 //Test variables
-$username = "TedMosby";
-$password = "patientTest1 ";
+// $username = "TedMosby";
+// $password = "patient1";
 
 $query = "SELECT * FROM patient_account WHERE patient_username = ? LIMIT 1";
 
