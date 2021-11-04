@@ -4,53 +4,6 @@ require_once '../require/getVaccine.php';
 require_once '../require/getVaccineBatch.php';
 require_once '../require/getVaccineLot.php';
 
-//if (isset($_POST['search'])) {
-//    include("../includes/database.php");
-//    $search = $_POST['search'];
-//    if ($search == "") {
-//        $querySearch = "SELECT vaccine_lot.vaccine_lot_id, vaccine.vaccine_name, vaccine_lot.source,vaccine_lot.date_stored, vaccine_lot.date_stored, vaccine_lot.vaccine_expiration, vaccine_lot.total_vaccine_vial_quantity FROM vaccine_lot JOIN vaccine ON vaccine_lot.vaccine_id = vaccine.vaccine_id;";
-//    } else {
-//        $querySearch = "SELECT vaccine_lot.vaccine_lot_id, vaccine.vaccine_name, vaccine_lot.source,vaccine_lot.date_stored, vaccine_lot.date_stored, vaccine_lot.vaccine_expiration, vaccine_lot.total_vaccine_vial_quantity FROM vaccine_lot JOIN vaccine ON vaccine_lot.vaccine_id = vaccine.vaccine_id WHERE vaccine_lot.vaccine_lot_id LIKE '$search%' OR vaccine.vaccine_name LIKE '$search%';";
-//    }
-//
-//    echo "
-//     <thead>
-//            <tr class='tableCenterCont'>
-//                <th scope='col'>Vaccine Lot ID</th>
-//                <th scope='col'>Vaccine Name</th>
-//                <th scope='col'>Vaccine Source</th>
-//                <th scope='col'>Date Received</th>
-//                <th scope='col'>Date Expiration</th>
-//                <th scope='col'>Batch Quantity</th>
-//                <th scope='col''>Bottle Quantity</th>
-//                <th scope='col'>Action</th>
-//            </tr>
-//            </thead>";
-//
-//    $count = 1;
-//    $stmt = $database->stmt_init();
-//    $stmt->prepare($querySearch);
-//    $stmt->execute();
-//    $stmt->bind_result($vaccineLotId, $vaccName, $vaccineSource,$dateStored, $vaccExp, $batchQty, $vaccQty);
-//    while ($stmt->fetch()) {
-//        echo "<tr class='tableCenterCont' onclick='showVaccine(this)'>
-//                <td>$vaccineLotId</td>
-//                <td>$vaccName</td>
-//                <td>$vaccineSource</td>
-//                <td>$dateStored</td>
-//                <td>$vaccExp</td>
-//                <td>$batchQty</td>
-//                <td>$vaccQty</td>
-//                <td>   <div>
-//                                      <button type='button' class='buttonTransparent actionButt' onclick='event.stopPropagation();archive(1, clickArchive, $vaccineLotId)'><i class='fa fa-archive'></i></button>
-//                                      <button type='button' class='viewReportBtn buttonTransparent actionButt' id='viewButton' onclick='viewVaccineDetails($vaccineLotId)'><i class='fas fa-eye'></i></button>
-//                                </div> </td>
-//                </tr>";
-//        $count++;
-//    }
-//}
-
-//filter
 if (isset($_POST['filter'])) {
     $filter = $_POST['filter'];
     $queryFilter = '';
@@ -187,40 +140,45 @@ if (isset($_POST['vaccId'])) {
     $dbase->fetch();
     $dbase->close();
 
-    $query1 = "INSERT INTO vaccine_lot (vaccine_id, employee_account_id, date_stored, source, total_vaccine_vial_quantity, vaccine_expiration) VALUE ('$vaccineid', 1,'$dateStored', '$source', '$Qty', '$dateExp');";
+    $query1 = "INSERT INTO vaccine_lot (vaccine_id, employee_account_id, date_stored, source, total_vaccine_vial_quantity, vaccine_expiration, Archived) VALUE ('$vaccineid', 1,'$dateStored', '$source', '$Qty', '$dateExp', 0);";
     $database->query($query1);
 
-    require_once '../require/getVaccine.php';
-    require_once '../require/getVaccineBatch.php';
-    require_once '../require/getVaccineLot.php';
+    echo " <thead class='tableCenterCont'>
+                    <tr>
+                        <th>Vaccine Lot ID</th>
+                        <th>Vaccine Name</th>
+                        <th>Vaccine Source</th>
+                        <th>Date Received</th>
+                        <th>Expiration Date</th>
+                        <th>Bottle Quantity</th>
+                        <th>Action</th>
+                    </tr>
+                    </thead>";
 
-    $count = 0;
-    foreach ($vaccineLots as $vl) {
-        $count++;
-        $vaccineLotId = $vl->getVaccLotId();
-        $vaccLotVaccId = $vl->getVaccLotVaccId();
-        $dateStored = $vl->getDateVaccStored();
-        $batchQty = $vl->getVaccBatchQty();
-        $source = $vl->getSource();
-        $vaccExp = $vl->getExpiration();
+    $query1 = "SELECT vaccine_lot.vaccine_lot_id, vaccine.vaccine_name, vaccine_lot.source, vaccine_lot.date_stored, vaccine_lot.vaccine_expiration, vaccine_lot.total_vaccine_vial_quantity FROM vaccine_lot JOIN vaccine ON vaccine_lot.vaccine_id = vaccine.vaccine_id WHERE vaccine_lot.Archived = 0;";
+    $dbase = $database->stmt_init();
+    $dbase->prepare($query1);
+    $dbase->execute();
+    $dbase->bind_result($vaccineLotId, $vaccName, $source, $dateStored, $vaccExp, $batchQty);
+    while ($dbase->fetch()) {
 
-
-        foreach ($vaccines as $vac) {
-            if ($vaccLotVaccId == $vac->getVaccId()) {
-                $vaccName = $vac->getVaccName();
-            }
-        }
-
-        echo "<tr>
-                <td>$count</td>
-                <td>$vaccineLotId</td>
-                <td>$vaccName</td>
-                <td>$source</td>
-                <td>$dateStored</td>
-                <td>$vaccExp</td>
-                <td>$batchQty</td>
-                </tr>";
+        echo "<tr class='table-row tableCenterCont' onclick='showVaccine(this)'>
+                            <td>$vaccineLotId</td>
+                            <td>$vaccName</td>
+                            <td>$source</td>
+                            <td>$dateStored</td>
+                            <td>$vaccExp</td>
+                            <td>$batchQty</td>
+                            <td>
+                                <div class='d-flex justify-content-center'>
+                                      <button type='button' class='btn btn-sm bg-none' onclick='event.stopPropagation();archive(1, clickArchive, $vaccineLotId)'><i class='fa fa-archive'></i></button>
+                                      <button type='button' class='btn btn-sm bg-none' id='viewButton' onclick='viewVaccineDetails($vaccineLotId)'><i class='fas fa-eye'></i></button>
+                                </div>
+                            </td>
+                            </tr>";
     }
+
+    echo"<div id='viewVaccineDetails' class='modal-window'></div>";
 
 }
 
@@ -252,6 +210,16 @@ if (isset($_POST['vaccineName'])) {
     $query2 = "INSERT INTO vaccine_information (vaccine_id, vaccine_manufacturer, vaccine_description, vaccine_dosage_required, vaccine_dosage_interval, vaccine_minimum_temperature, vaccine_maximum_temperature) VALUE ('$vaccineid', '$vaccineManufacturer', '$vaccineDescription', '$dosage', '$interval', '$minTemp', '$maxTemp');";
     $database->query($query2);
 
+     echo" <option selected disabled> Select Vaccine Efficacy</option>";
+
+                                    $getVaccinesQuery = "SELECT vaccine_name FROM vaccine";
+                                    $stmt = $database->stmt_init();
+                                    $stmt->prepare($getVaccinesQuery);
+                                    $stmt->execute();
+                                    $stmt->bind_result($vaccine);
+                                    while ($stmt->fetch()) {
+                                        echo "<option>$vaccine</option>";
+                                    }
 
 }
 
@@ -264,12 +232,194 @@ if (isset($_POST['archive'])){
         $query = "UPDATE `vaccine_lot` SET `Archived`= 1 WHERE `vaccine_lot_id` = '$archivedId'";
         $database->query($query);
 
+        echo " <thead class='tableCenterCont'>
+                    <tr>
+                        <th>Vaccine Lot ID</th>
+                        <th>Vaccine Name</th>
+                        <th>Vaccine Source</th>
+                        <th>Date Received</th>
+                        <th>Expiration Date</th>
+                        <th>Bottle Quantity</th>
+                        <th>Action</th>
+                    </tr>
+                    </thead>";
+
+        $query1 = "SELECT vaccine_lot.vaccine_lot_id, vaccine.vaccine_name, vaccine_lot.source, vaccine_lot.date_stored, vaccine_lot.vaccine_expiration, vaccine_lot.total_vaccine_vial_quantity FROM vaccine_lot JOIN vaccine ON vaccine_lot.vaccine_id = vaccine.vaccine_id WHERE vaccine_lot.Archived = 0;";
+        $dbase = $database->stmt_init();
+        $dbase->prepare($query1);
+        $dbase->execute();
+        $dbase->bind_result($vaccineLotId, $vaccName, $source, $dateStored, $vaccExp, $batchQty);
+        while ($dbase->fetch()) {
+
+            echo "<tr class='table-row tableCenterCont' onclick='showVaccine(this)'>
+                            <td>$vaccineLotId</td>
+                            <td>$vaccName</td>
+                            <td>$source</td>
+                            <td>$dateStored</td>
+                            <td>$vaccExp</td>
+                            <td>$batchQty</td>
+                            <td>
+                                <div class='d-flex justify-content-center'>
+                                      <button type='button' class='btn btn-sm bg-none' onclick='event.stopPropagation();archive(1, clickArchive, $vaccineLotId)'><i class='fa fa-archive'></i></button>
+                                      <button type='button' class='btn btn-sm bg-none' id='viewButton' onclick='viewVaccineDetails($vaccineLotId)'><i class='fas fa-eye'></i></button>
+                                </div>
+                            </td>
+                            </tr>";
+        }
+
+                    echo"<div id='viewVaccineDetails' class='modal-window'></div>";
+
     } else if ($option == "UnArchive") {
         $query = "UPDATE `vaccine_lot` SET `Archived`= 0 WHERE `vaccine_lot_id` = '$archivedId'";
         $database->query($query);
 
+          echo" <table class='table table-row table-hover tableModal' id='vaccineTable'>
+                    <thead class='tableHeader'>
+                    <tr class='tableCenterCont'>
+                        <th scope='col'>Vaccine Lot ID</th>
+                        <th scope='col'>Vaccine Name</th>
+                        <th scope='col'>Vaccine Source</th>
+                        <th scope='col'>Date Received</th>
+                        <th scope='col'>Expiration</th>
+                        <th scope='col'>Bottle Quantity</th>
+                        <th scope='col'>Action</th>
+                    </tr>
+                    </thead>
+                    <div id='vaccineContent'>";
 
+
+
+        $query1 = "SELECT vaccine_lot.vaccine_lot_id, vaccine.vaccine_name, vaccine_lot.source, vaccine_lot.date_stored, vaccine_lot.vaccine_expiration, vaccine_lot.total_vaccine_vial_quantity FROM vaccine_lot JOIN vaccine ON vaccine_lot.vaccine_id = vaccine.vaccine_id WHERE vaccine_lot.Archived = 1;";
+        $dbase = $database->stmt_init();
+        $dbase->prepare($query1);
+        $dbase->execute();
+        $dbase->bind_result($vaccineLotId, $vaccName, $source, $dateStored, $vaccExp, $batchQty);
+        while ($dbase->fetch()) {
+
+
+                                echo "<tr class='tableCenterCont'>
+                <td>$vaccineLotId</td>
+                <td>$vaccName</td>
+                <td>$source</td>
+                <td>$dateStored</td>
+                <td>$vaccExp</td>
+                <td>$batchQty</td>
+                <td>
+                    <div style='text-align: center;'>
+                        <button class='btn btn-warning' onclick='archive(0, clickArchive, $vaccineLotId )'><i class='fas fa-box-open'></i> unarchive</button>
+                    </div>
+                </td>
+                </tr>";
+        }
     }
+    echo"
+</div>
+</table>";
+}
+
+if (isset($_POST['showUpdatedArchive'])){
+     echo'<table class="table table-row table-hover tableModal" id="vaccineTable">
+                    <thead class="tableHeader">
+                    <tr class="tableCenterCont">
+                        <th scope="col">Vaccine Lot ID</th>
+                        <th scope="col">Vaccine Name</th>
+                        <th scope="col">Vaccine Source</th>
+                        <th scope="col">Date Received</th>
+                        <th scope="col">Expiration</th>
+                        <th scope="col">Bottle Quantity</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                    </thead>
+                    <div id="vaccineContent">';
+
+                        require_once '../require/getVaccine.php';
+                        require_once '../require/getVaccineBatch.php';
+                        require_once '../require/getVaccineLot.php';
+
+                        $count = 0;
+                        foreach ($vaccineLots as $vl) {
+                            if ($vl->getArchived() == 1) {
+                                $vaccineLotId = $vl->getVaccLotId();
+                                $vaccLotVaccId = $vl->getVaccLotVaccId();
+                                $dateStored = $vl->getDateVaccStored();
+                                $batchQty = $vl->getVaccBatchQty();
+                                $source = $vl->getSource();
+                                $vaccExp = $vl->getExpiration();
+
+
+                                foreach ($vaccines as $vac) {
+                                    if ($vaccLotVaccId == $vac->getVaccId()) {
+                                        $vaccName = $vac->getVaccName();
+                                    }
+                                }
+
+                                echo "<tr class='tableCenterCont'>
+                <td>$vaccineLotId</td>
+                <td>$vaccName</td>
+                <td>$source</td>
+                <td>$dateStored</td>
+                <td>$vaccExp</td>
+                <td>$batchQty</td>
+                <td>
+                    <div style='text-align: center;'>
+                        <button class='btn btn-warning' onclick='archive(0, clickArchive, $vaccineLotId )'><i class='fas fa-box-open'></i> unarchive</button>
+                    </div>
+                </td>
+                </tr>";
+                            }
+                        }
+                        echo"
+                    </div>
+                </table>";
+}
+
+if (isset($_POST['showUpdatedVaccine'])){
+    echo " <thead class='tableCenterCont'>
+                    <tr>
+                        <th>Vaccine Lot ID</th>
+                        <th>Vaccine Name</th>
+                        <th>Vaccine Source</th>
+                        <th>Date Received</th>
+                        <th>Expiration Date</th>
+                        <th>Bottle Quantity</th>
+                        <th>Action</th>
+                    </tr>
+                    </thead>";
+
+    foreach ($vaccineLots as $vl) {
+        if ($vl->getArchived() == 0) {
+            $vaccineLotId = $vl->getVaccLotId();
+            $vaccLotVaccId = $vl->getVaccLotVaccId();
+            $dateStored = $vl->getDateVaccStored();
+            $batchQty = $vl->getVaccBatchQty();
+            $source = $vl->getSource();
+            $vaccExp = $vl->getExpiration();
+
+
+            foreach ($vaccines as $vac) {
+                if ($vaccLotVaccId == $vac->getVaccId()) {
+                    $vaccName = $vac->getVaccName();
+                }
+            }
+
+            echo "<tr class='table-row tableCenterCont' onclick='showVaccine(this)'>
+                            <td>$vaccineLotId</td>
+                            <td>$vaccName</td>
+                            <td>$source</td>
+                            <td>$dateStored</td>
+                            <td>$vaccExp</td>
+                            <td>$batchQty</td>
+                            <td>
+                                <div class='d-flex justify-content-center'>
+                                      <button type='button' class='btn btn-sm bg-none' onclick='event.stopPropagation();archive(1, clickArchive, $vaccineLotId)'><i class='fa fa-archive'></i></button>
+                                      <button type='button' class='btn btn-sm bg-none' id='viewButton' onclick='viewVaccineDetails($vaccineLotId)'><i class='fas fa-eye'></i></button>
+                                </div>
+                            </td>
+                            </tr>";
+        }
+    }
+
+    echo"<div id='viewVaccineDetails' class='modal-window'></div>";
 }
 
 
@@ -285,7 +435,12 @@ if (isset($_POST['vaccine'])) {
     $stmt->bind_result($vaccine_lot_id, $vaccine_id, $employee_account_id, $date_stored, $source, $total_vaccine_vial_quantity, $vaccine_expiration, $archive, $vaccine_id, $vaccine_name, $vaccine_type, $vaccine_efficacy, $vaccine_lifespan_in_months, $vaccine_id, $vaccine_manufacturer, $vaccine_description, $vaccine_dosage_required, $vaccine_dosage_interval, $vaccine_minimum_temperature, $vaccine_maximum_temperature);
     $stmt->fetch();
     $stmt->close();
+}
 
+//filter
+if (isset($_POST['filter'])) {
+    $filter = $_POST['filter'];
+    $queryFilter = '';
     echo "
     <div class='content-modal'>
     <div class='modal-header'>

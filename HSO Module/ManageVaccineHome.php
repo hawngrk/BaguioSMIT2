@@ -218,18 +218,13 @@ include_once("../includes/database.php") ?>
                                         onchange="updateVaccineInfo(this)">
                                     <option selected disabled> Select Vaccine Efficacy</option>
                                     <?php
-                                    include '../includes/database.php';
                                     $getVaccinesQuery = "SELECT vaccine_name FROM vaccine";
                                     $stmt = $database->stmt_init();
                                     $stmt->prepare($getVaccinesQuery);
                                     $stmt->execute();
                                     $stmt->bind_result($vaccine);
-                                    $listVaccines = [];
                                     while ($stmt->fetch()) {
-                                        $listVaccines[] = $vaccine;
-                                    }
-                                    foreach ($listVaccines as $vac) {
-                                        echo "<option>$vac</option>";
+                                        echo "<option>$vaccine</option>";
                                     }
                                     ?>
                                 </select>
@@ -327,7 +322,7 @@ include_once("../includes/database.php") ?>
                     <div class="modal-footer">
                         <button onclick="closeModal('newVaccineModal')" class="btn btn-danger"> Cancel</button>
                         <button type='submit' id='addBtnNewVaccine' class="btn btn-success" name='addBtnNewVaccine'
-                                onclick="addNewVaccine()"> Add
+                                onclick="event.preventDefault(); confMessage('Vaccine Brand', addNewVaccine)"> Add
                         </button>
                     </div>
                 </div>
@@ -486,7 +481,20 @@ include_once("../includes/database.php") ?>
     //update vaccine info
     function updateVaccineInfo(vaccine) {
         $.ajax({
-            url: 'ManageVaccineProcessor.php',
+            url: '../includes/searchProcessor.php',
+            type: 'POST',
+            data: {"searchVaccine": textSearch},
+            success: function (result) {
+                document.getElementById("vaccineTable").innerHTML = result;
+            }
+        });
+    }
+
+    //filter vaccine source
+    function filterVaccine(filterVac) {
+        var selectedFilter = filterVac.value;
+        $.ajax({
+            url: '../includes/filterProcessor.php',
             type: 'POST',
             data: {"vaccine": vaccine.value},
             success: function (result) {
@@ -519,7 +527,8 @@ include_once("../includes/database.php") ?>
             type: 'POST',
             data: {vaccId: vaccId, qty: qty, stored: dateStored, exp: dateExp, source: source},
             success: function (result) {
-                document.getElementById('vaccineContent').innerHTML = result;
+                document.getElementById('vaccineTable').innerHTML = result;
+                closeModal('vaccineModal');
             }
         });
     }
@@ -528,7 +537,7 @@ include_once("../includes/database.php") ?>
     function confMessage(vax, action){
         Swal.fire({
             icon: 'info',
-            title: 'Are You Sure you Want to add this' + vax,
+            title: 'Are You Sure you Want to add this ' + vax,
             showDenyButton: true,
             confirmButtonText: 'Yes',
             denyButtonText: `No`,
@@ -580,9 +589,11 @@ include_once("../includes/database.php") ?>
                 lifeSpan: lifeSpan
             },
             success: function (result) {
+                document.getElementById('selectedVaccine').innerHTML = result;
+                closeModal('newVaccineModal');
             }
         });
-        closeModal('newVaccineModal');
+
     }
 
     //archive
@@ -616,11 +627,26 @@ include_once("../includes/database.php") ?>
             data: {archive: drive, option: option},
             success: function (result) {
                 if (option == "Archive") {
-                    window.location.href = "ManageVaccineHome.php";
+                    document.getElementById('vaccineTable').innerHTML = result;
+                    $.ajax({
+                        url: 'ManageVaccineProcessor.php',
+                        method: 'POST',
+                        data: {showUpdatedArchive: ""},
+                        success: function (result) {
+                            document.getElementById('archivedContent').innerHTML = result;
+                        }
+                    })
 
                 } else if (option == "UnArchive") {
-                    document.getElementById("vaccineTable").innerHTML = "";
-                    document.getElementById("vaccineTable").innerHTML = result;
+                    document.getElementById("archivedContent").innerHTML = result;
+                    $.ajax({
+                        url: 'ManageVaccineProcessor.php',
+                        method: 'POST',
+                        data: {showUpdatedVaccine: ""},
+                        success: function (result) {
+                            document.getElementById('vaccineTable').innerHTML = result;
+                        }
+                    })
                 }
             }
         })
