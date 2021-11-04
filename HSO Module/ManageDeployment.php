@@ -557,15 +557,15 @@ include_once("../includes/database.php") ?>
                     <i class='fas fa-window-close'></i>
                 </button>
             </div>
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col-7">
+            <div class="modal-body" style="padding: 4%">
+                <div class="row mb-4">
+                    <div class="col-8">
                         <label>Name of Health District:</label>
                         <input class="districtWidth float-right" type="text" id="newHealthDistrict"
                                name="newHealthDistrict">
                     </div>
                     <div class="w-100 d-none d-md-block"></div>
-                    <div class="col-7">
+                    <div class="col-8">
                         <label>Health District Contact Number:</label>
                         <input class="contactWidth float-right" type="text" id="contactNumber" name="contactNumber">
                     </div>
@@ -584,8 +584,8 @@ include_once("../includes/database.php") ?>
                 </div>
 
 
-                <div class="AddHealthD-option">
-                    <div class="row tableScroll2">
+                <div class="AddHealthD-option border border-dark rounded">
+                    <div class="tableScroll2">
                         <ul>
                             <?php
                             require_once "../require/getBarangay.php";
@@ -705,7 +705,7 @@ include_once("../includes/database.php") ?>
 </div>
 
 <div id="addVaccSite" class="modal-window">
-    <div class="content-modal">
+    <div class="content-modal tableModal">
         <div class="modal-header">
             <h4 class="modal-title">Add Vaccination Site</h4>
             <button type="button" class="close" data-dismiss="modal" onclick="closeModal('addVaccSite')">
@@ -714,7 +714,7 @@ include_once("../includes/database.php") ?>
         </div>
         <div class="modal-body">
             <label>Vaccine Site Location:</label>
-            <input class="districtWidth" type="text" id="newVaccinationSite" name="newVaccinationSite">
+            <input class="VaxSiteWidth" type="text" id="newVaccinationSite" name="newVaccinationSite">
 
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger" onclick="closeModal('addVaccSite')"> Cancel
@@ -791,11 +791,12 @@ include_once("../includes/database.php") ?>
 
 
     window.onclick = function (event) {
-        if (event.target == document.getElementById("DeployModal") || event.target == document.getElementById("HealthDModal") || event.target == document.getElementById("vaccSiteModal") || event.target == document.getElementById("HealthD")) {
+        if (event.target == document.getElementById("archived") || event.target == document.getElementById("DeployModal") || event.target == document.getElementById("HealthDModal") || event.target == document.getElementById("vaccSiteModal") || event.target == document.getElementById("HealthD")) {
             document.getElementById("DeployModal").style.display = "none";
             document.getElementById("HealthDModal").style.display = "none";
             document.getElementById("vaccSiteModal").style.display = "none";
             document.getElementById("HealthD").style.display = "none";
+            document.getElementById("archived").style.display = "none";
 
         }
     }

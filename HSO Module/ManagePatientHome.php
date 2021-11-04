@@ -492,7 +492,7 @@ include_once("../includes/database.php") ?>
                     <button type="button" onclick="closeModal('patientInformationModal')" class="btn btn-danger"
                             data-dismiss="modal" >Cancel
                     </button>
-                    <button type="button" id="addPatientNextBtn" onclick="addPatient()" class="btn btn-success">Add</button>
+                    <button type="button" id="addPatientNextBtn" onclick="confMessage('User', addPatient)" class="btn btn-success">Add</button>
                 </div>
             </div>
 
@@ -633,6 +633,8 @@ include_once("../includes/database.php") ?>
             patientMedBackgroundModal.style.display = "none";
         } else if (event.target === uploadFileModal) {
             uploadFileModal.style.display = "none";
+        } else if (event.target == document.getElementById("archived")){
+            document.getElementById("archived").style.display = "none";
         }
     }
 
@@ -737,6 +739,23 @@ include_once("../includes/database.php") ?>
         }
     }
 
+    function confMessage(item, action){
+        Swal.fire({
+            icon: 'info',
+            title: 'Are You Sure you Want to add this' + item,
+            showDenyButton: true,
+            confirmButtonText: 'Yes',
+            denyButtonText: `No`,
+        }).then((result) => {
+            if (result.isConfirmed) {
+                action();
+                Swal.fire('Saved!', '', 'success')
+            } else if (result.isDenied) {
+                Swal.fire('Changes are not saved', '', 'info')
+            }
+        })
+    }
+
     //Show Comorbidity List
     var choice = document.getElementById("comorbidity");
     choice.onchange = function () {
@@ -837,7 +856,6 @@ include_once("../includes/database.php") ?>
 
             success: function (result) {
                 console.log(result);
-                Swal.fire('Added Patient', '', 'success');
                 reloadPatient();
                 addButton.disabled = true;
             }
@@ -862,8 +880,8 @@ include_once("../includes/database.php") ?>
             url: '../includes/showRegisteredPatients.php',
             type: 'GET',
             success: function (result) {
-                document.getElementById("patientTable").innerHTML = "";
-                document.getElementById("patientTable").innerHTML = result;
+                document.getElementById("patientTable1").innerHTML = "";
+                document.getElementById("patientTable1").innerHTML = result;
             }
         });
     }
@@ -942,7 +960,15 @@ include_once("../includes/database.php") ?>
             }
         });
     }
-
 </script>
 
+<!--
+<script>
+    $(document).ready(function ($) {
+        $(".table-row").click(function () {
+            window.document.location = $(this).data("href");
+        });
+    });
+</script>
+-->
 </body>

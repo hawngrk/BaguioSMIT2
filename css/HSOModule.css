@@ -185,8 +185,12 @@ img{
 }
 
 .contactWidth, .districtWidth{ /*HSO*/
-    width: 40%;
+    width: 100%;
     margin: 1%;
+}
+
+.VaxSiteWidth{
+    width: 100%;
 }
 
 #HealthDModalSort{
@@ -473,7 +477,11 @@ h7~h8{
 }
 
 .sortButton, .filterButton{ /*hso*/
-    width: 89%;
+    width: 90%;
+}
+
+.sfDiv{
+    width: 160px;
 }
 
 .sfDiv select { /*hso*/

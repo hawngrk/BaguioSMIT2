@@ -562,6 +562,8 @@ include_once("../includes/database.php") ?>
                     invalidatedReportsModal.style.display = "none";
                 } else if (event.target === generateReportsModal) {
                     generateReportsModal.style.display = "none";
+                } else if (event.target == document.getElementById("archived")){
+                    document.getElementById("archived").style.display = "none";
                 }
             }
 

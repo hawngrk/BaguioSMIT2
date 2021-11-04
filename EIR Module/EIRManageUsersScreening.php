@@ -446,7 +446,7 @@
         </div>
         <div class="modal-footer">
             <button type="button" onclick="closeModal('addPatientModal')" class="btn btn-danger shadow-sm" >Cancel</button>
-            <button type="button" id="addBtn" class="btn btn-success shadow-sm" onclick="addPatient()">Add</button>
+            <button type="button" id="addBtn" class="btn btn-success shadow-sm" onclick="confMessage('Patient', addPatient)">Add</button>
         </div>
     </div>
 </div>
@@ -511,39 +511,38 @@
                 </thead>
 
                 <?php
-                require_once '../require/getVaccinationDrive.php';
-                require_once '../require/getVaccinationSites.php';
+                require_once '../require/getPatientDetails.php';
 
-                $count = 0;
-                foreach ($vaccination_drive as $vd) {
-                    if ($vd->getArchived() == 1) {
-                        $count++;
-                        $driveId = $vd->getDriveId();
-                        $date = $vd->getVaccDate();
-                        $stubs = $vd->getVaccStubs();
+                foreach ($patient_details as $pd) {
+                    if ($pd->getArchived() == 1) {
+                        $id = $pd->getPatientDeetPatId();
+                        $category = $pd->getPriorityGroup();
+                        $fullAddress = $pd->getHouseAdd() . ", " . $pd->getBrgy() . ", " . $pd->getCity() . ", " . $pd->getProvince();
+                        $contact = $pd->getContact();
 
-                        foreach ($vaccinationSites as $vs) {
-                            if ($vs->getVaccinationSiteId() == $vd->getVaccDriveVaccSiteId()) {
-                                $vaccinationSite = $vs->getVaccinationSiteLocation();
-                            }
+                        if ($pd->getPatientMName() == null && $pd->getPatientSuffix() == null) {
+                            $name = $pd->getPatientLName() . ", " . $pd->getPatientFName();
+                        } else if ($pd->getPatientSuffix() == null) {
+                            $name = $pd->getPatientLName() . ", " . $pd->getPatientFName() . " " . $pd->getPatientMName();
+                        } else if ($pd->getPatientMName() == null) {
+                            $name = $pd->getPatientLName() . ", " . $pd->getPatientFName() . " " . $pd->getPatientSuffix();
+                        } else {
+                            $name = $pd->getPatientLName() . ", " . $pd->getPatientFName() . " " . $pd->getPatientMName() . " " . $pd->getPatientSuffix();
                         }
 
-                        echo "<tr class='table-row'>
-                        <td>$count</td>
-                        <td>$driveId</td>
-                        <td>$vaccinationSite</td>
-                        <td>$date</td>
-                        <td>$stubs</td>
+                        echo "<tr class='tableCenterCont'>
+                        <td>$name</td>
+                        <td>$category</td>
+                        <td>$fullAddress</td>
+                        <td>$contact</td>
                         <td>
-                            <div style='text-align: left;'>
-                                <button class='btn btn-warning' onclick='archive(0, clickArchive, $driveId )'>unarchive <i class='fas fa-box-open'></i></button>
+                            <div>
+                                <button class='btn btn-warning' onclick='archive(0, clickArchive, $id)'><i class='fa fa-archive'></i> unarchive</button>
                             </div>
                         </td>
-             
-                      </tr>";
+                    </tr>";
                     }
                 }
-
                 ?>
             </table>
         </div>
@@ -751,6 +750,23 @@
         console.log(modal)
         document.getElementById(modal).style.display = "block";
         document.body.classList.add("scrollBody");
+    }
+
+    function confMessage(item, action){
+        Swal.fire({
+            icon: 'info',
+            title: 'Are You Sure you Want to add this' + item,
+            showDenyButton: true,
+            confirmButtonText: 'Yes',
+            denyButtonText: `No`,
+        }).then((result) => {
+            if (result.isConfirmed) {
+                action();
+                Swal.fire('Saved!', '', 'success')
+            } else if (result.isDenied) {
+                Swal.fire('Changes are not saved', '', 'info')
+            }
+        })
     }
 
     function closeModal(modal) {

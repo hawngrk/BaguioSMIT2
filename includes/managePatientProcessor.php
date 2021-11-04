@@ -128,9 +128,9 @@ if (isset($_POST['sort'])) {
                 <td>$patientAddress</td>
                 <td>$contactNum</td>
                 <td>
-                <div style='text-align: left;'>
-                                <button class='buttonTransparent' onclick='event.stopPropagation();archive(1, clickArchive, $patientId)'><i class='fa fa-archive'></i></button>
-                                <button type='button' class='viewReportBtn buttonTransparent' id='viewButton' onclick='viewPatient($patientId)'><i class='fas fa-eye'></i></button
+                <div class='d-flex justify-content-center'>
+                                <button class='btn btn-sm bg-none' onclick='event.stopPropagation();archive(1, clickArchive, $patientId)'><i class='fa fa-archive'></i></button>
+                                <button type='button' class='btn btn-sm bg-none' id='viewButton' onclick='viewPatient($patientId)'><i class='fas fa-eye'></i></button
                             </div>
 </td>
                 </tr>";

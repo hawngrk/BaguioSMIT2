@@ -1,13 +1,13 @@
-<?php 
+<?php
     require_once('../includes/configure.php');
-    require_once('../includes/recordActivityLog.php');
-    //Starting session to access SESSION data
-    session_start();
-
-    $accountDetails = $_SESSION['account'];
-    $employeeID = $accountDetails['empId'];
-    $employeeRole = $accountDetails['role'];
-
+//    require_once('../includes/recordActivityLog.php');
+//    //Starting session to access SESSION data
+//    session_start();
+//
+//    $accountDetails = $_SESSION['account'];
+//    $employeeID = $accountDetails['empId'];
+//    $employeeRole = $accountDetails['role'];
+//
 
     //Personal Information
     $firstname        = $_POST['firstname'];
@@ -55,22 +55,21 @@
         insertDetails($patientID['patient_id'], $firstname, $lastname, $middlename, $suffix, $priorityGroup, $category, $categoryID, $philHealthID, $pwdID, $houseAddress, $barangay, $cmAddress, $province, $region, $birthdate, $age, $gender, $contact, $occupation);
         insertMedicalBackground($patientID['patient_id'], $allergyToVaccine, $hypertension, $heartDisease, $kidneyDisease, $diabetesMellitus, $bronchialAsthma, $immunodeficiency, $cancer, $otherCommorbidity);
         $accountDetails = createAccount($patientID['patient_id'], $firstname, $lastname, $email);
-        insertPatientVitals($patientID);
-        insertLogs($employeeID, $employeeRole, 'Add', 'Added patient ID: '.$patientID['patient_id']);
-        echo json_encode($accountDetails);
+        insertPatientVitals($patientID['patient_id']);
+        //insertLogs($employeeID, $employeeRole, 'Add', 'Added patient ID: '.$patientID['patient_id']);
     }
     
 //Inserts full name in the patient table
 function insertPatient($firstname, $lastname, $middlename, $suffix) {
-    $query = "INSERT INTO patient (patient_full_name, first_dose_vaccination, second_dose_vaccination, for_queue) VALUES (?, ?, ?, ?)";
+    $query = "INSERT INTO patient (patient_full_name, first_dose_vaccination, second_dose_vaccination, for_queue, token) VALUES (?, ?, ?, ?, ?)";
     try {        
         $stmtinsert = $GLOBALS['database']->prepare($query);
         $fullName = toFullName($firstname, $lastname, $middlename, $suffix);
-        $result = $stmtinsert->execute([$fullName, 0, 0, 0]);
+        $result = $stmtinsert->execute([$fullName, 0, 0, 0, 0]);
         if($result) {
             $id = getPatientId($fullName);
-            
-            return $id;  
+
+            return $id;
 
         }
     } catch (PDOException $e) {
@@ -106,7 +105,7 @@ function insertPatientVitals($patientID) {
     $query = "INSERT INTO patient_vitals (patient_id) VALUES (?)";
     try {
         $stmtinsert = $GLOBALS['database']->prepare($query);
-        $stmtinsert->execute([$patientID['patient_id']]);
+        $stmtinsert->execute([$patientID]);
     } catch (PDOException $e) {
         echo 'Error in patient Vitals: ', $e->getMessage();
     }

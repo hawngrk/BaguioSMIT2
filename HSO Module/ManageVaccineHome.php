@@ -79,18 +79,16 @@ include_once("../includes/database.php") ?>
         </ul>
     </nav>
 
-    <!-- Page Content -->
+    <!-- Top Nav Bar  -->
     <div id="content">
         <!--Top Nav-->
         <div class="navbar navbar-expand-lg navbar-light bg-light shadow-sm p-3 mb-4 rounded-lg">
             <div class="container-fluid">
                 <div>
-                    <button onclick="openModal('vaccineModal')" type="button" class="shadow-lg  buttonTop3 float-right">
-                        <i
+                    <button onclick="openModal('vaccineModal')" type="button" class="shadow-lg  buttonTop3 float-right"><i
                                 class="fas fa-plus"></i> Add Vaccine
                     </button>
-                    <button onclick="openModal('newVaccineModal')" type="button"
-                            class="shadow-lg  buttonTop3 float-right"><i
+                    <button onclick="openModal('newVaccineModal')" type="button" class="shadow-lg  buttonTop3 float-right"><i
                                 class="fas fa-syringe"></i> Add New Vaccine
                     </button>
 
@@ -101,7 +99,6 @@ include_once("../includes/database.php") ?>
             </div>
         </div>
 
-        <!--Table Part-->
         <div class="tableContainer">
             <div class="table-title">
                 <div class="row">
@@ -206,8 +203,8 @@ include_once("../includes/database.php") ?>
     <!-----MODALS----->
     <!--Add Vaccine Modal-->
     <div id="vaccineModal" class="modal-window">
+        <div class="content-modal">
         <form id='addVaccineForm' method="post" enctype="multipart/form-data">
-            <div class="content-modal">
                 <div class="modal-header">
                     <h2 id="headerAddVaccine"> Add Vaccine </h2>
                     <span onclick="closeModal('vaccineModal')" class="close"><i class='fas fa-window-close'></i></span>
@@ -256,7 +253,7 @@ include_once("../includes/database.php") ?>
                 </div>
                 <div class="modal-footer">
                     <button onclick="closeModal('vaccineModal')" class="btn btn-danger">Cancel</button>
-                    <button id="addVaccineBtn" class="btn btn-success" type='submit' onclick="addVaccine()"> Add
+                    <button id="addVaccineBtn" class="btn btn-success" type='submit' onclick="event.preventDefault(); confMessage('Vaccine Lot', addVaccine)"> Add
                     </button>
 
                 </div>
@@ -266,8 +263,8 @@ include_once("../includes/database.php") ?>
 
     <!-- Add New Vaccine Modal-->
     <div id="newVaccineModal" class="modal-window">
+        <div class="content-modal">
         <form id='newVaccineForm' method="post" enctype="multipart/form-data">
-            <div class="content-modal">
                 <div class="modal-header">
                     <h2 id="headerAddNewVaccine">Add New Vaccine</h2>
                     <span onclick="closeModal('newVaccineModal')" class="close"><i
@@ -479,10 +476,10 @@ include_once("../includes/database.php") ?>
     }
 
     window.onclick = function (event) {
-        if (event.target === newVaccineModal) {
-            newVaccineModal.style.display = "none";
-        } else if (event.target === addVaccineModal) {
-            addVaccineModal.style.display = "none";
+        if (event.target == document.getElementById("archived") || event.target == document.getElementById("vaccineModal") || event.target == document.getElementById("newVaccineModal")) {
+            document.getElementById("archived").style.display = "none";
+            document.getElementById("vaccineModal").style.display = "none";
+            document.getElementById("newVaccineModal").style.display = "none";
         }
     }
 
@@ -528,6 +525,23 @@ include_once("../includes/database.php") ?>
     }
 
     //add new vaccine
+    function confMessage(vax, action){
+        Swal.fire({
+            icon: 'info',
+            title: 'Are You Sure you Want to add this' + vax,
+            showDenyButton: true,
+            confirmButtonText: 'Yes',
+            denyButtonText: `No`,
+        }).then((result) => {
+            if (result.isConfirmed) {
+                action();
+                Swal.fire('Saved!', '', 'success')
+            } else if (result.isDenied) {
+                Swal.fire('Changes are not saved', '', 'info')
+            }
+        })
+    }
+
     function addNewVaccine() {
         var vaccName = document.getElementById("vaccineName").value;
         var manu = document.getElementById('vaccineManufacturer').value;
@@ -568,6 +582,7 @@ include_once("../includes/database.php") ?>
             success: function (result) {
             }
         });
+        closeModal('newVaccineModal');
     }
 
     //archive

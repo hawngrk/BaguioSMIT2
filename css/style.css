@@ -1501,6 +1501,10 @@ h7~h8{
     width: 89%;
 }
 
+.sfDiv{
+    width: 150px;
+}
+
 .sfDiv select { /*hso*/
     /* styling */
     background-color: white;
