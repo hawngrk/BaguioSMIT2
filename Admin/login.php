@@ -1,4 +1,37 @@
 <?php 
+session_start();
+
+if(isset($_SESSION['account'])) {
+    $accountDetails = $_SESSION['account'];
+    echo json_encode($_SESSION);
+    if ($accountDetails['role'] == 'Barangay') {
+        header("Location: ../Barangay Module/homeBarangayModule.php");
+    }
+    
+    if ($accountDetails['role'] == 'Monitoring') {
+        header("Location: ../Monitoring Module/ScanQRMonitoring.php");
+    }
+    
+    if ($accountDetails['role'] == 'Screening') {
+        header("Location: ../Barangay Module/homeBarangayModule.php");
+    }
+
+    if ($accountDetails['role'] == 'HSO') {
+        header("Location: ../HSO Module/HSOdash.php");
+    }
+
+    if ($accountDetails['role'] == 'EIR') {
+        header("Location: ../EIR Module/.php");
+    }
+
+    if ($accountDetails['role'] == 'SSD') {
+        header("Location: ../Ssd Module/homeSsdModule.php");
+    }
+
+    if ($accountDetails['role'] == "Mayor's Office") {
+        header("Location: ../Mayor Module/UsersLog.php");
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -98,7 +131,7 @@ Description: Login HTML Elements for receiving credentials from the users
                         } 
                         if ($.trim(results)  == 'Monitoring') {
                             success();
-                            setTimeout("window.location.href = '../Monitoring Module/ScanQRScreening.php'", 500);
+                            setTimeout("window.location.href = '../Monitoring Module/ScanQRMonitoring.php'", 500);
                         } 
                         if ($.trim(results)  == 'Screening') {
                             success();
