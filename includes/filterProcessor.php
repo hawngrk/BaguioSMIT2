@@ -77,7 +77,7 @@ if (isset($_POST['filterVaccine'])) {
     $stmt->bind_result($vaccineLotId, $vaccName, $vaccineSource,$dateStored, $vaccExp, $batchQty, $vaccQty);
 
     while ($stmt->fetch()) {
-        echo "<tr class='tableCenterCont' onclick='showVaccine(this)'>
+        echo "<tr class='table-row tableCenterCont' onclick='showVaccine(this)'>
                 <td>$vaccineLotId</td>
                 <td>$vaccName</td>
                 <td>$vaccineSource</td>
@@ -85,9 +85,9 @@ if (isset($_POST['filterVaccine'])) {
                 <td>$vaccExp</td>
                 <td>$vaccQty</td>
                 <td>   
-                <div>
-                   <button type='button' class='buttonTransparent actionButt' onclick='event.stopPropagation();archive(1, clickArchive, $vaccineLotId)'><i class='fa fa-archive'></i></button>
-                   <button type='button' class='viewReportBtn buttonTransparent actionButt' id='viewButton' onclick='event.stopPropagation();viewVaccineDetails($vaccineLotId)'><i class='fas fa-eye'></i></button>
+                <div class='d-flex justify-content-center'>
+                   <button type='button' class='btn btn-sm bg-none' onclick='event.stopPropagation();archive(1, clickArchive, $vaccineLotId)'><i class='fa fa-archive'></i></button>
+                   <button type='button' class='btn btn-sm bg-none' id='viewButton' onclick='event.stopPropagation();viewVaccineDetails($vaccineLotId)'><i class='fas fa-eye'></i></button>
                 </div> 
                 </td>
                 </tr>";
@@ -126,10 +126,10 @@ if (isset($_POST['filterDeployment'])) {
                         <td>$vaccinationSite</td>
                         <td>$date</td>
                         <td>
-                            <div>
-                                <button class='buttonTransparent actionButt' onclick='event.stopPropagation(); archive(1, clickArchive, $driveId)'><i class='fa fa-archive'></i></button>
-                                <button class='buttonTransparent actionButt' onclick=''><i class='far fa-edit'></i></button>
-                           
+                            <div class='d-flex justify-content-center'>
+                                <button class='btn btn-sm bg-none' onclick='event.stopPropagation(); archive(1, clickArchive, $driveId)'><i class='fa fa-archive'></i></button>
+                                <button class='btn btn-sm bg-none' onclick=''><i class='far fa-edit'></i></button>
+                  
                             </div>
                         </td>
              

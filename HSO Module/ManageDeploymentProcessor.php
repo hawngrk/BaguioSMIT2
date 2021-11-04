@@ -32,7 +32,7 @@ if (isset($_POST['search'])) {
                 <td>$vaccinationSite</td>
                 <td>$date</td>
                 <td>$stub</td>
-                <td> <button class='buttonTransparent actionButt' onclick='event.stopPropagation(); archive(1, clickArchive, $driveId)'><i class='fa fa-archive'></i></button>
+                <td> <button class='btn btn-sm bg-none' onclick='event.stopPropagation(); archive(1, clickArchive, $driveId)'><i class='fa fa-archive'></i></button>
                                 <button class='buttonTransparent ml-2' onclick=''><i class='far fa-edit'></i></button>
                            
                             </td>
@@ -614,9 +614,9 @@ if (isset($_POST['archive'])){
                         <td>$vaccinationSite</td>
                         <td>$date</td>
                         <td>
-                            <div class='tableCenterCont'>
-                                <button class='buttonTransparent actionButt' onclick='event.stopPropagation(); archive(1, clickArchive, $driveId)'><i class='fa fa-archive'></i></button>
-                                <button class='buttonTransparent actionButt' onclick=''><i class='far fa-edit'></i></button>
+                            <div class='d-flex justify-content-center'>
+                                <button class='btn btn-sm bg-none' onclick='event.stopPropagation(); archive(1, clickArchive, $driveId)'><i class='fa fa-archive'></i></button>
+                                <button class='btn btn-sm bg-none' onclick=''><i class='far fa-edit'></i></button>
                             </div>
                         </td>
                       </tr>";
@@ -689,9 +689,9 @@ if (isset($_POST['showUpdatedDrive'])){
                         <td>$vaccinationSite</td>
                         <td>$date</td>
                         <td>
-                            <div class='tableCenterCont'>
-                                <button class='buttonTransparent actionButt' onclick='event.stopPropagation(); archive(1, clickArchive, $driveId)'><i class='fa fa-archive'></i></button>
-                                <button class='buttonTransparent actionButt' onclick=''><i class='far fa-edit'></i></button>
+                            <div class='d-flex justify-content-center'>
+                                <button class='btn btn-sm bg-none' onclick='event.stopPropagation(); archive(1, clickArchive, $driveId)'><i class='fa fa-archive'></i></button>
+                                <button class='btn btn-sm bg-none' onclick=''><i class='far fa-edit'></i></button>
                             </div>
                         </td>
                       </tr>";
@@ -767,7 +767,7 @@ if (isset($_POST['distArchive'])){
                                     <td>$number</td>
                                     <td style= 'vertical-align: middle;'>
                                         <div style='text-align: left;'>
-                                           <button class='buttonTransparent actionButt' onclick='event.stopPropagation(); archive(1,archiveDistrict, $districtId)'><i class='fa fa-archive'></i></button>
+                                           <button class='btn btn-sm bg-none' onclick='event.stopPropagation(); archive(1,archiveDistrict, $districtId)'><i class='fa fa-archive'></i></button>
                                         </div>
                                     </td>
                                   </tr>";
@@ -881,7 +881,7 @@ if (isset($_POST['showUpdatedDist'])){
                                     <td>$number</td>
                                     <td style= 'vertical-align: middle;'>
                                         <div style='text-align: left;'>
-                                           <button class='buttonTransparent actionButt' onclick='event.stopPropagation(); archive(1,archiveDistrict, $districtId)'><i class='fa fa-archive'></i></button>
+                                           <button class='btn btn-sm bg-none' onclick='event.stopPropagation(); archive(1,archiveDistrict, $districtId)'><i class='fa fa-archive'></i></button>
                                         </div>
                                     </td>
                                   </tr>";

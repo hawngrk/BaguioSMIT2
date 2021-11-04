@@ -79,10 +79,10 @@ include_once("../includes/database.php")
     <!-- Whole Page  -->
     <div id="content">
         <!-- Top Nav Bar  -->
-        
-            <div class="container-fluid">
-                <button id="buttonMarker" class="float-right notif" onclick="openNotif('notificationModal')">
-                    <span class="marker" id="marker"><i class="fas fa-circle"></i></span>
+
+        <div class="float-right">
+                <button id="buttonMarker" class="btn btn-lg bg-none" onclick="openNotif('notificationModal')">
+                    <span class="marker" id="marker"></span>
                     <i class="fas fa-bell"></i>
                 </button>
             </div>
@@ -166,7 +166,7 @@ include_once("../includes/database.php")
                             echo "
                                                    
                                                       
-                                                        <div id='$driveId' style='color: #9C9C9C'>
+                                                        <div id='$driveId' style='color: #000000'>
                                                             <p>Vaccination Location: $locName<br>
                                                                Date: $date <br>
                                                                Number of First Stubs: $firstStubs <br>

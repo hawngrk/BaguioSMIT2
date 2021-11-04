@@ -8,7 +8,7 @@ if (isset($_POST['filter'])) {
     $filter = $_POST['filter'];
     $queryFilter = '';
     echo "
-      <thead>
+      <thead >
             <tr class='tableCenterCont'>
                 <th scope='col'>Vaccine Lot ID</th>
                 <th scope='col'>Vaccine Name</th>
@@ -42,9 +42,9 @@ if (isset($_POST['filter'])) {
                 <td>$vaccExp</td>
                 <td>$vaccQty</td>
                 <td>   
-                <div>
-                   <button type='button' class='buttonTransparent actionButt' onclick='event.stopPropagation();archive(1, clickArchive, $vaccineLotId)'><i class='fa fa-archive'></i></button>
-                   <button type='button' class='viewReportBtn buttonTransparent actionButt' id='viewButton' onclick='event.stopPropagation();viewVaccineDetails($vaccineLotId)'><i class='fas fa-eye'></i></button>
+                <div class='d-flex justify-content-center'>
+                   <button type='button' class='btn btn-sm bg-none' onclick='event.stopPropagation();archive(1, clickArchive, $vaccineLotId)'><i class='fa fa-archive'></i></button>
+                   <button type='button' class='btn btn-sm bg-none' id='viewButton' onclick='event.stopPropagation();viewVaccineDetails($vaccineLotId)'><i class='fas fa-eye'></i></button>
                 </div> 
                 </td>
                 </tr>";
@@ -113,9 +113,9 @@ if (isset($_POST['sort'])) {
                 <td>$vaccExp</td>
                 <td>$vaccQty</td>
                 <td>   
-                <div>
-                   <button type='button' class='buttonTransparent actionButt' onclick='event.stopPropagation();archive(1, clickArchive, $vaccineLotId)'><i class='fa fa-archive'></i></button>
-                   <button type='button' class='viewReportBtn buttonTransparent actionButt' id='viewButton' onclick='event.stopPropagation();viewVaccineDetails($vaccineLotId)'><i class='fas fa-eye'></i></button>
+                <div class='d-flex justify-content-center'>
+                   <button type='button' class='btn btn-sm bg-none' onclick='event.stopPropagation();archive(1, clickArchive, $vaccineLotId)'><i class='fa fa-archive'></i></button>
+                   <button type='button' class='btn btn-sm bg-none' id='viewButton' onclick='event.stopPropagation();viewVaccineDetails($vaccineLotId)'><i class='fas fa-eye'></i></button>
                 </div> 
                 </td>
                 </tr>";
@@ -454,111 +454,110 @@ if (isset($_POST['filter'])) {
     <div class='modal-body'>
     <div class='vacinneInfo'>
     <h4 class='ml-3'> $vaccine_name </h4>
-    <hr>
     <div class='row'>
     <div class='col b'>
-    <h5 class='ml-5 font-weight-bold'> Manufacturer </h5>
+    <h7 class='ml-5 font-weight-bold'> Manufacturer </h7>
     </div>
     <div class='col'>
-    <h5> $vaccine_manufacturer </h5>
+    <h7> $vaccine_manufacturer </h7>
     </div>
     </div>
     
     <div class='row'>
     <div class='col'>
-    <h5 class='ml-5 font-weight-bold'> Vaccine Type </h5>
+    <h7 class='ml-5 font-weight-bold'> Vaccine Type </h7>
     </div>
     <div class='col'>
-    <h5> $vaccine_type </h5>
+    <h7> $vaccine_type </h7>
     </div>
     </div>
     
     <div class='row'>
     <div class='col'>
-    <h5 class='ml-5 font-weight-bold'> Efficacy </h5>
+    <h7 class='ml-5 font-weight-bold'> Efficacy </h7>
     </div>
     <div class='col'>
-    <h5> $vaccine_efficacy%</h5>
+    <h7> $vaccine_efficacy%</h7>
     </div>
     </div>
     
     <div class='row'>
     <div class='col'>
-    <h5 class='ml-5 font-weight-bold'> Date Stored </h5>
+    <h7 class='ml-5 font-weight-bold'> Date Stored </h7>
     </div>
     <div class='col'>
-    <h5> $date_stored </h5>
+    <h7> $date_stored </h7>
     </div>
     </div>
     
     <div class='row'>
     <div class='col'>
-    <h5 class='ml-5 font-weight-bold'> Expiration Date </h5>
+    <h7 class='ml-5 font-weight-bold'> Expiration Date </h7>
     </div>
     <div class='col'>
-    <h5> $vaccine_expiration </h5>
+    <h7> $vaccine_expiration </h7>
     </div>
     </div>
     
     <div class='row'>
     <div class='col'>
-    <h5 class='ml-5 font-weight-bold'> Life Span </h5>
+    <h7 class='ml-5 font-weight-bold'> Life Span </h7>
     </div>
     <div class='col'>
     
-    <h5> $vaccine_lifespan_in_months month/s </h5>
+    <h7> $vaccine_lifespan_in_months month/s </h7>
     </div>
     </div>
    
     <div class='row'>
     <div class='col'>
-    <h5 class='ml-5 font-weight-bold'> Dosage Required </h5>
+    <h7 class='ml-5 font-weight-bold'> Dosage Required </h7>
     </div>
     <div class='col'>
-    <h5> $vaccine_dosage_required doses </h5>
+    <h7> $vaccine_dosage_required doses </h7>
     </div>
     </div>
    
     <div class='row'>
     <div class='col'>
-    <h5 class='ml-5 font-weight-bold'> Dosage Interval </h5>
+    <h7 class='ml-5 font-weight-bold'> Dosage Interval </h7>
     </div>
     <div class='col'>
-    <h5> $vaccine_dosage_interval days </h5>
+    <h7> $vaccine_dosage_interval days </h7>
     </div>
     </div>
     
     <div class='row'>
     <div class='col'>
-    <h5 class='ml-5 font-weight-bold'> Total Quantity Vial </h5> 
+    <h7 class='ml-5 font-weight-bold'> Total Quantity Vial </h7> 
     </div>
     <div class='col'>
-    <h5> $total_vaccine_vial_quantity </h5>
+    <h7> $total_vaccine_vial_quantity </h7>
     </div>
     </div>
     
     <div class='row'>
     <div class='col'>
-    <h5 class='ml-5 font-weight-bold'> Minimum Temperature  </h5> 
+    <h7 class='ml-5 font-weight-bold'> Minimum Temperature  </h7> 
     </div>
     <div class='col'>
-    <h5> $vaccine_minimum_temperature °C </h5>
+    <h7> $vaccine_minimum_temperature °C </h7>
     </div>
     </div>
     
     <div class='row'>
     <div class='col'>
-    <h5 class='ml-5 font-weight-bold'> Maximum Temperature </h5> 
+    <h7 class='ml-5 font-weight-bold'> Maximum Temperature </h7> 
     </div>
     <div class='col'>
-    <h5> $vaccine_maximum_temperature °C </h5>
+    <h7> $vaccine_maximum_temperature °C </h7>
     </div>
     </div>
     
  
     <br>
     <div class='row'>
-    <h7 id='description' class='text-justify border border-secondary rounded mb-4'> <b> Desctiption: </b> <br> $vaccine_description</h7>
+    <h7 id='description' class='text-justify border border-secondary rounded mb-4'> <b> Description: </b> <br> $vaccine_description</h7>
     </div>
     </div>
     ";

@@ -79,9 +79,9 @@ include "../includes/database.php";
     <!-- Top Nav Bar  -->
     <div id="content">
         <!-- Page Content  -->
-            <div class="container-fluid">
-                <button id="buttonMarker" class="notif float-right" onclick="openNotif('notificationModal')">
-                    <span class="marker" id="marker"><i class="fas fa-circle"></i></span>
+            <div class="float-right">
+                <button id="buttonMarker" class="btn btn-lg bg-none" onclick="openNotif('notificationModal')">
+                    <span class="marker" id="marker"></span>
                     <i class="fas fa-bell"></i>
                 </button>
             </div>
@@ -148,7 +148,7 @@ include "../includes/database.php";
                 <div id='stubsModal' class='content-modal'>
                     <div class='modal-header' >
                         <h3 style='padding-right:50%' id="header">  </h3>
-                        <button id='closeModal' class='close' onclick='closeModal("barangayModal")'> &times;</button>
+                        <button id='closeModal' class='close' onclick='closeModal("barangayModal")'> <i class='fas fa-window-close'></i></button>
                     </div>
                     <div class='modal-body' id='healthDStubs'>
                         <nav class="navbar navbar-expand-lg navbar-light navbarDep">
@@ -388,8 +388,7 @@ include "../includes/database.php";
                 secondCounter =  secondCounter - parseInt(num);
             }
 
-            document.getElementById('secondCounter').innerHTML = "";
-            document.getElementById('secondCounter').innerHTML = "<center><p><i class='fas fa-ticket-alt'></i> Number of Stubs Left: " +  secondCounter + "</p> </center>";
+            document.getElementById('secondCounter').innerHTML = "<center><p class='float-left'><i class='fas fa-ticket-alt'></i> Number of Stubs Left: " +  secondCounter + "</p> </center>";
         }
 
         function checkZero(item, type){
@@ -482,6 +481,7 @@ include "../includes/database.php";
 
         function openModal(modal) {
             document.getElementById(modal).style.display = "block";
+            document.body.classList.add("scrollBody");
         }
         function shiftTab(active, idle1, pageBlock, pageNone1) {
             active.style.backgroundColor = "#1D7195";
@@ -491,6 +491,7 @@ include "../includes/database.php";
             idle1.style.color = "#000000";
             document.getElementById(pageBlock).style.display = "block";
             document.getElementById(pageNone1).style.display = "none";
+            document.body.classList.add("scrollBody");
         }
     </script>
 

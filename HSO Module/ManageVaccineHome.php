@@ -537,7 +537,7 @@ include_once("../includes/database.php") ?>
     function confMessage(vax, action){
         Swal.fire({
             icon: 'info',
-            title: 'Are You Sure you Want to add this ' + vax,
+            title: 'Are You Sure you Want to add this ' + vax + '?',
             showDenyButton: true,
             confirmButtonText: 'Yes',
             denyButtonText: `No`,

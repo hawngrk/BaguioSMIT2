@@ -183,9 +183,9 @@ include_once("../includes/database.php") ?>
                         <td>$vaccinationSite</td>
                         <td>$date</td>
                         <td>
-                            <div class='tableCenterCont'>
-                                <button class='buttonTransparent actionButt' onclick='event.stopPropagation(); archive(1, clickArchive, $driveId)'><i class='fa fa-archive'></i></button>
-                                <button class='buttonTransparent actionButt' onclick=''><i class='far fa-edit'></i></button>
+                            <div class='d-flex justify-content-center'>
+                                <button class='btn btn-sm bg-none' onclick='event.stopPropagation(); archive(1, clickArchive, $driveId)'><i class='fa fa-archive'></i></button>
+                                <button class='btn btn-sm bg-none' onclick=''><i class='far fa-edit'></i></button>
 
                             </div>
                         </td>
@@ -340,7 +340,6 @@ include_once("../includes/database.php") ?>
                                         </div>
                                     </div>
                                 </div>
-                                <hr>
                                 <div class="row">
                                     <div class="col">
                                         <div class="form-group">
@@ -364,9 +363,8 @@ include_once("../includes/database.php") ?>
                                         </div>
                                     </div>
                                 </div>
-                                <hr>
                                 <div class="row">
-                                    <div class="col-6">
+                                    <div class="col-8">
                                         <div class="input-group">
                                             <label class='label' for="stubs">First Dose Number of Stubs: </label>
                                             <input type="input" id="firstDoseStubs" name="firstDoseStubs" class="stubs" placeholder="ex. 100">
@@ -447,11 +445,13 @@ include_once("../includes/database.php") ?>
                 </button>
             </div>
 
-            <div id="healthDMain" class="modal-body">
-                <button type="button" class="btn btn-warning buttonTop3" onclick="openModal('archivedDistricts')">
-                    <i class="fas fa-inbox fa-lg"></i> Archive
-                </button>
-                <div id="distContent" class="tableScroll2">
+            <div>
+                <div class="d-flex float-right m-2">
+                    <button type="button" class="btn btn-warning buttonTop3 " onclick="openModal('archivedDistricts')">
+                        <i class="fas fa-inbox fa-lg"></i> Archive
+                    </button>
+                </div>
+                <div id="distContent" class="tableScroll2 mb-2 ">
                     <table class="table table-hover">
                         <thead>
                         <tr>
@@ -621,7 +621,7 @@ include_once("../includes/database.php") ?>
     <div id="HealthDView" class="modal-window">
         <div class="content-modal">
             <div class="modal-header">
-                <h4 class="modal-title">Add Health District</h4>
+                <h4 class="modal-title">View Health District</h4>
                 <button type="button" class="close" data-dismiss="modal" onclick="closeModal('HealthDView')">
                     <i class='fas fa-window-close'></i>
                 </button>
@@ -660,10 +660,10 @@ include_once("../includes/database.php") ?>
                     <i class='fas fa-window-close'></i>
                 </button>
             </div>
-            <div class="modal-body" id="siteModal">
-                <div id="siteContent" class="tableScroll2 border">
+            <div>
+                <div class="tableScroll2 border">
                     <table class="table table-row table-hover">
-                        <thead class="tableHeader">
+                        <thead>
                         <tr class="tableCenterCont">
                             <th>Vaccination Site Id</th>
                             <th>Location</th>
@@ -675,7 +675,6 @@ include_once("../includes/database.php") ?>
                         require_once '../require/getVaccinationSites.php';
 
                         foreach ($vaccinationSites as $vs) {
-                            $count++;
                             $siteId = $vs->getVaccinationSiteId();
                             $vaccinationSite = $vs->getVaccinationSiteLocation();
 
@@ -759,7 +758,7 @@ include_once("../includes/database.php") ?>
                         <td>$vaccinationSite</td>
                         <td>$date</td>
                         <td>
-                            <div style='text-align: left;'>
+                            <div>
                                 <button class='btn btn-warning' onclick='archive(0, clickArchive, $driveId )'>unarchive <i class='fas fa-box-open'></i></button>
                             </div>
                         </td>
@@ -784,7 +783,7 @@ include_once("../includes/database.php") ?>
     $(document).ready(function () {
         $('.add_another').click(function(event) {
             event.preventDefault();
-            $("#secondDoseTable").append('<tr><td><br> <label for="VaccineBr"><h6>Select First Dose Vaccine Brand: </h6></label> <select name="vaccineBrand" id="VaccineBr"> <?php require '../require/getVaccine.php'; foreach ($vaccines as $vac) { $vacName = $vac->getVaccName(); $vacId = $vac->getVaccId(); echo "<option value = $vacId>$vacName</option>";}?> </select></td><td><label><h6>Select First Dose Date: </h6></label><div class="form-inline"> <input type="date" id="secondDoseDate" name="secondDoseDate" class="dateForm form-control"> <button class="buttonTransparent delButt"><i class="fas fa-trash"></i></button> </div>');
+            $("#secondDoseTable").append('<tr><td><br> <label for="VaccineBr"><h6>Select First Dose Vaccine Brand: </h6></label> <select name="vaccineBrand" style="width: 72%" id="VaccineBr"> <?php require '../require/getVaccine.php'; foreach ($vaccines as $vac) { $vacName = $vac->getVaccName(); $vacId = $vac->getVaccId(); echo "<option value = $vacId>$vacName</option>";}?> </select></td><td><label><h6>Select First Dose Date: </h6></label><div class="form-inline"> <input type="date" id="secondDoseDate" name="secondDoseDate" class="dateForm form-control"> <button class="buttonTransparent delButt"><i class="fas fa-trash"></i></button> </div>');
         });
 
     });

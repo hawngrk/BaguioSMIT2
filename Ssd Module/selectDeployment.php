@@ -187,7 +187,7 @@ if (isset($_POST['viewBarangays2'])) {
 
                     <div class='stubNumbersContainer'>
                     <div id='secondCounter' class='bold counter'>
-                               <center><h5><i class='fas fa-ticket-alt'></i> Number of Stubs Left: $second_dose</h5> </center>
+                               <h5><i class='fas fa-ticket-alt'></i> Number of Stubs Left: $second_dose</h5>
                             </div>
 
                         <table class='table table-borderless'>

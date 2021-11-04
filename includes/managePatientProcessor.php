@@ -151,7 +151,7 @@ if (isset($_POST['patient'])) {
     echo "
      
                 <div class='modal-header'>
-                    <h4 class='modal-title'> Vaccine Details - $patient_last_name, $patient_first_name $patient_middle_name $patient_suffix </h4>
+                    <h4 class='modal-title'> Patient Details - $patient_last_name, $patient_first_name $patient_middle_name $patient_suffix </h4>
                     <button type='button' class='close' data-dismiss='modal' onclick='closeModal(\"viewPatientDetails\")'>
                         <i class='fas fa-window-close'></i>
                     </button>
@@ -308,6 +308,8 @@ if (isset($_POST['patient'])) {
                 <div class='col'>
                 <h7 class='font-weight-bold ml-5'> First Dose Date </h7>
                 </div>
+                
+                
                 ";
 
     if ($first_dose_vaccination == 1) {

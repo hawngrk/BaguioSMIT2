@@ -149,11 +149,7 @@ input[type=text1] {
     padding: 2%;
 }
 
-.navbarDep{
-    background: #ececec;
-    border-radius: 5px;
-    font-size: 18px;
-}
+
 
 .content-modal-table{
     background-color: #fefefe;
@@ -338,11 +334,6 @@ img{
     margin-right: 3%;
 }
 
-#healthDMain{
-    margin-left: 3%;
-    margin-top: 3%;
-    margin-right: 3%;
-}
 
 #siteModal{ /*hso*/
     margin-left: 3%;

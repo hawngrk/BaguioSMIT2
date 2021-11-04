@@ -94,9 +94,9 @@ if (isset($_POST['sortVaccine'])) {
                 <td>$dateReceived</td>
                 <td>$expirationDate</td>
                 <td>$totalQuantity</td>
-                <td>   <div>
-                                      <button type='button' class='buttonTransparent actionButt' onclick='event.stopPropagation();archive(1, clickArchive, $vaccineLotId)'><i class='fa fa-archive'></i></button>
-                                      <button type='button' class='viewReportBtn buttonTransparent actionButt' id='viewButton' onclick='viewVaccineDetails($vaccineLotId)'><i class='fas fa-eye'></i></button>
+                <td>   <div class='d-flex justify-content-center'>
+                                      <button type='button' class='btn btn-sm bg-none' onclick='event.stopPropagation();archive(1, clickArchive, $vaccineLotId)'><i class='fa fa-archive'></i></button>
+                                      <button type='button' class='btn btn-sm bg-none' id='viewButton' onclick='viewVaccineDetails($vaccineLotId)'><i class='fas fa-eye'></i></button>
                                 </div> </td>
                 </tr>";
     }
@@ -135,9 +135,9 @@ if (isset($_POST['sortDeployment'])) {
                         <td>$vaccinationSite</td>
                         <td>$date</td>
                         <td>
-                            <div>
-                                <button class='buttonTransparent actionButt' onclick='event.stopPropagation(); archive(1, clickArchive, $driveId)'><i class='fa fa-archive'></i></button>
-                                <button class='buttonTransparent actionButt' onclick=''><i class='far fa-edit'></i></button>
+                            <div class='d-flex justify-content-center'>
+                                <button class='btn btn-sm bg-none' onclick='event.stopPropagation(); archive(1, clickArchive, $driveId)'><i class='fa fa-archive'></i></button>
+                                <button class='btn btn-sm bg-none' onclick=''><i class='far fa-edit'></i></button>
                            
                             </div>
                         </td>
