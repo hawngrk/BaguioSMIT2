@@ -163,6 +163,41 @@ if (isset($_POST['districts'])){
         }
     }
 
+    echo" <table class='table table-hover tableDep' id='driveTable'>
+                            <thead>
+                            <tr class='tableCenterCont'>
+                                <th scope='col'>Drive Id</th>
+                                <th scope='col'>Location</th>
+                                <th scope='col'>Date</th>
+                                <th scope='col'>Action</th>
+                            </tr>
+                            </thead>";
+
+                            $query = "SELECT vaccination_drive.drive_id, vaccination_drive.vaccination_date, vaccination_sites.location FROM vaccination_drive JOIN vaccination_sites ON vaccination_drive.vaccination_site_id = vaccination_sites.vaccination_site_id WHERE vaccination_drive.Archived = 0";
+                $dbase = $database->stmt_init();
+                $dbase->prepare($query);
+                $dbase->execute();
+                $dbase->bind_result($driveId, $date, $vaccinationSite);
+                while($dbase->fetch()){
+
+                                    echo "<tr class='table-row' onclick='showDrive(this)'>
+
+                        <td>$driveId</td>
+                        <td>$vaccinationSite</td>
+                        <td>$date</td>
+                        <td>
+                            <div class='tableCenterCont'>
+                                <button class='buttonTransparent actionButt' onclick='event.stopPropagation(); archive(1, clickArchive, $driveId)'><i class='fa fa-archive'></i></button>
+                                <button class='buttonTransparent actionButt' onclick=''><i class='far fa-edit'></i></button>
+
+                            </div>
+                        </td>
+
+                      </tr>";
+
+                            }
+                       echo" </table>";
+
     require '../vendor/autoload.php';
 
     $options = array(
@@ -287,20 +322,13 @@ if (isset($_POST['healthName'])){
     $name = $_POST['healthName'];
     $number = $_POST['number'];
 
-    echo "  <div class='editButton'>
-                <button class='buttonTransparent'><i class='fas fa-edit'></i></button><br>
-            </div>
-  
-            <h3>Health District: </h3><br>
+    echo "  <h3>Health District: </h3><br>
             $name <br><hr> 
             <h3>Contact Number:</h3><br>
             $number<br><hr>
           
-            <h3>Barangays: </h3><br>
-            ";
-
-    echo " 
-                            <ul>";
+            <h3>Barangays: </h3><br> 
+            <div id='barangayList'>";
 
     require_once '../require/getBarangay.php';
 
@@ -322,7 +350,7 @@ if (isset($_POST['healthName'])){
         }
     }
 
-    echo "       
+    echo "   </div>
                            <div>
                                 <button class='buttonTransparent hyperlink' onclick='openList($id)'>+Add Barangay</i></button>
                            </div>
@@ -333,7 +361,7 @@ if (isset($_POST['healthName'])){
 
 if (isset($_POST['brgyId'])){
     require_once '../require/getBarangay.php';
-    require_once '../require/getHealthDistrict.php';
+
     $brgyId = $_POST['brgyId'];
 
     $query1 = "SELECT health_district_id FROM barangay WHERE barangay_id = '$brgyId'";
@@ -347,61 +375,24 @@ if (isset($_POST['brgyId'])){
     $query = "UPDATE barangay SET health_district_id = NULL WHERE barangay_id = '$brgyId';";
     $database->query($query);
 
-
-    foreach ($health_district as $hd){
-        if ($hd->getHealthDistrictId() == $barDistId){
-            $healthName = $hd->getHealthDistrictName();
-            $contactNumber = $hd->getContact();
-        }
-    }
-
-    $barangaysLists = [];
-
-    $query2 = "SELECT * FROM barangay WHERE health_district_id = '$barDistId'";
+    $query2 = "SELECT barangay_id, barangay_name FROM barangay WHERE health_district_id = '$barDistId'";
     $dbase = $database->stmt_init();
     $dbase->prepare($query2);
-    $dbase->bind_result( $barangayId,$barangayHealthDistId, $barangayName);
+    $dbase->bind_result( $barangayId, $barangayName);
     $dbase->execute();
+    while ($dbase->fetch()) {
 
-    while ($dbase->fetch()){
-        $barangaysLists[] = [$barangayId, $barangayHealthDistId, $barangayName] ;
-    }
-
-
-
-
-    echo " <div class='editButton'>
-                <button class='buttonTransparent'><i class='fas fa-edit'></i></button><br>
-            </div>
-
-            <h3>Health District: </h3><br>
-                $healthName <br><hr>
-            <h3>Contact Number:</h3><br>
-                $contactNumber<br><hr>
-            <h3>Barangays: </h3><br>
-    ";
-
-    echo "
-                            <ul>";
-
-    foreach ($barangaysLists as $b) {
-        echo "<li>
-                                               <label>$b[2]</label>
+                echo "<li>
+                                               <label>$barangayName</label>
                                                <div style='float: right'>
-                                                    <button class='buttonTransparent hyperlink' onclick='del($b[1], deleteBarangay)'>delete</i></button>
+                                                    <button class='buttonTransparent hyperlink' onclick='del($barangayId, deleteBarangay)'>delete</i></button>
                                                </div>
                                                </li>
                                                <br>
+                                               
+                                             ";
 
-    ";
     }
-
-    echo "
-                           <div>
-                                <button class='buttonTransparent hyperlink' onclick='openList($barDistId)'>+Add Barangay</i></button>
-                           </div>
-
-    ";
 
 }
 
@@ -508,7 +499,7 @@ if (isset($_POST['barId'])){
             $id = $b->getBarangayId();
             $name = $b->getBarangayName();
             echo " <li>
-                                    <input class = 'checkboxes' type='checkbox' onclick='selected($id)'>
+                                    <input class = 'checkboxes' type='checkbox' onclick='selected(\"barangay\", $id)'>
                                     <label>$name</label><br>
                                     </li> ";
         }
@@ -531,56 +522,25 @@ if (isset($_POST['list'])) {
         $database->query($query);
     }
 
-    $query2 = "SELECT * FROM barangay WHERE health_district_id = '$heDiId'";
-    $dbase = $database->stmt_init();
-    $dbase->prepare($query2);
-    $dbase->bind_result( $barangayId,$barangayHealthDistId, $barangayName);
-    $dbase->execute();
 
-    while ($dbase->fetch()){
-        $barangaysLists[] = [$barangayId, $barangayHealthDistId, $barangayName] ;
-    }
-
-    $query3 = "SELECT * FROM health_district WHERE health_district_id = '$heDiId'";
+    $query3 = "SELECT barangay_id, barangay_name FROM barangay WHERE health_district_id = '$heDiId'";
     $dbase = $database->stmt_init();
     $dbase->prepare($query3);
-    $dbase->bind_result( $hdId,$hdName, $hdNumber);
+    $dbase->bind_result( $barangayId, $barangayName);
     $dbase->execute();
-    $dbase->fetch();
-    $dbase->close();
+    while ($dbase->fetch()) {
 
-    echo " <div class='editButton'>
-                <button class='buttonTransparent'><i class='fas fa-edit'></i></button><br>
-            </div>
-
-            <h3>Health District: </h3><br>
-                $hdName <br><hr>
-            <h3>Contact Number:</h3><br>
-                $hdNumber<br><hr>
-            <h3>Barangays: </h3><br>
-    ";
-
-    echo "
-                            <ul>";
-
-    foreach ($barangaysLists as $b) {
         echo "<li>
-                                               <label>$b[2]</label>
+                                               <label>$barangayName</label>
                                                <div style='float: right'>
-                                                    <button class='buttonTransparent hyperlink' onclick='del($b[1], deleteBarangay)'>delete</i></button>
+                                                    <button class='buttonTransparent hyperlink' onclick='del($barangayId, deleteBarangay)'>delete</i></button>
                                                </div>
                                                </li>
                                                <br>
+                                               
+                                             ";
 
-    ";
     }
-
-    echo "
-                           <div>
-                                <button class='buttonTransparent hyperlink' onclick='openList($heDiId)'>+Add Barangay</i></button>
-                           </div>
-
-    ";
 }
 
 if (isset($_POST['archive'])){
@@ -601,7 +561,7 @@ if (isset($_POST['archive'])){
                             </tr>
                             </thead>';
 
-                            $query1 = "SELECT vaccination_drive.drive_id, vaccination_drive.vaccination_date, vaccination_sites.location FROM vaccination_drive JOIN vaccination_sites ON vaccination_drive.vaccination_site_id = vaccination_sites.vaccination_site_id WHERE vaccination_drive.Archived = 0";
+                            $query1 = "SELECT vaccination_drive.drive_id, vaccination_drive.vaccination_date, vaccination_sites.location FROM vaccination_drive JOIN vaccination_sites ON vaccination_drive.vaccination_site_id = vaccination_sites.vaccination_site_id WHERE vaccination_drive.Archived = 0 ORDER BY vaccination_drive.drive_id";
                 $dbase = $database->stmt_init();
                 $dbase->prepare($query1);
                 $dbase->execute();
@@ -638,7 +598,7 @@ if (isset($_POST['archive'])){
                 </tr>
                 </thead>';
 
-               $query = "SELECT vaccination_drive.drive_id, vaccination_drive.vaccination_date, vaccination_sites.location FROM vaccination_drive JOIN vaccination_sites ON vaccination_drive.vaccination_site_id = vaccination_sites.vaccination_site_id WHERE vaccination_drive.Archived = 1";
+               $query = "SELECT vaccination_drive.drive_id, vaccination_drive.vaccination_date, vaccination_sites.location FROM vaccination_drive JOIN vaccination_sites ON vaccination_drive.vaccination_site_id = vaccination_sites.vaccination_site_id WHERE vaccination_drive.Archived = 1 ORDER BY vaccination_drive.drive_id";
                 $dbase = $database->stmt_init();
                 $dbase->prepare($query);
                 $dbase->execute();
@@ -676,7 +636,7 @@ if (isset($_POST['showUpdatedDrive'])){
                             </tr>
                             </thead>';
 
-    $query1 = "SELECT vaccination_drive.drive_id, vaccination_drive.vaccination_date, vaccination_sites.location FROM vaccination_drive JOIN vaccination_sites ON vaccination_drive.vaccination_site_id = vaccination_sites.vaccination_site_id WHERE vaccination_drive.Archived = 0";
+    $query1 = "SELECT vaccination_drive.drive_id, vaccination_drive.vaccination_date, vaccination_sites.location FROM vaccination_drive JOIN vaccination_sites ON vaccination_drive.vaccination_site_id = vaccination_sites.vaccination_site_id WHERE vaccination_drive.Archived = 0 ORDER BY vaccination_drive.drive_id";
     $dbase = $database->stmt_init();
     $dbase->prepare($query1);
     $dbase->execute();
@@ -711,7 +671,7 @@ if (isset($_POST['showUpdatedArchive'])){
                             </tr>
                             </thead>';
 
-    $query1 = "SELECT vaccination_drive.drive_id, vaccination_drive.vaccination_date, vaccination_sites.location FROM vaccination_drive JOIN vaccination_sites ON vaccination_drive.vaccination_site_id = vaccination_sites.vaccination_site_id WHERE vaccination_drive.Archived = 1";
+    $query1 = "SELECT vaccination_drive.drive_id, vaccination_drive.vaccination_date, vaccination_sites.location FROM vaccination_drive JOIN vaccination_sites ON vaccination_drive.vaccination_site_id = vaccination_sites.vaccination_site_id WHERE vaccination_drive.Archived = 1 ORDER BY vaccination_drive.drive_id";
     $dbase = $database->stmt_init();
     $dbase->prepare($query1);
     $dbase->execute();

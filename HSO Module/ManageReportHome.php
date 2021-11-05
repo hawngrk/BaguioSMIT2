@@ -34,6 +34,7 @@ include_once("../includes/database.php") ?>
             integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY"
             crossorigin="anonymous"></script>
     <script src="//code.jquery.com/jquery-latest.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 </head>
 
@@ -141,7 +142,7 @@ include_once("../includes/database.php") ?>
 
                     <div class="w-100 d-none d-md-block"></div>
                     <!--Table Content-->
-                    <div class="tableReport tableScroll1 col">
+                    <div class="tableReport tableScroll1 col" id="mainReport">
                         <table class="table table-hover tableReport" id="reportsTable">
                             <thead>
                             <tr class="tableCenterCont">
@@ -157,24 +158,29 @@ include_once("../includes/database.php") ?>
                             require_once '../require/getPatient.php';
 
                             foreach ($reports as $rep) {
+                                if ($rep->getArchived() == 0) {
 
-                                $reportId = $rep->getReportId(); //replace this part based on the column name mentioned above in chronological order - NATIVIDAD HUDSON
-                                $patientId = $rep->getReportPatientId();
-                                $dateReported = $rep->getDateReported();
-                                $status = $rep->getReportStatus();
+                                    $reportId = $rep->getReportId(); //replace this part based on the column name mentioned above in chronological order - NATIVIDAD HUDSON
+                                    $patientId = $rep->getReportPatientId();
+                                    $dateReported = $rep->getDateReported();
+                                    $status = $rep->getReportStatus();
 
-                                if ($status != 'Invalidated') {
-                                    foreach ($patients as $pat) {
-                                        if ($patientId == $pat->getPatientId()) {
-                                            $reporter = $pat->getPatientFullName();
+                                    if ($status != 'Invalidated') {
+                                        foreach ($patients as $pat) {
+                                            if ($patientId == $pat->getPatientId()) {
+                                                $reporter = $pat->getPatientFullName();
+                                            }
                                         }
-                                    }
-                                    echo "<tr class='tableCenterCont' onclick='viewReport($reportId)'>
+                                        echo "<tr class='tableCenterCont' onclick='viewReport($reportId)'>
                                           <td>$reportId</td>
                                           <td>$reporter</td>
                                           <td>$dateReported</td>
                                           <td>$status</td>
-                                          <td><button class='btn btn-success btn-sm' type='submit' value='$reportId' onclick='viewReport($reportId)'>Review Report</button></td></tr>";
+                                          <td>
+                                          <button class='btn btn-success btn-sm' type='submit' value='$reportId' onclick='viewReport($reportId)'>Review Report</button>
+                                          <button class='buttonTransparent actionButt' onclick='event.stopPropagation(); archive(1, clickArchive, $reportId)'><i class='fa fa-archive'></i></button>
+                                          </td></tr>";
+                                    }
                                 }
                             }
                             ?>
@@ -276,43 +282,35 @@ include_once("../includes/database.php") ?>
                             <th scope="col">Action</th>
                         </tr>
                         </thead>
-                        <div id="vaccineContent">
                             <?php
-                            require_once '../require/getVaccine.php';
-                            require_once '../require/getVaccineBatch.php';
-                            require_once '../require/getVaccineLot.php';
+                            require_once '../require/getReport.php';
+                            require_once '../require/getPatient.php';
 
-                            $count = 0;
-                            foreach ($vaccineLots as $vl) {
-                                if ($vl->getArchived() == 1) {
-                                    $vaccineLotId = $vl->getVaccLotId();
-                                    $vaccLotVaccId = $vl->getVaccLotVaccId();
-                                    $dateStored = $vl->getDateVaccStored();
-                                    $batchQty = $vl->getVaccBatchQty();
-                                    $source = $vl->getSource();
-                                    $vaccExp = $vl->getExpiration();
+                            foreach ($reports as $rep) {
+                                if ($rep->getArchived() == 1) {
 
+                                    $reportId = $rep->getReportId(); //replace this part based on the column name mentioned above in chronological order - NATIVIDAD HUDSON
+                                    $patientId = $rep->getReportPatientId();
+                                    $dateReported = $rep->getDateReported();
+                                    $status = $rep->getReportStatus();
 
-                                    foreach ($vaccines as $vac) {
-                                        if ($vaccLotVaccId == $vac->getVaccId()) {
-                                            $vaccName = $vac->getVaccName();
+                                    if ($status != 'Invalidated') {
+                                        foreach ($patients as $pat) {
+                                            if ($patientId == $pat->getPatientId()) {
+                                                $reporter = $pat->getPatientFullName();
+                                            }
                                         }
+                                        echo "<tr class='tableCenterCont' onclick='viewReport($reportId)'>
+                                          <td>$reportId</td>
+                                          <td>$reporter</td>
+                                          <td>$dateReported</td>
+                                          <td>$status</td>
+                                          <td>
+                                            <div style='text-align: left;'>
+                                                 <button class='btn btn-warning' onclick='event.stopPropagation();archive(0, clickArchive, $reportId )'>unarchive <i class='fas fa-box-open'></i></button>
+                                            </div>
+                                          </td></tr>";
                                     }
-
-                                    echo "<tr class='tableCenterCont'>
-             
-                <td>$vaccineLotId</td>
-                <td>$vaccName</td>
-                <td>$source</td>
-                <td>$dateStored</td>
-                <td>$vaccExp</td>
-                <td>$batchQty</td>
-                <td>
-                    <div>
-                        <button class='btn btn-warning' onclick='archive(0, clickArchive, $vaccineLotId )'><i class='fas fa-box-open'></i> unarchive</button>
-                    </div>
-                </td>
-                </tr>";
                                 }
                             }
                             ?>
@@ -501,7 +499,7 @@ include_once("../includes/database.php") ?>
                     console.log(reportid);
                     console.log(selectedStatus);
                     $.ajax({
-                        url: 'ManageReportViewProcessor.php',
+                        url: '../includes/searchProcessor.php',
                         type: 'POST',
                         data: {"changeStatus": selectedStatus, "reportid": reportid},
                         success: function (result) {
@@ -574,6 +572,60 @@ include_once("../includes/database.php") ?>
                 } else {
                     row.parentNode.parentNode.style.backgroundColor = "white";
                 }
+            }
+
+            function clickArchive(report, option) {
+                $.ajax({
+                    url: 'ManageReportViewProcessor.php',
+                    method: 'POST',
+                    data: {archive: report, option: option},
+                    success: function (result) {
+                        if (option == "Archive") {
+                            document.getElementById('mainReport').innerHTML = result;
+                            $.ajax({
+                                url: 'ManageReportViewProcessor.php',
+                                method: 'POST',
+                                data: {showUpdatedArchive: ""},
+                                success: function (result) {
+                                    document.getElementById('archivedContent').innerHTML = result;
+                                }
+                            })
+
+                        } else if (option == "UnArchive") {
+                            document.getElementById("archivedContent").innerHTML = result;
+                            $.ajax({
+                                url: 'ManageReportViewProcessor.php',
+                                method: 'POST',
+                                data: {showUpdatedReport: ""},
+                                success: function (result) {
+                                    document.getElementById('mainReport').innerHTML = result;
+                                }
+                            })
+                        }
+                    }
+                })
+            }
+
+            async function archive(archive, action, report) {
+                if (archive == 1) {
+                    archiveText = "Archive";
+                } else {
+                    archiveText = "UnArchive";
+                }
+                Swal.fire({
+                    icon: 'info',
+                    title: 'Are you sure you want to ' + archiveText + ' this item?',
+                    showDenyButton: true,
+                    confirmButtonText: 'Yes',
+                    denyButtonText: `No`,
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        action(report, archiveText);
+                        Swal.fire('Saved!', '', 'success')
+                    } else if (result.isDenied) {
+                        Swal.fire('Changes are not saved', '', 'info')
+                    }
+                })
             }
         </script>
 </body>

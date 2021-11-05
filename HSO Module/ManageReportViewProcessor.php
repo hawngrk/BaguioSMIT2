@@ -1,4 +1,6 @@
 <?php
+include_once "../includes/database.php";
+
 //if (isset($_POST['search'])) {
 //    include '../includes/database.php';
 //    $search = $_POST['search'];
@@ -502,4 +504,176 @@ if (isset($_POST['download'])) {
         $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
         $objWriter->save('reports/' . $reportId . " - ". $patientName. '.docx');
     }
+}
+
+if (isset($_POST['archive'])) {
+    $archivedId = $_POST['archive'];
+    $option = $_POST['option'];
+
+    if ($option == "Archive") {
+        $query = "UPDATE report SET Archived = 1 WHERE `report_id` = '$archivedId'";
+        $database->query($query);
+
+        echo '   <table class="table table-row table-hover tableModal" id="vaccineTable">
+                        <thead>
+                        <tr class="tableCenterCont">
+                            <th scope="col">Report ID</th>
+                            <th scope="col">Name of Reporter</th>
+                            <th scope="col">Date Reported</th>
+                            <th scope="col">Report Verified</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                        </thead>';
+
+        $query1 = "SELECT report.report_id, patient.patient_full_name, report.date_reported, report.report_status FROM report JOIN patient ON report.patient_id = patient.patient_id WHERE report.Archived = 0 and report.report_status != 'Invalidated';";
+        $dbase = $database->stmt_init();
+        $dbase->prepare($query1);
+        $dbase->execute();
+        $dbase->bind_result($reportId, $reporter, $dateReported, $status);
+        while ($dbase->fetch()) {
+
+            echo "<tr class='tableCenterCont' onclick='viewReport($reportId)'>
+                                          <td>$reportId</td>
+                                          <td>$reporter</td>
+                                          <td>$dateReported</td>
+                                          <td>$status</td>
+                                          <td>
+                                          <button class='btn btn-success btn-sm' type='submit' value='$reportId' onclick='viewReport($reportId)'>Review Report</button>
+                                          <button class='buttonTransparent actionButt' onclick='archive(1, clickArchive, $reportId)'><i class='fa fa-archive'></i></button>
+                                          </td></tr>";
+
+        }
+        echo "</div></table>";
+
+    } else if ($option == "UnArchive") {
+        $query = "UPDATE report SET `Archived`= 0 WHERE `report_id` = '$archivedId'";
+        $database->query($query);
+
+        echo '   <table class="table table-row table-hover tableModal" id="vaccineTable">
+                        <thead>
+                        <tr class="tableCenterCont">
+                            <th scope="col">Report ID</th>
+                            <th scope="col">Name of Reporter</th>
+                            <th scope="col">Date Reported</th>
+                            <th scope="col">Report Verified</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                        </thead>';
+
+        $query1 = "SELECT report.report_id, patient.patient_full_name, report.date_reported, report.report_status FROM report JOIN patient ON report.patient_id = patient.patient_id WHERE report.Archived = 1;";
+        $dbase = $database->stmt_init();
+        $dbase->prepare($query1);
+        $dbase->execute();
+        $dbase->bind_result($reportId, $reporter, $dateReported, $status);
+        while ($dbase->fetch()) {
+
+            echo "<tr class='tableCenterCont' onclick='viewReport($reportId)'>
+                                          <td>$reportId</td>
+                                          <td>$reporter</td>
+                                          <td>$dateReported</td>
+                                          <td>$status</td>
+                                          <td>
+                                            <div style='text-align: left;'>
+                                                 <button class='btn btn-warning' onclick='archive(0, clickArchive, $reportId )'> unarchive <i class='fas fa-box-open'></i></button>
+                                            </div>
+                                          </td></tr>";
+
+        }
+        echo "</div></table>";
+    }
+}
+
+if (isset($_POST['showUpdatedReport'])){
+
+     echo'<table class="table table-row table-hover tableModal" id="vaccineTable">
+                        <thead>
+                        <tr class="tableCenterCont">
+                            <th scope="col">Report ID</th>
+                            <th scope="col">Name of Reporter</th>
+                            <th scope="col">Date Reported</th>
+                            <th scope="col">Report Verified</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                        </thead>';
+
+                            require_once '../require/getReport.php';
+                            require_once '../require/getPatient.php';
+
+                            foreach ($reports as $rep) {
+                                if ($rep->getArchived() == 0) {
+
+                                    $reportId = $rep->getReportId(); //replace this part based on the column name mentioned above in chronological order - NATIVIDAD HUDSON
+                                    $patientId = $rep->getReportPatientId();
+                                    $dateReported = $rep->getDateReported();
+                                    $status = $rep->getReportStatus();
+
+                                    if ($status != 'Invalidated') {
+                                        foreach ($patients as $pat) {
+                                            if ($patientId == $pat->getPatientId()) {
+                                                $reporter = $pat->getPatientFullName();
+                                            }
+                                        }
+                                        echo "<tr class='tableCenterCont' onclick='viewReport($reportId)'>
+                                          <td>$reportId</td>
+                                          <td>$reporter</td>
+                                          <td>$dateReported</td>
+                                          <td>$status</td>
+                                          <td>
+                                            <div style='text-align: left;'>
+                                                 <button class='btn btn-warning' onclick='archive(0, clickArchive, $reportId )'>unarchive <i class='fas fa-box-open'></i></button>
+                                            </div>
+                                          </td></tr>";
+                                    }
+                                }
+                            }
+                            echo"
+                        </div>
+                    </table>";
+}
+
+if (isset($_POST['showUpdatedArchive'])){
+    echo'<table class="table table-row table-hover tableModal" id="vaccineTable">
+                        <thead>
+                        <tr class="tableCenterCont">
+                            <th scope="col">Report ID</th>
+                            <th scope="col">Name of Reporter</th>
+                            <th scope="col">Date Reported</th>
+                            <th scope="col">Report Verified</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                        </thead>';
+
+    require_once '../require/getReport.php';
+    require_once '../require/getPatient.php';
+
+    foreach ($reports as $rep) {
+        if ($rep->getArchived() == 1) {
+
+            $reportId = $rep->getReportId(); //replace this part based on the column name mentioned above in chronological order - NATIVIDAD HUDSON
+            $patientId = $rep->getReportPatientId();
+            $dateReported = $rep->getDateReported();
+            $status = $rep->getReportStatus();
+
+            if ($status != 'Invalidated') {
+                foreach ($patients as $pat) {
+                    if ($patientId == $pat->getPatientId()) {
+                        $reporter = $pat->getPatientFullName();
+                    }
+                }
+                echo "<tr class='tableCenterCont' onclick='viewReport($reportId)'>
+                                          <td>$reportId</td>
+                                          <td>$reporter</td>
+                                          <td>$dateReported</td>
+                                          <td>$status</td>
+                                          <td>
+                                            <div style='text-align: left;'>
+                                                 <button class='btn btn-warning' onclick='archive(0, clickArchive, $reportId )'>unarchive <i class='fas fa-box-open'></i></button>
+                                            </div>
+                                          </td></tr>";
+            }
+        }
+    }
+    echo"
+                        </div>
+                    </table>";
 }

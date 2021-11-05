@@ -384,8 +384,9 @@ class reports{
     private $lastOut;
     private $dateReported;
     private $reportStatus;
+    private $archived;
 
-    public function __construct($repId, $repPatId, $repType, $repDetails, $vaccSymRep, $covSymRep,$dateLastOut, $dateRep, $repStat)
+    public function __construct($repId, $repPatId, $repType, $repDetails, $vaccSymRep, $covSymRep,$dateLastOut, $dateRep, $repStat, $archived)
     {
         $this->reportId = $repId;
         $this->reportPatientId = $repPatId;
@@ -396,6 +397,7 @@ class reports{
         $this->lastOut = $dateLastOut;
         $this->dateReported = $dateRep;
         $this->reportStatus = $repStat;
+        $this->archived = $archived;
     }
 
     public function getReportId()
@@ -441,6 +443,11 @@ class reports{
     public function getLastOut()
     {
         return $this->lastOut;
+    }
+
+    public function getArchived()
+    {
+        return $this->archived;
     }
 }
 ?>

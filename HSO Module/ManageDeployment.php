@@ -170,7 +170,7 @@ include_once("../includes/database.php") ?>
                             </tr>
                             </thead>
                             <?php
-                            $query = "SELECT vaccination_drive.drive_id, vaccination_drive.vaccination_date, vaccination_sites.location FROM vaccination_drive JOIN vaccination_sites ON vaccination_drive.vaccination_site_id = vaccination_sites.vaccination_site_id WHERE vaccination_drive.Archived = 0";
+                            $query = "SELECT vaccination_drive.drive_id, vaccination_drive.vaccination_date, vaccination_sites.location FROM vaccination_drive JOIN vaccination_sites ON vaccination_drive.vaccination_site_id = vaccination_sites.vaccination_site_id WHERE vaccination_drive.Archived = 0 ORDER BY vaccination_drive.drive_id";
                 $dbase = $database->stmt_init();
                 $dbase->prepare($query);
                 $dbase->execute();
@@ -340,6 +340,7 @@ include_once("../includes/database.php") ?>
                                         </div>
                                     </div>
                                 </div>
+                                <hr>
                                 <div class="row">
                                     <div class="col">
                                         <div class="form-group">
@@ -386,7 +387,7 @@ include_once("../includes/database.php") ?>
                                                 <tr>
                                                     <td>
                                                         <label for="VaccineBr"><h6>Select First Dose Vaccine Brand:</h6></label>
-                                                    <select style="width: 72%" name="secondDoseVaccineBrand" id="secondDoseVaccineBrand">
+                                                    <select style="width: 72%" name="vaccineBrand" id="VaccineBr">
                                                 <?php
                                                 require '../require/getVaccine.php';
                                                 foreach ($vaccines as $vac) {
@@ -401,7 +402,7 @@ include_once("../includes/database.php") ?>
                                                 <label><h6>Select First Dose Date: </h6></label>
                                                 <div class="form-inline">
                                                     <input type="date" id="secondDoseDate" name="secondDoseDate" class="dateForm form-control">
-                                                    <button class="buttonTransparent delButt"><i class="fas fa-trash"></i></button>
+                                                    <button class="buttonTransparent delButt" onclick="event.preventDefault(); removeRow(this)"><i class="fas fa-trash"></i></button>
                                                 </div>
                                             </td>
 
@@ -417,8 +418,6 @@ include_once("../includes/database.php") ?>
                                         </div>
                                     </div>
                                 </div>
-
-
 
                                 <div class="modal-footer">
                                     <button id='sendStubs' type='button' class='btn btn-secondary mr-auto' onclick='shiftTab(FirstDose, General, SecondDose, "FirstDosePage", "GeneralPage",  "SecondDosePage")'>
@@ -621,12 +620,11 @@ include_once("../includes/database.php") ?>
     <div id="HealthDView" class="modal-window">
         <div class="content-modal">
             <div class="modal-header">
-                <h4 class="modal-title">View Health District</h4>
+                <h4 id="chosenDistrict" class="modal-title">Health District</h4>
                 <button type="button" class="close" data-dismiss="modal" onclick="closeModal('HealthDView')">
                     <i class='fas fa-window-close'></i>
                 </button>
             </div>
-
             <div id="healthDContent" class="modal-body">
 
             </div>
@@ -645,7 +643,11 @@ include_once("../includes/database.php") ?>
             </div>
 
             <div id="healthDBarangayContent" class="modal-body">
-
+                <h3 id="hd"></h3><br><br><hr>
+                <h3 id="contact"></h3><br><br><hr>
+                <h3>Barangays: </h3><br>
+                <div id="barangayList">
+                </div>
             </div>
 
         </div>
@@ -660,10 +662,10 @@ include_once("../includes/database.php") ?>
                     <i class='fas fa-window-close'></i>
                 </button>
             </div>
-            <div>
-                <div class="tableScroll2 border">
+            <div class="modal-body" id="siteModal">
+                <div id="siteContent" class="tableScroll2 border">
                     <table class="table table-row table-hover">
-                        <thead>
+                        <thead class="tableHeader">
                         <tr class="tableCenterCont">
                             <th>Vaccination Site Id</th>
                             <th>Location</th>
@@ -746,7 +748,7 @@ include_once("../includes/database.php") ?>
                 </thead>
 
                 <?php
-               $query = "SELECT vaccination_drive.drive_id, vaccination_drive.vaccination_date, vaccination_sites.location FROM vaccination_drive JOIN vaccination_sites ON vaccination_drive.vaccination_site_id = vaccination_sites.vaccination_site_id WHERE vaccination_drive.Archived = 1";
+               $query = "SELECT vaccination_drive.drive_id, vaccination_drive.vaccination_date, vaccination_sites.location FROM vaccination_drive JOIN vaccination_sites ON vaccination_drive.vaccination_site_id = vaccination_sites.vaccination_site_id WHERE vaccination_drive.Archived = 1 ORDER BY vaccination_drive.drive_id";
                 $dbase = $database->stmt_init();
                 $dbase->prepare($query);
                 $dbase->execute();
@@ -777,13 +779,14 @@ include_once("../includes/database.php") ?>
     var healthDistricts = [];
     var priorityGroups = [];
     var firstDoseVaccineBrands = [];
+    var barangays = [];
     var id = "";
     var clicked = false;
 
     $(document).ready(function () {
         $('.add_another').click(function(event) {
             event.preventDefault();
-            $("#secondDoseTable").append('<tr><td><br> <label for="VaccineBr"><h6>Select First Dose Vaccine Brand: </h6></label> <select name="vaccineBrand" style="width: 72%" id="VaccineBr"> <?php require '../require/getVaccine.php'; foreach ($vaccines as $vac) { $vacName = $vac->getVaccName(); $vacId = $vac->getVaccId(); echo "<option value = $vacId>$vacName</option>";}?> </select></td><td><label><h6>Select First Dose Date: </h6></label><div class="form-inline"> <input type="date" id="secondDoseDate" name="secondDoseDate" class="dateForm form-control"> <button class="buttonTransparent delButt"><i class="fas fa-trash"></i></button> </div>');
+            $("#secondDoseTable").append('<tr><td><br> <label for="VaccineBr"><h6>Select First Dose Vaccine Brand: </h6></label> <select style="width: 72%" name="vaccineBrand" id="VaccineBr"> <?php require '../require/getVaccine.php'; foreach ($vaccines as $vac) { $vacName = $vac->getVaccName(); $vacId = $vac->getVaccId(); echo "<option value = $vacId>$vacName</option>";}?> </select></td><td><label><h6>Select First Dose Date: </h6></label><div class="form-inline"> <input type="date" id="secondDoseDate" name="secondDoseDate" class="dateForm form-control"> <button class="buttonTransparent delButt"><i class="fas fa-trash"></i></button> </div>');
         });
 
     });
@@ -834,6 +837,12 @@ include_once("../includes/database.php") ?>
             });
         }
     });
+
+    function removeRow(row){
+        var tr = row.parentNode.parentNode.parentNode;
+
+        console.log(tr);
+    }
 
     //search deployment
     function searchDeployment() {
@@ -974,10 +983,11 @@ include_once("../includes/database.php") ?>
     }
 
     function showDistrict(val) {
+        id = val.getElementsByTagName("td")[0].innerText;
+        var name = val.getElementsByTagName("td")[1].innerText;
+        var number = val.getElementsByTagName("td")[2].innerText;
 
-        id = val.getElementsByTagName("td")[1].innerText;
-        var name = val.getElementsByTagName("td")[2].innerText;
-        var number = val.getElementsByTagName("td")[3].innerText;
+        document.getElementById('chosenDistrict').innerText = name;
 
         $.ajax({
             url: 'ManageDeploymentProcessor.php',
@@ -991,8 +1001,6 @@ include_once("../includes/database.php") ?>
     }
 
     function addBarangay() {
-        console.log(checkedValue)
-        console.log(id)
         Swal.fire({
             icon: 'info',
             title: 'Do you want to add this Barangay?',
@@ -1005,13 +1013,12 @@ include_once("../includes/database.php") ?>
                     url: 'ManageDeploymentProcessor.php',
                     method: 'POST',
                     data: {
-                        list: checkedValue,
+                        list: barangays,
                         hdId: id
                     },
                     success: function (result) {
-                        document.getElementById("healthDContent").innerHTML = "";
                         document.getElementById("HealthDBarangay").style.display = "none";
-                        document.getElementById("healthDContent").innerHTML = result;
+                        document.getElementById("barangayList").innerHTML = result;
                         console.log(result)
                     }
                 })
@@ -1029,7 +1036,7 @@ include_once("../includes/database.php") ?>
         for(var idx = 0; idx < trs.length; idx++) {
             var tds = trs[idx].getElementsByTagName("td");
             var vaccineBrand = tds[0].children[1].value;
-            var doseDate = tds[1].children[2].value;
+            var doseDate = tds[1].children[1].children[0].value;
             secondDoseBrands.push(vaccineBrand);
             secondDoseDates.push(doseDate);
         }
@@ -1053,7 +1060,8 @@ include_once("../includes/database.php") ?>
                 location: location,
             },
             success: function (result) {
-                window.location.href = "ManageDeployment.php";
+                closeModal('newDeploymentForm');
+                document.getElementById('mainDrive').innerHTML = result;
             }
         })
 
@@ -1063,12 +1071,10 @@ include_once("../includes/database.php") ?>
         var healthDistrictName = document.getElementById("newHealthDistrict").value;
         var districtNumber = document.getElementById("contactNumber").value;
 
-        console.log(healthDistrictName);
-        console.log(checkedValue);
         $.ajax({
             url: 'ManageDeploymentProcessor.php',
             method: 'POST',
-            data: {barangays: checkedValue, healthDistrictName: healthDistrictName, number: districtNumber},
+            data: {barangays: barangays, healthDistrictName: healthDistrictName, number: districtNumber},
             success: function (result) {
                 document.getElementById("HealthDModal").style.display = "none";
                 document.getElementById("distContent").innerHTML = result;
@@ -1112,8 +1118,7 @@ include_once("../includes/database.php") ?>
             method: 'POST',
             data: {brgyId: barangayId},
             success: function (result) {
-                document.getElementById('healthDContent').innerHTML = "";
-                document.getElementById('healthDContent').innerHTML = result;
+                document.getElementById('barangayList').innerHTML = result;
                 console.log(result)
 
             }
@@ -1189,10 +1194,12 @@ include_once("../includes/database.php") ?>
     }
 
     function selected(array, id) {
-        if (array == "healthDistricts"){
-            array = healthDistricts;
-        } else if (array == "priorityGroups"){
+        if (array == "barangay"){
+            array = barangays;
+        } else if (array == "priorityGroups") {
             array = priorityGroups;
+        }else if (array == "healthDistricts"){
+            array = healthDistricts;
         }else{
             array = firstDoseVaccineBrands;
         }
