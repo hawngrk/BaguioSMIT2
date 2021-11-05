@@ -1,5 +1,6 @@
 <?php
-
+require_once('../includes/sessionHandling.php');
+checkRole('HSO');
 //include ("../AdminbackEnd/sessionHandling.php");
 include_once("../includes/database.php") ?>
 
@@ -78,7 +79,7 @@ include_once("../includes/database.php") ?>
         </ul>
 
         <ul class="list-unstyled CTAs">
-            <button type="button" class="btn btn-info">
+            <button type="button" class="btn btn-info" onclick='logout()'>
                 <span>Sign Out</span>
             </button>
         </ul>
@@ -961,7 +962,8 @@ include_once("../includes/database.php") ?>
         });
     }
 </script>
-
+<!--Logout script-->
+<script src="../javascript/logout.js"></script>
 <!--
 <script>
     $(document).ready(function ($) {

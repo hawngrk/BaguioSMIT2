@@ -1,5 +1,7 @@
 <?php
 include "../includes/database.php";
+require_once('../includes/sessionHandling.php');
+checkRole('SSD');
 ?>
 
 <html lang="en">

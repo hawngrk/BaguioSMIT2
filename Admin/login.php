@@ -21,7 +21,7 @@ if(isset($_SESSION['account'])) {
     }
 
     if ($accountDetails['role'] == 'EIR') {
-        header("Location: ../EIR Module/.php");
+        header("Location: ../EIR Module/EIRHomeScreening.php");
     }
 
     if ($accountDetails['role'] == 'SSD') {
@@ -166,6 +166,22 @@ Description: Login HTML Elements for receiving credentials from the users
                     error: function(results) {
                         console.log('There was an error');
                     }
+                });
+            }
+            function success() {
+                Swal.fire({
+                    icon: 'info',
+                    title: 'Successfully Logged in',
+                    showConfirmButton: false,
+                    timer: 1500
+                });    
+            }
+            function error() {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Invalid username or password',
+                    showConfirmButton: false,
+                    timer: 1500
                 });
             }
         </script>

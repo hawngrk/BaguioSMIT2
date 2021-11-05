@@ -8,38 +8,40 @@
 //initial session handling subject to change - Natividad Hudson Kit P.
 session_start();
 
-
 if(!isset($_SESSION['account'])) {
     header("Location:../Admin/login.php");
-} else {
-    $accountDetails = $_SESSION['account'];
-    if ($accountDetails['role'] == 'Barangay') {
-        header("Location:../Barangay Module/homeBarangayModule.php");
-    }
-    
-    if ($accountDetails['role'] == 'Monitoring') {
-        header("Location:../Monitoring Module/ScanQRMonitoring.php");
-    }
-    
-    if ($accountDetails['role'] == 'Screening') {
-        header("Location:../Barangay Module/homeBarangayModule.php");
-    }
+} 
 
-    if ($accountDetails['role'] == 'HSO') {
-        header("Location:../HSO Module/HSOdash.php");
-    }
+function checkRole($currentPage) {
+    $empRole = $_SESSION['account'];
+    if($empRole['role'] != $currentPage) {
+        if ($empRole['role'] == 'Barangay') {
+            header("Location:../Barangay Module/homeBarangayModule.php");
+        }
+        
+        if ($empRole['role'] == 'Monitoring') {
+            header("Location:../Monitoring Module/ScanQRMonitoring.php");
+        }
+        
+        if ($empRole['role'] == 'Screening') {
+            header("Location:../Barangay Module/homeBarangayModule.php");
+        }
 
-    if ($accountDetails['role'] == 'EIR') {
-        header("Location:../EIR Module/.php");
-    }
+        if ($empRole['role'] == 'HSO') {
+            header("Location:../HSO Module/HSOdash.php");
+        }
 
-    if ($accountDetails['role'] == 'SSD') {
-        header("Location:../Ssd Module/homeSsdModule.php");
-    }
+        if ($empRole['role'] == 'EIR') {
+            header("Location:../EIR Module/EIRHomeScreening.php");
+        }
 
-    if ($accountDetails['role'] == "Mayor's Office") {
-        header("Location:../Mayor Module/UsersLog.php");
-    }
+        if ($empRole['role'] == 'SSD') {
+            header("Location:../Ssd Module/homeSsdModule.php");
+        }
 
+        if ($empRole['role'] == "Mayor's Office") {
+            header("Location:../Mayor Module/UsersLog.php");
+        }
+    }
 }
 ?>

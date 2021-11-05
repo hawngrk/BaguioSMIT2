@@ -1,3 +1,7 @@
+<?php 
+require_once('../includes/sessionHandling.php');
+checkRole("Mayor's Office");
+?>
 <!DOCTYPE html>
 <html>
 
@@ -53,7 +57,7 @@
         </ul>
 
         <ul class="list-unstyled CTAs">
-            <button type="button" class="btn btn-info signOutPersonnel">
+            <button type="button" class="btn btn-info signOutPersonnel" onclick='logout()'>
                 <span>Sign Out</span>
             </button>
         </ul>
@@ -180,3 +184,5 @@
         })
     }
 </script>
+<!--Logout script-->
+<script src="../javascript/logout.js"></script>

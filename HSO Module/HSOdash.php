@@ -1,3 +1,7 @@
+<?php 
+require_once('../includes/sessionHandling.php');
+checkRole('HSO');
+?>
 <!DOCTYPE html>
 <html>
 
@@ -70,7 +74,7 @@
 
 
             <ul class="list-unstyled CTAs">
-                <button type="button" class="btn btn-info signOutPersonnel">
+                <button type="button" class="btn btn-info signOutPersonnel" onclick='logout()'>
                     <span>Sign Out</span>
                 </button>
             </ul>
@@ -110,5 +114,8 @@
         </div>
     </div>
     </body>
-
+    <!--jQuery-->
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <!--Logout script-->
+    <script src="../javascript/logout.js"></script>
 </html>

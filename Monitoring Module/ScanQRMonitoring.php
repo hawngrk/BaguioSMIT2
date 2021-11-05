@@ -1,3 +1,7 @@
+<?php 
+require_once('../includes/sessionHandling.php');
+checkRole('Monitoring');
+?>
 <!DOCTYPE html>
 <html>
 
@@ -57,7 +61,7 @@
                 </li>
             </ul>
             <ul class="list-unstyled CTAs">
-                <button type="button" class="btn btn-info signOutPersonnel">
+                <button type="button" class="btn btn-info signOutPersonnel" onclick='logout()'>
                     <span>Sign Out</span>
                 </button>
             </ul>
@@ -108,7 +112,6 @@
                 </div>
             </div>
             
-
         </div>
     </div>
     <script type="text/javascript">
@@ -161,6 +164,8 @@
             document.getElementById(modal).style.display = "none";
         }
     </script>
+    <!--Logout script-->
+<script src="../javascript/logout.js"></script>
 </body>
 </html>
 
