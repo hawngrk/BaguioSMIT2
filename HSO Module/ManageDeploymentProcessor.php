@@ -322,13 +322,13 @@ if (isset($_POST['healthName'])){
     $name = $_POST['healthName'];
     $number = $_POST['number'];
 
-    echo "  <h3>Health District: </h3><br>
+    echo "  <h5>Health District: </h5>
             $name <br><hr> 
-            <h3>Contact Number:</h3><br>
+            <h5>Contact Number:</h5>
             $number<br><hr>
           
-            <h3>Barangays: </h3><br> 
-            <div id='barangayList'>";
+            <h5>Barangays: </h5><br> 
+            <div class='tableScroll6 border border-dark p-3' id='barangayList'>";
 
     require_once '../require/getBarangay.php';
 
@@ -338,12 +338,12 @@ if (isset($_POST['healthName'])){
         if ($id == $hId) {
             $name = $b->getBarangayName();
             $bId = $b->getBarangayId();
-            echo "<li>
+            echo "<ul>
                                                <label>$name</label>
                                                <div style='float: right'>
-                                                    <button class='buttonTransparent hyperlink' onclick='del($bId, deleteBarangay)'>delete</i></button>
+                                                    <button class='btn btn-danger' onclick='del($bId, deleteBarangay)'>delete</i></button>
                                                </div>
-                                               </li>
+                                               </ul>
                                                <br>
                                                
                                              ";
@@ -551,7 +551,7 @@ if (isset($_POST['archive'])){
         $query = "UPDATE `vaccination_drive` SET `Archived`= 1 WHERE `drive_id` = '$archivedId'";
         $database->query($query);
 
-        echo' <table class="table table-hover tableDep" id="driveTable">
+        echo' <table class="table table-hover tableDep tableScroll2 mb-2" id="driveTable">
                             <thead>
                             <tr class="tableCenterCont">
                                 <th scope="col">Drive Id</th>
@@ -588,8 +588,8 @@ if (isset($_POST['archive'])){
         $query = "UPDATE `vaccination_drive` SET `Archived`= 0 WHERE `drive_id` = '$archivedId'";
         $database->query($query);
 
-        echo'<table class="table table-row table-hover tableModal">
-                <thead>
+        echo'<table class="table table-row table-hover tableModal ">
+                <thead class="tableHeader">
                 <tr>
                     <th scope="col">Drive Id</th>
                     <th scope="col">Location</th>
@@ -610,8 +610,8 @@ if (isset($_POST['archive'])){
                         <td>$vaccinationSite</td>
                         <td>$date</td>
                         <td>
-                            <div style='text-align: left;'>
-                                <button class='btn btn-warning' onclick='archive(0, clickArchive, $driveId )'>unarchive <i class='fas fa-box-open'></i></button>
+                            <div class='d-flex justify-content-center'>
+                                <button class='btn btn-sm bg-none' onclick='archive(0, clickArchive, $driveId )'>unarchive <i class='fas fa-box-open'></i></button>
                             </div>
                         </td>
 
@@ -684,8 +684,8 @@ if (isset($_POST['showUpdatedArchive'])){
                         <td>$vaccinationSite</td>
                         <td>$date</td>
                          <td>
-                            <div style='text-align: left;'>
-                                <button class='btn btn-warning' onclick='archive(0, clickArchive, $driveId )'>unarchive <i class='fas fa-box-open'></i></button>
+                            <div class='d-flex justify-content-center'>
+                                <button class='btn btn-sm bg-none' onclick='archive(0, clickArchive, $driveId )'>unarchive <i class='fas fa-box-open'></i></button>
                             </div>
                         </td>
                       </tr>";
@@ -704,7 +704,7 @@ if (isset($_POST['distArchive'])){
 
         echo' 
                     <table class="table table-row table-hover tableModal">
-                        <thead>
+                        <thead class="tableHeader">
                         <tr>
                             <th scope="col">Health District Id</th>
                             <th scope="col">District Name</th>
@@ -740,7 +740,7 @@ if (isset($_POST['distArchive'])){
         $database->query($query);
 
         echo' <table class="table table-row table-hover tableModal">
-                        <thead>
+                        <thead class="tableHeader">
                         <tr>
                             <th scope="col">Health District Id</th>
                             <th scope="col">District Name</th>
@@ -780,7 +780,7 @@ if (isset($_POST['distArchive'])){
 if (isset($_POST['showUpdatedDistArchive'])){
     echo"
      <table class='table table-row table-hover tableModal'>
-                        <thead>
+                        <thead class='tableHeader'>
                         <tr>
                             <th scope='col'>Health District Id</th>
                             <th scope='col'>District Name</th>
@@ -801,10 +801,8 @@ if (isset($_POST['showUpdatedDistArchive'])){
                                     <td>$districtId</td>
                                     <td>$districtName</td>
                                     <td>$number</td>
-                                    <td style= 'vertical-align: middle;'>
-                                         <div style='text-align: left;'>
-                                            <button class='btn btn-warning' onclick='event.stopPropagation();archive(0, archiveDistrict, $districtId )'>unarchive <i class='fas fa-box-open'></i></button>
-                                         </div>
+                                    <td class='d-flex justify-content-center'>
+                                            <button class='btn btn-sm bg-none' onclick='event.stopPropagation();archive(0, archiveDistrict, $districtId )'>unarchive <i class='fas fa-box-open'></i></button>
                                     </td>
                                   </tr>";
                             }

@@ -846,7 +846,6 @@ input[type=text]:disabled{
     background-color: white;
     width: 100%;
     margin-top: 1%;
-    border-radius: 12px;
 }
 
 .tableScroll3{
@@ -877,6 +876,27 @@ input[type=text]:disabled{
     width: 73%!important;
     height: 60%;
     margin-top: 10%;
+}
+
+.tableScroll5{
+    position: relative;
+    height: 50vh;
+    overflow: auto;
+    display: block;
+    background-color: white;
+    width: 100%;
+    margin-top: 1%;
+}
+
+.tableScroll6{
+    position: relative;
+    min-height: fit-content;
+    max-height: 50vh;
+    overflow: auto;
+    display: block;
+    background-color: white;
+    width: 100%;
+    margin-top: 1%;
 }
 
 

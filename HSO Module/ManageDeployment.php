@@ -452,8 +452,8 @@ include_once("../includes/database.php") ?>
                         <i class="fas fa-inbox fa-lg"></i> Archive
                     </button>
                 </div>
-                <div id="distContent" class="tableScroll2 mb-2 ">
-                    <table class="table table-hover">
+                <div id="distContent" class="tableScroll5 mb-2 ">
+                    <table class="table table-hover border">
                         <thead class="tableHeader">
                         <tr class="tableCenterCont">
                             <th scope="col">Health District Id</th>
@@ -479,8 +479,8 @@ include_once("../includes/database.php") ?>
                                     <td>$districtName</td>
                                     <td>$number</td>
                                     <td style= 'vertical-align: middle;'>
-                                        <div style='text-align: left;'>
-                                           <button class='buttonTransparent actionButt' onclick='event.stopPropagation(); archive(1,archiveDistrict, $districtId)'><i class='fa fa-archive'></i></button>
+                                        <div class='d-flex justify-content-center'>
+                                           <button class='btn btn-sm bg-none' onclick='event.stopPropagation(); archive(1,archiveDistrict, $districtId)'><i class='fa fa-archive'></i></button>
                                         </div>
                                     </td>
                                   </tr>";
@@ -666,8 +666,8 @@ include_once("../includes/database.php") ?>
                     <i class='fas fa-window-close'></i>
                 </button>
             </div>
-            <div class="modal-body" id="siteModal">
-                <div id="siteContent" class="tableScroll2 border">
+            <div>
+                <div id="siteContent" class="tableScroll6 border">
                     <table class="table table-row table-hover">
                         <thead class="tableHeader">
                         <tr class="tableCenterCont">
