@@ -133,7 +133,7 @@ include_once("../includes/database.php") ?>
                                 <select class="form-select filterButton" id="filterSites" name="filterSite"
                                         onchange="filterVaccinationSites(this)">
                                     <option value="" selected disabled hidden>Filter By</option>
-                                    <option value=""  disabled >Select Location</option>
+                                    <option value="" disabled>Select Location</option>
                                     <option value="All">All</option>
                                     <?php
                                     require_once("../require/getVaccinationSites.php");
@@ -148,8 +148,8 @@ include_once("../includes/database.php") ?>
                             <div class="sfDiv col-md-1.5 my-auto">
                                 <select class="form-select sortButton" id="sortReports" name="sortReports"
                                         onchange="sortDeploymentDate(this)">
-                                    <option value="" disabled >Select Date Sort </option>
-                                    <option value="None"> None </option>
+                                    <option value="" disabled>Select Date Sort</option>
+                                    <option value="None"> None</option>
                                     <option value="Asc">Date ↑</option>
                                     <option value="Desc">Date ↓</option>
                                 </select>
@@ -160,7 +160,7 @@ include_once("../includes/database.php") ?>
                     <div class="w-100 d-none d-md-block"></div>
 
                     <div id="mainDrive" class="tableDep tableScroll1 col">
-                        <table class="table table-hover tableDep" id="driveTable">
+                        <table class="table table-hover tableDep table-fixed" id="driveTable">
                             <thead>
                             <tr class='tableCenterCont'>
                                 <th scope="col">Drive Id</th>
@@ -177,7 +177,7 @@ include_once("../includes/database.php") ?>
                 $dbase->bind_result($driveId, $date, $vaccinationSite);
                 while($dbase->fetch()){
 
-                                    echo "<tr class='table-row' onclick='showDrive(this)'>
+                                echo "<tr class='table-row tableCenterCont' onclick='showDrive(this)'>
 
                         <td>$driveId</td>
                         <td>$vaccinationSite</td>
@@ -431,7 +431,7 @@ include_once("../includes/database.php") ?>
                 </div>
 
             </div>
-    </div>
+        </div>
     </form>
 
     <!--Health District Modal-->
@@ -452,8 +452,8 @@ include_once("../includes/database.php") ?>
                 </div>
                 <div id="distContent" class="tableScroll2 mb-2 ">
                     <table class="table table-hover">
-                        <thead>
-                        <tr>
+                        <thead class="tableHeader">
+                        <tr class="tableCenterCont">
                             <th scope="col">Health District Id</th>
                             <th scope="col">District Name</th>
                             <th scope="col">Contact Number</th>
@@ -470,9 +470,9 @@ include_once("../includes/database.php") ?>
                             $number = $hd->getContact();
                             $archived = $hd->getArchived();
 
-                            if($archived == 0) {
+                            if ($archived == 0) {
 
-                                echo "<tr class='table-row' onclick='showDistrict(this)'>
+                                echo "<tr class='table-row tableCenterCont' onclick='showDistrict(this)'>
                                     <td>$districtId</td>
                                     <td>$districtName</td>
                                     <td>$number</td>
@@ -499,24 +499,25 @@ include_once("../includes/database.php") ?>
         </div>
     </div>
 
-        <div id="archivedDistricts" class="modal-window">
-            <div class="content-modal-table">
-                <div class="modal-header">
-                    <h4 class="modal-title">Archived Health Districts</h4>
-                    <button type="button" class="close" data-dismiss="modal" onclick="closeModal('archivedDistricts')">
-                        <i class='fas fa-window-close'></i>
-                    </button>
-                </div>
-                <div id='archivedDistrictContent' class="modal-body">
-                    <table class="table table-row table-hover tableModal">
-                        <thead>
-                        <tr>
-                            <th scope="col">Health District Id</th>
-                            <th scope="col">District Name</th>
-                            <th scope="col">Contact Number</th>
-                            <th scope="col">Action</th>
-                        </tr>
-                        </thead>
+    <!--Archive Health District Modal-->
+    <div id="archivedDistricts" class="modal-window">
+        <div class="content-modal-table">
+            <div class="modal-header">
+                <h4 class="modal-title">Archived Health Districts</h4>
+                <button type="button" class="close" data-dismiss="modal" onclick="closeModal('archivedDistricts')">
+                    <i class='fas fa-window-close'></i>
+                </button>
+            </div>
+            <div id='archivedDistrictContent' class="modal-body">
+                <table class="table table-row table-hover tableModal">
+                    <thead class="tableHeader">
+                    <tr class="tableCenterCont">
+                        <th scope="col">Health District Id</th>
+                        <th scope="col">District Name</th>
+                        <th scope="col">Contact Number</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                    </thead>
 
                         <?php
                         require_once '../require/getHealthDistrict.php';
@@ -547,7 +548,7 @@ include_once("../includes/database.php") ?>
             </div>
         </div>
 
-    <!--Add Health district modal-->
+    <!--Add Health district Modal-->
     <div id="HealthDModal" class="modal-window">
         <div class="content-modal">
             <div class="modal-header">
@@ -625,6 +626,7 @@ include_once("../includes/database.php") ?>
                     <i class='fas fa-window-close'></i>
                 </button>
             </div>
+
             <div id="healthDContent" class="modal-body">
 
             </div>
@@ -755,7 +757,7 @@ include_once("../includes/database.php") ?>
                 $dbase->bind_result($driveId, $date, $vaccinationSite);
                 while($dbase->fetch()){
 
-                            echo "<tr class='table-row tableCenterCont'>
+                        echo "<tr class='table-row tableCenterCont'>
                         <td>$driveId</td>
                         <td>$vaccinationSite</td>
                         <td>$date</td>
@@ -824,8 +826,8 @@ include_once("../includes/database.php") ?>
     }
 
     //clear search text field
-    $('#searchDeploymentInput').on('input', function(e) {
-        if('' == this.value) {
+    $('#searchDeploymentInput').on('input', function (e) {
+        if ('' == this.value) {
             $.ajax({
                 url: '../includes/searchProcessor.php',
                 type: 'POST',

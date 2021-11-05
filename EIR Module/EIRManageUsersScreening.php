@@ -112,14 +112,15 @@
                                         onchange="filterCategoryGroup(this)">
                                     <option value="" selected disabled hidden>Filter By</option>
                                     <option value="" disabled >Select Category Group</option>
-                                    <option value="None"> None </option>
-                                    <option value="A1"> A1 </option>
-                                    <option value="A2"> A2 </option>
-                                    <option value="A3"> A3 </option>
-                                    <option value="A4"> A4 </option>
-                                    <option value="A5"> A5 </option>
-                                    <option value="A6"> ROP </option>
-                                    <option value="A7"> A7 </option>
+                                    <option value="All"> All </option>
+                                    <?php
+                                    require_once("../require/getPriorityGroup.php");
+                                    foreach ($priorityGroups as $pg) {
+                                        $id = $pg->getPriorityGroupId();
+                                        $category = $pg->getPriorityGroup();
+                                        echo "<option value=$category> $category </option>";
+                                    }
+                                    ?>
                                 </select>
                             </div>
                             <div class="sfDiv col-md-1.5 my-auto">
@@ -150,37 +151,27 @@
                 </thead>
                 <?php
                 require_once '../require/getPatientDetails.php';
-                foreach ($patient_details as $pd) {
-                    if ($pd->getArchived() == 0) {
-                        $id = $pd->getPatientDeetPatId();
-                        $category = $pd->getPriorityGroup();
-                        $fullAddress = $pd->getHouseAdd() . ", " . $pd->getBrgy() . ", " . $pd->getCity() . ", " . $pd->getProvince();
-                        $contact = $pd->getContact();
+                $query = "SELECT patient.patient_id, CONCAT(patient_details.patient_last_name,', ',patient_details.patient_first_name,' ',COALESCE(patient_details.patient_middle_name,''),' ',COALESCE(patient_details.patient_suffix,'')) AS full_name, priority_groups.priority_group, CONCAT(patient_details.patient_house_address, ' ', barangay.barangay_name,' ',barangay.city,' ', barangay.province) AS full_address, patient_contact_number FROM patient JOIN patient_details ON patient.patient_id = patient_details.patient_id JOIN barangay ON barangay.barangay_id = patient_details.barangay_id JOIN priority_groups ON priority_groups.priority_group_id = patient_details.priority_group_id;";
+                $patient_details = [];
 
-                        if ($pd->getPatientMName() == null && $pd->getPatientSuffix() == null) {
-                            $name = $pd->getPatientLName() . ", " . $pd->getPatientFName();
-                        } else if ($pd->getPatientSuffix() == null) {
-                            $name = $pd->getPatientLName() . ", " . $pd->getPatientFName() . " " . $pd->getPatientMName();
-                        } else if ($pd->getPatientMName() == null) {
-                            $name = $pd->getPatientLName() . ", " . $pd->getPatientFName() . " " . $pd->getPatientSuffix();
-                        } else {
-                            $name = $pd->getPatientLName() . ", " . $pd->getPatientFName() . " " . $pd->getPatientMName() . " " . $pd->getPatientSuffix();
-                        }
-
-                        echo "<tr class='table-row tableCenterCont' onclick='showPatient(this)'>
-                        <td>$id</td>
-                        <td>$name</td>
-                        <td>$category</td>
-                        <td>$fullAddress</td>
-                        <td>$contact</td>
-                        <td>
-                            <div class='d-flex justify-content-center'>
-                                <button class='btn btn-sm bg-none' onclick='archive(1, clickArchive, $id)'><i class='fa fa-archive'></i></button>
-                                <button type='button' class='btn btn-sm bg-none' id='viewButton' onclick='viewPatient($id)'><i class='fas fa-eye'></i></button
-                            </div>
-                        </td>
-                    </tr>";
-                    }
+                $stmt = $database->stmt_init();
+                $stmt->prepare($query);
+                $stmt->execute();
+                $stmt->bind_result($patientId, $fullname, $category, $patientAddress, $contactNum);
+                while ($stmt->fetch()) {
+                    echo "<tr onclick='showPatient(this)' class='tableCenterCont'>
+                                <td>$patientId</td>
+                                <td>$fullname</td>
+                                <td>$category</td>
+                                <td>$patientAddress</td>
+                                <td>$contactNum</td>
+                                <td>
+                                    <div class='d-flex justify-content-center'>
+                                        <button class='btn btn-sm bg-none' onclick='event.stopPropagation();archive(1, clickArchive, $id)'><i class='fa fa-archive'></i></button>
+                                        <button type='button' class='btn btn-sm bg-none' id='viewButton' onclick='viewPatient($id)'><i class='fas fa-eye'></i></button
+                                    </div>
+                                </td>
+                            </tr>";
                 }
                 ?>
             </table>
@@ -575,9 +566,9 @@
     function filterCategoryGroup(filter){
         var selectedFilter = filter.value;
         $.ajax({
-            url: '../includes/managePatientProcessor.php',
+            url: '../includes/filterProcessor.php',
             type: 'POST',
-            data: {"filter": selectedFilter},
+            data: {"filterPatient": selectedFilter},
             success: function (result) {
                 document.getElementById("patientTable").innerHTML = result;
             }

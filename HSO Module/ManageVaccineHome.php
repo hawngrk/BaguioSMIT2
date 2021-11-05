@@ -85,11 +85,11 @@ include_once("../includes/database.php") ?>
         <div class="navbar navbar-expand-lg navbar-light bg-light shadow-sm p-3 mb-4 rounded-lg">
             <div class="container-fluid">
                 <div>
-                    <button onclick="openModal('vaccineModal')" type="button" class="shadow-lg  buttonTop3 float-right"><i
-                                class="fas fa-plus"></i> Add Vaccine
+                    <button onclick="openModal('vaccineModal')" type="button" class="shadow-lg  buttonTop3 float-left"><i
+                                class="fas fa-plus"></i> Add Vaccine Lot
                     </button>
                     <button onclick="openModal('newVaccineModal')" type="button" class="shadow-lg  buttonTop3 float-right"><i
-                                class="fas fa-syringe"></i> Add New Vaccine
+                                class="fas fa-syringe"></i> Add New Vaccine Brand
                     </button>
 
                 </div>
@@ -99,6 +99,7 @@ include_once("../includes/database.php") ?>
             </div>
         </div>
 
+        <!-- Table Container-->
         <div class="tableContainer">
             <div class="table-title">
                 <div class="row">
@@ -106,7 +107,6 @@ include_once("../includes/database.php") ?>
                         <div class="input-group">
                             <input id="searchVacc" type="search" placeholder="Search" class="form-control"
                                    name="searchVaccine" onkeyup="searchVaccine()"/>
-                            <!--                            <button type="submit" class="buttonTop5" name="serachVaccineBtn" onclick="searchVaccine()"> <i class="fas fa-search"></i> </button>-->
                         </div>
                     </div>
                     <div class="col-sm-auto">
@@ -142,7 +142,7 @@ include_once("../includes/database.php") ?>
 
             <!--Table Content-->
             <div class="tableVaccine tableScroll2 shadow">
-                <table class="table table-hover" id="vaccineTable">
+                <table class="table table-hover table-fixed" id="vaccineTable">
                     <thead class='tableCenterCont'>
                     <tr>
                         <th>Vaccine Lot ID</th>
@@ -194,13 +194,17 @@ include_once("../includes/database.php") ?>
                         }
                     }
                     ?>
-                    <div id="viewVaccineDetails" class="modal-window"></div>
                 </table>
             </div>
         </div>
     </div>
 
     <!-----MODALS----->
+    <!---View Modal--->
+    <div id="viewVaccineDetails" class="modal-window">
+
+    </div>
+
     <!--Add Vaccine Modal-->
     <div id="vaccineModal" class="modal-window">
         <div class="content-modal">
@@ -213,10 +217,10 @@ include_once("../includes/database.php") ?>
                     <div id="addVaccineModal">
                         <div class="row">
                             <div class="col-sm-6">
-                                <label for="selectedVaccine" class="required"> Select a Vaccine: </label>
+                                <label for="selectedVaccine" class="required"> Select a Vaccine Brand: </label>
                                 <select class="form-select vaccineType" id="selectedVaccine" name="selectedVaccine"
                                         onchange="updateVaccineInfo(this)">
-                                    <option selected disabled> Select Vaccine Efficacy</option>
+                                    <option selected disabled> Select Vaccine </option>
                                     <?php
                                     $getVaccinesQuery = "SELECT vaccine_name FROM vaccine";
                                     $stmt = $database->stmt_init();
@@ -229,7 +233,8 @@ include_once("../includes/database.php") ?>
                                     ?>
                                 </select>
                                 <label class="label1 required" for="qty"> Total Vial Quantity Received: </label>
-                                <input type="text" id="qty"><br>
+                                <input type="text" id="qty">
+                                <br>
                                 <label class="label1 required" for="source"> Vaccine Source: </label>
                                 <select class="vaxSource required" id="source">
                                     <option selected disabled>Select Vaccine Source</option>
@@ -256,7 +261,7 @@ include_once("../includes/database.php") ?>
         </form>
     </div>
 
-    <!-- Add New Vaccine Modal-->
+    <!-- Add New Vaccine Brand Modal-->
     <div id="newVaccineModal" class="modal-window">
         <div class="content-modal">
         <form id='newVaccineForm' method="post" enctype="multipart/form-data">
@@ -359,7 +364,6 @@ include_once("../includes/database.php") ?>
                         require_once '../require/getVaccineBatch.php';
                         require_once '../require/getVaccineLot.php';
 
-                        $count = 0;
                         foreach ($vaccineLots as $vl) {
                             if ($vl->getArchived() == 1) {
                                 $vaccineLotId = $vl->getVaccLotId();
@@ -486,19 +490,6 @@ include_once("../includes/database.php") ?>
             data: {"searchVaccine": textSearch},
             success: function (result) {
                 document.getElementById("vaccineTable").innerHTML = result;
-            }
-        });
-    }
-
-    //filter vaccine source
-    function filterVaccine(filterVac) {
-        var selectedFilter = filterVac.value;
-        $.ajax({
-            url: '../includes/filterProcessor.php',
-            type: 'POST',
-            data: {"vaccine": vaccine.value},
-            success: function (result) {
-                document.getElementById("selectedVaccineInfo").innerHTML = result;
             }
         });
     }
@@ -668,9 +659,9 @@ include_once("../includes/database.php") ?>
     var viewVaccineModal = document.getElementById("viewVaccineDetails");
     function viewVaccineDetails(vaccineId) {
         $.ajax({
-            url: 'ManageVaccineProcessor.php',
+            url: '../includes/viewProcessor.php',
             type: 'POST',
-            data: {"vaccine": vaccineId},
+            data: {"viewVaccine": vaccineId},
             success: function (result) {
                 document.getElementById("viewVaccineDetails").innerHTML = result;
                 viewVaccineModal.style.display = "block";
@@ -678,15 +669,13 @@ include_once("../includes/database.php") ?>
         })
     }
 
-
     //show vaccine - row
     function showVaccine(val) {
         var id = val.getElementsByTagName("td")[0].innerText;
-        console.log(id)
         $.ajax({
-            url: 'ManageVaccineProcessor.php',
+            url: '../includes/viewProcessor.php',
             method: 'POST',
-            data: {vaccine: id},
+            data: {"viewVaccine": id},
             success: function (result) {
                 document.getElementById("viewVaccineDetails").innerHTML = result;
                 viewVaccineModal.style.display = "block";
