@@ -40,7 +40,7 @@ checkRole('SSD');
     <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet"/>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
-    <script defer src="../javascript/showDateAndTime.js"> </script>
+    <script defer src="../javascript/showDateAndTime.js"></script>
 
 </head>
 
@@ -50,7 +50,7 @@ checkRole('SSD');
     <nav id="sidebar">
         <div class="sidebar-header">
             <div class="sidebar-brand-icon">
-            <img src="../img/logoo.png" style="width: 104%; margin-bottom:-19%; margin-top:-5%;" alt="Baguio Logo">
+                <img src="../img/logoo.png" style="width: 104%; margin-bottom:-19%; margin-top:-5%;" alt="Baguio Logo">
             </div>
         </div>
 
@@ -59,9 +59,10 @@ checkRole('SSD');
             <h4 id="headingNav1"> Special Service Division</h4>
             <hr>
             <div class="timeBox">
-                    <p id="time"></p>  <p id="datee"></p>
-                    <script src="../javascript/detailedDateAndTime.js"></script>
-                    </div>
+                <p id="time"></p>
+                <p id="datee"></p>
+                <script src="../javascript/detailedDateAndTime.js"></script>
+            </div>
             <hr>
 
             <li>
@@ -81,42 +82,89 @@ checkRole('SSD');
     <!-- Top Nav Bar  -->
     <div id="content">
         <!-- Page Content  -->
-            <div class="float-right">
-                <button id="buttonMarker" class="btn btn-lg bg-none" onclick="openNotif('notificationModal')">
-                    <span class="marker" id="marker"></span>
-                    <i class="fas fa-bell"></i>
+        <nav class="navbar navbar-expand-lg">
+            <div class="float-right dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <span class="marker" id="marker"></span>
+                                        <i class="fas fa-bell"></i>
                 </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <?php
+                    $query = "SELECT vaccination_drive.drive_id, vaccination_sites.location, vaccination_drive.vaccination_date, vaccination_drive.first_dose_stubs, vaccination_drive.second_dose_stubs, vaccination_drive.notif_opened FROM vaccination_sites JOIN vaccination_drive ON vaccination_sites.vaccination_site_id = vaccination_drive.vaccination_site_id ORDER BY vaccination_drive.drive_id desc;";
+                    $vaccination_drive = [];
+
+                    $stmt = $database->stmt_init();
+                    $stmt->prepare($query);
+                    $stmt->execute();
+                    $stmt->bind_result($driveId, $locName, $date, $firstStubs, $secondStubs, $opened);
+                    echo "<table class='tableScroll4'>";
+                    while ($stmt->fetch()) {
+                        if ($opened == 1) {
+                            echo "<tr>
+                                                         <td>
+                                                            Location: $locName
+                                                            Date: $date <br>
+                                                            Number of First Stubs: $firstStubs <br>
+                                                            Number of Second Stubs: $secondStubs <br>
+                                                            <br>
+                                                            <hr>
+                                                            </td>
+                                                       </tr>
+                                                                          ";
+                        } else {
+                            echo "<tr onclick='updateDeploymentDetails($driveId); closeModal(\"notificationModal\") '>
+                                                                       <script>document.getElementById('marker').setAttribute('style', 'color:#c10d0d!important');</script>
+                                                            <td  style='background: lightgray'>Vaccination Location: $locName<br>
+                                                                Date: $date<br>
+                                                                Number of First Stubs: $firstStubs <br>
+                                                                Number of Second Stubs: $secondStubs<br>
+                                                            <hr>
+                                                            </td>
+                                                            </tr>
+                                                                          ";
+                        }
+                    }
+                    echo "</table>";
+                    ?>
+                </div>
             </div>
-        <br>
+        </nav>
+        <!--            <div class="float-right">-->
+        <!--                <button id="buttonMarker" class="btn btn-lg bg-none" onclick="openNotif('notificationModal')">-->
+        <!--                    <span class="markerid="marker"" ></span>-->
+        <!--                    <i class="fas fa-bell"></i>-->
+        <!--                </button>-->
+        <!--            </div>-->
         <br>
         <div class="row">
-                    <div id="selectDeployment">
-                        <select class="form-select" id="selectHealthDistrict" onchange="updateDeploymentDetails(this.value)">
-                            <option value='' disabled selected hidden> Select Deployment </option>
-                            <?php
-                            require_once("../require/getVaccinationDrive.php");
-                            require_once("../require/getVaccinationSites.php");
-                            foreach ($vaccination_drive  as $vaccinationDrive) {
-                                $id = $vaccinationDrive->getDriveId();
-                                $location = $vaccinationDrive->getVaccDriveVaccSiteId();
-                                $date = date("d-m-Y", strtotime($vaccinationDrive->getVaccDate()));
-                                foreach ($vaccinationSites as $site) {
-                                    if ($site->getVaccinationSiteId() == $location) {
-                                        $locName = $site->getVaccinationSiteLocation();
+            <div id="selectDeployment">
+                <select class="form-select" id="selectHealthDistrict" onchange="updateDeploymentDetails(this.value)">
+                    <option value='' disabled selected hidden> Select Deployment</option>
+                    <?php
+                    require_once("../require/getVaccinationDrive.php");
+                    require_once("../require/getVaccinationSites.php");
+                    foreach ($vaccination_drive as $vaccinationDrive) {
+                        $id = $vaccinationDrive->getDriveId();
+                        $location = $vaccinationDrive->getVaccDriveVaccSiteId();
+                        $date = date("d-m-Y", strtotime($vaccinationDrive->getVaccDate()));
+                        foreach ($vaccinationSites as $site) {
+                            if ($site->getVaccinationSiteId() == $location) {
+                                $locName = $site->getVaccinationSiteLocation();
 
 
-                                        echo "<option value=$id> $date - $locName </option>";
-                                    }
-                                }
+                                echo "<option value=$id> $date - $locName </option>";
                             }
-                            ?>
-                        </select>
-                    </div>
+                        }
+                    }
+                    ?>
+                </select>
+            </div>
             <div class="col">
                 <div class="row">
                     <div id="hDistrictContainer">
                         <h2> Health Center Districts </h2>
-                        
+
                         <table class="table table-hover" id="healthDistrictTable">
                         </table>
                     </div>
@@ -148,9 +196,10 @@ checkRole('SSD');
 
             <div id="barangayModal" class="modal-window">
                 <div id='stubsModal' class='content-modal'>
-                    <div class='modal-header' >
-                        <h3 style='padding-right:50%' id="header">  </h3>
-                        <button id='closeModal' class='close' onclick='closeModal("barangayModal")'> <i class='fas fa-window-close'></i></button>
+                    <div class='modal-header'>
+                        <h3 style='padding-right:50%' id="header"></h3>
+                        <button id='closeModal' class='close' onclick='closeModal("barangayModal")'><i
+                                    class='fas fa-window-close'></i></button>
                     </div>
                     <div class='modal-body' id='healthDStubs'>
                         <nav class="navbar navbar-expand-lg navbar-light navbarDep">
@@ -159,15 +208,18 @@ checkRole('SSD');
                                     <div class="row">
                                         <div class="col-sm-auto">
                                             <li role="presentation" class="doseOption1 nav-item">
-                                                <a class="nav-link" role="tab" id="firstDose" data-toggle="tab" href="#firstDose"
-                                                   onclick="shiftTab(firstDose, secondDose,'firstDosePage', 'secondDosePage')">First Dose</a>
+                                                <a class="nav-link" role="tab" id="firstDose" data-toggle="tab"
+                                                   href="#firstDose"
+                                                   onclick="shiftTab(firstDose, secondDose,'firstDosePage', 'secondDosePage')">First
+                                                    Dose</a>
                                             </li>
                                         </div>
                                         <div class="col-sm-auto">
                                             <li role="presentation" class="doseOption2 nav-item">
                                                 <a class="nav-link" id="secondDose" role="tab" data-toggle="tab"
                                                    href="#secondDose"
-                                                   onclick="shiftTab(secondDose, firstDose, 'secondDosePage', 'firstDosePage')">Second Dose</a>
+                                                   onclick="shiftTab(secondDose, firstDose, 'secondDosePage', 'firstDosePage')">Second
+                                                    Dose</a>
                                             </li>
                                         </div>
                                     </div>
@@ -194,25 +246,26 @@ checkRole('SSD');
         <div class="content-modal">
             <div class="modal-header">
                 <h4 class="modal-title">Notifications</h4>
-                <button type="button" class="close" data-dismiss="modal" onclick="window.location.href = 'distributeStubSsdModule.php'">
+                <button type="button" class="close" data-dismiss="modal"
+                        onclick="window.location.href = 'distributeStubSsdModule.php'">
                     &times;
                 </button>
             </div>
             <table>
-            <div class="modal-body" id="notificationContent">
+                <div class="modal-body" id="notificationContent">
 
-                <?php
-                $query = "SELECT vaccination_drive.drive_id, vaccination_sites.location, vaccination_drive.vaccination_date, vaccination_drive.first_dose_stubs, vaccination_drive.second_dose_stubs, vaccination_drive.notif_opened FROM vaccination_sites JOIN vaccination_drive ON vaccination_sites.vaccination_site_id = vaccination_drive.vaccination_site_id ORDER BY vaccination_drive.drive_id desc;";
-                $vaccination_drive = [];
+                    <?php
+                    $query = "SELECT vaccination_drive.drive_id, vaccination_sites.location, vaccination_drive.vaccination_date, vaccination_drive.first_dose_stubs, vaccination_drive.second_dose_stubs, vaccination_drive.notif_opened FROM vaccination_sites JOIN vaccination_drive ON vaccination_sites.vaccination_site_id = vaccination_drive.vaccination_site_id ORDER BY vaccination_drive.drive_id desc;";
+                    $vaccination_drive = [];
 
-                $stmt = $database->stmt_init();
-                $stmt->prepare($query);
-                $stmt->execute();
-                $stmt->bind_result($driveId, $locName, $date, $firstStubs, $secondStubs, $opened);
+                    $stmt = $database->stmt_init();
+                    $stmt->prepare($query);
+                    $stmt->execute();
+                    $stmt->bind_result($driveId, $locName, $date, $firstStubs, $secondStubs, $opened);
 
-                while ($stmt->fetch()) {
-                    if ($opened == 1){
-                        echo "<tr>
+                    while ($stmt->fetch()) {
+                        if ($opened == 1) {
+                            echo "<tr>
                                                    
                                                        
                                                             <td>
@@ -225,9 +278,9 @@ checkRole('SSD');
                                                             </td>       
                                                  </tr>
                                                       ";
-                    } else{
+                        } else {
 
-                        echo "<tr onclick='updateDeploymentDetails($driveId); closeModal(\"notificationModal\") '>
+                            echo "<tr onclick='updateDeploymentDetails($driveId); closeModal(\"notificationModal\") '>
                                                    <script>document.getElementById('marker').setAttribute('style', 'color:#c10d0d!important');</script>
                                                       
                                                       
@@ -244,12 +297,12 @@ checkRole('SSD');
                                                       ";
 
 
+                        }
+
                     }
+                    ?>
 
-                }
-                ?>
-
-            </div>
+                </div>
             </table>
         </div>
     </div>
@@ -259,13 +312,13 @@ checkRole('SSD');
         });
 
         var channel = pusher.subscribe('ssd');
-        channel.bind('my-event', function(data) {
+        channel.bind('my-event', function (data) {
             var id = data.message;
 
             toastr.options.positionClass = 'toast-bottom-right';
             toastr.info('You Have Received A New Deployment!');
 
-            document.getElementById('marker').setAttribute('style', 'color:#c10d0d!important') ;
+            document.getElementById('marker').setAttribute('style', 'color:#c10d0d!important');
             document.getElementById("notificationContent").innerHTML = "";
             document.getElementById("selectDeployment").innerHTML = "";
 
@@ -288,22 +341,25 @@ checkRole('SSD');
             });
         });
 
-        function openNotif(modal){
+        function openNotif(modal) {
             document.getElementById(modal).style.display = "block";
             $.ajax({
                 url: 'selectDeployment.php',
                 type: 'POST',
                 data: {"open": "opened"},
                 success: function (result) {
-                    setTimeout(function(){ document.getElementById('marker').setAttribute('style', 'color:transparent!important'); }, 5000);
+                    setTimeout(function () {
+                        document.getElementById('marker').setAttribute('style', 'color:transparent!important');
+                    }, 5000);
+                    document.getElementById("notifications").innerHTML = result;
                 }
             });
         }
 
-        function sendStubs(drive){
+        function sendStubs(drive) {
             var result1 = {};
             var trs = document.getElementById('firstDosePage').getElementsByTagName("tr");
-            for(var idx = 1; idx < trs.length; idx++) {
+            for (var idx = 1; idx < trs.length; idx++) {
                 var tds = trs[idx].getElementsByTagName("td");
                 result1[trs[idx].id] = [];
                 for (var index = 0; index < tds.length; index++) {
@@ -313,7 +369,7 @@ checkRole('SSD');
             }
             var result2 = [];
             var trs2 = document.getElementById('secondDosePage').getElementsByTagName("tr");
-            for(var i = 1; i < trs2.length; i++) {
+            for (var i = 1; i < trs2.length; i++) {
                 var tds2 = trs2[i].getElementsByTagName("td");
                 for (var ind = 0; ind < tds2.length; ind++) {
                     var val2 = tds2[ind].firstChild.value;
@@ -324,7 +380,7 @@ checkRole('SSD');
             $.ajax({
                 url: 'selectDeployment.php',
                 type: 'POST',
-                data: {"sendStubs": result1, "stubsDrive": drive, "second_dose": result2 },
+                data: {"sendStubs": result1, "stubsDrive": drive, "second_dose": result2},
                 success: function () {
                     closeModal('barangayModal');
                 }
@@ -333,24 +389,25 @@ checkRole('SSD');
         }
 
         var firstCounter = 0;
-        function countStubs(num, oldnum, item){
+
+        function countStubs(num, oldnum, item) {
 
             if (num.includes("%")) {
                 num = num.replace(/%/g, '');
-                num = (firstCounter/ 100) * num;
+                num = (firstCounter / 100) * num;
             }
 
             if (num == undefined || num == "") {
                 num = 0;
             }
 
-            if(oldnum == undefined || oldnum == ""){
+            if (oldnum == undefined || oldnum == "") {
 
                 oldnum = 0;
             }
 
 
-            if (num > firstCounter){
+            if (num > firstCounter) {
                 alert('Number Exceeds Number Of Left Stubs!');
                 firstCounter += parseInt(oldnum);
                 item.value = 0;
@@ -364,50 +421,51 @@ checkRole('SSD');
         }
 
         var secondCounter = 0;
-        function countStubs2(num, oldnum, item){
+
+        function countStubs2(num, oldnum, item) {
 
             if (num.includes("%")) {
                 num = num.replace(/%/g, '');
-                num = (secondCounter/ 100) * num;
+                num = (secondCounter / 100) * num;
             }
 
             if (num == undefined || num == "") {
                 num = 0;
             }
 
-            if(oldnum == undefined || oldnum == ""){
+            if (oldnum == undefined || oldnum == "") {
 
                 oldnum = 0;
             }
 
 
-            if (num >  secondCounter){
+            if (num > secondCounter) {
                 alert('Number Exceeds Number Of Left Stubs!');
                 secondCounter += parseInt(oldnum);
                 item.value = 0;
             } else {
-                secondCounter =  secondCounter + parseInt(oldnum);
-                secondCounter =  secondCounter - parseInt(num);
+                secondCounter = secondCounter + parseInt(oldnum);
+                secondCounter = secondCounter - parseInt(num);
             }
 
-            document.getElementById('secondCounter').innerHTML = "<center><p class='float-left'><i class='fas fa-ticket-alt'></i> Number of Stubs Left: " +  secondCounter + "</p> </center>";
+            document.getElementById('secondCounter').innerHTML = "<center><p class='float-left'><i class='fas fa-ticket-alt'></i> Number of Stubs Left: " + secondCounter + "</p> </center>";
         }
 
-        function checkZero(item, type){
-            if(type == 'first'){
+        function checkZero(item, type) {
+            if (type == 'first') {
                 var counter = firstCounter;
-            }else {
+            } else {
                 var counter = secondCounter
             }
 
-            if(counter == 0){
+            if (counter == 0) {
                 alert('No more stubs');
                 item.value = 0;
             }
         }
 
 
-        function updateDeploymentDetails(val){
+        function updateDeploymentDetails(val) {
             $.ajax({
                 url: 'selectDeployment.php',
                 type: 'POST',
@@ -427,7 +485,7 @@ checkRole('SSD');
             });
         }
 
-        function viewBarangays(id, district, driveId, priorities, firstDoseStubs, secondDoseStubs){
+        function viewBarangays(id, district, driveId, priorities, firstDoseStubs, secondDoseStubs) {
             firstCounter = firstDoseStubs;
             secondCounter = secondDoseStubs;
 
@@ -448,7 +506,7 @@ checkRole('SSD');
                 data: {"viewBarangays2": id, "drive": driveId, "secondStubs": secondDoseStubs},
                 success: function (result) {
                     document.getElementById("secondDosePage").innerHTML = result;
-                    document.getElementById("barangayModal").style.display ="block";
+                    document.getElementById("barangayModal").style.display = "block";
                 }
             });
         }
@@ -477,14 +535,15 @@ checkRole('SSD');
             }
         }
 
-        function closeModal(modal){
-            document.getElementById(modal).style.display ="none";
+        function closeModal(modal) {
+            document.getElementById(modal).style.display = "none";
         }
 
         function openModal(modal) {
             document.getElementById(modal).style.display = "block";
             document.body.classList.add("scrollBody");
         }
+
         function shiftTab(active, idle1, pageBlock, pageNone1) {
             active.style.backgroundColor = "#1D7195";
             active.style.color = "#ffffff";

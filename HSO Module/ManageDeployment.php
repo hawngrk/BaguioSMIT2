@@ -501,6 +501,11 @@ include_once("../includes/database.php") ?>
         </div>
     </div>
 
+    <!--Edit Modal-->
+    <div id="editModal" class="modal-window">
+    </div>
+
+
     <!--Archive Health District Modal-->
     <div id="archivedDistricts" class="modal-window">
         <div class="content-modal-table">

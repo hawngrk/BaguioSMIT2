@@ -115,92 +115,166 @@ include_once("../includes/database.php");
 
     <!-- Top Nav Bar -->
 
-    <div id="notificationModal" class="modal-window">
-        <div class="content-modal">
-            <div class="modal-header">
-                <h4 class="modal-title">Notifications</h4>
-                <button type="button" class="close" data-dismiss="modal"
-                        onclick="closeModal('notificationModal')">
-                    &times;
-                </button>
-            </div>
-            <table>
-            <div class="modal-body" id="notificationContent">
-                <?php
-                $query = "SELECT barangay_stubs.drive_id, barangay_stubs.A1_stubs, barangay_stubs.A2_stubs, barangay_stubs.A3_stubs, barangay_stubs.A4_stubs, barangay_stubs.A5_stubs, barangay_stubs.A6_stubs, barangay_stubs.notif_opened, vaccination_sites.location, vaccination_drive.vaccination_date FROM barangay_stubs JOIN vaccination_drive ON vaccination_drive.drive_id = barangay_stubs.drive_id JOIN vaccination_sites ON vaccination_sites.vaccination_site_id = vaccination_drive.vaccination_site_id WHERE barangay_id = '113';";
-                $stmt = $database->stmt_init();
-                $stmt->prepare($query);
-                $stmt->execute();
-                $stmt->bind_result($driveId,$A1, $A2, $A3, $A4, $A5, $A6, $opened, $locName, $date);
-                while ($stmt->fetch()) {
 
-                    $availableStubs = [$A1, $A2, $A3, $A4, $A5, $A6];
-                    $priorityStub = [];
-                    $values = [];
-
-                    for ($i = 0; $i < 6; $i++) {
-                        if ($availableStubs[$i] != 0) {
-                            $priorityStub[] = "A" . ($i + 1);
-                            $values[] = $availableStubs[$i];
-                        }
-                    }
-
-                    if ($opened == 1) {
-                        echo "<tr>
-                                                        <td style='color: #9C9C9C'>
-                                                            Stubs:<br>";
-                        foreach ($priorityStub as $ps) {
-                            foreach ($values as $value)
-                                echo " $ps: $value";
-                        }
-
-                        echo "
-                                                            Vaccination Location: $locName<br>
-                                                               Date: $date <br>
-                                                            
-                                                       
-                                                      <hr style='width: 100%; background: azure'>
-                                                     </td>
-                                                      </tr>
-                                                      ";
-                    } else {
-
-                        echo "<tr onclick='updateBarangayHome($driveId); ; closeModal(\"notificationModal\")'>
-                                                   <script>document.getElementById('marker').setAttribute('style', 'color:#c10d0d!important');</script>
-                                                  
-                                                        <td style='background: lightgray'>
-                                                             Stubs:";
-
-                        foreach ($priorityStub as $ps) {
-                            foreach ($values as $value)
-                                echo "$ps: $value<br>";
-                        }
-
-                        echo "
-                                                            Vaccination Location: $locName<br>
-                                                               Date: $date <br>
-                                                           
-                                                       
-                                                      <hr style='width: 100%; background: azure'>
-                                                      </td>
-                                                      </tr>";
-                    }
-                }
-                ?>
-            </div>
-            </table>
-        </div>
-    </div>
+<!--    <div id="notificationModal" class="modal-window">-->
+<!--        <div class="content-modal">-->
+<!--            <div class="modal-header">-->
+<!--                <h4 class="modal-title">Notifications</h4>-->
+<!--                <button type="button" class="close" data-dismiss="modal"-->
+<!--                        onclick="closeModal('notificationModal')">-->
+<!--                    &times;-->
+<!--                </button>-->
+<!--            </div>-->
+<!--            <table>-->
+<!--            <div class="modal-body" id="notificationContent">-->
+<!--                --><?php
+//                $query = "SELECT barangay_stubs.drive_id, barangay_stubs.A1_stubs, barangay_stubs.A2_stubs, barangay_stubs.A3_stubs, barangay_stubs.A4_stubs, barangay_stubs.A5_stubs, barangay_stubs.A6_stubs, barangay_stubs.notif_opened, vaccination_sites.location, vaccination_drive.vaccination_date FROM barangay_stubs JOIN vaccination_drive ON vaccination_drive.drive_id = barangay_stubs.drive_id JOIN vaccination_sites ON vaccination_sites.vaccination_site_id = vaccination_drive.vaccination_site_id WHERE barangay_id = '113';";
+//                $stmt = $database->stmt_init();
+//                $stmt->prepare($query);
+//                $stmt->execute();
+//                $stmt->bind_result($driveId,$A1, $A2, $A3, $A4, $A5, $A6, $opened, $locName, $date);
+//                while ($stmt->fetch()) {
+//
+//                    $availableStubs = [$A1, $A2, $A3, $A4, $A5, $A6];
+//                    $priorityStub = [];
+//                    $values = [];
+//
+//                    for ($i = 0; $i < 6; $i++) {
+//                        if ($availableStubs[$i] != 0) {
+//                            $priorityStub[] = "A" . ($i + 1);
+//                            $values[] = $availableStubs[$i];
+//                        }
+//                    }
+//
+//                    if ($opened == 1) {
+//                        echo "<tr>
+//                                                        <td style='color: #9C9C9C'>
+//                                                            Stubs:<br>";
+//                        foreach ($priorityStub as $ps) {
+//                            foreach ($values as $value)
+//                                echo " $ps: $value";
+//                        }
+//
+//                        echo "
+//                                                            Vaccination Location: $locName<br>
+//                                                               Date: $date <br>
+//
+//
+//                                                      <hr style='width: 100%; background: azure'>
+//                                                     </td>
+//                                                      </tr>
+//                                                      ";
+//                    } else {
+//
+//                        echo "<tr onclick='updateBarangayHome($driveId); ; closeModal(\"notificationModal\")'>
+//                                                   <script>document.getElementById('marker').setAttribute('style', 'color:#c10d0d!important');</script>
+//
+//                                                        <td style='background: lightgray'>
+//                                                             Stubs:";
+//
+//                        foreach ($priorityStub as $ps) {
+//                            foreach ($values as $value)
+//                                echo "$ps: $value<br>";
+//                        }
+//
+//                        echo "
+//                                                            Vaccination Location: $locName<br>
+//                                                               Date: $date <br>
+//
+//
+//                                                      <hr style='width: 100%; background: azure'>
+//                                                      </td>
+//                                                      </tr>";
+//                    }
+//                }
+//                ?>
+<!--            </div>-->
+<!--            </table>-->
+<!--        </div>-->
+<!--    </div>-->
 
     <div id="content">
-        <div class="topNav row">
-            <div class="container-fluid">
-                <button id="buttonMarker" class="notif float-right" onclick="openNotif('notificationModal')">
-                    <span class="marker" id="marker"><i class="fas fa-circle"></i></span>
+        <nav class="navbar navbar-expand-lg">
+            <div class="float-right dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="marker" id="marker"></span>
                     <i class="fas fa-bell"></i>
                 </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <?php
+                                    $query = "SELECT barangay_stubs.drive_id, barangay_stubs.A1_stubs, barangay_stubs.A2_stubs, barangay_stubs.A3_stubs, barangay_stubs.A4_stubs, barangay_stubs.A5_stubs, barangay_stubs.A6_stubs, barangay_stubs.notif_opened, vaccination_sites.location, vaccination_drive.vaccination_date FROM barangay_stubs JOIN vaccination_drive ON vaccination_drive.drive_id = barangay_stubs.drive_id JOIN vaccination_sites ON vaccination_sites.vaccination_site_id = vaccination_drive.vaccination_site_id WHERE barangay_id = '113';";
+                                    $stmt = $database->stmt_init();
+                                    $stmt->prepare($query);
+                                    $stmt->execute();
+                                    $stmt->bind_result($driveId,$A1, $A2, $A3, $A4, $A5, $A6, $opened, $locName, $date);
+                                    while ($stmt->fetch()) {
+
+                                        $availableStubs = [$A1, $A2, $A3, $A4, $A5, $A6];
+                                        $priorityStub = [];
+                                        $values = [];
+
+                                        for ($i = 0; $i < 6; $i++) {
+                                            if ($availableStubs[$i] != 0) {
+                                                $priorityStub[] = "A" . ($i + 1);
+                                                $values[] = $availableStubs[$i];
+                                            }
+                                        }
+
+                                        if ($opened == 1) {
+                                            echo "<tr>
+                                                                            <td style='color: #9C9C9C'>
+                                                                                Stubs:<br>";
+                                            foreach ($priorityStub as $ps) {
+                                                foreach ($values as $value)
+                                                    echo " $ps: $value";
+                                            }
+
+                                            echo "
+                                                                                Vaccination Location: $locName<br>
+                                                                                   Date: $date <br>
+                    
+                    
+                                                                          <hr style='width: 100%; background: azure'>
+                                                                         </td>
+                                                                          </tr>
+                                                                          ";
+                                        } else {
+
+                                            echo "<tr onclick='updateBarangayHome($driveId); ; closeModal(\"notificationModal\")'>
+                                                                       <script>document.getElementById('marker').setAttribute('style', 'color:#c10d0d!important');</script>
+                    
+                                                                            <td style='background: lightgray'>
+                                                                                 Stubs:";
+
+                                            foreach ($priorityStub as $ps) {
+                                                foreach ($values as $value)
+                                                    echo "$ps: $value<br>";
+                                            }
+
+                                            echo "
+                                                                                Vaccination Location: $locName<br>
+                                                                                   Date: $date <br>
+                    
+                    
+                                                                          <hr style='width: 100%; background: azure'>
+                                                                          </td>
+                                                                          </tr>
+                                                                         ";
+                                        }
+                                    }
+                                    ?>
+                </div>
             </div>
-        </div>
+        </nav>
+<!--        <div class="topNav row">-->
+<!--            <div class="container-fluid">-->
+<!--                <button id="buttonMarker" class="notif float-right" onclick="openNotif('notificationModal')">-->
+<!--                    <span class="marker" id="marker"><i class="fas fa-circle"></i></span>-->
+<!--                    <i class="fas fa-bell"></i>-->
+<!--                </button>-->
+<!--            </div>-->
+<!--        </div>-->
         <br>
         <br>
         <!--Page Content-->

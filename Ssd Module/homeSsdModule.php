@@ -65,15 +65,14 @@ checkRole('SSD');
             <hr>
 
             <li class="active">
-                <a href="homeSsdModule.php"><i class="fas fa-home"></i>  Home</a>
+                <a href="homeSsdModule.php"><i class="fas fa-home"></i> Home </a>
             </li>
             <li>
-                <a href="distributeStubSsdModule.php"><i class="fas fa-ticket-alt"></i>  Stub Distribute</a>
+                <a href="distributeStubSsdModule.php"><i class="fas fa-ticket-alt"></i> Stub Distribute</a>
             </li>
         </ul>
         <ul class="list-unstyled CTAs">
-            <button type="button" class="btn btn-info" 
-onclick='logout()'>
+            <button type="button" class="btn btn-info" onclick='logout()'>
                 <span>Sign Out</span>
             </button>
         </ul>
@@ -82,13 +81,61 @@ onclick='logout()'>
     <!-- Whole Page  -->
     <div id="content">
         <!-- Top Nav Bar  -->
-
-        <div class="float-right">
-                <button id="buttonMarker" class="btn btn-lg bg-none" onclick="openNotif('notificationModal')">
+        <nav class="navbar navbar-expand-lg">
+            <div class="float-right dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <span class="marker" id="marker"></span>
                     <i class="fas fa-bell"></i>
                 </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <?php
+                    $query = "SELECT vaccination_drive.drive_id, vaccination_sites.location, vaccination_drive.vaccination_date, vaccination_drive.first_dose_stubs, vaccination_drive.second_dose_stubs, vaccination_drive.notif_opened FROM vaccination_sites JOIN vaccination_drive ON vaccination_sites.vaccination_site_id = vaccination_drive.vaccination_site_id ORDER BY vaccination_drive.drive_id desc;";
+                    $vaccination_drive = [];
+
+                    $stmt = $database->stmt_init();
+                    $stmt->prepare($query);
+                    $stmt->execute();
+                    $stmt->bind_result($driveId, $locName, $date, $firstStubs, $secondStubs, $opened);
+                    echo "<table class='tableScroll4'>";
+                    while ($stmt->fetch()) {
+                        if ($opened == 1) {
+                            echo "<tr>
+                                                         <td>
+                                                            Location: $locName
+                                                            Date: $date <br>
+                                                            Number of First Stubs: $firstStubs <br>
+                                                            Number of Second Stubs: $secondStubs <br>
+                                                            <br>
+                                                            <hr>
+                                                            </td>
+                                                       </tr>
+                                                                          ";
+                        } else {
+                            echo "<tr onclick='updateDeploymentDetails($driveId); closeModal(\"notificationModal\") '>
+                                                                       <script>document.getElementById('marker').setAttribute('style', 'color:#c10d0d!important');</script>
+                                                            <td  style='background: lightgray'>Vaccination Location: $locName<br>
+                                                                Date: $date<br>
+                                                                Number of First Stubs: $firstStubs <br>
+                                                                Number of Second Stubs: $secondStubs<br>
+                                                            <hr>
+                                                            </td>
+                                                            </tr>
+                                                                          ";
+                        }
+                    }
+                    echo "</table>";
+                    ?>
+                </div>
             </div>
+        </nav>
+
+<!--        <div class="float-right">-->
+<!--                <button id="buttonMarker" class="btn btn-lg bg-none" onclick="openNotif('notificationModal')">-->
+<!--                    <span class="marker" id="marker"></span>-->
+<!--                    <i class="fas fa-bell"></i>-->
+<!--                </button>-->
+<!--            </div>-->
 
         <br>
         <br>

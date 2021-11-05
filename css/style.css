@@ -1129,4 +1129,6 @@ select.sortButton:focus, select.filterButton:focus { /*hso*/
     outline: 0;
 }
 
-
+#dropdownMenuButton::after{
+    content: none;
+}

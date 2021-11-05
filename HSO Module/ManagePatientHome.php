@@ -175,7 +175,7 @@ include_once("../includes/database.php") ?>
                                 <td>$patientAddress</td>
                                 <td>$contactNum</td>
                                 <td>
-                                    <div class='d-flex justify-content-center'>
+                                    <div class ='d-flex justify-content-center'>
                                         <button class='btn btn-sm bg-none' onclick='event.stopPropagation();archive(1, clickArchive, $id)'><i class='fa fa-archive'></i></button>
                                         <button type='button' class='btn btn-sm bg-none' id='viewButton' onclick='viewPatient($id)'><i class='fas fa-eye'></i></button
                                     </div>
@@ -693,9 +693,9 @@ include_once("../includes/database.php") ?>
 
     function viewPatient(patientId){
         $.ajax({
-            url:'../includes/managePatientProcessor.php',
+            url:'../includes/viewProcessor.php',
             type:'POST',
-            data:{"patient": patientId},
+            data:{"viewPatient": patientId},
             success:function (result){
                 document.getElementById("patientModalContent").innerHTML = result;
                 openModal('viewPatientDetails');
@@ -706,9 +706,9 @@ include_once("../includes/database.php") ?>
     function showPatient(val) {
         var id = val.getElementsByTagName("td")[0].innerText;
         $.ajax({
-            url: '../includes/managePatientProcessor.php',
+            url: '../includes/viewProcessor.php',
             method: 'POST',
-            data: {patient: id},
+            data: {"viewPatient": id},
             success: function (result) {
                 document.getElementById("patientModalContent").innerHTML = result;
                 openModal('viewPatientDetails');

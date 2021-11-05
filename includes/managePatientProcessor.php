@@ -48,9 +48,9 @@ if (isset($_POST['sort'])) {
     }
 }
 
-//view
-if (isset($_POST['patient'])) {
-    $patientId = $_POST['patient'];
+//view Patient
+if (isset($_POST['viewPatient'])) {
+    $patientId = $_POST['viewPatient'];
     $query = "SELECT * FROM patient_details JOIN patient ON patient_details.patient_id = patient.patient_id WHERE patient_details.patient_id = '$patientId'";
 
     $stmt = $database->stmt_init();
