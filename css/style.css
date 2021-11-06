@@ -866,6 +866,15 @@ input[type=text]:disabled{
     width: 100%;
 }
 
+.tableScroll7{
+    position: relative;
+    height: 80vh;
+    overflow-y: auto;
+    display: block;
+    background-color: white;
+    width: 350px;
+}
+
 
 .tableModal{
     width: fit-content;
@@ -1129,6 +1138,6 @@ select.sortButton:focus, select.filterButton:focus { /*hso*/
     outline: 0;
 }
 
-#dropdownMenuButton::after{
+#dropdownMenuButton::before{
     content: none;
 }

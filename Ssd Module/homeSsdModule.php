@@ -81,14 +81,14 @@ checkRole('SSD');
     <!-- Whole Page  -->
     <div id="content">
         <!-- Top Nav Bar  -->
-        <nav class="navbar navbar-expand-lg">
-            <div class="float-right dropdown">
-                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+        <nav class="float-right mr-4">
+            <div class="dropdown">
+                <button class="btn btn-lg dropdown-toggle bg-none" type="button" id="dropdownMenuButton"
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <span class="marker" id="marker"></span>
                     <i class="fas fa-bell"></i>
                 </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <div class="dropdown-menu mr-4 border border-dark" aria-labelledby="dropdownMenuButton">
                     <?php
                     $query = "SELECT vaccination_drive.drive_id, vaccination_sites.location, vaccination_drive.vaccination_date, vaccination_drive.first_dose_stubs, vaccination_drive.second_dose_stubs, vaccination_drive.notif_opened FROM vaccination_sites JOIN vaccination_drive ON vaccination_sites.vaccination_site_id = vaccination_drive.vaccination_site_id ORDER BY vaccination_drive.drive_id desc;";
                     $vaccination_drive = [];
@@ -97,7 +97,8 @@ checkRole('SSD');
                     $stmt->prepare($query);
                     $stmt->execute();
                     $stmt->bind_result($driveId, $locName, $date, $firstStubs, $secondStubs, $opened);
-                    echo "<table class='tableScroll4'>";
+                    echo "<table class='tableScroll7 px-4 py-2'>
+                            <tr><td><h4>Notifications<hr></h4></td></tr>";
                     while ($stmt->fetch()) {
                         if ($opened == 1) {
                             echo "<tr>

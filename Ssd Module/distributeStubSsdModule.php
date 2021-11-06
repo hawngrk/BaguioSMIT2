@@ -82,26 +82,30 @@ checkRole('SSD');
     <!-- Top Nav Bar  -->
     <div id="content">
         <!-- Page Content  -->
-        <nav class="navbar navbar-expand-lg">
-            <div class="float-right dropdown">
-                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <span class="marker" id="marker"></span>
-                                        <i class="fas fa-bell"></i>
-                </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <?php
-                    $query = "SELECT vaccination_drive.drive_id, vaccination_sites.location, vaccination_drive.vaccination_date, vaccination_drive.first_dose_stubs, vaccination_drive.second_dose_stubs, vaccination_drive.notif_opened FROM vaccination_sites JOIN vaccination_drive ON vaccination_sites.vaccination_site_id = vaccination_drive.vaccination_site_id ORDER BY vaccination_drive.drive_id desc;";
-                    $vaccination_drive = [];
+        <div class="row">
+            <div class="col-12">
 
-                    $stmt = $database->stmt_init();
-                    $stmt->prepare($query);
-                    $stmt->execute();
-                    $stmt->bind_result($driveId, $locName, $date, $firstStubs, $secondStubs, $opened);
-                    echo "<table class='tableScroll4'>";
-                    while ($stmt->fetch()) {
-                        if ($opened == 1) {
-                            echo "<tr>
+                <nav class="float-right mr-4">
+                    <div class="dropdown">
+                        <button class="btn btn-lg dropdown-toggle bg-none" type="button" id="dropdownMenuButton"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="marker" id="marker"></span>
+                            <i class="fas fa-bell"></i>
+                        </button>
+                        <div class="dropdown-menu mr-4 border border-dark" aria-labelledby="dropdownMenuButton">
+                            <?php
+                            $query = "SELECT vaccination_drive.drive_id, vaccination_sites.location, vaccination_drive.vaccination_date, vaccination_drive.first_dose_stubs, vaccination_drive.second_dose_stubs, vaccination_drive.notif_opened FROM vaccination_sites JOIN vaccination_drive ON vaccination_sites.vaccination_site_id = vaccination_drive.vaccination_site_id ORDER BY vaccination_drive.drive_id desc;";
+                            $vaccination_drive = [];
+
+                            $stmt = $database->stmt_init();
+                            $stmt->prepare($query);
+                            $stmt->execute();
+                            $stmt->bind_result($driveId, $locName, $date, $firstStubs, $secondStubs, $opened);
+                            echo "<table class='tableScroll7 px-4 py-2'>
+                            <tr><td><h4>Notifications<hr></h4></td></tr>";
+                            while ($stmt->fetch()) {
+                                if ($opened == 1) {
+                                    echo "<tr>
                                                          <td>
                                                             Location: $locName
                                                             Date: $date <br>
@@ -112,8 +116,8 @@ checkRole('SSD');
                                                             </td>
                                                        </tr>
                                                                           ";
-                        } else {
-                            echo "<tr onclick='updateDeploymentDetails($driveId); closeModal(\"notificationModal\") '>
+                                } else {
+                                    echo "<tr onclick='updateDeploymentDetails($driveId); closeModal(\"notificationModal\") '>
                                                                        <script>document.getElementById('marker').setAttribute('style', 'color:#c10d0d!important');</script>
                                                             <td  style='background: lightgray'>Vaccination Location: $locName<br>
                                                                 Date: $date<br>
@@ -123,13 +127,15 @@ checkRole('SSD');
                                                             </td>
                                                             </tr>
                                                                           ";
-                        }
-                    }
-                    echo "</table>";
-                    ?>
-                </div>
+                                }
+                            }
+                            echo "</table>";
+                            ?>
+                        </div>
+                    </div>
+                </nav>
             </div>
-        </nav>
+        </div>
         <!--            <div class="float-right">-->
         <!--                <button id="buttonMarker" class="btn btn-lg bg-none" onclick="openNotif('notificationModal')">-->
         <!--                    <span class="markerid="marker"" ></span>-->

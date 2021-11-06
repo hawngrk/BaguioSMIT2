@@ -195,22 +195,23 @@ checkRole('Barangay');
 <!--    </div>-->
 
     <div id="content">
-        <nav class="navbar navbar-expand-lg">
-            <div class="float-right dropdown">
-                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+        <nav class="float-right mr-4">
+            <div class="dropdown">
+                <button class="btn btn-lg dropdown-toggle bg-none" type="button" id="dropdownMenuButton"
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <span class="marker" id="marker"></span>
                     <i class="fas fa-bell"></i>
                 </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <div class="dropdown-menu mr-4 border border-dark" aria-labelledby="dropdownMenuButton">
                     <?php
                                     $query = "SELECT barangay_stubs.drive_id, barangay_stubs.A1_stubs, barangay_stubs.A2_stubs, barangay_stubs.A3_stubs, barangay_stubs.A4_stubs, barangay_stubs.A5_stubs, barangay_stubs.A6_stubs, barangay_stubs.notif_opened, vaccination_sites.location, vaccination_drive.vaccination_date FROM barangay_stubs JOIN vaccination_drive ON vaccination_drive.drive_id = barangay_stubs.drive_id JOIN vaccination_sites ON vaccination_sites.vaccination_site_id = vaccination_drive.vaccination_site_id WHERE barangay_id = '113';";
                                     $stmt = $database->stmt_init();
                                     $stmt->prepare($query);
                                     $stmt->execute();
                                     $stmt->bind_result($driveId,$A1, $A2, $A3, $A4, $A5, $A6, $opened, $locName, $date);
+                                    echo "<table class='tableScroll7 px-4 py-2'>
+                                        <tr><td><h4>Notifications<hr></h4></td></tr>";
                                     while ($stmt->fetch()) {
-
                                         $availableStubs = [$A1, $A2, $A3, $A4, $A5, $A6];
                                         $priorityStub = [];
                                         $values = [];
@@ -223,8 +224,8 @@ checkRole('Barangay');
                                         }
 
                                         if ($opened == 1) {
-                                            echo "<tr>
-                                                                            <td style='color: #9C9C9C'>
+                                            echo " <tr>
+                                                                            <td>
                                                                                 Stubs:<br>";
                                             foreach ($priorityStub as $ps) {
                                                 foreach ($values as $value)
@@ -236,7 +237,7 @@ checkRole('Barangay');
                                                                                    Date: $date <br>
                     
                     
-                                                                          <hr style='width: 100%; background: azure'>
+                                                                          <hr>
                                                                          </td>
                                                                           </tr>
                                                                           ";
@@ -264,6 +265,8 @@ checkRole('Barangay');
                                                                          ";
                                         }
                                     }
+
+                                                                          echo "</table>";
                                     ?>
                 </div>
             </div>
