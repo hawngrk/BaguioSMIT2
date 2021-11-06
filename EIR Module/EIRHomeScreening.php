@@ -94,6 +94,7 @@ checkRole('EIR');
     </div>
 </div>
 
+<!-- JQuery with Ajax-->
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 <!-- Popper.JS -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
@@ -103,5 +104,4 @@ checkRole('EIR');
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="../javascript/logout.js"></script>
 </body>
-
 </html>

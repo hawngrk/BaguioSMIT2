@@ -1,3 +1,8 @@
+<?php
+require_once('../includes/sessionHandling.php');
+checkRole('Barangay');
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -95,7 +100,7 @@
         </ul>
 
         <ul class="list-unstyled CTAs">
-            <button type="button" class="btn btn-info" onclick="signout">
+            <button type="button" class="btn btn-info" onclick="logout()">
                 <span>Sign Out</span>
             </button>
         </ul>
@@ -190,6 +195,8 @@
         document.getElementById(modal).style.display = "none";
     }
 </script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="../javascript/logout.js"></script>
 </body>
 
 </html>
