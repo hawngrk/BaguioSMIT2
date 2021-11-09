@@ -1,7 +1,7 @@
 body {
     margin: 0;
     padding: 0;
-    background-color: #A8C9D7;
+    /*background-color: #a8c9d7;*/
 }
 
 .loginRow {
@@ -34,8 +34,7 @@ body {
 }
 
 .logInToText {
-    color: white;
-    margin-top: 3%;
+    color: #000000;
     text-align: center;
 }
 
@@ -50,14 +49,14 @@ body {
 #login-form {
     /* margin-left: 4%; */
     border-radius: 12px;
-    width: 32%;
-    border: 1px solid #9C9C9C;
-    background-color: #fff;
+    width: 40%;
+    background-color: #435056;
     height: 100%;
-    margin-top: 3%;
     display: block;
     margin-left: auto;
     margin-right: auto;
+    margin-top: 20vh;
+    padding: 15px;
 }
 
 #username {
@@ -69,6 +68,18 @@ body {
     display: block;
     margin-left: auto;
     margin-right: auto;
+}
+
+.buttonLogin{
+    background: #64b7da;
+    border: 1px solid black;
+    width: 50%;
+    height: 40px;
+    color: #000000 !important;
+    margin-right: 10px;
+    font-size: 120%;
+    padding: 2px;
+    border-radius: 20px;
 }
 
 #backdrop {
@@ -88,16 +99,6 @@ body {
     padding-bottom: 0;
 }
 
-.buttonLogin {
-    border-radius: 7px;
-    margin-left: 15%;
-    padding-top: 2%;
-    border: 1px solid gray;
-    width: 70%;
-    color: #fff;
-    background: #124F88;
-    margin-bottom: 5%;
-}
 
 .buttonLogin:hover {
     background: lightslategray;
@@ -107,7 +108,8 @@ body {
     width: 100%;
     margin-bottom: 0%;
     padding-bottom: 0%;
-    background: white;
+    background: #647881;
+    color: white;
 }
 
 .input-group-lg {
