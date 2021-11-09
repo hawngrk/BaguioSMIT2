@@ -108,14 +108,14 @@ include_once("../includes/database.php") ?>
                 <div class="row">
                     <div class="col">
                         <div class="input-group">
-                            <input  id="searchPatientInput" type="search" name="searchPatient" class="form-control" placeholder="Search" onkeyup="searchPatient()"/>
+                            <input  id="searchPatientInput" type="search" name="searchPatient" class="form-control" placeholder="Search" onkeyup="searchPatient(this.value)"/>
                         </div>
                     </div>
                     <div class="col-sm-auto">
                         <div class="row">
                             <div class="sfDiv col-md-1.5 my-auto">
                                 <select class="form-select filterButton" id="filterCat" name="filterCategory"
-                                        onchange="filterCategoryGroup(this)">
+                                        onchange="filterCategoryGroup(this.value)">
                                     <option value='' selected disabled hidden>Filter By</option>
                                     <option value='' disabled >Select Category Group</option>
                                     <option value="All"> All </option>
@@ -124,7 +124,7 @@ include_once("../includes/database.php") ?>
                                     foreach ($priorityGroups as $pg) {
                                         $id = $pg->getPriorityGroupId();
                                         $category = $pg->getPriorityGroup();
-                                        echo "<option value=$category> $category </option>";
+                                        echo "<option value=$id> $category </option>";
                                     }
                                     ?>
                                 </select>
@@ -144,7 +144,7 @@ include_once("../includes/database.php") ?>
                 </div>
             </div>
 
-            <div class="tablePatient shadow tableScroll2">
+            <div class="tablePatient shadow tableScroll2" id="mainPatient">
                 <!--Table Part-->
                 <table class="table table table-hover tablePatient" id="patientTable1">
                     <thead>
@@ -160,9 +160,7 @@ include_once("../includes/database.php") ?>
 
                     <?php
                     require_once '../require/getPatientDetails.php';
-                    $query = "SELECT patient.patient_id, CONCAT(patient_details.patient_last_name,', ',patient_details.patient_first_name,' ',COALESCE(patient_details.patient_middle_name,''),' ',COALESCE(patient_details.patient_suffix,'')) AS full_name, priority_groups.priority_group, CONCAT(patient_details.patient_house_address, ' ', barangay.barangay_name,' ',barangay.city,' ', barangay.province) AS full_address, patient_contact_number FROM patient JOIN patient_details ON patient.patient_id = patient_details.patient_id JOIN barangay ON barangay.barangay_id = patient_details.barangay_id JOIN priority_groups ON priority_groups.priority_group_id = patient_details.priority_group_id;";
-                    $patient_details = [];
-
+                    $query = "SELECT patient.patient_id, CONCAT(patient_details.patient_last_name,', ',patient_details.patient_first_name,' ',COALESCE(patient_details.patient_middle_name,''),' ',COALESCE(patient_details.patient_suffix,'')) AS full_name, priority_groups.priority_group, CONCAT(patient_details.patient_house_address, ' ', barangay.barangay_name,' ',barangay.city,' ', barangay.province) AS full_address, patient_contact_number FROM patient JOIN patient_details ON patient.patient_id = patient_details.patient_id JOIN barangay ON barangay.barangay_id = patient_details.barangay_id JOIN priority_groups ON priority_groups.priority_group_id = patient_details.priority_group_id WHERE patient_details.Archived = 0;";
                     $stmt = $database->stmt_init();
                     $stmt->prepare($query);
                     $stmt->execute();
@@ -176,7 +174,7 @@ include_once("../includes/database.php") ?>
                                 <td>$contactNum</td>
                                 <td>
                                     <div class ='d-flex justify-content-center'>
-                                        <button class='btn btn-sm bg-none' onclick='event.stopPropagation();archive(1, clickArchive, $id)'><i class='fa fa-archive'></i></button>
+                                        <button class='btn btn-sm bg-none' onclick='event.stopPropagation();archive(1, clickArchive, $patientId)'><i class='fa fa-archive'></i></button>
                                         <button type='button' class='btn btn-sm bg-none' id='viewButton' onclick='viewPatient($id)'><i class='fas fa-eye'></i></button
                                     </div>
                                 </td>
@@ -325,16 +323,14 @@ include_once("../includes/database.php") ?>
                                     <label class="required" for="priorityGroup">Priority Group </label>
                                     <select class="formControl" id="priorityGroup" name="priorityGroup" required>
                                         <option disabled selected>Select a Category Group...</option>
-                                        <option value="A1: Health Care Workers">A1: Health Care Workers</option>
-                                        <option value="A2: Senior Citizens">A2: Senior Citizens</option>
-                                        <option value="A3: Adult with Comorbidity">A3: Adult with Comorbidity</option>
-                                        <option value="A4: Frontliner">A4: Frontline Personnel in Essential Sector,
-                                            including
-                                            Uniformed
-                                            Personnel
-                                        </option>
-                                        <option value="A5: Indigent">A5: Indigent Population</option>
-                                        <option value="A6: ROP">A6: Rest of the Population</option>
+                                        <?php
+                                        require_once("../require/getPriorityGroup.php");
+                                        foreach ($priorityGroups as $priority) {
+                                            $id = $priority->getPriorityGroupId();
+                                            $name = $priority->getPriorityGroup();
+                                            echo "<option value=$id>$name</option>";
+                                        }
+                                        ?>
                                     </select>
                                 </div>
                                 <div class="col">
@@ -531,6 +527,7 @@ include_once("../includes/database.php") ?>
                     <table class="table table-row table-hover tableModal" id="patientTable1">
                         <thead>
                         <tr class="tableCenterCont">
+                            <th>Patient ID</th>
                             <th scope="col">Patient Name</th>
                             <th scope="col">Category</th>
                             <th scope="col">Complete Address</th>
@@ -540,37 +537,27 @@ include_once("../includes/database.php") ?>
                         </thead>
 
                         <?php
-                        require_once '../require/getPatientDetails.php';
-
-                        foreach ($patient_details as $pd) {
-                            if ($pd->getArchived() == 1) {
-                                $id = $pd->getPatientDeetPatId();
-                                $category = $pd->getPriorityGroup();
-                                $fullAddress = $pd->getHouseAdd() . ", " . $pd->getBrgy() . ", " . $pd->getCity() . ", " . $pd->getProvince();
-                                $contact = $pd->getContact();
-
-                                if ($pd->getPatientMName() == null && $pd->getPatientSuffix() == null) {
-                                    $name = $pd->getPatientLName() . ", " . $pd->getPatientFName();
-                                } else if ($pd->getPatientSuffix() == null) {
-                                    $name = $pd->getPatientLName() . ", " . $pd->getPatientFName() . " " . $pd->getPatientMName();
-                                } else if ($pd->getPatientMName() == null) {
-                                    $name = $pd->getPatientLName() . ", " . $pd->getPatientFName() . " " . $pd->getPatientSuffix();
-                                } else {
-                                    $name = $pd->getPatientLName() . ", " . $pd->getPatientFName() . " " . $pd->getPatientMName() . " " . $pd->getPatientSuffix();
-                                }
+                    require_once '../require/getPatientDetails.php';
+                    $query = "SELECT patient.patient_id, CONCAT(patient_details.patient_last_name,', ',patient_details.patient_first_name,' ',COALESCE(patient_details.patient_middle_name,''),' ',COALESCE(patient_details.patient_suffix,'')) AS full_name, priority_groups.priority_group, CONCAT(patient_details.patient_house_address, ' ', barangay.barangay_name,' ',barangay.city,' ', barangay.province) AS full_address, patient_contact_number FROM patient JOIN patient_details ON patient.patient_id = patient_details.patient_id JOIN barangay ON barangay.barangay_id = patient_details.barangay_id JOIN priority_groups ON priority_groups.priority_group_id = patient_details.priority_group_id  WHERE patient_details.Archived = 1;";
+                    $stmt = $database->stmt_init();
+                    $stmt->prepare($query);
+                    $stmt->execute();
+                    $stmt->bind_result($patientId, $fullname, $category, $patientAddress, $contactNum);
+                    while ($stmt->fetch()) {
 
                                 echo "<tr class='tableCenterCont'>
-                        <td>$name</td>
+                        <td>$patientId</td>
+                        <td>$fullname</td>
                         <td>$category</td>
-                        <td>$fullAddress</td>
-                        <td>$contact</td>
+                        <td>$patientAddress</td>
+                        <td>$contactNum</td>
                         <td>
                             <div>
-                                <button class='btn btn-warning' onclick='archive(0, clickArchive, $id)'><i class='fa fa-archive'></i> unarchive</button>
+                                <button class='btn btn-warning' onclick='archive(0, clickArchive, $patientId)'><i class='fa fa-archive'></i> unarchive</button>
                             </div>
                         </td>
                     </tr>";
-                            }
+
                         }
                         ?>
                     </table>
@@ -647,34 +634,33 @@ include_once("../includes/database.php") ?>
                 type: 'POST',
                 data: {"searchPatient": ""},
                 success: function (result) {
-                    document.getElementById("patientTable1").innerHTML = result;
+                    document.getElementById("mainPatient").innerHTML = result;
                 }
             });
         }
     });
 
     //search patient
-    function searchPatient() {
-        var textSearch = document.getElementById("searchPatientInput").value;
+    function searchPatient(textSearch) {
+         console.log(textSearch);
         $.ajax({
             url: '../includes/searchProcessor.php',
             type: 'POST',
             data: {"searchPatient": textSearch},
             success: function (result) {
-                document.getElementById("patientTable1").innerHTML = result;
+                document.getElementById("mainPatient").innerHTML = result;
             }
         });
     }
 
     //filter category group
     function filterCategoryGroup(filter){
-        var selectedFilter = filter.value;
         $.ajax({
             url: '../includes/filterProcessor.php',
             type: 'POST',
-            data: {"filterPatient": selectedFilter},
+            data: {"filterPatient": filter},
             success: function (result) {
-                document.getElementById("patientTable1").innerHTML = result;
+                document.getElementById("mainPatient").innerHTML = result;
             }
         })
     }
@@ -686,7 +672,7 @@ include_once("../includes/database.php") ?>
             type: 'POST',
             data: {"sortPatient": selectedSort},
             success: function (result) {
-                document.getElementById("patientTable1").innerHTML = result;
+                document.getElementById("mainPatient").innerHTML = result;
             }
         })
     }
@@ -765,6 +751,7 @@ include_once("../includes/database.php") ?>
     }
 
     function addPatient() {
+
 
         //Personal Information
         var last = document.getElementById("lname").value;
@@ -856,9 +843,8 @@ include_once("../includes/database.php") ?>
             },
 
             success: function (result) {
-                console.log(result);
+                closeModal('patientInformationModal')
                 reloadPatient();
-                addButton.disabled = true;
             }
         });
     }
@@ -878,16 +864,16 @@ include_once("../includes/database.php") ?>
 
     function reloadPatient() {
         $.ajax({
-            url: '../includes/showRegisteredPatients.php',
-            type: 'GET',
+            url: '../Barangay Module/ManagePatientProcessor.php',
+            method: 'POST',
+            data: {showUpdatedPatient: ""},
             success: function (result) {
-                document.getElementById("patientTable1").innerHTML = "";
-                document.getElementById("patientTable1").innerHTML = result;
+                document.getElementById('mainPatient').innerHTML = result;
             }
-        });
+        })
     }
 
-    async function archive(archive, action, drive) {
+    async function archive(archive, action, patient) {
         if (archive == 1) {
             archiveText = "Archive";
         } else {
@@ -901,7 +887,7 @@ include_once("../includes/database.php") ?>
             denyButtonText: `No`,
         }).then((result) => {
             if (result.isConfirmed) {
-                action(drive, archiveText);
+                action(patient, archiveText);
                 Swal.fire('Saved!', '', 'success')
             } else if (result.isDenied) {
                 Swal.fire('Changes are not saved', '', 'info')
@@ -909,18 +895,34 @@ include_once("../includes/database.php") ?>
         })
     }
 
-    function clickArchive(drive, option) {
+    function clickArchive(patient, option) {
         $.ajax({
             url: '../Barangay Module/ManagePatientProcessor.php',
             method: 'POST',
-            data: {archive: drive, option: option},
+            data: {archive: patient, option: option},
             success: function (result) {
+
                 if (option == "Archive") {
-                    window.location.href = "ManagePatientHome.php";
+                    document.getElementById('mainPatient').innerHTML = result;
+                    $.ajax({
+                        url: '../Barangay Module/ManagePatientProcessor.php',
+                        method: 'POST',
+                        data: {showUpdatedArchive: ""},
+                        success: function (result) {
+                            document.getElementById('archivedContent').innerHTML = result;
+                        }
+                    })
 
                 } else if (option == "UnArchive") {
-                    document.getElementById("patientTable1").innerHTML = "";
-                    document.getElementById("patientTable1").innerHTML = result;
+                    document.getElementById("archivedContent").innerHTML = result;
+                    $.ajax({
+                        url: '../Barangay Module/ManagePatientProcessor.php',
+                        method: 'POST',
+                        data: {showUpdatedPatient: ""},
+                        success: function (result) {
+                            document.getElementById('mainPatient').innerHTML = result;
+                        }
+                    })
                 }
             }
         })

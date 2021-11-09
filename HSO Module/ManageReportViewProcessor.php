@@ -197,13 +197,15 @@ if (isset($_POST['report'])) {
     $vaccineSymptoms = explode(',', $vaccineSymptoms);
     $covid19Symptoms = explode(',', $covid19Symptoms);
 
-    foreach ($patient_details as $pat_det) {
-        if ($pat_det->getPatientDeetPatId() == $patientId) {
-            $patientName = $pat_det->getPatientFName(). " " .$pat_det->getPatientMName(). " " .$pat_det->getPatientLName();
-            $patientAddress = $pat_det->getHouseAdd(). ", " .$pat_det->getBrgy(). ", " .$pat_det->getCity(). ", " .$pat_det->getProvince();
-            $patientNum = $pat_det->getContact();
-        }
-    }
+    $query1 = "SELECT patient.patient_full_name, CONCAT(patient_details.patient_house_address, ' ', barangay.barangay_name, ' ', patient_details.patient_CM_address, ' ', patient_details.patient_province) AS full_address, patient_details.patient_contact_number FROM patient_details JOIN patient ON patient.patient_id = patient_details.patient_id JOIN barangay ON patient_details.barangay_id = barangay.barangay_id WHERE patient_details.patient_id = $patientId ;";
+    $dbase = $database->stmt_init();
+    $dbase->prepare($query1);
+    $dbase->execute();
+    $dbase->bind_result($patientName, $patientAddress, $patientNum);
+    $dbase->fetch();
+    $dbase->close();
+
+
     echo "
     <div class='content-modal'>
     <div class='modal-header'>
@@ -619,9 +621,8 @@ if (isset($_POST['showUpdatedReport'])){
                                           <td>$dateReported</td>
                                           <td>$status</td>
                                           <td>
-                                            <div style='text-align: left;'>
-                                                 <button class='btn btn-warning' onclick='archive(0, clickArchive, $reportId )'>unarchive <i class='fas fa-box-open'></i></button>
-                                            </div>
+                                            <button class='btn btn-success btn-sm' type='submit' value='$reportId' onclick='viewReport($reportId)'>Review Report</button>
+                                          <button class='buttonTransparent actionButt' onclick='archive(1, clickArchive, $reportId)'><i class='fa fa-archive'></i></button>
                                           </td></tr>";
                                     }
                                 }

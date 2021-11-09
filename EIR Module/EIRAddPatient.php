@@ -7,7 +7,6 @@
 //    $accountDetails = $_SESSION['account'];
 //    $employeeID = $accountDetails['empId'];
 //    $employeeRole = $accountDetails['role'];
-//
 
     //Personal Information
     $firstname        = $_POST['firstname'];
@@ -48,16 +47,18 @@
     $cancer            = $_POST['cancer'];
     $otherCommorbidity = $_POST['otherCommorbidity'];
 
-    if (verifyPatient($firstname, $lastname, $contact) == '1') {
-      echo "Patient already exist";  
-    } else {
+
+
+//    if (verifyPatient($firstname, $lastname, $contact) == '1') {
+//      echo "Patient already exist";
+//    } else {
         $patientID = insertPatient($firstname, $lastname, $middlename, $suffix);
-        insertDetails($patientID['patient_id'], $firstname, $lastname, $middlename, $suffix, $priorityGroup, $category, $categoryID, $philHealthID, $pwdID, $houseAddress, $barangay, $cmAddress, $province, $region, $birthdate, $age, $gender, $contact, $occupation);
+        insertDetails($patientID['patient_id'], $firstname, $lastname, $middlename, $suffix, $category, $categoryID, $philHealthID, $pwdID, $houseAddress, $cmAddress, $province, $region, $birthdate, $age, $gender, $contact, $occupation, $priorityGroup, $barangay);
         insertMedicalBackground($patientID['patient_id'], $allergyToVaccine, $hypertension, $heartDisease, $kidneyDisease, $diabetesMellitus, $bronchialAsthma, $immunodeficiency, $cancer, $otherCommorbidity);
         $accountDetails = createAccount($patientID['patient_id'], $firstname, $lastname, $email);
         insertPatientVitals($patientID['patient_id']);
         //insertLogs($employeeID, $employeeRole, 'Add', 'Added patient ID: '.$patientID['patient_id']);
-    }
+
     
 //Inserts full name in the patient table
 function insertPatient($firstname, $lastname, $middlename, $suffix) {
@@ -78,13 +79,13 @@ function insertPatient($firstname, $lastname, $middlename, $suffix) {
 }
 
 //Insert patient's personal details in patient details table
-function insertDetails($patientID, $firstname, $lastname, $middlename, $suffix, $priority, $category, $categoryID, $philHealthID, $pwdID, $houseAddress, $barangay, $cmAddress, $province, $region, $birthdate, $age,$gender, $contact, $occupation) {
+function insertDetails($patientID, $firstname, $lastname, $middlename, $suffix, $category, $categoryID, $philHealthID, $pwdID, $houseAddress, $cmAddress, $province, $region, $birthdate, $age,$gender, $contact, $occupation, $priority, $barangay) {
 
-    $query = "INSERT INTO patient_details (patient_id, patient_first_name, patient_last_name, patient_middle_name, patient_suffix, patient_priority_group, patient_category_id, patient_category_number, patient_philHealth, patient_pwd, patient_house_address, patient_barangay_address, patient_CM_address, patient_province, patient_region, patient_birthdate, patient_age, patient_gender, patient_contact_number, patient_occupation) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CAST(? AS DATE), ?, ?, ?, ?)";
+    $query = "INSERT INTO patient_details (patient_id, patient_first_name, patient_last_name, patient_middle_name, patient_suffix, patient_category_id, patient_category_number, patient_philHealth, patient_pwd, patient_house_address, patient_CM_address, patient_province, patient_region, patient_birthdate, patient_age, patient_gender, patient_contact_number, patient_occupation, Archived, barangay_id,priority_group_id) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CAST(? AS DATE), ?, ?, ?, ?, ?, ?, ?)";
 
     try {
         $stmtinsert = $GLOBALS['database']->prepare($query);
-        $result = $stmtinsert->execute([$patientID, $firstname, $lastname, $middlename, $suffix, $priority, $category, $categoryID, $philHealthID, $pwdID, $houseAddress, $barangay, $cmAddress, $province, $region, $birthdate, $age,$gender, $contact, $occupation]); 
+        $result = $stmtinsert->execute([$patientID, $firstname, $lastname, $middlename, $suffix, $category, $categoryID, $philHealthID, $pwdID, $houseAddress, $cmAddress, $province, $region, $birthdate, $age,$gender, $contact, $occupation, 0, $priority, $barangay]);
     } catch (PDOException $e) {
         echo 'Error in patient details: ', $e->getMessage();
     }

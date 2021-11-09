@@ -69,16 +69,6 @@ if (isset($_POST['id'])) {
         }
     }
 
-    foreach ($vaccineDrive1 as $drive1) {
-        if ($drive == $drive1->getDriveId()) {
-            foreach ($vaccines as $vac) {
-                if ($drive1->getVaccineId() == $vac->getVaccId()) {
-                    $brand = $vac->getVaccName();
-                }
-            }
-        }
-    }
-
     $healthDistricts = [];
     foreach ($healthDistrictDrives as $hdd){
         if ($drive == $hdd->getDriveId()){
@@ -101,8 +91,19 @@ if (isset($_POST['id'])) {
     echo "
     <h7><b>Vaccination Site:</b></h7><br>
     <h8>$siteName</h8><br><br>
-    <h7><b>Vaccination Brand:</b></h7><br>
-    <h8>$brand</h8><br><br>
+    <h7><b>Vaccination Brand/s:</b></h7><br>";
+    foreach ($vaccineDrive1 as $drive1) {
+        if ($drive == $drive1->getDriveId()) {
+            foreach ($vaccines as $vac) {
+                if ($drive1->getVaccineId() == $vac->getVaccId()) {
+                    $firstDbrand = $vac->getVaccName();
+
+                    echo"<h8>$firstDbrand</h8><br><br>";
+                }
+            }
+        }
+    }
+    echo"
     <h7><b>Vaccination Date:</b></h7><br>
     <h8>$date</h8><br><br>
     <h7><b>Stubs For First Dose:</b></h7><br>
@@ -111,7 +112,7 @@ if (isset($_POST['id'])) {
     <h8>$second_dose_stubs</h8><br><br>
     ";
 
-    echo "<h7><b>Health Districts:</b></h7>";
+    echo "<h7><b>Health District/s:</b></h7>";
 
     foreach ($distNames as $dn){
         echo "<li>$dn</li>";
@@ -163,7 +164,7 @@ if (isset($_POST['districts'])){
         }
     }
 
-    echo" <table class='table table-hover tableDep' id='driveTable'>
+    echo"  <table class='table table-hover tableDep table-fixed' id='driveTable'>
                             <thead>
                             <tr class='tableCenterCont'>
                                 <th scope='col'>Drive Id</th>
@@ -180,15 +181,15 @@ if (isset($_POST['districts'])){
                 $dbase->bind_result($driveId, $date, $vaccinationSite);
                 while($dbase->fetch()){
 
-                                    echo "<tr class='table-row' onclick='showDrive(this)'>
+                    echo "<tr class='table-row tableCenterCont' onclick='showDrive(this)'>
 
                         <td>$driveId</td>
                         <td>$vaccinationSite</td>
                         <td>$date</td>
                         <td>
-                            <div class='tableCenterCont'>
-                                <button class='buttonTransparent actionButt' onclick='event.stopPropagation(); archive(1, clickArchive, $driveId)'><i class='fa fa-archive'></i></button>
-                                <button class='buttonTransparent actionButt' onclick=''><i class='far fa-edit'></i></button>
+                            <div class='d-flex justify-content-center'>
+                                <button class='btn btn-sm bg-none' onclick='event.stopPropagation(); archive(1, clickArchive, $driveId)'><i class='fa fa-archive'></i></button>
+                                <button class='btn btn-sm bg-none' onclick=''><i class='far fa-edit'></i></button>
 
                             </div>
                         </td>
@@ -283,26 +284,25 @@ if (isset($_POST['site'])) {
     $query1 = "INSERT INTO vaccination_sites (location) VALUE ('$newSite');";
     $database->query($query1);
 
-    echo'  <table class="table table-row table-hover">
-                        <thead>
-                        <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Vaccination Site Id</th>
-                            <th scope="col">Location</th>
-                            <th scope="col">Action</th>
+    echo'  <div id="siteContent" class="tableScroll6 border">
+                    <table class="table table-row table-hover">
+                        <thead class="tableHeader">
+                        <tr class="tableCenterCont">
+                            <th>Vaccination Site Id</th>
+                            <th>Location</th>
+                            <th>Action</th>
                         </tr>
                         </thead>';
 
     require_once '../require/getVaccinationSites.php';
 
-    $count = 0;
+
     foreach ($vaccinationSites as $vs) {
         $count++;
         $siteId = $vs->getVaccinationSiteId();
         $vaccinationSite = $vs->getVaccinationSiteLocation();
 
         echo "<tr class='table-row''>
-                                    <td>$count</td>
                                     <td>$siteId</td>
                                     <td>$vaccinationSite</td>
                                     <td style= 'vertical-align: middle;'>
@@ -404,13 +404,13 @@ if (isset($_POST['deleteSiteId'])){
     $query = "DELETE FROM vaccination_sites WHERE vaccination_site_id = '$delSite'";
     $database->query($query);
 
-    echo'  <table class="table table-row table-hover">
-                        <thead>
-                        <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Vaccination Site Id</th>
-                            <th scope="col">Location</th>
-                            <th scope="col">Action</th>
+    echo'  <div id="siteContent" class="tableScroll6 border">
+                    <table class="table table-row table-hover">
+                        <thead class="tableHeader">
+                        <tr class="tableCenterCont">
+                            <th>Vaccination Site Id</th>
+                            <th>Location</th>
+                            <th>Action</th>
                         </tr>
                         </thead>';
 
@@ -418,12 +418,11 @@ if (isset($_POST['deleteSiteId'])){
 
     $count = 0;
     foreach ($vaccinationSites as $vs) {
-        $count++;
+
         $siteId = $vs->getVaccinationSiteId();
         $vaccinationSite = $vs->getVaccinationSiteLocation();
 
         echo "<tr class='table-row''>
-                                    <td>$count</td>
                                     <td>$siteId</td>
                                     <td>$vaccinationSite</td>
                                     <td style= 'vertical-align: middle;'>

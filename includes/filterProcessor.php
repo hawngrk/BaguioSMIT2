@@ -5,23 +5,23 @@ include("../includes/database.php");
 if (isset($_POST['filterPatient'])) {
     $filter = $_POST['filterPatient'];
     $queryFilter = '';
-    echo "
-      <thead>
-            <tr class='tableCenterCont'>
-                <th scope='col'>Patient Id No.</th>
-                <th scope='col'>Patient Name</th>
-                <th scope='col'>Category</th>
-                <th scope='col'>Complete Address</th>
-                <th scope='col'>Contact Number</th>
-                <th scope='col'>Action</th>
-            </tr>
-            </thead>";
+    echo '
+     <table class="table table table-hover tablePatient" id="patientTable1">
+                    <thead>
+                    <tr class="tableCenterCont">
+                        <th>Patient ID</th>
+                        <th>Patient Name</th>
+                        <th>Category</th>
+                        <th>Complete Address</th>
+                        <th>Contact Number</th>
+                        <th>Action</th>
+                    </tr>
+                    </thead>';
 
-    $temp = "";
     if ($filter == 'All') {
-        $queryFilter = "SELECT patient.patient_id, patient.patient_full_name, priority_groups.priority_group, CONCAT(patient_details.patient_house_address, ' ', barangay.barangay_name, ' ', barangay.city, ' ', barangay.province) AS full_address, patient_contact_number FROM patient JOIN patient_details ON patient.patient_id = patient_details.patient_id JOIN barangay ON barangay.barangay_id = patient_details.barangay_id = barangay.barangay_id JOIN priority_groups ON priority_groups.priority_group_id = patient_details.priority_group_id;";
+        $queryFilter = "SELECT patient.patient_id, CONCAT(patient_details.patient_last_name,', ',patient_details.patient_first_name,' ',COALESCE(patient_details.patient_middle_name,''),' ',COALESCE(patient_details.patient_suffix,'')) AS full_name, priority_groups.priority_group, CONCAT(patient_details.patient_house_address, ' ', barangay.barangay_name,' ',barangay.city,' ', barangay.province) AS full_address, patient_contact_number FROM patient JOIN patient_details ON patient.patient_id = patient_details.patient_id JOIN barangay ON barangay.barangay_id = patient_details.barangay_id JOIN priority_groups ON priority_groups.priority_group_id = patient_details.priority_group_id WHERE patient_details.Archived = 0;";
     } else {
-        $queryFilter = "SELECT patient.patient_id, patient.patient_full_name, priority_groups.priority_group, CONCAT(patient_details.patient_house_address, ' ', barangay.barangay_name, ' ', barangay.city, ' ', barangay.province) AS full_address, patient_contact_number FROM patient JOIN patient_details ON patient.patient_id = patient_details.patient_id JOIN barangay ON barangay.barangay_id = patient_details.barangay_id = barangay.barangay_id JOIN priority_groups ON priority_groups.priority_group_id = patient_details.priority_group_id WHERE priority_groups.priority_group LIKE '$filter%';";
+        $queryFilter = "SELECT patient.patient_id, CONCAT(patient_details.patient_last_name,', ',patient_details.patient_first_name,' ',COALESCE(patient_details.patient_middle_name,''),' ',COALESCE(patient_details.patient_suffix,'')) AS full_name, priority_groups.priority_group, CONCAT(patient_details.patient_house_address, ' ', barangay.barangay_name,' ',barangay.city,' ', barangay.province) AS full_address, patient_contact_number FROM patient JOIN patient_details ON patient.patient_id = patient_details.patient_id JOIN barangay ON barangay.barangay_id = patient_details.barangay_id JOIN priority_groups ON priority_groups.priority_group_id = patient_details.priority_group_id WHERE patient_details.Archived = 0 AND patient_details.priority_group_id = '$filter';";
     }
 
     $stmt = $database->stmt_init();
@@ -30,19 +30,21 @@ if (isset($_POST['filterPatient'])) {
     $stmt->bind_result($patientId, $patientName, $category, $patientAddress, $contactNum);
     while ($stmt->fetch()) {
         echo "<tr onclick='showPatient(this)' class='tableCenterCont'>
-                <td>$patientId</td>
-                <td>$patientName</td>
-                <td>$category</td>
-                <td>$patientAddress</td>
-                <td>$contactNum</td>
-                <td>
-                <div style='text-align: left;'>
-                                <button class='buttonTransparent' onclick='event.stopPropagation();archive(1, clickArchive, $patientId)'><i class='fa fa-archive'></i></button>
-                                <button type='button' class='viewReportBtn buttonTransparent' id='viewButton' onclick='viewPatient($patientId)'><i class='fas fa-eye'></i></button
-                            </div>
-</td>
-                </tr>";
+                                <td>$patientId</td>
+                                <td>$patientName</td>
+                                <td>$category</td>
+                                <td>$patientAddress</td>
+                                <td>$contactNum</td>
+                                <td>
+                                    <div class ='d-flex justify-content-center'>
+                                        <button class='btn btn-sm bg-none' onclick='event.stopPropagation();archive(1, clickArchive, $patientId)'><i class='fa fa-archive'></i></button>
+                                        <button type='button' class='btn btn-sm bg-none' id='viewButton' onclick='viewPatient($patientId)'><i class='fas fa-eye'></i></button
+                                    </div>
+                                </td>
+                            </tr>";
     }
+    echo'
+                </table>';
 }
 
 

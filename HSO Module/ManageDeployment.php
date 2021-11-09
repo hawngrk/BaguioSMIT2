@@ -1,7 +1,6 @@
 <?php
 require_once('../includes/sessionHandling.php');
 checkRole('HSO');
-//include ("../includes/sessionHandling.php");
 include_once("../includes/database.php") ?>
 
 
@@ -371,6 +370,8 @@ include_once("../includes/database.php") ?>
                                         <div class="input-group">
                                             <label class='label' for="stubs">First Dose Number of Stubs: </label>
                                             <input type="input" id="firstDoseStubs" name="firstDoseStubs" class="stubs" placeholder="ex. 100">
+                                            <input id="noStubsFirst" class = 'checkboxes' type='checkbox' onclick="disableCheck(this)">
+                                            <label>No Stubs</label>
                                         </div>
                                     </div>
                                 </div>
@@ -417,6 +418,8 @@ include_once("../includes/database.php") ?>
                                         <div class="col-6">
                                             <label class='label' for="stubs"><h6>Second Dose Number of Stubs: </h6></label>
                                             <input type="input" id="secondDoseStubs" name="secondDoseStubs" class="stubs" placeholder="ex. 100">
+                                            <input class = 'checkboxes' type='checkbox' id="noStubsSecond" onclick="disableCheck(this)">
+                                            <label>No Stubs</label>
                                         </div>
                                     </div>
                                 </div>
@@ -847,10 +850,17 @@ include_once("../includes/database.php") ?>
         }
     });
 
+    function disableCheck(checkbox){
+        if (checkbox.checked == true){
+            checkbox.parentNode.children[1].disabled = true;
+            checkbox.parentNode.children[1].value = 0;
+        } else {
+            checkbox.parentNode.children[1].disabled = false;
+        }
+    }
+
     function removeRow(row){
         var tr = row.parentNode.parentNode.parentNode;
-
-        console.log(tr);
     }
 
     //search deployment
@@ -899,28 +909,7 @@ include_once("../includes/database.php") ?>
             method: 'POST',
             data: {archive: drive, option: option},
             success: function (result) {
-                if (option == "Archive") {
-                    document.getElementById('mainDrive').innerHTML = result;
-                    $.ajax({
-                        url: 'ManageDeploymentProcessor.php',
-                        method: 'POST',
-                        data: {showUpdatedArchive: ""},
-                        success: function (result) {
-                            document.getElementById('archivedContent').innerHTML = result;
-                        }
-                    })
 
-                } else if (option == "UnArchive") {
-                    document.getElementById("archivedContent").innerHTML = result;
-                    $.ajax({
-                        url: 'ManageDeploymentProcessor.php',
-                        method: 'POST',
-                        data: {showUpdatedDrive: ""},
-                        success: function (result) {
-                            document.getElementById('mainDrive').innerHTML = result;
-                        }
-                    })
-                }
             }
         })
     }
@@ -1054,6 +1043,9 @@ include_once("../includes/database.php") ?>
         var location = document.getElementById("site").value;
         var firstDoseStubs = document.getElementById("firstDoseStubs").value;
         var secondDoseStubs = document.getElementById("secondDoseStubs").value;
+
+
+
         $.ajax({
             url: 'ManageDeploymentProcessor.php',
             method: 'POST',
@@ -1220,6 +1212,8 @@ include_once("../includes/database.php") ?>
             var idx = array.indexOf(id);
             array.splice(idx, 1);
         }
+
+        console.log(firstDoseVaccineBrands)
     }
 
 

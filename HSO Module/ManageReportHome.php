@@ -121,7 +121,6 @@ checkRole('HSO');
                                     <option value="" selected disabled hidden>Filter By</option>
                                     <option value='' disabled >Select Status</option>
                                     <option value="All">All</option>
-                                    <option value="Unverified">Unverified</option>
                                     <option value="Verified">Verified</option>
                                     <option value="Pending">Pending</option>
                                 </select>
@@ -178,7 +177,7 @@ checkRole('HSO');
                                           <td>$dateReported</td>
                                           <td>$status</td>
                                           <td>
-                                          <button class='btn btn-success btn-sm' type='submit' value='$reportId' onclick='viewReport($reportId)'>Review Report</button>
+                                          <button class='btn btn-success btn-sm' type='submit' value='$reportId' onclick='event.stopPropagation(); viewReport($reportId)'>Review Report</button>
                                           <button class='buttonTransparent actionButt' onclick='event.stopPropagation(); archive(1, clickArchive, $reportId)'><i class='fa fa-archive'></i></button>
                                           </td></tr>";
                                     }
@@ -411,7 +410,7 @@ checkRole('HSO');
 
             function showInvalidatedReports() {
                 $.ajax({
-                    url: 'manageReportViewProcessor.php',
+                    url: 'ManageReportViewProcessor.php',
                     type: 'POST',
                     data: {"invalidated": 1},
                     success: function (result) {
@@ -424,7 +423,7 @@ checkRole('HSO');
             // view invalidated report
             function viewInvalidatedReport(reportId) {
                 $.ajax({
-                    url: 'manageReportViewProcessor.php',
+                    url: 'ManageReportViewProcessor.php',
                     type: 'POST',
                     data: {"report": reportId, "view": 1},
                     success: function (result) {
@@ -437,7 +436,7 @@ checkRole('HSO');
             //edit invalidated report
             function editInvalidatedReport(reportId) {
                 $.ajax({
-                    url: 'manageReportViewProcessor.php',
+                    url: 'ManageReportViewProcessor.php',
                     type: 'POST',
                     data: {"report": reportId, "view": 2},
                     success: function (result) {
@@ -456,7 +455,7 @@ checkRole('HSO');
             var viewReportModal = document.getElementById("viewReportModal");
             function viewReport(reportId) {
                 $.ajax({
-                    url: 'manageReportViewProcessor.php',
+                    url: 'ManageReportViewProcessor.php',
                     type: 'POST',
                     data: {"report": reportId, "view": 1},
                     success: function (result) {
@@ -469,7 +468,7 @@ checkRole('HSO');
             //edit report
             function editReport(reportId) {
                 $.ajax({
-                    url: 'manageReportViewProcessor.php',
+                    url: 'ManageReportViewProcessor.php',
                     type: 'POST',
                     data: {"report": reportId, "view": 2},
                     success: function (result) {
@@ -516,7 +515,7 @@ checkRole('HSO');
             var generateReportsModal = document.getElementById("generateReportModal");
             function generateReport() {
                 $.ajax({
-                    url: 'manageReportViewProcessor.php',
+                    url: 'ManageReportViewProcessor.php',
                     type: 'POST',
                     data: {"generate": 1},
                     success: function (result) {
