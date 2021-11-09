@@ -71,33 +71,26 @@ Description: Login HTML Elements for receiving credentials from the users
 
     <!-- Log In -->
     <div class="loginow">
-        <h3 class="logInToText pt-5">Login to Baguio Vaccination SMIT+ System</h3>
         <!-- <div class="loginRow"> -->
-        <form id="login-form" class="form">
-            <img src="../img/SMIT+.png" class="logo" alt="">
+        <form id="login-form" class="form ">
+            <img src="../img/logoo.png" class="logo" alt="">
             <!-- <div class="form-group">
                             <input type="text" name="username" id="username" class="form-control" placeholder="Username">
                         </div>
                         <div class="form-group">
                             <input type="password" name="password" id="password" placeholder="Password" class="form-control">
                         </div> -->
-            <div class="input-group input-group-lg">
-                <div class="input-group-prepend">
-                    <span class="input-group-text" id="inputGroup-sizing-lg">Username</span>
-                </div>
+            <div class="input-group input-group-lg mb-3">
                 <input type="text" id="userN" name="username"  class="form-control" aria-label="Large" aria-describedby="inputGroup-sizing-sm" placeholder="Enter username" required>
             </div>
-            <div class="input-group input-group-lg">
-                <div class="input-group-prepend">
-                    <span class="input-group-text" id="inputGroup-sizing-lg">Password</span>
-                </div>
+            <div class="input-group input-group-lg mb-3">
                 <input type="password" id="passW" name="password" class="form-control" aria-label="Large" aria-describedby="inputGroup-sizing-sm" placeholder="Enter password" required>
             </div>
-            <div class="form-button">
-                <button type="button" id="login" name="loginButton" class="buttonLogin">Login</button>
+            <div class="form-button d-flex justify-content-center">
+                <button type="button" id="login" name="loginButton" class="buttonLogin font-weight-bold my-2">Login</button>
             </div>
             <div class="form-link">
-                <a href="resetPW.html" id="forgot_pswd">Forget password?</a>
+                <a href="resetPW.html" id="forgot_pswd" class="text-light">Forget password?</a>
             </div>
         </form>
         <!-- <div id="backdrop2"><img id="backdrop" src="../img/backdrop.jpeg" class="loginColumn loginImg" alt=""></div> -->
@@ -185,10 +178,6 @@ Description: Login HTML Elements for receiving credentials from the users
                 });
             }
         </script>
-        <div>
-            © 2021 Copyright:
-            <a href="https://baguiosmit+.com/">BaguioSmit+.com</a>
-        </div>
     </footer>
 </body>
 
