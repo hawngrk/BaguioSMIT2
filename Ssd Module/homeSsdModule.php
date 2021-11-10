@@ -41,6 +41,8 @@ checkRole('SSD');
     <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet"/>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
+    <script defer src="../javascript/logout.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 </head>
 
@@ -84,11 +86,11 @@ checkRole('SSD');
         <nav class="float-right mr-4">
             <div class="dropdown">
                 <button class="btn btn-lg dropdown-toggle bg-none" type="button" id="dropdownMenuButton"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <span class="marker" id="marker"></span>
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onclick="openNotif()">
+                    <span class="marker" id="marker"><i class="fas fa-circle"></i></span>
                     <i class="fas fa-bell"></i>
                 </button>
-                <div class="dropdown-menu mr-4 border border-dark" aria-labelledby="dropdownMenuButton">
+                <div id="notifications" class="dropdown-menu mr-4 border border-dark" aria-labelledby="dropdownMenuButton">
                     <?php
                     $query = "SELECT vaccination_drive.drive_id, vaccination_sites.location, vaccination_drive.vaccination_date, vaccination_drive.first_dose_stubs, vaccination_drive.second_dose_stubs, vaccination_drive.notif_opened FROM vaccination_sites JOIN vaccination_drive ON vaccination_sites.vaccination_site_id = vaccination_drive.vaccination_site_id ORDER BY vaccination_drive.drive_id desc;";
                     $vaccination_drive = [];
@@ -101,7 +103,7 @@ checkRole('SSD');
                             <tr><td><h4>Notifications<hr></h4></td></tr>";
                     while ($stmt->fetch()) {
                         if ($opened == 1) {
-                            echo "<tr>
+                            echo "<tr onclick='updateDeploymentDetails($driveId)'>
                                                          <td>
                                                             Location: $locName
                                                             Date: $date <br>
@@ -113,7 +115,7 @@ checkRole('SSD');
                                                        </tr>
                                                                           ";
                         } else {
-                            echo "<tr onclick='updateDeploymentDetails($driveId); closeModal(\"notificationModal\") '>
+                            echo "<tr onclick='updateDeploymentDetails($driveId)'>
                                                                        <script>document.getElementById('marker').setAttribute('style', 'color:#c10d0d!important');</script>
                                                             <td  style='background: lightgray'>Vaccination Location: $locName<br>
                                                                 Date: $date<br>
@@ -193,64 +195,6 @@ checkRole('SSD');
                 </div>
             </div>
         </div>
-
-        <div id="notificationModal" class="modal-window">
-            <div class="content-modal">
-                <div class="modal-header">
-                    <h4 class="modal-title">Notifications</h4>
-                    <button type="button" class="close" data-dismiss="modal" onclick="window.location.href = 'homeSsdModule.php'">
-                        &times;
-                    </button>
-                </div>
-                <div class="modal-body" id="notificationContent">
-                    <?php
-                    $query = "SELECT vaccination_drive.drive_id, vaccination_sites.location, vaccination_drive.vaccination_date, vaccination_drive.first_dose_stubs, vaccination_drive.second_dose_stubs, vaccination_drive.notif_opened FROM vaccination_sites JOIN vaccination_drive ON vaccination_sites.vaccination_site_id = vaccination_drive.vaccination_site_id ORDER BY vaccination_drive.drive_id desc;";
-                    $vaccination_drive = [];
-
-                    $stmt = $database->stmt_init();
-                    $stmt->prepare($query);
-                    $stmt->execute();
-                    $stmt->bind_result($driveId, $locName, $date, $firstStubs, $secondStubs, $opened);
-
-                    while ($stmt->fetch()) {
-                        if ($opened == 1){
-                            echo "
-                                                   
-                                                      
-                                                        <div id='$driveId' style='color: #000000'>
-                                                            <p>Vaccination Location: $locName<br>
-                                                               Date: $date <br>
-                                                               Number of First Stubs: $firstStubs <br>
-                                                               Number of Second Stubs: $secondStubs <br>
-                                                            </p>
-                                                        </div>
-                                                      <hr style='width: 100%; background: azure'>
-                                                 
-                                                      ";
-                        } else{
-
-                            echo "
-                                                   <script>document.getElementById('marker').setAttribute('style', 'color:#c10d0d!important');</script>
-                                                      
-                                                        <div id='$driveId' style='background: lightgray'>
-                                                            <p>Vaccination Location: $locName<br>
-                                                               Date: $date <br>
-                                                               Number of First Stubs: $firstStubs <br>
-                                                               Number of Second Stubs: $secondStubs <br>
-                                                            </p>
-                                                        </div>
-                                                      <hr style='width: 100%; background: azure'>
-                                                 
-                                                      ";
-
-                        }
-
-                    }
-                    ?>
-
-                </div>
-            </div>
-        </div>
     </div>
 
 </body>
@@ -299,25 +243,39 @@ checkRole('SSD');
         });
     });
 
-    function openNotif(modal){
-        document.getElementById(modal).style.display = "block";
+    function openNotif() {
+
         $.ajax({
             url: 'selectDeployment.php',
             type: 'POST',
             data: {"open": "opened"},
-            success: function (result) {
-                setTimeout(function(){ document.getElementById('marker').setAttribute('style', 'color:transparent!important'); }, 5000);
+            success: function () {
+                setTimeout(function () {
+                    document.getElementById('marker').setAttribute('style', 'color:transparent!important');
+                }, 500);
             }
         });
     }
 
-    function closeModal(modal){
-        document.getElementById(modal).style.display ="none";
+    function updateDeploymentDetails(val) {
+        window.location.href = "distributeStubSsdModule.php";
+        $.ajax({
+            url: 'selectDeployment.php',
+            type: 'POST',
+            data: {"deploymentId": val},
+            success: function (result) {
+                document.getElementById("labelling").innerHTML = result;
+            }
+        });
+
+        $.ajax({
+            url: 'selectDeployment.php',
+            type: 'POST',
+            data: {"healthDistrict": val},
+            success: function (result) {
+                document.getElementById("healthDistrictTable").innerHTML = result;
+            }
+        });
     }
 
-    function openModal(modal) {
-        document.getElementById(modal).style.display = "block";
-    }
 </script>
-<!--Logout script-->
-<script src="../javascript/logout.js"></script>
