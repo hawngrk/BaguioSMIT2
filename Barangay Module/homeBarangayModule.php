@@ -1,7 +1,12 @@
 <?php
+
 include_once("../includes/database.php");
 require_once('../includes/sessionHandling.php');
 checkRole('Barangay');
+
+$accountDetails = $_SESSION['account'];
+$barangay_id = $accountDetails['barangay_id'];
+
 ?>
 
 <!DOCTYPE html>
@@ -204,14 +209,15 @@ checkRole('Barangay');
                 </button>
                 <div class="dropdown-menu mr-4 border border-dark" aria-labelledby="dropdownMenuButton">
                     <?php
-                                    $query = "SELECT barangay_stubs.drive_id, barangay_stubs.A1_stubs, barangay_stubs.A2_stubs, barangay_stubs.A3_stubs, barangay_stubs.A4_stubs, barangay_stubs.A5_stubs, barangay_stubs.A6_stubs, barangay_stubs.notif_opened, vaccination_sites.location, vaccination_drive.vaccination_date FROM barangay_stubs JOIN vaccination_drive ON vaccination_drive.drive_id = barangay_stubs.drive_id JOIN vaccination_sites ON vaccination_sites.vaccination_site_id = vaccination_drive.vaccination_site_id WHERE barangay_id = '113';";
-                                    $stmt = $database->stmt_init();
-                                    $stmt->prepare($query);
-                                    $stmt->execute();
-                                    $stmt->bind_result($driveId,$A1, $A2, $A3, $A4, $A5, $A6, $opened, $locName, $date);
-                                    echo "<table class='tableScroll7 px-4 py-2'>
+                    $query = "SELECT barangay_stubs.drive_id, barangay_stubs.A1_stubs, barangay_stubs.A2_stubs, barangay_stubs.A3_stubs, barangay_stubs.A4_stubs, barangay_stubs.A5_stubs, barangay_stubs.A6_stubs, barangay_stubs.notif_opened, vaccination_sites.location, vaccination_drive.vaccination_date FROM barangay_stubs JOIN vaccination_drive ON vaccination_drive.drive_id = barangay_stubs.drive_id JOIN vaccination_sites ON vaccination_sites.vaccination_site_id = vaccination_drive.vaccination_site_id WHERE barangay_id = '$barangay_id';";
+                    $stmt = $database->stmt_init();
+                    $stmt->prepare($query);
+                    $stmt->execute();
+                    $stmt->bind_result($driveId,$A1, $A2, $A3, $A4, $A5, $A6, $opened, $locName, $date);
+                    echo "<table class='tableScroll7 px-4 py-2'>
                                         <tr><td><h4>Notifications<hr></h4></td></tr>";
-                                    while ($stmt->fetch()) {
+                    while ($stmt->fetch()) {
+
                                         $availableStubs = [$A1, $A2, $A3, $A4, $A5, $A6];
                                         $priorityStub = [];
                                         $values = [];
@@ -291,7 +297,7 @@ checkRole('Barangay');
                        <?php
                        require_once("../require/getVaccinationDrive.php");
                        require_once("../require/getVaccinationSites.php");
-                       $query = "SELECT drive_id FROM barangay_stubs WHERE barangay_id = '113'";
+                       $query = "SELECT drive_id FROM barangay_stubs WHERE barangay_id = '$barangay_id'";
                        $stmt = $database->stmt_init();
                        $stmt->prepare($query);
                        $stmt->execute();
