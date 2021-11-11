@@ -185,4 +185,5 @@ checkRole("Mayor's Office");
     }
 </script>
 <!--Logout script-->
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="../javascript/logout.js"></script>

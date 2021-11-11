@@ -769,17 +769,14 @@ include_once("../includes/database.php") ?>
         var email = document.getElementById("email").value;
 
         //Category Information
-        var priority = document.getElementById("priorityGroup").value;
+        var priorityId = document.getElementById("priorityGroup").value;
         var id = document.getElementById("categoryID").value;
         var idNo = document.getElementById("categoryNo").value;
         var philHealth = document.getElementById("philHealth").value;
         var pwd = document.getElementById("pwdID").value;
         //Address Information
         var houseAddress = document.getElementById("houseAddress").value;
-        var brgy = document.getElementById("barangay").value;
-        var city = document.getElementById("city").value;
-        var province = document.getElementById("province").value;
-        var region = document.getElementById("region").value;
+        var brgyId = document.getElementById("barangay").value;
 
         //Clinical Information
         var allergyInput = document.getElementById("allergy").value;
@@ -816,7 +813,7 @@ include_once("../includes/database.php") ?>
                 email: email,
 
                 //Priority Group
-                priority: priority,
+                priority: priorityId,
                 category: id,
                 categoryID: idNo,
                 philhealthID: philHealth,
@@ -824,10 +821,7 @@ include_once("../includes/database.php") ?>
 
                 //Address Information
                 houseAddress: houseAddress,
-                barangay: brgy,
-                cmAddress: city,
-                province: province,
-                region: region,
+                barangay: brgyId,
 
                 //Clinical Information
                 allergy: allergy,
@@ -841,7 +835,6 @@ include_once("../includes/database.php") ?>
                 cancer: cancer,
                 otherCommorbidity: enteredCommorbidity
             },
-
             success: function (result) {
                 closeModal('patientInformationModal')
                 reloadPatient();

@@ -171,8 +171,8 @@ checkRole('EIR');
                                 <td>$contactNum</td>
                                 <td>
                                     <div class='d-flex justify-content-center'>
-                                        <button class='btn btn-sm bg-none' onclick='event.stopPropagation();archive(1, clickArchive, $id)'><i class='fa fa-archive'></i></button>
-                                        <button type='button' class='btn btn-sm bg-none' id='viewButton' onclick='viewPatient($id)'><i class='fas fa-eye'></i></button
+                                        <button class='btn btn-sm bg-none' onclick='event.stopPropagation();archive(1, clickArchive, $patientId)'><i class='fa fa-archive'></i></button>
+                                        <button type='button' class='btn btn-sm bg-none' id='viewButton' onclick='viewPatient($patientId)'><i class='fas fa-eye'></i></button
                                     </div>
                                 </td>
                             </tr>";
@@ -606,9 +606,9 @@ checkRole('EIR');
 
     function viewPatient(patientId){
         $.ajax({
-            url:'../includes/managePatientProcessor.phpp',
+            url:'../includes/managePatientProcessor.php',
             type:'POST',
-            data:{"patient": patientId},
+            data:{"viewPatient": patientId},
             success:function (result){
                 document.getElementById("patientModalContent").innerHTML = result;
                 openModal('viewPatientDetails');
@@ -707,7 +707,7 @@ checkRole('EIR');
                 email: email,
 
                 //Priority Group
-                priority: priority,
+                priority: priorityId,
                 category: id,
                 categoryID: idNo,
                 philhealthID: philHealth,
@@ -715,10 +715,7 @@ checkRole('EIR');
 
                 //Address Information
                 houseAddress: houseAddress,
-                barangay: brgy,
-                cmAddress: city,
-                province: province,
-                region: region,
+                barangay: brgyId,
 
                 //Clinical Information
                 allergy: allergy,
@@ -732,7 +729,6 @@ checkRole('EIR');
                 cancer: cancer,
                 otherCommorbidity: enteredCommorbidity
             },
-
             success: function (result) {
                 console.log(result);
                 Swal.fire('Added Patient', '', 'success');
@@ -746,7 +742,11 @@ checkRole('EIR');
         document.getElementById(modal).style.display = "block";
         document.body.classList.add("scrollBody");
     }
-
+    
+    function closeModal(modal) {
+        document.getElementById(modal).style.display = "none";
+    }
+    
     function confMessage(item, action){
         Swal.fire({
             icon: 'info',
@@ -764,9 +764,6 @@ checkRole('EIR');
         })
     }
 
-    function closeModal(modal) {
-        document.getElementById(modal).style.display = "none";
-    }
 
     //Change unchecked commorbidity to 0
     function verifyCommorbidity(commorbidity) {
@@ -825,6 +822,61 @@ checkRole('EIR');
                 reloadPatient();
             }
         });
+    }
+
+    async function archive(archive, action, patient) {
+        if (archive == 1) {
+            archiveText = "Archive";
+        } else {
+            archiveText = "UnArchive";
+        }
+        Swal.fire({
+            icon: 'info',
+            title: 'Are You Sure you Want to ' + archiveText + ' this item?',
+            showDenyButton: true,
+            confirmButtonText: 'Yes',
+            denyButtonText: `No`,
+        }).then((result) => {
+            if (result.isConfirmed) {
+                action(patient, archiveText);
+                Swal.fire('Saved!', '', 'success')
+            } else if (result.isDenied) {
+                Swal.fire('Changes are not saved', '', 'info')
+            }
+        })
+    }
+
+    function clickArchive(patient, option) {
+        $.ajax({
+            url: '../Barangay Module/ManagePatientProcessor.php',
+            method: 'POST',
+            data: {archive: patient, option: option},
+            success: function (result) {
+
+                if (option == "Archive") {
+                    document.getElementById('mainPatient').innerHTML = result;
+                    $.ajax({
+                        url: '../Barangay Module/ManagePatientProcessor.php',
+                        method: 'POST',
+                        data: {showUpdatedArchive: ""},
+                        success: function (result) {
+                            document.getElementById('archivedContent').innerHTML = result;
+                        }
+                    })
+
+                } else if (option == "UnArchive") {
+                    document.getElementById("archivedContent").innerHTML = result;
+                    $.ajax({
+                        url: '../Barangay Module/ManagePatientProcessor.php',
+                        method: 'POST',
+                        data: {showUpdatedPatient: ""},
+                        success: function (result) {
+                            document.getElementById('mainPatient').innerHTML = result;
+                        }
+                    })
+                }
+            }
+        })
     }
 </script>
 <!--Logout script-->
