@@ -75,7 +75,6 @@ $barangay_id = $accountDetails['barangay_id'];
         <ul class="list-unstyled components">
             <hr>
             <?php
-                session_start();
                 $accountDetails = $_SESSION['account'];
                 $barangay = $accountDetails['barangay'];
                 echo "<h4 id='headingNav1'>$barangay</h4>";

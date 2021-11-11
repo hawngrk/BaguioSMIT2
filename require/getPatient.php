@@ -15,7 +15,4 @@
         $patient = new patientInfo($patientId, $patientFullName, $firstDoseDate, $secondDoseDate, $patientFirstDosage,
             $patientSecondDosage, $forQueue, $notification, $firstDoseVaccinator, $secondDoseVaccinator, $token);
         $patients[] = $patient;
-
     }
-
-

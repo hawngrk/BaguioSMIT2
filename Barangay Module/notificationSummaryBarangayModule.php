@@ -67,7 +67,6 @@ checkRole('Barangay');
         <ul class="list-unstyled components">
             <hr>
             <?php
-                session_start();
                 $accountDetails = $_SESSION['account'];
                 $barangay = $accountDetails['barangay'];
                 echo "<h4 id='headingNav1'>$barangay</h4>";
@@ -189,6 +188,7 @@ checkRole('Barangay');
         }
     }
 </script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="../javascript/logout.js"></script>
 <style>
     .topNav {
