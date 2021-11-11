@@ -1,7 +1,6 @@
 <?php
 
 include_once "../includes/database.php";
-require_once '../require/getHealthDistrict.php';
 if (isset($_POST['search'])) {
 
     $search = $_POST['search'];
@@ -130,7 +129,7 @@ if (isset($_POST['districts'])){
     $date = $_POST['date'];
     $location = $_POST['location'];
 
-    $query1 = "INSERT INTO vaccination_drive (vaccination_site_id, vaccination_date, Archived, notif_opened, first_dose_stubs, second_dose_stubs) VALUE ('$location', '$date', 0, 0, '$firstDoseStubs', '$secondDoseStubs');";
+    $query1 = "INSERT INTO vaccination_drive (vaccination_site_id, vaccination_date, Archived, notif_opened, first_dose_stubs, second_dose_stubs, allocated) VALUE ('$location', '$date', 0, 0, '$firstDoseStubs', '$secondDoseStubs', 0);";
     $database->query($query1);
 
     $getDrive = "SELECT drive_id from vaccination_drive ORDER BY drive_id DESC LIMIT 1";
@@ -217,6 +216,8 @@ if (isset($_POST['districts'])){
 }
 
 if (isset($_POST['barangays'])) {
+    require_once '../require/getHealthDistrict.php';
+
     $barangayList = $_POST['barangays'];
     $healthDistrictName = $_POST['healthDistrictName'];
     $contact = $_POST['number'];
@@ -225,7 +226,7 @@ if (isset($_POST['barangays'])) {
     echo "$contact";
     echo json_encode($barangayList);
 
-    $query1 = "INSERT INTO health_district (health_district_name, hd_contact_number) VALUE ('$healthDistrictName', '$contact');";
+    $query1 = "INSERT INTO health_district (health_district_name, hd_contact_number, Archived) VALUE ('$healthDistrictName', '$contact', 0);";
     $database->query($query1);
 
     $getDistrict = "SELECT health_district_id from health_district ORDER BY health_district_id DESC LIMIT 1";
@@ -241,10 +242,9 @@ if (isset($_POST['barangays'])) {
         $database->query($query2);
     }
 
-    echo '  <table class="table table-row table-hover">
-                        <thead>
-                        <tr>
-                            <th scope="col">#</th>
+    echo '     <table class="table table-hover border">
+                        <thead class="tableHeader">
+                        <tr class="tableCenterCont">
                             <th scope="col">Health District Id</th>
                             <th scope="col">District Name</th>
                             <th scope="col">Contact Number</th>
@@ -257,24 +257,25 @@ if (isset($_POST['barangays'])) {
 
     $count = 0;
     foreach ($health_district as $hd) {
-        $count++;
         $districtId = $hd->getHealthDistrictId();
         $districtName = $hd->getHealthDistrictName();
         $number = $hd->getContact();
+        $archived = $hd->getArchived();
 
-        echo "<tr class='table-row' onclick='showDistrict(this)'>
-                                    <td>$count</td>
+        if ($archived == 0) {
+
+            echo "<tr class='table-row tableCenterCont' onclick='showDistrict(this)'>
                                     <td>$districtId</td>
                                     <td>$districtName</td>
                                     <td>$number</td>
                                     <td style= 'vertical-align: middle;'>
-                                        <div style='text-align: left;'>
-                                            <button class='buttonTransparent' onclick='event.stopPropagation(); del($districtId ,deleteDistrict())'><i class='fas fa-trash-alt'></i></button>
+                                        <div class='d-flex justify-content-center'>
+                                           <button class='btn btn-sm bg-none' onclick='event.stopPropagation(); archive(1,archiveDistrict, $districtId)'><i class='fa fa-archive'></i></button>
                                         </div>
                                     </td>
                                   </tr>";
+        }
     }
-
     echo"</table>";
 }
 
@@ -284,8 +285,7 @@ if (isset($_POST['site'])) {
     $query1 = "INSERT INTO vaccination_sites (location) VALUE ('$newSite');";
     $database->query($query1);
 
-    echo'  <div id="siteContent" class="tableScroll6 border">
-                    <table class="table table-row table-hover">
+    echo'   <table class="table table-row table-hover">
                         <thead class="tableHeader">
                         <tr class="tableCenterCont">
                             <th>Vaccination Site Id</th>
@@ -296,13 +296,11 @@ if (isset($_POST['site'])) {
 
     require_once '../require/getVaccinationSites.php';
 
-
     foreach ($vaccinationSites as $vs) {
-        $count++;
         $siteId = $vs->getVaccinationSiteId();
         $vaccinationSite = $vs->getVaccinationSiteLocation();
 
-        echo "<tr class='table-row''>
+        echo "<tr class='table-row tableCenterCont'>
                                     <td>$siteId</td>
                                     <td>$vaccinationSite</td>
                                     <td style= 'vertical-align: middle;'>
@@ -404,8 +402,7 @@ if (isset($_POST['deleteSiteId'])){
     $query = "DELETE FROM vaccination_sites WHERE vaccination_site_id = '$delSite'";
     $database->query($query);
 
-    echo'  <div id="siteContent" class="tableScroll6 border">
-                    <table class="table table-row table-hover">
+    echo'   <table class="table table-row table-hover">
                         <thead class="tableHeader">
                         <tr class="tableCenterCont">
                             <th>Vaccination Site Id</th>
@@ -416,13 +413,11 @@ if (isset($_POST['deleteSiteId'])){
 
     require_once '../require/getVaccinationSites.php';
 
-    $count = 0;
     foreach ($vaccinationSites as $vs) {
-
         $siteId = $vs->getVaccinationSiteId();
         $vaccinationSite = $vs->getVaccinationSiteLocation();
 
-        echo "<tr class='table-row''>
+        echo "<tr class='table-row tableCenterCont'>
                                     <td>$siteId</td>
                                     <td>$vaccinationSite</td>
                                     <td style= 'vertical-align: middle;'>
@@ -434,7 +429,6 @@ if (isset($_POST['deleteSiteId'])){
     }
 
     echo '</table>';
-
 }
 
 if (isset($_POST['deleteDistId'])){
@@ -550,7 +544,7 @@ if (isset($_POST['archive'])){
         $query = "UPDATE `vaccination_drive` SET `Archived`= 1 WHERE `drive_id` = '$archivedId'";
         $database->query($query);
 
-        echo' <table class="table table-hover tableDep tableScroll2 mb-2" id="driveTable">
+        echo'   <table class="table table-hover tableDep table-fixed" id="driveTable">
                             <thead>
                             <tr class="tableCenterCont">
                                 <th scope="col">Drive Id</th>
@@ -560,14 +554,14 @@ if (isset($_POST['archive'])){
                             </tr>
                             </thead>';
 
-                            $query1 = "SELECT vaccination_drive.drive_id, vaccination_drive.vaccination_date, vaccination_sites.location FROM vaccination_drive JOIN vaccination_sites ON vaccination_drive.vaccination_site_id = vaccination_sites.vaccination_site_id WHERE vaccination_drive.Archived = 0 ORDER BY vaccination_drive.drive_id";
-                $dbase = $database->stmt_init();
-                $dbase->prepare($query1);
-                $dbase->execute();
-                $dbase->bind_result($driveId, $date, $vaccinationSite);
-                while($dbase->fetch()){
+        $query = "SELECT vaccination_drive.drive_id, vaccination_drive.vaccination_date, vaccination_sites.location FROM vaccination_drive JOIN vaccination_sites ON vaccination_drive.vaccination_site_id = vaccination_sites.vaccination_site_id WHERE vaccination_drive.Archived = 0 ORDER BY vaccination_drive.drive_id";
+        $dbase = $database->stmt_init();
+        $dbase->prepare($query);
+        $dbase->execute();
+        $dbase->bind_result($driveId, $date, $vaccinationSite);
+        while($dbase->fetch()){
 
-                                    echo "<tr class='table-row' onclick='showDrive(this)'>
+            echo "<tr class='table-row tableCenterCont' onclick='showDrive(this)'>
 
                         <td>$driveId</td>
                         <td>$vaccinationSite</td>
@@ -576,10 +570,13 @@ if (isset($_POST['archive'])){
                             <div class='d-flex justify-content-center'>
                                 <button class='btn btn-sm bg-none' onclick='event.stopPropagation(); archive(1, clickArchive, $driveId)'><i class='fa fa-archive'></i></button>
                                 <button class='btn btn-sm bg-none' onclick=''><i class='far fa-edit'></i></button>
+
                             </div>
                         </td>
+
                       </tr>";
-                            }
+
+        }
 
                         echo"</table>";
 
@@ -587,8 +584,8 @@ if (isset($_POST['archive'])){
         $query = "UPDATE `vaccination_drive` SET `Archived`= 0 WHERE `drive_id` = '$archivedId'";
         $database->query($query);
 
-        echo'<table class="table table-row table-hover tableModal ">
-                <thead class="tableHeader">
+        echo'<table class="table table-row table-hover tableModal">
+                <thead>
                 <tr>
                     <th scope="col">Drive Id</th>
                     <th scope="col">Location</th>
@@ -597,25 +594,25 @@ if (isset($_POST['archive'])){
                 </tr>
                 </thead>';
 
-               $query = "SELECT vaccination_drive.drive_id, vaccination_drive.vaccination_date, vaccination_sites.location FROM vaccination_drive JOIN vaccination_sites ON vaccination_drive.vaccination_site_id = vaccination_sites.vaccination_site_id WHERE vaccination_drive.Archived = 1 ORDER BY vaccination_drive.drive_id";
-                $dbase = $database->stmt_init();
-                $dbase->prepare($query);
-                $dbase->execute();
-                $dbase->bind_result($driveId, $date, $vaccinationSite);
-                while($dbase->fetch()){
+        $query = "SELECT vaccination_drive.drive_id, vaccination_drive.vaccination_date, vaccination_sites.location FROM vaccination_drive JOIN vaccination_sites ON vaccination_drive.vaccination_site_id = vaccination_sites.vaccination_site_id WHERE vaccination_drive.Archived = 1 ORDER BY vaccination_drive.drive_id";
+        $dbase = $database->stmt_init();
+        $dbase->prepare($query);
+        $dbase->execute();
+        $dbase->bind_result($driveId, $date, $vaccinationSite);
+        while($dbase->fetch()){
 
-                        echo "<tr class='table-row'>
+            echo "<tr class='table-row tableCenterCont'>
                         <td>$driveId</td>
                         <td>$vaccinationSite</td>
                         <td>$date</td>
                         <td>
-                            <div class='d-flex justify-content-center'>
-                                <button class='btn btn-sm bg-none' onclick='archive(0, clickArchive, $driveId )'>unarchive <i class='fas fa-box-open'></i></button>
+                            <div>
+                                <button class='btn btn-warning' onclick='archive(0, clickArchive, $driveId )'>unarchive <i class='fas fa-box-open'></i></button>
                             </div>
                         </td>
 
                       </tr>";
-                }
+        }
                 echo'
             </table>';
 
@@ -625,7 +622,7 @@ if (isset($_POST['archive'])){
 }
 
 if (isset($_POST['showUpdatedDrive'])){
-    echo ' <table class="table table-hover tableDep" id="driveTable">
+    echo'   <table class="table table-hover tableDep table-fixed" id="driveTable">
                             <thead>
                             <tr class="tableCenterCont">
                                 <th scope="col">Drive Id</th>
@@ -635,14 +632,14 @@ if (isset($_POST['showUpdatedDrive'])){
                             </tr>
                             </thead>';
 
-    $query1 = "SELECT vaccination_drive.drive_id, vaccination_drive.vaccination_date, vaccination_sites.location FROM vaccination_drive JOIN vaccination_sites ON vaccination_drive.vaccination_site_id = vaccination_sites.vaccination_site_id WHERE vaccination_drive.Archived = 0 ORDER BY vaccination_drive.drive_id";
+    $query = "SELECT vaccination_drive.drive_id, vaccination_drive.vaccination_date, vaccination_sites.location FROM vaccination_drive JOIN vaccination_sites ON vaccination_drive.vaccination_site_id = vaccination_sites.vaccination_site_id WHERE vaccination_drive.Archived = 0 ORDER BY vaccination_drive.drive_id";
     $dbase = $database->stmt_init();
-    $dbase->prepare($query1);
+    $dbase->prepare($query);
     $dbase->execute();
     $dbase->bind_result($driveId, $date, $vaccinationSite);
-    while ($dbase->fetch()) {
+    while($dbase->fetch()){
 
-        echo "<tr class='table-row' onclick='showDrive(this)'>
+        echo "<tr class='table-row tableCenterCont' onclick='showDrive(this)'>
 
                         <td>$driveId</td>
                         <td>$vaccinationSite</td>
@@ -651,46 +648,49 @@ if (isset($_POST['showUpdatedDrive'])){
                             <div class='d-flex justify-content-center'>
                                 <button class='btn btn-sm bg-none' onclick='event.stopPropagation(); archive(1, clickArchive, $driveId)'><i class='fa fa-archive'></i></button>
                                 <button class='btn btn-sm bg-none' onclick=''><i class='far fa-edit'></i></button>
+
                             </div>
                         </td>
+
                       </tr>";
+
     }
 
-    echo "</table>";
+    echo"</table>";
 }
 
 if (isset($_POST['showUpdatedArchive'])){
-    echo ' <table class="table table-hover tableDep" id="driveTable">
-                            <thead>
-                            <tr class="tableCenterCont">
-                                <th scope="col">Drive Id</th>
-                                <th scope="col">Location</th>
-                                <th scope="col">Date</th>
-                                <th scope="col">Action</th>
-                            </tr>
-                            </thead>';
+    echo'<table class="table table-row table-hover tableModal">
+                <thead>
+                <tr>
+                    <th scope="col">Drive Id</th>
+                    <th scope="col">Location</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Action</th>
+                </tr>
+                </thead>';
 
-    $query1 = "SELECT vaccination_drive.drive_id, vaccination_drive.vaccination_date, vaccination_sites.location FROM vaccination_drive JOIN vaccination_sites ON vaccination_drive.vaccination_site_id = vaccination_sites.vaccination_site_id WHERE vaccination_drive.Archived = 1 ORDER BY vaccination_drive.drive_id";
+    $query = "SELECT vaccination_drive.drive_id, vaccination_drive.vaccination_date, vaccination_sites.location FROM vaccination_drive JOIN vaccination_sites ON vaccination_drive.vaccination_site_id = vaccination_sites.vaccination_site_id WHERE vaccination_drive.Archived = 1 ORDER BY vaccination_drive.drive_id";
     $dbase = $database->stmt_init();
-    $dbase->prepare($query1);
+    $dbase->prepare($query);
     $dbase->execute();
     $dbase->bind_result($driveId, $date, $vaccinationSite);
-    while ($dbase->fetch()) {
+    while($dbase->fetch()){
 
-        echo "<tr class='table-row' onclick='showDrive(this)'>
-
+        echo "<tr class='table-row tableCenterCont'>
                         <td>$driveId</td>
                         <td>$vaccinationSite</td>
                         <td>$date</td>
-                         <td>
-                            <div class='d-flex justify-content-center'>
-                                <button class='btn btn-sm bg-none' onclick='archive(0, clickArchive, $driveId )'>unarchive <i class='fas fa-box-open'></i></button>
+                        <td>
+                            <div>
+                                <button class='btn btn-warning' onclick='archive(0, clickArchive, $driveId )'>unarchive <i class='fas fa-box-open'></i></button>
                             </div>
                         </td>
+
                       </tr>";
     }
-
-    echo "</table>";
+    echo'
+            </table>';
 }
 
 if (isset($_POST['distArchive'])){

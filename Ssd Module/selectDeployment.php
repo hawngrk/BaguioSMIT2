@@ -225,57 +225,6 @@ if (isset($_POST['viewBarangays2'])) {
             </div>";
 }
 
-if (isset($_POST['notifDrive'])) {
-    $query = "SELECT vaccination_drive.drive_id, vaccination_sites.location, vaccination_drive.vaccination_date, vaccination_drive.first_dose_stubs, vaccination_drive.second_dose_stubs, vaccination_drive.notif_opened FROM vaccination_sites JOIN vaccination_drive ON vaccination_sites.vaccination_site_id = vaccination_drive.vaccination_site_id ORDER BY vaccination_drive.drive_id desc;";
-    $vaccination_drive = [];
-
-    $stmt = $database->stmt_init();
-    $stmt->prepare($query);
-    $stmt->execute();
-    $stmt->bind_result($driveId, $locName, $date, $firstStubs, $secondStubs, $opened);
-    echo"<table>";
-    while ($stmt->fetch()) {
-        if ($opened == 1){
-            echo "<tr>
-                                                   
-                                                       
-                                                            <td>
-                                                               Location: $locName
-                                                               Date: $date <br>
-                                                               Number of First Stubs: $firstStubs <br>
-                                                               Number of Second Stubs: $secondStubs <br>
-                                                               <br>
-                                                               <hr>
-                                                            </td>
-                                                      
-                                                  
-                                                 </tr>
-                                                      ";
-        } else{
-
-            echo "<tr onclick='updateDeploymentDetails($driveId); closeModal(\"notificationModal\") '>
-                                                   <script>document.getElementById('marker').setAttribute('style', 'color:#c10d0d!important');</script>
-                                                      
-                                                      
-                                                           <td  style='background: lightgray'>Vaccination Location: $locName<br>
-                                                               Date: $date<br>
-                                                               Number of First Stubs: $firstStubs <br>
-                                                               Number of Second Stubs: $secondStubs<br>
-                                                           <hr>
-                                                       
-                                                  </td>
-                                                      
-                                                 </tr>
-                                                      ";
-
-
-        }
-    }
-    echo"</table>";
-
-
-}
-
 if (isset($_POST['notifListDrives'])){
 
 
@@ -300,6 +249,45 @@ if (isset($_POST['open'])){
     $stmt->execute();
     $stmt->fetch();
     $stmt->close();
+}
+
+if (isset($_POST['showUpdatedNotif'])){
+    $query = "SELECT vaccination_drive.drive_id, vaccination_sites.location, vaccination_drive.vaccination_date, vaccination_drive.first_dose_stubs, vaccination_drive.second_dose_stubs, vaccination_drive.notif_opened FROM vaccination_sites JOIN vaccination_drive ON vaccination_sites.vaccination_site_id = vaccination_drive.vaccination_site_id ORDER BY vaccination_drive.drive_id desc;";
+
+    $stmt = $database->stmt_init();
+    $stmt->prepare($query);
+    $stmt->execute();
+    $stmt->bind_result($driveId, $locName, $date, $firstStubs, $secondStubs, $opened);
+    echo "<table class='tableScroll7 px-4 py-2'>
+                            <tr><td><h4>Notifications<hr></h4></td></tr>";
+    while ($stmt->fetch()) {
+        if ($opened == 1) {
+            echo "<tr onclick='updateDeploymentDetails($driveId)'>
+
+                                                         <td>
+                                                            Location: $locName <br>
+                                                            Date: $date <br>
+                                                            Number of First Stubs: $firstStubs <br>
+                                                            Number of Second Stubs: $secondStubs <br>
+                                                            <br>
+                                                            <hr>
+                                                            </td>
+                                                       </tr>
+                                                                          ";
+        } else {
+            echo "<tr onclick='updateDeploymentDetails($driveId)'>
+                                                                       <script>document.getElementById('marker').setAttribute('style', 'color:#c10d0d!important');</script>
+                                                            <td  style='background: lightgray!important'>New!<br>Vaccination Location: $locName<br>
+                                                                Date: $date<br>
+                                                                Number of First Stubs: $firstStubs <br>
+                                                                Number of Second Stubs: $secondStubs<br>
+                                                            <hr>
+                                                            </td>
+                                                            </tr>
+                                                                          ";
+        }
+    }
+    echo "</table>";
 }
 
 if (isset($_POST['sendStubs'])){

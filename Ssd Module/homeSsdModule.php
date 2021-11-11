@@ -90,55 +90,11 @@ checkRole('SSD');
                     <span class="marker" id="marker"><i class="fas fa-circle"></i></span>
                     <i class="fas fa-bell"></i>
                 </button>
-                <div id="notifications" class="dropdown-menu mr-4 border border-dark" aria-labelledby="dropdownMenuButton">
-                    <?php
-                    $query = "SELECT vaccination_drive.drive_id, vaccination_sites.location, vaccination_drive.vaccination_date, vaccination_drive.first_dose_stubs, vaccination_drive.second_dose_stubs, vaccination_drive.notif_opened FROM vaccination_sites JOIN vaccination_drive ON vaccination_sites.vaccination_site_id = vaccination_drive.vaccination_site_id ORDER BY vaccination_drive.drive_id desc;";
-                    $vaccination_drive = [];
+                <div id="notifications" class="dropdown-menu mr-4 border border-dark" style="width: 352px" aria-labelledby="dropdownMenuButton">
 
-                    $stmt = $database->stmt_init();
-                    $stmt->prepare($query);
-                    $stmt->execute();
-                    $stmt->bind_result($driveId, $locName, $date, $firstStubs, $secondStubs, $opened);
-                    echo "<table class='tableScroll7 px-4 py-2'>
-                            <tr><td><h4>Notifications<hr></h4></td></tr>";
-                    while ($stmt->fetch()) {
-                        if ($opened == 1) {
-                            echo "<tr onclick='updateDeploymentDetails($driveId)'>
-                                                         <td>
-                                                            Location: $locName
-                                                            Date: $date <br>
-                                                            Number of First Stubs: $firstStubs <br>
-                                                            Number of Second Stubs: $secondStubs <br>
-                                                            <br>
-                                                            <hr>
-                                                            </td>
-                                                       </tr>
-                                                                          ";
-                        } else {
-                            echo "<tr onclick='updateDeploymentDetails($driveId)'>
-                                                                       <script>document.getElementById('marker').setAttribute('style', 'color:#c10d0d!important');</script>
-                                                            <td  style='background: lightgray'>Vaccination Location: $locName<br>
-                                                                Date: $date<br>
-                                                                Number of First Stubs: $firstStubs <br>
-                                                                Number of Second Stubs: $secondStubs<br>
-                                                            <hr>
-                                                            </td>
-                                                            </tr>
-                                                                          ";
-                        }
-                    }
-                    echo "</table>";
-                    ?>
                 </div>
             </div>
         </nav>
-
-<!--        <div class="float-right">-->
-<!--                <button id="buttonMarker" class="btn btn-lg bg-none" onclick="openNotif('notificationModal')">-->
-<!--                    <span class="marker" id="marker"></span>-->
-<!--                    <i class="fas fa-bell"></i>-->
-<!--                </button>-->
-<!--            </div>-->
 
         <br>
         <br>
@@ -231,28 +187,24 @@ checkRole('SSD');
         toastr.info('You Have Received A New Deployment!');
 
         document.getElementById('marker').setAttribute('style', 'color:#c10d0d!important') ;
-        document.getElementById("notificationContent").innerHTML = "";
-
-        $.ajax({
-            url: 'selectDeployment.php',
-            type: 'POST',
-            data: {"notifDrive": "notifDrive"},
-            success: function (result) {
-                document.getElementById("notificationContent").innerHTML = result;
-            }
-        });
     });
 
     function openNotif() {
-
+        $.ajax({
+            url: 'selectDeployment.php',
+            type: 'POST',
+            data: {"showUpdatedNotif": ""},
+            success: function (result) {
+                document.getElementById('notifications').innerHTML = result
+            }
+        });
         $.ajax({
             url: 'selectDeployment.php',
             type: 'POST',
             data: {"open": "opened"},
             success: function () {
-                setTimeout(function () {
-                    document.getElementById('marker').setAttribute('style', 'color:transparent!important');
-                }, 500);
+                document.getElementById('marker').setAttribute('style', 'color:transparent!important');
+
             }
         });
     }

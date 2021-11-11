@@ -95,7 +95,7 @@ include_once("../includes/database.php") ?>
             <div class="container-fluid">
                 <div>
                     <button type="button" class="buttonTop3 float-left" onclick="openModal('DeployModal');
-                            shiftTab(General, FirstDose, SecondDose, 'GeneralPage', 'FirstDosePage', 'SecondDosePage')">
+                            shiftTab('General', 'FirstDose', 'SecondDose', 'GeneralPage', 'FirstDosePage', 'SecondDosePage')">
                         <i class="fas fa-plus"></i>
                         Add Deployment
                     </button>
@@ -234,21 +234,21 @@ include_once("../includes/database.php") ?>
                                         <div class="col-sm-auto">
                                             <li id="GeneralList" role="presentation" class="doseOption1 nav-item active">
                                                 <a class="nav-link" role="tab" id="General" data-toggle="tab" href="#General"
-                                                   onclick="shiftTab(General, FirstDose, SecondDose, 'GeneralPage', 'FirstDosePage', 'SecondDosePage')">General</a>
+                                                   onclick="shiftTab('General', 'FirstDose', 'SecondDose', 'GeneralPage', 'FirstDosePage', 'SecondDosePage')">General</a>
                                             </li>
                                         </div>
                                         <div class="col-sm-auto">
                                             <li role="presentation" class="doseOption2 nav-item">
                                                 <a class="nav-link" id="FirstDose" role="tab" data-toggle="tab"
                                                    href="#FirstDose"
-                                                   onclick="shiftTab(FirstDose, General, SecondDose, 'FirstDosePage', 'GeneralPage', 'SecondDosePage')">First Dose</a>
+                                                   onclick="shiftTab('FirstDose', 'General', 'SecondDose', 'FirstDosePage', 'GeneralPage', 'SecondDosePage')">First Dose</a>
                                             </li>
                                         </div>
                                         <div class="col-sm-auto">
                                             <li role="presentation" class="doseOption3 nav-item">
                                                 <a class="nav-link" role="tab" id="SecondDose" data-toggle="tab"
                                                    href="#SecondDose"
-                                                   onclick="shiftTab(SecondDose, FirstDose, General, 'SecondDosePage', 'GeneralPage', 'FirstDosePage')">Second Dose</a>
+                                                   onclick="shiftTab('SecondDose', 'FirstDose', 'General', 'SecondDosePage', 'GeneralPage', 'FirstDosePage')">Second Dose</a>
                                             </li>
                                         </div>
                                     </div>
@@ -600,12 +600,11 @@ include_once("../includes/database.php") ?>
                             <?php
                             require_once "../require/getBarangay.php";
 
-
                             foreach ($barangays as $b) {
                                 $id = $b->getBarangayId();
                                 $name = $b->getBarangayName();
                                 echo " <li>
-                                    <input class = 'checkboxes' type='checkbox' onclick='selected($id)'>
+                                    <input class = 'checkboxes' type='checkbox' onclick='selected(\"barangay\", $id)'>
                                     <label>$name</label><br>
                                 </li> ";
                             }
@@ -816,17 +815,16 @@ include_once("../includes/database.php") ?>
     }
 
     function shiftTab(active, idle1, idle2, pageBlock, pageNone1, pageNone2) {
-        active.style.backgroundColor = "#1D7195";
-        active.style.color = "#FFFFFFFF";
-        active.style.borderRadius = "12px";
-        idle1.style.backgroundColor = "rgba(49,51,53,0)";
-        idle2.style.backgroundColor = "rgba(49,51,53,0)";
-        idle1.style.color = "#000000";
-        idle2.style.color = "#000000";
+        document.getElementById(active).style.backgroundColor = "#1D7195";
+        document.getElementById(active).style.color = "#FFFFFFFF";
+        document.getElementById(active).style.borderRadius = "12px";
+        document.getElementById(idle1).style.backgroundColor = "rgba(49,51,53,0)";
+        document.getElementById(idle2).style.backgroundColor = "rgba(49,51,53,0)";
+        document.getElementById(idle1).style.color = "#000000";
+        document.getElementById(idle2).style.color = "#000000";
         document.getElementById(pageBlock).style.display = "block";
         document.getElementById(pageNone1).style.display = "none";
         document.getElementById(pageNone2).style.display = "none";
-        document.getElementById(active).style.color = "#FFFFFFFF";
         document.getElementById(idle1).style.color = "#000000";
         document.getElementById(idle2).style.color = "#000000";
     }
@@ -911,7 +909,28 @@ include_once("../includes/database.php") ?>
             method: 'POST',
             data: {archive: drive, option: option},
             success: function (result) {
+                if (option == "Archive") {
+                    document.getElementById('mainDrive').innerHTML = result;
+                    $.ajax({
+                        url: 'ManageDeploymentProcessor.php',
+                        method: 'POST',
+                        data: {showUpdatedArchive: ""},
+                        success: function (result) {
+                            document.getElementById('archivedContent').innerHTML = result;
+                        }
+                    })
 
+                } else if (option == "UnArchive") {
+                    document.getElementById("archivedContent").innerHTML = result;
+                    $.ajax({
+                        url: 'ManageDeploymentProcessor.php',
+                        method: 'POST',
+                        data: {showUpdatedDrive: ""},
+                        success: function (result) {
+                            document.getElementById('mainDrive').innerHTML = result;
+                        }
+                    })
+                }
             }
         })
     }
@@ -961,11 +980,13 @@ include_once("../includes/database.php") ?>
     }
 
     function closeModal(modal) {
+
         document.getElementById(modal).style.display = "none";
         document.body.classList.remove("scrollBody");
     }
 
     function openModal(modal) {
+
         document.getElementById(modal).style.display = "block";
         document.body.classList.add("scrollBody");
     }
@@ -1019,7 +1040,7 @@ include_once("../includes/database.php") ?>
                     success: function (result) {
                         document.getElementById("HealthDBarangay").style.display = "none";
                         document.getElementById("barangayList").innerHTML = result;
-                        console.log(result)
+
                     }
                 })
                 Swal.fire('Saved!', '', 'success')
@@ -1063,7 +1084,8 @@ include_once("../includes/database.php") ?>
                 location: location,
             },
             success: function (result) {
-                closeModal('newDeploymentForm');
+                closeModal('DeployModal');
+                document.getElementById('newDeploymentForm').reset();
                 document.getElementById('mainDrive').innerHTML = result;
             }
         })
@@ -1071,15 +1093,20 @@ include_once("../includes/database.php") ?>
     }
 
     function addDistrict() {
+        console.log('inside')
         var healthDistrictName = document.getElementById("newHealthDistrict").value;
         var districtNumber = document.getElementById("contactNumber").value;
+
+        console.log(healthDistrictName);
+        console.log(districtNumber);
+        console.log(barangays);
 
         $.ajax({
             url: 'ManageDeploymentProcessor.php',
             method: 'POST',
             data: {barangays: barangays, healthDistrictName: healthDistrictName, number: districtNumber},
             success: function (result) {
-                document.getElementById("HealthDModal").style.display = "none";
+                closeModal('HealthDModal');
                 document.getElementById("distContent").innerHTML = result;
             }
         })
@@ -1087,7 +1114,7 @@ include_once("../includes/database.php") ?>
 
     function addSite() {
         var siteName = document.getElementById("newVaccinationSite").value;
-        console.log(siteName);
+
         $.ajax({
             url: 'ManageDeploymentProcessor.php',
             method: 'POST',
@@ -1101,7 +1128,7 @@ include_once("../includes/database.php") ?>
     }
 
     function deleteDistrict(delDistId) {
-        console.log('passed');
+
         $.ajax({
             url: 'ManageDeploymentProcessor.php',
             method: 'POST',
@@ -1115,21 +1142,21 @@ include_once("../includes/database.php") ?>
     }
 
     function deleteBarangay(barangayId) {
-        console.log(barangayId)
+
         $.ajax({
             url: 'ManageDeploymentProcessor.php',
             method: 'POST',
             data: {brgyId: barangayId},
             success: function (result) {
                 document.getElementById('barangayList').innerHTML = result;
-                console.log(result)
+
 
             }
         })
     }
 
     function deleteSite(siteId) {
-        console.log(siteId);
+
         $.ajax({
             url: 'ManageDeploymentProcessor.php',
             method: 'POST',
@@ -1215,7 +1242,8 @@ include_once("../includes/database.php") ?>
             array.splice(idx, 1);
         }
 
-        console.log(firstDoseVaccineBrands)
+        console.log(barangays)
+
     }
 
 
