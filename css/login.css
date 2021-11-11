@@ -110,6 +110,7 @@ body {
     padding-bottom: 0%;
     background: #647881;
     color: white;
+    display: inline-flex!important;
 }
 
 .input-group-lg {

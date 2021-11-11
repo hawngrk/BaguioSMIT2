@@ -66,7 +66,10 @@ Description: Login HTML Elements for receiving credentials from the users
 <body>
     <!-- Top Nav Bar-->
     <div id="topBar">
-        <strong>Thursday, January 12, 2021 | 6:32 PM</strong>
+                <p id="time"></p>
+                <br>
+                <p id="datee"></p>
+                <script src="../javascript/detailedDateAndTime.js"></script>
     </div>
 
     <!-- Log In -->
