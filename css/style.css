@@ -854,7 +854,7 @@ input[type=text]:disabled{
     overflow-y: auto;
     display: block;
     background-color: white;
-    width: 95%;
+    width: 100%;
 }
 
 .tableScroll4{

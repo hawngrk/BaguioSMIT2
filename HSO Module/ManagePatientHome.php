@@ -923,6 +923,8 @@ include_once("../includes/database.php") ?>
 
     function closeModal(modal) {
         document.getElementById(modal).style.display = "none";
+
+        document.body.classList.remove("scrollBody");
     }
 
     function openModal(modal) {

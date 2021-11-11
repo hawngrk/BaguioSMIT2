@@ -745,6 +745,7 @@ checkRole('EIR');
     
     function closeModal(modal) {
         document.getElementById(modal).style.display = "none";
+        document.body.classList.remove("scrollBody");
     }
     
     function confMessage(item, action){

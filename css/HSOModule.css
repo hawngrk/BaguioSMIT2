@@ -193,6 +193,9 @@ img{
     width: 100%;
     margin: 1%;
 }
+#district{
+    height: 40vh;
+}
 
 .VaxSiteWidth{
     width: 100%;
@@ -208,9 +211,7 @@ img{
     border-radius: 12px;
 }
 
-.AddHealthD-option{ /*HSO*/
-    margin: 1%;
-}
+
 
 /*HSO*/
 #addVaccineModal{
@@ -388,6 +389,9 @@ img{
     width: 100%;
 }
 
+.depMod{
+    width: 160vh;
+}
 
 .tableModal{
     width: fit-content;

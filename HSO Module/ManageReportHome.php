@@ -177,9 +177,10 @@ checkRole('HSO');
                                           <td>$dateReported</td>
                                           <td>$status</td>
                                           <td>
-                                          <button class='btn btn-success btn-sm' type='submit' value='$reportId' onclick='event.stopPropagation(); viewReport($reportId)'>Review Report</button>
-                                          <button class='buttonTransparent actionButt' onclick='event.stopPropagation(); archive(1, clickArchive, $reportId)'><i class='fa fa-archive'></i></button>
-                                          </td></tr>";
+                                          <div class='d-flex justify-content-center'>
+                                          <button class='btn btn-sm bg-none' type='submit' value='$reportId' onclick='event.stopPropagation(); viewReport($reportId)'><i class='fas fa-eye'></i></button>
+                                          <button class='btn btn-sm bg-none' onclick='event.stopPropagation(); archive(1, clickArchive, $reportId)'><i class='fa fa-archive'></i></button>
+                                          </div></td></tr>";
                                     }
                                 }
                             }
@@ -350,6 +351,7 @@ checkRole('HSO');
             //close modal
             function closeModal(modal) {
                 document.getElementById(modal).style.display = "none";
+                document.body.classList.remove("scrollBody");
             }
 
             //clear search text field

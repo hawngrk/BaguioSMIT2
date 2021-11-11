@@ -192,6 +192,7 @@ checkRole('Barangay');
 
     function closeModal(modal){
         document.getElementById(modal).style.display = "none";
+        document.body.classList.remove("scrollBody");
     }
 </script>
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>

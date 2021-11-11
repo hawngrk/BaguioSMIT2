@@ -440,6 +440,7 @@ $barangay_id = $accountDetails['barangay_id'];
     function closeModal(modal) {
         document.getElementById("notificationContent").innerHTML = "";
         document.getElementById(modal).style.display = "none";
+        document.body.classList.remove("scrollBody");
 
         $.ajax({
             url: 'ManagePatientProcessor.php',

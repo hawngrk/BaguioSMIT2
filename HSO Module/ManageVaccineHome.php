@@ -647,6 +647,7 @@ include_once("../includes/database.php") ?>
     //close modal
     function closeModal(modal) {
         document.getElementById(modal).style.display = "none";
+        document.body.classList.remove("scrollBody");
     }
 
     //open modal
