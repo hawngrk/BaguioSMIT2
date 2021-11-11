@@ -321,7 +321,7 @@ checkRole('SSD');
             }
 
             document.getElementById('firstCounter').innerHTML = "";
-            document.getElementById('firstCounter').innerHTML = "<center><p><i class='fas fa-ticket-alt'></i> Number of Stubs Left: " + firstCounter + "</p> </center>";
+            document.getElementById('firstCounter').innerHTML = "<h5 ><i class='fas fa-ticket-alt'></i> Number of Stubs Left: " + firstCounter +"</h5>";
         }
 
         var secondCounter = 0;
@@ -352,7 +352,7 @@ checkRole('SSD');
                 secondCounter = secondCounter - parseInt(num);
             }
 
-            document.getElementById('secondCounter').innerHTML = "<center><p class='float-left'><i class='fas fa-ticket-alt'></i> Number of Stubs Left: " + secondCounter + "</p> </center>";
+            document.getElementById('secondCounter').innerHTML = " <h5><i class='fas fa-ticket-alt'></i> Number of Stubs Left:" + secondCounter + "</h5>";
         }
 
         function checkZero(item, type) {
