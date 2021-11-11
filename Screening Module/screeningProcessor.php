@@ -44,61 +44,86 @@ if (isset($_POST['filter'])) {
 
 if (isset($_POST['modalScreening'])) {
     $modalRes = $_POST['modalScreening'];
-    require('../require/getPatientDetails.php');
     require('../includes/configure.php');
     
-    foreach ($patient_details as $ps) {
-        if ($modalRes == $ps->getPatientDeetPatId()) {
-            $id = $ps->getPatientDeetPatId();
-            $FName = $ps->getpatientFName();
-            $LName = $ps->getpatientLName();
-            $FullAddress = $ps->getHouseAdd() . $ps->getBrgy() .  $ps->getCity() .  $ps->getProvince() .  $ps->getRegion();
-            $category = $ps->getPriorityGroup();
+    $queryDetails = 
+    "SELECT 
+        patient_details.patient_first_name,
+        patient_details.patient_last_name,
+    CONCAT(
+        patient_details.patient_house_address, ' ', barangay.barangay_name, ' ', barangay.city, ' ', barangay.province 
+    ) AS full_address,
+        priority_groups.priority_group
+    FROM
+        patient
+    JOIN 
+        patient_details 
+    ON 
+        patient_details.patient_id = $modalRes
+    JOIN
+        barangay
+    ON 
+        barangay.barangay_id = patient_details.barangay_id
+    JOIN
+        priority_groups
+    ON
+        priority_groups.priority_group_id = patient_details.priority_group_id
+    WHERE 
+    	patient.patient_id = $modalRes
+    ";        
+    $stmtinsert = $database->prepare($queryDetails);
+    $stmtinsert->execute();
+    $patientDetails = $stmtinsert->fetch(PDO::FETCH_ASSOC);
 
-            echo "<h3>$FName $LName</h3>
-            <hr>
-            <div class='row'>
-            <div class='col'>
-                <h5>Address: </h5> <p>$FullAddress<p>
-                <hr>
-                <h5>Category:</h5><p>$category</p>
-                <hr>
-                <h5>Medical Background</h5>
-                <h6>Allergies:</h6>
-                <h6>Commorbidities::</h6>
-                <hr>
-                <h5>Vaccination Details</h5>
-                <h6>Schedule:</h6>
-                <h6>Vax Site:</h6>
-                <h6>Vaccine:</h6>
-                <h6>Lot No.:</h6>
-                <hr>
-            </div>
-            <div class='col-md-6'>
-            <h5>Pre-Vaccine Vitals:</h5>
-            <form>
-            Pulse Rate: <br><input class='textInp'type='text' placeholder='Beats Per Minute' name='vitals'>
-            <br>
-            Temperature: <br> <input class='textInp' type='text' placeholder='in Celcius' name='vitals'>
-            <br>
-            <br>
-            <strong>Blood Pressure</strong>
-            <br>
-            Diastolic: <br><input class='textInp' type='text' placeholder='millimetres of mercury' name='vitals'>
-            <br>
-            Systolic: <br><input class='textInp' type='text' placeholder='millimetres of mercury' name='vitals'>
-            </form>
-            </div>
-            </div>
-            <div class='modal-footer'>
-            <button onclick=btnViewPostVac('close') type='button' class='btn btn-danger'> Cancel</button>            
-            <button onclick=btnViewPostVac('add') id='addButtonId' type='button' class='btn btn-success' value=$id> Add</button>
-            </div>
-            </div>
-            ";
-        }
-    }
+    $id = $modalRes;
+    $fullName = $patientDetails['patient_last_name'].', '.$patientDetails['patient_first_name'];
+    $fullAddress = $patientDetails['full_address'];
+    $category = $patientDetails['priority_group'];
+
+    echo "<h3>$fullName</h3>
+    <hr>
+    <div class='row'>
+    <div class='col'>
+        <h5>Address: </h5> <p>$fullAddress<p>
+        <hr>
+        <h5>Category:</h5><p>$category</p>
+        <hr>
+        <h5>Medical Background</h5>
+        <h6>Allergies:</h6>
+        <h6>Commorbidities::</h6>
+        <hr>
+        <h5>Vaccination Details</h5>
+        <h6>Schedule:</h6>
+        <h6>Vax Site:</h6>
+        <h6>Vaccine:</h6>
+        <h6>Lot No.:</h6>
+        <hr>
+    </div>
+    <div class='col-md-6'>
+    <h5>Pre-Vaccine Vitals:</h5>
+    <form>
+    Pulse Rate: <br><input class='textInp'type='text' placeholder='Beats Per Minute' name='vitals'>
+    <br>
+    Temperature: <br> <input class='textInp' type='text' placeholder='in Celcius' name='vitals'>
+    <br>
+    <br>
+    <strong>Blood Pressure</strong>
+    <br>
+    Diastolic: <br><input class='textInp' type='text' placeholder='millimetres of mercury' name='vitals'>
+    <br>
+    Systolic: <br><input class='textInp' type='text' placeholder='millimetres of mercury' name='vitals'>
+    </form>
+    </div>
+    </div>
+    <div class='modal-footer'>
+    <button onclick=btnViewPostVac('close') type='button' class='btn btn-danger'> Cancel</button>            
+    <button onclick=btnViewPostVac('add') id='addButtonId' type='button' class='btn btn-success' value=$id> Add</button>
+    </div>
+    </div>
+    ";
 }
+    
+
 
 if (isset($_POST['pulse'])) {
     require_once('../includes/configure.php');

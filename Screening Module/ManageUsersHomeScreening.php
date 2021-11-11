@@ -214,11 +214,15 @@ checkRole('Screening');
 
         // Fetching Data from the Database Code
         $.ajax({
-            url: 'screeningSearchProcessor.php',
+            url: 'screeningProcessor.php',
             type: 'POST',
             data: {"modalScreening": patientId},
             success: function (data) {
+                console.log(data);
                 document.getElementById('patientRow').innerHTML = data;
+            },
+            error: function(data) {
+                console.log(data);
             }
         })
     }

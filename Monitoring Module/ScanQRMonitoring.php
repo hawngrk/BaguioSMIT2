@@ -57,7 +57,7 @@ checkRole('Monitoring');
                     <a href="../Monitoring Module/ScanQRMonitoring.php"><i class="fas fa-qrcode"></i> Scan QR</a>
                 </li>
                 <li>
-                    <a href="../Monitoring Module/ManageUsersHomeScreening.php"><i class="fas fa-users"></i> Manage Users</a>
+                    <a href="../Monitoring Module/ManageUsersHomeMonitoring.php"><i class="fas fa-users"></i> Manage Users</a>
                 </li>
             </ul>
             <ul class="list-unstyled CTAs">
