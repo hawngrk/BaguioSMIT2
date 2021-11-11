@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 5.0.2
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: Nov 06, 2021 at 05:50 PM
--- Server version: 10.4.19-MariaDB
--- PHP Version: 8.0.7
+-- Host: 127.0.0.1:3306
+-- Generation Time: Nov 11, 2021 at 11:21 AM
+-- Server version: 5.7.31
+-- PHP Version: 7.3.21
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -20,6 +20,8 @@ SET time_zone = "+00:00";
 --
 -- Database: `smit+`
 --
+CREATE DATABASE IF NOT EXISTS `smit+` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+USE `smit+`;
 
 -- --------------------------------------------------------
 
@@ -27,14 +29,17 @@ SET time_zone = "+00:00";
 -- Table structure for table `activity_logs`
 --
 
-CREATE TABLE `activity_logs` (
-  `log_id` int(11) NOT NULL,
-  `log_entry_date` timestamp NOT NULL DEFAULT current_timestamp(),
+DROP TABLE IF EXISTS `activity_logs`;
+CREATE TABLE IF NOT EXISTS `activity_logs` (
+  `log_id` int(11) NOT NULL AUTO_INCREMENT,
+  `log_entry_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `employee_id` int(11) NOT NULL,
   `employee_role` varchar(255) NOT NULL,
   `log_type` varchar(255) NOT NULL,
-  `log_description` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `log_description` varchar(255) NOT NULL,
+  PRIMARY KEY (`log_id`),
+  KEY `employee_id_activity` (`employee_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `activity_logs`
@@ -59,7 +64,18 @@ INSERT INTO `activity_logs` (`log_id`, `log_entry_date`, `employee_id`, `employe
 (16, '2021-11-06 15:03:35', 2, 'HSO', 'Logout', 'Successfully logged out'),
 (17, '2021-11-06 15:04:01', 2, 'HSO', 'Login', 'Successfully logged in'),
 (18, '2021-11-06 15:06:45', 2, 'HSO', 'Logout', 'Successfully logged out'),
-(19, '2021-11-06 15:09:38', 2, 'HSO', 'Login', 'Successfully logged in');
+(19, '2021-11-06 15:09:38', 2, 'HSO', 'Login', 'Successfully logged in'),
+(20, '2021-11-09 17:32:02', 1, 'Barangay', 'Logout', 'Successfully logged out'),
+(21, '2021-11-09 18:32:48', 2, 'HSO', 'Login', 'Successfully logged in'),
+(22, '2021-11-09 18:32:52', 2, 'HSO', 'Login', 'Successfully logged in'),
+(23, '2021-11-09 18:32:54', 2, 'HSO', 'Login', 'Successfully logged in'),
+(24, '2021-11-09 18:32:54', 2, 'HSO', 'Login', 'Successfully logged in'),
+(25, '2021-11-09 18:32:55', 2, 'HSO', 'Login', 'Successfully logged in'),
+(26, '2021-11-09 18:32:55', 2, 'HSO', 'Login', 'Successfully logged in'),
+(27, '2021-11-09 18:32:55', 2, 'HSO', 'Login', 'Successfully logged in'),
+(28, '2021-11-09 18:32:56', 2, 'HSO', 'Login', 'Successfully logged in'),
+(29, '2021-11-09 18:32:57', 2, 'HSO', 'Login', 'Successfully logged in'),
+(30, '2021-11-09 18:33:13', 2, 'HSO', 'Login', 'Successfully logged in');
 
 -- --------------------------------------------------------
 
@@ -67,14 +83,17 @@ INSERT INTO `activity_logs` (`log_id`, `log_entry_date`, `employee_id`, `employe
 -- Table structure for table `barangay`
 --
 
-CREATE TABLE `barangay` (
-  `barangay_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `barangay`;
+CREATE TABLE IF NOT EXISTS `barangay` (
+  `barangay_id` int(11) NOT NULL AUTO_INCREMENT,
   `health_district_id` int(11) DEFAULT NULL,
   `barangay_name` varchar(255) NOT NULL,
   `city` varchar(255) NOT NULL,
   `province` varchar(255) NOT NULL,
-  `region` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `region` varchar(255) NOT NULL,
+  PRIMARY KEY (`barangay_id`),
+  KEY `health_district_id` (`health_district_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=128 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `barangay`
@@ -214,7 +233,8 @@ INSERT INTO `barangay` (`barangay_id`, `health_district_id`, `barangay_name`, `c
 -- Table structure for table `barangay_stubs`
 --
 
-CREATE TABLE `barangay_stubs` (
+DROP TABLE IF EXISTS `barangay_stubs`;
+CREATE TABLE IF NOT EXISTS `barangay_stubs` (
   `barangay_id` int(11) NOT NULL,
   `drive_id` int(11) NOT NULL,
   `A1_stubs` int(11) DEFAULT NULL,
@@ -224,7 +244,9 @@ CREATE TABLE `barangay_stubs` (
   `A5_stubs` int(11) DEFAULT NULL,
   `A6_stubs` int(11) DEFAULT NULL,
   `second_dose` int(11) NOT NULL,
-  `notif_opened` int(1) NOT NULL
+  `notif_opened` int(1) NOT NULL,
+  KEY `barangay_id` (`barangay_id`),
+  KEY `drive_id` (`drive_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -262,16 +284,19 @@ INSERT INTO `barangay_stubs` (`barangay_id`, `drive_id`, `A1_stubs`, `A2_stubs`,
 -- Table structure for table `employee`
 --
 
-CREATE TABLE `employee` (
-  `employee_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `employee`;
+CREATE TABLE IF NOT EXISTS `employee` (
+  `employee_id` int(11) NOT NULL AUTO_INCREMENT,
   `employee_first_name` varchar(255) NOT NULL,
   `employee_last_name` varchar(255) NOT NULL,
   `employee_middle_name` varchar(255) DEFAULT NULL,
   `employee_suffix` varchar(255) DEFAULT NULL,
   `employee_role` varchar(255) NOT NULL,
   `barangay_id` int(11) DEFAULT NULL,
-  `employee_contact_number` char(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `employee_contact_number` char(11) NOT NULL,
+  PRIMARY KEY (`employee_id`),
+  KEY `barangay_id` (`barangay_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `employee`
@@ -292,15 +317,18 @@ INSERT INTO `employee` (`employee_id`, `employee_first_name`, `employee_last_nam
 -- Table structure for table `employee_account`
 --
 
-CREATE TABLE `employee_account` (
-  `employee_account_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `employee_account`;
+CREATE TABLE IF NOT EXISTS `employee_account` (
+  `employee_account_id` int(11) NOT NULL AUTO_INCREMENT,
   `employee_id` int(11) NOT NULL,
   `employee_username` varchar(255) NOT NULL,
   `employee_password` varchar(255) NOT NULL,
   `employee_account_type` varchar(255) NOT NULL,
-  `employee_picture` blob DEFAULT NULL,
-  `disabled` tinyint(1) NOT NULL DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `employee_picture` blob,
+  `disabled` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`employee_account_id`),
+  UNIQUE KEY `employee_id` (`employee_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `employee_account`
@@ -321,12 +349,14 @@ INSERT INTO `employee_account` (`employee_account_id`, `employee_id`, `employee_
 -- Table structure for table `health_district`
 --
 
-CREATE TABLE `health_district` (
-  `health_district_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `health_district`;
+CREATE TABLE IF NOT EXISTS `health_district` (
+  `health_district_id` int(11) NOT NULL AUTO_INCREMENT,
   `health_district_name` varchar(255) NOT NULL,
   `hd_contact_number` char(11) NOT NULL,
-  `Archived` int(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `Archived` int(1) NOT NULL,
+  PRIMARY KEY (`health_district_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `health_district`
@@ -356,9 +386,12 @@ INSERT INTO `health_district` (`health_district_id`, `health_district_name`, `hd
 -- Table structure for table `health_district_drives`
 --
 
-CREATE TABLE `health_district_drives` (
+DROP TABLE IF EXISTS `health_district_drives`;
+CREATE TABLE IF NOT EXISTS `health_district_drives` (
   `drive_id` int(11) NOT NULL,
-  `health_district_id` int(11) NOT NULL
+  `health_district_id` int(11) NOT NULL,
+  KEY `drive_id` (`drive_id`),
+  KEY `health_district_id` (`health_district_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -387,7 +420,8 @@ INSERT INTO `health_district_drives` (`drive_id`, `health_district_id`) VALUES
 (51, 10),
 (51, 11),
 (52, 9),
-(53, 2);
+(53, 2),
+(54, 3);
 
 -- --------------------------------------------------------
 
@@ -395,7 +429,8 @@ INSERT INTO `health_district_drives` (`drive_id`, `health_district_id`) VALUES
 -- Table structure for table `medical_background`
 --
 
-CREATE TABLE `medical_background` (
+DROP TABLE IF EXISTS `medical_background`;
+CREATE TABLE IF NOT EXISTS `medical_background` (
   `patient_id` int(11) NOT NULL,
   `allergy_to_vaccine` tinyint(4) NOT NULL,
   `hypertension` tinyint(4) NOT NULL,
@@ -405,7 +440,8 @@ CREATE TABLE `medical_background` (
   `bronchial_asthma` tinyint(4) NOT NULL,
   `immunodeficiency` tinyint(4) NOT NULL,
   `cancer` tinyint(4) NOT NULL,
-  `other_commorbidity` varchar(255) DEFAULT NULL
+  `other_commorbidity` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`patient_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -473,8 +509,9 @@ INSERT INTO `medical_background` (`patient_id`, `allergy_to_vaccine`, `hypertens
 -- Table structure for table `patient`
 --
 
-CREATE TABLE `patient` (
-  `patient_id` int(255) NOT NULL,
+DROP TABLE IF EXISTS `patient`;
+CREATE TABLE IF NOT EXISTS `patient` (
+  `patient_id` int(255) NOT NULL AUTO_INCREMENT,
   `patient_full_name` varchar(255) NOT NULL,
   `date_of_first_dosage` date DEFAULT NULL,
   `date_of_second_dosage` date DEFAULT NULL,
@@ -484,8 +521,11 @@ CREATE TABLE `patient` (
   `notification` int(1) DEFAULT NULL,
   `first_dose_vaccinator` int(11) DEFAULT NULL,
   `second_dose_vaccinator` int(11) DEFAULT NULL,
-  `token` varchar(255) NOT NULL DEFAULT '0'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `token` varchar(255) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`patient_id`),
+  KEY `patient_first_vaccinator` (`first_dose_vaccinator`),
+  KEY `patient_second_vaccinator` (`second_dose_vaccinator`)
+) ENGINE=InnoDB AUTO_INCREMENT=60 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `patient`
@@ -558,14 +598,17 @@ INSERT INTO `patient` (`patient_id`, `patient_full_name`, `date_of_first_dosage`
 -- Table structure for table `patient_account`
 --
 
-CREATE TABLE `patient_account` (
-  `patient_account_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `patient_account`;
+CREATE TABLE IF NOT EXISTS `patient_account` (
+  `patient_account_id` int(11) NOT NULL AUTO_INCREMENT,
   `patient_id` int(11) NOT NULL,
   `patient_username` varchar(255) NOT NULL,
   `patient_password` varchar(255) NOT NULL,
-  `patient_picture` blob DEFAULT NULL,
-  `patient_email` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `patient_picture` blob,
+  `patient_email` varchar(255) NOT NULL,
+  PRIMARY KEY (`patient_account_id`),
+  KEY `patient_id_account` (`patient_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=478 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `patient_account`
@@ -637,7 +680,8 @@ INSERT INTO `patient_account` (`patient_account_id`, `patient_id`, `patient_user
 -- Table structure for table `patient_barangay_queue`
 --
 
-CREATE TABLE `patient_barangay_queue` (
+DROP TABLE IF EXISTS `patient_barangay_queue`;
+CREATE TABLE IF NOT EXISTS `patient_barangay_queue` (
   `patient_id` int(11) NOT NULL,
   `barangay_id` int(11) NOT NULL,
   `first_dose_queue` int(11) NOT NULL,
@@ -659,7 +703,8 @@ INSERT INTO `patient_barangay_queue` (`patient_id`, `barangay_id`, `first_dose_q
 -- Table structure for table `patient_details`
 --
 
-CREATE TABLE `patient_details` (
+DROP TABLE IF EXISTS `patient_details`;
+CREATE TABLE IF NOT EXISTS `patient_details` (
   `patient_id` int(11) NOT NULL,
   `patient_first_name` varchar(255) NOT NULL,
   `patient_last_name` varchar(255) NOT NULL,
@@ -680,7 +725,10 @@ CREATE TABLE `patient_details` (
   `patient_occupation` varchar(255) NOT NULL,
   `Archived` int(1) DEFAULT NULL,
   `barangay_id` int(11) DEFAULT NULL,
-  `priority_group_id` int(11) DEFAULT NULL
+  `priority_group_id` int(11) DEFAULT NULL,
+  UNIQUE KEY `patient_id_patient_first_name` (`patient_id`),
+  KEY `barangay_id` (`barangay_id`),
+  KEY `priority_group_id` (`priority_group_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -713,39 +761,39 @@ INSERT INTO `patient_details` (`patient_id`, `patient_first_name`, `patient_last
 (23, 'Oliver', 'Catacutan', 'Reyes', '', 'Professional Regulation  Commission ', '9484497', '1564', '', '39 - Assumptiion Rd', 'Baguio City', 'Benguet', 'CAR', '1975-08-08', 46, 'Male', '9703029461', 'Doctor', 0, 4, 1),
 (24, 'Liam', 'Dagohoy', 'Cruz', '', 'Office of Senior Citizen Affairs', '2752453', '2990', '', '82 Mamaga', 'Baguio City', 'Benguet', 'CAR', '1955-03-03', 66, 'Male', '9874069918', 'Businessman', 0, 4, 4),
 (25, 'Jamie', 'Dalisay', 'Ocampo', '', 'Other', '1674720', '7581', '4545654', '17 Balilo', 'Baguio City', 'Benguet', 'CAR', '1970-01-01', 51, 'Male', '9804881607', 'Student', 0, 10, 3),
-(26, 'Ethan', 'Del Rosario', 'Gonzales', 'III', 'Professional Regulation  Commission ', '8768583', '8485', '', '80F - Palma Street', 'Baguio City', 'Benguet', 'CAR', '1968-01-04', 53, 'Male', '9849427233', 'Sugeon', NULL, 1, 1),
-(27, 'Alexander', 'Lardizabal', 'Aquino', '', 'Facility', '9793318', '4217', '', '62A - Delong rd', 'Baguio City', 'Benguet', 'CAR', '1974-02-07', 47, 'Male', '9664932091', 'Secretary', NULL, 1, 1),
-(28, 'Cameron', 'Mabini', 'Ramos', '', 'Professional Regulation  Commission ', '8807939', '9578', '', '41- Lower Batac', 'Baguio City', 'Benguet', 'CAR', '1984-01-05', 37, 'Male', '9898213006', 'Soldier', NULL, 1, 1),
-(29, 'Finlay', 'Magsaysay', 'Garcia', '', 'Other', '2199487', '2628', '', '25C - East Gavioli', 'Baguio City', 'Benguet', 'CAR', '1982-06-01', 39, 'Male', '9598015136', 'Repairman', NULL, 1, 1),
-(30, 'Kyle', 'Laxamana', 'Lopez', '', 'Facility', '9517279', '3519', '', '85A - Circle', 'Baguio City', 'Benguet', 'CAR', '1970-01-01', 51, 'Male', '9901480444', 'Reporter', NULL, 1, 1),
-(31, 'Tabitha', 'Salvador', 'Castillo', '', 'Other', '8109756', '7174', '', '90G - Navy Road', 'Baguio City', 'Benguet', 'CAR', '1989-05-06', 32, 'Female', '9540164037', 'Construction Worker', NULL, 1, 1),
-(32, 'Kyndra', 'Suarez', 'Diaz', '', 'Professional Regulation  Commission ', '3006499', '6730', '', '77 - Pico Street', 'Baguio City', 'Benguet', 'CAR', '1970-01-01', 51, 'Female', '9704230263', 'Professor', NULL, 1, 1),
-(33, 'Kesley', 'Sulu', 'Villanueva', '', 'Facility', '6511829', '7152', '', '12 - Otek road', 'Baguio City', 'Benguet', 'CAR', '1984-02-04', 37, 'Female', '9337991402', 'Postman', NULL, 1, 1),
-(34, 'Caryl', 'Tolentino', 'Abalos', '', 'Facility', '2325387', '8559', '', 'Mabini Road', 'Baguio City', 'Benguet', 'CAR', '1970-01-01', 51, 'Female', '9199686580', 'Photographer', NULL, 1, 1),
-(35, 'Krisha', 'Trinidad', 'Abadiano', '', 'Professional Regulation  Commission ', '5255679', '5584', '', '4F - Lamtang Road', 'Baguio City', 'Benguet', 'CAR', '1970-01-01', 51, 'Female', '9968838166', 'Pilot', NULL, 1, 1),
-(36, 'Myra', 'Tibayan', 'Abella', '', 'Other', '5047268', '7125', '', '72- Maria Bassa', 'Baguio City', 'Benguet', 'CAR', '1970-01-01', 51, 'Female', '9413165408', 'Catholic Nun', NULL, 1, 1),
-(37, 'Roda', 'Santos', 'Agustin', '', 'Other', '5856031', '5819', '', '26 - Pink Castle', 'Baguio City', 'Benguet', 'CAR', '1994-03-03', 27, 'Female', '9851903805', 'Painter', NULL, 1, 1),
-(38, 'Christine', 'Reyes', 'Aranda', '', 'Other', '8873969', '9049', '', '43 - Lower Bua', 'Baguio City', 'Benguet', 'CAR', '1970-01-01', 51, 'Female', '9184380320', 'Mechanic', NULL, 1, 1),
-(39, 'Sandra', 'Cruz', 'Basilio', '', 'Other', '7237155', '6221', '', '95- Upper Cuenca', 'Baguio City', 'Benguet', 'CAR', '1970-01-01', 51, 'Female', '9319504468', 'Clown', NULL, 1, 1),
-(40, 'Sarah', 'Bautista', 'Bayani', '', 'Other', '8638076', '9304', '', '40 -  Casilagan Norte', 'Baguio City', 'Benguet', 'CAR', '1986-03-10', 35, 'Female', '9371148514', 'Housekeeper', NULL, 1, 1),
-(41, 'Ivy', 'Ocampo', 'Belmonte', '', 'Other', '1834905', '6212', '', '87 - Ambalite Sur', 'Baguio City', 'Benguet', 'CAR', '1970-01-01', 51, 'Female', '9255474127', 'Gardener', NULL, 1, 1),
-(42, 'Rhea', 'Aquino', 'Bonilla', '', 'Other', '1058615', '2475', '', '93 - Monterazas Village', 'Baguio City', 'Benguet', 'CAR', '1970-01-01', 51, 'Female', '9316197334', 'Builder', NULL, 1, 1),
-(43, 'Erica', 'Ramos', 'Briones', '', 'Other', '2903359', '1969', '', '71B - Mirhea Residences', 'Baguio City', 'Benguet', 'CAR', '1970-01-01', 51, 'Female', '9480878459', 'Foreman', NULL, 1, 1),
-(44, 'Osiana', 'Garcia', 'Castro', '', 'Other', '6888261', '4272', '', '49L - San Lorenzo Residences', 'Baguio City', 'Benguet', 'CAR', '1970-01-01', 51, 'Female', '9245469986', 'Farmer', NULL, 1, 1),
-(45, 'Steven', 'Mendoza', 'Esguerra', '', 'Other', '8377165', '9899', '', '17N - Poso ', 'Baguio City', 'Benguet', 'CAR', '1970-01-01', 51, 'Male', '9624831879', 'Singer', NULL, 1, 1),
-(46, 'Joe', 'Pascual', 'Estrella', '', 'Facility', '6444601', '2413', '', '63O - Amyanan Road', 'Baguio City', 'Benguet', 'CAR', '1993-12-03', 27, 'Male', '9508249241', 'Saleman', NULL, 1, 1),
-(47, 'Lennon', 'Castillo', 'Espino', '', 'Facility', '8412294', '8512', '', '13A - Bokawpan', 'Baguio City', 'Benguet', 'CAR', '1970-01-01', 51, 'Male', '9351256726', 'Librarian', NULL, 1, 1),
-(48, 'Patrick', 'Villanueva', 'Famorca', '', 'Other', '1807742', '8013', '', '86F - Sinipsop ', 'Baguio City', 'Benguet', 'CAR', '1970-01-01', 51, 'Male', '9671757640', 'Priest', NULL, 1, 1),
-(49, 'Jason', 'Diaz', 'Javier', '', 'Other', '3363284', '3945', '', '11A - Silangob Road', 'Baguio City', 'Benguet', 'CAR', '1970-01-01', 51, 'Male', '9517652197', 'Driver', NULL, 1, 1),
-(50, 'Louis', 'Rodriquez', 'Nicolas', '', 'Other', '5850780', '1775', '', '68B - Pilando Road', 'Baguio City', 'Benguet', 'CAR', '1970-01-01', 51, 'Male', '9820221363', 'Waiter', NULL, 1, 1),
-(51, 'Olly', 'Marquez', 'Navarro', 'Jr.', 'Other', '7068178', '2247', '', '6W - Residence Building', 'Baguio City', 'Benguet', 'CAR', '1970-01-01', 51, 'Male', '9123204573', 'Security Guard', NULL, 1, 1),
-(52, 'Bailey', 'Mercado', 'Padilla', '', 'Professional Regulation  Commission ', '8318841', '3775', '', '46 - North Road', 'Baguio City', 'Benguet', 'CAR', '1970-01-01', 51, 'Male', '9307814440', 'Police Officer', NULL, 1, 1),
-(53, 'Marcus', 'Gonzales', 'Peralta', '', 'Professional Regulation  Commission ', '6030757', '3906', '', '9D - South Residences', 'Baguio City', 'Benguet', 'CAR', '1970-01-01', 51, 'Male', '9416438823', 'Surgeon', NULL, 1, 1),
-(54, 'Peter', 'Lopez', 'Rimas', '', 'Professional Regulation  Commission ', '4110345', '9406', '', '78  - West Road ', 'Baguio City', 'Benguet', 'CAR', '2000-04-03', 21, 'Male', '9806080574', 'Nurse', NULL, 1, 1),
-(55, 'Nero', 'Dante', '', '', 'Other', '2191217', '1231', '1212312', '15 Tacay Road.', 'Baguio City', 'Benguet', 'CAR', '1999-09-17', 22, 'Male', '9634212543', 'Student', NULL, 1, 1),
-(56, 'Artbog', 'Hassan', 'Cruz', '', 'others', '2191563', '321233', '323414', 'Bortag Village', 'Baguio City', 'Benguet', 'Cordillera Administrative Region ', '1992-10-05', 29, 'male', '', '', NULL, 1, 1),
-(57, 'Kassandra', 'Athens', '', '', 'Other', '2191217', '1231', '1212312', '15 Tacay Road.', 'Baguio City', 'Benguet', 'CAR', '1999-12-07', 21, 'Femail', '9634212543', 'Student', NULL, 1, 1),
-(58, 'Julius', 'Caesar', 'Gaius', '', 'others', '2195523', '', '', 'Bortag Village', 'Baguio City', 'Benguet', 'Cordillera Administrative Region ', '1978-08-18', 43, 'male', '09217357942', 'General', NULL, 1, 1);
+(26, 'Ethan', 'Del Rosario', 'Gonzales', 'III', 'Professional Regulation  Commission ', '8768583', '8485', '', '80F - Palma Street', 'Baguio City', 'Benguet', 'CAR', '1968-01-04', 53, 'Male', '9849427233', 'Sugeon', 0, 1, 1),
+(27, 'Alexander', 'Lardizabal', 'Aquino', '', 'Facility', '9793318', '4217', '', '62A - Delong rd', 'Baguio City', 'Benguet', 'CAR', '1974-02-07', 47, 'Male', '9664932091', 'Secretary', 0, 1, 1),
+(28, 'Cameron', 'Mabini', 'Ramos', '', 'Professional Regulation  Commission ', '8807939', '9578', '', '41- Lower Batac', 'Baguio City', 'Benguet', 'CAR', '1984-01-05', 37, 'Male', '9898213006', 'Soldier', 0, 1, 1),
+(29, 'Finlay', 'Magsaysay', 'Garcia', '', 'Other', '2199487', '2628', '', '25C - East Gavioli', 'Baguio City', 'Benguet', 'CAR', '1982-06-01', 39, 'Male', '9598015136', 'Repairman', 0, 1, 1),
+(30, 'Kyle', 'Laxamana', 'Lopez', '', 'Facility', '9517279', '3519', '', '85A - Circle', 'Baguio City', 'Benguet', 'CAR', '1970-01-01', 51, 'Male', '9901480444', 'Reporter', 0, 1, 1),
+(31, 'Tabitha', 'Salvador', 'Castillo', '', 'Other', '8109756', '7174', '', '90G - Navy Road', 'Baguio City', 'Benguet', 'CAR', '1989-05-06', 32, 'Female', '9540164037', 'Construction Worker', 0, 1, 1),
+(32, 'Kyndra', 'Suarez', 'Diaz', '', 'Professional Regulation  Commission ', '3006499', '6730', '', '77 - Pico Street', 'Baguio City', 'Benguet', 'CAR', '1970-01-01', 51, 'Female', '9704230263', 'Professor', 0, 1, 1),
+(33, 'Kesley', 'Sulu', 'Villanueva', '', 'Facility', '6511829', '7152', '', '12 - Otek road', 'Baguio City', 'Benguet', 'CAR', '1984-02-04', 37, 'Female', '9337991402', 'Postman', 0, 1, 1),
+(34, 'Caryl', 'Tolentino', 'Abalos', '', 'Facility', '2325387', '8559', '', 'Mabini Road', 'Baguio City', 'Benguet', 'CAR', '1970-01-01', 51, 'Female', '9199686580', 'Photographer', 0, 1, 1),
+(35, 'Krisha', 'Trinidad', 'Abadiano', '', 'Professional Regulation  Commission ', '5255679', '5584', '', '4F - Lamtang Road', 'Baguio City', 'Benguet', 'CAR', '1970-01-01', 51, 'Female', '9968838166', 'Pilot', 0, 1, 1),
+(36, 'Myra', 'Tibayan', 'Abella', '', 'Other', '5047268', '7125', '', '72- Maria Bassa', 'Baguio City', 'Benguet', 'CAR', '1970-01-01', 51, 'Female', '9413165408', 'Catholic Nun', 0, 1, 1),
+(37, 'Roda', 'Santos', 'Agustin', '', 'Other', '5856031', '5819', '', '26 - Pink Castle', 'Baguio City', 'Benguet', 'CAR', '1994-03-03', 27, 'Female', '9851903805', 'Painter', 0, 1, 1),
+(38, 'Christine', 'Reyes', 'Aranda', '', 'Other', '8873969', '9049', '', '43 - Lower Bua', 'Baguio City', 'Benguet', 'CAR', '1970-01-01', 51, 'Female', '9184380320', 'Mechanic', 0, 1, 1),
+(39, 'Sandra', 'Cruz', 'Basilio', '', 'Other', '7237155', '6221', '', '95- Upper Cuenca', 'Baguio City', 'Benguet', 'CAR', '1970-01-01', 51, 'Female', '9319504468', 'Clown', 0, 1, 1),
+(40, 'Sarah', 'Bautista', 'Bayani', '', 'Other', '8638076', '9304', '', '40 -  Casilagan Norte', 'Baguio City', 'Benguet', 'CAR', '1986-03-10', 35, 'Female', '9371148514', 'Housekeeper', 0, 1, 1),
+(41, 'Ivy', 'Ocampo', 'Belmonte', '', 'Other', '1834905', '6212', '', '87 - Ambalite Sur', 'Baguio City', 'Benguet', 'CAR', '1970-01-01', 51, 'Female', '9255474127', 'Gardener', 0, 1, 1),
+(42, 'Rhea', 'Aquino', 'Bonilla', '', 'Other', '1058615', '2475', '', '93 - Monterazas Village', 'Baguio City', 'Benguet', 'CAR', '1970-01-01', 51, 'Female', '9316197334', 'Builder', 0, 1, 1),
+(43, 'Erica', 'Ramos', 'Briones', '', 'Other', '2903359', '1969', '', '71B - Mirhea Residences', 'Baguio City', 'Benguet', 'CAR', '1970-01-01', 51, 'Female', '9480878459', 'Foreman', 0, 1, 1),
+(44, 'Osiana', 'Garcia', 'Castro', '', 'Other', '6888261', '4272', '', '49L - San Lorenzo Residences', 'Baguio City', 'Benguet', 'CAR', '1970-01-01', 51, 'Female', '9245469986', 'Farmer', 0, 1, 1),
+(45, 'Steven', 'Mendoza', 'Esguerra', '', 'Other', '8377165', '9899', '', '17N - Poso ', 'Baguio City', 'Benguet', 'CAR', '1970-01-01', 51, 'Male', '9624831879', 'Singer', 0, 1, 1),
+(46, 'Joe', 'Pascual', 'Estrella', '', 'Facility', '6444601', '2413', '', '63O - Amyanan Road', 'Baguio City', 'Benguet', 'CAR', '1993-12-03', 27, 'Male', '9508249241', 'Saleman', 0, 1, 1),
+(47, 'Lennon', 'Castillo', 'Espino', '', 'Facility', '8412294', '8512', '', '13A - Bokawpan', 'Baguio City', 'Benguet', 'CAR', '1970-01-01', 51, 'Male', '9351256726', 'Librarian', 0, 1, 1),
+(48, 'Patrick', 'Villanueva', 'Famorca', '', 'Other', '1807742', '8013', '', '86F - Sinipsop ', 'Baguio City', 'Benguet', 'CAR', '1970-01-01', 51, 'Male', '9671757640', 'Priest', 0, 1, 1),
+(49, 'Jason', 'Diaz', 'Javier', '', 'Other', '3363284', '3945', '', '11A - Silangob Road', 'Baguio City', 'Benguet', 'CAR', '1970-01-01', 51, 'Male', '9517652197', 'Driver', 0, 1, 1),
+(50, 'Louis', 'Rodriquez', 'Nicolas', '', 'Other', '5850780', '1775', '', '68B - Pilando Road', 'Baguio City', 'Benguet', 'CAR', '1970-01-01', 51, 'Male', '9820221363', 'Waiter', 0, 1, 1),
+(51, 'Olly', 'Marquez', 'Navarro', 'Jr.', 'Other', '7068178', '2247', '', '6W - Residence Building', 'Baguio City', 'Benguet', 'CAR', '1970-01-01', 51, 'Male', '9123204573', 'Security Guard', 0, 1, 1),
+(52, 'Bailey', 'Mercado', 'Padilla', '', 'Professional Regulation  Commission ', '8318841', '3775', '', '46 - North Road', 'Baguio City', 'Benguet', 'CAR', '1970-01-01', 51, 'Male', '9307814440', 'Police Officer', 0, 1, 1),
+(53, 'Marcus', 'Gonzales', 'Peralta', '', 'Professional Regulation  Commission ', '6030757', '3906', '', '9D - South Residences', 'Baguio City', 'Benguet', 'CAR', '1970-01-01', 51, 'Male', '9416438823', 'Surgeon', 0, 1, 1),
+(54, 'Peter', 'Lopez', 'Rimas', '', 'Professional Regulation  Commission ', '4110345', '9406', '', '78  - West Road ', 'Baguio City', 'Benguet', 'CAR', '2000-04-03', 21, 'Male', '9806080574', 'Nurse', 0, 1, 1),
+(55, 'Nero', 'Dante', '', '', 'Other', '2191217', '1231', '1212312', '15 Tacay Road.', 'Baguio City', 'Benguet', 'CAR', '1999-09-17', 22, 'Male', '9634212543', 'Student', 0, 1, 1),
+(56, 'Artbog', 'Hassan', 'Cruz', '', 'others', '2191563', '321233', '323414', 'Bortag Village', 'Baguio City', 'Benguet', 'Cordillera Administrative Region ', '1992-10-05', 29, 'male', '', '', 0, 1, 1),
+(57, 'Kassandra', 'Athens', '', '', 'Other', '2191217', '1231', '1212312', '15 Tacay Road.', 'Baguio City', 'Benguet', 'CAR', '1999-12-07', 21, 'Femail', '9634212543', 'Student', 0, 1, 1),
+(58, 'Julius', 'Caesar', 'Gaius', '', 'others', '2195523', '', '', 'Bortag Village', 'Baguio City', 'Benguet', 'Cordillera Administrative Region ', '1978-08-18', 43, 'male', '09217357942', 'General', 0, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -753,10 +801,14 @@ INSERT INTO `patient_details` (`patient_id`, `patient_first_name`, `patient_last
 -- Table structure for table `patient_drive`
 --
 
-CREATE TABLE `patient_drive` (
+DROP TABLE IF EXISTS `patient_drive`;
+CREATE TABLE IF NOT EXISTS `patient_drive` (
   `patient_id` int(11) NOT NULL,
   `drive_id` int(11) NOT NULL,
-  `vaccine_lot_id` int(11) NOT NULL
+  `vaccine_lot_id` int(11) NOT NULL,
+  KEY `patient_id` (`patient_id`),
+  KEY `drive_id` (`drive_id`),
+  KEY `vaccine_lot_id` (`vaccine_lot_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -776,7 +828,8 @@ INSERT INTO `patient_drive` (`patient_id`, `drive_id`, `vaccine_lot_id`) VALUES
 -- Table structure for table `patient_vitals`
 --
 
-CREATE TABLE `patient_vitals` (
+DROP TABLE IF EXISTS `patient_vitals`;
+CREATE TABLE IF NOT EXISTS `patient_vitals` (
   `patient_id` int(11) NOT NULL,
   `pre_vital_pulse_rate_1st_dose` varchar(18) DEFAULT NULL,
   `pre_vital_temp_rate_1st_dose` varchar(18) DEFAULT NULL,
@@ -793,7 +846,8 @@ CREATE TABLE `patient_vitals` (
   `post_vital_pulse_rate_2nd_dose` varchar(18) DEFAULT NULL,
   `post_vital_temp_rate_2nd_dose` varchar(18) DEFAULT NULL,
   `post_vital_bpDiastolic_2nd_dose` varchar(18) DEFAULT NULL,
-  `post_vital_bpSystolic_2nd_dose` varchar(18) DEFAULT NULL
+  `post_vital_bpSystolic_2nd_dose` varchar(18) DEFAULT NULL,
+  PRIMARY KEY (`patient_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -866,7 +920,8 @@ INSERT INTO `patient_vitals` (`patient_id`, `pre_vital_pulse_rate_1st_dose`, `pr
 -- Table structure for table `priority_drive`
 --
 
-CREATE TABLE `priority_drive` (
+DROP TABLE IF EXISTS `priority_drive`;
+CREATE TABLE IF NOT EXISTS `priority_drive` (
   `drive_id` int(11) NOT NULL,
   `priority_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -900,7 +955,8 @@ INSERT INTO `priority_drive` (`drive_id`, `priority_id`) VALUES
 (50, 7),
 (51, 1),
 (52, 2),
-(53, 1);
+(53, 1),
+(54, 3);
 
 -- --------------------------------------------------------
 
@@ -908,10 +964,12 @@ INSERT INTO `priority_drive` (`drive_id`, `priority_id`) VALUES
 -- Table structure for table `priority_groups`
 --
 
-CREATE TABLE `priority_groups` (
-  `priority_group_id` int(11) NOT NULL,
-  `priority_group` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+DROP TABLE IF EXISTS `priority_groups`;
+CREATE TABLE IF NOT EXISTS `priority_groups` (
+  `priority_group_id` int(11) NOT NULL AUTO_INCREMENT,
+  `priority_group` varchar(255) NOT NULL,
+  PRIMARY KEY (`priority_group_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `priority_groups`
@@ -932,8 +990,9 @@ INSERT INTO `priority_groups` (`priority_group_id`, `priority_group`) VALUES
 -- Table structure for table `report`
 --
 
-CREATE TABLE `report` (
-  `report_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `report`;
+CREATE TABLE IF NOT EXISTS `report` (
+  `report_id` int(11) NOT NULL AUTO_INCREMENT,
   `patient_id` int(11) NOT NULL,
   `report_type` char(20) NOT NULL,
   `report_details` varchar(255) NOT NULL,
@@ -942,8 +1001,10 @@ CREATE TABLE `report` (
   `date_last_out` date NOT NULL,
   `date_reported` date NOT NULL,
   `report_status` char(20) NOT NULL,
-  `Archived` int(1) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `Archived` int(1) DEFAULT NULL,
+  PRIMARY KEY (`report_id`),
+  UNIQUE KEY `patient_id` (`patient_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `report`
@@ -962,15 +1023,18 @@ INSERT INTO `report` (`report_id`, `patient_id`, `report_type`, `report_details`
 -- Table structure for table `vaccination_drive`
 --
 
-CREATE TABLE `vaccination_drive` (
-  `drive_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `vaccination_drive`;
+CREATE TABLE IF NOT EXISTS `vaccination_drive` (
+  `drive_id` int(11) NOT NULL AUTO_INCREMENT,
   `vaccination_site_id` int(11) NOT NULL,
   `vaccination_date` date NOT NULL,
   `Archived` int(1) DEFAULT NULL,
   `notif_opened` int(1) DEFAULT NULL,
   `first_dose_stubs` int(11) NOT NULL,
-  `second_dose_stubs` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `second_dose_stubs` int(11) NOT NULL,
+  PRIMARY KEY (`drive_id`),
+  KEY `vaccination_site_id` (`vaccination_site_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=55 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `vaccination_drive`
@@ -1002,7 +1066,8 @@ INSERT INTO `vaccination_drive` (`drive_id`, `vaccination_site_id`, `vaccination
 (50, 2, '2021-11-16', 0, 1, 111111, 111111),
 (51, 1, '2021-11-16', 0, 1, 222, 5555),
 (52, 3, '2021-11-25', 0, 1, 7777, 777777),
-(53, 4, '2021-11-23', 0, 1, 66, 77);
+(53, 4, '2021-11-23', 0, 1, 66, 77),
+(54, 1, '2021-11-12', 0, 0, 100, 100);
 
 -- --------------------------------------------------------
 
@@ -1010,10 +1075,13 @@ INSERT INTO `vaccination_drive` (`drive_id`, `vaccination_site_id`, `vaccination
 -- Table structure for table `vaccination_sites`
 --
 
-CREATE TABLE `vaccination_sites` (
-  `vaccination_site_id` int(11) NOT NULL,
-  `location` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+DROP TABLE IF EXISTS `vaccination_sites`;
+CREATE TABLE IF NOT EXISTS `vaccination_sites` (
+  `vaccination_site_id` int(11) NOT NULL AUTO_INCREMENT,
+  `location` varchar(255) NOT NULL,
+  PRIMARY KEY (`vaccination_site_id`),
+  UNIQUE KEY `vaccination_site_id` (`vaccination_site_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `vaccination_sites`
@@ -1035,13 +1103,15 @@ INSERT INTO `vaccination_sites` (`vaccination_site_id`, `location`) VALUES
 -- Table structure for table `vaccine`
 --
 
-CREATE TABLE `vaccine` (
-  `vaccine_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `vaccine`;
+CREATE TABLE IF NOT EXISTS `vaccine` (
+  `vaccine_id` int(11) NOT NULL AUTO_INCREMENT,
   `vaccine_name` varchar(255) NOT NULL,
   `vaccine_type` varchar(255) NOT NULL,
   `vaccine_efficacy` int(11) NOT NULL,
-  `vaccine_lifespan_in_months` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `vaccine_lifespan_in_months` int(11) NOT NULL,
+  PRIMARY KEY (`vaccine_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `vaccine`
@@ -1067,14 +1137,18 @@ INSERT INTO `vaccine` (`vaccine_id`, `vaccine_name`, `vaccine_type`, `vaccine_ef
 -- Table structure for table `vaccine_batch`
 --
 
-CREATE TABLE `vaccine_batch` (
-  `vaccine_batch_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `vaccine_batch`;
+CREATE TABLE IF NOT EXISTS `vaccine_batch` (
+  `vaccine_batch_id` int(11) NOT NULL AUTO_INCREMENT,
   `vaccine_lot_id` int(11) NOT NULL,
   `vaccine_id` int(11) NOT NULL,
   `vaccine_quantity` int(11) NOT NULL,
   `date_manufactured` date NOT NULL,
-  `date_of_expiration` date NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `date_of_expiration` date NOT NULL,
+  PRIMARY KEY (`vaccine_batch_id`),
+  KEY `vaccine_lot_id` (`vaccine_lot_id`),
+  KEY `vaccine_id` (`vaccine_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `vaccine_batch`
@@ -1094,9 +1168,12 @@ INSERT INTO `vaccine_batch` (`vaccine_batch_id`, `vaccine_lot_id`, `vaccine_id`,
 -- Table structure for table `vaccine_drive_1`
 --
 
-CREATE TABLE `vaccine_drive_1` (
+DROP TABLE IF EXISTS `vaccine_drive_1`;
+CREATE TABLE IF NOT EXISTS `vaccine_drive_1` (
   `drive_id` int(11) NOT NULL,
-  `vaccine_id` int(11) NOT NULL
+  `vaccine_id` int(11) NOT NULL,
+  KEY `drive_id` (`drive_id`),
+  KEY `vaccine_id` (`vaccine_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -1243,7 +1320,8 @@ INSERT INTO `vaccine_drive_1` (`drive_id`, `vaccine_id`) VALUES
 (50, 1),
 (51, 2),
 (52, 2),
-(53, 2);
+(53, 2),
+(54, 6);
 
 -- --------------------------------------------------------
 
@@ -1251,7 +1329,8 @@ INSERT INTO `vaccine_drive_1` (`drive_id`, `vaccine_id`) VALUES
 -- Table structure for table `vaccine_drive_2`
 --
 
-CREATE TABLE `vaccine_drive_2` (
+DROP TABLE IF EXISTS `vaccine_drive_2`;
+CREATE TABLE IF NOT EXISTS `vaccine_drive_2` (
   `drive_id` int(11) NOT NULL,
   `vaccine_id` int(11) NOT NULL,
   `first_dose_date` date NOT NULL
@@ -1315,7 +1394,8 @@ INSERT INTO `vaccine_drive_2` (`drive_id`, `vaccine_id`, `first_dose_date`) VALU
 (51, 4, '2021-11-30'),
 (51, 4, '2021-11-15'),
 (52, 4, '2021-11-09'),
-(53, 4, '2021-11-22');
+(53, 4, '2021-11-22'),
+(54, 1, '2021-12-01');
 
 -- --------------------------------------------------------
 
@@ -1323,14 +1403,16 @@ INSERT INTO `vaccine_drive_2` (`drive_id`, `vaccine_id`, `first_dose_date`) VALU
 -- Table structure for table `vaccine_information`
 --
 
-CREATE TABLE `vaccine_information` (
+DROP TABLE IF EXISTS `vaccine_information`;
+CREATE TABLE IF NOT EXISTS `vaccine_information` (
   `vaccine_id` int(11) NOT NULL,
   `vaccine_manufacturer` varchar(255) NOT NULL,
   `vaccine_description` longtext NOT NULL,
   `vaccine_dosage_required` int(11) NOT NULL,
   `vaccine_dosage_interval` int(11) NOT NULL,
   `vaccine_minimum_temperature` int(11) NOT NULL,
-  `vaccine_maximum_temperature` int(11) NOT NULL
+  `vaccine_maximum_temperature` int(11) NOT NULL,
+  UNIQUE KEY `vaccine_id` (`vaccine_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -1356,16 +1438,20 @@ INSERT INTO `vaccine_information` (`vaccine_id`, `vaccine_manufacturer`, `vaccin
 -- Table structure for table `vaccine_lot`
 --
 
-CREATE TABLE `vaccine_lot` (
-  `vaccine_lot_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `vaccine_lot`;
+CREATE TABLE IF NOT EXISTS `vaccine_lot` (
+  `vaccine_lot_id` int(11) NOT NULL AUTO_INCREMENT,
   `vaccine_id` int(11) NOT NULL,
   `employee_account_id` int(11) NOT NULL,
   `date_stored` date NOT NULL,
   `source` varchar(255) DEFAULT NULL,
   `total_vaccine_vial_quantity` int(11) NOT NULL,
   `vaccine_expiration` date DEFAULT NULL,
-  `Archived` int(1) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `Archived` int(1) DEFAULT NULL,
+  PRIMARY KEY (`vaccine_lot_id`),
+  KEY `vaccine_id` (`vaccine_id`),
+  KEY `employee_account_id` (`employee_account_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `vaccine_lot`
@@ -1384,251 +1470,6 @@ INSERT INTO `vaccine_lot` (`vaccine_lot_id`, `vaccine_id`, `employee_account_id`
 (10, 3, 1, '2021-11-24', 'National Government', 66, '2021-12-01', 0),
 (11, 4, 1, '2021-11-17', 'National Government', 77, '2021-11-23', 0),
 (12, 4, 1, '2021-11-23', 'Department Of Health', 668, '2021-11-29', 0);
-
---
--- Indexes for dumped tables
---
-
---
--- Indexes for table `activity_logs`
---
-ALTER TABLE `activity_logs`
-  ADD PRIMARY KEY (`log_id`),
-  ADD KEY `employee_id_activity` (`employee_id`);
-
---
--- Indexes for table `barangay`
---
-ALTER TABLE `barangay`
-  ADD PRIMARY KEY (`barangay_id`),
-  ADD KEY `health_district_id` (`health_district_id`);
-
---
--- Indexes for table `barangay_stubs`
---
-ALTER TABLE `barangay_stubs`
-  ADD KEY `barangay_id` (`barangay_id`),
-  ADD KEY `drive_id` (`drive_id`);
-
---
--- Indexes for table `employee`
---
-ALTER TABLE `employee`
-  ADD PRIMARY KEY (`employee_id`),
-  ADD KEY `barangay_id` (`barangay_id`);
-
---
--- Indexes for table `employee_account`
---
-ALTER TABLE `employee_account`
-  ADD PRIMARY KEY (`employee_account_id`),
-  ADD UNIQUE KEY `employee_id` (`employee_id`);
-
---
--- Indexes for table `health_district`
---
-ALTER TABLE `health_district`
-  ADD PRIMARY KEY (`health_district_id`);
-
---
--- Indexes for table `health_district_drives`
---
-ALTER TABLE `health_district_drives`
-  ADD KEY `drive_id` (`drive_id`),
-  ADD KEY `health_district_id` (`health_district_id`);
-
---
--- Indexes for table `medical_background`
---
-ALTER TABLE `medical_background`
-  ADD PRIMARY KEY (`patient_id`);
-
---
--- Indexes for table `patient`
---
-ALTER TABLE `patient`
-  ADD PRIMARY KEY (`patient_id`),
-  ADD KEY `patient_first_vaccinator` (`first_dose_vaccinator`),
-  ADD KEY `patient_second_vaccinator` (`second_dose_vaccinator`);
-
---
--- Indexes for table `patient_account`
---
-ALTER TABLE `patient_account`
-  ADD PRIMARY KEY (`patient_account_id`),
-  ADD KEY `patient_id_account` (`patient_id`);
-
---
--- Indexes for table `patient_details`
---
-ALTER TABLE `patient_details`
-  ADD UNIQUE KEY `patient_id_patient_first_name` (`patient_id`),
-  ADD KEY `barangay_id` (`barangay_id`),
-  ADD KEY `priority_group_id` (`priority_group_id`);
-
---
--- Indexes for table `patient_drive`
---
-ALTER TABLE `patient_drive`
-  ADD KEY `patient_id` (`patient_id`),
-  ADD KEY `drive_id` (`drive_id`),
-  ADD KEY `vaccine_lot_id` (`vaccine_lot_id`);
-
---
--- Indexes for table `patient_vitals`
---
-ALTER TABLE `patient_vitals`
-  ADD PRIMARY KEY (`patient_id`);
-
---
--- Indexes for table `priority_groups`
---
-ALTER TABLE `priority_groups`
-  ADD PRIMARY KEY (`priority_group_id`);
-
---
--- Indexes for table `report`
---
-ALTER TABLE `report`
-  ADD PRIMARY KEY (`report_id`),
-  ADD UNIQUE KEY `patient_id` (`patient_id`);
-
---
--- Indexes for table `vaccination_drive`
---
-ALTER TABLE `vaccination_drive`
-  ADD PRIMARY KEY (`drive_id`),
-  ADD KEY `vaccination_site_id` (`vaccination_site_id`);
-
---
--- Indexes for table `vaccination_sites`
---
-ALTER TABLE `vaccination_sites`
-  ADD PRIMARY KEY (`vaccination_site_id`),
-  ADD UNIQUE KEY `vaccination_site_id` (`vaccination_site_id`);
-
---
--- Indexes for table `vaccine`
---
-ALTER TABLE `vaccine`
-  ADD PRIMARY KEY (`vaccine_id`);
-
---
--- Indexes for table `vaccine_batch`
---
-ALTER TABLE `vaccine_batch`
-  ADD PRIMARY KEY (`vaccine_batch_id`),
-  ADD KEY `vaccine_lot_id` (`vaccine_lot_id`),
-  ADD KEY `vaccine_id` (`vaccine_id`);
-
---
--- Indexes for table `vaccine_drive_1`
---
-ALTER TABLE `vaccine_drive_1`
-  ADD KEY `drive_id` (`drive_id`),
-  ADD KEY `vaccine_id` (`vaccine_id`);
-
---
--- Indexes for table `vaccine_information`
---
-ALTER TABLE `vaccine_information`
-  ADD UNIQUE KEY `vaccine_id` (`vaccine_id`);
-
---
--- Indexes for table `vaccine_lot`
---
-ALTER TABLE `vaccine_lot`
-  ADD PRIMARY KEY (`vaccine_lot_id`),
-  ADD KEY `vaccine_id` (`vaccine_id`),
-  ADD KEY `employee_account_id` (`employee_account_id`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `activity_logs`
---
-ALTER TABLE `activity_logs`
-  MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
-
---
--- AUTO_INCREMENT for table `barangay`
---
-ALTER TABLE `barangay`
-  MODIFY `barangay_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=128;
-
---
--- AUTO_INCREMENT for table `employee`
---
-ALTER TABLE `employee`
-  MODIFY `employee_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
-
---
--- AUTO_INCREMENT for table `employee_account`
---
-ALTER TABLE `employee_account`
-  MODIFY `employee_account_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
-
---
--- AUTO_INCREMENT for table `health_district`
---
-ALTER TABLE `health_district`
-  MODIFY `health_district_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
-
---
--- AUTO_INCREMENT for table `patient`
---
-ALTER TABLE `patient`
-  MODIFY `patient_id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
-
---
--- AUTO_INCREMENT for table `patient_account`
---
-ALTER TABLE `patient_account`
-  MODIFY `patient_account_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=478;
-
---
--- AUTO_INCREMENT for table `priority_groups`
---
-ALTER TABLE `priority_groups`
-  MODIFY `priority_group_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
-
---
--- AUTO_INCREMENT for table `report`
---
-ALTER TABLE `report`
-  MODIFY `report_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-
---
--- AUTO_INCREMENT for table `vaccination_drive`
---
-ALTER TABLE `vaccination_drive`
-  MODIFY `drive_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
-
---
--- AUTO_INCREMENT for table `vaccination_sites`
---
-ALTER TABLE `vaccination_sites`
-  MODIFY `vaccination_site_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
-
---
--- AUTO_INCREMENT for table `vaccine`
---
-ALTER TABLE `vaccine`
-  MODIFY `vaccine_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
-
---
--- AUTO_INCREMENT for table `vaccine_batch`
---
-ALTER TABLE `vaccine_batch`
-  MODIFY `vaccine_batch_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
-
---
--- AUTO_INCREMENT for table `vaccine_lot`
---
-ALTER TABLE `vaccine_lot`
-  MODIFY `vaccine_lot_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- Constraints for dumped tables
