@@ -8,14 +8,14 @@ require_once '../require/getPriorityGroup.php';
 
 foreach($patients as $p) {
     if ($p->getForQueue() == 1) {
-        $id = $p->getPatientId();
+        $id = $p->getPatientId();   
         foreach ($patient_details as $pd) {
             if ($pd->getBarangayId() == $barangay_id && $pd->getPatientDeetPatId() == $id) {
                 $fullAddress = $pd->getHouseAdd() . ", " . $accountDetails['barangay'] . ", " . $pd->getCity() . ", " . $pd->getProvince();
                 $contact = $pd->getContact();
                 foreach ($priorityGroups as $priority) {
                     if ($pd->getPriorityGroupId() == $priority->getPriorityGroupId()) {
-                        $category = $pd->getPriorityGroup();
+                        $category = $pd->getPriorityGroupId();
                     }
                 }
                 if ($pd->getPatientMName() == null && $pd->getPatientSuffix() == null) {

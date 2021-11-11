@@ -240,7 +240,7 @@ class patientDetails{
 
 
 
-    public function __construct($patientDetailPatientId, $patFirstName, $patLastName, $patMiddleName,$patientSuffix, $categoryId, $categoryNumber, $philHealthID, $pwdID, $houseAddress, $city, $province, $region, $birthdate, $age, $gender, $contact, $occupation, $archived, $priorityGroupId, $barangayId)
+    public function __construct($patientDetailPatientId, $patFirstName, $patLastName, $patMiddleName,$patientSuffix, $categoryId, $categoryNumber, $philHealthID, $pwdID, $houseAddress, $city, $province, $region, $birthdate, $age, $gender, $contact, $occupation, $archived, $barangayId, $priorityGroupId)
     {
         $this->patientDeetPatId = $patientDetailPatientId;
         $this->patientFName = $patFirstName;
@@ -261,8 +261,8 @@ class patientDetails{
         $this->contact = $contact;
         $this->occupation = $occupation;
         $this->archived = $archived;
-        $this->priorityGroupId = $priorityGroupId;
         $this->barangayId = $barangayId;
+        $this->priorityGroupId = $priorityGroupId;
     }
 
     public function getPatientDeetPatId()
@@ -360,14 +360,14 @@ class patientDetails{
     return $this->archived;
     }
 
-    public function getPriorityGroupId()
-    {
-        return $this->priorityGroupId;
-    }
-
     public function getBarangayId()
     {
         return $this->barangayId;
+    }
+
+    public function getPriorityGroupId()
+    {
+        return $this->priorityGroupId;
     }
 }
 ?>
