@@ -1,6 +1,6 @@
 <?php
-require_once('../includes/sessionHandling.php');
-checkRole('HSO');
+//require_once('../includes/sessionHandling.php');
+//checkRole('HSO');
 include_once("../includes/database.php") ?>
 
 
@@ -358,7 +358,7 @@ include_once("../includes/database.php") ?>
                                                 <input type="input" id="firstDoseStubs" name="firstDoseStubs" class="stubs" placeholder="ex. 100">
                                             </row>
                                             <row>
-                                                <input id="noStubsFirst" class = 'checkboxes p-4' type='checkbox' onclick="disableCheck(this)">
+                                                <input id="noStubsFirst" class = 'checkboxes p-4' type='checkbox' onclick="disableCheck(this, 'firstDoseStubs')">
                                                 <label>No Stubs</label>
                                             </row>
                                         </div>
@@ -405,7 +405,7 @@ include_once("../includes/database.php") ?>
                                         <div class="col-6">
                                             <label class='label' for="stubs"><h6>Second Dose Number of Stubs: </h6></label>
                                             <input type="input" id="secondDoseStubs" name="secondDoseStubs" class="stubs" placeholder="ex. 100">
-                                            <input class = 'checkboxes' type='checkbox' id="noStubsSecond" onclick="disableCheck(this)">
+                                            <input class = 'checkboxes' type='checkbox' id="noStubsSecond" onclick="disableCheck(this, 'secondDoseStubs')">
                                             <label>No Stubs</label>
                                         </div>
                                     </div>
@@ -835,12 +835,12 @@ include_once("../includes/database.php") ?>
         }
     });
 
-    function disableCheck(checkbox){
+    function disableCheck(checkbox, id){
         if (checkbox.checked == true){
-            checkbox.parentNode.children[1].disabled = true;
-            checkbox.parentNode.children[1].value = 0;
+            document.getElementById(id).disabled = true;
+            document.getElementById(id).value = 0;
         } else {
-            checkbox.parentNode.children[1].disabled = false;
+            document.getElementById(id).disabled = false;
         }
     }
 
