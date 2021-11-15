@@ -660,17 +660,14 @@ checkRole('EIR');
         var email = document.getElementById("email").value;
 
         //Category Information
-        var priority = document.getElementById("priorityGroup").value;
+        var priorityId = document.getElementById("priorityGroup").value;
         var id = document.getElementById("categoryID").value;
         var idNo = document.getElementById("categoryNo").value;
         var philHealth = document.getElementById("philHealth").value;
         var pwd = document.getElementById("pwdID").value;
         //Address Information
         var houseAddress = document.getElementById("houseAddress").value;
-        var brgy = document.getElementById("barangay").value;
-        var city = document.getElementById("city").value;
-        var province = document.getElementById("province").value;
-        var region = document.getElementById("region").value;
+        var brgyId = document.getElementById("barangay").value;
 
         //Clinical Information
         var allergyInput = document.getElementById("allergy").value;
@@ -687,7 +684,6 @@ checkRole('EIR');
         var immunodeficiency = verifyCommorbidity($('#immunodeficiency:checked').val());
         var other = $('#other:checked').val();
         var enteredCommorbidity = other ? document.querySelector('.otherInput').value : "";
-
         $.ajax({
             url: 'EIRAddPatient.php',
             type: 'POST',
@@ -818,6 +814,7 @@ checkRole('EIR');
             processData: false,
             data: formData,
             success: function (result) {
+                console.log(result);
                 uploadFileModal.style.display = "none";
                 Swal.fire('Added Patient', '', 'success');
                 reloadPatient();

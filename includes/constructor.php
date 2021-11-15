@@ -226,9 +226,6 @@ class patientDetails{
     private $philHealthID;
     private $pwdID;
     private $houseAdd;
-    private $city;
-    private $province;
-    private $region;
     private $birthdate;
     private $age;
     private $gender;
@@ -240,7 +237,7 @@ class patientDetails{
 
 
 
-    public function __construct($patientDetailPatientId, $patFirstName, $patLastName, $patMiddleName,$patientSuffix, $categoryId, $categoryNumber, $philHealthID, $pwdID, $houseAddress, $city, $province, $region, $birthdate, $age, $gender, $contact, $occupation, $archived, $barangayId, $priorityGroupId)
+    public function __construct($patientDetailPatientId, $patFirstName, $patLastName, $patMiddleName,$patientSuffix, $categoryId, $categoryNumber, $philHealthID, $pwdID, $houseAddress, $birthdate, $age, $gender, $contact, $occupation, $archived, $barangayId, $priorityGroupId)
     {
         $this->patientDeetPatId = $patientDetailPatientId;
         $this->patientFName = $patFirstName;
@@ -252,9 +249,6 @@ class patientDetails{
         $this->philHealthID = $philHealthID;
         $this->pwdID = $pwdID;
         $this->houseAdd = $houseAddress;
-        $this->city = $city;
-        $this->province = $province;
-        $this->region = $region;
         $this->birthdate = $birthdate;
         $this->age = $age;
         $this->gender = $gender;
@@ -314,22 +308,6 @@ class patientDetails{
     {
         return $this->houseAdd;
     }
-
-    public function getCity()
-    {
-        return $this->city;
-    }
-
-    public function getProvince()
-    {
-        return $this->province;
-    }
-
-    public function getRegion()
-    {
-        return $this->region;
-    }
-
     public function getBirthdate()
     {
         return $this->birthdate;

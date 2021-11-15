@@ -58,8 +58,8 @@ if ($count > 1) {
                     $email = $row[22];
 
                     //Foreign key ID from priority and barangay table
-                    $priorityGroup = $row[23];
-                    $barangay = $row[24];
+                    $barangay = $row[23];
+                    $priorityGroup = $row[24];
 
                     $patientID = insertPatientUpload($fullName);
                     insertDetails($patientID['patient_id'], $firstName, $lastName, $middleName, $suffix, $category, $categoryID, $philHealthID, $pwdID, $houseAddress, $birthdate, $age, $gender, $contact, $occupation, $barangay, $priorityGroup);
@@ -117,15 +117,15 @@ if ($count > 1) {
                 $email = $row[22];
 
                 //Foreign key ID from priority and barangay table
-                $priorityGroup = $row[23];
-                $barangay = $row[24];
+                $barangay = $row[23];
+                $priorityGroup = $row[24];
 
+                echo $barangay."\n";
                 $patientID = insertPatientUpload($fullName);
                 insertDetails($patientID['patient_id'], $firstName, $lastName, $middleName, $suffix, $category, $categoryID, $philHealthID, $pwdID, $houseAddress, $birthdate, $age, $gender, $contact, $occupation, $barangay, $priorityGroup);
                 insertMedicalBackground($patientID['patient_id'], $allergyToVaccine, $hypertension, $heartDisease, $kidneyDisease, $diabetesMellitus, $bronchialAsthma, $immunodeficiency, $cancer, $otherCommorbidity);
                 $accountDetails = createAccount($patientID['patient_id'], $firstName, $lastName, $email);
                 insertPatientVitals($patientID);
-                
             }
             insertLogs($employeeID, $employeeRole, 'Upload', 'Uploaded patient csv file');
         }
@@ -172,13 +172,13 @@ function insertPatientUpload($fullName) {
 }
 
 //Insert patient's personal details in patient details table
-function insertDetails($patientID, $firstName, $lastName, $middleName, $suffix, $priorityGroup, $category, $categoryID, $philHealthID, $pwdID, $houseAddress, $barangay, $cmAddress, $province, $region, $birthdate, $age, $gender, $contact, $occupation) {
+function insertDetails($patientID, $firstname, $lastname, $middlename, $suffix, $category, $categoryID, $philHealthID, $pwdID, $houseAddress, $birthdate, $age,$gender, $contact, $occupation, $barangay, $priority) {
 
-    $query = "INSERT INTO patient_details (patient_id, patient_first_name, patient_last_name, patient_middle_name, patient_suffix, patient_category_id, patient_category_number, patient_philHealth, patient_pwd, patient_house_address, patient_CM_address, patient_province, patient_region, patient_birthdate, patient_age, patient_gender, patient_contact_number, patient_occupation, barangay_id, priority_group_id) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CAST(? AS DATE), ?, ?, ?, ?, ?, ?, ?)";
+    $query = "INSERT INTO patient_details (patient_id, patient_first_name, patient_last_name, patient_middle_name, patient_suffix, patient_category_id, patient_category_number, patient_philHealth, patient_pwd, patient_house_address, patient_birthdate, patient_age, patient_gender, patient_contact_number, patient_occupation, Archived, barangay_id, priority_group_id) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CAST(? AS DATE), ?, ?, ?, ?, ?, ?, ?)";
 
     try {
         $stmtinsert = $GLOBALS['database']->prepare($query);
-        $stmtinsert->execute([$patientID, $firstName, $lastName, $middleName, $suffix, $category, $categoryID, $philHealthID, $pwdID, $houseAddress, $birthdate, $age, $gender, $contact, $occupation, $barangay, $priorityGroup]); 
+        $result = $stmtinsert->execute([$patientID, $firstname, $lastname, $middlename, $suffix, $category, $categoryID, $philHealthID, $pwdID, $houseAddress, $birthdate, $age,$gender, $contact, $occupation, 0, $barangay, $priority]);
     } catch (PDOException $e) {
         echo 'Error in patient details: ', $e->getMessage();
     }
