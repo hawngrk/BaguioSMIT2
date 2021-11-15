@@ -15,169 +15,149 @@ if (isset($_POST['viewPatient'])) {
     echo "
      
                 <div class='modal-header'>
-                    <h4 class='modal-title'> Patient Details - $patient_last_name, $patient_first_name $patient_middle_name $patient_suffix </h4>
+                    <h4 class='modal-title'> Patient Details</h4>
                     <button type='button' class='close' data-dismiss='modal' onclick='closeModal(\"viewPatientDetails\")'>
                         <i class='fas fa-window-close'></i>
                     </button>
                 </div>
                 <div class='modal-body'>
                 <div class='patientInfo'>
-                <h5 class='ml-3'> Personal Information </h5>
-                <div class='row'>
+                <div col-10>
+                <h3 class='ml-4'> $patient_last_name, $patient_first_name $patient_middle_name $patient_suffix </h3>
+                </div>
+                <div class='border border-dark rounded p-2 m-1'>
                 <div class='col'>
-                <h7 class='font-weight-bold ml-5'> Complete Name </h7>
+                    <h4 class='ml-2'> Personal Information </h4>
+                </div>
+                
+                <div class='row ml-5'>
+                <div class='col'>
+                <h7 class='font-weight-bold'> Complete Name: </h7><br>
+                <h7> $patient_first_name $patient_middle_name $patient_last_name $patient_suffix </h7>
                 </div> 
                 <div class='col'>
-                <h7> $patient_first_name $patient_middle_name $patient_last_name $patient_suffix </h7>
+                <h7 class='font-weight-bold'> Gender: </h7><br>
+                <h7> $patient_gender </h7>
+                </div>
+                <div class='col'>
+                <h7 class='font-weight-bold'> Birthdate </h7><br>
+                <h7> $patient_birthdate </h7>
+                </div>
+               
+                </div>
+                <div class='row ml-5 mt-2'>
+                <div class='col'>
+                <h7 class='font-weight-bold'> Occupation </h7><br>
+                <h7> $patient_occupation </h7>
+                </div>
+                <div class='col'>
+                <h7 class='font-weight-bold'> Contact Number </h7><br>
+                <h7 class='ml-2'> $patient_contact_number </h7>
+                </div>
+                <div class='col'>
+                <h7 class='font-weight-bold'> Email Address </h7><br>
+                <h7> *email address sample*</h7>
                 </div>
                 </div>
  
-                <div class='row'>
-                <div class='col'>
-                <h7 class='font-weight-bold ml-5'> Gender </h7>
-                </div>
-                <div class='col'>
-                <h7> $patient_gender </h7>
-                </div>
-                </div>
+               
                 
-                <div class='row'>
-                <div class='col'>
-                <h7 class='font-weight-bold ml-5'> Birthdate </h7>
-                </div>
-                <div class='col'>
-                <h7> $patient_birthdate </h7>
-                </div>
-                </div>
-                
-                <div class='row'>
-                <div class='col'>
-                <h7 class='font-weight-bold ml-5'> Occupation </h7>
-                </div>
-                <div class='col'>
-                <h7> $patient_occupation </h7>
-                </div>
-                </div>
-                
-                <div class='row'>
-                <div class='col'>
-                <h7 class='font-weight-bold ml-5'> Contact Number </h7>
-                </div>
-                <div class='col'>
-                <h7> $patient_contact_number </h7>
-                </div>
-                </div>
-                
-                <div class='row'>
-                <div class='col'>
-                <h7 class='font-weight-bold ml-5'> Email Address </h7>
-                </div>
-                <div class='col'>
-                <h7> </h7>
-                </div>
-                </div>
+              
                 <br>
-                <h5 class='ml-3'> Category Information </h5>
-                <div class='row'>
                 <div class='col'>
-                <h7 class='font-weight-bold ml-5'> Priority Group </h7>
+                <h4 class='ml-2'> Category Information </h4>
                 </div>
+                <div class='row ml-5'>
                 <div class='col'>
+                <h7 class='font-weight-bold'> Priority Group: </h7><br>
                 <h7> $patient_priority_group </h7>
                 </div>
-                </div>
-                <div class='row'>
                 <div class='col'>
-                <h7 class='font-weight-bold ml-5'> Category ID </h7>
-                </div>
-                <div class='col'>
+                <h7 class='font-weight-bold'> Category ID: </h7><br>
                 <h7> $patient_category_id </h7>
                 </div>
-                </div>
-                
-                <div class='row'>
                 <div class='col'>
-                <h7 class='font-weight-bold ml-5'> Category ID No. </h7>
-                </div>
-                <div class='col'>
+                <h7 class='font-weight-bold'> Category ID No.: </h7>
                 <h7> $patient_category_number </h7>
                 </div>
                 </div>
+                <div class='row ml-5  mt-2'>
+                
                 
                 ";
 
     if ($patient_philHealth == "") {
-        echo "";
+        echo "<div class='col-4'>
+                <h7 class='font-weight-bold'> PhilHealth ID No.: </h7><br>
+                <h7> None </h7>
+                </div>";
     } else {
-        echo "<div class='row'>
-                <div class='col'>
-                <h7 class='font-weight-bold ml-5'> PhilHealth ID No. </h7>
-                </div>
-                <div class='col'>
+        echo "
+                <div class='col-4'>
+                <h7 class='font-weight-bold'> PhilHealth ID No.: </h7><br>
                 <h7> $patient_philHealth </h7>
-                </div>
                 </div>";
     }
 
     if ($patient_pwd == "") {
-        echo "";
-    } else {
-        echo "<div class='row'>
-                <div class='col'>
-                <h7 class='font-weight-bold ml-5'> PWD ID No. </h7>
+        echo "
+                <div class='col-4'>
+                <h7 class='font-weight-bold'> PWD ID No.: </h7><br>
+                <h7> None </h7>
                 </div>
-                <div class='col'>
-                <h7>  </h7>
+                </div>";
+    } else {
+        echo "
+                <div class='col-4'>
+                <h7 class='font-weight-bold'> PWD ID No.: </h7><br>
+                <h7> $patient_pwd </h7>
                 </div>
                 </div>";
     }
 
     echo "      <br>
-                <h5 class='ml-3'> Address Information </h5>
-                <div class='row'>
                 <div class='col'>
-                <h7 class='font-weight-bold ml-5'> House Address</h7>
+                <h4 class='ml-2'> Address Information </h4>
                 </div>
+         
+                <div class='row ml-5'>
                 <div class='col'>
+                <h7 class='font-weight-bold'> House Address</h7><br>
                 <h7> $patient_house_address </h7>
                 </div>
-                </div>
-                
-                <div class='row'>
                 <div class='col'>
-                <h7 class='font-weight-bold ml-5'> Barangay </h7>
-                </div>
-                <div class='col'>
+                <h7 class='font-weight-bold'> Barangay </h7><br>
                 <h7> $patient_barangay_address </h7>
                 </div>
-                </div>
-                
-                <div class='row'>
-                <div class='col'>
-                <h7 class='font-weight-bold ml-5'> City and Region </h7>
-                </div> 
-                <div class='col'>
+                <div class='col-5'>
+                <h7 class='font-weight-bold'> City and Region </h7><br>
                 <h7> $patient_CM_address, $patient_region </h7>
                 </div>
                 </div>
+                
+                
                 <br>
-                <h5 class='ml-3'> Vaccine Information </h5>
+                <div class='col'>
+                <h4 class='ml-2'> Vaccine Information </h4>
+                </div>
                     ";
 
 
-    echo "<div class='row'>
-                <h6 class='font-weight-bold ml-5'> First Dose </h6>
-                </div>
-                <div class='row'>
+    echo "<div class='row ml-5'>
                 <div class='col'>
-                <h7 class='font-weight-bold ml-5'> First Dose Date </h7>
+                <h7 class='font-weight-bold ml-5'> First Dose </h7>
+                </div>
+                </div>
+                <div class='row ml-5'>
+                <div class='col-sm-5'>
+                <h7 class='font-weight-bold ml-5  '> First Dose Date </h7>
                 </div>
                 
                 
                 ";
 
     if ($first_dose_vaccination == 1) {
-        echo "  <div class='col'>
+        echo "  <div class='col-sm-5'>
                 <h7> $date_of_first_dosage </h7>
                 </div>
             </div>
@@ -230,10 +210,12 @@ if (isset($_POST['viewPatient'])) {
             <h7>  </h7>
             </div>
             </div>
+            </div>
              ";
     } else {
         echo "<div class='col'>
           <h7> Not Vaccinated  </h7> 
+          </div>
           </div>
           </div>";
     }
@@ -268,7 +250,7 @@ if (isset($_POST['viewVaccine'])) {
     <h3 class='ml-4'> $vaccine_name </h3>
     </div>
     <div class='col'>
-    <button type='button' class='btn btn-info ml-4'> <i class='far fa-edit'></i>  Edit</button> 
+    <button type='button' class='btn btn-info btn-md p-2'> <i class='far fa-edit'></i>  Edit</button> 
     </div>
     </div>
     <div class='row'>

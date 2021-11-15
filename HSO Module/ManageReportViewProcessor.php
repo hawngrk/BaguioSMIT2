@@ -230,8 +230,8 @@ if (isset($_POST['report'])) {
             </div>
         <div class='col'>
         <h5 class='reviewReport'>Symptoms Experienced</h5>
-        <h7> <b> Vaccine Side Effect: </b></h7>
-        <ul>
+        <h7 class='ml-2'> <b> Vaccine Side Effect: </b></h7>
+        <ul class='ml-2'>
         ";
         if ($vaccineSymptoms[0] === "") {
             echo "<li>None</li>";
@@ -266,7 +266,7 @@ if (isset($_POST['report'])) {
     
     <div class='col'>
         <h5>Additional Details:</h5>
-        <h7 class='paddingLeft'>$reportDetails</h7>
+        <h7 class='ml-4'>$reportDetails</h7>
     </div>
     </div>
     <br>

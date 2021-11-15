@@ -47,6 +47,7 @@ include_once("../includes/database.php") ?>
         </div>
 
         <ul class="list-unstyled components">
+            <hr>
             <h4 id="headingNav1"> Health Service Office </h4>
             <hr>
             <h5 id="headingNav2">
