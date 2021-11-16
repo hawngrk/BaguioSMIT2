@@ -460,7 +460,7 @@ if (isset($_POST['download'])) {
     mkdir('reports');
 
     foreach ($reports as $rep) {
-        $getReportsQuery = "SELECT report.report_id, report.report_type, report.report_details, report.report_status, CONCAT(patient_details.patient_first_name, ' ', patient_details.patient_middle_name, ' ', patient_details.patient_last_name) AS full_name, CONCAT(patient_details.patient_house_address, ' ', patient_details.patient_barangay_address, ' ', patient_details.patient_CM_address, ' ', patient_details.patient_province) AS full_address, patient_details.patient_contact_number FROM report JOIN patient_details ON report.patient_id = patient_details.patient_id WHERE report.report_id = $rep";
+        $getReportsQuery = "SELECT report.report_id, report.report_type, report.report_details, report.report_status, CONCAT(patient_details.patient_first_name, ' ', patient_details.patient_middle_name, ' ', patient_details.patient_last_name) AS full_name, CONCAT(patient_details.patient_house_address, ' ', barangay.barangay_name,' ',barangay.city,' ', barangay.province) AS full_address, patient_details.patient_contact_number FROM report JOIN patient_details ON report.patient_id = patient_details.patient_id JOIN barangay ON barangay.barangay_id = patient_details.barangay_id WHERE report.report_id = $rep";
         $stmt->prepare($getReportsQuery);
         $stmt->execute();
         $stmt->bind_result($reportId, $reportType, $reportDetails, $reportStatus, $patientName, $patientAddress, $patientNum);

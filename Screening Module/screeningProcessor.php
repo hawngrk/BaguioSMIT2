@@ -155,48 +155,16 @@ if (isset($_POST['pulse'])) {
 }
 
 if (isset($_POST['patientId'])) {
-    require_once ('../require/getPatientDetails.php');
-    require_once ('../require/getPatient.php');
-    require_once ('../require/getPatientDrive.php');
 
     $patId = $_POST['patientId'];
 
-    foreach ($patient_details as $patient){
-        if($patient->getPatientDeetPatId() == $patId){
-            $group = $patient->getPriorityGroup();
-            $age = $patient->getAge();
-            $gender = $patient->getGender();
-            $contact = $patient->getContact();
-        }
-    }
-
-    foreach ($patients as $pat){
-        if ($pat->getPatientId() == $patId){
-            $name = $pat->getPatientFullName();
-            $fDate = $pat->getFirstDosageDate();
-            $sDate = $pat->getSecondDosageDate();
-            $first = $pat->getFirstDosage();
-            $second = $pat->getSecondDosage();
-        }
-    }
-
-//    foreach ($patientDrives as $patientDrive){
-//        if ($patientDrive->getPatientDrivePatientId() == $patId){
-//            $lot = $patientDrive->getPatientDriveLotId();
-//            $drive = $patientDrive->getPatientDriveDriveId();
-//        }
-//    }
-
-//    $getPatientDrive = "SELECT vaccination_sites.location, patient_drive.vaccine_lot_id FROM `patient_drive` INNER JOIN vaccination_drive ON patient_drive.drive_id = vaccination_drive.drive_id INNER JOIN vaccination_sites ON vaccination_drive.vaccination_site_id = vaccination_sites.vaccination_site_id WHERE patient_drive.patient_id = $patId";
-//    $dbase = $database->stmt_init();
-//    $dbase->prepare($getPatientDrive);
-//    $dbase->execute();
-//    $dbase->bind_result($location, $lot);
-//    $dbase->fetch();
-//    $dbase->close();
-
-
-
+    $query = "SELECT patient.patient_full_name, patient_details.patient_gender, patient_details.patient_contact_number, patient_details.patient_age, priority_groups.priority_group, patient.date_of_first_dosage, patient.date_of_second_dosage, patient.first_dose_vaccination, patient.second_dose_vaccination FROM patient_details JOIN patient on patient_details.patient_id = patient.patient_id JOIN priority_groups ON patient_details.priority_group_id = priority_groups.priority_group_id WHERE patient_details.patient_id = $patId;";
+    $stmt = $database->stmt_init();
+    $stmt->prepare($query);
+    $stmt->execute();
+    $stmt->bind_result($name, $gender, $contact, $age, $group, $fDate, $sDate, $first, $second);
+    $stmt->fetch();
+    $stmt->close();
 
 
     echo "      

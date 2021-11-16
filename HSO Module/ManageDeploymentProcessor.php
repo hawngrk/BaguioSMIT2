@@ -9,6 +9,7 @@ if (isset($_POST['id'])) {
     require_once '../require/getVaccinationDrive.php';
     require_once '../require/getVaccine.php';
     require_once '../require/getVaccineDrive1.php';
+    require_once '../require/getVaccineDrive2.php';
     require_once '../require/getVaccinationSites.php';
     require_once '../require/getHealthDistrictDrives.php';
     require_once '../require/getHealthDistrict.php';
@@ -16,13 +17,10 @@ if (isset($_POST['id'])) {
     foreach ($vaccination_drive as $vd) {
         if ($drive == $vd->getDriveId()) {
             $name = $vd->getDriveId();
-            $first_dose_stubs = $vd->getFirstDoseStubs();
-            $second_dose_stubs = $vd->getSecondDoseStubs();
             $siteId = $vd->getVaccDriveVaccSiteId();
             $date = $vd->getVaccDate();
         }
     }
-
 
     foreach ($vaccinationSites as $vs) {
         if ($vs->getVaccinationSiteId() == $siteId) {
@@ -45,33 +43,43 @@ if (isset($_POST['id'])) {
                 $distNames[] = $dist->getHealthDistrictName();
             }
         }
-
     }
 
 
     echo "
     <h7><b>Vaccination Site:</b></h7><br>
     <h8>$siteName</h8><br><br>
-    <h7><b>Vaccination Brand/s:</b></h7><br>";
+    <h7><b>Vaccination Date:</b></h7><br>
+    <h8>$date</h8><br><br>
+    <h7><b>First Dose</b></h7><br>
+    <h7>Vaccine Brands: </h7><br>";
     foreach ($vaccineDrive1 as $drive1) {
-        if ($drive == $drive1->getDriveId()) {
+        if ( $drive1->getDriveId() == $drive) {
             foreach ($vaccines as $vac) {
                 if ($drive1->getVaccineId() == $vac->getVaccId()) {
                     $firstDbrand = $vac->getVaccName();
+                    $fBrandStubs = $drive1->getStubs();
 
-                    echo"<h8>$firstDbrand</h8><br><br>";
+                    echo"<h8>$firstDbrand: $fBrandStubs stubs</h8><br><br>";
                 }
             }
         }
     }
-    echo"
-    <h7><b>Vaccination Date:</b></h7><br>
-    <h8>$date</h8><br><br>
-    <h7><b>Stubs For First Dose:</b></h7><br>
-    <h8>$first_dose_stubs</h8><br><br>
-    <h7><b>Stubs For Second Dose:</b></h7><br>
-    <h8>$second_dose_stubs</h8><br><br>
-    ";
+    echo "<h7><b>Second Dose</b></h7><br> 
+          Criterias of First Dose:<br>";
+    foreach ($vaccineDrive2 as $drive2) {
+        if ( $drive2->getDriveId() == $drive) {
+            $sDate = $drive2->getFirstDoseDate();
+            foreach ($vaccines as $vac) {
+                if ($drive1->getVaccineId() == $vac->getVaccId()) {
+                    $secondDbrand = $vac->getVaccName();
+                    $sBrandStubs = $drive2->getStubs();
+
+                    echo"<h8>$secondDbrand - $sDate - $sBrandStubs stubs</h8><br><br>";
+                }
+            }
+        }
+    }
 
     echo "<h7><b>Health District/s:</b></h7>";
 
@@ -85,13 +93,10 @@ if (isset($_POST['districts'])){
     $priorities = $_POST['priorities'];
     $firstBrands = $_POST['firstBrands'];
     $secondBrands = $_POST['secondBrands'];
-    $secondDates = $_POST['secondDates'];
-    $firstDoseStubs = $_POST['firstDoseStubs'];
-    $secondDoseStubs = $_POST['secondDoseStubs'];
     $date = $_POST['date'];
     $location = $_POST['location'];
 
-    $query1 = "INSERT INTO vaccination_drive (vaccination_site_id, vaccination_date, Archived, notif_opened, first_dose_stubs, second_dose_stubs, allocated) VALUE ('$location', '$date', 0, 0, '$firstDoseStubs', '$secondDoseStubs', 0);";
+    $query1 = "INSERT INTO vaccination_drive (vaccination_site_id, vaccination_date, Archived, notif_opened, allocated) VALUE ('$location', '$date', 0, 0, 0);";
     $database->query($query1);
 
     $getDrive = "SELECT drive_id from vaccination_drive ORDER BY drive_id DESC LIMIT 1";
@@ -103,8 +108,8 @@ if (isset($_POST['districts'])){
     $dbase->fetch();
     $dbase->close();
 
-    foreach ($firstBrands as $firstDoseBrands) {
-        $query2 = "INSERT INTO vaccine_drive_1 (drive_id, vaccine_id) VALUE ('$driveId', '$firstDoseBrands');";
+    foreach ($firstBrands as $key => $value) {
+        $query2 = "INSERT INTO vaccine_drive_1 (drive_id, vaccine_id, stubs) VALUE ('$driveId', '$key', '$value[0]');";
         $database->query($query2);
     }
 
@@ -118,11 +123,9 @@ if (isset($_POST['districts'])){
         $database->query($query4);
     }
 
-    foreach ($secondBrands as $secondDoseBrand){
-        foreach ($secondDates as $secondDoseDate){
-            $query5 = "INSERT INTO vaccine_drive_2 (drive_id, vaccine_id, first_dose_date) VALUE ('$driveId' , '$secondDoseBrand', '$secondDoseDate')";
+    foreach ($secondBrands as $brand => $values){
+            $query5 = "INSERT INTO vaccine_drive_2 (drive_id, vaccine_id, first_dose_date, stubs) VALUE ('$driveId' , '$brand', '$values[0]', '$values[1]')";
             $database->query($query5);
-        }
     }
 
     echo"  <table class='table table-hover tableDep table-fixed' id='driveTable'>

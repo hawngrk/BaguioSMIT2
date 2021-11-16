@@ -1,4 +1,4 @@
-<?php 
+<?php
 require_once('../includes/sessionHandling.php');
 checkRole('Screening');
 ?>
@@ -132,7 +132,7 @@ checkRole('Screening');
 
     function qr(content){
         $.ajax({
-            url: 'screeningSearchProcessor.php',
+            url: 'screeningProcessor.php',
             method: 'POST',
             data: {patientId: content},
             success: function (result) {

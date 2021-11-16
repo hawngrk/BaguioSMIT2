@@ -36,9 +36,9 @@ $stmt->close();
 for ($index = 0; $index < sizeof($priorityStub); $index++) {
     $patients = [];
     if ($type == "many") {
-        $patientQuery = "SELECT patient.patient_id, patient.token, patient_details.patient_contact_number FROM patient JOIN patient_details ON patient_details.patient_id = patient.patient_id JOIN patient_barangay_queue ON patient_barangay_queue.patient_id = patient.patient_id WHERE patient.for_queue = 1 AND patient_details.patient_priority_group = '$priorityStub[$index]' AND patient_details.patient_barangay_address = 'San Luis Village' AND patient.first_dose_vaccination = 0 AND patient.notification = 0 ORDER BY patient_barangay_queue.first_dose_queue ASC LIMIT $values[$index];";
+        $patientQuery = "SELECT patient.patient_id, patient.token, patient_details.patient_contact_number FROM patient JOIN patient_details ON patient_details.patient_id = patient.patient_id JOIN patient_barangay_queue ON patient_barangay_queue.patient_id = patient.patient_id JOIN priority_groups ON patient_details.priority_group_id = priority_groups.priority_group_id JOIN barangay ON patient_details.barangay_id = barangay.barangay_id WHERE patient.for_queue = 1 AND priority_groups.priority_group = '$priorityStub[$index]' AND barangay.barangay_name = 'San Luis Village' AND patient.first_dose_vaccination = 0 AND patient.notification = 0 ORDER BY patient_barangay_queue.first_dose_queue ASC LIMIT $values[$index];";
     } else {
-        $patientQuery = "SELECT patient.patient_id, patient.token, patient_details.patient_contact_number FROM patient JOIN patient_details ON patient_details.patient_id = patient.patient_id JOIN patient_barangay_queue ON patient_barangay_queue.patient_id = patient.patient_id WHERE patient.for_queue = 1 AND patient_details.patient_priority_group = '$priorityStub[$index]' AND patient_details.patient_barangay_address = 'San Luis Village' AND patient.first_dose_vaccination = 0 AND patient.notification = 0 ORDER BY patient_barangay_queue.first_dose_queue ASC LIMIT 1;";
+        $patientQuery = "SELECT patient.patient_id, patient.token, patient_details.patient_contact_number FROM patient JOIN patient_details ON patient_details.patient_id = patient.patient_id JOIN patient_barangay_queue ON patient_barangay_queue.patient_id = patient.patient_id JOIN priority_groups ON patient_details.priority_group_id = priority_groups.priority_group_id JOIN barangay ON patient_details.barangay_id = barangay.barangay_id WHERE patient.for_queue = 1 AND priority_groups.priority_group = '$priorityStub[$index]' AND barangay.barangay_name = 'San Luis Village' AND patient.first_dose_vaccination = 0 AND patient.notification = 0 ORDER BY patient_barangay_queue.first_dose_queue ASC LIMIT 1";
     }
 
     $stmt = $database->stmt_init();
@@ -93,7 +93,7 @@ for ($index = 0; $index < sizeof($priorityStub); $index++) {
 
             array_push($patients, $patientId);
 
-            /*
+
             $ch2 = curl_init();
             $parameters = array(
                 'apikey' => '95544f613ef48df7a05012fd0b86b4ff',
@@ -108,7 +108,7 @@ for ($index = 0; $index < sizeof($priorityStub); $index++) {
             $output = curl_exec($ch2 );
             curl_close ($ch2);
             echo $output;
-            */
+
         }
     }
     foreach ($patients as $pat) {

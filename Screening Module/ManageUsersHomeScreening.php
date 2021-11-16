@@ -1,6 +1,6 @@
 <?php 
-require_once('../includes/sessionHandling.php');
-checkRole('Screening');
+//require_once('../includes/sessionHandling.php');
+//checkRole('Screening');
 ?>
 <!DOCTYPE html>
 <html>

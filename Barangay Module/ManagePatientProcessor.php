@@ -255,20 +255,13 @@ if (isset($_POST['patientId'])) {
 
     $patId = $_POST['patientId'];
 
-    foreach ($patient_details as $patient){
-        if($patient->getPatientDeetPatId() == $patId){
-            $group = $patient->getPriorityGroup();
-            $age = $patient->getAge();
-            $gender = $patient->getGender();
-            $contact = $patient->getContact();
-        }
-    }
-
-    foreach ($patients as $pat){
-        if ($pat->getPatientId() == $patId){
-            $name = $pat->getPatientFullName();
-        }
-    }
+    $query = "SELECT patient.patient_full_name, patient_details.patient_gender, patient_details.patient_contact_number, patient_details.patient_age, priority_groups.priority_group FROM patient_details JOIN patient on patient_details.patient_id = patient.patient_id JOIN priority_groups ON patient_details.priority_group_id = priority_groups.priority_group_id WHERE patient_details.patient_id = $patId;";
+    $stmt = $database->stmt_init();
+    $stmt->prepare($query);
+    $stmt->execute();
+    $stmt->bind_result($name, $gender, $contact, $age, $group);
+    $stmt->fetch();
+    $stmt->close();
 
     echo "      
                 <img style='width:150px;' src='../img/SMIT+.png' alt='Baguio Logo'><br>
@@ -290,21 +283,13 @@ if (isset($_POST['passport'])) {
 
     $passportId = $_POST['passport'];
 
-    foreach ($patient_details as $patient){
-        if($patient->getPatientDeetPatId() == $passportId){
-            $group = $patient->getPriorityGroup();
-            $age = $patient->getAge();
-            $gender = $patient->getGender();
-            $contact = $patient->getContact();
-        }
-    }
-
-    foreach ($patients as $pat){
-        if ($pat->getPatientId() == $passportId){
-            $patientId = $pat->getPatientId();
-            $name = $pat->getPatientFullName();
-        }
-    }
+    $query = "SELECT patient.patient_full_name, patient_details.patient_gender, patient_details.patient_contact_number, patient_details.patient_age, priority_groups.priority_group FROM patient_details JOIN patient on patient_details.patient_id = patient.patient_id JOIN priority_groups ON patient_details.priority_group_id = priority_groups.priority_group_id WHERE patient_details.patient_id = $passportId;";
+    $stmt = $database->stmt_init();
+    $stmt->prepare($query);
+    $stmt->execute();
+    $stmt->bind_result($name, $gender, $contact, $age, $group);
+    $stmt->fetch();
+    $stmt->close();
 
     echo "      
                 <img style='width:150px;' src='../img/SMIT+.png' alt='Baguio Logo'><br>
@@ -316,7 +301,7 @@ if (isset($_POST['passport'])) {
                 <h5>Age: $age</h5><br>
                 <h5>Contact Number: $contact</h5><br>
                 
-                <button id='postVac' class='btn-success' type='submit' style='width: 50%; float: right' onclick='queuePatient($patientId)'>Confirm Registration</button>";
+                <button id='postVac' class='btn-success' type='submit' style='width: 50%; float: right' onclick='queuePatient($passportId)'>Confirm Registration</button>";
 
 }
 

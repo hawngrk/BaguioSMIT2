@@ -607,19 +607,17 @@ class vaccinationDrive
     private $vaccDate;
     private $archived;
     private $notifOpened;
-    private $firstDoseStubs;
-    private $secondDoseStubs;
+    private $allocated;
 
 
-    public function __construct($driveId, $siteId, $vaccinationDate, $archived, $notifOpened, $firstDoseStubs, $secondDoseStubs)
+    public function __construct($driveId, $siteId, $vaccinationDate, $archived, $notifOpened, $allocated)
     {
         $this->driveId = $driveId;
         $this->vaccDriveVaccSiteId = $siteId;
         $this->vaccDate= $vaccinationDate;
         $this->archived = $archived;
         $this->notifOpened = $notifOpened;
-        $this->firstDoseStubs = $firstDoseStubs;
-        $this->secondDoseStubs = $secondDoseStubs;
+        $this->allocated = $allocated;
 
     }
 
@@ -648,14 +646,9 @@ class vaccinationDrive
         return $this->notifOpened;
     }
 
-    public function getFirstDoseStubs()
+    public function getAllocated()
     {
-        return $this->firstDoseStubs;
-    }
-
-    public function getSecondDoseStubs()
-    {
-        return $this->secondDoseStubs;
+        return $this->allocated;
     }
 }
 
@@ -666,12 +659,14 @@ class vaccineDrive1
 {
     private $driveId;
     private $vaccineId;
+    private $stubs;
 
 
-    public function __construct($driveId, $vaccineId)
+    public function __construct($driveId, $vaccineId, $stubs)
     {
         $this->driveId = $driveId;
         $this->vaccineId = $vaccineId;
+        $this->stubs = $stubs;
 
 
     }
@@ -687,6 +682,11 @@ class vaccineDrive1
     {
         return $this->vaccineId;
     }
+
+    public function getStubs()
+    {
+        return $this->stubs;
+    }
 }
 
 ?>
@@ -697,13 +697,15 @@ class vaccineDrive2
     private $driveId;
     private $vaccineId;
     private $firstDoseDate;
+    private $stubs;
 
 
-    public function __construct($driveId, $vaccineId, $firstDoseDate)
+    public function __construct($driveId, $vaccineId, $firstDoseDate, $stubs)
     {
         $this->driveId = $driveId;
         $this->vaccineId = $vaccineId;
         $this->firstDoseDate = $firstDoseDate;
+        $this->stubs = $stubs;
 
     }
 
@@ -722,6 +724,11 @@ class vaccineDrive2
     public function getFirstDoseDate()
     {
         return $this->firstDoseDate;
+    }
+
+    public function getStubs()
+    {
+        return $this->stubs;
     }
 }
 

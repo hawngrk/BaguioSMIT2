@@ -1,6 +1,9 @@
 <?php
 require_once('../includes/sessionHandling.php');
 checkRole('Barangay');
+
+$accountDetails = $_SESSION['account'];
+$barangay_id = $accountDetails['barangay_id'];
 ?>
 
 <!DOCTYPE html>
@@ -156,6 +159,7 @@ checkRole('Barangay');
 <script type="text/javascript">
 
     function qr(content){
+        console.log(content)
         $.ajax({
             url: 'ManagePatientProcessor.php',
             method: 'POST',
