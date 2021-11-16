@@ -350,9 +350,9 @@ if (isset($_POST['viewVaccine'])) {
     </div>
     </div>
     
-    <br>
     
     <div class='row'>
+    <h7 class='ml-5 mb-1 font-weight-bold'>Vaccine Description</h7>
     <div class='text-justify border border-secondary rounded mx-5 p-2 mb-3' style='overflow: auto;'>
     <h7> $vaccine_description </h7>
     </div>

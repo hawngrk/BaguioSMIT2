@@ -16,8 +16,8 @@ if (isset($_POST['editVaccine'])) {
     echo "
     <div class='content-modal'>
     <div class='modal-header'>
-        <h4 class='modal-title'> Vaccine Details </h4>
-        <button type='button' class='close' data-dismiss='modal' onclick='closeModal(\"viewVaccineDetails\")'>
+        <h4 class='modal-title'> Vaccine Details - EDIT</h4>
+        <button type='button' class='close' data-dismiss='modal' onclick='closeModal(\"editVaccineDetails\"); openModal(\"viewVaccineDetails\")'>
             <i class='fas fa-window-close'></i>
         </button>
     </div>";
@@ -129,16 +129,16 @@ if (isset($_POST['editVaccine'])) {
     </div>
     </div>
     
-    <br>
     
     <div class='row'>
-    <div class='text-justify border border-secondary rounded mx-5 p-2 mb-3' style='overflow: auto;'>
-    <textarea contenteditable='true'> $vaccine_description </textarea>
+    <h7 class='ml-5 mb-1 font-weight-bold'>Vaccine Description</h7>
+    <div class='text-justify rounded mx-5 p-2' style='width:100%; overflow: auto;'>
+    <textarea contenteditable='true' style='width:100%; height: 30vh'> $vaccine_description </textarea>
     </div>
     </div>
     </div>
     <div class='modal-footer'>
-    <button type='button' class='btn btn-danger float-right' onclick='closeModal(\"viewVaccineDetails\")'>Cancel</button>
+    <button type='button' class='btn btn-danger float-right' onclick='closeModal(\"editVaccineDetails\"); openModal(\"viewVaccineDetails\")'>Cancel</button>
     <button type='button' class='btn btn-success float-right' onclick=''> Save </button>
     </div>
     ";

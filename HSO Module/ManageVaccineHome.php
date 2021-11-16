@@ -210,6 +210,10 @@ include_once("../includes/database.php") ?>
 
     </div>
 
+    <div id="editVaccineDetails" class="modal-window">
+
+    </div>
+
     <!--Add Vaccine Lot Modal-->
     <div id="vaccineModal" class="modal-window">
         <div class="content-modal">
@@ -682,7 +686,8 @@ include_once("../includes/database.php") ?>
     }
 
     //edit vaccine details
-    var editVaccineModal = document.getElementById("viewVaccineDetails");
+    var editVaccineModal = document.getElementById("editVaccineDetails");
+    var viewVaccineModal = document.getElementById("viewVaccineDetails");
 
     function editVaccineDetails(vaccineId) {
         $.ajax({
@@ -690,8 +695,10 @@ include_once("../includes/database.php") ?>
             type: 'POST',
             data: {"editVaccine": vaccineId},
             success: function (result) {
-                document.getElementById("viewVaccineDetails").innerHTML = result;
+                document.getElementById("editVaccineDetails").innerHTML = result;
                 editVaccineModal.style.display = "block";
+                viewVaccineModal.style.display = "none";
+
             }
         })
     }
