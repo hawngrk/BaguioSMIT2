@@ -226,9 +226,6 @@ if (isset($_POST['viewBarangays2'])) {
 }
 
 if (isset($_POST['notifListDrives'])){
-
-
-
     echo '<select onchange="updateDeploymentDetails(this.value)">
                             <option value="" disabled selected hidden> Select Deployment </option>';
 

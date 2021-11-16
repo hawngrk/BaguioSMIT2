@@ -30,4 +30,6 @@ if (isset($_POST['barangayName'])) {
   
 ";
 }
+
+
 ?>

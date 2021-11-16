@@ -86,6 +86,22 @@ input[type=text1] {
     background: #68A0B8
 }
 
+#totalReports {
+    background: #68A0B8;
+}
+
+#totalVerified{
+    background: #3681A1;
+}
+
+#totalInvalidate{
+    background: #1D7195;
+}
+
+#totalPending{
+    background: #4F91AD;
+}
+
 .counter-box.colored1 p,
 .counter-box.colored1 i,
 .counter-box.colored1 .counter {
@@ -132,6 +148,7 @@ input[type=text1] {
 .counter-box span{
     font-size: 29px;
 }
+
 .tableReport {
     width: 100%!important;
     background-color: white;

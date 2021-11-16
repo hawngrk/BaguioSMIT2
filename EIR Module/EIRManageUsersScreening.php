@@ -1,4 +1,4 @@
-<?php 
+<?php
 require_once('../includes/sessionHandling.php');
 checkRole('EIR');
 ?>
@@ -39,6 +39,9 @@ checkRole('EIR');
             crossorigin="anonymous"></script>
 
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script src="../javascript/closeModal.js"></script>
+    <script src="../javascript/openModal.js"></script>
 </head>
 
 <body>
@@ -85,13 +88,14 @@ checkRole('EIR');
                     <button type="button" class="buttonTop3 float-left"
                             onclick="openModal('uploadFileModal')"><i
                                 class="fas fa-upload"></i> Upload File
+
                     </button>
                     <button type="button" onclick="openModal('addPatientModal')"
                             class="buttonTop3"><i class="fas fa-user-plus"></i> Add User Account
                     </button>
                 </div>
                 <button type="button" class="btn btn-warning shadow-sm buttonTop3 float-right"
-                        onclick="openModal('archived')"><i class="fas fa-inbox fa-lg"> </i> Archive
+                        onclick="openModal('archivedModal')"><i class="fas fa-inbox fa-lg"> </i> Archive
                 </button>
             </div>
         </div>
@@ -102,7 +106,8 @@ checkRole('EIR');
                 <div class="row">
                     <div class="col">
                         <div class="input-group">
-                            <input id="searchPatient" type="search" class="form-control" placeholder="Search" name="searchPatient" onkeyup="search()"/>
+                            <input id="searchPatient" type="search" class="form-control" placeholder="Search"
+                                   name="searchPatient" onkeyup="search()"/>
                             <button type="submit" class="buttonTop5" name="searchPatientBtn" onclick="searchPatient()">
                                 <i class="fas fa-search"></i>
                             </button>
@@ -113,16 +118,16 @@ checkRole('EIR');
                         <div class="row">
                             <div class="sfDiv col-md-1.5 my-auto">
                                 <select class="form-select filterButton" id="filterCat" name="filterCategory"
-                                        onchange="filterCategoryGroup(this)">
-                                    <option value="" selected disabled hidden>Filter By</option>
-                                    <option value="" disabled >Select Category Group</option>
-                                    <option value="All"> All </option>
+                                        onchange="filterCategoryGroup(this.value)">
+                                    <option value='' selected disabled hidden>Filter By</option>
+                                    <option value='' disabled>Select Category Group</option>
+                                    <option value="All"> All</option>
                                     <?php
                                     require_once("../require/getPriorityGroup.php");
                                     foreach ($priorityGroups as $pg) {
                                         $id = $pg->getPriorityGroupId();
                                         $category = $pg->getPriorityGroup();
-                                        echo "<option value=$category> $category </option>";
+                                        echo "<option value=$id> $category </option>";
                                     }
                                     ?>
                                 </select>
@@ -131,7 +136,7 @@ checkRole('EIR');
                                 <select class="form-select sortButton" id="sortPatientName" name="sortPatient"
                                         onchange="sortByName(this)">
                                     <option value="" selected disabled hidden>Sort By</option>
-                                    <option value="" disabled >Select Category Group</option>
+                                    <option value="" disabled>Select Category Group</option>
                                     <option value="Asc">Name Asc</option>
                                     <option value="Desc">Name Desc</option>
                                 </select>
@@ -141,48 +146,47 @@ checkRole('EIR');
                 </div>
             </div>
 
+            <!--Table Part-->
             <div class="tablePatient shadow tableScroll2">
-            <table class="table table-hover" id="patientTable">
-                <thead>
-                <tr class="labelRow tableCenterCont">
-                    <th>Patient Id No.</th>
-                    <th>Patient Name</th>
-                    <th>Category</th>
-                    <th>Complete Address</th>
-                    <th>Contact Number</th>
-                    <th>Action</th>
-                </tr>
-                </thead>
-                <?php
-                require_once '../require/getPatientDetails.php';
-                $query = "SELECT patient.patient_id, CONCAT(patient_details.patient_last_name,', ',patient_details.patient_first_name,' ',COALESCE(patient_details.patient_middle_name,''),' ',COALESCE(patient_details.patient_suffix,'')) AS full_name, priority_groups.priority_group, CONCAT(patient_details.patient_house_address, ' ', barangay.barangay_name,' ',barangay.city,' ', barangay.province) AS full_address, patient_contact_number FROM patient JOIN patient_details ON patient.patient_id = patient_details.patient_id JOIN barangay ON barangay.barangay_id = patient_details.barangay_id JOIN priority_groups ON priority_groups.priority_group_id = patient_details.priority_group_id;";
-                $patient_details = [];
-
-                $stmt = $database->stmt_init();
-                $stmt->prepare($query);
-                $stmt->execute();
-                $stmt->bind_result($patientId, $fullname, $category, $patientAddress, $contactNum);
-                while ($stmt->fetch()) {
-                    echo "<tr onclick='showPatient(this)' class='tableCenterCont'>
+                <table class="table table-hover" id="patientTable">
+                    <thead>
+                    <tr class="labelRow tableCenterCont">
+                        <th>Patient Id No.</th>
+                        <th>Patient Name</th>
+                        <th>Category</th>
+                        <th>Complete Address</th>
+                        <th>Contact Number</th>
+                        <th>Action</th>
+                    </tr>
+                    </thead>
+                    <?php
+                    require_once '../require/getPatientDetails.php';
+                    $query = "SELECT patient.patient_id, CONCAT(patient_details.patient_last_name,', ',patient_details.patient_first_name,' ',COALESCE(patient_details.patient_middle_name,''),' ',COALESCE(patient_details.patient_suffix,'')) AS full_name, priority_groups.priority_group, CONCAT(patient_details.patient_house_address, ' ', barangay.barangay_name,' ',barangay.city,' ', barangay.province) AS full_address, patient_contact_number FROM patient JOIN patient_details ON patient.patient_id = patient_details.patient_id JOIN barangay ON barangay.barangay_id = patient_details.barangay_id JOIN priority_groups ON priority_groups.priority_group_id = patient_details.priority_group_id WHERE patient_details.Archived = 0;";
+                    $stmt = $database->stmt_init();
+                    $stmt->prepare($query);
+                    $stmt->execute();
+                    $stmt->bind_result($patientId, $fullname, $category, $patientAddress, $contactNum);
+                    while ($stmt->fetch()) {
+                        echo "<tr class='tableCenterCont' onclick='showPatient(this)'>
                                 <td>$patientId</td>
                                 <td>$fullname</td>
                                 <td>$category</td>
                                 <td>$patientAddress</td>
                                 <td>$contactNum</td>
                                 <td>
-                                    <div class='d-flex justify-content-center'>
+                                    <div class ='d-flex justify-content-center'>
                                         <button class='btn btn-sm bg-none' onclick='event.stopPropagation();archive(1, clickArchive, $patientId)'><i class='fa fa-archive'></i></button>
                                         <button type='button' class='btn btn-sm bg-none' id='viewButton' onclick='viewPatient($patientId)'><i class='fas fa-eye'></i></button
                                     </div>
                                 </td>
                             </tr>";
-                }
-                ?>
-            </table>
+                    }
+                    ?>
+                </table>
+            </div>
         </div>
-    </div>
 
-</div>
+    </div>
 </div>
 
 <!--MODALS-->
@@ -197,37 +201,38 @@ checkRole('EIR');
     <div class="content-modal">
         <div class="modal-header">
             <h4 class="modal-title">Add User | Patient - Information</h4>
-            <button type="button" onclick="closeModal('addPatientModal')" class="close" data-dismiss="modal"><i class='fas fa-window-close'></i>
+            <button type="button" onclick="closeModalForms('addPatientModal')" class="close" data-dismiss="modal"><i
+                        class='fas fa-window-close'></i>
             </button>
         </div>
         <div class="modal-body">
-            <form id="registrationForm" name="registrationForm" action="/action_page.php"
-                  onsubmit="return validateForm()" method="post">
+            <form id="registrationForm" name="registrationForm" onsubmit="return validateForm()" method="post"
+                  class="form">
                 <div class="personalInfo">
                     <h5> Personal Information </h5>
                     <div class="row">
                         <div class="col">
                             <label class="required" for="lname">Last Name</label>
-                            <input type="text3" id="lname" class='input' name="lastname"
+                            <input type="text3" id="lname" class='input form-control' name="lastname"
                                    placeholder="Input Answer Here" required>
                         </div>
                         <div class="col">
                             <label class="required" for="fname">First Name </label>
-                            <input type="text3" id="fname" class='input' name="firstname"
+                            <input type="text3" id="fname" class='input form-control' name="firstname"
                                    placeholder="Input Answer Here" required>
 
                         </div>
                         <div class="col">
                             <label class="required" for="mname">Middle Name </label>
-                            <input type="text3" id="mname" class='input' name="middlename"
+                            <input type="text3" id="mname" class='input form-control' name="middlename"
                                    placeholder="Input Answer Here" required>
                         </div>
-                    </div>
-                    <div class="row">
+
                         <div class="col">
                             <label class="label1 required" for="suffix">Suffix </label><br>
-                            <select id="suffix" name="suffix" required>
-                                <option selected value="">None</option>
+                            <select id="suffix" name="suffix" class="form-select form-select-lg" required>
+                                <option value=""> Select Suffix...</option>
+                                <option value="none">None</option>
                                 <option value="sr">Sr</option>
                                 <option value="jr">Jr</option>
                                 <option value="I">I</option>
@@ -235,35 +240,46 @@ checkRole('EIR');
                                 <option value="III">III</option>
                             </select>
                         </div>
+                    </div>
+                    <div class="row">
+
                         <div class="col">
-                            <label class="label1 required" for="gender"> Gender </label>
-                            <select class="formControl" id="gender" name="gender" required>
-                                <option disabled selected>Select a Gender...</option>
+                            <label class="label1 required" for="date"> Birthdate </label>
+                            <input type="date" id="date" name="birthdate" class="form-control" required>
+                        </div>
+                        <div class="col">
+                            <label class="label1 required" for="gender"> Sex </label>
+                            <select class="form-select" id="gender" name="gender" required>
+                                <option value="">Select a Sex...</option>
                                 <option value="male">Male</option>
                                 <option value="female">Female</option>
                             </select>
                         </div>
                         <div class="col">
-                            <label class="label1 required" for="date"> Birthdate </label>
-                            <input type="date" id="date" name="birthdate" required>
+                            <label class="label1 required" for="civilStatus"> Civil Status </label>
+                            <select class="form-select" id="civilStatus" name="civilStatus" required>
+                                <option value="">Please Select...</option>
+                                <option value="Not Applicable">Not Applicable</option>
+                                <option value="Single">Single</option>
+                                <option value="Married">Married</option>
+                            </select>
+                        </div>
+                        <div class="col">
+                            <label class="label1 required" for="occupation">Occupation </label>
+                            <input type="text3" id="occupation" class='input form-control' name="middlename"
+                                   placeholder="Input Answer Here" required>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col">
-                            <label class="label1 required" for="occupation">Occupation </label>
-                            <input type="text3" id="occupation" class='input' name="middlename"
-                                   placeholder="Input Answer Here" required>
-                        </div>
-                        <div class="col">
                             <label class="label1 required" for="contactNum">Contact Number </label>
-                            <input type="text3" id="contactNum" class='input' name="contactNum"
+                            <input type="text3" id="contactNum" class='input form-control' name="contactNum"
                                    placeholder="09XX-XXX-XXXX" required>
                         </div>
-
                         <div class="col">
-                            <label class="label1 required" for="email"> Email </label>
-                            <input type="text3" id="email" class='input' name="email"
-                                   placeholder="@email.com" required>
+                            <label class="label1 required" for="email"> Email Address </label>
+                            <input type="text3" id="email" class='input form-control' name="email"
+                                   placeholder="email@example.org" required>
                         </div>
                     </div>
                 </div>
@@ -274,29 +290,26 @@ checkRole('EIR');
                     <div class="row">
                         <div class="col">
                             <label class="required" for="priorityGroup">Priority Group </label>
-                            <select class="formControl" id="priorityGroup" name="priorityGroup" required>
+                            <select class="form-select" id="priorityGroup" name="priorityGroup" required>
                                 <option disabled selected>Select a Category Group...</option>
-                                <option value="A1: Health Care Workers">A1: Health Care Workers</option>
-                                <option value="A2: Senior Citizens">A2: Senior Citizens</option>
-                                <option value="A3: Adult with Comorbidity">A3: Adult with Comorbidity</option>
-                                <option value="A4: Frontliner">A4: Frontline Personnel in Essential Sector,
-                                    including
-                                    Uniformed
-                                    Personnel
-                                </option>
-                                <option value="A5: Indigent">A5: Indigent Population</option>
-                                <option value="A6: ROP">A6: Rest of the Population</option>
-                                <option value="A7: 12-17">A7: 12-17 Years Old</option>
+                                <?php
+                                require_once("../require/getPriorityGroup.php");
+                                foreach ($priorityGroups as $priority) {
+                                    $id = $priority->getPriorityGroupId();
+                                    $name = $priority->getPriorityGroup();
+                                    echo "<option value=$id>$name</option>";
+                                }
+                                ?>
                             </select>
                         </div>
                         <div class="col">
                             <label class="required" for="categoryID">Category ID</label><br>
-                            <select id="categoryID" name="categoryID" required>
+                            <select id="categoryID" name="categoryID" class="form-select" required>
                                 <option disabled selected>Select a Category ID...</option>
-                                <option value="prc">Professional Regulation Commission ID</option>
-                                <option value="senior">Office of Senior Citizen Affairs ID</option>
-                                <option value="facility"> Facility ID</option>
-                                <option value="others"> Other ID</option>
+                                <option value="Professional Regulation Comission Id">Professional Regulation Commission ID</option>
+                                <option value="Office of Senior Citizen Affairs Id">Office of Senior Citizen Affairs ID</option>
+                                <option value="Facility Id"> Facility ID</option>
+                                <option value="Other Id"> Other ID</option>
                             </select>
                         </div>
                         <div class="col">
@@ -309,12 +322,12 @@ checkRole('EIR');
                         <div class="col-4">
                             <label class="label1" for="philHealth"> PhilHealth ID No.</label>
                             <input type="text3" id="philHealth" class='input' name="philHealth"
-                                   placeholder="Input Answer Here">
+                                   placeholder="Input Philhealth ID">
                         </div>
                         <div class="col-4">
                             <label class="label1" for="pwdID"> PWD ID No.</label>
                             <input type="text3" id="pwdID" class='input' name="pwdID"
-                                   placeholder="Input Answer Here">
+                                   placeholder="Input PWD ID">
                         </div>
                     </div>
                 </div>
@@ -325,13 +338,14 @@ checkRole('EIR');
                     <div class="row">
                         <div class="col-8">
                             <label class="required" for="houseAddress">House Address </label>
-                            <input type="text3" id="houseAddress" class='input' name="houseAddress"
-                                   placeholder="Input House Number/Lot/Block Number, Street, Alley etc." required>
+                            <input type="text3" id="houseAddress" class='input form-control' name="houseAddress"
+                                   placeholder="Input House Number/Lot/Block Number, Street, Alley etc."
+                                   required>
                         </div>
                         <div class="col-4">
                             <div id="barangayList">
                                 <label class="required" for="barangay"> Barangay </label>
-                                <select id="barangay" onchange="updateBarangayDetails(this.value)">
+                                <select id="barangay" onchange="updateBarangayDetails(this.value)" class="form-select">
                                     <option value="" disabled selected> Select Barangay</option>
                                     <?php
                                     require_once("../require/getBarangay.php");
@@ -348,16 +362,18 @@ checkRole('EIR');
                     <div class="row" id="barangayDetails">
                         <div class="col">
                             <label class="label1" for="city">City/Municipality</label>
-                            <input type="text3" id="city" class='input' name="city" disabled="disabled">
+                            <input type="text3" id="city" class='input form-control' name="city" disabled="disabled">
                         </div>
                         <div class="col">
                             <label class="label1" for="province">Province</label>
-                            <input type="text3" id="province" class='input' name="province" disabled="disabled">
+                            <input type="text3" id="province" class='input form-control' name="province"
+                                   disabled="disabled">
                         </div>
 
                         <div class="col">
                             <label class="label1" for="region">Region</label>
-                            <input type="text3" id="region" class='input' name="region" disabled="disabled">
+                            <input type="text3" id="region" class='input form-control' name="region"
+                                   disabled="disabled">
                         </div>
                     </div>
                 </div>
@@ -368,18 +384,18 @@ checkRole('EIR');
                     <div class="row">
                         <div class="col-4">
                             <label class="required" for="allergy"> Allergy with Vaccine?</label>
-                            <select class="formControl" id="allergy" name="allergy" required>
-                                <option selected disabled>Select Answer...</option>
-                                <option value="None">None</option>
-                                <option value="Yes">Yes</option>
+                            <select class="form-select" id="allergy" name="allergy" required>
+                                <option value="">Select Answer...</option>
+                                <option value="none">None</option>
+                                <option value="yes" required>Yes</option>
                             </select>
                         </div>
                         <div class="col-4">
                             <label class="required" for="comorbidity"> With Comorbidity? </label>
-                            <select class="" id="comorbidity" name="comorbidity" required>
-                                <option selected disabled>Select Answer...</option>
+                            <select class="form-select" id="comorbidity" name="comorbidity" required>
+                                <option value="">Select Answer...</option>
                                 <option value="none"> None</option>
-                                <option value="yes"> Yes</option>
+                                <option value="yes" required> Yes</option>
                             </select>
                         </div>
                     </div>
@@ -389,59 +405,63 @@ checkRole('EIR');
                     <div class="listOfComorbidity">
                         <div class="row">
                             <div class="col">
-                                <input type="checkbox" name="hypertension" value="1" id="hypertension">
+                                <input type="checkbox" name="hypertension" value="hypertension"
+                                       id="hypertension" class="form-select">
                                 <label> Hypertension</label>
                             </div>
                             <div class="col">
-                                <input type="checkbox" name="heartDisease" value="1" id="heartDisease">
+                                <input type="checkbox" name="heartDisease" value="heartDisease"
+                                       id="heartDisease" class="form-select">
                                 <label> Heart Disease</label>
                             </div>
                             <div class="col">
-                                <input type="checkbox" name="kidneyDisease" value="1"
-                                       id="kidneyDisease">
+                                <input type="checkbox" name="kidneyDisease" value="kidneyDisease"
+                                       id="kidneyDisease" class="form-select">
                                 <label> Kidney Disease </label>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col">
-                                <input type="checkbox" name="diabetes" value="1" id="diabetes">
+                                <input type="checkbox" name="diabetes" value="diabetes" id="diabetes">
                                 <label> Diabetes Mellitus </label>
                             </div>
                             <div class="col">
-                                <input type="checkbox" name="asthma" value="1" id="asthma">
+                                <input type="checkbox" name="asthma" value="asthma" id="asthma" class="form-select">
                                 <label> Bronchial Asthma </label>
                             </div>
                             <div class="col">
-                                <input type="checkbox" name="immunodeficiency" value="1"
-                                       id="immunodeficiency">
+                                <input type="checkbox" name="immunodeficiency" value="immunodeficiency"
+                                       id="immunodeficiency" class="form-select">
                                 <label> Immunodeficiency </label>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-4">
-                                <input type="checkbox" name="cancer" value="cancer" id="cancer">
+                                <input type="checkbox" name="cancer" value="cancer" id="cancer" class="form-select">
                                 <label> Cancer </label>
                             </div>
                             <div class="col">
-                                <input type="checkbox" name="other" value="other" id="other"
-                                       onclick="showOthersInput(this)">
+                                <input type="checkbox" name="others" value="others" id="others"
+                                       onclick="showOthersInput(this)" class="form-select">
                                 <label> Others </label>
                             </div>
                             <div class="col">
                                 <div id="otherTextField">
-                                    <input type="text3" name="other" id="other" class="otherInput"
-                                           placeholder="Input Other Commorbidity">
+                                    <input type="text3" name="others" id="others"
+                                           placeholder="Input Other Commorbidity" class="form-select">
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 </div>
             </form>
         </div>
         <div class="modal-footer">
-            <button type="button" onclick="closeModal('addPatientModal')" class="btn btn-danger shadow-sm" >Cancel</button>
-            <button type="button" id="addBtn" class="btn btn-success shadow-sm" onclick="confMessage('Patient', addPatient)">Add</button>
+            <button type="button" onclick="closeModal('addPatientModal')" class="btn btn-danger shadow-sm">Cancel
+            </button>
+            <button type="button" id="addBtn" class="btn btn-success shadow-sm"
+                    onclick="confMessage('Patient', addPatient)">Add
+            </button>
         </div>
     </div>
 </div>
@@ -449,7 +469,8 @@ checkRole('EIR');
     <div class="content-modal">
         <div class="modal-header">
             <h4 class="modal-title">Upload files</h4>
-            <button type="button" onclick="closeModal('uploadFileModal')" class="close"><i class='fas fa-window-close'></i></button>
+            <button type="button" onclick="closeModalForms('uploadFileModal')" class="close"><i
+                        class='fas fa-window-close'></i></button>
         </div>
         <div class="modal-body">
             <div class="row" id="upload-content">
@@ -474,22 +495,22 @@ checkRole('EIR');
             </div>
         </div>
         <div class="modal-footer">
-            <button type="button" id="uploadFileCancelBtn" class="btn btn-secondary"
-                    onclick="document.getElementById('uploadFileModal').style.display= 'none'">
+            <button type="button" id="uploadFileCancelBtn" class="btn btn-danger"
+                    onclick="closeModalForms('uploadFileModal')">
                 Cancel
             </button>
-            <button type="button" id="uploadFileConfirmBtn" class="btn btn-primary"
+            <button type="button" id="uploadFileConfirmBtn" class="btn btn-success"
                     name="patientUploadFile" onclick="uploadFiles()">Add
             </button>
         </div>
     </div>
 </div>
 </div>
-<div id="archived" class="modal-window">
+<div id="archivedModal" class="modal-window">
     <div class="content-modal-table">
         <div class="modal-header">
             <h4 class="modal-title">Archived Users</h4>
-            <button type="button" class="close" data-dismiss="modal" onclick="closeModal('archived')">
+            <button type="button" class="close" data-dismiss="modal" onclick="closeModal('archivedModal')">
                 <i class='fas fa-window-close'></i>
             </button>
         </div>
@@ -558,33 +579,33 @@ checkRole('EIR');
     function search() {
         var textSearch = document.getElementById("searchPatient").value;
         $.ajax({
-            url: '../includes/managePatientProcessor.php',
+            url: '../includes/searchProcessor.php',
             type: 'POST',
-            data: {"search": textSearch},
+            data: {"searchPatient": textSearch},
             success: function (result) {
                 document.getElementById("patientTable").innerHTML = result;
             }
         });
     }
 
-    function filterCategoryGroup(filter){
-        var selectedFilter = filter.value;
+    //filter category group
+    function filterCategoryGroup(filter) {
         $.ajax({
             url: '../includes/filterProcessor.php',
             type: 'POST',
-            data: {"filterPatient": selectedFilter},
+            data: {"filterPatient": filter},
             success: function (result) {
                 document.getElementById("patientTable").innerHTML = result;
             }
         })
     }
 
-    function sortByName(sort){
+    function sortByName(sort) {
         var selectedSort = sort.value;
         $.ajax({
-            url: '../includes/managePatientProcessor.php',
+            url: '../includes/sortingProcessor.php',
             type: 'POST',
-            data: {"sort": selectedSort},
+            data: {"sortPatient": selectedSort},
             success: function (result) {
                 document.getElementById("patientTable").innerHTML = result;
             }
@@ -594,9 +615,9 @@ checkRole('EIR');
     function showPatient(val) {
         var id = val.getElementsByTagName("td")[0].innerText;
         $.ajax({
-            url: '../includes/managePatientProcessor.php',
+            url: '../includes/viewProcessor.php',
             method: 'POST',
-            data: {patient: id},
+            data: {viewPatient: id},
             success: function (result) {
                 document.getElementById("patientModalContent").innerHTML = result;
                 openModal('viewPatientDetails');
@@ -604,12 +625,12 @@ checkRole('EIR');
         })
     }
 
-    function viewPatient(patientId){
+    function viewPatient(patientId) {
         $.ajax({
-            url:'../includes/managePatientProcessor.php',
-            type:'POST',
-            data:{"viewPatient": patientId},
-            success:function (result){
+            url: '../includes/viewProcessor.php',
+            type: 'POST',
+            data: {"viewPatient": patientId},
+            success: function (result) {
                 document.getElementById("patientModalContent").innerHTML = result;
                 openModal('viewPatientDetails');
             }
@@ -733,18 +754,31 @@ checkRole('EIR');
             }
         });
     }
-    function openModal(modal) {
-        console.log(modal)
-        document.getElementById(modal).style.display = "block";
-        document.body.classList.add("scrollBody");
-    }
-    
-    function closeModal(modal) {
-        document.getElementById(modal).style.display = "none";
-        document.body.classList.remove("scrollBody");
-    }
-    
-    function confMessage(item, action){
+    //
+    // function openModal(modal) {
+    //     document.getElementById(modal).style.display = "block";
+    //     document.body.classList.add("scrollBody");
+    // }
+
+    // function closeModal(modal) {
+    //     Swal.fire({
+    //         icon: 'question',
+    //         title: 'Are you sure you want to quit?',
+    //         text:'All progress in this form will be lost.',
+    //         showDenyButton: true,
+    //         confirmButtonText: 'Yes',
+    //         denyButtonText: `No`,
+    //         confirmButtonColor: '#007bff'
+    //     }).then((result) => {
+    //         if (result.isConfirmed) {
+    //             document.getElementById("registrationForm").reset();
+    //             document.getElementById(modal).style.display = "none";
+    //             document.body.classList.remove("scrollBody");
+    //         }
+    //     })
+    // }
+
+    function confMessage(item, action) {
         Swal.fire({
             icon: 'info',
             title: 'Are You Sure you Want to add this' + item,
@@ -795,6 +829,7 @@ checkRole('EIR');
     }
 
     var sucess = document.getElementById("submit");
+
     function getUploadedFiles(item) {
         for (var i = 0; i < item.files.length; i++) {
             var element = document.createElement('p');
@@ -876,6 +911,16 @@ checkRole('EIR');
             }
         })
     }
+
+    //input validations
+    addPatientForm = document.getElementById("registrationForm");
+    $('#addBtn').click(async function (e) {
+        if (addPatientForm.checkValidity() != "") {
+            addPatient();
+        } else {
+            Swal.fire({icon: 'warning', title: 'Please fill the required fields', confirmButtonText: 'OK', confirmButtonColor: '#007bff'})
+        }
+    });
 </script>
 <!--Logout script-->
 <script src="../javascript/logout.js"></script>

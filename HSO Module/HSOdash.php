@@ -61,7 +61,7 @@ checkRole('HSO');
             <hr>
 
             <li class="active">
-                <a href="#"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+                <a href="HSOdash.php"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
             </li>
             <li>
                 <a href="ManageVaccineHome.php"><i class="fas fa-syringe"></i> Manage Vaccine</a>
@@ -100,7 +100,10 @@ checkRole('HSO');
             </div>
             <br>
             <div class="row">
-                <input type="date" id="dateFilter" name="birthdateFilter" class="w-25">
+                <div class="dateContainer">
+                    Start Date: <input type="date" id="startDate"  class="w-25">
+                    End Date: <input type="date" id="endDate" class="w-25">
+                </div>
             </div>
             <div class="cardContainer">
                 <div class="row">

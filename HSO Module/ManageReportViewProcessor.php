@@ -404,7 +404,6 @@ if (isset($_POST['generate'])) {
             <thead class='tableHeader'>
             <tr class='tableCenterCont'>
                 <th onclick=selectHighlight(this); scope='col'>Select</th>
-                <th onclick=selectHighlight(this); scope='col'></th>
                 <th onclick=selectHighlight(this); scope='col'>Report ID</th>
                 <th onclick=selectHighlight(this); scope='col'>Name of Reporter</th>
                 <th onclick=selectHighlight(this); scope='col'>Date Reported</th>
@@ -417,9 +416,7 @@ if (isset($_POST['generate'])) {
     require_once '../require/getReport.php';
     require_once '../require/getPatient.php';
 
-    $count = 0;
     foreach ($reports as $rep) {
-        $count++;
         $reportId = $rep->getReportId();
         $patientId = $rep->getReportPatientId();
         $dateReported = $rep->getDateReported();
@@ -433,7 +430,6 @@ if (isset($_POST['generate'])) {
         echo "
             <tr class='tableCenterCont'>
                 <td><input type='checkbox' onclick='selectHighlight(this)' class='reportList' value='$reportId'></td>
-                <td>$count</td>
                 <td>$reportId</td>
                 <td>$reporter</td>
                 <td>$dateReported</td>

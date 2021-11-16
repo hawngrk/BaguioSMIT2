@@ -1,44 +1,6 @@
 <?php
 
 include_once "../includes/database.php";
-if (isset($_POST['search'])) {
-
-    $search = $_POST['search'];
-    if ($search == "") {
-        $querySearch = "SELECT patient.patient_id, patient.patient_full_name, CONCAT(patient_details.patient_house_address, ' ', patient_details.patient_barangay_address, ' ', patient_details.patient_CM_address, ' ', patient_details.patient_province) AS full_address, patient_contact_number FROM patient JOIN patient_details ON patient.patient_id = patient_details.patient_id;";
-    } else {
-        $querySearch = "SELECT patient.patient_id, patient.patient_full_name, CONCAT(patient_details.patient_house_address, ' ', patient_details.patient_barangay_address, ' ', patient_details.patient_CM_address, ' ', patient_details.patient_province) AS full_address, patient_contact_number FROM patient JOIN patient_details ON patient.patient_id = patient_details.patient_id WHERE patient.patient_id LIKE '$search%' OR patient.patient_full_name LIKE '$search%';";
-    }
-    echo "
-    <thead>
-            <tr>
-              <th scope='col'>Drive Id</th>
-                                <th scope='col'>Location</th>
-                                <th scope='col'>Date</th>
-                                <th scope='col'>No. of Stubs</th>
-                                <th scope='col'>Action</th>
-            </tr>
-            </thead>";
-
-    $count = 1;
-    $stmt = $database->stmt_init();
-    $stmt->prepare($querySearch);
-    $stmt->execute();
-    $stmt->bind_result($driveId, $vaccinationSite, $date, $stub);
-    while ($stmt->fetch()) {
-        echo "<tr onclick='showDrive(this)'>
-                <td>$driveId</td>
-                <td>$vaccinationSite</td>
-                <td>$date</td>
-                <td>$stub</td>
-                <td> <button class='btn btn-sm bg-none' onclick='event.stopPropagation(); archive(1, clickArchive, $driveId)'><i class='fa fa-archive'></i></button>
-                                <button class='buttonTransparent ml-2' onclick=''><i class='far fa-edit'></i></button>
-                           
-                            </td>
-                </tr>";
-        $count++;
-    }
-}
 
 if (isset($_POST['id'])) {
     $drive = $_POST['id'];
@@ -320,12 +282,12 @@ if (isset($_POST['healthName'])){
     $name = $_POST['healthName'];
     $number = $_POST['number'];
 
-    echo "  <h5>Health District: </h5>
-            $name <br><hr> 
-            <h5>Contact Number:</h5>
-            $number<br><hr>
+    echo "  <h5 class='ml-3'>Health District: </h5>
+            <h7 class='ml-5'>$name</h7> <br><hr> 
+            <h5 class='ml-3'>Contact Number:</h5>
+            <h7 class='ml-5'> $number </h7><br><hr>
           
-            <h5>Barangays: </h5><br> 
+            <h5 <h7 class='ml-3'>Barangays: </h5><br> 
             <div class='tableScroll6 border border-dark p-3' id='barangayList'>";
 
     require_once '../require/getBarangay.php';
@@ -350,7 +312,7 @@ if (isset($_POST['healthName'])){
 
     echo "   </div>
                            <div>
-                                <button class='buttonTransparent hyperlink' onclick='openList($id)'>+Add Barangay</i></button>
+                                <button class='buttonTransparentHealth hyperlink' onclick='openList($id)'>+Add Barangay</i></button>
                            </div>
 
                        ";

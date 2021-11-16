@@ -36,7 +36,6 @@ include_once("../includes/database.php") ?>
             crossorigin="anonymous"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-    <script defer src="../javascript/showDateAndTime.js"></script>
 </head>
 
 <body>
@@ -90,19 +89,21 @@ include_once("../includes/database.php") ?>
         <div class="navbar navbar-expand-lg navbar-light bg-light shadow-sm p-3 mb-4 rounded-lg">
             <div class="container-fluid">
                 <div>
-                    <button id="uploadFileBtn" onclick="openModal('uploadFileModal')" type="button" class="buttonTop3"><i class="fas fa-upload"></i> Upload
-                        File
+                    <button type="button" class="buttonTop3 float-left" id="uploadFileBtn"
+                            onclick="openModal('uploadFileModal')"><i
+                                class="fas fa-upload"></i> Upload File
                     </button>
-
-                    <button onclick="openModal('patientInformationModal')" type="button"  class="buttonTop3 ml-50"><i class="fas fa-plus"></i> Add User
+                    <button type="button" onclick="openModal('patientInformationModal')"
+                            class="buttonTop3"><i class="fas fa-user-plus"></i> Add User Account
                     </button>
                 </div>
-                <button type="button" class="btn btn-warning buttonTop3 float-right" onclick="openModal('archived')">
-                    <i class="fas fa-inbox fa-lg"></i> Archive
+                <button type="button" class="btn btn-warning shadow-sm buttonTop3 float-right"
+                        onclick="openModal('archived')"><i class="fas fa-inbox fa-lg"> </i> Archive
                 </button>
             </div>
         </div>
 
+        <!-- Table  -->
         <div class="tableContainer">
             <div class="table-title">
                 <div class="row">
@@ -166,7 +167,7 @@ include_once("../includes/database.php") ?>
                     $stmt->execute();
                     $stmt->bind_result($patientId, $fullname, $category, $patientAddress, $contactNum);
                     while ($stmt->fetch()) {
-                    echo "<tr onclick='showPatient(this)' class='tableCenterCont'>
+                    echo "<tr class='tableCenterCont' onclick='showPatient(this)'>
                                 <td>$patientId</td>
                                 <td>$fullname</td>
                                 <td>$category</td>
@@ -175,7 +176,7 @@ include_once("../includes/database.php") ?>
                                 <td>
                                     <div class ='d-flex justify-content-center'>
                                         <button class='btn btn-sm bg-none' onclick='event.stopPropagation();archive(1, clickArchive, $patientId)'><i class='fa fa-archive'></i></button>
-                                        <button type='button' class='btn btn-sm bg-none' id='viewButton' onclick='viewPatient($id)'><i class='fas fa-eye'></i></button
+                                        <button type='button' class='btn btn-sm bg-none' id='viewButton' onclick='viewPatient($patientId)'><i class='fas fa-eye'></i></button
                                     </div>
                                 </td>
                             </tr>";
@@ -238,7 +239,7 @@ include_once("../includes/database.php") ?>
         </div>
 
 
-        <!--Button for Adding Patient Details-->
+        <!--Add Patient Modal-->
         <div id="patientInformationModal" class="modal-window">
             <div class="content-modal">
                 <div class="modal-header">
@@ -248,33 +249,33 @@ include_once("../includes/database.php") ?>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form id="registrationForm" name="registrationForm" action="/action_page.php"
-                          onsubmit="return validateForm()" method="post">
+                    <form id="registrationForm" name="registrationForm" onsubmit="return validateForm()" method="post" class="form">
                         <div class="personalInfo">
                             <h5> Personal Information </h5>
                             <div class="row">
                                 <div class="col">
                                     <label class="required" for="lname">Last Name</label>
-                                    <input type="text3" id="lname" class='input' name="lastname"
+                                    <input type="text3" id="lname" class='input form-control' name="lastname"
                                            placeholder="Input Answer Here" required>
                                 </div>
                                 <div class="col">
                                     <label class="required" for="fname">First Name </label>
-                                    <input type="text3" id="fname" class='input' name="firstname"
+                                    <input type="text3" id="fname" class='input form-control' name="firstname"
                                            placeholder="Input Answer Here" required>
 
                                 </div>
                                 <div class="col">
                                     <label class="required" for="mname">Middle Name </label>
-                                    <input type="text3" id="mname" class='input' name="middlename"
+                                    <input type="text3" id="mname" class='input form-control' name="middlename"
                                            placeholder="Input Answer Here" required>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col">
                                     <label class="label1 required" for="suffix">Suffix </label><br>
-                                    <select id="suffix" name="suffix" required>
-                                        <option selected value="">None</option>
+                                    <select id="suffix" name="suffix" required class="form-select">
+                                        <option value="">Select a Suffix...</option>
+                                        <option value="none"> None</option>
                                         <option value="sr">Sr</option>
                                         <option value="jr">Jr</option>
                                         <option value="I">I</option>
@@ -284,32 +285,32 @@ include_once("../includes/database.php") ?>
                                 </div>
                                 <div class="col">
                                     <label class="label1 required" for="gender"> Gender </label>
-                                    <select class="formControl" id="gender" name="gender" required>
-                                        <option disabled selected>Select a Gender...</option>
+                                    <select class="form-select" id="gender" name="gender" required>
+                                        <option value="">Select a Gender...</option>
                                         <option value="male">Male</option>
                                         <option value="female">Female</option>
                                     </select>
                                 </div>
                                 <div class="col">
                                     <label class="label1 required" for="date"> Birthdate </label>
-                                    <input type="date" id="date" name="birthdate" required>
+                                    <input type="date" id="date" name="birthdate"  class="form-control" required>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col">
                                     <label class="label1 required" for="occupation">Occupation </label>
-                                    <input type="text3" id="occupation" class='input' name="middlename"
+                                    <input type="text3" id="occupation" class='input form-control' name="middlename"
                                            placeholder="Input Answer Here" required>
                                 </div>
                                 <div class="col">
                                     <label class="label1 required" for="contactNum">Contact Number </label>
-                                    <input type="text3" id="contactNum" class='input' name="contactNum"
+                                    <input type="text3" id="contactNum" class='input form-control' name="contactNum"
                                            placeholder="09XX-XXX-XXXX" required>
                                 </div>
 
                                 <div class="col">
                                     <label class="label1 required" for="email"> Email Address </label>
-                                    <input type="text3" id="email" class='input' name="email"
+                                    <input type="text3" id="email" class='input form-control' name="email"
                                            placeholder="email@example.org" required>
                                 </div>
                             </div>
@@ -321,8 +322,8 @@ include_once("../includes/database.php") ?>
                             <div class="row">
                                 <div class="col">
                                     <label class="required" for="priorityGroup">Priority Group </label>
-                                    <select class="formControl" id="priorityGroup" name="priorityGroup" required>
-                                        <option disabled selected>Select a Category Group...</option>
+                                    <select class="form-select" id="priorityGroup" name="priorityGroup" required>
+                                        <option select="">Select a Category Group...</option>
                                         <?php
                                         require_once("../require/getPriorityGroup.php");
                                         foreach ($priorityGroups as $priority) {
@@ -335,8 +336,8 @@ include_once("../includes/database.php") ?>
                                 </div>
                                 <div class="col">
                                     <label class="required" for="categoryID">Category ID</label><br>
-                                    <select id="categoryID" name="categoryID" required>
-                                        <option disabled selected>Select a Category ID...</option>
+                                    <select id="categoryID" name="categoryID" class="form-select" required>
+                                        <option value="">Select a Category ID...</option>
                                         <option value="prc">Professional Regulation Commission ID</option>
                                         <option value="senior">Office of Senior Citizen Affairs ID</option>
                                         <option value="facility"> Facility ID</option>
@@ -369,15 +370,15 @@ include_once("../includes/database.php") ?>
                             <div class="row">
                                 <div class="col-8">
                                     <label class="required" for="houseAddress">House Address </label>
-                                    <input type="text3" id="houseAddress" class='input' name="houseAddress"
+                                    <input type="text3" id="houseAddress" class='input form-control' name="houseAddress"
                                            placeholder="Input House Number/Lot/Block Number, Street, Alley etc."
                                            required>
                                 </div>
                                 <div class="col-4">
                                     <div id="barangayList">
                                         <label class="required" for="barangay"> Barangay </label>
-                                        <select id="barangay" onchange="updateBarangayDetails(this.value)">
-                                            <option value="" disabled selected> Select Barangay</option>
+                                        <select id="barangay" onchange="updateBarangayDetails(this.value)" class="form-select">
+                                            <option value=""> Select a Barangay...</option>
                                             <?php
                                             require_once("../require/getBarangay.php");
                                             foreach ($barangays as $barangay) {
@@ -393,16 +394,16 @@ include_once("../includes/database.php") ?>
                             <div class="row" id="barangayDetails">
                                 <div class="col">
                                     <label class="label1" for="city">City/Municipality</label>
-                                    <input type="text3" id="city" class='input' name="city" disabled="disabled">
+                                    <input type="text3" id="city" class='input form-control' name="city" disabled="disabled">
                                 </div>
                                 <div class="col">
                                     <label class="label1" for="province">Province</label>
-                                    <input type="text3" id="province" class='input' name="province" disabled="disabled">
+                                    <input type="text3" id="province" class='input form-control' name="province" disabled="disabled">
                                 </div>
 
                                 <div class="col">
                                     <label class="label1" for="region">Region</label>
-                                    <input type="text3" id="region" class='input' name="region" disabled="disabled">
+                                    <input type="text3" id="region" class='input form-control' name="region" disabled="disabled">
                                 </div>
                             </div>
                         </div>
@@ -413,16 +414,16 @@ include_once("../includes/database.php") ?>
                             <div class="row">
                                 <div class="col-4">
                                     <label class="required" for="allergy"> Allergy with Vaccine?</label>
-                                    <select class="formControl" id="allergy" name="allergy" required>
-                                        <option selected disabled>Select Answer...</option>
+                                    <select class="form-select" id="allergy" name="allergy" required>
+                                        <option value="">Select Answer...</option>
                                         <option value="none">None</option>
                                         <option value="yes">Yes</option>
                                     </select>
                                 </div>
                                 <div class="col-4">
                                     <label class="required" for="comorbidity"> With Comorbidity? </label>
-                                    <select class="" id="comorbidity" name="comorbidity" required>
-                                        <option selected disabled>Select Answer...</option>
+                                    <select class="form-select" id="comorbidity" name="comorbidity" required>
+                                        <option value="">Select Answer...</option>
                                         <option value="none"> None</option>
                                         <option value="yes"> Yes</option>
                                     </select>
@@ -435,17 +436,17 @@ include_once("../includes/database.php") ?>
                                 <div class="row">
                                     <div class="col">
                                         <input type="checkbox" name="hypertension" value="hypertension"
-                                               id="hypertension">
+                                               id="hypertension" class="form-select">
                                         <label> Hypertension</label>
                                     </div>
                                     <div class="col">
                                         <input type="checkbox" name="heartDisease" value="heartDisease"
-                                               id="heartDisease">
+                                               id="heartDisease" class="form-select">
                                         <label> Heart Disease</label>
                                     </div>
                                     <div class="col">
                                         <input type="checkbox" name="kidneyDisease" value="kidneyDisease"
-                                               id="kidneyDisease">
+                                               id="kidneyDisease" class="form-select">
                                         <label> Kidney Disease </label>
                                     </div>
                                 </div>
@@ -455,29 +456,29 @@ include_once("../includes/database.php") ?>
                                         <label> Diabetes Mellitus </label>
                                     </div>
                                     <div class="col">
-                                        <input type="checkbox" name="asthma" value="asthma" id="asthma">
+                                        <input type="checkbox" name="asthma" value="asthma" id="asthma" class="form-select">
                                         <label> Bronchial Asthma </label>
                                     </div>
                                     <div class="col">
                                         <input type="checkbox" name="immunodeficiency" value="immunodeficiency"
-                                               id="immunodeficiency">
+                                               id="immunodeficiency" class="form-select">
                                         <label> Immunodeficiency </label>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-4">
-                                        <input type="checkbox" name="cancer" value="cancer" id="cancer">
+                                        <input type="checkbox" name="cancer" value="cancer" id="cancer" class="form-select">
                                         <label> Cancer </label>
                                     </div>
                                     <div class="col">
                                         <input type="checkbox" name="others" value="others" id="others"
-                                               onclick="showOthersInput(this)">
+                                               onclick="showOthersInput(this)" class="form-select">
                                         <label> Others </label>
                                     </div>
                                     <div class="col">
                                         <div id="otherTextField">
                                             <input type="text3" name="others" id="others"
-                                                   placeholder="Input Other Commorbidity">
+                                                   placeholder="Input Other Commorbidity" class="form-select" required>
                                         </div>
                                     </div>
                                 </div>
@@ -729,7 +730,7 @@ include_once("../includes/database.php") ?>
     function confMessage(item, action){
         Swal.fire({
             icon: 'info',
-            title: 'Are You Sure you Want to add this' + item,
+            title: 'Are You Sure you Want to add this ' + item,
             showDenyButton: true,
             confirmButtonText: 'Yes',
             denyButtonText: `No`,
@@ -750,9 +751,8 @@ include_once("../includes/database.php") ?>
         showList.style.display = (this.value == "none") ? "none" : "block";
     }
 
+    //add patient
     function addPatient() {
-
-
         //Personal Information
         var last = document.getElementById("lname").value;
         var first = document.getElementById("fname").value;
@@ -841,6 +841,7 @@ include_once("../includes/database.php") ?>
             }
         });
     }
+
     //Change unchecked commorbidity to 0
     function verifyCommorbidity(commorbidity) {
     return !commorbidity ? 0 : 1;
@@ -855,6 +856,7 @@ include_once("../includes/database.php") ?>
     return age;
     }
 
+    //reload
     function reloadPatient() {
         $.ajax({
             url: '../Barangay Module/ManagePatientProcessor.php',
@@ -866,6 +868,7 @@ include_once("../includes/database.php") ?>
         })
     }
 
+    //archive
     async function archive(archive, action, patient) {
         if (archive == 1) {
             archiveText = "Archive";
@@ -888,6 +891,7 @@ include_once("../includes/database.php") ?>
         })
     }
 
+    //click archive
     function clickArchive(patient, option) {
         $.ajax({
             url: '../Barangay Module/ManagePatientProcessor.php',
@@ -923,7 +927,6 @@ include_once("../includes/database.php") ?>
 
     function closeModal(modal) {
         document.getElementById(modal).style.display = "none";
-
         document.body.classList.remove("scrollBody");
     }
 
@@ -958,6 +961,17 @@ include_once("../includes/database.php") ?>
             }
         });
     }
+
+    //input validations
+    addPatientForm = document.getElementById("registrationForm");
+    $('#addPatientNextBtn').click(async function (e) {
+        if (addPatientForm.checkValidity() != "") {
+            addPatient();
+        } else {
+            Swal.fire({icon: 'warning', title: 'Please fill the required fields', confirmButtonText: 'OK', confirmButtonColor: '#007bff'})
+        }
+    });
+
 </script>
 <!--Logout script-->
 <script src="../javascript/logout.js"></script>

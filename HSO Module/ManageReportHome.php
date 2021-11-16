@@ -1,4 +1,4 @@
-<?php 
+<?php
 include_once("../includes/database.php");
 require_once('../includes/sessionHandling.php');
 checkRole('HSO');
@@ -79,7 +79,7 @@ checkRole('HSO');
         </ul>
 
         <ul class="list-unstyled CTAs">
-            <button type="button" class="btn btn-info" onclick='logout()'> 
+            <button type="button" class="btn btn-info" onclick='logout()'>
                 <span>Sign Out</span>
             </button>
         </ul>
@@ -104,13 +104,60 @@ checkRole('HSO');
             </div>
         </div>
 
+        <div class="cardContainer">
+            <div class="row">
+                <div class="col">
+                    <div class="card text-white mb-3 shadow" id="totalReports">
+                        <div class="card-header">
+                            <h5><center> Total Reports </center></h5>
+                        </div>
+                        <div class="card-body">
+                            <center> 5 </center>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card text-white mb-3 shadow" id="totalPending">
+                        <div class="card-header">
+                            <h5><center> Total Pending Reports </center></h5>
+                        </div>
+                        <div class="card-body">
+                            <center> 2 </center>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card text-white mb-3 shadow" id="totalVerified">
+                        <div class="card-header">
+                            <h5><center> Total Verified Reports </center></h5>
+                        </div>
+                        <div class="card-body">
+                            <center> 3 </center>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card text-white mb-3 shadow" id="totalInvalidate">
+                        <div class="card-header">
+                            <h5><center> Total Invalidated Reports </center></h5>
+                        </div>
+                        <div class="card-body">
+                            <center> 2 </center>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
         <!-- Table Part-->
         <div class="tableContainer">
             <div class="table-title">
                 <div class="row">
                     <div class="col">
                         <div class="input-group">
-                            <input id="searchReportHSO" type="search" name="searchReport" class="form-control" placeholder="Search" onkeyup="searchReport()"/>
+                            <input id="searchReportHSO" type="search" name="searchReport" class="form-control"
+                                   placeholder="Search" onkeyup="searchReport()"/>
                         </div>
                     </div>
                     <div class="col-sm-auto">
@@ -119,7 +166,7 @@ checkRole('HSO');
                                 <select class="form-select filterButton" id="filterReportsInput" name="filterReports"
                                         onchange="filterReport(this)">
                                     <option value="" selected disabled hidden>Filter By</option>
-                                    <option value='' disabled >Select Status</option>
+                                    <option value='' disabled>Select Status</option>
                                     <option value="All">All</option>
                                     <option value="Verified">Verified</option>
                                     <option value="Pending">Pending</option>
@@ -129,8 +176,8 @@ checkRole('HSO');
                                 <select class="form-select sortButton" id="sortReports" name="sortReports"
                                         onchange="sortReport(this)">
                                     <option value="" selected disabled hidden>Sort By</option>
-                                    <option value="" disabled >Select Sort By </option>
-                                    <option value="None"> None </option>
+                                    <option value="" disabled>Select Sort By</option>
+                                    <option value="None"> None</option>
                                     <option value="nameAsc">Name Asc</option>
                                     <option value="nameDesc">Name Desc</option>
                                     <option value="dateAsc">Date Asc</option>
@@ -191,70 +238,116 @@ checkRole('HSO');
                         </table>
                     </div>
 
+
                     <!--Counter Container-->
-                    <div class="col-sm-auto">
-                        <div class="counterColumn">
-                            <div class="four counterRow">
-                                <div class="counter-box colored1" style="align-content: center">
+                    <!--                    <div class="col-sm-auto">-->
+                    <!--                        <div class="counterColumn">-->
+                    <!--                            <div class="four counterRow">-->
+                    <!--                                <div class="counter-box colored1" style="align-content: center">-->
+                    <!---->
+                    <!--                                    <p>Total Reports</p>-->
+                    <!--                                    --><?php
+                    //                                    $query = "SELECT COUNT(*) FROM report ";
+                    //                                    $stmt = $database->stmt_init();
+                    //                                    $stmt->prepare($query);
+                    //                                    $stmt->execute();
+                    //                                    $stmt->bind_result($totalReports);
+                    //                                    $stmt->fetch();
+                    //                                    echo "<span class='d-flex justify-content-center'> $totalReports </span>"
+                    //                                    ?>
+                    <!--                                </div>-->
+                    <!--                            </div>-->
+                    <!---->
+                    <!--                            <div class="four counterRow">-->
+                    <!--                                <div class="counter-box colored2">-->
+                    <!--                                    <p class="p-0">Total of Pending Reports</p>-->
+                    <!--                                    --><?php
+                    //                                    $query = "SELECT COUNT(report_status) FROM report WHERE report_status = 'Pending'";
+                    //                                    $stmt = $database->stmt_init();
+                    //                                    $stmt->prepare($query);
+                    //                                    $stmt->execute();
+                    //                                    $stmt->bind_result($unverifiedReports);
+                    //                                    $stmt->fetch();
+                    //                                    echo "<span class='d-flex justify-content-center'>$unverifiedReports</span>"
+                    //                                    ?>
+                    <!---->
+                    <!--                                </div>-->
+                    <!--                            </div>-->
+                    <!---->
+                    <!--                            <div class="four counterRow">-->
+                    <!--                                <div class="counter-box colored3">-->
+                    <!--                                    <p>Total of Verified Reports</p>-->
+                    <!--                                    --><?php
+                    //                                    $query = "SELECT COUNT(report_status) FROM report WHERE report_status = 'Verified'";
+                    //                                    $stmt = $database->stmt_init();
+                    //                                    $stmt->prepare($query);
+                    //                                    $stmt->execute();
+                    //                                    $stmt->bind_result($verifiedReports);
+                    //                                    $stmt->fetch();
+                    //                                    echo "<span class='d-flex justify-content-center'>$verifiedReports</span>"
+                    //                                    ?>
+                    <!--                                </div>-->
+                    <!--                            </div>-->
+                    <!---->
+                    <!--                            <div class="four counterRow">-->
+                    <!--                                <div class="counter-box colored4">-->
+                    <!--                                    <p>Total of Invalidated Reports</p>-->
+                    <!--                                    --><?php
+                    //                                    $query = "SELECT COUNT(report_status) FROM report WHERE report_status = 'Invalidated'";
+                    //                                    $stmt = $database->stmt_init();
+                    //                                    $stmt->prepare($query);
+                    //                                    $stmt->execute();
+                    //                                    $stmt->bind_result($invalidatedReports);
+                    //                                    $stmt->fetch();
+                    //                                    echo "<span class='d-flex justify-content-center'>$invalidatedReports</span>"
+                    //                                    ?>
+                    <!--                                </div>-->
+                    <!--                            </div>-->
+                    <!--                        </div>-->
+                    <!--                    </div>-->
+                </div>
+            </div>
+        </div>
 
-                                    <p>Total Reports</p>
-                                    <?php
-                                    $query = "SELECT COUNT(*) FROM report ";
-                                    $stmt = $database->stmt_init();
-                                    $stmt->prepare($query);
-                                    $stmt->execute();
-                                    $stmt->bind_result($totalReports);
-                                    $stmt->fetch();
-                                    echo "<span class='d-flex justify-content-center'> $totalReports </span>"
-                                    ?>
-                                </div>
-                            </div>
-
-                            <div class="four counterRow">
-                                <div class="counter-box colored2">
-                                    <p class="p-0">Total of Pending Reports</p>
-                                    <?php
-                                    $query = "SELECT COUNT(report_status) FROM report WHERE report_status = 'Pending'";
-                                    $stmt = $database->stmt_init();
-                                    $stmt->prepare($query);
-                                    $stmt->execute();
-                                    $stmt->bind_result($unverifiedReports);
-                                    $stmt->fetch();
-                                    echo "<span class='d-flex justify-content-center'>$unverifiedReports</span>"
-                                    ?>
-
-                                </div>
-                            </div>
-
-                            <div class="four counterRow">
-                                <div class="counter-box colored3">
-                                    <p>Total of Verified Reports</p>
-                                    <?php
-                                    $query = "SELECT COUNT(report_status) FROM report WHERE report_status = 'Verified'";
-                                    $stmt = $database->stmt_init();
-                                    $stmt->prepare($query);
-                                    $stmt->execute();
-                                    $stmt->bind_result($verifiedReports);
-                                    $stmt->fetch();
-                                    echo "<span class='d-flex justify-content-center'>$verifiedReports</span>"
-                                    ?>
-                                </div>
-                            </div>
-
-                            <div class="four counterRow">
-                                <div class="counter-box colored4">
-                                    <p>Total of Invalidated Reports</p>
-                                    <?php
-                                    $query = "SELECT COUNT(report_status) FROM report WHERE report_status = 'Invalidated'";
-                                    $stmt = $database->stmt_init();
-                                    $stmt->prepare($query);
-                                    $stmt->execute();
-                                    $stmt->bind_result($invalidatedReports);
-                                    $stmt->fetch();
-                                    echo "<span class='d-flex justify-content-center'>$invalidatedReports</span>"
-                                    ?>
-                                </div>
-                            </div>
+        <div class="cardContainer">
+            <div class="row">
+                <div class="col">
+                    <div class="card text-white mb-3 shadow" id="totalReports">
+                        <div class="card-header">
+                            <h5><center> Total Reports </center></h5>
+                        </div>
+                        <div class="card-body">
+                            <center> 5 </center>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card text-white mb-3 shadow" id="totalPending">
+                        <div class="card-header">
+                            <h5><center> Total Pending Reports </center></h5>
+                        </div>
+                        <div class="card-body">
+                            <center> 2 </center>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card text-white mb-3 shadow" id="totalVerified">
+                        <div class="card-header">
+                            <h5><center> Total Verified Reports </center></h5>
+                        </div>
+                        <div class="card-body">
+                            <center> 3 </center>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card text-white mb-3 shadow" id="totalInvalidate">
+                        <div class="card-header">
+                            <h5><center> Total Invalidated Reports </center></h5>
+                        </div>
+                        <div class="card-body">
+                            <center> 2 </center>
                         </div>
                     </div>
                 </div>
@@ -283,25 +376,25 @@ checkRole('HSO');
                             <th scope="col">Action</th>
                         </tr>
                         </thead>
-                            <?php
-                            require_once '../require/getReport.php';
-                            require_once '../require/getPatient.php';
+                        <?php
+                        require_once '../require/getReport.php';
+                        require_once '../require/getPatient.php';
 
-                            foreach ($reports as $rep) {
-                                if ($rep->getArchived() == 1) {
+                        foreach ($reports as $rep) {
+                            if ($rep->getArchived() == 1) {
 
-                                    $reportId = $rep->getReportId(); //replace this part based on the column name mentioned above in chronological order - NATIVIDAD HUDSON
-                                    $patientId = $rep->getReportPatientId();
-                                    $dateReported = $rep->getDateReported();
-                                    $status = $rep->getReportStatus();
+                                $reportId = $rep->getReportId(); //replace this part based on the column name mentioned above in chronological order - NATIVIDAD HUDSON
+                                $patientId = $rep->getReportPatientId();
+                                $dateReported = $rep->getDateReported();
+                                $status = $rep->getReportStatus();
 
-                                    if ($status != 'Invalidated') {
-                                        foreach ($patients as $pat) {
-                                            if ($patientId == $pat->getPatientId()) {
-                                                $reporter = $pat->getPatientFullName();
-                                            }
+                                if ($status != 'Invalidated') {
+                                    foreach ($patients as $pat) {
+                                        if ($patientId == $pat->getPatientId()) {
+                                            $reporter = $pat->getPatientFullName();
                                         }
-                                        echo "<tr class='tableCenterCont' onclick='viewReport($reportId)'>
+                                    }
+                                    echo "<tr class='tableCenterCont' onclick='viewReport($reportId)'>
                                           <td>$reportId</td>
                                           <td>$reporter</td>
                                           <td>$dateReported</td>
@@ -311,327 +404,329 @@ checkRole('HSO');
                                                  <button class='btn btn-warning' onclick='event.stopPropagation();archive(0, clickArchive, $reportId )'>unarchive <i class='fas fa-box-open'></i></button>
                                             </div>
                                           </td></tr>";
-                                    }
                                 }
                             }
-                            ?>
-                        </div>
-                    </table>
+                        }
+                        ?>
                 </div>
+                </table>
             </div>
         </div>
+    </div>
 
 
-        <!-- Additional Scripts-->
-        <!-- jQuery CDN - Slim version (=without AJAX) -->
-        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-                integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-                crossorigin="anonymous"></script>
-        <!-- Popper.JS -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"
-                integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ"
-                crossorigin="anonymous"></script>
-        <!-- Bootstrap JS -->
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"
-                integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm"
-                crossorigin="anonymous"></script>
-        <!-- AJAX -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!-- Additional Scripts-->
+    <!-- jQuery CDN - Slim version (=without AJAX) -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+    <!-- Popper.JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"
+            integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ"
+            crossorigin="anonymous"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"
+            integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm"
+            crossorigin="anonymous"></script>
+    <!-- AJAX -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
 
-        <script>
-            //opening modal
-            function openModal(modal) {
-                console.log(modal)
-                document.getElementById(modal).style.display = "block";
-                document.getElementById(modal).removeClass('hidden');
-                overlay.trigger('show');
-            }
+    <script>
+        //opening modal
+        function openModal(modal) {
+            console.log(modal)
+            document.getElementById(modal).style.display = "block";
+            document.getElementById(modal).removeClass('hidden');
+            overlay.trigger('show');
+        }
 
-            //close modal
-            function closeModal(modal) {
-                document.getElementById(modal).style.display = "none";
-                document.body.classList.remove("scrollBody");
-            }
+        //close modal
+        function closeModal(modal) {
+            document.getElementById(modal).style.display = "none";
+            document.body.classList.remove("scrollBody");
+        }
 
-            //clear search text field
-            $('#searchReportHSO').on('input', function(e) {
-                if('' == this.value) {
-                    $.ajax({
-                        url: '../includes/searchProcessor.php',
-                        type: 'POST',
-                        data: {"searchReport": ""},
-                        success: function (result) {
-                            document.getElementById("reportsTable").innerHTML = result;
-                        }
-                    });
-                }
-            });
-
-            //search report
-            function searchReport() {
-                var textSearch = document.getElementById("searchReportHSO").value;
+        //clear search text field
+        $('#searchReportHSO').on('input', function (e) {
+            if ('' == this.value) {
                 $.ajax({
                     url: '../includes/searchProcessor.php',
                     type: 'POST',
-                    data: {"searchReport": textSearch},
+                    data: {"searchReport": ""},
                     success: function (result) {
                         document.getElementById("reportsTable").innerHTML = result;
                     }
-                })
-            }
-
-            //sort report
-            function sortReport(sort) {
-                var selectedSort = sort.value;
-                $.ajax({
-                    url: '../includes/sortingProcessor.php',
-                    type: 'POST',
-                    data: {"sortReport": selectedSort},
-                    success: function (result) {
-                        document.getElementById("reportsTable").innerHTML = result;
-                    }
-                })
-            }
-
-            //filter report
-            function filterReport(filter) {
-                var selectedFilter = filter.value;
-                $.ajax({
-                    url: '../includes/filterProcessor.php',
-                    type: 'POST',
-                    data: {"filterReport": selectedFilter},
-                    success: function (result) {
-                        document.getElementById("reportsTable").innerHTML = result;
-                    }
-                })
-            }
-
-            //show invalidated reports
-            var invalidatedReportsModal = document.getElementById("invalidatedReportsModal");
-
-            function showInvalidatedReports() {
-                $.ajax({
-                    url: 'ManageReportViewProcessor.php',
-                    type: 'POST',
-                    data: {"invalidated": 1},
-                    success: function (result) {
-                        document.getElementById("invalidatedReportsModal").innerHTML = result;
-                        invalidatedReportsModal.style.display = "block";
-                    }
                 });
             }
+        });
 
-            // view invalidated report
-            function viewInvalidatedReport(reportId) {
-                $.ajax({
-                    url: 'ManageReportViewProcessor.php',
-                    type: 'POST',
-                    data: {"report": reportId, "view": 1},
-                    success: function (result) {
-                        document.getElementById("invalidatedReportsModal").innerHTML = result;
-                        invalidatedReportsModal.style.display = "block";
-                    }
-                });
-            }
+        //search report
+        function searchReport() {
+            var textSearch = document.getElementById("searchReportHSO").value;
+            $.ajax({
+                url: '../includes/searchProcessor.php',
+                type: 'POST',
+                data: {"searchReport": textSearch},
+                success: function (result) {
+                    document.getElementById("reportsTable").innerHTML = result;
+                }
+            })
+        }
 
-            //edit invalidated report
-            function editInvalidatedReport(reportId) {
-                $.ajax({
-                    url: 'ManageReportViewProcessor.php',
-                    type: 'POST',
-                    data: {"report": reportId, "view": 2},
-                    success: function (result) {
-                        document.getElementById("invalidatedReportsModal").innerHTML = result;
-                        invalidatedReportsModal.style.display = "block";
-                    }
-                });
-            }
+        //sort report
+        function sortReport(sort) {
+            var selectedSort = sort.value;
+            $.ajax({
+                url: '../includes/sortingProcessor.php',
+                type: 'POST',
+                data: {"sortReport": selectedSort},
+                success: function (result) {
+                    document.getElementById("reportsTable").innerHTML = result;
+                }
+            })
+        }
 
-            //close invalidated reports
-            function closeInvalidatedReports() {
+        //filter report
+        function filterReport(filter) {
+            var selectedFilter = filter.value;
+            $.ajax({
+                url: '../includes/filterProcessor.php',
+                type: 'POST',
+                data: {"filterReport": selectedFilter},
+                success: function (result) {
+                    document.getElementById("reportsTable").innerHTML = result;
+                }
+            })
+        }
+
+        //show invalidated reports
+        var invalidatedReportsModal = document.getElementById("invalidatedReportsModal");
+
+        function showInvalidatedReports() {
+            $.ajax({
+                url: 'ManageReportViewProcessor.php',
+                type: 'POST',
+                data: {"invalidated": 1},
+                success: function (result) {
+                    document.getElementById("invalidatedReportsModal").innerHTML = result;
+                    invalidatedReportsModal.style.display = "block";
+                }
+            });
+        }
+
+        // view invalidated report
+        function viewInvalidatedReport(reportId) {
+            $.ajax({
+                url: 'ManageReportViewProcessor.php',
+                type: 'POST',
+                data: {"report": reportId, "view": 1},
+                success: function (result) {
+                    document.getElementById("invalidatedReportsModal").innerHTML = result;
+                    invalidatedReportsModal.style.display = "block";
+                }
+            });
+        }
+
+        //edit invalidated report
+        function editInvalidatedReport(reportId) {
+            $.ajax({
+                url: 'ManageReportViewProcessor.php',
+                type: 'POST',
+                data: {"report": reportId, "view": 2},
+                success: function (result) {
+                    document.getElementById("invalidatedReportsModal").innerHTML = result;
+                    invalidatedReportsModal.style.display = "block";
+                }
+            });
+        }
+
+        //close invalidated reports
+        function closeInvalidatedReports() {
+            invalidatedReportsModal.style.display = "none";
+        }
+
+        //view report
+        var viewReportModal = document.getElementById("viewReportModal");
+
+        function viewReport(reportId) {
+            $.ajax({
+                url: 'ManageReportViewProcessor.php',
+                type: 'POST',
+                data: {"report": reportId, "view": 1},
+                success: function (result) {
+                    document.getElementById("viewReportModal").innerHTML = result;
+                    viewReportModal.style.display = "block";
+                }
+            });
+        }
+
+        //edit report
+        function editReport(reportId) {
+            $.ajax({
+                url: 'ManageReportViewProcessor.php',
+                type: 'POST',
+                data: {"report": reportId, "view": 2},
+                success: function (result) {
+                    document.getElementById("viewReportModal").innerHTML = result;
+                    viewReportModal.style.display = "block";
+                }
+            });
+        }
+
+        //close view report
+        function closeViewReport(status) {
+            if (status === 'Invalidated') {
                 invalidatedReportsModal.style.display = "none";
+            } else {
+                viewReportModal.style.display = "none";
             }
+        }
 
-            //view report
-            var viewReportModal = document.getElementById("viewReportModal");
-            function viewReport(reportId) {
-                $.ajax({
-                    url: 'ManageReportViewProcessor.php',
-                    type: 'POST',
-                    data: {"report": reportId, "view": 1},
-                    success: function (result) {
-                        document.getElementById("viewReportModal").innerHTML = result;
-                        viewReportModal.style.display = "block";
-                    }
-                });
-            }
-
-            //edit report
-            function editReport(reportId) {
-                $.ajax({
-                    url: 'ManageReportViewProcessor.php',
-                    type: 'POST',
-                    data: {"report": reportId, "view": 2},
-                    success: function (result) {
-                        document.getElementById("viewReportModal").innerHTML = result;
-                        viewReportModal.style.display = "block";
-                    }
-                });
-            }
-
-            //close view report
-            function closeViewReport(status) {
-                if (status === 'Invalidated') {
-                    invalidatedReportsModal.style.display = "none";
+        //change status
+        function changeRepStatus(reportid, status) {
+            var selectedStatus = document.getElementById('statusSelection').value;
+            if (selectedStatus !== status) {
+                if (selectedStatus === 'Verify') {
+                    selectedStatus = 'Verified';
                 } else {
-                    viewReportModal.style.display = "none";
+                    selectedStatus = 'Invalidated';
+                }
+                console.log(reportid);
+                console.log(selectedStatus);
+                $.ajax({
+                    url: '../includes/searchProcessor.php',
+                    type: 'POST',
+                    data: {"changeStatus": selectedStatus, "reportid": reportid},
+                    success: function (result) {
+                        viewReportModal.style.display = "none";
+                    }
+                });
+            } else {
+                viewReportModal.style.display = "none";
+            }
+        }
+
+        //generate report
+        var generateReportsModal = document.getElementById("generateReportModal");
+
+        function generateReport() {
+            $.ajax({
+                url: 'ManageReportViewProcessor.php',
+                type: 'POST',
+                data: {"generate": 1},
+                success: function (result) {
+                    document.getElementById("generateReportModal").innerHTML = result;
+                    generateReportsModal.style.display = "block";
+                }
+            });
+        }
+
+        //close generate report
+        function closeGenerateReports() {
+            generateReportsModal.style.display = "none";
+        }
+
+        //download report
+        function downloadReports() {
+            var reports = document.getElementsByClassName("reportList");
+            var reportsIds = [];
+            for (i = 0; i < reports.length; i++) {
+                if (reports[i].checked === true) {
+                    reportsIds.push(parseInt(reports[i].value));
                 }
             }
-
-            //change status
-            function changeRepStatus(reportid, status) {
-                var selectedStatus = document.getElementById('statusSelection').value;
-                if (selectedStatus !== status) {
-                    if (selectedStatus === 'Verify') {
-                        selectedStatus = 'Verified';
-                    } else {
-                        selectedStatus = 'Invalidated';
-                    }
-                    console.log(reportid);
-                    console.log(selectedStatus);
-                    $.ajax({
-                        url: '../includes/searchProcessor.php',
-                        type: 'POST',
-                        data: {"changeStatus": selectedStatus, "reportid": reportid},
-                        success: function (result) {
-                            viewReportModal.style.display = "none";
-                        }
-                    });
-                } else {
-                    viewReportModal.style.display = "none";
+            $.ajax({
+                url: 'ManageReportViewProcessor.php',
+                type: 'POST',
+                data: {"download": reportsIds},
+                success: function (result) {
+                    window.location.href = "DownloadFile.php";
+                    //generateReport(2)
+                    console.log('ok');
+                    console.log(result);
                 }
-            }
+            });
+        }
 
-            //generate report
-            var generateReportsModal = document.getElementById("generateReportModal");
-            function generateReport() {
-                $.ajax({
-                    url: 'ManageReportViewProcessor.php',
-                    type: 'POST',
-                    data: {"generate": 1},
-                    success: function (result) {
-                        document.getElementById("generateReportModal").innerHTML = result;
-                        generateReportsModal.style.display = "block";
-                    }
-                });
-            }
-
-            //close generate report
-            function closeGenerateReports() {
+        //close window
+        window.onclick = function (event) {
+            if (event.target === viewReportModal) {
+                viewReportModal.style.display = "none";
+            } else if (event.target === invalidatedReportsModal) {
+                invalidatedReportsModal.style.display = "none";
+            } else if (event.target === generateReportsModal) {
                 generateReportsModal.style.display = "none";
+            } else if (event.target == document.getElementById("archived")) {
+                document.getElementById("archived").style.display = "none";
             }
+        }
 
-            //download report
-            function downloadReports() {
-                var reports = document.getElementsByClassName("reportList");
-                var reportsIds = [];
-                for (i = 0; i < reports.length; i++) {
-                    if (reports[i].checked === true) {
-                        reportsIds.push(parseInt(reports[i].value));
+        // highlight selected row
+        function selectHighlight(row) {
+            if (row.checked == true) {
+                row.parentNode.parentNode.style.backgroundColor = "#b3b3b3";
+            } else {
+                row.parentNode.parentNode.style.backgroundColor = "white";
+            }
+        }
+
+        function clickArchive(report, option) {
+            $.ajax({
+                url: 'ManageReportViewProcessor.php',
+                method: 'POST',
+                data: {archive: report, option: option},
+                success: function (result) {
+                    if (option == "Archive") {
+                        document.getElementById('mainReport').innerHTML = result;
+                        $.ajax({
+                            url: 'ManageReportViewProcessor.php',
+                            method: 'POST',
+                            data: {showUpdatedArchive: ""},
+                            success: function (result) {
+                                document.getElementById('archivedContent').innerHTML = result;
+                            }
+                        })
+
+                    } else if (option == "UnArchive") {
+                        document.getElementById("archivedContent").innerHTML = result;
+                        $.ajax({
+                            url: 'ManageReportViewProcessor.php',
+                            method: 'POST',
+                            data: {showUpdatedReport: ""},
+                            success: function (result) {
+                                document.getElementById('mainReport').innerHTML = result;
+                            }
+                        })
                     }
                 }
-                $.ajax({
-                    url: 'ManageReportViewProcessor.php',
-                    type: 'POST',
-                    data: {"download": reportsIds},
-                    success: function (result) {
-                        window.location.href = "DownloadFile.php";
-                        //generateReport(2)
-                        console.log('ok');
-                        console.log(result);
-                    }
-                });
-            }
+            })
+        }
 
-            //close window
-            window.onclick = function (event) {
-                if (event.target === viewReportModal) {
-                    viewReportModal.style.display = "none";
-                } else if (event.target === invalidatedReportsModal) {
-                    invalidatedReportsModal.style.display = "none";
-                } else if (event.target === generateReportsModal) {
-                    generateReportsModal.style.display = "none";
-                } else if (event.target == document.getElementById("archived")){
-                    document.getElementById("archived").style.display = "none";
+        async function archive(archive, action, report) {
+            if (archive == 1) {
+                archiveText = "Archive";
+            } else {
+                archiveText = "UnArchive";
+            }
+            Swal.fire({
+                icon: 'info',
+                title: 'Are you sure you want to ' + archiveText + ' this item?',
+                showDenyButton: true,
+                confirmButtonText: 'Yes',
+                denyButtonText: `No`,
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    action(report, archiveText);
+                    Swal.fire('Saved!', '', 'success')
+                } else if (result.isDenied) {
+                    Swal.fire('Changes are not saved', '', 'info')
                 }
-            }
-
-            // highlight selected row
-            function selectHighlight(row) {
-                if (row.checked == true) {
-                    row.parentNode.parentNode.style.backgroundColor = "#b3b3b3";
-                } else {
-                    row.parentNode.parentNode.style.backgroundColor = "white";
-                }
-            }
-
-            function clickArchive(report, option) {
-                $.ajax({
-                    url: 'ManageReportViewProcessor.php',
-                    method: 'POST',
-                    data: {archive: report, option: option},
-                    success: function (result) {
-                        if (option == "Archive") {
-                            document.getElementById('mainReport').innerHTML = result;
-                            $.ajax({
-                                url: 'ManageReportViewProcessor.php',
-                                method: 'POST',
-                                data: {showUpdatedArchive: ""},
-                                success: function (result) {
-                                    document.getElementById('archivedContent').innerHTML = result;
-                                }
-                            })
-
-                        } else if (option == "UnArchive") {
-                            document.getElementById("archivedContent").innerHTML = result;
-                            $.ajax({
-                                url: 'ManageReportViewProcessor.php',
-                                method: 'POST',
-                                data: {showUpdatedReport: ""},
-                                success: function (result) {
-                                    document.getElementById('mainReport').innerHTML = result;
-                                }
-                            })
-                        }
-                    }
-                })
-            }
-
-            async function archive(archive, action, report) {
-                if (archive == 1) {
-                    archiveText = "Archive";
-                } else {
-                    archiveText = "UnArchive";
-                }
-                Swal.fire({
-                    icon: 'info',
-                    title: 'Are you sure you want to ' + archiveText + ' this item?',
-                    showDenyButton: true,
-                    confirmButtonText: 'Yes',
-                    denyButtonText: `No`,
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        action(report, archiveText);
-                        Swal.fire('Saved!', '', 'success')
-                    } else if (result.isDenied) {
-                        Swal.fire('Changes are not saved', '', 'info')
-                    }
-                })
-            }
-        </script>
-        <!--Logout script-->
-<script src="../javascript/logout.js"></script>
+            })
+        }
+    </script>
+    <!--Logout script-->
+    <script src="../javascript/logout.js"></script>
 </body>
 
 

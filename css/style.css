@@ -221,6 +221,13 @@ a:focus {
     height: 5%;
 }
 
+.buttonTransparentHealth{
+    background: transparent!important;
+    border: transparent!important;
+    width: -1%;
+    height: 5%;
+}
+
 .hyperlink{
     text-decoration: underline;
     color: dodgerblue;

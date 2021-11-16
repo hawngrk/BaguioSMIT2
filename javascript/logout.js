@@ -6,6 +6,7 @@ function logout() {
         showDenyButton: true,
         confirmButtonText: 'Yes',
         denyButtonText: `No`,
+        confirmButtonColor: '#007bff'
     }).then((result) => {
         if (result.isConfirmed) {
             $.ajax({

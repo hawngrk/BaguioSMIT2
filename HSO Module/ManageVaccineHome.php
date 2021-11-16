@@ -33,6 +33,7 @@ include_once("../includes/database.php") ?>
             integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY"
             crossorigin="anonymous"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<!--    <script src="../includes/commonJS.js"></script>-->
 
 </head>
 
@@ -87,10 +88,12 @@ include_once("../includes/database.php") ?>
         <div class="navbar navbar-expand-lg navbar-light bg-light shadow-sm p-3 mb-4 rounded-lg">
             <div class="container-fluid">
                 <div>
-                    <button onclick="openModal('vaccineModal')" type="button" class="shadow-lg  buttonTop3 float-left"><i
+                    <button onclick="openModal('vaccineModal')" type="button" class="shadow-lg  buttonTop3 float-left">
+                        <i
                                 class="fas fa-plus"></i> Add Vaccine Lot
                     </button>
-                    <button onclick="openModal('newVaccineModal')" type="button" class="shadow-lg  buttonTop3 float-right"><i
+                    <button onclick="openModal('newVaccineModal')" type="button"
+                            class="shadow-lg  buttonTop3 float-right"><i
                                 class="fas fa-syringe"></i> Add New Vaccine Brand
                     </button>
 
@@ -128,13 +131,13 @@ include_once("../includes/database.php") ?>
                                         onchange="sortVaccine(this)">
                                     <option value="" selected disabled hidden>Sort By</option>
                                     <option value="" disabled>Select Sort By</option>
-                                    <option value="None"> None </option>
+                                    <option value="None"> None</option>
                                     <option value="dateAsc">Date Received ↑</option>
                                     <option value="dateDesc">Date Received ↓</option>
                                     <option value="expirationAsc">Expiration Date ↑</option>
                                     <option value="expirationDesc">Expiration Date ↓</option>
                                     <option value="bottleQAsc">Bottle Quantity ↑</option>
-                                     <option value="bottleQDesc">Bottle Quantity ↓</option>
+                                    <option value="bottleQDesc">Bottle Quantity ↓</option>
                                 </select>
                             </div>
                         </div>
@@ -207,10 +210,10 @@ include_once("../includes/database.php") ?>
 
     </div>
 
-    <!--Add Vaccine Modal-->
+    <!--Add Vaccine Lot Modal-->
     <div id="vaccineModal" class="modal-window">
         <div class="content-modal">
-        <form id='addVaccineForm' method="post" enctype="multipart/form-data">
+            <form id='addVaccineLotForm' method="post" enctype="multipart/form-data" class="form">
                 <div class="modal-header">
                     <h2 id="headerAddVaccine"> Add Vaccine </h2>
                     <span onclick="closeModal('vaccineModal')" class="close"><i class='fas fa-window-close'></i></span>
@@ -220,9 +223,10 @@ include_once("../includes/database.php") ?>
                         <div class="row">
                             <div class="col-sm-6">
                                 <label for="selectedVaccine" class="required"> Select a Vaccine Brand: </label>
+
                                 <select class="form-select vaccineType" id="selectedVaccine" name="selectedVaccine"
-                                        onchange="updateVaccineInfo(this)">
-                                    <option selected disabled> Select Vaccine </option>
+                                        onchange="updateVaccineInfo(this)" required>
+                                    <option value=""> Select Vaccine</option>
                                     <?php
                                     $getVaccinesQuery = "SELECT vaccine_name FROM vaccine";
                                     $stmt = $database->stmt_init();
@@ -235,69 +239,70 @@ include_once("../includes/database.php") ?>
                                     ?>
                                 </select>
                                 <label class="label1 required" for="qty"> Total Vial Quantity Received: </label>
-                                <input type="text" id="qty">
+                                <input type="text" id="qty" class="form-control" name="quantity" required>
                                 <br>
                                 <label class="label1 required" for="source"> Vaccine Source: </label>
-                                <select class="vaxSource required" id="source">
-                                    <option selected disabled>Select Vaccine Source</option>
+                                <select class="vaxSource required form-select" id="source" name="quantity" required>
+                                    <option value="">Select Vaccine Source</option>
                                     <option value="National Government">National Government</option>
                                     <option value="Department Of Health">Department Of Health</option>
                                 </select>
                             </div>
                             <div class="col-sm-6">
                                 <label for="dateStored" class="required">Date Stored</label><br>
-                                <input type='date' id="dateStored" name="dateStored"><br>
+                                <input type='date' id="dateStored" name="dateStored" class="form-control" required><br>
                                 <label class="label1 required" for="dateExp">Date of Expiration</label><br>
-                                <input type='date' id="dateExp" name="dateExp">
+                                <input type='date' id="dateExp" name="dateExp" class="form-control" required>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button onclick="closeModal('vaccineModal')" class="btn btn-danger">Cancel</button>
-                    <button id="addVaccineBtn" class="btn btn-success" type='submit' onclick="event.preventDefault(); confMessage('Vaccine Lot', addVaccine)"> Add
+                    <button id="addVaccineLotBtn" class="btn btn-success" type='submit'
+                            onclick="event.preventDefault(); confMessage('Vaccine Lot', addVaccine)"> Add
                     </button>
 
                 </div>
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
 
     <!-- Add New Vaccine Brand Modal-->
     <div id="newVaccineModal" class="modal-window">
         <div class="content-modal">
-        <form id='newVaccineForm' method="post" enctype="multipart/form-data">
-                <div class="modal-header">
-                    <h2 id="headerAddNewVaccine">Add New Vaccine</h2>
-                    <span onclick="closeModal('newVaccineModal')" class="close"><i
-                                class='fas fa-window-close'></i></span>
-                </div>
-                <div class="modal-body">
+            <div class="modal-header">
+                <h2 id="headerAddNewVaccine">Add New Vaccine</h2>
+                <span onclick="closeModal('newVaccineModal')" class="close"><i
+                            class='fas fa-window-close'></i></span>
+            </div>
+            <div class="modal-body">
+                <form id='newVaccineBrandForm' method="post" enctype="multipart/form-data" class="form">
                     <div id="addNewVaccineModal">
                         <div class="row">
                             <div class="col-md-6">
                                 <h5>Vaccine Details</h5>
                                 <label for="vaccineName" class="required"> Vaccine Name </label>
-                                <input type="text3" class="form-control" id="vaccineName" placeholder="Ex. Sinovac">
+                                <input type="text3" class="form-control" id="vaccineName" placeholder="Ex. Sinovac" required>
 
                                 <label class="label1 required" for="vaccineManufacturer"> Vaccine Manufacturer </label>
                                 <input type="text3" class="form-control" id="vaccineManufacturer"
-                                       placeholder="Enter Manufacturer">
+                                       placeholder="Enter Manufacturer" required>
 
                                 <label class="label1 required" for="vaccineDescription"> Vaccine Description </label>
                                 <input type="text3" class="form-control" id="vaccineDescription"
-                                       placeholder="Enter Description">
+                                       placeholder="Enter Description" required>
 
                                 <h5 class="addNewVaccineH3 label1">Vaccine Characteristics</h5>
                                 <label for="vaccineType" class="required"> Vaccine Type: </label>
-                                <select id="vaccineType">
-                                    <option selected disabled>Select Vaccine Type</option>
+                                <select id="vaccineType" class="form-select" required>
+                                    <option value="">Select Vaccine Type</option>
                                     <option value="Inactivated Virus">Inactivated Vaccine</option>
                                     <option value="Viral vector">Viral vector Vaccine</option>
                                 </select>
                                 <label class="label1 required" for="vaccineEfficacy"> Vaccine Efficacy: </label>
-                                <select id="vaccineEfficacy">
-                                    <option selected disabled>Select Vaccine Efficacy</option>
+                                <select id="vaccineEfficacy" class="form-select" required>
+                                    <option value="">Select Vaccine Efficacy</option>
                                     <option value="90">90%</option>
                                     <option value="70">70%</option>
                                     <option value="50">50%</option>
@@ -307,34 +312,34 @@ include_once("../includes/database.php") ?>
                                 <label class="label1 required" for="dosageRequired" id="labelDosage"> Dosage
                                     Required </label>
                                 <input type="text3" class="form-control" id="dosageRequired"
-                                       placeholder="Enter Dosage Required">
+                                       placeholder="Enter Dosage Required" required>
                                 <label class="label1 required" for="dosageInterval"> Dosage Interval (Days) </label>
                                 <input type="text3" class="form-control" id="dosageInterval"
-                                       placeholder="Enter Dosage Interval">
+                                       placeholder="Enter Dosage Interval" required>
 
                                 <h5 class="label1"> Storage and Handling</h5>
                                 <label for="minimumTemperature" class="required"> Minimum Temperature (Degree
                                     Celcius) </label>
                                 <input type="text3" class="form-control" id="minimumTemperature"
-                                       placeholder="Minimum Temperature">
+                                       placeholder="Minimum Temperature" required>
                                 <label class="label1 required" for="maximumTemperature"> Maximum Temperature (Degree
                                     Celcius) </label>
                                 <input type="text3" class="form-control" id="maximumTemperature"
-                                       placeholder="Maximum Temperature">
+                                       placeholder="Maximum Temperature" required>
                                 <label class="label1 required" for="lifeSpan"> Life Span (Months) </label>
-                                <input type="text3" class="form-control" id="lifeSpan" placeholder="Life Span">
+                                <input type="text3" class="form-control" id="lifeSpan" placeholder="Life Span" required>
                             </div>
                         </div>
                     </div>
-                    <div class="modal-footer">
-                        <button onclick="closeModal('newVaccineModal')" class="btn btn-danger"> Cancel</button>
-                        <button type='submit' id='addBtnNewVaccine' class="btn btn-success" name='addBtnNewVaccine'
-                                onclick="event.preventDefault(); confMessage('Vaccine Brand', addNewVaccine)"> Add
-                        </button>
-                    </div>
-                </div>
+                </form>
             </div>
-        </form>
+            <div class="modal-footer">
+                <button onclick="closeModal('newVaccineModal')" class="btn btn-danger"> Cancel</button>
+                <button type='submit' id='addBtnNewVaccine' class="btn btn-success" name='addBtnNewVaccine'
+                        onclick="event.preventDefault(); confMessage('Vaccine Brand', addNewVaccine)"> Add
+                </button>
+            </div>
+        </div>
     </div>
 
     <!--Archived Modal-->
@@ -403,7 +408,7 @@ include_once("../includes/database.php") ?>
             </div>
         </div>
     </div>
-</div>
+    </div>
 </div>
 
 <!-- jQuery CDN - Slim version (=without AJAX) -->
@@ -476,6 +481,7 @@ include_once("../includes/database.php") ?>
         })
     }
 
+    //close modal
     window.onclick = function (event) {
         if (event.target == document.getElementById("archived") || event.target == document.getElementById("vaccineModal") || event.target == document.getElementById("newVaccineModal")) {
             document.getElementById("archived").style.display = "none";
@@ -508,7 +514,7 @@ include_once("../includes/database.php") ?>
         });
     }
 
-    //add vaccine
+    //add vaccine lot
     function addVaccine() {
         var vaccId = document.getElementById("selectedVaccine").value;
         var qty = document.getElementById('qty').value;
@@ -526,8 +532,8 @@ include_once("../includes/database.php") ?>
         });
     }
 
-    //add new vaccine
-    function confMessage(vax, action){
+    //confMessage
+    function confMessage(vax, action) {
         Swal.fire({
             icon: 'info',
             title: 'Are You Sure you Want to add this ' + vax + '?',
@@ -544,6 +550,7 @@ include_once("../includes/database.php") ?>
         })
     }
 
+    //add new vaccine brand
     function addNewVaccine() {
         var vaccName = document.getElementById("vaccineName").value;
         var manu = document.getElementById('vaccineManufacturer').value;
@@ -582,6 +589,7 @@ include_once("../includes/database.php") ?>
                 lifeSpan: lifeSpan
             },
             success: function (result) {
+
                 document.getElementById('selectedVaccine').innerHTML = result;
                 closeModal('newVaccineModal');
             }
@@ -653,13 +661,13 @@ include_once("../includes/database.php") ?>
 
     //open modal
     function openModal(modal) {
-        console.log(modal)
         document.getElementById(modal).style.display = "block";
         document.body.classList.add("scrollBody");
     }
 
     //view vaccine details
     var viewVaccineModal = document.getElementById("viewVaccineDetails");
+
     function viewVaccineDetails(vaccineId) {
         $.ajax({
             url: '../includes/viewProcessor.php',
@@ -668,6 +676,21 @@ include_once("../includes/database.php") ?>
             success: function (result) {
                 document.getElementById("viewVaccineDetails").innerHTML = result;
                 viewVaccineModal.style.display = "block";
+            }
+        })
+    }
+
+    //edit vaccine details
+    var editVaccineModal = document.getElementById("viewVaccineDetails");
+
+    function editVaccineDetails(vaccineId) {
+        $.ajax({
+            url: '../includes/editProcessor.php',
+            type: 'POST',
+            data: {"editVaccine": vaccineId},
+            success: function (result) {
+                document.getElementById("viewVaccineDetails").innerHTML = result;
+                editVaccineModal.style.display = "block";
             }
         })
     }
@@ -686,6 +709,25 @@ include_once("../includes/database.php") ?>
         })
     }
 
+
+   // input validation -
+    addVaccineLotForm = document.getElementById("addVaccineLotForm");
+    $('#addVaccineLotBtn').click(async function (e) {
+        if (addVaccineLotForm.checkValidity() != "") {
+            addVaccine();
+        } else {
+            Swal.fire({icon: 'warning', title: 'Please fill the required fields', confirmButtonText: 'OK', confirmButtonColor: '#007bff'})
+        }
+    });
+
+    addNewVaccineBrandForm = document.getElementById("newVaccineBrandForm");
+    $('#addBtnNewVaccine').click(async function (e) {
+        if (addNewVaccineBrandForm.checkValidity() != "") {
+            addNewVaccine();
+        } else {
+            Swal.fire({icon: 'warning', title: 'Please fill the required fields', confirmButtonText: 'OK', confirmButtonColor: '#007bff'})
+        }
+    });
 </script>
 
 <!--Logout script-->

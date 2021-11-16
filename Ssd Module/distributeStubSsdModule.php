@@ -312,7 +312,8 @@ checkRole('SSD');
 
 
             if (num > firstCounter) {
-                alert('Number Exceeds Number Of Left Stubs!');
+                Swal.fire({icon: 'warning', title: 'Number exceeds number of left stubs!', confirmButtonText: 'OK', confirmButtonColor: '#007bff'});
+                //alert('Number Exceeds Number Of Left Stubs!');
                 firstCounter += parseInt(oldnum);
                 item.value = 0;
             } else {
@@ -344,7 +345,8 @@ checkRole('SSD');
 
 
             if (num > secondCounter) {
-                alert('Number Exceeds Number Of Left Stubs!');
+                Swal.fire({icon: 'warning', title: 'Number exceeds number of left stubs!', confirmButtonText: 'OK', confirmButtonColor: '#007bff'});
+               // alert('Number Exceeds Number Of Left Stubs!');
                 secondCounter += parseInt(oldnum);
                 item.value = 0;
             } else {
@@ -363,7 +365,8 @@ checkRole('SSD');
             }
 
             if (counter == 0) {
-                alert('No more stubs');
+                Swal.fire({icon: 'warning', title: 'No more stubs left!', confirmButtonText: 'OK', confirmButtonColor: '#007bff'});
+                //alert('No more stubs');
                 item.value = 0;
             }
         }

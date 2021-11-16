@@ -4,12 +4,12 @@ include ('../includes/database.php');
 //View Patient
 if (isset($_POST['viewPatient'])) {
     $patientId = $_POST['viewPatient'];
-    $query = "SELECT * FROM patient_details JOIN patient ON patient_details.patient_id = patient.patient_id WHERE patient_details.patient_id = '$patientId'";
+    $query = "SELECT * FROM patient_details JOIN patient ON patient_details.patient_id = patient.patient_id JOIN barangay ON barangay.barangay_id = patient_details.barangay_id JOIN priority_groups ON priority_groups.priority_group_id = patient_details.priority_group_id WHERE patient_details.patient_id = $patientId;";
 
     $stmt = $database->stmt_init();
     $stmt->prepare($query);
     $stmt->execute();
-    $stmt->bind_result($patient_id, $patient_first_name, $patient_last_name, $patient_middle_name, $patient_suffix, $patient_priority_group, $patient_category_id, $patient_category_number, $patient_philHealth, $patient_pwd, $patient_house_address, $patient_barangay_address, $patient_CM_address, $patient_province, $patient_region, $patient_birthdate, $patient_age, $patient_gender, $patient_contact_number, $patient_occupation, $archived, $patient_id, $patient_full_name, $date_of_first_dosage, $date_of_second_dosage, $first_dose_vaccination, $second_dose_vaccination, $for_queue, $notification, $first_dose_vaccinator, $second_dose_vaccinator, $token);
+    $stmt->bind_result($patient_id, $patient_first_name, $patient_last_name, $patient_middle_name, $patient_suffix, $patient_category_id, $patient_category_number, $patient_philHealth, $patient_pwd, $patient_house_address, $patient_birthdate, $patient_age, $patient_gender, $patient_contact_number, $patient_occupation, $archived, $barangay_id, $priority_group_id, $patient_id, $patient_full_name, $date_of_first_dosage, $date_of_second_dosage, $first_dose_vaccination, $second_dose_vaccination, $for_queue, $notification, $first_dose_vaccinator, $second_dose_vaccinator, $token, $barangay_id, $health_district_id, $barangay_name, $city, $province, $region, $priority_group_id, $priotiy_group);
     $stmt->fetch();
     $stmt->close();
     echo "
@@ -69,15 +69,14 @@ if (isset($_POST['viewPatient'])) {
                 </div>
                 <div class='row ml-5'>
                 <div class='col'>
-                <h7 class='font-weight-bold'> Priority Group: </h7><br>
-                <h7> $patient_priority_group </h7>
+                <h7> $priotiy_group </h7>
                 </div>
                 <div class='col'>
                 <h7 class='font-weight-bold'> Category ID: </h7><br>
                 <h7> $patient_category_id </h7>
                 </div>
                 <div class='col'>
-                <h7 class='font-weight-bold'> Category ID No.: </h7>
+                <h7 class='font-weight-bold'> Category ID No.: </h7><br>
                 <h7> $patient_category_number </h7>
                 </div>
                 </div>
@@ -250,15 +249,15 @@ if (isset($_POST['viewVaccine'])) {
     <h3 class='ml-4'> $vaccine_name </h3>
     </div>
     <div class='col'>
-    <button type='button' class='btn btn-info btn-md p-2'> <i class='far fa-edit'></i>  Edit</button> 
+    <button type='button' class='btn btn-info ml-4' onclick='editVaccineDetails($vaccine_lot_id)'> <i class='far fa-edit'></i>  Edit</button> 
     </div>
     </div>
     <div class='row'>
-    <div class='col b'>
+    <div class='col'>
     <h7 class='ml-5 font-weight-bold'> Manufacturer </h7>
     </div>
     <div class='col'>
-    <input type='text' value=$vaccine_manufacturer style='border: 0;' readonly> 
+    $vaccine_manufacturer
     </div>
     </div>
 
@@ -267,7 +266,7 @@ if (isset($_POST['viewVaccine'])) {
     <h7 class='ml-5 font-weight-bold'> Vaccine Type </h7>
     </div>
     <div class='col'>
-    <input type='text' value=$vaccine_type style='border: 0;' readonly> 
+    $vaccine_type
     </div>
     </div>
 
@@ -276,7 +275,7 @@ if (isset($_POST['viewVaccine'])) {
     <h7 class='ml-5 font-weight-bold'> Efficacy </h7>
     </div>
     <div class='col'>
-    <input type='text' value=$vaccine_efficacy% style='border: 0;' readonly>
+    $vaccine_efficacy% 
     </div>
     </div>
 
@@ -285,7 +284,7 @@ if (isset($_POST['viewVaccine'])) {
     <h7 class='ml-5 font-weight-bold'> Date Stored </h7>
     </div>
     <div class='col'>
-    <input type='text' value=$date_stored style='border: 0;' readonly>
+    $date_stored
     </div>
     </div>
 
@@ -294,7 +293,7 @@ if (isset($_POST['viewVaccine'])) {
     <h7 class='ml-5 font-weight-bold'> Expiration Date </h7>
     </div>
     <div class='col'>
-    <input type='text' value=$vaccine_expiration style='border: 0;' readonly>
+    $vaccine_expiration
     </div>
     </div>
 
@@ -303,7 +302,7 @@ if (isset($_POST['viewVaccine'])) {
     <h7 class='ml-5 font-weight-bold'> Life Span (in months) </h7>
     </div>
     <div class='col'>
-    <input type='text' value=$vaccine_lifespan_in_months style='border: 0;' readonly>
+   $vaccine_lifespan_in_months 
     </div>
     </div>
 
@@ -312,7 +311,7 @@ if (isset($_POST['viewVaccine'])) {
     <h7 class='ml-5 font-weight-bold'> Dosage Interval (in months) </h7>
     </div>
     <div class='col'>
-    <input type='text' value=$vaccine_dosage_interval style='border: 0;' readonly>
+    $vaccine_dosage_interval 
     </div>
     </div>
     
@@ -321,7 +320,7 @@ if (isset($_POST['viewVaccine'])) {
     <h7 class='ml-5 font-weight-bold'> Dosage Required </h7>
     </div>
     <div class='col'>
-    <input type='text' value=$vaccine_dosage_required style='border: 0;' readonly>
+    $vaccine_dosage_required
     </div>
     </div>
 
@@ -330,7 +329,7 @@ if (isset($_POST['viewVaccine'])) {
     <h7 class='ml-5 font-weight-bold'> Total Quantity Vial </h7>
     </div>
     <div class='col'>
-    <input type='text' value=$total_vaccine_vial_quantity style='border: 0;' readonly>
+    $total_vaccine_vial_quantity 
     </div>
     </div>
 
@@ -339,7 +338,7 @@ if (isset($_POST['viewVaccine'])) {
     <h7 class='ml-5 font-weight-bold'> Minimum Temperature (°C) </h7>
     </div>
     <div class='col'>
-    <input type='text' value=$vaccine_minimum_temperature style='border: 0;' readonly>
+    $vaccine_minimum_temperature 
     </div>
     </div>
 
@@ -348,7 +347,7 @@ if (isset($_POST['viewVaccine'])) {
     <h7 class='ml-5 font-weight-bold'> Maximum Temperature (°C) </h7>
     </div>
     <div class='col'>
-    <input type='text' value=$vaccine_maximum_temperature style='border: 0;' readonly>
+    $vaccine_maximum_temperature 
     </div>
     </div>
     
