@@ -89,35 +89,44 @@ if (isset($_POST['modalRes'])) {
     $preTemp = $patientDetails['pre_vital_temp_rate_1st_dose'];
     $preBP = $patientDetails['pre_vital_bpDiastolic_1st_dose']."/".$patientDetails['pre_vital_bpSystolic_1st_dose'];
 
-    echo "<h4>$fullName</h4>
+    echo "<h3>$fullName</h3>
     <hr>
     <div class='row'>
     <div class='col'>
-    <h6>Address: </h6><p>$fullAddress<p>
-    <h6>Category:</h6><p>$category</p>
+    <h4>Address: </h4><p>$fullAddress<p>
     <hr>
-    <h5>Medical Background</h5>
+    <h4>Category:</h4><p>$category</p>
+    <hr>
+    <h4>Medical Background</h4>
     <h6>Allergies:</h6>
+    <p>*Allergies Here*</p>
     <h6>Commorbidities:</h6>
+    <p>*Commorbidities Here*</p>
     <hr>
-    <h5>Vaccination Details</h5>
+    <h4>Vaccination Details</h4>
     <h6>Schedule:</h6>
+    <p>*Sample Sched*</p>
     <h6>Vax Site:</h6>
+    <p>*Sample VaxSite*</p>
     <h6>Vaccine:</h6>
+    <p>*Sample Vax*</p>
     <h6>Lot No.:</h6>
+    <p>*Sample Lot No*</p>
     </div>
-    <div class='col'>
-    <h5>Pre-Vaccine Vitals:</h5>
+    <div class='col-md-6'>
+    <h4>Pre-Vaccine Vitals:</h4>
     <h6>Pulse Rate:</h6><p>$prePulse</p>
     <h6>Temperature Rate:</h6><p>$preTemp</p>
-    <h6>Blood Presuure Rate:</h6><p>$preBP</p>
+    <h6>Blood Presure Rate:</h6><p>$preBP</p>
     <hr>
-    <h5>Post-Vaccine Vitals:</h5>
+    <h4>Post-Vaccine Vitals:</h4>
     <form>
-    Pulse Rate: <input id='pulseR' type='text' name='vitals'>
+    <strong>Pulse Rate:</strong> <br><input id='pulseR' type='text' placeholder='Beats Per Minute' name='vitals'>
     <br>
-    Temperature: <input id='tempR' type='text' name='vitals'>
+    <strong>Temperature:</strong> <br><input id='tempR' type='text' placeholder='in Celcius' name='vitals'>
     <br>
+    <br>
+    
     <strong>Blood Pressure</strong>
     <br>
     Diastolic: <br><input class='textInp' type='text' placeholder='millimetres of mercury' name='vitals'>
@@ -127,13 +136,13 @@ if (isset($_POST['modalRes'])) {
     </div>
     </div>
     <div class='modal-footer'>
+        <button onclick=btnViewPostVac('close') type='button' class='btn btn-danger' onclick='closeModal('postVacView')'> Cancel</button>
         <button onlcick=btnViewPostVac('ad') type='button' class='btn btn-success'> Add</button>
-        <button onclick=btnViewPostVac('close') type='button' class='btn btn-danger'> Cancel</button>
         </div>
         </div>
         ";
 }
-    
+
 if (isset($_POST['pulse'])) {
     require_once('../includes/configure.php');
     $pulseRR = $_POST['pulse'];

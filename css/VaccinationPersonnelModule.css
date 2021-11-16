@@ -6,6 +6,11 @@
     background-color: white;
     border-radius: 12px;
 }
+.tableMonitoring {
+    margin-top:2%!important;
+    background-color: white;
+    border-radius: 12px;
+}
 
 .paddingLeft{ /*HSO*/
     padding-left: 3%;

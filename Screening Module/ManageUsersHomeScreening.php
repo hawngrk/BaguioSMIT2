@@ -1,6 +1,6 @@
 <?php 
-//require_once('../includes/sessionHandling.php');
-//checkRole('Screening');
+require_once('../includes/sessionHandling.php');
+checkRole('Screening');
 ?>
 <!DOCTYPE html>
 <html>
@@ -123,12 +123,12 @@
                 <table class="table table-row table-hover" id="patientTable">
                     <thead>
                     <tr class="table">
-                        <th> Patient ID</th>
-                        <th>Patient Name</th>
-                        <th>Category</th>
-                        <th>Complete Address</th>
-                        <th>Contact Number</th>
-                        <th>Action</th>
+                        <th class="columnName">ID</th>
+                        <th class="columnName">Patient Name</th>
+                        <th class="columnName">Category</th>
+                        <th class="columnName">Complete Address</th>
+                        <th class="columnName">Contact Number</th>
+                        <th class="columnName">Action</th>
                     </tr>
                     </thead>
                     <?php
@@ -143,8 +143,8 @@
 <div id="preVacView" class="modal-window">
     <div class="content-modal">
         <div class="modal-header">
-            <h4 class="modal-title">Pre-Vaccine Vitals</h4>
-            <span id="newVaccineClose" class="close">&times;</span>
+            <h3 class="modal-title">Pre-Vaccine Vitals</h3>
+            <span id="newVaccineClose" class="close" onclick="closeModal('preVacView')" ><i class='fas fa-window-close'></i></span>
         </div>
         <div class="modal-body" id="patientRow"></div>
     </div>
@@ -204,13 +204,19 @@
             }
         })
     }
+    function closeModal(modal) {
+        document.getElementById(modal).style.display = "none";
+        document.body.classList.remove("scrollBody");
+    }
+
+    function openModal(modal) {
+        document.getElementById(modal).style.display = "block";
+        document.body.classList.add("scrollBody");
+    }
 
     function clickModalRow(patientId) {
-        // Modal Settings 
-        preVacView.style.display = "block";
-        newVaccineClose.onclick = function () {
-            preVacView.style.display = "none";
-        }
+        openModal('preVacView');
+
 
         // Fetching Data from the Database Code
         $.ajax({

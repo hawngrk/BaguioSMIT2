@@ -1,7 +1,7 @@
-<?php 
-require_once('../includes/sessionHandling.php');
-checkRole('Monitoring');
-?>
+<?php //
+//require_once('../includes/sessionHandling.php');
+//checkRole('Monitoring');
+//?>
 
 <!DOCTYPE html>
 <html>
@@ -74,32 +74,38 @@ checkRole('Monitoring');
 
         <!-- Page Content  -->
         <div id="content">
-            <nav class="navbar navbar-expand-lg navbar-light bg-light rounded-lg navbarMonitoring">
-                <div class="container-fluid">
+            <div class="tableContainer">
+
+            <div class="row">
                     <!--Search Input and Button-->
                     <div class="search-containerMonitoring col">
                         <div class="input-group">
-                            <input id="searchPatientVaxPer" type="text" placeholder="Search" class="form-control" onkeyup="searchPatient()">
-                            <button type="submit" class="buttonTop5" name="searchPatientBtn" onclick="searchPatient()">
-                                <i class="fa fa-search"></i>
-                            </button>
+                            <input id="searchPatientVaxPer" type="search" placeholder="Search" class="form-control" onkeyup="searchPatient()">
+<!--                            <button type="submit" class="buttonTop5" name="searchPatientBtn" onclick="searchPatient()">-->
+<!--                                <i class="fa fa-search"></i>-->
+<!--                            </button>-->
                         </div>
 
                     </div>
-                    <div class="col-sm-auto">
-                                <button type="button" class="btn btn-outline-dark buttonTop3 float-right">
-                                    <i class="fas fa-sort-amount-down"></i>
-                                </button>
-                                <button type="button" class="btn btn-outline-dark buttonTop3 float-right">
-                                    <i class="fas fa-filter"></i>
-                                </button>
-
+                    <div class="sfDiv col-md-1.5 my-auto">
+                        <select class="form-select filterButton" id="FilterPat">
+                            <option value='' selected disabled hidden>Filter By</option>
+                            <option value='' disabled>S</option>
+                            <option value='All'>All </option>
+                        </select>
                     </div>
+                    <div class="sfDiv col-md-1.5 my-auto">
+                        <select class="form-select sortButton" id="SortPat">
+                            <option value='' selected disabled hidden>Sort By</option>
+                            <option value='' disabled>S</option>
+                            <option value='All'>All </option>
+                        </select>
+                    </div>
+
                 </div>
 
-            </nav>
 
-            <div class = "tableMonitoring tableScroll4">
+            <div class = "tableMonitoring shadow tableScroll4">
                 <!--Table Part-->
                 <table class="table table table-hover" id="patientTable">
                     <thead>
@@ -117,13 +123,12 @@ checkRole('Monitoring');
                     ?>
                 </table>
             </div>
-
-
+            </div>
             <div id="postVacView" class="modal-window">
                 <div class="content-modal">
                 <div class="modal-header">
                         <h3 class="modal-title">Post-Vaccine Vitals</h3>
-                        <span id="newVaccineClose" class="close">&times;</span>
+                        <span id="newVaccineClose" class="close" onclick="closeModal('postVacView')"><i class='fas fa-window-close'></i></span>
                     </div>
                     <div class="modal-body" id="patientRow"></div>
                 </div>
@@ -136,6 +141,17 @@ checkRole('Monitoring');
 </html>
 
 <script>
+    function closeModal(modal) {
+        document.getElementById(modal).style.display = "none";
+        document.body.classList.remove("scrollBody");
+    }
+
+    function openModal(modal) {
+
+        document.getElementById(modal).style.display = "block";
+        document.body.classList.add("scrollBody");
+    }
+
      function searchPatient() {
         var textSearch = document.getElementById("searchPatientVaxPer").value;
         $.ajax({
@@ -150,10 +166,7 @@ checkRole('Monitoring');
 
     function clickModalRow(patientId) {
         // Modal Settings
-        postVacView.style.display = "block";
-        newVaccineClose.onclick = function () {
-            postVacView.style.display = "none";
-        }
+        openModal('postVacView');
 
         // Fetching Data from the Database Code
         $.ajax({
@@ -168,7 +181,7 @@ checkRole('Monitoring');
 
     function btnViewPostVac(param) {
         if (param == 'close') {
-            postVacView.style.display = "none";
+            closeModal('postVacView');
         } 
         
         if(param == 'add') {

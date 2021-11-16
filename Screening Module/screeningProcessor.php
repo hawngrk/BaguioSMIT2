@@ -84,27 +84,34 @@ if (isset($_POST['modalScreening'])) {
     <hr>
     <div class='row'>
     <div class='col'>
-        <h5>Address: </h5> <p>$fullAddress<p>
+        <h4>Address: </h4> <p>$fullAddress<p>
         <hr>
-        <h5>Category:</h5><p>$category</p>
+        <h4>Category:</h4><p>$category</p>
         <hr>
-        <h5>Medical Background</h5>
+        <h4>Medical Background</h4>
         <h6>Allergies:</h6>
+        <p>*Allergies Here*</p>
         <h6>Commorbidities::</h6>
+        <p>*Commorbidities Here*</p>
         <hr>
-        <h5>Vaccination Details</h5>
+        <h4>Vaccination Details</h4>
         <h6>Schedule:</h6>
+        <p>*Sample Sched*</p>
         <h6>Vax Site:</h6>
+        <p>*Sample VaxSite*</p>
         <h6>Vaccine:</h6>
+        <p>*Sample Vax*</p>
         <h6>Lot No.:</h6>
-        <hr>
+        <p>*Sample Lot No*</p>
+        
     </div>
     <div class='col-md-6'>
-    <h5>Pre-Vaccine Vitals:</h5>
+    <h4>Pre-Vaccine Vitals:</h4>
     <form>
-    Pulse Rate: <br><input class='textInp'type='text' placeholder='Beats Per Minute' name='vitals'>
+    <strong>Pulse Rate:</strong>
+    <br><input class='textInp'type='text' placeholder='Beats Per Minute' name='vitals'>
     <br>
-    Temperature: <br> <input class='textInp' type='text' placeholder='in Celcius' name='vitals'>
+    <strong>Temperature:</strong> <br> <input class='textInp' type='text' placeholder='in Celcius' name='vitals'>
     <br>
     <br>
     <strong>Blood Pressure</strong>
@@ -116,7 +123,7 @@ if (isset($_POST['modalScreening'])) {
     </div>
     </div>
     <div class='modal-footer'>
-    <button onclick=btnViewPostVac('close') type='button' class='btn btn-danger'> Cancel</button>            
+    <button onclick=closeModal('preVacView') type='button' class='btn btn-danger'> Cancel</button>            
     <button onclick=btnViewPostVac('add') id='addButtonId' type='button' class='btn btn-success' value=$id> Add</button>
     </div>
     </div>
