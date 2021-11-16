@@ -121,7 +121,7 @@ if (isset($_POST['archive'])){
                                 <td>
                                     <div class ='d-flex justify-content-center'>
                                         <button class='btn btn-sm bg-none' onclick='event.stopPropagation();archive(1, clickArchive, $patientId)'><i class='fa fa-archive'></i></button>
-                                        <button type='button' class='btn btn-sm bg-none' id='viewButton' onclick='viewPatient($id)'><i class='fas fa-eye'></i></button
+                                        <button type='button' class='btn btn-sm bg-none' id='viewButton' onclick='viewPatient($patientId)'><i class='fas fa-eye'></i></button
                                     </div>
                                 </td>
                             </tr>";
@@ -202,7 +202,7 @@ if (isset($_POST['showUpdatedPatient'])){
                                 <td>
                                     <div class ='d-flex justify-content-center'>
                                         <button class='btn btn-sm bg-none' onclick='event.stopPropagation();archive(1, clickArchive, $patientId)'><i class='fa fa-archive'></i></button>
-                                        <button type='button' class='btn btn-sm bg-none' id='viewButton' onclick='viewPatient($id)'><i class='fas fa-eye'></i></button
+                                        <button type='button' class='btn btn-sm bg-none' id='viewButton' onclick='viewPatient($patientId)'><i class='fas fa-eye'></i></button
                                     </div>
                                 </td>
                             </tr>";

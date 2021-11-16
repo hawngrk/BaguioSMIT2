@@ -51,18 +51,69 @@ if (isset($_POST['sort'])) {
 //view Patient
 if (isset($_POST['viewPatient'])) {
     $patientId = $_POST['viewPatient'];
-    $query = "SELECT * FROM patient_details JOIN patient ON patient_details.patient_id = patient.patient_id WHERE patient_details.patient_id = '$patientId'";
+    
+    $query = "SELECT
+        patient.patient_id,
+        patient.patient_full_name,
+        patient.date_of_first_dosage,
+        patient.date_of_second_dosage,
+        patient.first_dose_vaccination,
+        patient.second_dose_vaccination,
+        patient.for_queue,
+        patient.notification,
+        patient.first_dose_vaccinator,
+        patient.second_dose_vaccinator,
+        patient.token,
+        patient_details.patient_category_id,
+        patient_details.patient_category_number,
+        patient_details.patient_philhealth,
+        patient_details.patient_pwd,
+        patient_details.patient_house_address,
+        patient_details.patient_birthdate,
+        patient_details.patient_age,
+        patient_details.patient_gender,
+        patient_details.patient_contact_number,
+        patient_details.patient_occupation,
+        patient_details.archived,
+        patient_account.patient_email,
+        priority_groups.priority_group,
+        barangay.barangay_name, 
+        barangay.city, 
+        barangay.province, 
+        barangay.region
+    FROM 
+        patient
+    JOIN 
+        patient_details 
+    ON 
+        patient_details.patient_id = $patientId
+    JOIN
+        barangay
+    ON 
+        barangay.barangay_id = patient_details.barangay_id
+    JOIN
+        priority_groups
+    ON
+        priority_groups.priority_group_id = patient_details.priority_group_id
+    JOIN
+        patient_account
+    ON 
+        patient_account.patient_id = $patientId
+    WHERE
+        patient.patient_id = $patientId;
+    ";
 
     $stmt = $database->stmt_init();
     $stmt->prepare($query);
     $stmt->execute();
-    $stmt->bind_result($patient_id, $patient_first_name, $patient_last_name, $patient_middle_name, $patient_suffix, $patient_priority_group, $patient_category_id, $patient_category_number, $patient_philHealth, $patient_pwd, $patient_house_address, $patient_barangay_address, $patient_CM_address, $patient_province, $patient_region, $patient_birthdate, $patient_age, $patient_gender, $patient_contact_number, $patient_occupation, $archived, $patient_id, $patient_full_name, $date_of_first_dosage, $date_of_second_dosage, $first_dose_vaccination, $second_dose_vaccination, $for_queue, $notification, $first_dose_vaccinator, $second_dose_vaccinator, $token);
+    $stmt->bind_result($patient_id, $patient_full_name, $date_of_first_dosage, $date_of_second_dosage, $first_dose_vaccination, $second_dose_vaccination, $for_queue, $notification, $first_dose_vaccinator, $second_dose_vaccinator, $token, $patient_category_id, $patient_category_number, $patient_philHealth, $patient_pwd, $patient_house_address, $patient_birthdate, $patient_age, $patient_gender, $patient_contact_number, $patient_occupation, $archived, $patient_email, $patient_priority_group, $patient_barangay_address, $patient_CM_address, $patient_province, $patient_region);
+
     $stmt->fetch();
     $stmt->close();
     echo "
      
                 <div class='modal-header'>
-                    <h4 class='modal-title'> Patient Details - $patient_last_name, $patient_first_name $patient_middle_name $patient_suffix </h4>
+                    <h4 class='modal-title'> Patient Details - $patient_full_name</h4>
                     <button type='button' class='close' data-dismiss='modal' onclick='closeModal(\"viewPatientDetails\")'>
                         <i class='fas fa-window-close'></i>
                     </button>
@@ -75,7 +126,7 @@ if (isset($_POST['viewPatient'])) {
                 <h7 class='font-weight-bold ml-5'> Complete Name </h7>
                 </div> 
                 <div class='col'>
-                <h7> $patient_first_name $patient_middle_name $patient_last_name $patient_suffix </h7>
+                <h7> $patient_full_name</h7>
                 </div>
                 </div>
  
@@ -120,7 +171,7 @@ if (isset($_POST['viewPatient'])) {
                 <h7 class='font-weight-bold ml-5'> Email Address </h7>
                 </div>
                 <div class='col'>
-                <h7> </h7>
+                <h7> $patient_email </h7>
                 </div>
                 </div>
                 <br>
@@ -180,34 +231,28 @@ if (isset($_POST['viewPatient'])) {
     }
 
     echo "      <br>
-                <h5 class='ml-3'> Address Information </h5>
-                <div class='row'>
                 <div class='col'>
-                <h7 class='font-weight-bold ml-5'> House Address</h7>
+                <h4 class='ml-2'> Address Information </h4>
+                </div>
+         
+                <div class='row ml-5'>
+                <div class='col'>
+                <h7 class='font-weight-bold'> House Address</h7><br>
+                <h7> $patient_house_address </h7><br>
+                <h7 class='font-weight-bold'> Region</h7><br>
+                <h7> $patient_region </h7>
                 </div>
                 <div class='col'>
-                <h7> $patient_house_address </h7>
-                </div>
-                </div>
-                
-                <div class='row'>
-                <div class='col'>
-                <h7 class='font-weight-bold ml-5'> Barangay </h7>
-                </div>
-                <div class='col'>
+                <h7 class='font-weight-bold'> Barangay </h7><br>
                 <h7> $patient_barangay_address </h7>
                 </div>
-                </div>
-                
-                <div class='row'>
-                <div class='col'>
-                <h7 class='font-weight-bold ml-5'> City and Region </h7>
-                </div> 
-                <div class='col'>
-                <h7> $patient_CM_address, $patient_region </h7>
+                <div class='col-5'>
+                <h7 class='font-weight-bold'> City and Province</h7><br>
+                <h7> $patient_CM_address, $patient_province </h7><br>
+
                 </div>
                 </div>
-                <br>
+
                 <h5 class='ml-3'> Vaccine Information </h5>
                     ";
 
