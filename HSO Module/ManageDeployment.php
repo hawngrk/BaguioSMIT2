@@ -446,15 +446,15 @@ include_once("../includes/database.php") ?>
 </div>
 </form>
 
-<!--Health District Modal-->
-<div id="HealthD" class="modal-window">
-    <div class="content-modal">
-        <div class="modal-header">
-            <h4 class="modal-title">Health Districts</h4>
-            <button type="button" class="close" data-dismiss="modal" onclick="closeModal('HealthD')">
-                <i class='fas fa-window-close'></i>
-            </button>
-        </div>
+    <!--Health District Modal-->
+    <div id="HealthD" class="modal-window">
+        <div class="content-modal">
+            <div class="modal-header">
+                <h4 class="modal-title">Health Districts</h4>
+                <button type="button" class="close" data-dismiss="modal" onclick="closeModal('HealthD')">
+                    <i class='fas fa-window-close'></i>
+                </button>
+            </div>
 
         <div>
             <div class="d-flex float-right m-2">
@@ -731,7 +731,7 @@ include_once("../includes/database.php") ?>
         <div class="modal-header">
             <h4 class="modal-title">Add Vaccination Site</h4>
             <button type="button" class="close" data-dismiss="modal" onclick="closeModal('addVaccSite')">
-                &times;
+                <i class='fas fa-window-close'></i>
             </button>
         </div>
         <div class="modal-body">
@@ -998,6 +998,7 @@ include_once("../includes/database.php") ?>
     }
 
     function openModal(modal) {
+
         document.getElementById(modal).style.display = "block";
         document.body.classList.add("scrollBody");
     }

@@ -111,7 +111,7 @@ checkRole('Barangay');
             <div class="content-modal">
                 <div class="modal-header">
                     <h3 class="modal-title">Patient Information</h3>
-                    <button type="button" class="close" data-dismiss="modal" onclick="closeModal('qrView')">&times;</button>
+                    <button type="button" class="close" data-dismiss="modal" onclick="closeModal('qrView')"><i class='fas fa-window-close'></i></button>
                 </div>
                 <div class="modal-body" id="qr"></div>
             </div>
@@ -163,6 +163,7 @@ checkRole('Barangay');
             success: function (result) {
                 document.getElementById('qrView').style.display = "block";
                 document.getElementById('qr').innerHTML = result;
+                document.body.classList.add("scrollBody");
             }
         })
     }
@@ -175,6 +176,7 @@ checkRole('Barangay');
             success: function (result) {
                 document.getElementById('qrView').style.display = "block";
                 document.getElementById('qr').innerHTML = result;
+                document.body.classList.add("scrollBody");
             }
         })
     }

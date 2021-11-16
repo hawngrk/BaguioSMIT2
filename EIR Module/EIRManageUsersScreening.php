@@ -476,13 +476,14 @@ checkRole('EIR');
             <div class="row" id="upload-content">
                 <div class="col">
                     <div class="col-md-12 text-center">
-                        <button class="button" id="iconBrowse"
+                        <button class="shadow-sm" id="iconBrowse"
                                 onclick="document.getElementById('fileUpload').click()">
-                            <label for="fileUpload"><i class="fas fa-upload"></i></label>
+                            <label for="fileUpload">Browse files
                         </button>
+                        <br>
                         <input id="fileUpload" type="file" style="display: none"
                                onchange="getUploadedFiles(this)" multiple/>
-                        <p><br> Upload a list of patients (.csv) </p>
+                        <h6><br> Upload a list of patients (.csv) </h6>
                     </div>
                 </div>
 
@@ -832,7 +833,7 @@ checkRole('EIR');
 
     function getUploadedFiles(item) {
         for (var i = 0; i < item.files.length; i++) {
-            var element = document.createElement('p');
+            var element = document.createElement('li');
             element.innerHTML = item.files[i].name;
             document.getElementById("uploadedFiles").insertAdjacentElement("beforeend", element);
         }

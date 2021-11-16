@@ -676,6 +676,7 @@ include_once("../includes/database.php") ?>
             success: function (result) {
                 document.getElementById("viewVaccineDetails").innerHTML = result;
                 viewVaccineModal.style.display = "block";
+                document.body.classList.add("scrollBody");
             }
         })
     }
@@ -705,6 +706,7 @@ include_once("../includes/database.php") ?>
             success: function (result) {
                 document.getElementById("viewVaccineDetails").innerHTML = result;
                 viewVaccineModal.style.display = "block";
+                document.body.classList.add("scrollBody");
             }
         })
     }

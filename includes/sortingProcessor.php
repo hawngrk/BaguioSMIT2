@@ -193,7 +193,7 @@ if (isset($_POST['sortReport'])) {
                                           <td>$reporter</td>
                                           <td>$dateReported</td>
                                           <td>$status</td>
-                                          <td><button class='btn btn-success btn-sm' type='submit' value='$reportId' onclick='viewReport($reportId)'>Review Report</button></td></tr>";
+                                          <td><button class='btn btn-sm bg-none' type='submit' value='$reportId' onclick='viewReport($reportId)'><i class='fas fa-eye'></i></button></td></tr>";
         }
     }
 }

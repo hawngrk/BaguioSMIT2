@@ -152,7 +152,7 @@ if (isset($_POST['invalidated'])) {
                 <td>$reportId</td>
                 <td>$reporter</td>
                 <td>$dateReported</td>
-                <td><button class='btn btn-success btn-sm' type='submit' value='$reportId' onclick='viewInvalidatedReport($reportId)'>Review Report</button></td>
+                <td><button class='btn btn-sm bg-none' type='submit' value='$reportId' onclick='viewInvalidatedReport($reportId)'><i class='fas fa-eye'></i></button></td>
                 </tr>";
     }
     echo "
@@ -434,7 +434,7 @@ if (isset($_POST['generate'])) {
                 <td>$reporter</td>
                 <td>$dateReported</td>
                 <td>$status</td>
-                <td><button class='btn btn-secondary' type='submit' value='$reportId' onclick='viewReport($reportId)'>Review Report</button></td>
+                <td><button class='btn btn-sm bg-none' type='submit' value='$reportId' onclick='viewReport($reportId)'><i class='fas fa-eye'></i></button></td>
                 </tr>";
     }
 
@@ -536,7 +536,7 @@ if (isset($_POST['archive'])) {
                                           <td>$dateReported</td>
                                           <td>$status</td>
                                           <td>
-                                          <button class='btn btn-success btn-sm' type='submit' value='$reportId' onclick='viewReport($reportId)'>Review Report</button>
+                                          <button class='btn btn-sm bg-none' type='submit' value='$reportId' onclick='viewReport($reportId)'><i class='fas fa-eye'></i></button>
                                           <button class='buttonTransparent actionButt' onclick='archive(1, clickArchive, $reportId)'><i class='fa fa-archive'></i></button>
                                           </td></tr>";
 
@@ -617,7 +617,7 @@ if (isset($_POST['showUpdatedReport'])){
                                           <td>$dateReported</td>
                                           <td>$status</td>
                                           <td>
-                                            <button class='btn btn-success btn-sm' type='submit' value='$reportId' onclick='viewReport($reportId)'>Review Report</button>
+                                            <button class='btn btn-sm bg-none ' type='submit' value='$reportId' onclick='viewReport($reportId)'><i class='fas fa-eye'></i></button>
                                           <button class='buttonTransparent actionButt' onclick='archive(1, clickArchive, $reportId)'><i class='fa fa-archive'></i></button>
                                           </td></tr>";
                                     }

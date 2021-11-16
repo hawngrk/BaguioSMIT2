@@ -29,7 +29,6 @@ if (isset($_POST['viewPatient'])) {
                 <div class='col'>
                     <h4 class='ml-2'> Personal Information </h4>
                 </div>
-                
                 <div class='row ml-5'>
                 <div class='col'>
                 <h7 class='font-weight-bold'> Complete Name: </h7><br>

@@ -682,16 +682,13 @@ select{
 
 input[type=date]{
     width: 95%;
-    height:auto;
-    margin-top: 2px;
-    padding: 3px;
+    padding: 4px;
     display: inline-block;
     border-radius: 8px;
+    border: 2px solid #ccc;
 }
 
-.input{ /*HSO*/
-    margin-top: 2%;
-}
+
 
 #uploadListPatient{
     border: 2px solid lightgray;

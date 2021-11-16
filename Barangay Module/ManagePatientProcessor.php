@@ -275,12 +275,12 @@ if (isset($_POST['patientId'])) {
                 
                 <h1> REGISTERED <i class='far fa-check-circle' style='color: green'></i></h1><br><br>
                 
-                <h5>Full Name: $name</h5><br>
-                <h5>Gender: $gender</h5><br>
-                <h5>Age: $age</h5><br>
-                <h5>Contact Number: $contact</h5><br>
+                <h5><b>Full Name: </b> $name</h5><br>
+                <h5><b>Gender: </b> $gender</h5><br>
+                <h5><b>Age: </b> $age</h5><br>
+                <h5><b>Contact Number: </b> $contact</h5><br>
                 
-                <button id='postVac' class='btn-success' type='submit' style='width: 50%; float: right' onclick='queuePatient($patId)'>Confirm Registration</button>";
+                <button id='postVac' class='btn btn-success' type='submit' style='float: right' onclick='queuePatient($patId)'>Confirm Registration</button>";
 
 }
 
