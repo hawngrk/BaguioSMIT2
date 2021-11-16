@@ -209,7 +209,10 @@ if (isset($_POST['patientId'])) {
     }
 
     echo"<h5>Second Dose Vaccination Date: $sDate</h5><br>
-                     <button id='postVac' class='btn-success' type='submit' style='width: 20%; float: right'>Add Pre Vitals</button>";
+           </div>
+           <div class='modal-footer'>
+           <button id='postVac' class='btn btn-success p-40' type='submit' style='width: 20%; float: right'>Add Pre Vitals</button>
+    </div>";
 
 }
 

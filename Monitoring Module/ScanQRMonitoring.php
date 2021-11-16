@@ -1,7 +1,7 @@
-<?php 
-require_once('../includes/sessionHandling.php');
-checkRole('Monitoring');
-?>
+<?php //
+//require_once('../includes/sessionHandling.php');
+//checkRole('Monitoring');
+//?>
 <!DOCTYPE html>
 <html>
 
@@ -74,7 +74,7 @@ checkRole('Monitoring');
                 <div class="content-modal">
                     <div class="modal-header">
                         <h3 class="modal-title">Post-Vaccine Vitals</h3>
-                        <button type="button" class="close" data-dismiss="modal" onclick="closeModal('qrView')">&times;</button>
+                        <button type="button" class="close" data-dismiss="modal" onclick="closeModal('qrView')"><i class='fas fa-window-close'></i></button>
                     </div>
                     <div class="modal-body" id="qr"></div>
                 </div>
