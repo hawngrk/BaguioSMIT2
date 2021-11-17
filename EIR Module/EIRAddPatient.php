@@ -12,6 +12,7 @@
     $suffix           = $_POST['suffix'];
     $birthdate        = $_POST['birthdate'];
     $age              = $_POST['age'];
+    $civilStat        = $_POST['civilStat'];
     $gender           = $_POST['gender'];
     $occupation       = $_POST['occupation'];
     
@@ -47,7 +48,7 @@
      echo "Patient already exist";
    } else {
         $patientID = insertPatient($firstname, $lastname, $middlename, $suffix);
-        insertDetails($patientID['patient_id'], $firstname, $lastname, $middlename, $suffix, $category, $categoryID, $philHealthID, $pwdID, $houseAddress, $birthdate, $age, $gender, $contact, $occupation, $barangay, $priorityGroup);
+        insertDetails($patientID['patient_id'], $firstname, $lastname, $middlename, $suffix, $category, $categoryID, $philHealthID, $pwdID, $houseAddress, $birthdate, $age, $civilStat, $gender, $contact, $occupation, $barangay, $priorityGroup);
         insertMedicalBackground($patientID['patient_id'], $allergyToVaccine, $hypertension, $heartDisease, $kidneyDisease, $diabetesMellitus, $bronchialAsthma, $immunodeficiency, $cancer, $otherCommorbidity);
         $accountDetails = createAccount($patientID['patient_id'], $firstname, $lastname, $email);
         insertPatientVitals($patientID['patient_id']);
@@ -73,13 +74,13 @@ function insertPatient($firstname, $lastname, $middlename, $suffix) {
 }
 
 //Insert patient's personal details in patient details table
-function insertDetails($patientID, $firstname, $lastname, $middlename, $suffix, $category, $categoryID, $philHealthID, $pwdID, $houseAddress, $birthdate, $age,$gender, $contact, $occupation, $barangay, $priority) {
+function insertDetails($patientID, $firstname, $lastname, $middlename, $suffix, $category, $categoryID, $philHealthID, $pwdID, $houseAddress, $birthdate, $age, $civilStat, $gender, $contact, $occupation, $barangay, $priority) {
 
-    $query = "INSERT INTO patient_details (patient_id, patient_first_name, patient_last_name, patient_middle_name, patient_suffix, patient_category_id, patient_category_number, patient_philHealth, patient_pwd, patient_house_address, patient_birthdate, patient_age, patient_gender, patient_contact_number, patient_occupation, Archived, barangay_id, priority_group_id) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CAST(? AS DATE), ?, ?, ?, ?, ?, ?, ?)";
+    $query = "INSERT INTO patient_details (patient_id, patient_first_name, patient_last_name, patient_middle_name, patient_suffix, patient_category_id, patient_category_number, patient_philHealth, patient_pwd, patient_house_address, patient_birthdate, patient_age, civil_status,patient_gender, patient_contact_number, patient_occupation, Archived, barangay_id, priority_group_id) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CAST(? AS DATE), ?, ?, ?, ?, ?, ?, ?, ?)";
 
     try {
         $stmtinsert = $GLOBALS['database']->prepare($query);
-        $result = $stmtinsert->execute([$patientID, $firstname, $lastname, $middlename, $suffix, $category, $categoryID, $philHealthID, $pwdID, $houseAddress, $birthdate, $age,$gender, $contact, $occupation, 0, $barangay, $priority]);
+        $result = $stmtinsert->execute([$patientID, $firstname, $lastname, $middlename, $suffix, $category, $categoryID, $philHealthID, $pwdID, $houseAddress, $birthdate, $age, $civilStat, $gender, $contact, $occupation, 0, $barangay, $priority]);
     } catch (PDOException $e) {
         echo 'Error in patient details: ', $e->getMessage();
     }

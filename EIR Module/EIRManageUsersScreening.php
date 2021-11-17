@@ -664,8 +664,6 @@ checkRole('EIR');
 
     //Submit Button Clicked
     function addPatient() {
-        var addButton = document.getElementById("addBtn");
-
         //Personal Information
         var last = document.getElementById("lname").value;
         var first = document.getElementById("fname").value;
@@ -673,6 +671,7 @@ checkRole('EIR');
         var suffix = document.getElementById("suffix").value;
         var occupation = document.getElementById("occupation").value;
         var gender = document.getElementById("gender").value;
+        var civilStat = document.getElementById("civilStatus").value;
         var birthdate = document.getElementById("date").value;
         var dob = new Date(document.getElementById("date").value);
         var age = getAge(dob);
@@ -706,8 +705,9 @@ checkRole('EIR');
         var immunodeficiency = verifyCommorbidity($('#immunodeficiency:checked').val());
         var other = $('#other:checked').val();
         var enteredCommorbidity = other ? document.querySelector('.otherInput').value : "";
+
         $.ajax({
-            url: 'EIRAddPatient.php',
+            url: '../EIR Module/EIRAddPatient.php',
             type: 'POST',
             data: {
                 //Personal Information
@@ -719,6 +719,7 @@ checkRole('EIR');
                 occupation: occupation,
                 birthdate: birthdate,
                 age: age,
+                civilStat: civilStat,
 
                 //Contact Information
                 contact: contact,
@@ -749,9 +750,9 @@ checkRole('EIR');
             },
             success: function (result) {
                 console.log(result);
+                
                 Swal.fire('Added Patient', '', 'success');
                 reloadPatient();
-                addButton.disabled = true;
             }
         });
     }

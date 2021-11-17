@@ -228,6 +228,7 @@ class patientDetails{
     private $houseAdd;
     private $birthdate;
     private $age;
+    private $civilStat;
     private $gender;
     private $contact;
     private $occupation;
@@ -235,9 +236,7 @@ class patientDetails{
     private $priorityGroupId;
     private $barangayId;
 
-
-
-    public function __construct($patientDetailPatientId, $patFirstName, $patLastName, $patMiddleName,$patientSuffix, $categoryId, $categoryNumber, $philHealthID, $pwdID, $houseAddress, $birthdate, $age, $gender, $contact, $occupation, $archived, $barangayId, $priorityGroupId)
+    public function __construct($patientDetailPatientId, $patFirstName, $patLastName, $patMiddleName,$patientSuffix, $categoryId, $categoryNumber, $philHealthID, $pwdID, $houseAddress, $birthdate, $age, $civilStat, $gender, $contact, $occupation, $archived, $barangayId, $priorityGroupId)
     {
         $this->patientDeetPatId = $patientDetailPatientId;
         $this->patientFName = $patFirstName;
@@ -251,6 +250,7 @@ class patientDetails{
         $this->houseAdd = $houseAddress;
         $this->birthdate = $birthdate;
         $this->age = $age;
+        $this->civilStat = $civilStat;
         $this->gender = $gender;
         $this->contact = $contact;
         $this->occupation = $occupation;
@@ -321,6 +321,11 @@ class patientDetails{
     public function getAge()
     {
         return $this->age;
+    }
+
+    public function getCivilStat() 
+    {
+        return $this->$civilStat;
     }
 
     public function getContact()

@@ -118,6 +118,7 @@ if (isset($_POST['viewPatient'])) {
                 </div>
                 <div class='row ml-5'>
                 <div class='col'>
+                <h7 class='font-weight-bold'> Priority Group: </h7><br>
                 <h7> $patient_priority_group </h7>
                 </div>
                 <div class='col'>

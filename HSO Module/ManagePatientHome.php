@@ -760,6 +760,7 @@ include_once("../includes/database.php") ?>
         var suffix = document.getElementById("suffix").value;
         var occupation = document.getElementById("occupation").value;
         var gender = document.getElementById("gender").value;
+        var civilStat = document.getElementById("civilStatus").value;
         var birthdate = document.getElementById("date").value;
         var dob = new Date(document.getElementById("date").value);
         var age = getAge(dob);
@@ -807,6 +808,7 @@ include_once("../includes/database.php") ?>
                 occupation: occupation,
                 birthdate: birthdate,
                 age: age,
+                civilStat: civilStat,
 
                 //Contact Information
                 contact: contact,

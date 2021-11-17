@@ -28,42 +28,43 @@ if ($count > 1) {
                     $unformattedDate= $row[6];
                     $formattedBirthdate = date('Y-m-d',strtotime($unformattedDate));
                     $birthdate = $formattedBirthdate;
-                    
+
                     $age = calculateAge($formattedBirthdate);
                     $fullName = toFullName($firstName, $lastName, $middleName, $suffix);
-
+                    
+                    $civilStat = $row[7];
                     //category Information
-                    $category = $row[7];
-                    $categoryID = $row[8];
-                    $philHealthID = $row[9];
-                    $pwdID = $row[10];
-
+                    $category = $row[8];
+                    $categoryID = $row[9];
+                    $philHealthID = $row[10];
+                    $pwdID = $row[11];
+    
                     //Clinical Information
-                    $allergyToVaccine = $row[11];
-                    $hypertension = $row[12];
-                    $diabetesMellitus = $row[13];
-                    $heartDisease = $row[14];
-                    $bronchialAsthma = $row[15];
-                    $kidneyDisease = $row[16];
-                    $immunodeficiency = $row[17];
-                    $cancer = $row[18];
-                    $otherCommorbidity = $row[19];
-
+                    $allergyToVaccine = $row[12];
+                    $hypertension = $row[13];
+                    $diabetesMellitus = $row[14];
+                    $heartDisease = $row[15];
+                    $bronchialAsthma = $row[16];
+                    $kidneyDisease = $row[17];
+                    $immunodeficiency = $row[18];
+                    $cancer = $row[19];
+                    $otherCommorbidity = $row[20];
+    
                     //Address Information
-                    $houseAddress = $row[20];
-
-
+                    $houseAddress = $row[21];
+    
+    
                     // Contact Information
-                    $contact = $row[21];
-                    $email = $row[22];
-
+                    $contact = $row[22];
+                    $email = $row[23];
+    
                     //Foreign key ID from priority and barangay table
-                    $barangay = $row[23];
-                    $priorityGroup = $row[24];
+                    $barangay = $row[24];
+                    $priorityGroup = $row[25];
 
                     $patientID = insertPatientUpload($fullName);
-                    insertDetails($patientID['patient_id'], $firstName, $lastName, $middleName, $suffix, $category, $categoryID, $philHealthID, $pwdID, $houseAddress, $birthdate, $age, $gender, $contact, $occupation, $barangay, $priorityGroup);
-                    insertMedicalBackground($patientID['patient_id'], $allergyToVaccine, $hypertension, $heartDisease, $kidneyDisease, $diabetesMellitus, $bronchialAsthma, $immunodeficiency, $cancer, $otherCommorbidity);
+                    insertDetails($patientID['patient_id'], $firstName, $lastName, $middleName, $suffix, $category, $categoryID, $philHealthID, $pwdID, $houseAddress, $birthdate, $age, $civilStat, $gender, $contact, $occupation, $barangay, $priorityGroup);
+                    insertMedicalBackground($paztientID['patient_id'], $allergyToVaccine, $hypertension, $heartDisease, $kidneyDisease, $diabetesMellitus, $bronchialAsthma, $immunodeficiency, $cancer, $otherCommorbidity);
                     $accountDetails = createAccount($patientID['patient_id'], $firstName, $lastName, $email);
                     insertPatientVitals($patientID);
                 }
@@ -91,38 +92,39 @@ if ($count > 1) {
                 $age = calculateAge($formattedBirthdate);
                 $fullName = toFullName($firstName, $lastName, $middleName, $suffix);
 
+                $civilStat = $row[7];
                 //category Information
-                $category = $row[7];
-                $categoryID = $row[8];
-                $philHealthID = $row[9];
-                $pwdID = $row[10];
+                $category = $row[8];
+                $categoryID = $row[9];
+                $philHealthID = $row[10];
+                $pwdID = $row[11];
 
                 //Clinical Information
-                $allergyToVaccine = $row[11];
-                $hypertension = $row[12];
-                $diabetesMellitus = $row[13];
-                $heartDisease = $row[14];
-                $bronchialAsthma = $row[15];
-                $kidneyDisease = $row[16];
-                $immunodeficiency = $row[17];
-                $cancer = $row[18];
-                $otherCommorbidity = $row[19];
+                $allergyToVaccine = $row[12];
+                $hypertension = $row[13];
+                $diabetesMellitus = $row[14];
+                $heartDisease = $row[15];
+                $bronchialAsthma = $row[16];
+                $kidneyDisease = $row[17];
+                $immunodeficiency = $row[18];
+                $cancer = $row[19];
+                $otherCommorbidity = $row[20];
 
                 //Address Information
-                $houseAddress = $row[20];
+                $houseAddress = $row[21];
 
 
                 // Contact Information
-                $contact = $row[21];
-                $email = $row[22];
+                $contact = $row[22];
+                $email = $row[23];
 
                 //Foreign key ID from priority and barangay table
-                $barangay = $row[23];
-                $priorityGroup = $row[24];
+                $barangay = $row[24];
+                $priorityGroup = $row[25];
 
                 echo $barangay."\n";
                 $patientID = insertPatientUpload($fullName);
-                insertDetails($patientID['patient_id'], $firstName, $lastName, $middleName, $suffix, $category, $categoryID, $philHealthID, $pwdID, $houseAddress, $birthdate, $age, $gender, $contact, $occupation, $barangay, $priorityGroup);
+                insertDetails($patientID['patient_id'], $firstName, $lastName, $middleName, $suffix, $category, $categoryID, $philHealthID, $pwdID, $houseAddress, $birthdate, $age, $civilStat,$gender, $contact, $occupation, $barangay, $priorityGroup);
                 insertMedicalBackground($patientID['patient_id'], $allergyToVaccine, $hypertension, $heartDisease, $kidneyDisease, $diabetesMellitus, $bronchialAsthma, $immunodeficiency, $cancer, $otherCommorbidity);
                 $accountDetails = createAccount($patientID['patient_id'], $firstName, $lastName, $email);
                 insertPatientVitals($patientID);
@@ -172,13 +174,13 @@ function insertPatientUpload($fullName) {
 }
 
 //Insert patient's personal details in patient details table
-function insertDetails($patientID, $firstname, $lastname, $middlename, $suffix, $category, $categoryID, $philHealthID, $pwdID, $houseAddress, $birthdate, $age,$gender, $contact, $occupation, $barangay, $priority) {
+function insertDetails($patientID, $firstname, $lastname, $middlename, $suffix, $category, $categoryID, $philHealthID, $pwdID, $houseAddress, $birthdate, $age, $civilStat, $gender, $contact, $occupation, $barangay, $priority) {
 
-    $query = "INSERT INTO patient_details (patient_id, patient_first_name, patient_last_name, patient_middle_name, patient_suffix, patient_category_id, patient_category_number, patient_philHealth, patient_pwd, patient_house_address, patient_birthdate, patient_age, patient_gender, patient_contact_number, patient_occupation, Archived, barangay_id, priority_group_id) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CAST(? AS DATE), ?, ?, ?, ?, ?, ?, ?)";
+    $query = "INSERT INTO patient_details (patient_id, patient_first_name, patient_last_name, patient_middle_name, patient_suffix, patient_category_id, patient_category_number, patient_philHealth, patient_pwd, patient_house_address, patient_birthdate, patient_age, civil_status,patient_gender, patient_contact_number, patient_occupation, Archived, barangay_id, priority_group_id) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CAST(? AS DATE), ?, ?, ?, ?, ?, ?, ?, ?)";
 
     try {
         $stmtinsert = $GLOBALS['database']->prepare($query);
-        $result = $stmtinsert->execute([$patientID, $firstname, $lastname, $middlename, $suffix, $category, $categoryID, $philHealthID, $pwdID, $houseAddress, $birthdate, $age,$gender, $contact, $occupation, 0, $barangay, $priority]);
+        $result = $stmtinsert->execute([$patientID, $firstname, $lastname, $middlename, $suffix, $category, $categoryID, $philHealthID, $pwdID, $houseAddress, $birthdate, $age, $civilStat, $gender, $contact, $occupation, 0, $barangay, $priority]);
     } catch (PDOException $e) {
         echo 'Error in patient details: ', $e->getMessage();
     }
