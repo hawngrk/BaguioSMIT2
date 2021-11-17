@@ -181,6 +181,10 @@ checkRole('Screening');
         });
     }
 
+    function generateQr(){
+
+    }
+
     function filterCategory(filter){
         var selectedFilter = filter.value;
         $.ajax({

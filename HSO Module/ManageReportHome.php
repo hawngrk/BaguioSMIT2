@@ -309,52 +309,6 @@ checkRole('HSO');
             </div>
         </div>
 
-        <div class="cardContainer">
-            <div class="row">
-                <div class="col">
-                    <div class="card text-white mb-3 shadow" id="totalReports">
-                        <div class="card-header">
-                            <h5><center> Total Reports </center></h5>
-                        </div>
-                        <div class="card-body">
-                            <center> 5 </center>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="card text-white mb-3 shadow" id="totalPending">
-                        <div class="card-header">
-                            <h5><center> Total Pending Reports </center></h5>
-                        </div>
-                        <div class="card-body">
-                            <center> 2 </center>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="card text-white mb-3 shadow" id="totalVerified">
-                        <div class="card-header">
-                            <h5><center> Total Verified Reports </center></h5>
-                        </div>
-                        <div class="card-body">
-                            <center> 3 </center>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="card text-white mb-3 shadow" id="totalInvalidate">
-                        <div class="card-header">
-                            <h5><center> Total Invalidated Reports </center></h5>
-                        </div>
-                        <div class="card-body">
-                            <center> 2 </center>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-
         <!-- Archive Modal  -->
         <div id="archived" class="modal-window">
             <div class="content-modal-table">

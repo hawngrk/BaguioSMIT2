@@ -201,7 +201,7 @@ checkRole('EIR');
     <div class="content-modal">
         <div class="modal-header">
             <h4 class="modal-title">Add User | Patient - Information</h4>
-            <button type="button" onclick="closeModalForms('addPatientModal')" class="close" data-dismiss="modal"><i
+            <button type="button" onclick="closeModalForms('addPatientModal','registrationForm')" class="close"><i
                         class='fas fa-window-close'></i>
             </button>
         </div>
@@ -457,7 +457,7 @@ checkRole('EIR');
             </form>
         </div>
         <div class="modal-footer">
-            <button type="button" onclick="closeModal('addPatientModal')" class="btn btn-danger shadow-sm">Cancel
+            <button type="button" onclick="closeModalForms('addPatientModal','registrationForm')" class="btn btn-danger shadow-sm">Cancel
             </button>
             <button type="button" id="addBtn" class="btn btn-success shadow-sm"
                     onclick="confMessage('Patient', addPatient)">Add
@@ -469,13 +469,14 @@ checkRole('EIR');
     <div class="content-modal">
         <div class="modal-header">
             <h4 class="modal-title">Upload files</h4>
-            <button type="button" onclick="closeModalForms('uploadFileModal')" class="close"><i
+            <button type="button" onclick="closeModalForms('uploadFileModal','uploadForm')" class="close"><i
                         class='fas fa-window-close'></i></button>
         </div>
         <div class="modal-body">
             <div class="row" id="upload-content">
                 <div class="col">
-                    <div class="col-md-12 text-center">
+                    <form id="uploadForm">
+                    <div class="col-md-12 text-center form-group">
                         <button class="shadow-sm" id="iconBrowse"
                                 onclick="document.getElementById('fileUpload').click()">
                             <label for="fileUpload">Browse files
@@ -485,6 +486,7 @@ checkRole('EIR');
                                onchange="getUploadedFiles(this)" multiple/>
                         <h6><br> Upload a list of patients (.csv) </h6>
                     </div>
+                    </form>
                 </div>
 
                 <div class="col">
@@ -497,7 +499,7 @@ checkRole('EIR');
         </div>
         <div class="modal-footer">
             <button type="button" id="uploadFileCancelBtn" class="btn btn-danger"
-                    onclick="closeModalForms('uploadFileModal')">
+                   onclick="closeModalForms('uploadFileModal','uploadForm')">
                 Cancel
             </button>
             <button type="button" id="uploadFileConfirmBtn" class="btn btn-success"
@@ -528,38 +530,27 @@ checkRole('EIR');
                 </thead>
 
                 <?php
-                require_once '../require/getPatientDetails.php';
+                    require_once '../require/getPatientDetails.php';
+                    $query = "SELECT patient.patient_id, CONCAT(patient_details.patient_last_name,', ',patient_details.patient_first_name,' ',COALESCE(patient_details.patient_middle_name,''),' ',COALESCE(patient_details.patient_suffix,'')) AS full_name, priority_groups.priority_group, CONCAT(patient_details.patient_house_address, ' ', barangay.barangay_name,' ',barangay.city,' ', barangay.province) AS full_address, patient_contact_number FROM patient JOIN patient_details ON patient.patient_id = patient_details.patient_id JOIN barangay ON barangay.barangay_id = patient_details.barangay_id JOIN priority_groups ON priority_groups.priority_group_id = patient_details.priority_group_id  WHERE patient_details.Archived = 1;";
+                    $stmt = $database->stmt_init();
+                    $stmt->prepare($query);
+                    $stmt->execute();
+                    $stmt->bind_result($patientId, $fullname, $category, $patientAddress, $contactNum);
+                    while ($stmt->fetch()) {
 
-                foreach ($patient_details as $pd) {
-                    if ($pd->getArchived() == 1) {
-                        $id = $pd->getPatientDeetPatId();
-                        $category = $pd->getPriorityGroup();
-                        $fullAddress = $pd->getHouseAdd() . ", " . $pd->getBrgy() . ", " . $pd->getCity() . ", " . $pd->getProvince();
-                        $contact = $pd->getContact();
-
-                        if ($pd->getPatientMName() == null && $pd->getPatientSuffix() == null) {
-                            $name = $pd->getPatientLName() . ", " . $pd->getPatientFName();
-                        } else if ($pd->getPatientSuffix() == null) {
-                            $name = $pd->getPatientLName() . ", " . $pd->getPatientFName() . " " . $pd->getPatientMName();
-                        } else if ($pd->getPatientMName() == null) {
-                            $name = $pd->getPatientLName() . ", " . $pd->getPatientFName() . " " . $pd->getPatientSuffix();
-                        } else {
-                            $name = $pd->getPatientLName() . ", " . $pd->getPatientFName() . " " . $pd->getPatientMName() . " " . $pd->getPatientSuffix();
-                        }
-
-                        echo "<tr class='tableCenterCont'>
-                        <td>$name</td>
+                                echo "<tr class='tableCenterCont'>
+                        <td>$patientId</td>
+                        <td>$fullname</td>
                         <td>$category</td>
-                        <td>$fullAddress</td>
-                        <td>$contact</td>
+                        <td>$patientAddress</td>
+                        <td>$contactNum</td>
                         <td>
                             <div>
-                                <button class='btn btn-warning' onclick='archive(0, clickArchive, $id)'><i class='fa fa-archive'></i> unarchive</button>
+                                <button class='btn btn-warning' onclick='archive(0, clickArchive, $patientId)'><i class='fa fa-archive'></i> unarchive</button>
                             </div>
                         </td>
                     </tr>";
                     }
-                }
                 ?>
             </table>
         </div>

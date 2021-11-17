@@ -33,7 +33,9 @@ include_once("../includes/database.php") ?>
             integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY"
             crossorigin="anonymous"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<!--    <script src="../includes/commonJS.js"></script>-->
+
+    <script src="../javascript/openModal.js"></script>
+    <script src="../javascript/closeModal.js"></script>
 
 </head>
 
@@ -207,7 +209,6 @@ include_once("../includes/database.php") ?>
     <!-----MODALS----->
     <!---View Modal--->
     <div id="viewVaccineDetails" class="modal-window">
-
     </div>
 
     <div id="editVaccineDetails" class="modal-window">
@@ -220,14 +221,13 @@ include_once("../includes/database.php") ?>
             <form id='addVaccineLotForm' method="post" enctype="multipart/form-data" class="form">
                 <div class="modal-header">
                     <h2 id="headerAddVaccine"> Add Vaccine </h2>
-                    <span onclick="closeModal('vaccineModal')" class="close"><i class='fas fa-window-close'></i></span>
+                    <span onclick="closeModalForms('vaccineModal','addVaccineLotForm')" class="close"><i class='fas fa-window-close'></i></span>
                 </div>
                 <div class="modal-body">
                     <div id="addVaccineModal">
                         <div class="row">
                             <div class="col-sm-6">
                                 <label for="selectedVaccine" class="required"> Select a Vaccine Brand: </label>
-
                                 <select class="form-select vaccineType" id="selectedVaccine" name="selectedVaccine"
                                         onchange="updateVaccineInfo(this)" required>
                                     <option value=""> Select Vaccine</option>
@@ -262,7 +262,7 @@ include_once("../includes/database.php") ?>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button onclick="closeModal('vaccineModal')" class="btn btn-danger">Cancel</button>
+                    <button onclick="closeModalForms('vaccineModal','addVaccineLotForm')" class="btn btn-danger" type="button">Cancel</button>
                     <button id="addVaccineLotBtn" class="btn btn-success" type='submit'
                             onclick="event.preventDefault(); confMessage('Vaccine Lot', addVaccine)"> Add
                     </button>
@@ -277,7 +277,7 @@ include_once("../includes/database.php") ?>
         <div class="content-modal">
             <div class="modal-header">
                 <h2 id="headerAddNewVaccine">Add New Vaccine</h2>
-                <span onclick="closeModal('newVaccineModal')" class="close"><i
+                <span onclick="closeModalForms('newVaccineModal','newVaccineBrandForm')" class="close"><i
                             class='fas fa-window-close'></i></span>
             </div>
             <div class="modal-body">
@@ -338,7 +338,7 @@ include_once("../includes/database.php") ?>
                 </form>
             </div>
             <div class="modal-footer">
-                <button onclick="closeModal('newVaccineModal')" class="btn btn-danger"> Cancel</button>
+                <button onclick="closeModalForms('newVaccineModal','newVaccineBrandForm')" class="btn btn-danger"> Cancel</button>
                 <button type='submit' id='addBtnNewVaccine' class="btn btn-success" name='addBtnNewVaccine'
                         onclick="event.preventDefault(); confMessage('Vaccine Brand', addNewVaccine)"> Add
                 </button>
@@ -532,6 +532,7 @@ include_once("../includes/database.php") ?>
             success: function (result) {
                 document.getElementById('vaccineTable').innerHTML = result;
                 closeModal('vaccineModal');
+                document.getElementById('addVaccineLotForm').reset();
             }
         });
     }
@@ -567,16 +568,6 @@ include_once("../includes/database.php") ?>
         var maxTemp = document.getElementById('maximumTemperature').value;
         var lifeSpan = document.getElementById('lifeSpan').value;
 
-        // console.log(vaccName);
-        // console.log(manu);
-        // console.log(desc);
-        // console.log(type);
-        // console.log(efficacy);
-        // console.log(dosage);
-        // console.log(interval);
-        // console.log(minTemp);
-        // console.log(maxTemp);
-        // console.log(lifeSpan);
         $.ajax({
             url: 'ManageVaccineProcessor.php',
             type: 'POST',
@@ -593,7 +584,6 @@ include_once("../includes/database.php") ?>
                 lifeSpan: lifeSpan
             },
             success: function (result) {
-
                 document.getElementById('selectedVaccine').innerHTML = result;
                 closeModal('newVaccineModal');
             }
@@ -657,17 +647,17 @@ include_once("../includes/database.php") ?>
         })
     }
 
-    //close modal
-    function closeModal(modal) {
-        document.getElementById(modal).style.display = "none";
-        document.body.classList.remove("scrollBody");
-    }
-
-    //open modal
-    function openModal(modal) {
-        document.getElementById(modal).style.display = "block";
-        document.body.classList.add("scrollBody");
-    }
+    // //close modal
+    // function closeModal(modal) {
+    //     document.getElementById(modal).style.display = "none";
+    //     document.body.classList.remove("scrollBody");
+    // }
+    //
+    // //open modal
+    // function openModal(modal) {
+    //     document.getElementById(modal).style.display = "block";
+    //     document.body.classList.add("scrollBody");
+    // }
 
     //view vaccine details
     var viewVaccineModal = document.getElementById("viewVaccineDetails");

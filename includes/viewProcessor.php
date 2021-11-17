@@ -181,7 +181,7 @@ if (isset($_POST['viewPatient'])) {
                 <div class='col-5'>
                 <h7 class='font-weight-bold'> City and Province</h7><br>
                 <h7> $patient_CM_address, $patient_province </h7>
-                <h7 class='font-weight-bold'> Region</h7><br>
+                <h7 class='font-weight-bold'> Region </h7><br>
                 <h7> $patient_region </h7>
                 </div>
                 </div>
@@ -257,7 +257,7 @@ if (isset($_POST['viewPatient'])) {
             <h7 class='font-weight-bold ml-5'> Vaccine Type </h7>
             </div>
             <div class='col'>
-            <h7>  </h7>
+            <h7> <!--Vaccine Type--> </h7>
             </div>
             </div>
             </div>

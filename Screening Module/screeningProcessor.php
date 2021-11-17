@@ -165,54 +165,279 @@ if (isset($_POST['patientId'])) {
 
     $patId = $_POST['patientId'];
 
-    $query = "SELECT patient.patient_full_name, patient_details.patient_gender, patient_details.patient_contact_number, patient_details.patient_age, priority_groups.priority_group, patient.date_of_first_dosage, patient.date_of_second_dosage, patient.first_dose_vaccination, patient.second_dose_vaccination FROM patient_details JOIN patient on patient_details.patient_id = patient.patient_id JOIN priority_groups ON patient_details.priority_group_id = priority_groups.priority_group_id WHERE patient_details.patient_id = $patId;";
+    $query = "SELECT patient.patient_full_name, patient_details.patient_gender, patient_details.patient_contact_number, patient_details.patient_age, patient_details.patient_house_address,
+       patient_details.barangay_id,barangay.barangay_name, barangay.city, barangay.region, priority_groups.priority_group, patient.date_of_first_dosage, patient.date_of_second_dosage, 
+       patient.first_dose_vaccination, patient.second_dose_vaccination, patient.first_dose_vaccinator, patient.second_dose_vaccinator,medical_background.patient_id, medical_background.allergy_to_vaccine, medical_background.hypertension, 
+       medical_background.heart_disease, medical_background.kidney_disease, medical_background.diabetes_mellitus, medical_background.bronchial_asthma, medical_background.immunodeficiency, 
+       medical_background.cancer, medical_background.other_commorbidity FROM patient_details JOIN patient ON patient_details.patient_id = patient.patient_id JOIN priority_groups
+           ON patient_details.priority_group_id = priority_groups.priority_group_id JOIN barangay ON barangay.barangay_id = patient_details.barangay_id JOIN medical_background 
+               ON medical_background.patient_id = patient_details.patient_id WHERE patient_details.patient_id = '$patId';";
     $stmt = $database->stmt_init();
     $stmt->prepare($query);
     $stmt->execute();
-    $stmt->bind_result($name, $gender, $contact, $age, $group, $fDate, $sDate, $first, $second);
+    $stmt->bind_result($name, $gender, $contact, $age, $houseAddress, $barangayId, $barangayName, $city, $region,$group, $fDate, $sDate, $first, $second,$firstVacVaccinator, $secondVacVaccinator, $idPatient, $allergy, $hypertension, $heartDisease, $kidneyDisease, $diabetesMellitus, $asthma, $immunodeficiency, $cancer, $otherCommorbidity);
     $stmt->fetch();
     $stmt->close();
 
 
-    echo "      
-                <img style='width:150px;' src='../img/SMIT+.png' alt='Baguio Logo'>
-               
+    echo "    
+                <h3 class='ml-3'>PERSONAL INFORMATION</h3>
                 <hr>
-                <h2>PATIENT PROFILE</h2>
-                <hr><br>
-                <h5>Full Name: $name</h5><br>
-                <h5>Gender: $gender</h5><br>
-                <h5>Age: $age</h5><br>
-                <h5>Contact Number: $contact</h5><br>
-                
-                <hr>
-                <h2>VACCINATION SUMMARY</h2>
-                <hr><br>
-                
-                <h5>Priority Group: $group</h5><br>
-           
-                 
-                <h5>First Dose: ";
+                <div class='perInfo'>
+                    <div class='row'>
+                        <div class='col ml-5'>
+                            <h5> Full Name: </h5>
+                        </div>
+                        <div class='col'>
+                            <h5> $name </h5>
+                        </div>
+                    </div>
+                    
+                    <div class='row'>
+                        <div class='col ml-5'>
+                            <h5> Gender: </h5>
+                        </div>
+                        <div class='col'>
+                            <h5> $gender </h5>
+                        </div>
+                    </div>
+                    
+                    <div class='row'>
+                        <div class='col ml-5'>
+                            <h5> Age: </h5>
+                        </div>
+                        <div class='col'>
+                            <h5> $age </h5>
+                        </div>
+                    </div>
+                    
+                    <div class='row'>
+                        <div class='col ml-5'>
+                            <h5> Contact Number: </h5>
+                        </div>
+                        <div class='col'>
+                            <h5> $contact </h5>
+                        </div>
+                    </div>
+                    
+                    <div class='row'>
+                        <div class='col ml-5'>
+                            <h5> Complete Address: </h5>
+                        </div>
+                        <div class='col'>
+                            <h5> $houseAddress $barangayName <br> $city, $region </h5>
+                        </div>
+                    </div>
+                </div>    
+               ";
 
-    if ($first == 0){
-        echo "Pending </h5><br>";
-    } else {
-        echo "Vaccinated </h5></br>";
+    echo "     <br>
+               <h3 class='ml-3'>MEDICAL INFORMATION</h3>
+               <hr>
+               <div>
+                    <div class='row'>
+                        <div class='col ml-5'>
+                            <h5> Allergic to Vaccine: </h5>
+                        </div>
+                       
+                        <div class='col'>
+        ";
+    if($allergy == 0){
+        echo" <h5> NO </h5>";
+    } else{
+        echo "<h5> YES </h5>";
     }
 
-    echo"<h5>First Dose Vaccination Date: $fDate</h5><br><br>
-                     <h5>Second Dose: ";
-    if ($second == 0){
-        echo "Pending </h5><br>";
+    echo "
+                        </div>
+                    </div>
+                    <div class='row'>
+                        <div class='col ml-5'>
+                            <h5> Comorbidity: </h5>
+                        </div>
+                        <div class='col'>
+                        
+                        </div>
+                        ";
+
+
+    echo"
+                    </div>     
+               </div>
+               <br>
+               <h3 class='ml-3'>VACCINATION INFORMATION</h3>
+               <hr>
+               <div>
+                   <div class='row ml-4'>    
+                      <h5> <b> FIRST DOSE VACCINATION </b> </h5>
+                   </div>
+                   <div class='row'>
+                        <div class='col ml-5'>
+                            <h5> First Dose Date: </h5>
+                        </div>
+                        <div class='col'>
+                        ";
+    if($first == 0){
+        echo "<h5> (Pending) </h5>
+                </div>
+                </div>
+                <br>
+               <h3 class='ml-3'>ADD PRE-VITAL SIGNS</h3>
+               <hr>
+               <div class='row'>
+                    <div class='col ml-5'>  
+                        <h5> Temperature: </h5>
+                        <h5> Temperature: </h5>
+                        <h5> Temperature: </h5>
+                        <h5> Temperature: </h5>
+                    </div>
+                    <div class='col'>
+                        <input type='text3' value='' placeholder='Enter temperature'>
+                        <input type='text3' value='' placeholder='Enter temperature'>
+                        <input type='text3' value='' placeholder='Enter temperature'>
+                        <input type='text3' value='' placeholder='Enter temperature'>
+                    </div>
+               </div>
+               </div>
+               <div class='modal-footer'>
+                    <button id='postVac' class='btn btn-success float-right' type='submit'> Save </button>
+               </div>
+            ";
     } else {
-        echo "Vaccinated </h5></br>";
+        echo "
+                            <h5> $fDate </h5>
+                        </div>
+                   </div>
+                   <div class='row'>
+                       <div class='col ml-5'>
+                            <h5> Vaccinator: </h5>
+                       </div>
+                       <div class='col'>
+                             <h5> $firstVacVaccinator </h5>
+                       </div>
+                   </div>
+                   <div>
+                   <div class='row ml-4'>
+                      <h5> <b> SECOND DOSE VACCINATION </b> </h5>
+                   </div>
+                   <div class='row'>
+                      <div class='col ml-5'>
+                        <h5> Second Dose Date: </h5>
+                      </div>
+                      <div class='col'>
+                      ";
+        if ($second == 1) {
+            echo "
+                        <h5> $sDate</h5>
+                      </div>
+                   </div>  
+                   <div class='row'>
+                       <div class='col ml-5'>
+                             <h5> Vaccinator: </h5>
+                       </div>
+                       <div class='col'>
+                            <h5> $secondVacVaccinator</h5>
+                       </div>
+                   </div>
+                   </div>
+                   </div>
+                    <div class='modal-footer'>
+                        <button id='postVac' class='btn btn-success float-right' type='button' onclick='closeModal(\"qrView\")'>Close</button>
+                    </div>
+                  ";
+        } else {
+            echo"<h5> Pending </h5>
+                      </div>
+                   </div> 
+                   <div>
+                    <br>
+               <h3 class='ml-3'>ADD PRE-VITAL SIGNS</h3>
+               <hr>
+                    <div class='row'>
+                        <div class='col ml-5'>  
+                            <h5> Temperature: </h5>
+                            <h5> Temperature: </h5>
+                            <h5> Temperature: </h5>
+                            <h5> Temperature: </h5>
+                        </div>
+                        <div class='col'>
+                            <input type='text3' value='' placeholder='Enter temperature'>
+                            <input type='text3' value='' placeholder='Enter temperature'>
+                            <input type='text3' value='' placeholder='Enter temperature'>
+                            <input type='text3' value='' placeholder='Enter temperature'>
+                        </div>
+                    </div>
+                    </div>
+                    <div class='modal-footer'>
+                        <button id='postVac' class='btn btn-success float-right' type='submit'>Save</button>
+                    </div>
+                    ";
+
+        }
     }
 
-    echo"<h5>Second Dose Vaccination Date: $sDate</h5><br>
-           </div>
-           <div class='modal-footer'>
-           <button id='postVac' class='btn btn-success p-40' type='submit' style='width: 20%; float: right'>Add Pre Vitals</button>
-    </div>";
+//    if ($second == 0) {
+//        echo "
+//            ";
+//    } else {
+//        echo "  <h5> $sDate </h5>
+//                        </div>
+//                   </div>
+//                   <div class='row'>
+//                       <div class='col ml-5'>
+//                            <h5> Vaccinator: </h5>
+//                       </div>
+//                       <div class='col'>
+//                             <h5> $secondVacVaccinator </h5>
+//                       </div>
+//                   </div>
+//                  </div>
+//                  ";
+//
+//    }
+
+//    if ($sDate == 0 ){
+//        echo " <h5> $sDate (Pending) </h5>
+// </div>";
+//    } else {
+//        echo "<h5> $sDate </h5>
+//                    </div>
+//               </div>
+//               <div class='row'>
+//                   <div class='col ml-5'>
+//                      <h5> Vaccinator: </h5>
+//                   </div>
+//                   <div class='col'>
+//                      <h5> $secondVacVaccinator </h5>
+//                   </div>
+//               </div>
+//                 ";
+//    }
+
+
+//    if ($first == 0){
+//        echo "Pending </h5><br>";
+//    } else {
+//        echo "Vaccinated </h5></br>";
+//    }
+//
+//    echo"<h5>Vaccination Date: $fDate</h5><br><br> ";
+//    if ($second == 0){
+//        echo "<h5>Second Dose: Pending </h5><br>";
+//    } else {
+//        echo "Second Dose: Vaccinated </h5></br>
+//                <h5>Vaccination Date: $sDate</h5><br>
+//           </div>
+//           <div class='modal-footer'>
+//           <button id='postVac' class='btn btn-success p-40' type='submit' style='width: 20%; float: right'>Add Pre Vitals</button>
+//    </div>";
+//    }
+
+//    echo"<h5>Vaccination Date: $sDate</h5><br>
+//           </div>
+//           <div class='modal-footer'>
+//           <button id='postVac' class='btn btn-success p-40' type='submit' style='width: 20%; float: right'>Add Pre Vitals</button>
+//    </div>";
 
 }
 

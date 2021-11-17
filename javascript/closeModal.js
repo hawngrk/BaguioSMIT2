@@ -1,6 +1,6 @@
 
 //modal with Forms
-function closeModalForms(modal) {
+function closeModalForms(modal,form) {
     Swal.fire({
         icon: 'question',
         title: 'Are you sure you want to quit?',
@@ -11,9 +11,10 @@ function closeModalForms(modal) {
         confirmButtonColor: '#007bff'
     }).then((result) => {
         if (result.isConfirmed) {
-            document.getElementById("registrationForm").reset();
+            document.getElementById(form).reset();
             document.getElementById(modal).style.display = "none";
             document.body.classList.remove("scrollBody");
+
         }
     })
 }

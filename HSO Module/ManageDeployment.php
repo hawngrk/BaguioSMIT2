@@ -37,6 +37,9 @@ include_once("../includes/database.php") ?>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+    <script src="../javascript/openModal.js"></script>
+    <script src="../javascript/closeModal.js"></script>
+
 </head>
 
 <body>
@@ -1115,7 +1118,6 @@ include_once("../includes/database.php") ?>
 
     function addSite() {
         var siteName = document.getElementById("newVaccinationSite").value;
-
         $.ajax({
             url: 'ManageDeploymentProcessor.php',
             method: 'POST',
@@ -1129,7 +1131,6 @@ include_once("../includes/database.php") ?>
     }
 
     function deleteDistrict(delDistId) {
-
         $.ajax({
             url: 'ManageDeploymentProcessor.php',
             method: 'POST',
@@ -1139,7 +1140,6 @@ include_once("../includes/database.php") ?>
                 document.getElementById("distContent").innerHTML = result;
             }
         })
-
     }
 
     function deleteBarangay(barangayId) {
@@ -1150,14 +1150,11 @@ include_once("../includes/database.php") ?>
             data: {brgyId: barangayId},
             success: function (result) {
                 document.getElementById('barangayList').innerHTML = result;
-
-
             }
         })
     }
 
     function deleteSite(siteId) {
-
         $.ajax({
             url: 'ManageDeploymentProcessor.php',
             method: 'POST',

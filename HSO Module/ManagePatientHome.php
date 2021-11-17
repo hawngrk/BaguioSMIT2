@@ -36,6 +36,9 @@ include_once("../includes/database.php") ?>
             crossorigin="anonymous"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+    <script src="../javascript/openModal.js"></script>
+    <script src="../javascript/closeModal.js"></script>
+
 </head>
 
 <body>
@@ -200,7 +203,7 @@ include_once("../includes/database.php") ?>
             <div class="content-modal">
                 <div class="modal-header">
                     <h3> Upload File/s </h3>
-                    <span onclick="closeModal('uploadFileModal')" class="close">
+                    <span onclick="closeModalForms('uploadFileModal','uploadForm')" class="close">
                         <i class='fas fa-window-close'></i>
                     </span>
                 </div>
@@ -208,8 +211,9 @@ include_once("../includes/database.php") ?>
                 <div class="modal-body">
                     <div class="row" id="upload-content">
                         <div class="col">
-                            <div class="col-md-12 text-center">
-                                <button class="shadow-sm" id="iconBrowse"
+                            <form id="uploadForm">
+                            <div class="col-md-12 text-center form-group">
+                                <button class="shadow-sm form-control-file" id="iconBrowse" type="button"
                                         onclick="document.getElementById('fileUpload').click()">
                                     Browse files
                                 </button>
@@ -218,8 +222,8 @@ include_once("../includes/database.php") ?>
                                        onchange="getUploadedFiles(this)" multiple/>
                                 <h6><br> Upload a list of patients (.csv) </h6>
                             </div>
+                            </form>
                         </div>
-
                         <div class="col">
                             <h5> Uploaded Files </h5>
                             <div id="uploadedFiles">
@@ -228,7 +232,7 @@ include_once("../includes/database.php") ?>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" onclick="closeModal('uploadFileModal')" data-dismiss="modal">
+                    <button type="button" class="btn btn-danger" onclick="closeModalForms('uploadFileModal','uploadForm')">
                         Cancel
                     </button>
                     <button type="button" id="uploadFileConfirmBtn" class="btn btn-primary"
@@ -244,12 +248,13 @@ include_once("../includes/database.php") ?>
             <div class="content-modal">
                 <div class="modal-header">
                     <h4 class="modal-title">Add User | Patient - Information</h4>
-                    <button type="button" onclick="closeModal('patientInformationModal')" class="close" data-dismiss="modal">
+                    <button type="button" onclick="closeModalForms('patientInformationModal','registrationForm')" class="close" data-dismiss="modal">
                         <i class='fas fa-window-close'></i>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form id="registrationForm" name="registrationForm" onsubmit="return validateForm()" method="post" class="form">
+                    <form id="registrationForm" name="registrationForm" onsubmit="return validateForm()" method="post"
+                          class="form">
                         <div class="personalInfo">
                             <h5> Personal Information </h5>
                             <div class="row">
@@ -269,13 +274,12 @@ include_once("../includes/database.php") ?>
                                     <input type="text3" id="mname" class='input form-control' name="middlename"
                                            placeholder="Input Answer Here" required>
                                 </div>
-                            </div>
-                            <div class="row">
+
                                 <div class="col">
                                     <label class="label1 required" for="suffix">Suffix </label><br>
-                                    <select id="suffix" name="suffix" required class="form-select">
-                                        <option value="">Select a Suffix...</option>
-                                        <option value="none"> None</option>
+                                    <select id="suffix" name="suffix" class="form-select form-select-lg" required>
+                                        <option value=""> Select Suffix...</option>
+                                        <option value="none">None</option>
                                         <option value="sr">Sr</option>
                                         <option value="jr">Jr</option>
                                         <option value="I">I</option>
@@ -283,31 +287,42 @@ include_once("../includes/database.php") ?>
                                         <option value="III">III</option>
                                     </select>
                                 </div>
+                            </div>
+                            <div class="row">
+
                                 <div class="col">
-                                    <label class="label1 required" for="gender"> Gender </label>
+                                    <label class="label1 required" for="date"> Birthdate </label>
+                                    <input type="date" id="date" name="birthdate" class="form-control" required>
+                                </div>
+                                <div class="col">
+                                    <label class="label1 required" for="gender"> Sex </label>
                                     <select class="form-select" id="gender" name="gender" required>
-                                        <option value="">Select a Gender...</option>
+                                        <option value="">Select a Sex...</option>
                                         <option value="male">Male</option>
                                         <option value="female">Female</option>
                                     </select>
                                 </div>
                                 <div class="col">
-                                    <label class="label1 required" for="date"> Birthdate </label>
-                                    <input type="date" id="date" name="birthdate"  class="form-control" required>
+                                    <label class="label1 required" for="civilStatus"> Civil Status </label>
+                                    <select class="form-select" id="civilStatus" name="civilStatus" required>
+                                        <option value="">Please Select...</option>
+                                        <option value="Not Applicable">Not Applicable</option>
+                                        <option value="Single">Single</option>
+                                        <option value="Married">Married</option>
+                                    </select>
                                 </div>
-                            </div>
-                            <div class="row">
                                 <div class="col">
                                     <label class="label1 required" for="occupation">Occupation </label>
                                     <input type="text3" id="occupation" class='input form-control' name="middlename"
                                            placeholder="Input Answer Here" required>
                                 </div>
+                            </div>
+                            <div class="row">
                                 <div class="col">
                                     <label class="label1 required" for="contactNum">Contact Number </label>
                                     <input type="text3" id="contactNum" class='input form-control' name="contactNum"
                                            placeholder="09XX-XXX-XXXX" required>
                                 </div>
-
                                 <div class="col">
                                     <label class="label1 required" for="email"> Email Address </label>
                                     <input type="text3" id="email" class='input form-control' name="email"
@@ -323,7 +338,7 @@ include_once("../includes/database.php") ?>
                                 <div class="col">
                                     <label class="required" for="priorityGroup">Priority Group </label>
                                     <select class="form-select" id="priorityGroup" name="priorityGroup" required>
-                                        <option select="">Select a Category Group...</option>
+                                        <option disabled selected>Select a Category Group...</option>
                                         <?php
                                         require_once("../require/getPriorityGroup.php");
                                         foreach ($priorityGroups as $priority) {
@@ -337,11 +352,11 @@ include_once("../includes/database.php") ?>
                                 <div class="col">
                                     <label class="required" for="categoryID">Category ID</label><br>
                                     <select id="categoryID" name="categoryID" class="form-select" required>
-                                        <option value="">Select a Category ID...</option>
-                                        <option value="prc">Professional Regulation Commission ID</option>
-                                        <option value="senior">Office of Senior Citizen Affairs ID</option>
-                                        <option value="facility"> Facility ID</option>
-                                        <option value="others"> Other ID</option>
+                                        <option disabled selected>Select a Category ID...</option>
+                                        <option value="Professional Regulation Comission Id">Professional Regulation Commission ID</option>
+                                        <option value="Office of Senior Citizen Affairs Id">Office of Senior Citizen Affairs ID</option>
+                                        <option value="Facility Id"> Facility ID</option>
+                                        <option value="Other Id"> Other ID</option>
                                     </select>
                                 </div>
                                 <div class="col">
@@ -354,12 +369,12 @@ include_once("../includes/database.php") ?>
                                 <div class="col-4">
                                     <label class="label1" for="philHealth"> PhilHealth ID No.</label>
                                     <input type="text3" id="philHealth" class='input' name="philHealth"
-                                           placeholder="Input Answer Here">
+                                           placeholder="Input Philhealth ID">
                                 </div>
                                 <div class="col-4">
                                     <label class="label1" for="pwdID"> PWD ID No.</label>
                                     <input type="text3" id="pwdID" class='input' name="pwdID"
-                                           placeholder="Input Answer Here">
+                                           placeholder="Input PWD ID">
                                 </div>
                             </div>
                         </div>
@@ -378,7 +393,7 @@ include_once("../includes/database.php") ?>
                                     <div id="barangayList">
                                         <label class="required" for="barangay"> Barangay </label>
                                         <select id="barangay" onchange="updateBarangayDetails(this.value)" class="form-select">
-                                            <option value=""> Select a Barangay...</option>
+                                            <option value="" disabled selected> Select Barangay</option>
                                             <?php
                                             require_once("../require/getBarangay.php");
                                             foreach ($barangays as $barangay) {
@@ -398,12 +413,14 @@ include_once("../includes/database.php") ?>
                                 </div>
                                 <div class="col">
                                     <label class="label1" for="province">Province</label>
-                                    <input type="text3" id="province" class='input form-control' name="province" disabled="disabled">
+                                    <input type="text3" id="province" class='input form-control' name="province"
+                                           disabled="disabled">
                                 </div>
 
                                 <div class="col">
                                     <label class="label1" for="region">Region</label>
-                                    <input type="text3" id="region" class='input form-control' name="region" disabled="disabled">
+                                    <input type="text3" id="region" class='input form-control' name="region"
+                                           disabled="disabled">
                                 </div>
                             </div>
                         </div>
@@ -417,7 +434,7 @@ include_once("../includes/database.php") ?>
                                     <select class="form-select" id="allergy" name="allergy" required>
                                         <option value="">Select Answer...</option>
                                         <option value="none">None</option>
-                                        <option value="yes">Yes</option>
+                                        <option value="yes" required>Yes</option>
                                     </select>
                                 </div>
                                 <div class="col-4">
@@ -425,7 +442,7 @@ include_once("../includes/database.php") ?>
                                     <select class="form-select" id="comorbidity" name="comorbidity" required>
                                         <option value="">Select Answer...</option>
                                         <option value="none"> None</option>
-                                        <option value="yes"> Yes</option>
+                                        <option value="yes" required> Yes</option>
                                     </select>
                                 </div>
                             </div>
@@ -478,7 +495,7 @@ include_once("../includes/database.php") ?>
                                     <div class="col">
                                         <div id="otherTextField">
                                             <input type="text3" name="others" id="others"
-                                                   placeholder="Input Other Commorbidity" class="form-select" required>
+                                                   placeholder="Input Other Commorbidity" class="form-select">
                                         </div>
                                     </div>
                                 </div>
@@ -487,10 +504,10 @@ include_once("../includes/database.php") ?>
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" onclick="closeModal('patientInformationModal')" class="btn btn-danger"
-                            data-dismiss="modal" >Cancel
+                    <button type="button" onclick="closeModalForms('patientInformationModal','registrationForm')" class="btn btn-danger"
+                            data-dismiss="modal"> Cancel
                     </button>
-                    <button type="button" id="addPatientNextBtn" onclick="confMessage('User', addPatient)" class="btn btn-success">Add</button>
+                    <button type="submit" id="addPatientNextBtn" onclick="confMessage('User', addPatient)" class="btn btn-success">Add</button>
                 </div>
             </div>
 
