@@ -1,7 +1,7 @@
-<?php //
-//require_once('../includes/sessionHandling.php');
-//checkRole('Screening');
-//?>
+<?php 
+require_once('../includes/sessionHandling.php');
+checkRole('Screening');
+?>
 <!DOCTYPE html>
 <html>
 
@@ -270,6 +270,13 @@
                 }
             })
         }
+    }
+
+    function allergy(checkbox){
+        var checkboxes = document.getElementsByName('allergy');
+        checkboxes.forEach((item) =>  {
+            if (item !== checkbox) item.checked = false;
+        });
     }
 </script>
 <!--Logout script-->

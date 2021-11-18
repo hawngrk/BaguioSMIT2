@@ -158,6 +158,13 @@
     function closeModal(modal){
         document.getElementById(modal).style.display = "none";
     }
+
+    function allergy(checkbox){
+        var checkboxes = document.getElementsByName('allergy');
+        checkboxes.forEach((item) =>  {
+            if (item !== checkbox) item.checked = false;
+        });
+    }
 </script>
 <!--Logout script-->
 <script src="../javascript/logout.js"></script>
