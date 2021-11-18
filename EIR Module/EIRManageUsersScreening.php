@@ -200,7 +200,7 @@ checkRole('EIR');
 <div id="addPatientModal" class="modal-window">
     <div class="content-modal">
         <div class="modal-header">
-            <h4 class="modal-title">Add User | Patient - Information</h4>
+            <h4 class="modal-title">Add Profile Information </h4>
             <button type="button" onclick="closeModalForms('addPatientModal','registrationForm')" class="close"><i
                         class='fas fa-window-close'></i>
             </button>
@@ -309,8 +309,12 @@ checkRole('EIR');
                             <label class="required" for="categoryID">Category ID</label><br>
                             <select id="categoryID" name="categoryID" class="form-select" required>
                                 <option disabled selected>Select a Category ID...</option>
-                                <option value="Professional Regulation Comission Id">Professional Regulation Commission ID</option>
-                                <option value="Office of Senior Citizen Affairs Id">Office of Senior Citizen Affairs ID</option>
+                                <option value="Professional Regulation Comission Id">Professional Regulation Commission
+                                    ID
+                                </option>
+                                <option value="Office of Senior Citizen Affairs Id">Office of Senior Citizen Affairs
+                                    ID
+                                </option>
                                 <option value="Facility Id"> Facility ID</option>
                                 <option value="Other Id"> Other ID</option>
                             </select>
@@ -348,7 +352,8 @@ checkRole('EIR');
                         <div class="col-4">
                             <div id="barangayList">
                                 <label class="required" for="barangay"> Barangay </label>
-                                <select id="barangay" onchange="updateBarangayDetails(this.value)" class="form-select">
+                                <select id="barangay" name="barangay" onchange="updateBarangayDetails(this.value)"
+                                        class="form-select" required>
                                     <option value="" disabled selected> Select Barangay</option>
                                     <?php
                                     require_once("../require/getBarangay.php");
@@ -444,33 +449,27 @@ checkRole('EIR');
                                 <label> Cancer </label>
                             </div>
                             <div class="col">
-                                <input type="checkbox" name="others" value="others" id="others"
+                                <input type="checkbox" name="others" value="others" id="othersComorbidity"
                                        onclick="showOthersInput(this)" class="form-select">
-                                <label> Others </label>
+                                <label for="other" id="others"> Others </label>
                             </div>
                             <div class="col">
                                 <div id="otherTextField">
-                                    <input type="text3" name="others" id="others"
-                                           placeholder="Input Other Commorbidity" class="form-select">
+                                    <input type="text3" name="otherCom" id="otherCom"
+                                           placeholder="Input Other Comorbidity" class="form-select">
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <input type="button" onclick="closeModalForms('addPatientModal','registrationForm')" class="btn btn-danger shadow-sm" value="Cancel">
+                    <input type="button" onclick="closeModalForms('addPatientModal','registrationForm')"
+                           class="btn btn-danger shadow-sm" value="Cancel">
                     <input type="submit" class="btn btn-success shadow-sm" value="Add">
                 </div>
 
             </form>
         </div>
-        <!-- <div class="modal-footer">
-            <button type="button" onclick="closeModalForms('addPatientModal','registrationForm')" class="btn btn-danger shadow-sm">Cancel
-            </button>
-            <button type="button" id="addBtn" class="btn btn-success shadow-sm"
-                    onclick="confMessage('Patient', addPatient)">Add
-            </button>
-        </div> -->
     </div>
 </div>
 <div id="uploadFileModal" class="modal-window">
@@ -484,16 +483,16 @@ checkRole('EIR');
             <div class="row" id="upload-content">
                 <div class="col">
                     <form id="uploadForm">
-                    <div class="col-md-12 text-center form-group">
-                        <button class="shadow-sm" id="iconBrowse"
-                                onclick="document.getElementById('fileUpload').click()">
-                            <label for="fileUpload">Browse files
-                        </button>
-                        <br>
-                        <input id="fileUpload" type="file" style="display: none"
-                               onchange="getUploadedFiles(this)" multiple/>
-                        <h6><br> Upload a list of patients (.csv) </h6>
-                    </div>
+                        <div class="col-md-12 text-center form-group">
+                            <button class="shadow-sm" id="iconBrowse"
+                                    onclick="document.getElementById('fileUpload').click()">
+                                <label for="fileUpload">Browse files
+                            </button>
+                            <br>
+                            <input id="fileUpload" type="file" style="display: none"
+                                   onchange="getUploadedFiles(this)" multiple/>
+                            <h6><br> Upload a list of patients (.csv) </h6>
+                        </div>
                     </form>
                 </div>
 
@@ -507,7 +506,7 @@ checkRole('EIR');
         </div>
         <div class="modal-footer">
             <button type="button" id="uploadFileCancelBtn" class="btn btn-danger"
-                   onclick="closeModalForms('uploadFileModal','uploadForm')">
+                    onclick="closeModalForms('uploadFileModal','uploadForm')">
                 Cancel
             </button>
             <button type="button" id="uploadFileConfirmBtn" class="btn btn-success"
@@ -538,15 +537,15 @@ checkRole('EIR');
                 </thead>
 
                 <?php
-                    require_once '../require/getPatientDetails.php';
-                    $query = "SELECT patient.patient_id, CONCAT(patient_details.patient_last_name,', ',patient_details.patient_first_name,' ',COALESCE(patient_details.patient_middle_name,''),' ',COALESCE(patient_details.patient_suffix,'')) AS full_name, priority_groups.priority_group, CONCAT(patient_details.patient_house_address, ' ', barangay.barangay_name,' ',barangay.city,' ', barangay.province) AS full_address, patient_contact_number FROM patient JOIN patient_details ON patient.patient_id = patient_details.patient_id JOIN barangay ON barangay.barangay_id = patient_details.barangay_id JOIN priority_groups ON priority_groups.priority_group_id = patient_details.priority_group_id  WHERE patient_details.Archived = 1;";
-                    $stmt = $database->stmt_init();
-                    $stmt->prepare($query);
-                    $stmt->execute();
-                    $stmt->bind_result($patientId, $fullname, $category, $patientAddress, $contactNum);
-                    while ($stmt->fetch()) {
+                require_once '../require/getPatientDetails.php';
+                $query = "SELECT patient.patient_id, CONCAT(patient_details.patient_last_name,', ',patient_details.patient_first_name,' ',COALESCE(patient_details.patient_middle_name,''),' ',COALESCE(patient_details.patient_suffix,'')) AS full_name, priority_groups.priority_group, CONCAT(patient_details.patient_house_address, ' ', barangay.barangay_name,' ',barangay.city,' ', barangay.province) AS full_address, patient_contact_number FROM patient JOIN patient_details ON patient.patient_id = patient_details.patient_id JOIN barangay ON barangay.barangay_id = patient_details.barangay_id JOIN priority_groups ON priority_groups.priority_group_id = patient_details.priority_group_id  WHERE patient_details.Archived = 1;";
+                $stmt = $database->stmt_init();
+                $stmt->prepare($query);
+                $stmt->execute();
+                $stmt->bind_result($patientId, $fullname, $category, $patientAddress, $contactNum);
+                while ($stmt->fetch()) {
 
-                                echo "<tr class='tableCenterCont'>
+                    echo "<tr class='tableCenterCont'>
                         <td>$patientId</td>
                         <td>$fullname</td>
                         <td>$category</td>
@@ -558,7 +557,7 @@ checkRole('EIR');
                             </div>
                         </td>
                     </tr>";
-                    }
+                }
                 ?>
             </table>
         </div>
@@ -578,19 +577,45 @@ checkRole('EIR');
 <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.js"></script>
 
 <script type="text/javascript">
-    $().ready(function(){
-       $("#registrationForm").validate({
-           rules: {
-               lname: "required",
-               fname: "required"
-           },
-           messages: {
-               lname: "First name is required",
-               fname: "Last name is required"
-           }
-       });
+    $().ready(function () {
+        $("#registrationForm").validate({
+            rules: {
+                lname: "required",
+                fname: "required",
+                suffix: "required",
+                birthdate: "required",
+                gender: "required",
+                occupation: "required",
+                contactNum: "required",
+                email: "required",
+                category: "required",
+                categoryID: "required",
+                houseAddress: "required",
+                barangay: "required",
+                allergy: "required",
+                comorbidity: "required",
+                otherCom: "required"
+            },
+            messages: {
+                lname: "First name is required",
+                fname: "Last name is required",
+                suffix: "Suffix is required",
+                birthdate: "Birthdate is required",
+                gender: "Gender is required",
+                occupation: "Occupation is required",
+                contactNum: "Contact number is required",
+                email: "Email is required",
+                priorityGroup: "Category group is required",
+                categoryNo: "Category ID is required",
+                houseAddress: "Address is required",
+                barangay: "Barangay is required",
+                allergy: "Allergy is required",
+                comorbidity: "Comorbidity is required",
+                otherCom: "Other comorbidity is required"
+            }
+        });
     })
-                           
+
     function search() {
         var textSearch = document.getElementById("searchPatient").value;
         $.ajax({
@@ -665,13 +690,13 @@ checkRole('EIR');
     }
 
     function showOthersInput() {
-        var elem = document.getElementById('other');
+        var elem = document.getElementById('othersComorbidity');
         var other = document.getElementById('otherTextField');
 
         if (elem.checked == true) {
             other.style.display = "block";
+            document.getElementById('otherCom').required;
         } else {
-            var other = document.getElementById('otherTextField');
             other.style.display = "none";
         }
     }
@@ -764,35 +789,12 @@ checkRole('EIR');
             },
             success: function (result) {
                 console.log(result);
-                
+
                 Swal.fire('Added Patient', '', 'success');
                 reloadPatient();
             }
         });
     }
-    //
-    // function openModal(modal) {
-    //     document.getElementById(modal).style.display = "block";
-    //     document.body.classList.add("scrollBody");
-    // }
-
-    // function closeModal(modal) {
-    //     Swal.fire({
-    //         icon: 'question',
-    //         title: 'Are you sure you want to quit?',
-    //         text:'All progress in this form will be lost.',
-    //         showDenyButton: true,
-    //         confirmButtonText: 'Yes',
-    //         denyButtonText: `No`,
-    //         confirmButtonColor: '#007bff'
-    //     }).then((result) => {
-    //         if (result.isConfirmed) {
-    //             document.getElementById("registrationForm").reset();
-    //             document.getElementById(modal).style.display = "none";
-    //             document.body.classList.remove("scrollBody");
-    //         }
-    //     })
-    // }
 
     function confMessage(item, action) {
         Swal.fire({
@@ -927,16 +929,6 @@ checkRole('EIR');
             }
         })
     }
-
-    //input validations
-    addPatientForm = document.getElementById("registrationForm");
-    $('#addBtn').click(async function (e) {
-        if (addPatientForm.checkValidity() != "") {
-            addPatient();
-        } else {
-            Swal.fire({icon: 'warning', title: 'Please fill the required fields', confirmButtonText: 'OK', confirmButtonColor: '#007bff'})
-        }
-    });
 </script>
 <!--Logout script-->
 <script src="../javascript/logout.js"></script>
