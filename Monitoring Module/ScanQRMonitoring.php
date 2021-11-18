@@ -137,9 +137,9 @@
             $.ajax({
                 url: 'monitoringSearchProcessor.php',
                 method: 'POST',
-                data: {patientId: content},
+                data: {modalRes: content},
                 success: function (result) {
-                    document.getElementById('qrView').style.display = "block";
+                    openModal('qrView');
                     document.getElementById('qr').innerHTML = result;
                      console.log(result);
                 }, error: function(result){
@@ -162,6 +162,13 @@
 
         function closeModal(modal){
             document.getElementById(modal).style.display = "none";
+            document.body.classList.remove("scrollBody");
+        }
+
+        function openModal(modal) {
+
+            document.getElementById(modal).style.display = "block";
+            document.body.classList.add("scrollBody");
         }
     </script>
     <!--Logout script-->

@@ -136,7 +136,7 @@ if (isset($_POST['modalRes'])) {
     </div>
     </div>
     <div class='modal-footer'>
-        <button onclick=btnViewPostVac('close') type='button' class='btn btn-danger' onclick='closeModal('postVacView')'> Cancel</button>
+        <button onclick=closeModal('qrView') type='button' class='btn btn-danger'> Cancel</button>
         <button onlcick=btnViewPostVac('ad') type='button' class='btn btn-success'> Add</button>
         </div>
         </div>
@@ -167,45 +167,79 @@ if (isset($_POST['patientId'])) {
     $stmt->close();
 
 
-    echo "
-                <img style='width:150px;' src='../img/SMIT+.png' alt='Baguio Logo'>
 
-                <hr>
-                <h2>PATIENT PROFILE</h2>
-                <hr><br>
-                <h5>Full Name: $name</h5><br>
-                <h5>Gender: $gender</h5><br>
-                <h5>Age: $age</h5><br>
-                <h5>Contact Number: $contact</h5><br>
-
-                <hr>
-                <h2>VACCINATION SUMMARY</h2>
-                <hr><br>
-
-                <h5>Priority Group: $group</h5><br>
-
-
-                <h5>First Dose: ";
-
-        if ($first == 0){
-            echo "Pending </h5><br>";
-        } else {
-            echo "Vaccinated </h5></br>";
-        }
-
-        echo"<h5>First Dose Vaccination Date: $fDate</h5><br><br>
-                     <h5>Second Dose: ";
-        if ($second == 0){
-            echo "Pending </h5><br>";
-        } else {
-            echo "Vaccinated </h5></br>";
-        }
-
-        echo"<h5>Second Dose Vaccination Date: $sDate</h5><br>
-            </div>
-            <div class='modal-footer'>
-            <button id='postVac' class='btn btn-success' type='submit' style='width: 20%; float: right'>Add Post Vitals</button>
-            </div>";
+    echo "<h3>$fullName</h3>
+    <hr>
+    <div class='row'>
+    <div class='col'>
+    <h4>Address: </h4><p>$fullAddress<p>
+    <hr>
+    <h4>Category:</h4><p>$category</p>
+    <hr>
+    <h4>Medical Background</h4>
+    <h6>Allergies:</h6>
+    <p>*Allergies Here*</p>
+    <h6>Commorbidities:</h6>
+    <p>*Commorbidities Here*</p>
+    <hr>
+    <h4>Vaccination Details</h4>
+    <h6>Schedule:</h6>
+    <p>*Sample Sched*</p>
+    <h6>Vax Site:</h6>
+    <p>*Sample VaxSite*</p>
+    <h6>Vaccine:</h6>
+    <p>*Sample Vax*</p>
+    <h6>Lot No.:</h6>
+    <p>*Sample Lot No*</p>
+    </div>
+    <div class='col-md-6'>
+    <h4>Pre-Vaccine Vitals:</h4>
+    <h6>Pulse Rate:</h6><p>$prePulse</p>
+    <h6>Temperature Rate:</h6><p>$preTemp</p>
+    <h6>Blood Presure Rate:</h6><p>$preBP</p>
+    <hr>
+    <h4>Post-Vaccine Vitals:</h4>
+    <form>
+    <strong>Pulse Rate:</strong> <br><input id='pulseR' type='text' placeholder='Beats Per Minute' name='vitals'>
+    <br>
+    <strong>Temperature:</strong> <br><input id='tempR' type='text' placeholder='in Celcius' name='vitals'>
+    <br>
+    <br>
+    
+    <strong>Blood Pressure</strong>
+    <br>
+    Diastolic: <br><input class='textInp' type='text' placeholder='millimetres of mercury' name='vitals'>
+    <br>
+    Systolic: <br><input class='textInp' type='text' placeholder='millimetres of mercury' name='vitals'>
+    </form>
+    </div>
+    </div>
+    <div class='modal-footer'>
+        <button onclick=closeModal('postVacView') type='button' class='btn btn-danger'> Cancel</button>
+        <button onlcick=btnViewPostVac('ad') type='button' class='btn btn-success'> Add</button>
+        </div>
+        </div>
+        ";
+//
+//        if ($first == 0){
+//            echo "Pending </h5><br>";
+//        } else {
+//            echo "Vaccinated </h5></br>";
+//        }
+//
+//        echo"<h5>First Dose Vaccination Date: $fDate</h5><br><br>
+//                     <h5>Second Dose: ";
+//        if ($second == 0){
+//            echo "Pending </h5><br>";
+//        } else {
+//            echo "Vaccinated </h5></br>";
+//        }
+//
+//        echo"<h5>Second Dose Vaccination Date: $sDate</h5><br>
+//            </div>
+//            <div class='modal-footer'>
+//            <button id='postVac' class='btn btn-success' type='submit' style='width: 20%; float: right'>Add Post Vitals</button>
+//            </div>";
 
 
 
@@ -237,40 +271,77 @@ if (isset($_POST['passport'])){
     }
 
     echo "      
-                <img style='width:150px;' src='../img/SMIT+.png' alt='Baguio Logo'>
-               
+                <h3> $fullName </h3>
                 <hr>
-                <h2>PATIENT PROFILE</h2>
-                <hr><br>
-                <h5>Full Name: $name</h5><br>
-                <h5>Gender: $gender</h5><br>
-                <h5>Age: $age</h5><br>
-                <h5>Contact Number: $contact</h5><br>
-                
+                <div class='row'>
+                <div class='col'>
+                <h4>Address: </h4><p>$fullAddress<p>
                 <hr>
-                <h2>VACCINATION SUMMARY</h2>
-                <hr><br>
+                <h4>Category:</h4><p>$category</p>
+                <hr>
+                <h4>Medical Background</h4>
+                <h6>Allergies:</h6>
+                <p>*Allergies Here*</p>
+                <h6>Commorbidities:</h6>
+                <p>*Commorbidities Here*</p>
+                <hr>
+                <h4>Vaccination Details</h4>
+                <h6>Schedule:</h6>
+                <p>*Sample Sched*</p>
+                <h6>Vax Site:</h6>
+                <p>*Sample VaxSite*</p>
+                <h6>Vaccine:</h6>
+                <p>*Sample Vax*</p>
+                <h6>Lot No.:</h6>
+                <p>*Sample Lot No*</p>
+                </div>
+                <div class='col'>
                 
-                <h5>Priority Group: $group</h5><br>
-              
-                 
-                <h5>First Dose: ";
+                <h4>Pre-Vaccine Vitals:</h4>
+    <h6>Pulse Rate:</h6><p>$prePulse</p>
+    <h6>Temperature Rate:</h6><p>$preTemp</p>
+    <h6>Blood Presure Rate:</h6><p>$preBP</p>
+    <hr>
+    <h4>Post-Vaccine Vitals:</h4>
+    <form>
+    <strong>Pulse Rate:</strong> <br><input id='pulseR' type='text' placeholder='Beats Per Minute' name='vitals'>
+    <br>
+    <strong>Temperature:</strong> <br><input id='tempR' type='text' placeholder='in Celcius' name='vitals'>
+    <br>
+    <br>
+    
+    <strong>Blood Pressure</strong>
+    <br>
+    Diastolic: <br><input class='textInp' type='text' placeholder='millimetres of mercury' name='vitals'>
+    <br>
+    Systolic: <br><input class='textInp' type='text' placeholder='millimetres of mercury' name='vitals'>
+    </form>
+    </div>
+    </div>
+    <div class='modal-footer'>
+        <button onclick=closeModal('postVacView') type='button' class='btn btn-danger'> Cancel</button>
+        <button onlcick=btnViewPostVac('add') type='button' class='btn btn-success'> Add</button>
+        </div> 
+        </div>";
 
-    if ($first == 0){
-        echo "Not Vaccinated </h5><br>";
-    } else {
-        echo "Vaccinated </h5></br>";
-    }
+//
+//                <h5>First Dose:
 
-    echo"<h5>First Dose Vaccination Date: $fDate</h5><br><br>
-                     <h5>Second Dose: ";
-    if ($second == 0){
-        echo "Not Vaccinated </h5><br>";
-    } else {
-        echo "Vaccinated </h5></br>";
-    }
-
-    echo"<h5>Second Dose Vaccination Date: $sDate</h5><br>
-                     <button id='postVac' class='btn-success' type='submit' style='width: 20%; float: right'>Add Post Vitals</button>";
+//    if ($first == 0){
+//        echo "Not Vaccinated </h5><br>";
+//    } else {
+//        echo "Vaccinated </h5></br>";
+//    }
+//
+//    echo"<h5>First Dose Vaccination Date: $fDate</h5><br><br>
+//                     <h5>Second Dose: ";
+//    if ($second == 0){
+//        echo "Not Vaccinated </h5><br>";
+//    } else {
+//        echo "Vaccinated </h5></br>";
+//    }
+//
+//    echo"<h5>Second Dose Vaccination Date: $sDate</h5><br>
+//                     <button id='postVac' class='btn-success' type='submit' style='width: 20%; float: right'>Add Post Vitals</button>";
 
 }

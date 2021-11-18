@@ -90,6 +90,9 @@ if (isset($_POST['modalScreening'])) {
     $fullName = $patientDetails['patient_last_name'].', '.$patientDetails['patient_first_name'];
     $fullAddress = $patientDetails['full_address'];
     $category = $patientDetails['priority_group'];
+    $prePulse = $patientDetails['pre_vital_pulse_rate_1st_dose'];
+    $preTemp = $patientDetails['pre_vital_temp_rate_1st_dose'];
+    $preBP = $patientDetails['pre_vital_bpDiastolic_1st_dose']."/".$patientDetails['pre_vital_bpSystolic_1st_dose'];
 
 
     echo "<h3>$fullName</h3>

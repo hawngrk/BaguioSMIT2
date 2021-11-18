@@ -276,11 +276,11 @@ input[type=text]{
     width: 60%;
 }
 
-#postVacView h6, #preVacView h6{
+#postVacView h6, #preVacView h6, #qrView h6{
     display: inline;
 }
 
-#postVacView button, #preVacView button{
+#postVacView button, #preVacView button, #qrView h6{
     align-content: flex-end;
 }
 
