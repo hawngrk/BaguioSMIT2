@@ -109,9 +109,14 @@ if (isset($_POST['modalScreening'])) {
         <h4>Category:</h4><p>$category</p>
         <hr>
         <h4>Medical Background</h4>
+        
         <h6>Allergies:</h6><br>
         $allergyToVaccine
+
+
         <h6>Commorbidities:</h6><br>
+        <div class='row'>
+        <div class='col' style='columns: 2;'> 
         $hypertension
         $heartDisease
         $kidneyDisease
@@ -119,26 +124,23 @@ if (isset($_POST['modalScreening'])) {
         $bronchialAsthma
         $immunodeficiency
         $cancer
-        $otherCommorbidity
-
-        <h4>Vaccination Details</h4>
-        <h6>Schedule:</h6>
-        <p>*Sample Sched*</p>
-        <h6>Vax Site:</h6>
-        <p>*Sample VaxSite*</p>
-        <h6>Vaccine:</h6>
-        <p>*Sample Vax*</p>
-        <h6>Lot No.:</h6>
-        <p>*Sample Lot No*</p>
-        
+        $otherCommorbidity 
+        </div>
+        </div>
+       
     </div>
+
+    
+
     <div class='col-md-6'>
     <h4>Pre-Vaccine Vitals:</h4>
     <form>
     <strong>Pulse Rate:</strong>
-    <br><input class='textInp'type='text' placeholder='Beats Per Minute' name='vitals'>
+    <br><input class='textInp'type='text' placeholder='Enter pulse rate' name='vitals'>
     <br>
-    <strong>Temperature:</strong> <br> <input class='textInp' type='text' placeholder='in Celcius' name='vitals'>
+    <strong>Temperature:</strong> <br> <input class='textInp' type='text' placeholder='Enter temperature' name='vitals'>
+    <br>
+    <strong>Oxygen Saturation:</strong> <br> <input class='textInp' type='text' placeholder='Enter oxygen saturation' name='vitals'>
     <br>
     <br>
     <strong>Blood Pressure (Diastolic/Systolic e.g. 120/80)</strong>
@@ -149,11 +151,43 @@ if (isset($_POST['modalScreening'])) {
     </form>
     </div>
     </div>
+    </div>
+
+    <div class='col'> 
+    <br>
+    <h4>Vaccination Details</h4>
+    
+        <div class='row'>
+            <div class='col'>
+            <h5>1st dose vaccination</h5>
+            <h6>Schedule:</h6>
+            <p>*Sample Sched*</p>
+            <h6>Vax Site:</h6>
+            <p>*Sample VaxSite*</p>
+            <h6>Vaccine:</h6>
+            <p>*Sample Vax*</p>
+            <h6>Lot No.:</h6>
+            <p>*Sample Lot No*</p>
+            </div>
+
+            <div class='col'>
+            <h5>2nd dose vaccination</h5>
+            <h6>Schedule:</h6>
+            <p>*Sample Sched*</p>
+            <h6>Vax Site:</h6>
+            <p>*Sample VaxSite*</p>
+            <h6>Vaccine:</h6>
+            <p>*Sample Vax*</p>
+            <h6>Lot No.:</h6>
+            <p>*Sample Lot No*</p>
+            </div>
+        </div>
+    </div>
     <div class='modal-footer'>
     <button onclick=closeModal('preVacView') type='button' class='btn btn-danger'> Cancel</button>            
     <button onclick=btnViewPostVac('add') id='addButtonId' type='button' class='btn btn-success' value=$patientID> Add</button>
     </div>
-    </div>
+</div>
     ";
 }
     
