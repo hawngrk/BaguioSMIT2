@@ -1,7 +1,7 @@
 <?php
 include_once("../includes/database.php");
-require_once('../includes/sessionHandling.php');
-checkRole('HSO');
+//require_once('../includes/sessionHandling.php');
+//checkRole('HSO');
 ?>
 
 <head>
@@ -389,10 +389,8 @@ checkRole('HSO');
     <script>
         //opening modal
         function openModal(modal) {
-            console.log(modal)
             document.getElementById(modal).style.display = "block";
-            document.getElementById(modal).removeClass('hidden');
-            overlay.trigger('show');
+            document.body.classList.add("scrollBody");
         }
 
         //close modal
@@ -572,6 +570,7 @@ checkRole('HSO');
                 success: function (result) {
                     document.getElementById("generateReportModal").innerHTML = result;
                     generateReportsModal.style.display = "block";
+                    openModal('generateReportModal');
                 }
             });
         }

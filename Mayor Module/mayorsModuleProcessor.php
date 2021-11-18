@@ -29,7 +29,29 @@ if (isset($_POST['empDeets'])){
                     </dl>
                 </div>
             </div>
-        </div>";
+            
+        </div>
+        <div class='row'>
+        <div class='col-12'>
+            <div class='tablescroll4'>
+            <table class='table table-row table-hover tableModal'>
+            <thead class='tableHeader'>
+            <tr class='tableCenterCont'>
+                <th scope='col'> Log Type </th>
+                <th scope='col'> Log Description </th>
+            </tr>
+            </thead>
+            <tr class='tableCenterCont'>
+            <td>Log Type 1</td>
+            <td>Log Description 1</td>
+            </tr>
+            </table>
+            </div>
+        </div>
+            
+            
+        </div>
+        ";
 }
 
 //search

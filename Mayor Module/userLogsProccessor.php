@@ -14,7 +14,7 @@ if (isset($_POST['empDeets'])){
         echo "<h4> $empFName $empMName $empLName </h4>
         <hr>
         <div class='row mayorsCnt'>
-            <div class='col'>
+        <div class='col'>
             <h5>Employee Role:</h5><p>$empRole</p>
             <h5>Contact Number:</h5><p>$empContactNumber</p>
             <h5>Account Type:</h5><p>$empType</p>
@@ -27,6 +27,8 @@ if (isset($_POST['empDeets'])){
             <h7>Password:</h7><p>$empPW</p>
             </div>
             </div>
-        </div>";
+        </div>
+        
+        ";
 }
 ?>
