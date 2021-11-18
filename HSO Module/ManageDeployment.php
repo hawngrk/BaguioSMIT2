@@ -310,9 +310,10 @@ include_once("../includes/database.php") ?>
                                     <div class="col">
                                         <div class="form-group">
                                             <h6 style="float: left">Select Vaccine Brand/s: </h6>
+                                            <input id="noStubsFirst" class = 'checkboxes p-4' type='checkbox' onclick="disableCheck(this, 'firstDoseStubs', 'first')">
+                                            <label>No Stubs</label>
                                             <div class="border border-dark tableScroll3 rounded" id = "firstDoseStubs"
                                                  style="columns:3; padding: 2%; list-style-type: none; height: auto!important">
-
                                                     <?php
                                                     require '../require/getVaccine.php';
                                                     foreach ($vaccines as $vac) {
@@ -360,6 +361,8 @@ include_once("../includes/database.php") ?>
                             </div>
 
                             <div role="tabpanel" class="tab-pane" id="SecondDosePage" >
+                                <input id="noStubsFirst" class = 'checkboxes p-4' type='checkbox' onclick="disableCheck(this, 'secondDoseTable', 'second')">
+                                <label>No Stubs</label>
                                 <h3>Second Dose</h3>
                                 <div class="AddHealthD-option">
                                             <table id="secondDoseTable">
@@ -828,12 +831,31 @@ include_once("../includes/database.php") ?>
         }
     });
 
-    function disableCheck(checkbox, id) {
-        if (checkbox.checked == true) {
-            document.getElementById(id).disabled = true;
-            document.getElementById(id).value = 0;
-        } else {
-            document.getElementById(id).disabled = false;
+    function disableCheck(checkbox, id, type) {
+        if (type == 'first') {
+            var div = document.getElementById(id).getElementsByTagName('div');
+            if (checkbox.checked == true) {
+                for (var index = 0; index < div.length; index++) {
+                    div[index].children[0].disabled = true;
+                    div[index].children[0].value = 0;
+                }
+            } else {
+                for (var index = 0; index < div.length; index++) {
+                    div[index].children[0].disabled = false;
+                }
+            }
+        }else{
+            var tr = document.getElementById(id).getElementsByTagName('tr');
+            if (checkbox.checked == true) {
+                for (var index = 0; index < tr.length; index++) {
+                    tr[index].children[2].children[1].children[0].disabled = true;
+                    tr[index].children[2].children[1].children[0].value = 0;
+                }
+            }else{
+                for (var index = 0; index < tr.length; index++) {
+                    tr[index].children[2].children[1].children[0].disabled = false;
+                }
+            }
         }
     }
 
@@ -1076,8 +1098,6 @@ include_once("../includes/database.php") ?>
                 firstDoseVaccineBrands[vaccine].push(li[i].children[3].children[0].value);
             }
         }
-
-        console.log(firstDoseVaccineBrands);
 
         var date = document.getElementById("date").value;
         var location = document.getElementById("site").value;

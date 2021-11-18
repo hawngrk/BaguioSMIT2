@@ -667,15 +667,15 @@ if (isset($_POST['distArchive'])){
         $database->query($query);
 
         echo' 
-                    <table class="table table-row table-hover tableModal">
-                        <thead class="tableHeader">
-                        <tr>
-                            <th scope="col">Health District Id</th>
-                            <th scope="col">District Name</th>
-                            <th scope="col">Contact Number</th>
-                            <th scope="col">Action</th>
-                        </tr>
-                        </thead>';
+                  <table class="table table-hover border">
+                    <thead class="tableHeader">
+                    <tr class="tableCenterCont">
+                        <th scope="col">Health District Id</th>
+                        <th scope="col">District Name</th>
+                        <th scope="col">Contact Number</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                    </thead>';
 
 
         $query1 = "SELECT health_district_id, health_district_name, hd_contact_number FROM health_district WHERE Archived = 0";
@@ -685,12 +685,12 @@ if (isset($_POST['distArchive'])){
         $dbase->bind_result($districtId, $districtName, $number);
         while ($dbase->fetch()) {
 
-                echo "<tr class='table-row' onclick='showDistrict(this)'>
+                echo "<tr class='table-row tableCenterCont' onclick='showDistrict(this)'>
                                     <td>$districtId</td>
                                     <td>$districtName</td>
                                     <td>$number</td>
                                     <td style= 'vertical-align: middle;'>
-                                        <div style='text-align: left;'>
+                                        <div class='d-flex justify-content-center'>
                                            <button class='btn btn-sm bg-none' onclick='event.stopPropagation(); archive(1,archiveDistrict, $districtId)'><i class='fa fa-archive'></i></button>
                                         </div>
                                     </td>
@@ -742,73 +742,80 @@ if (isset($_POST['distArchive'])){
 }
 
 if (isset($_POST['showUpdatedDistArchive'])){
-    echo"
-     <table class='table table-row table-hover tableModal'>
-                        <thead class='tableHeader'>
-                        <tr>
-                            <th scope='col'>Health District Id</th>
-                            <th scope='col'>District Name</th>
-                            <th scope='col'>Contact Number</th>
-                            <th scope='col'>Action</th>
-                        </tr>
-                        </thead>";
+    echo'
+    <table class="table table-row table-hover tableModal">
+                <thead class="tableHeader">
+                <tr class="tableCenterCont">
+                    <th scope="col">Health District Id</th>
+                    <th scope="col">District Name</th>
+                    <th scope="col">Contact Number</th>
+                    <th scope="col">Action</th>
+                </tr>
+                </thead>
+';
 
-                        foreach ($health_district as $hd) {
-                            $districtId = $hd->getHealthDistrictId();
-                            $districtName = $hd->getHealthDistrictName();
-                            $number = $hd->getContact();
-                            $archived = $hd->getArchived();
+    require_once '../require/getHealthDistrict.php';
 
-                            if($archived == 1) {
+    foreach ($health_district as $hd) {
+        $districtId = $hd->getHealthDistrictId();
+        $districtName = $hd->getHealthDistrictName();
+        $number = $hd->getContact();
+        $archived = $hd->getArchived();
 
-                                echo "<tr class='table-row' onclick='showDistrict(this)'>
+        if ($archived == 1) {
+
+            echo "<tr class='table-row' onclick='showDistrict(this)'>
                                     <td>$districtId</td>
                                     <td>$districtName</td>
                                     <td>$number</td>
-                                    <td class='d-flex justify-content-center'>
-                                            <button class='btn btn-sm bg-none' onclick='event.stopPropagation();archive(0, archiveDistrict, $districtId )'>unarchive <i class='fas fa-box-open'></i></button>
+                                    <td style= 'vertical-align: middle;'>
+                                        <div style='text-align: left;'>
+                                            <button class='btn btn-warning' onclick='event.stopPropagation(); archive(0, archiveDistrict, $districtId )'>unarchive <i class='fas fa-box-open'></i></button>
+                                         </div>
                                     </td>
                                   </tr>";
-                            }
-                        }
+        }
+    }
                     echo"    
                     </table>";
 
 }
 
 if (isset($_POST['showUpdatedDist'])){
-    echo"
+    echo'
                 
-                    <table class='table table-hover'>
-                        <thead>
-                        <tr>
-                            <th scope='col'>Health District Id</th>
-                            <th scope='col'>District Name</th>
-                            <th scope='col'>Contact Number</th>
-                            <th scope='col'>Action</th>
-                        </tr>
-                        </thead>";
+                    <table class="table table-hover border">
+                    <thead class="tableHeader">
+                    <tr class="tableCenterCont">
+                        <th scope="col">Health District Id</th>
+                        <th scope="col">District Name</th>
+                        <th scope="col">Contact Number</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                    </thead>';
 
-                        foreach ($health_district as $hd) {
-                            $districtId = $hd->getHealthDistrictId();
-                            $districtName = $hd->getHealthDistrictName();
-                            $number = $hd->getContact();
-                            $archived = $hd->getArchived();
+    require_once '../require/getHealthDistrict.php';
 
-                            if($archived == 0) {
+    foreach ($health_district as $hd) {
+        $districtId = $hd->getHealthDistrictId();
+        $districtName = $hd->getHealthDistrictName();
+        $number = $hd->getContact();
+        $archived = $hd->getArchived();
 
-                                echo "<tr class='table-row' onclick='showDistrict(this)'>
+        if ($archived == 0) {
+
+            echo "<tr class='table-row tableCenterCont' onclick='showDistrict(this)'>
                                     <td>$districtId</td>
                                     <td>$districtName</td>
                                     <td>$number</td>
                                     <td style= 'vertical-align: middle;'>
-                                        <div style='text-align: left;'>
+                                        <div class='d-flex justify-content-center'>
                                            <button class='btn btn-sm bg-none' onclick='event.stopPropagation(); archive(1,archiveDistrict, $districtId)'><i class='fa fa-archive'></i></button>
                                         </div>
                                     </td>
                                   </tr>";
-                            }
-                        }
+        }
+    }
                     echo"</table>";
 
 }
