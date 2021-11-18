@@ -206,26 +206,26 @@ checkRole('EIR');
             </button>
         </div>
         <div class="modal-body">
-            <form id="registrationForm" name="registrationForm" onsubmit="return validateForm()" method="post"
+            <form id="registrationForm" name="registrationForm" action="" method="post"
                   class="form">
                 <div class="personalInfo">
                     <h5> Personal Information </h5>
                     <div class="row">
                         <div class="col">
                             <label class="required" for="lname">Last Name</label>
-                            <input type="text3" id="lname" class='input form-control' name="lastname"
-                                   placeholder="Input Answer Here" required>
+                            <input type="text3" id="lname" class='input form-control' name="lname"
+                                   placeholder="Input Answer Here">
                         </div>
                         <div class="col">
                             <label class="required" for="fname">First Name </label>
-                            <input type="text3" id="fname" class='input form-control' name="firstname"
-                                   placeholder="Input Answer Here" required>
+                            <input type="text3" id="fname" class='input form-control' name="fname"
+                                   placeholder="Input Answer Here">
 
                         </div>
                         <div class="col">
-                            <label class="required" for="mname">Middle Name </label>
+                            <label for="mname">Middle Name </label>
                             <input type="text3" id="mname" class='input form-control' name="middlename"
-                                   placeholder="Input Answer Here" required>
+                                   placeholder="Input Answer Here">
                         </div>
 
                         <div class="col">
@@ -262,11 +262,14 @@ checkRole('EIR');
                                 <option value="Not Applicable">Not Applicable</option>
                                 <option value="Single">Single</option>
                                 <option value="Married">Married</option>
+                                <option value="Widow/Widower">Widow/Widower</option>
+                                <option value="Separated/Anulled">Separated/Anulled</option>
+                                <option value="Living with Partner">Living with Partner</option>
                             </select>
                         </div>
                         <div class="col">
                             <label class="label1 required" for="occupation">Occupation </label>
-                            <input type="text3" id="occupation" class='input form-control' name="middlename"
+                            <input type="text3" id="occupation" class='input form-control'
                                    placeholder="Input Answer Here" required>
                         </div>
                     </div>
@@ -454,15 +457,20 @@ checkRole('EIR');
                         </div>
                     </div>
                 </div>
+                <div class="modal-footer">
+                    <input type="button" onclick="closeModalForms('addPatientModal','registrationForm')" class="btn btn-danger shadow-sm" value="Cancel">
+                    <input type="submit" class="btn btn-success shadow-sm" value="Add">
+                </div>
+
             </form>
         </div>
-        <div class="modal-footer">
+        <!-- <div class="modal-footer">
             <button type="button" onclick="closeModalForms('addPatientModal','registrationForm')" class="btn btn-danger shadow-sm">Cancel
             </button>
             <button type="button" id="addBtn" class="btn btn-success shadow-sm"
                     onclick="confMessage('Patient', addPatient)">Add
             </button>
-        </div>
+        </div> -->
     </div>
 </div>
 <div id="uploadFileModal" class="modal-window">
@@ -566,8 +574,23 @@ checkRole('EIR');
         integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm"
         crossorigin="anonymous"></script>
 
-<script type="text/javascript">
 
+<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.js"></script>
+
+<script type="text/javascript">
+    $().ready(function(){
+       $("#registrationForm").validate({
+           rules: {
+               lname: "required",
+               fname: "required"
+           },
+           messages: {
+               lname: "First name is required",
+               fname: "Last name is required"
+           }
+       });
+    })
+                           
     function search() {
         var textSearch = document.getElementById("searchPatient").value;
         $.ajax({
