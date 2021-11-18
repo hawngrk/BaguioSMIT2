@@ -134,7 +134,7 @@
         $.ajax({
             url: 'screeningProcessor.php',
             method: 'POST',
-            data: {patientId: content},
+            data: {modalScreening: content},
             success: function (result) {
                 document.getElementById('qrView').style.display = "block";
                 document.getElementById('qr').innerHTML = result;
@@ -144,10 +144,11 @@
 
     function passport(passportId){
         $.ajax({
-            url: 'screeningSearchProcessor.php',
+            url: 'screeningProcessor.php',
             method: 'POST',
-            data: {passport: passportId},
+            data: {modalScreening: passportId},
             success: function (result) {
+                console.log(result);
                 document.getElementById('qrView').style.display = "block";
                 document.getElementById('qr').innerHTML = result;
             }
