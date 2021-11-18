@@ -136,7 +136,6 @@
             </div>
         </div>
     </div>
-
 </body>
 </html>
 
@@ -213,6 +212,12 @@
                     })
             
         }
+    }
+    function allergy(checkbox){
+        var checkboxes = document.getElementsByName('allergy');
+        checkboxes.forEach((item) =>  {
+            if (item !== checkbox) item.checked = false;
+        });
     }
 </script>
 <!--Logout script-->

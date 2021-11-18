@@ -130,8 +130,6 @@ if (isset($_POST['modalScreening'])) {
        
     </div>
 
-    
-
     <div class='col-md-6'>
     <h4>Pre-Vaccine Vitals:</h4>
     <form>
@@ -155,6 +153,8 @@ if (isset($_POST['modalScreening'])) {
 
     <div class='col'> 
     <br>
+
+    <hr>
     <h4>Vaccination Details</h4>
     
         <div class='row'>
@@ -185,7 +185,7 @@ if (isset($_POST['modalScreening'])) {
     </div>
     <div class='modal-footer'>
     <button onclick=closeModal('preVacView') type='button' class='btn btn-danger'> Cancel</button>            
-    <button onclick=btnViewPostVac('add') id='addButtonId' type='button' class='btn btn-success' value=$patientID> Add</button>
+    <button onclick=btnViewPostVac('add') id='addButtonId' type='button' class='btn btn-success' value=$patientID> Save</button>
     </div>
 </div>
     ";

@@ -152,7 +152,7 @@
             $.ajax({
                 url: 'monitoringSearchProcessor.php',
                 method: 'POST',
-                data: {passport: passportId},
+                data: {modalRes: passportId},
                 success: function (result) {
                     document.getElementById('qrView').style.display = "block";
                     document.getElementById('qr').innerHTML = result;
@@ -216,4 +216,3 @@
         margin-top: 3%;
     }
 </style>
-
