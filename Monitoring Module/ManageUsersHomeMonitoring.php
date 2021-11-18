@@ -179,11 +179,7 @@
     }
 
     function btnViewPostVac(param) {
-        if (param == 'close') {
-            closeModal('postVacView');
-        } 
-        
-        if(param == 'add') {
+
             var id = document.getElementById('addButtonId').value;
             var pulse = document.getElementById('pulseR').value;
             var temp = document.getElementById('tempR').value;
@@ -209,9 +205,8 @@
                     } else if (result.isDenied) {
                     Swal.fire('Changes are not saved', '', 'info')
                     }
-                    })
-            
-        }
+            });
+        
     }
     function allergy(checkbox){
         var checkboxes = document.getElementsByName('allergy');

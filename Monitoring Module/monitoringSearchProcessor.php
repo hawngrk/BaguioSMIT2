@@ -183,7 +183,7 @@ if (isset($_POST['modalRes'])) {
     </div>
     <div class='modal-footer'>
         <button onclick=closeModal('qrView') type='button' class='btn btn-danger'> Cancel</button>
-        <button onlcick=btnViewPostVac('ad') type='button' class='btn btn-success value=$patientID'> Save</button>
+        <button onlcick=btnViewPostVac() type='button' class='btn btn-success value=$patientID'> Save</button>
     </div>";
 }
 
@@ -217,17 +217,33 @@ function checkbox($commorbidity, $commorbidityName) {
 function checkAllergy($allergy) {
     if($allergy == 0) {
         return "
+        <div class='row'>
+        <div class='col-2'>
         <input type='checkbox' name='allergy' value='1' onclick='allergy(this)'>
         <label for='yes'>Yes</label><br>
-        
+        </div>
+
+        <div class='col-2'>
         <input type='checkbox' name='allergy' value='0' onclick='allergy(this)' checked>
         <label for='no'>No</label><br>
+        </div>
+        </div>
         ";
     } else {
-        return "<label for='yes'>Yes</label>
-        <input type='checkbox' name='allergy' value='1' onclick='allergy(this)' checked><br>
-        <label for='no'>No</label>
-        <input type='checkbox' name='allergy' value='0' onclick='allergy(this)'><br>";
+        return 
+        "
+        <div class='row'>
+        <div class='col-2'>
+        <input type='checkbox' name='allergy' value='1' onclick='allergy(this)' checked>
+        <label for='yes'>Yes</label><br>
+        </div>
+
+        <div class='col-2'>
+        <input type='checkbox' name='allergy' value='0' onclick='allergy(this)'>
+        <label for='no'>No</label><br>
+        </div>
+        </div>
+        ";
     }
 }
 

@@ -134,18 +134,18 @@ if (isset($_POST['modalScreening'])) {
     <h4>Pre-Vaccine Vitals:</h4>
     <form>
     <strong>Pulse Rate:</strong>
-    <br><input class='textInp'type='text' placeholder='Enter pulse rate' name='vitals'>
+    <br><input class='textInp' id='pulseR' type='text' placeholder='Enter pulse rate' name='vitals'>
     <br>
-    <strong>Temperature:</strong> <br> <input class='textInp' type='text' placeholder='Enter temperature' name='vitals'>
+    <strong>Temperature:</strong> <br> <input class='textInp' type='text' id='tempR' placeholder='Enter temperature' name='vitals'>
     <br>
-    <strong>Oxygen Saturation:</strong> <br> <input class='textInp' type='text' placeholder='Enter oxygen saturation' name='vitals'>
+    <strong>Oxygen Saturation:</strong> <br> <input class='textInp' type='text' id='oxygenSat' placeholder='Enter oxygen saturation' name='vitals'>
     <br>
     <br>
     <strong>Blood Pressure (Diastolic/Systolic e.g. 120/80)</strong>
     <br>
-    Diastolic: <br><input class='textInp' type='text' placeholder='millimetres of mercury' name='vitals'>
+    <strong>Diastolic:</strong> <br><input class='textInp' type='text' placeholder='millimetres of mercury' id='bpRDias' name='vitals'>
     <br>
-    Systolic: <br><input class='textInp' type='text' placeholder='millimetres of mercury' name='vitals'>
+    <strong>Systolic:</strong> <br><input class='textInp' type='text' placeholder='millimetres of mercury' id='bpRSys' name='vitals'>
     </form>
     </div>
     </div>
@@ -185,7 +185,7 @@ if (isset($_POST['modalScreening'])) {
     </div>
     <div class='modal-footer'>
     <button onclick=closeModal('preVacView') type='button' class='btn btn-danger'> Cancel</button>            
-    <button onclick=btnViewPostVac('add') id='addButtonId' type='button' class='btn btn-success' value=$patientID> Save</button>
+    <button onclick=btnViewPostVac() id='addButtonId' type='button' class='btn btn-success' value=$patientID> Save</button>
     </div>
 </div>
     ";
@@ -195,6 +195,7 @@ if (isset($_POST['pulse'])) {
     require_once('../includes/configure.php');
     $pulseRR = $_POST['pulse'];
     $tempRR = $_POST['temp'];
+    $oxygen = $_POST['oxygen'];
     $bpDiastolic = $_POST['diastolic'];
     $bpSystolic = $_POST['systolic'];
     $id = $_POST['id'];
@@ -206,13 +207,13 @@ if (isset($_POST['pulse'])) {
         $row = $stmtselect->fetch(PDO::FETCH_ASSOC);
 
         if ($row['first_dose_vaccination'] == 1 && $row['second_dose_vaccination'] == 0) {
-            $query = ("UPDATE patient_vitals SET pre_vital_pulse_rate_2nd_dose = ?, pre_vital_temp_rate_2nd_dose = ?, pre_vital_bpDiastolic_2nd_dose = ?, pre_vital_bpSystolic_2nd_dose = ? WHERE patient_vitals.patient_id = ?");
+            $query = ("UPDATE patient_vitals SET pre_vital_pulse_rate_2nd_dose = ?, pre_vital_temp_rate_2nd_dose = ?, patient_oxygen_saturation_2nd_dose = ?, pre_vital_bpDiastolic_2nd_dose = ?, pre_vital_bpSystolic_2nd_dose = ? WHERE patient_vitals.patient_id = ?");
             $stmtinsert = $database->prepare($query);
-            $stmtinsert->execute([$pulseRR, $tempRR, $bpDiastolic, $bpSystolic, $id]);
+            $stmtinsert->execute([$pulseRR, $tempRR, $oxygen, $bpDiastolic, $bpSystolic, $id]);
         } else {
-            $query = ("UPDATE patient_vitals SET pre_vital_pulse_rate_1st_dose = ?, pre_vital_temp_rate_1st_dose = ?, pre_vital_bpDiastolic_1st_dose = ?, pre_vital_bpSystolic_1st_dose = ? WHERE patient_vitals.patient_id = ?");
+            $query = ("UPDATE patient_vitals SET pre_vital_pulse_rate_1st_dose = ?, pre_vital_temp_rate_1st_dose = ?, patient_oxygen_saturation_1st_dose = ?, pre_vital_bpDiastolic_1st_dose = ?, pre_vital_bpSystolic_1st_dose = ? WHERE patient_vitals.patient_id = ?");
             $stmtinsert = $database->prepare($query);
-            $stmtinsert->execute([$pulseRR, $tempRR, $bpDiastolic, $bpSystolic, $id]);
+            $stmtinsert->execute([$pulseRR, $tempRR, $oxygen, $bpDiastolic, $bpSystolic, $id]);
         }
     } catch (Exception $th) {
         echo $th->getMessage();
@@ -237,17 +238,32 @@ function checkbox($commorbidity, $commorbidityName) {
 function checkAllergy($allergy) {
     if($allergy == 0) {
         return "
+        <div class='row'>
+        <div class='col-2'>
         <input type='checkbox' name='allergy' value='1' onclick='allergy(this)'>
         <label for='yes'>Yes</label><br>
-        
+        </div>
+
+        <div class='col-2'>
         <input type='checkbox' name='allergy' value='0' onclick='allergy(this)' checked>
         <label for='no'>No</label><br>
+        </div>
+        </div>
         ";
     } else {
-        return "<label for='yes'>Yes</label>
-        <input type='checkbox' name='allergy' value='1' onclick='allergy(this)' checked><br>
-        <label for='no'>No</label>
-        <input type='checkbox' name='allergy' value='0' onclick='allergy(this)'><br>";
+        return "
+        <div class='row'>
+        <div class='col-2'>
+        <input type='checkbox' name='allergy' value='1' onclick='allergy(this)' checked>
+        <label for='yes'>Yes</label><br>
+        </div>
+
+        <div class='col-2'>
+        <input type='checkbox' name='allergy' value='0' onclick='allergy(this)'>
+        <label for='no'>No</label><br>
+        </div>
+        </div>
+        ";
     }
 }
 
