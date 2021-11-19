@@ -233,7 +233,8 @@ include_once("../includes/database.php") ?>
                         <div class="col">
                             <div class="form-group">
                                 <label for="site"><h6>Select Vaccination Site: </h6></label>
-                                <select name="site" id="site" required>
+                                <select name="site" id="site">
+                                    <option value="" disabled selected> Select Vaccination Site</option>
                                     <?php
                                     require '../require/getVaccinationSites.php';
                                     foreach ($vaccinationSites as $vs) {
@@ -254,8 +255,7 @@ include_once("../includes/database.php") ?>
                         </div>
                     </div>
                     <label for="district"><h6>Select Health District/s: </h6></label>
-                    <div id="district" style="padding: 2%; margin-bottom: 2%"
-                         class="AddHealthD-option tableScroll3 border border-dark rounded">
+                    <div id="district" style="padding: 2%; margin-bottom: 2%" name="district"  class="AddHealthD-option tableScroll3 border border-dark rounded">
                         <div id="districList">
                             <div class="row">
                                 <ul style="columns: 3">
@@ -266,8 +266,8 @@ include_once("../includes/database.php") ?>
                                         $hdId = $hd->getHealthDistrictId();
                                         $hdName = $hd->getHealthDistrictName();
                                         echo " <li>
-                                                            <input class = 'checkboxes' type='checkbox' onclick='selected(\"healthDistricts\", $hdId)'>
-                                                            <label>$hdName</label><br>
+                                                            <input id='districts' name='districts' class = 'checkboxes' type='checkbox' onclick='selected(\"healthDistricts\", $hdId)'>
+                                                            <label for='districts'>$hdName</label><br>
                                                           </li> ";
                                     }
                                     ?>
@@ -418,9 +418,9 @@ include_once("../includes/database.php") ?>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" onclick="closeModal('DeployModal')"> Cancel
-                    </button>
-                    <button type="button" class="btn btn-success" onclick="add('Deployment', addDep)"> Add</button>
+                    <input type="button" class="btn btn-danger" onclick="closeModalForms('DeployModal','newDeploymentForm')" value="Cancel">
+                    </input>
+                    <input type="submit" class="btn btn-success" onclick="add('Deployment', addDep, validationDeployment)" value="Add"> </input>
 
                 </div>
 
