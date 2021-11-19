@@ -1,7 +1,7 @@
 <?php
-//require_once('../includes/sessionHandling.php');
-//checkRole('HSO');
-//include ("../AdminbackEnd/sessionHandling.php");
+require_once('../includes/sessionHandling.php');
+checkRole('HSO');
+include ("../AdminbackEnd/sessionHandling.php");
 include_once("../includes/database.php") ?>
 
 <head>
@@ -87,7 +87,7 @@ include_once("../includes/database.php") ?>
         </ul>
     </nav>
 
-    <div id="content">
+    <form id="content">
         <!-- Page Content  -->
         <div class="navbar navbar-expand-lg navbar-light bg-light shadow-sm p-3 mb-4 rounded-lg">
             <div class="container-fluid">
@@ -112,7 +112,8 @@ include_once("../includes/database.php") ?>
                 <div class="row">
                     <div class="col">
                         <div class="input-group">
-                            <input  id="searchPatientInput" type="search" name="searchPatient" class="form-control" placeholder="Search" onkeyup="searchPatient(this.value)"/>
+                            <input id="searchPatientInput" type="search" name="searchPatient" class="form-control"
+                                   placeholder="Search" onkeyup="searchPatient(this.value)"/>
                         </div>
                     </div>
                     <div class="col-sm-auto">
@@ -121,8 +122,8 @@ include_once("../includes/database.php") ?>
                                 <select class="form-select filterButton" id="filterCat" name="filterCategory"
                                         onchange="filterCategoryGroup(this.value)">
                                     <option value='' selected disabled hidden>Filter By</option>
-                                    <option value='' disabled >Select Category Group</option>
-                                    <option value="All"> All </option>
+                                    <option value='' disabled>Select Category Group</option>
+                                    <option value="All"> All</option>
                                     <?php
                                     require_once("../require/getPriorityGroup.php");
                                     foreach ($priorityGroups as $pg) {
@@ -137,8 +138,8 @@ include_once("../includes/database.php") ?>
                                 <select class="form-select sortButton" id="sortPatientName" name="sortPatient"
                                         onchange="sortByName(this)">
                                     <option value="" selected disabled hidden>Sort By</option>
-                                    <option value="" disabled >Select Name Sort </option>
-                                    <option value="None"> None </option>
+                                    <option value="" disabled>Select Name Sort</option>
+                                    <option value="None"> None</option>
                                     <option value="Asc">Name ↑</option>
                                     <option value="Desc">Name ↓</option>
                                 </select>
@@ -170,7 +171,7 @@ include_once("../includes/database.php") ?>
                     $stmt->execute();
                     $stmt->bind_result($patientId, $fullname, $category, $patientAddress, $contactNum);
                     while ($stmt->fetch()) {
-                    echo "<tr class='tableCenterCont' onclick='showPatient(this)'>
+                        echo "<tr class='tableCenterCont' onclick='showPatient(this)'>
                                 <td>$patientId</td>
                                 <td>$fullname</td>
                                 <td>$category</td>
@@ -198,12 +199,11 @@ include_once("../includes/database.php") ?>
         </div>
 
         <!--Modal for uploading patient csv-->
-        <!--To include uploading files limited to csv file only-->
-        <div id="uploadFileModal" class="modal-window">
+        <<div id="uploadFileModal" class="modal-window">
             <div class="content-modal">
                 <div class="modal-header">
                     <h3> Upload File/s </h3>
-                    <span onclick="closeModalForms('uploadFileModal','uploadForm')" class="close">
+                    <span onclick="closeModal('uploadFileModal')" class="close">
                         <i class='fas fa-window-close'></i>
                     </span>
                 </div>
@@ -212,16 +212,16 @@ include_once("../includes/database.php") ?>
                     <div class="row" id="upload-content">
                         <div class="col">
                             <form id="uploadForm">
-                            <div class="col-md-12 text-center form-group">
-                                <button class="shadow-sm form-control-file" id="iconBrowse" type="button"
-                                        onclick="document.getElementById('fileUpload').click()">
-                                    Browse files
-                                </button>
-                                <br>
-                                <input id="fileUpload" type="file" style="display: none"
-                                       onchange="getUploadedFiles(this)" multiple/>
-                                <h6><br> Upload a list of patients (.csv) </h6>
-                            </div>
+                                <div class="col-md-12 text-center form-group">
+                                    <button class="shadow-sm form-control-file" id="iconBrowse" type="button"
+                                            onclick="document.getElementById('fileUpload').click()">
+                                        Browse files
+                                    </button>
+                                    <br>
+                                    <input id="fileUpload" type="file" style="display: none"
+                                           onchange="getUploadedFiles(this)" multiple/>
+                                    <h6><br> Upload a list of patients (.csv) </h6>
+                                </div>
                             </form>
                         </div>
                         <div class="col">
@@ -232,7 +232,7 @@ include_once("../includes/database.php") ?>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" onclick="closeModalForms('uploadFileModal','uploadForm')">
+                    <button type="button" class="btn btn-danger" onclick="closeModal('uploadFileModal')">
                         Cancel
                     </button>
                     <button type="button" id="uploadFileConfirmBtn" class="btn btn-primary"
@@ -242,37 +242,36 @@ include_once("../includes/database.php") ?>
             </div>
         </div>
 
-
         <!--Add Patient Modal-->
         <div id="patientInformationModal" class="modal-window">
             <div class="content-modal">
                 <div class="modal-header">
-                    <h4 class="modal-title">Add User | Patient - Information</h4>
-                    <button type="button" onclick="closeModalForms('patientInformationModal','registrationForm')" class="close" data-dismiss="modal">
-                        <i class='fas fa-window-close'></i>
+                    <h4 class="modal-title">Add Profile Information </h4>
+                    <button type="button" onclick="closeModal('patientInformationModal')" class="close"><i
+                                class='fas fa-window-close'></i>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form id="registrationForm" name="registrationForm" onsubmit="return validateForm()" method="post"
+                    <form id="registrationForm" name="registrationForm" action="" method="post"
                           class="form">
                         <div class="personalInfo">
                             <h5> Personal Information </h5>
                             <div class="row">
                                 <div class="col">
                                     <label class="required" for="lname">Last Name</label>
-                                    <input type="text3" id="lname" class='input form-control' name="lastname"
-                                           placeholder="Input Answer Here" required>
+                                    <input type="text3" id="lname" class='input form-control' name="lname"
+                                           placeholder="Input Answer Here">
                                 </div>
                                 <div class="col">
                                     <label class="required" for="fname">First Name </label>
-                                    <input type="text3" id="fname" class='input form-control' name="firstname"
-                                           placeholder="Input Answer Here" required>
+                                    <input type="text3" id="fname" class='input form-control' name="fname"
+                                           placeholder="Input Answer Here">
 
                                 </div>
                                 <div class="col">
-                                    <label class="required" for="mname">Middle Name </label>
+                                    <label for="mname">Middle Name </label>
                                     <input type="text3" id="mname" class='input form-control' name="middlename"
-                                           placeholder="Input Answer Here" required>
+                                           placeholder="Input Answer Here">
                                 </div>
 
                                 <div class="col">
@@ -292,7 +291,7 @@ include_once("../includes/database.php") ?>
 
                                 <div class="col">
                                     <label class="label1 required" for="date"> Birthdate </label>
-                                    <input type="date" id="date" name="birthdate" class="form-control" required>
+                                    <input type="date" id="date" name="birthdate" class="form-control">
                                 </div>
                                 <div class="col">
                                     <label class="label1 required" for="gender"> Sex </label>
@@ -304,29 +303,32 @@ include_once("../includes/database.php") ?>
                                 </div>
                                 <div class="col">
                                     <label class="label1 required" for="civilStatus"> Civil Status </label>
-                                    <select class="form-select" id="civilStatus" name="civilStatus" required>
+                                    <select class="form-select" id="civilStatus" name="civilStatus">
                                         <option value="">Please Select...</option>
                                         <option value="Not Applicable">Not Applicable</option>
                                         <option value="Single">Single</option>
                                         <option value="Married">Married</option>
+                                        <option value="Widow/Widower">Widow/Widower</option>
+                                        <option value="Separated/Anulled">Separated/Anulled</option>
+                                        <option value="Living with Partner">Living with Partner</option>
                                     </select>
                                 </div>
                                 <div class="col">
                                     <label class="label1 required" for="occupation">Occupation </label>
-                                    <input type="text3" id="occupation" class='input form-control' name="middlename"
-                                           placeholder="Input Answer Here" required>
+                                    <input type="text3" id="occupation" class='input form-control' name="occupation"
+                                           placeholder="Input Answer Here">
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col">
                                     <label class="label1 required" for="contactNum">Contact Number </label>
                                     <input type="text3" id="contactNum" class='input form-control' name="contactNum"
-                                           placeholder="09XX-XXX-XXXX" required>
+                                           placeholder="09XX-XXX-XXXX" pattern="09[0-9]{9}">
                                 </div>
                                 <div class="col">
                                     <label class="label1 required" for="email"> Email Address </label>
-                                    <input type="text3" id="email" class='input form-control' name="email"
-                                           placeholder="email@example.org" required>
+                                    <input type="email" id="email" class='input form-control' name="email"
+                                           placeholder="email@example.org">
                                 </div>
                             </div>
                         </div>
@@ -353,8 +355,14 @@ include_once("../includes/database.php") ?>
                                     <label class="required" for="categoryID">Category ID</label><br>
                                     <select id="categoryID" name="categoryID" class="form-select" required>
                                         <option disabled selected>Select a Category ID...</option>
-                                        <option value="Professional Regulation Comission Id">Professional Regulation Commission ID</option>
-                                        <option value="Office of Senior Citizen Affairs Id">Office of Senior Citizen Affairs ID</option>
+                                        <option value="Professional Regulation Comission Id">Professional Regulation
+                                            Commission
+                                            ID
+                                        </option>
+                                        <option value="Office of Senior Citizen Affairs Id">Office of Senior Citizen
+                                            Affairs
+                                            ID
+                                        </option>
                                         <option value="Facility Id"> Facility ID</option>
                                         <option value="Other Id"> Other ID</option>
                                     </select>
@@ -392,7 +400,9 @@ include_once("../includes/database.php") ?>
                                 <div class="col-4">
                                     <div id="barangayList">
                                         <label class="required" for="barangay"> Barangay </label>
-                                        <select id="barangay" onchange="updateBarangayDetails(this.value)" class="form-select">
+                                        <select id="barangay" name="barangay"
+                                                onchange="updateBarangayDetails(this.value)"
+                                                class="form-select" required>
                                             <option value="" disabled selected> Select Barangay</option>
                                             <?php
                                             require_once("../require/getBarangay.php");
@@ -409,7 +419,8 @@ include_once("../includes/database.php") ?>
                             <div class="row" id="barangayDetails">
                                 <div class="col">
                                     <label class="label1" for="city">City/Municipality</label>
-                                    <input type="text3" id="city" class='input form-control' name="city" disabled="disabled">
+                                    <input type="text3" id="city" class='input form-control' name="city"
+                                           disabled="disabled">
                                 </div>
                                 <div class="col">
                                     <label class="label1" for="province">Province</label>
@@ -442,7 +453,7 @@ include_once("../includes/database.php") ?>
                                     <select class="form-select" id="comorbidity" name="comorbidity" required>
                                         <option value="">Select Answer...</option>
                                         <option value="none"> None</option>
-                                        <option value="yes" required> Yes</option>
+                                        <option value="yes"> Yes</option>
                                     </select>
                                 </div>
                             </div>
@@ -450,6 +461,19 @@ include_once("../includes/database.php") ?>
                         <div id="comorbidityList">
                             <h5> Comorbidity Information</h5>
                             <div class="listOfComorbidity">
+                                <label class="required" for="comorbidities"> Select that blessed </label>
+                                <select id="comorbidities" name="comorbidities" class="form-select" required>
+                                    <option value="" disabled selected> Select Barangay</option>
+                                    <?php
+                                    require_once("../require/getBarangay.php");
+                                    foreach ($barangays as $barangay) {
+                                        $id = $barangay->getBarangayId();
+                                        $name = $barangay->getBarangayName();
+                                        echo "<option value=$id>$name</option>";
+                                    }
+                                    ?>
+                                </select>
+
                                 <div class="row">
                                     <div class="col">
                                         <input type="checkbox" name="hypertension" value="hypertension"
@@ -473,7 +497,8 @@ include_once("../includes/database.php") ?>
                                         <label> Diabetes Mellitus </label>
                                     </div>
                                     <div class="col">
-                                        <input type="checkbox" name="asthma" value="asthma" id="asthma" class="form-select">
+                                        <input type="checkbox" name="asthma" value="asthma" id="asthma"
+                                               class="form-select">
                                         <label> Bronchial Asthma </label>
                                     </div>
                                     <div class="col">
@@ -484,40 +509,41 @@ include_once("../includes/database.php") ?>
                                 </div>
                                 <div class="row">
                                     <div class="col-4">
-                                        <input type="checkbox" name="cancer" value="cancer" id="cancer" class="form-select">
+                                        <input type="checkbox" name="cancer" value="cancer" id="cancer"
+                                               class="form-select">
                                         <label> Cancer </label>
                                     </div>
                                     <div class="col">
-                                        <input type="checkbox" name="others" value="others" id="others"
+                                        <input type="checkbox" name="others" value="others" id="othersComorbidity"
                                                onclick="showOthersInput(this)" class="form-select">
-                                        <label> Others </label>
+                                        <label for="other" id="others"> Others </label>
                                     </div>
                                     <div class="col">
                                         <div id="otherTextField">
-                                            <input type="text3" name="others" id="others"
-                                                   placeholder="Input Other Commorbidity" class="form-select">
+                                            <input type="text3" name="otherCom" id="otherCom"
+                                                   placeholder="Input Other Comorbidity" class="form-select">
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        <div class="modal-footer">
+                            <input type="button" onclick="closeModalForms('patientInformationModal','registrationForm')"
+                                   class="btn btn-danger shadow-sm" value="Cancel">
+                            <input type="submit" class="btn btn-success shadow-sm" value="Add"
+                                   onclick="event.preventDefault(); confMessage('patient', addPatient, validationPatient)">
+                        </div>
                     </form>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" onclick="closeModalForms('patientInformationModal','registrationForm')" class="btn btn-danger"
-                            data-dismiss="modal"> Cancel
-                    </button>
-                    <button type="submit" id="addPatientNextBtn" onclick="confMessage('User', addPatient)" class="btn btn-success">Add</button>
-                </div>
             </div>
-
         </div>
 
         <!--Notification modal-->
         <div id="notifyModal" class="modal-window">
             <div class="content-modal">
                 <div class="modal-header">
-                    <span id="notificationClose" onclick="closeModal('patientInformationModal')" class="close"><i class='fas fa-window-close'></i></span>
+            <span id="notificationClose" onclick="closeModal('patientInformationModal')" class="close"><i
+                        class='fas fa-window-close'></i></span>
                 </div>
                 <div class="modal-body">
                     <img src="../../img/checkmark.png" alt="confirm" id="confirm">
@@ -526,7 +552,10 @@ include_once("../includes/database.php") ?>
                     </p>
                 </div>
                 <div class="modal-footer">
-                    <button id='notificationDoneBtn' onclick="closeModal('patientInformationModal')" class="btn btn-primary" type="submit"> Done</button>
+                    <button id='notificationDoneBtn' onclick="closeModal('patientInformationModal')"
+                            class="btn btn-primary"
+                            type="submit"> Done
+                    </button>
                     <!--instead of close change to Done-->
                 </div>
             </div>
@@ -555,15 +584,15 @@ include_once("../includes/database.php") ?>
                         </thead>
 
                         <?php
-                    require_once '../require/getPatientDetails.php';
-                    $query = "SELECT patient.patient_id, CONCAT(patient_details.patient_last_name,', ',patient_details.patient_first_name,' ',COALESCE(patient_details.patient_middle_name,''),' ',COALESCE(patient_details.patient_suffix,'')) AS full_name, priority_groups.priority_group, CONCAT(patient_details.patient_house_address, ' ', barangay.barangay_name,' ',barangay.city,' ', barangay.province) AS full_address, patient_contact_number FROM patient JOIN patient_details ON patient.patient_id = patient_details.patient_id JOIN barangay ON barangay.barangay_id = patient_details.barangay_id JOIN priority_groups ON priority_groups.priority_group_id = patient_details.priority_group_id  WHERE patient_details.Archived = 1;";
-                    $stmt = $database->stmt_init();
-                    $stmt->prepare($query);
-                    $stmt->execute();
-                    $stmt->bind_result($patientId, $fullname, $category, $patientAddress, $contactNum);
-                    while ($stmt->fetch()) {
+                        require_once '../require/getPatientDetails.php';
+                        $query = "SELECT patient.patient_id, CONCAT(patient_details.patient_last_name,', ',patient_details.patient_first_name,' ',COALESCE(patient_details.patient_middle_name,''),' ',COALESCE(patient_details.patient_suffix,'')) AS full_name, priority_groups.priority_group, CONCAT(patient_details.patient_house_address, ' ', barangay.barangay_name,' ',barangay.city,' ', barangay.province) AS full_address, patient_contact_number FROM patient JOIN patient_details ON patient.patient_id = patient_details.patient_id JOIN barangay ON barangay.barangay_id = patient_details.barangay_id JOIN priority_groups ON priority_groups.priority_group_id = patient_details.priority_group_id  WHERE patient_details.Archived = 1;";
+                        $stmt = $database->stmt_init();
+                        $stmt->prepare($query);
+                        $stmt->execute();
+                        $stmt->bind_result($patientId, $fullname, $category, $patientAddress, $contactNum);
+                        while ($stmt->fetch()) {
 
-                                echo "<tr class='tableCenterCont'>
+                            echo "<tr class='tableCenterCont'>
                         <td>$patientId</td>
                         <td>$fullname</td>
                         <td>$category</td>
@@ -582,7 +611,7 @@ include_once("../includes/database.php") ?>
                 </div>
             </div>
         </div>
-    </div>
+</div>
 </div>
 
 
@@ -601,6 +630,12 @@ include_once("../includes/database.php") ?>
 <!-- AJAX -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
+
+<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.js"></script>
+
+<script src="../javascript/inputValidations.js"></script>
+
+
 <script>
 
     // Add Patient
@@ -608,7 +643,6 @@ include_once("../includes/database.php") ?>
     var patientInformationModal = document.getElementById("patientInformationModal");
     var patientMedBackgroundModal = document.getElementById("patientMedBackgroundModal");
     var addPatientNextBtn = document.getElementById("addPatientNextBtn");
-
 
 
     // Upload File
@@ -632,21 +666,9 @@ include_once("../includes/database.php") ?>
         notificationModal.style.display = "none";
     }
 
-    window.onclick = function (event) {
-        if (event.target === patientInformationModal) {
-            patientInformationModal.style.display = "none";
-        } else if (event.target === patientMedBackgroundModal) {
-            patientMedBackgroundModal.style.display = "none";
-        } else if (event.target === uploadFileModal) {
-            uploadFileModal.style.display = "none";
-        } else if (event.target == document.getElementById("archived")){
-            document.getElementById("archived").style.display = "none";
-        }
-    }
-
     //clear search text field
-    $('#searchPatientInput').on('input', function(e) {
-        if('' == this.value) {
+    $('#searchPatientInput').on('input', function (e) {
+        if ('' == this.value) {
             $.ajax({
                 url: '../includes/searchProcessor.php',
                 type: 'POST',
@@ -660,7 +682,7 @@ include_once("../includes/database.php") ?>
 
     //search patient
     function searchPatient(textSearch) {
-         console.log(textSearch);
+        console.log(textSearch);
         $.ajax({
             url: '../includes/searchProcessor.php',
             type: 'POST',
@@ -672,7 +694,7 @@ include_once("../includes/database.php") ?>
     }
 
     //filter category group
-    function filterCategoryGroup(filter){
+    function filterCategoryGroup(filter) {
         $.ajax({
             url: '../includes/filterProcessor.php',
             type: 'POST',
@@ -683,7 +705,7 @@ include_once("../includes/database.php") ?>
         })
     }
 
-    function sortByName(sort){
+    function sortByName(sort) {
         var selectedSort = sort.value;
         $.ajax({
             url: '../includes/sortingProcessor.php',
@@ -695,12 +717,12 @@ include_once("../includes/database.php") ?>
         })
     }
 
-    function viewPatient(patientId){
+    function viewPatient(patientId) {
         $.ajax({
-            url:'../includes/viewProcessor.php',
-            type:'POST',
-            data:{"viewPatient": patientId},
-            success:function (result){
+            url: '../includes/viewProcessor.php',
+            type: 'POST',
+            data: {"viewPatient": patientId},
+            success: function (result) {
                 document.getElementById("patientModalContent").innerHTML = result;
                 openModal('viewPatientDetails');
             }
@@ -733,32 +755,35 @@ include_once("../includes/database.php") ?>
     }
 
     function showOthersInput() {
-        var elem = document.getElementById('others');
+        var elem = document.getElementById('othersComorbidity');
         var others = document.getElementById('otherTextField');
 
         if (elem.checked == true) {
             others.style.display = "block";
+            document.getElementById('otherCom').required;
         } else {
-            var others = document.getElementById('otherTextField');
             others.style.display = "none";
         }
     }
 
-    function confMessage(item, action){
-        Swal.fire({
-            icon: 'info',
-            title: 'Are You Sure you Want to add this ' + item,
-            showDenyButton: true,
-            confirmButtonText: 'Yes',
-            denyButtonText: `No`,
-        }).then((result) => {
-            if (result.isConfirmed) {
-                action();
-                Swal.fire('Saved!', '', 'success')
-            } else if (result.isDenied) {
-                Swal.fire('Changes are not saved', '', 'info')
-            }
-        })
+    function confMessage(vax, action, validationMethod) {
+        var formValidation = validationMethod();
+        if (formValidation) {
+            Swal.fire({
+                icon: 'info',
+                title: 'Are You Sure you Want to add this ' + vax + '?',
+                showDenyButton: true,
+                confirmButtonText: 'Yes',
+                denyButtonText: `No`
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    action();
+                    Swal.fire('Saved!', '', 'success')
+                } else if (result.isDenied) {
+                    Swal.fire('Changes are not saved', '', 'info')
+                }
+            })
+        }
     }
 
     //Show Comorbidity List
@@ -863,16 +888,16 @@ include_once("../includes/database.php") ?>
 
     //Change unchecked commorbidity to 0
     function verifyCommorbidity(commorbidity) {
-    return !commorbidity ? 0 : 1;
+        return !commorbidity ? 0 : 1;
     }
 
     //Calculates the age of the patient using its birthday
     function getAge(dob) {
-    var month_diff = Date.now() - dob.getTime();
-    var age_dt = new Date(month_diff);
-    var year = age_dt.getUTCFullYear();
-    var age = Math.abs(year - 1970);
-    return age;
+        var month_diff = Date.now() - dob.getTime();
+        var age_dt = new Date(month_diff);
+        var year = age_dt.getUTCFullYear();
+        var age = Math.abs(year - 1970);
+        return age;
     }
 
     //reload
@@ -944,17 +969,6 @@ include_once("../includes/database.php") ?>
         })
     }
 
-    function closeModal(modal) {
-        document.getElementById(modal).style.display = "none";
-        document.body.classList.remove("scrollBody");
-    }
-
-    function openModal(modal) {
-        console.log(modal);
-        document.getElementById(modal).style.display = "block";
-        document.body.classList.add("scrollBody");
-    }
-
     function getUploadedFiles(item) {
         for (var i = 0; i < item.files.length; i++) {
             var element = document.createElement('li');
@@ -980,17 +994,6 @@ include_once("../includes/database.php") ?>
             }
         });
     }
-
-    //input validations
-    addPatientForm = document.getElementById("registrationForm");
-    $('#addPatientNextBtn').click(async function (e) {
-        if (addPatientForm.checkValidity() != "") {
-            addPatient();
-        } else {
-            Swal.fire({icon: 'warning', title: 'Please fill the required fields', confirmButtonText: 'OK', confirmButtonColor: '#007bff'})
-        }
-    });
-
 </script>
 <!--Logout script-->
 <script src="../javascript/logout.js"></script>

@@ -233,7 +233,7 @@ include_once("../includes/database.php") ?>
                         <div class="col">
                             <div class="form-group">
                                 <label for="site"><h6>Select Vaccination Site: </h6></label>
-                                <select name="site" id="site">
+                                <select name="site" id="site" required>
                                     <?php
                                     require '../require/getVaccinationSites.php';
                                     foreach ($vaccinationSites as $vs) {
@@ -248,7 +248,7 @@ include_once("../includes/database.php") ?>
                         <div class="col">
 
                             <div class="form-group ">
-                                <label><h6>Date: </h6></label><br>
+                                <label for="date"><h6>Date: </h6></label><br>
                                 <input type="date" id="date" name="date" class="dateForm">
                             </div>
                         </div>
@@ -716,16 +716,18 @@ include_once("../includes/database.php") ?>
             </button>
         </div>
         <div class="modal-body">
-            <label>Vaccine Site Location:</label>
-            <input class="VaxSiteWidth" type="text" id="newVaccinationSite" name="newVaccinationSite">
+            <form id="addVaccinationSiteForm" name="addVaccinationSiteForm"  method="post" enctype="multipart/form-data" class="form">
+                <label for="vaccinationLoc">Vaccine Site Location:</label>
+                <input class="VaxSiteWidth" type="text" id="vaccinationLoc" name="vaccinationLoc">
 
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger" onclick="closeModal('addVaccSite')"> Cancel
-                </button>
-                <button type="button" class="btn btn-success"
-                        onclick='add("Vaccination Site",addSite, "vaccSiteModal")'> Add
-                </button>
-            </div>
+                <div class="modal-footer">
+                    <input type="button" class="btn btn-danger" onclick="closeModalForms('addVaccSite','addVaccinationSiteForm')" value="Cancel">
+                    </input>
+                    <input type="submit" class="btn btn-success"
+                           onclick="add('Vaccination Site', addSite, validationSite)" value="Add">
+                    </input>
+                </div>
+            </form>
         </div>
     </div>
 </div>
@@ -776,6 +778,10 @@ include_once("../includes/database.php") ?>
 </div>
 
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.js"></script>
+
+<script src="../javascript/inputValidations.js"></script>
 
 <script>
     var list = document.getElementById("listPatientContent");
@@ -1239,38 +1245,24 @@ include_once("../includes/database.php") ?>
         })
     }
 
-    async function add(item, action) {
-        Swal.fire({
-            icon: 'info',
-            title: 'Do you want to add this ' + item + '?',
-            showDenyButton: true,
-            confirmButtonText: 'Yes',
-            denyButtonText: `No`,
-        }).then((result) => {
-            if (result.isConfirmed) {
-                action();
-                Swal.fire('Saved!', '', 'success')
-            } else if (result.isDenied) {
-                Swal.fire('Changes are not saved', '', 'info')
-            }
-        })
-    }
-
-    async function edit(action, item) {
-        Swal.fire({
-            icon: 'info',
-            title: 'Are you sure you want to edit this Deployment?',
-            showDenyButton: true,
-            confirmButtonText: 'Yes',
-            denyButtonText: `No`,
-        }).then((result) => {
-            if (result.isConfirmed) {
-                action(item);
-                Swal.fire('Saved!', '', 'success')
-            } else if (result.isDenied) {
-                Swal.fire('Changes are not saved', '', 'info')
-            }
-        })
+    async function add(item, action, validationMethod) {
+        var formValidation = validationMethod();
+        if(formValidation){
+            Swal.fire({
+                icon: 'info',
+                title: 'Do you want to add this ' + item + '?',
+                showDenyButton: true,
+                confirmButtonText: 'Yes',
+                denyButtonText: `No`,
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    action();
+                    Swal.fire('Saved!', '', 'success')
+                } else if (result.isDenied) {
+                    Swal.fire('Changes are not saved', '', 'info')
+                }
+            })
+        }
     }
 
     async function del(item, action) {

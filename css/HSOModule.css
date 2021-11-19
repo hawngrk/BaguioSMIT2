@@ -32,9 +32,9 @@ input[type=text1] {
     height: auto;
 }
 
-.vaccineType, #qty,#source{
-    width: 95%;
-    height: 18%;
+.vaccineType,#source{
+    width: 100%;
+    height: auto;
 }
 
 .viewReportBtn, .archiveVaxBtn {
@@ -471,11 +471,6 @@ h7~h8{
     border: 2px solid #ccc;
     border-radius: 8px;
 }
-#dateStored, #dateExp {
-    width: 70%;
-    height: 17%;
-}
-
 
 .sortPosition{
     margin-left: 2%;
@@ -495,5 +490,13 @@ h7~h8{
 .sortButton, .filterButton{ /*hso*/
     width: 90%;
 }
+
+label.error {
+    color: #B90E0A;
+    font-size: 1rem;
+    display: block;
+}
+
+
 
 

@@ -201,7 +201,7 @@ checkRole('EIR');
     <div class="content-modal">
         <div class="modal-header">
             <h4 class="modal-title">Add Profile Information </h4>
-            <button type="button" onclick="closeModalForms('addPatientModal','registrationForm')" class="close"><i
+            <button type="button" onclick="closeModal('addPatientModal')" class="close"><i
                         class='fas fa-window-close'></i>
             </button>
         </div>
@@ -257,7 +257,7 @@ checkRole('EIR');
                         </div>
                         <div class="col">
                             <label class="label1 required" for="civilStatus"> Civil Status </label>
-                            <select class="form-select" id="civilStatus" name="civilStatus" required>
+                            <select class="form-select" id="civilStatus" name="civilStatus">
                                 <option value="">Please Select...</option>
                                 <option value="Not Applicable">Not Applicable</option>
                                 <option value="Single">Single</option>
@@ -575,46 +575,9 @@ checkRole('EIR');
 
 
 <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.js"></script>
+<script src="../javascript/inputValidations.js"></script>
 
 <script type="text/javascript">
-    $().ready(function () {
-        $("#registrationForm").validate({
-            rules: {
-                lname: "required",
-                fname: "required",
-                suffix: "required",
-                birthdate: "required",
-                gender: "required",
-                occupation: "required",
-                contactNum: "required",
-                email: "required",
-                category: "required",
-                categoryID: "required",
-                houseAddress: "required",
-                barangay: "required",
-                allergy: "required",
-                comorbidity: "required",
-                otherCom: "required"
-            },
-            messages: {
-                lname: "First name is required",
-                fname: "Last name is required",
-                suffix: "Suffix is required",
-                birthdate: "Birthdate is required",
-                gender: "Gender is required",
-                occupation: "Occupation is required",
-                contactNum: "Contact number is required",
-                email: "Email is required",
-                priorityGroup: "Category group is required",
-                categoryNo: "Category ID is required",
-                houseAddress: "Address is required",
-                barangay: "Barangay is required",
-                allergy: "Allergy is required",
-                comorbidity: "Comorbidity is required",
-                otherCom: "Other comorbidity is required"
-            }
-        });
-    })
 
     function search() {
         var textSearch = document.getElementById("searchPatient").value;

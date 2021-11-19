@@ -687,6 +687,7 @@ select{
 }
 
 input[type=date]{
+    height: auto;
     width: 95%;
     padding: 4px;
     display: inline-block;
@@ -742,6 +743,14 @@ input[type=date]{
 
 /*Text Inputs*/ /*HSO?*/
 input[type=text3],select{
+    width: 95%;
+    padding: 5px;
+    display: inline-block;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+}
+
+input[type=email]{
     width: 95%;
     padding: 5px;
     display: inline-block;
@@ -975,8 +984,8 @@ h7~h8{
     border-radius: 8px;
 }
 #dateStored, #dateExp {
-    width: 70%;
-    height: 17%;
+    width: 100%;
+    height: auto;
 }
 
 
@@ -1207,3 +1216,16 @@ select.sortButton:focus, select.filterButton:focus { /*hso*/
 #dropdownMenuButton::before{
     content: none;
 }
+
+input.error {
+    border: 1px solid #B90E0A;
+    font-weight: 300;
+    color: #B90E0A;
+}
+
+select.error{
+    border: 1px solid #B90E0A;
+    font-weight: 50;
+    color: #B90E0A;
+}
+

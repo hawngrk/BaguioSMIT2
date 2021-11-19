@@ -211,6 +211,7 @@ include_once("../includes/database.php") ?>
     <div id="viewVaccineDetails" class="modal-window">
     </div>
 
+    <!---View Modal--->
     <div id="editVaccineDetails" class="modal-window">
 
     </div>
@@ -218,19 +219,21 @@ include_once("../includes/database.php") ?>
     <!--Add Vaccine Lot Modal-->
     <div id="vaccineModal" class="modal-window">
         <div class="content-modal">
-            <form id='addVaccineLotForm' method="post" enctype="multipart/form-data" class="form">
-                <div class="modal-header">
-                    <h2 id="headerAddVaccine"> Add Vaccine </h2>
-                    <span onclick="closeModalForms('vaccineModal','addVaccineLotForm')" class="close"><i class='fas fa-window-close'></i></span>
-                </div>
-                <div class="modal-body">
-                    <div id="addVaccineModal">
-                        <div class="row">
+            <div class="modal-header">
+                <h2 id="headerAddVaccine"> Add Vaccine </h2>
+                <span onclick="closeModal('vaccineModal')" class="close"><i
+                            class='fas fa-window-close'></i></span>
+            </div>
+            <div class="modal-body">
+                <form id="addVaccineLotForm" name="addVaccineLotForm" action="" method="post"
+                      enctype="multipart/form-data" class="form">
+                    <div>
+                        <div class="row mx-3">
                             <div class="col-sm-6">
-                                <label for="selectedVaccine" class="required"> Select a Vaccine Brand: </label>
+                                <label class="required" for="selectedVaccine"> Select a Vaccine Brand </label>
                                 <select class="form-select vaccineType" id="selectedVaccine" name="selectedVaccine"
-                                        onchange="updateVaccineInfo(this)" required>
-                                    <option value=""> Select Vaccine</option>
+                                        onchange="updateVaccineInfo(this)">
+                                    <option disabled selected> Select Vaccine</option>
                                     <?php
                                     $getVaccinesQuery = "SELECT vaccine_name FROM vaccine";
                                     $stmt = $database->stmt_init();
@@ -242,33 +245,33 @@ include_once("../includes/database.php") ?>
                                     }
                                     ?>
                                 </select>
-                                <label class="label1 required" for="qty"> Total Vial Quantity Received: </label>
-                                <input type="text" id="qty" class="form-control" name="quantity" required>
-                                <br>
+                                <label class="label1 required" for="qty"> Total Vial Quantity Received </label>
+                                <input type="text" id="qty" class="form-control" name="qty">
+
                                 <label class="label1 required" for="source"> Vaccine Source: </label>
-                                <select class="vaxSource required form-select" id="source" name="quantity" required>
-                                    <option value="">Select Vaccine Source</option>
+                                <select class="vaxSource required form-select" id="source" name="source" >
+                                    <option disabled selected>Select Vaccine Source</option>
                                     <option value="National Government">National Government</option>
-                                    <option value="Department Of Health">Department Of Health</option>
+                                    <option value="Department Of Health">World Health Organization</option>
                                 </select>
                             </div>
                             <div class="col-sm-6">
                                 <label for="dateStored" class="required">Date Stored</label><br>
-                                <input type='date' id="dateStored" name="dateStored" class="form-control" required><br>
-                                <label class="label1 required" for="dateExp">Date of Expiration</label><br>
-                                <input type='date' id="dateExp" name="dateExp" class="form-control" required>
+                                <input type='date' id="dateStored" name="dateStored" class="form-control">
+                                <label class="label1 required" for="dateExp">Date of Expiration</label>
+                                <input type='date' id="dateExp" name="dateExp" class="form-control">
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button onclick="closeModalForms('vaccineModal','addVaccineLotForm')" class="btn btn-danger" type="button">Cancel</button>
-                    <button id="addVaccineLotBtn" class="btn btn-success" type='submit'
-                            onclick="event.preventDefault(); confMessage('Vaccine Lot', addVaccine)"> Add
-                    </button>
-
-                </div>
-            </form>
+                    <div class="modal-footer">
+                        <input type="button" onclick="closeModalForms('vaccineModal','addVaccineLotForm')" class="btn btn-danger shadow-sm"
+                                value="Cancel">
+                        </input>
+                        <input  type="submit" class="btn btn-success" value="Add" onclick="event.preventDefault(); confMessage('Vaccine Lot', addVaccine, validationVaccineLot)">
+                        </input>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 
@@ -277,71 +280,67 @@ include_once("../includes/database.php") ?>
         <div class="content-modal">
             <div class="modal-header">
                 <h2 id="headerAddNewVaccine">Add New Vaccine</h2>
-                <span onclick="closeModalForms('newVaccineModal','newVaccineBrandForm')" class="close"><i
+                <span onclick="closeModal('newVaccineModal')" class="close"><i
                             class='fas fa-window-close'></i></span>
             </div>
             <div class="modal-body">
-                <form id='newVaccineBrandForm' method="post" enctype="multipart/form-data" class="form">
-                    <div id="addNewVaccineModal">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <h5>Vaccine Details</h5>
+                <form id='newVaccineBrandForm' name="newVaccineBrandForm" method="post" enctype="multipart/form-data" class="form">
+                    <div>
+                        <h5 class="ml-3">Vaccine Details</h5>
+                        <div class="row mx-3">
+                            <div class="col-sm-6">
                                 <label for="vaccineName" class="required"> Vaccine Name </label>
-                                <input type="text3" class="form-control" id="vaccineName" placeholder="Ex. Sinovac" required>
+                                <input type="text3" class="form-control" id="vaccineName" name="vaccineName" placeholder="Ex. Sinovac">
 
                                 <label class="label1 required" for="vaccineManufacturer"> Vaccine Manufacturer </label>
-                                <input type="text3" class="form-control" id="vaccineManufacturer"
-                                       placeholder="Enter Manufacturer" required>
+                                <input type="text3" class="form-control" id="vaccineManufacturer" name="vaccineManufacturer"
+                                       placeholder="Enter Manufacturer">
 
                                 <label class="label1 required" for="vaccineDescription"> Vaccine Description </label>
-                                <input type="text3" class="form-control" id="vaccineDescription"
-                                       placeholder="Enter Description" required>
+                                <input type="text3" class="form-control" id="vaccineDescription" name="vaccineDescription"
+                                       placeholder="Enter Description">
 
                                 <h5 class="addNewVaccineH3 label1">Vaccine Characteristics</h5>
                                 <label for="vaccineType" class="required"> Vaccine Type: </label>
-                                <select id="vaccineType" class="form-select" required>
-                                    <option value="">Select Vaccine Type</option>
+                                <select id="vaccineType" class="form-select" name="vaccineType">
+                                    <option disabled selected>Select Vaccine Type</option>
                                     <option value="Inactivated Virus">Inactivated Vaccine</option>
                                     <option value="Viral vector">Viral vector Vaccine</option>
                                 </select>
                                 <label class="label1 required" for="vaccineEfficacy"> Vaccine Efficacy: </label>
-                                <select id="vaccineEfficacy" class="form-select" required>
-                                    <option value="">Select Vaccine Efficacy</option>
+                                <select id="vaccineEfficacy" class="form-select" name="vaccineEfficacy">
+                                    <option disabled selected>Select Vaccine Efficacy</option>
                                     <option value="90">90%</option>
                                     <option value="70">70%</option>
                                     <option value="50">50%</option>
                                 </select>
                             </div>
-                            <div class="col-md-6">
-                                <label class="label1 required" for="dosageRequired" id="labelDosage"> Dosage
-                                    Required </label>
-                                <input type="text3" class="form-control" id="dosageRequired"
-                                       placeholder="Enter Dosage Required" required>
+                            <div class="col-sm-6">
+                                <label class="required" for="dosageRequired"> Dosage Required </label>
+                                <input type="text3" class="form-control" id="dosageRequired" name="dosageRequired"
+                                       placeholder="Enter Dosage Required">
                                 <label class="label1 required" for="dosageInterval"> Dosage Interval (Days) </label>
-                                <input type="text3" class="form-control" id="dosageInterval"
-                                       placeholder="Enter Dosage Interval" required>
+                                <input type="text3" class="form-control" id="dosageInterval" name="dosageInterval"
+                                       placeholder="Enter Dosage Interval">
 
                                 <h5 class="label1"> Storage and Handling</h5>
-                                <label for="minimumTemperature" class="required"> Minimum Temperature (Degree
-                                    Celcius) </label>
-                                <input type="text3" class="form-control" id="minimumTemperature"
-                                       placeholder="Minimum Temperature" required>
-                                <label class="label1 required" for="maximumTemperature"> Maximum Temperature (Degree
-                                    Celcius) </label>
-                                <input type="text3" class="form-control" id="maximumTemperature"
-                                       placeholder="Maximum Temperature" required>
+                                <label class="required" for="minimumTemperature"> Minimum Temperature (Degree Celcius) </label>
+                                <input type="text3" class="form-control" id="minimumTemperature"  name="minimumTemperature" placeholder="Minimum Temperature">
+                                <label class="label1 required" for="maximumTemperature"> Maximum Temperature (Degree Celcius) </label>
+                                <input type="text3" class="form-control" id="maximumTemperature" name="maximumTemperature" placeholder="Maximum Temperature">
                                 <label class="label1 required" for="lifeSpan"> Life Span (Months) </label>
-                                <input type="text3" class="form-control" id="lifeSpan" placeholder="Life Span" required>
+                                <input type="text3" class="form-control" id="lifeSpan" name="lifeSpan" placeholder="Life Span">
                             </div>
                         </div>
                     </div>
+                    <div class="modal-footer">
+                        <input type="button" onclick="closeModalForms('newVaccineModal','newVaccineBrandForm')" class="btn btn-danger shadow-sm"
+                               value="Cancel">
+                        </input>
+                        <input  type="submit" class="btn btn-success" value="Add" onclick="event.preventDefault(); confMessage('Vaccine Brand', addNewVaccine, validationNewVaccineBrand)">
+                        </input>
+                    </div>
                 </form>
-            </div>
-            <div class="modal-footer">
-                <button onclick="closeModalForms('newVaccineModal','newVaccineBrandForm')" class="btn btn-danger"> Cancel</button>
-                <button type='submit' id='addBtnNewVaccine' class="btn btn-success" name='addBtnNewVaccine'
-                        onclick="event.preventDefault(); confMessage('Vaccine Brand', addNewVaccine)"> Add
-                </button>
             </div>
         </div>
     </div>
@@ -412,7 +411,7 @@ include_once("../includes/database.php") ?>
             </div>
         </div>
     </div>
-    </div>
+</div>
 </div>
 
 <!-- jQuery CDN - Slim version (=without AJAX) -->
@@ -430,6 +429,10 @@ include_once("../includes/database.php") ?>
 <!-- AJAX -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
+<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.js"></script>
+
+<script src="../javascript/inputValidations.js"></script>
+
 <script>
 
     //clear search text field
@@ -444,7 +447,7 @@ include_once("../includes/database.php") ?>
                 }
             });
         }
-    });
+    })
 
     //search vaccine
     function searchVaccine() {
@@ -483,15 +486,6 @@ include_once("../includes/database.php") ?>
                 document.getElementById("vaccineTable").innerHTML = result;
             }
         })
-    }
-
-    //close modal
-    window.onclick = function (event) {
-        if (event.target == document.getElementById("archived") || event.target == document.getElementById("vaccineModal") || event.target == document.getElementById("newVaccineModal")) {
-            document.getElementById("archived").style.display = "none";
-            document.getElementById("vaccineModal").style.display = "none";
-            document.getElementById("newVaccineModal").style.display = "none";
-        }
     }
 
     //update vaccine info
@@ -538,21 +532,24 @@ include_once("../includes/database.php") ?>
     }
 
     //confMessage
-    function confMessage(vax, action) {
-        Swal.fire({
-            icon: 'info',
-            title: 'Are You Sure you Want to add this ' + vax + '?',
-            showDenyButton: true,
-            confirmButtonText: 'Yes',
-            denyButtonText: `No`,
-        }).then((result) => {
-            if (result.isConfirmed) {
-                action();
-                Swal.fire('Saved!', '', 'success')
-            } else if (result.isDenied) {
-                Swal.fire('Changes are not saved', '', 'info')
-            }
-        })
+    function confMessage(vax, action, validationMethod) {
+        var formValidation = validationMethod();
+        if (formValidation) {
+            Swal.fire({
+                icon: 'info',
+                title: 'Are You Sure you Want to add this ' + vax + '?',
+                showDenyButton: true,
+                confirmButtonText: 'Yes',
+                denyButtonText: `No`
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    action();
+                    Swal.fire('Saved!', '', 'success')
+                } else if(result.isDenied) {
+                    Swal.fire('Changes are not saved', '', 'info')
+                }
+            })
+        }
     }
 
     //add new vaccine brand
@@ -647,18 +644,6 @@ include_once("../includes/database.php") ?>
         })
     }
 
-    // //close modal
-    // function closeModal(modal) {
-    //     document.getElementById(modal).style.display = "none";
-    //     document.body.classList.remove("scrollBody");
-    // }
-    //
-    // //open modal
-    // function openModal(modal) {
-    //     document.getElementById(modal).style.display = "block";
-    //     document.body.classList.add("scrollBody");
-    // }
-
     //view vaccine details
     var viewVaccineModal = document.getElementById("viewVaccineDetails");
 
@@ -707,26 +692,6 @@ include_once("../includes/database.php") ?>
             }
         })
     }
-
-
-   // input validation -
-    addVaccineLotForm = document.getElementById("addVaccineLotForm");
-    $('#addVaccineLotBtn').click(async function (e) {
-        if (addVaccineLotForm.checkValidity() != "") {
-            addVaccine();
-        } else {
-            Swal.fire({icon: 'warning', title: 'Please fill the required fields', confirmButtonText: 'OK', confirmButtonColor: '#007bff'})
-        }
-    });
-
-    addNewVaccineBrandForm = document.getElementById("newVaccineBrandForm");
-    $('#addBtnNewVaccine').click(async function (e) {
-        if (addNewVaccineBrandForm.checkValidity() != "") {
-            addNewVaccine();
-        } else {
-            Swal.fire({icon: 'warning', title: 'Please fill the required fields', confirmButtonText: 'OK', confirmButtonColor: '#007bff'})
-        }
-    });
 </script>
 
 <!--Logout script-->
