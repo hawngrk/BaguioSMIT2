@@ -2,11 +2,11 @@
 include("../includes/database.php");
 
 if (isset($_POST['search'])) {
-    $search = $_POST['search'];
-    if ($search == "") {
-        $querySearch = "SELECT patient.patient_id, patient.patient_full_name, patient_details.patient_priority_group, CONCAT(patient_details.patient_house_address, ' ', patient_details.patient_barangay_address, ' ', patient_details.patient_CM_address, ' ', patient_details.patient_province) AS full_address, patient_contact_number FROM patient JOIN patient_details ON patient.patient_id = patient_details.patient_id;";
+    $searchPatient = $_POST['search'];
+    if ($searchPatient == "") {
+        $querySearchPatient = "SELECT patient.patient_id, CONCAT(patient_details.patient_last_name,', ',patient_details.patient_first_name,' ',COALESCE(patient_details.patient_middle_name,''),' ',COALESCE(patient_details.patient_suffix,'')) AS full_name, priority_groups.priority_group, CONCAT(patient_details.patient_house_address, ' ', barangay.barangay_name,' ',barangay.city,' ', barangay.province) AS full_address, patient_contact_number FROM patient JOIN patient_details ON patient.patient_id = patient_details.patient_id JOIN barangay ON barangay.barangay_id = patient_details.barangay_id JOIN priority_groups ON priority_groups.priority_group_id = patient_details.priority_group_id WHERE patient_details.Archived = 0;";
     } else {
-        $querySearch = "SELECT patient.patient_id, patient.patient_full_name,  patient_details.patient_priority_group, CONCAT(patient_details.patient_house_address, ' ', patient_details.patient_barangay_address, ' ', patient_details.patient_CM_address, ' ', patient_details.patient_province) AS full_address, patient_contact_number FROM patient JOIN patient_details ON patient.patient_id = patient_details.patient_id WHERE patient.patient_id LIKE '$search%' OR patient.patient_full_name LIKE '$search%';";
+        $querySearchPatient = "SELECT patient.patient_id, CONCAT(patient_details.patient_last_name,', ',patient_details.patient_first_name,' ',COALESCE(patient_details.patient_middle_name,''),' ',COALESCE(patient_details.patient_suffix,'')) AS full_name, priority_groups.priority_group, CONCAT(patient_details.patient_house_address, ' ', barangay.barangay_name,' ',barangay.city,' ', barangay.province) AS full_address, patient_contact_number FROM patient JOIN patient_details ON patient.patient_id = patient_details.patient_id JOIN barangay ON barangay.barangay_id = patient_details.barangay_id JOIN priority_groups ON priority_groups.priority_group_id = patient_details.priority_group_id WHERE patient_details.Archived = 0 AND patient_details.patient_id LIKE '$searchPatient%' OR barangay.barangay_name LIKE '$searchPatient%' OR patient_details.patient_first_name LIKE '$searchPatient%' OR patient_details.patient_last_name LIKE '$searchPatient%';";
     }
     echo "
     <thead>
@@ -21,13 +21,14 @@ if (isset($_POST['search'])) {
             </thead>";
             
     $stmt = $database->stmt_init();
-    $stmt->prepare($querySearch);
+    $stmt->prepare($querySearchPatient);
     $stmt->execute();
-    $stmt->bind_result($patientID, $patientName, $category, $patientAddress, $contactNum);
+    $stmt->bind_result($patientID, $fullname, $category, $patientAddress, $contactNum);
+
     while ($stmt->fetch()) {
         echo "<tr class='tableCenterCont'>
                 <td>$patientID</td>
-                <td>$patientName</td>
+                <td>$fullname</td>
                 <td>$category</td>
                 <td>$patientAddress</td>
                 <td>$contactNum</td>
@@ -100,6 +101,30 @@ if (isset($_POST['modalScreening'])) {
     $cancer = checkbox($patientDetails['cancer'], "cancer");
     $otherCommorbidity = otherCommorbidity($patientDetails['other_commorbidity']);
 
+    //Pre vital information
+    $pulseRate1st = 80;
+    $tempRate1st = 35.2;
+    $oxygen1st = 90;
+    $bloodPressure1st = '120/80';
+    
+    $pulseRate2nd = 80;
+    $tempRate2nd = 35.2;
+    $oxygen2nd = 90;
+    $bloodPressure2nd = '120/80';
+
+    //Vaccination Information
+    $sched1st = "10/06/2021";
+    $site1st = "SM B1 Parking Lot";
+    $vaccine1st = "Pfizer";
+    $lot1st = "1231233";
+
+    $sched2nd = "10/25/2021";
+    $site2nd = "UB Gym";
+    $vaccine2nd = "Pfizer";
+    $lot2nd = "3423235";
+
+    $vaccineStatus = "Fully Vaccinated";
+
     echo "<h3>$fullName</h3>
     <hr>
     <div class='row'>
@@ -116,21 +141,37 @@ if (isset($_POST['modalScreening'])) {
 
         <h6>Commorbidities:</h6><br>
         <div class='row'>
-        <div class='col' style='columns: 2;'> 
-        $hypertension
-        $heartDisease
-        $kidneyDisease
-        $diabetesMellitus
-        $bronchialAsthma
-        $immunodeficiency
-        $cancer
-        $otherCommorbidity 
+            <div class='col' style='columns: 2;'> 
+            $hypertension
+            $heartDisease
+            $kidneyDisease
+            $diabetesMellitus
+            $bronchialAsthma
+            $immunodeficiency
+            $cancer
+            $otherCommorbidity 
+            </div>
         </div>
-        </div>
-       
+    </div>
+    <div class='col-md-6'>
+    <h4>Pre-Vaccine Vitals:</h4>
+    <div class='row'>
+    <div class='col'>
+    <h5>1st Dose vitals</h5>
+    <h6>Pulse Rate:</h6><p>$pulseRate1st</p>
+    <h6>Temperature Rate:</h6><p>$tempRate1st</p>
+    <h6>Oxygen saturation:</h6><p>$oxygen1st</p>
+    <h6>Blood Presure Rate:</h6><p>$bloodPressure1st</p>
+    </div>
+    <div class='col'>
+    <h5>2nd Dose vitals</h5>
+    <h6>Pulse Rate:</h6><p>$pulseRate2nd</p>
+    <h6>Temperature Rate:</h6><p>$tempRate2nd</p>
+    <h6>Oxygen saturation:</h6><p>$oxygen2nd</p>
+    <h6>Blood Presure Rate:</h6><p>$bloodPressure2nd</p>
+    </div>
     </div>
 
-    <div class='col-md-6'>
     <h4>Pre-Vaccine Vitals:</h4>
     <form>
     <strong>Pulse Rate:</strong>
@@ -155,31 +196,30 @@ if (isset($_POST['modalScreening'])) {
     <br>
 
     <hr>
-    <h4>Vaccination Details</h4>
-    
+    <h4>Vaccination Details - $vaccineStatus</h4>
         <div class='row'>
             <div class='col'>
-            <h5>1st dose vaccination</h5>
-            <h6>Schedule:</h6>
-            <p>*Sample Sched*</p>
-            <h6>Vax Site:</h6>
-            <p>*Sample VaxSite*</p>
-            <h6>Vaccine:</h6>
-            <p>*Sample Vax*</p>
-            <h6>Lot No.:</h6>
-            <p>*Sample Lot No*</p>
+                <h5>1st dose vaccination</h5>
+                <h6>Schedule:</h6>
+                <p>$sched1st</p>
+                <h6>Vax Site:</h6>
+                <p>$site1st</p>
+                <h6>Vaccine:</h6>
+                <p>$vaccine1st</p>
+                <h6>Lot No.:</h6>
+                <p>$lot1st</p>
             </div>
 
             <div class='col'>
-            <h5>2nd dose vaccination</h5>
-            <h6>Schedule:</h6>
-            <p>*Sample Sched*</p>
-            <h6>Vax Site:</h6>
-            <p>*Sample VaxSite*</p>
-            <h6>Vaccine:</h6>
-            <p>*Sample Vax*</p>
-            <h6>Lot No.:</h6>
-            <p>*Sample Lot No*</p>
+                <h5>2nd dose vaccination</h5>
+                <h6>Schedule:</h6>
+                <p>$sched2nd</p>
+                <h6>Vax Site:</h6>
+                <p>$site2nd</p>
+                <h6>Vaccine:</h6>
+                <p>$vaccine2nd</p>
+                <h6>Lot No.:</h6>
+                <p>$lot2nd</p>
             </div>
         </div>
     </div>
@@ -199,6 +239,9 @@ if (isset($_POST['pulse'])) {
     $bpDiastolic = $_POST['diastolic'];
     $bpSystolic = $_POST['systolic'];
     $id = $_POST['id'];
+    
+    //Log purposes
+    $logMessage = "Added the following pre vitals: Pulse rate ($pulseRR), Temperature rate = $tempRR, Oxygen saturation ($oxygen), Blood Pressure ($bpDiastolic/$bpSystolic) for patient ID: $id";
 
     try {
         $querySelect = "SELECT * FROM patient WHERE patient_id = ?";
@@ -207,18 +250,17 @@ if (isset($_POST['pulse'])) {
         $row = $stmtselect->fetch(PDO::FETCH_ASSOC);
 
         if ($row['first_dose_vaccination'] == 1 && $row['second_dose_vaccination'] == 0) {
-            $query = ("UPDATE patient_vitals SET pre_vital_pulse_rate_2nd_dose = ?, pre_vital_temp_rate_2nd_dose = ?, patient_oxygen_saturation_2nd_dose = ?, pre_vital_bpDiastolic_2nd_dose = ?, pre_vital_bpSystolic_2nd_dose = ? WHERE patient_vitals.patient_id = ?");
+            $query = ("UPDATE patient_vitals SET pre_vital_pulse_rate_2nd_dose = ?, pre_vital_temp_rate_2nd_dose = ?, pre_oxygen_saturation_2nd_dose = ?, pre_vital_bpDiastolic_2nd_dose = ?, pre_vital_bpSystolic_2nd_dose = ? WHERE patient_vitals.patient_id = ?");
             $stmtinsert = $database->prepare($query);
             $stmtinsert->execute([$pulseRR, $tempRR, $oxygen, $bpDiastolic, $bpSystolic, $id]);
         } else {
-            $query = ("UPDATE patient_vitals SET pre_vital_pulse_rate_1st_dose = ?, pre_vital_temp_rate_1st_dose = ?, patient_oxygen_saturation_1st_dose = ?, pre_vital_bpDiastolic_1st_dose = ?, pre_vital_bpSystolic_1st_dose = ? WHERE patient_vitals.patient_id = ?");
+            $query = ("UPDATE patient_vitals SET pre_vital_pulse_rate_1st_dose = ?, pre_vital_temp_rate_1st_dose = ?, pre_oxygen_saturation_1st_dose = ?, pre_vital_bpDiastolic_1st_dose = ?, pre_vital_bpSystolic_1st_dose = ? WHERE patient_vitals.patient_id = ?");
             $stmtinsert = $database->prepare($query);
             $stmtinsert->execute([$pulseRR, $tempRR, $oxygen, $bpDiastolic, $bpSystolic, $id]);
         }
     } catch (Exception $th) {
         echo $th->getMessage();
     }
-    echo 'added';
 }
 function checkbox($commorbidity, $commorbidityName) {
     $ls = trim(strtolower($commorbidityName));
