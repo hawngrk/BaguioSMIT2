@@ -88,23 +88,6 @@ function validationPatient(){
                 allergy: "required",
                 comorbidity: "required",
                 otherCom: "required"
-            },
-            messages: {
-                lname: "First name is required",
-                fname: "Last name is required",
-                suffix: "Suffix is required",
-                birthdate: "Birthdate is required",
-                gender: "Gender is required",
-                occupation: "Occupation is required",
-                contactNum: "Contact number is required",
-                email: "Email is required",
-                priorityGroup: "Category group is required",
-                categoryNo: "Category ID is required",
-                houseAddress: "Address is required",
-                barangay: "Barangay is required",
-                allergy: "Allergy is required",
-                comorbidity: "Comorbidity is required",
-                otherCom: "Other comorbidity is required"
             }
         });
     return form.valid();
@@ -121,19 +104,49 @@ function validationSite(){
     return form.valid();
 }
 
-function validationFile(){
-    var form = $('#uploadForm')
+function validationDeployment(){
+    var form = $('#newDeploymentForm')
     form.validate({
         rules: {
-            fileUpload: {
+            site: {
+                required: true
+            },
+
+            date: {
+              required: true,
+              date: true
+            },
+
+            districts:{
                 required: true,
-                extension: "csv"
+                minlength: 1
             }
         }
     });
     return form.valid();
 }
 
+function validationHealthDistrict(){
+    var form = $('#healthDistrictForm')
+    form.validate({
+        rules: {
+            newHealthDistrict: {
+                required: true
+            },
+
+            contactNumber: {
+                required: true,
+                number: true
+            },
+
+            barangay: {
+                required: true,
+                minlength: 1
+            }
+        }
+    });
+    return form.valid();
+}
 
 
 

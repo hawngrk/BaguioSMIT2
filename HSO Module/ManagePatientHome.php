@@ -630,7 +630,7 @@ include_once("../includes/database.php") ?>
 <!-- AJAX -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
-
+<!-- Validation -->
 <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.js"></script>
 
 <script src="../javascript/inputValidations.js"></script>

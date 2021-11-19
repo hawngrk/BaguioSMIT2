@@ -168,11 +168,12 @@ if (isset($_POST['editDeployment'])) {
         <div class='modal-body'>
             <div class='deploymentInfo'>
                 <div class='row'>
-                    <h4 class='ml-3'> Please edit Vaccination Date</h4>
+                    <h5 class='ml-3'> Edit the following information of the deployment</h5>
                 </div>
+                <br>
                 <div class='row'>
                     <div class='col'>
-                        <h7 class='ml-5 font-weight-bold'> Vaccination Date </h7>
+                        <h6 class='ml-5 font-weight-bold'> Vaccination Date </h6>
                     </div>
                     <div class='col' contenteditable='true'>
                         <input type='date' value='$date' class='w-75' style='outline-color:blue' id='editDate'>
@@ -180,17 +181,13 @@ if (isset($_POST['editDeployment'])) {
                 </div>
                 <br>
                 <div class='row'>
-                    <h5 class='ml-3'> Please Edit Vaccination Site</h5>
-                </div>
-                <div class='row'>
                     <div class='col'>
-                        <h7 class='ml-5 font-weight-bold'> Vaccination Site </h7>
+                        <h6 class='ml-5 font-weight-bold'> Vaccination Site </h6>
                     </div>
+                    <div class='col'>
                    <div class='form-group'>
-                                        <label for='site'><h6>Select Vaccination Site: </h6></label>
-                                        <select name='editSite' id='editSite'>
+                                        <select name='editSite' id='editSite' class='w-75'> 
                                         <option value=$locationId>$location</option>";
-
                                             require '../require/getVaccinationSites.php';
                                             foreach ($vaccinationSites as $vs) {
                                                 if($vs->getVaccinationSiteId() != $locationId) {
@@ -202,6 +199,7 @@ if (isset($_POST['editDeployment'])) {
 
                                             echo"
                                         </select>
+                                    </div>
                                     </div>
                 </div>
                                      
@@ -237,34 +235,31 @@ if (isset($_POST['editedDistrict'])) {
         <div class='modal-body'>
             <div class='deploymentInfo'>
                 <div class='row'>
-                    <h4 class='ml-3'> Please Edit Health District</h4>
+                    <h5 class='ml-3'> Edit the following information of a Health District</h5>
                 </div>
                 <div class='row'>
-                    <div class='col'>
-                        <h7 class='ml-5 font-weight-bold'> Health District Name </h7>
+                 <div class='col mt-3'>
+                        <h6 class='ml-5 font-weight-bold'> Health District Name </h6>
                     </div>
-                    <div class='col' contenteditable='true'>
-                        <input type='text' value='$name' class='w-75' style='outline-color:blue' id='editDistName'>
+                    <div class='col mt-3' contenteditable='true'>
+                        <input type='text' value='$name' class='w-75' id='editDistName'>
                     </div>
-                </div>
+                 </div>
                 <br>
-                <div class='row'>
-                    <h5 class='ml-3'> Please Edit Contact Number</h5>
-                </div>
                  <div class='row'>
                     <div class='col'>
-                        <h7 class='ml-5 font-weight-bold'> Contact Number </h7>
+                        <h6 class='ml-5 font-weight-bold'> Contact Number </h6>
                     </div>
                     <div class='col' contenteditable='true'>
                         <input type='text' value='$contact' class='w-75' style='outline-color:blue' id='editDistContact'>
                     </div>
-                </div>                        
+                </div>                
             </div>
         </div>
                                      
         <div class='modal-footer'>
-            <button type='button' class='btn btn-danger float-right' onclick='closeModal(\"editDistrictModal\")'>Cancel</button>
-            <button type='button' class='btn btn-success float-right' onclick='edit(editDist, $districtId )'> Save </button>
+            <button type='button' class='btn btn-danger float-right' onclick='closeModalForms(\"editDistrictModal\",\"editHealthDistrictForm\")'> Cancel </button>
+            <button type='submit' class='btn btn-success float-right' onclick='edit(editDist, $districtId)'> Save </button>
         </div>
     </div>";
 }

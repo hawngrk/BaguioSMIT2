@@ -495,7 +495,11 @@ label.error {
     color: #B90E0A;
     font-size: 1rem;
     display: block;
+    margin-left: 1%;
+    margin-top: 1%;
 }
+
+
 
 
 
