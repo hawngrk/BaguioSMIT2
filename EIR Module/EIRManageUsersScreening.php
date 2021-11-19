@@ -517,7 +517,7 @@ checkRole('EIR');
 </div>
 </div>
 <div id="archivedModal" class="modal-window">
-    <div class="content-modal-table">
+    <div class="content-modal">
         <div class="modal-header">
             <h4 class="modal-title">Archived Users</h4>
             <button type="button" class="close" data-dismiss="modal" onclick="closeModal('archivedModal')">
