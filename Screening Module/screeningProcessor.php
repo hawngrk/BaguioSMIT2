@@ -27,12 +27,14 @@ if (isset($_POST['search'])) {
 
     while ($stmt->fetch()) {
         echo "<tr class='tableCenterCont'>
-                <td>$patientID</td>
-                <td>$fullname</td>
-                <td>$category</td>
-                <td>$patientAddress</td>
-                <td>$contactNum</td>
-                <td><button id='postVac' class='viewReportBtn btn-success' type='submit' onclick='clickModalRow($patientID)'>Add Vitals</button></td></td>
+                <td class='columnName'>$patientID</td>
+                <td class='columnName'>$fullname</td>
+                <td class='columnName'>$category</td>
+                <td class='columnName'>$patientAddress</td>
+                <td class='columnName'>$contactNum</td>
+                <td class='columnName'>
+                <button class='addVitals btn-success btn-sm' type='submit' onclick='clickModalRow($patientID)'>Add Vitals</button>
+                </td>
                 </tr>";
     }
 }
@@ -48,6 +50,20 @@ if (isset($_POST['modalScreening'])) {
     $queryDetails = 
     "SELECT 
         patient.patient_full_name,
+        patient.date_of_first_dosage,
+        patient.date_of_second_dosage,
+        patient.first_dose_vaccination,
+        patient.second_dose_vaccination,
+        patient_vitals.pre_vital_pulse_rate_1st_dose,
+        patient_vitals.pre_vital_temp_rate_1st_dose,
+        patient_vitals.pre_oxygen_saturation_1st_dose,
+        patient_vitals.pre_vital_bpDiastolic_1st_dose,
+        patient_vitals.pre_vital_bpSystolic_1st_dose,
+        patient_vitals.pre_vital_pulse_rate_2nd_dose,
+        patient_vitals.pre_vital_temp_rate_2nd_dose,
+        patient_vitals.pre_oxygen_saturation_2nd_dose,
+        patient_vitals.pre_vital_bpDiastolic_2nd_dose,
+        patient_vitals.pre_vital_bpSystolic_2nd_dose,
         medical_background.allergy_to_vaccine,
         medical_background.hypertension,
         medical_background.heart_disease,
@@ -63,6 +79,10 @@ if (isset($_POST['modalScreening'])) {
         priority_groups.priority_group
     FROM
         patient
+    JOIN
+        patient_vitals
+    ON
+        patient_vitals.patient_id = $patientID
     JOIN
         medical_background
     ON  
@@ -102,28 +122,40 @@ if (isset($_POST['modalScreening'])) {
     $otherCommorbidity = otherCommorbidity($patientDetails['other_commorbidity']);
 
     //Pre vital information
-    $pulseRate1st = 80;
-    $tempRate1st = 35.2;
-    $oxygen1st = 90;
-    $bloodPressure1st = '120/80';
+    $pulseRate1st = $patientDetails['pre_vital_pulse_rate_1st_dose'];
+    $tempRate1st = $patientDetails['pre_vital_temp_rate_1st_dose'];
+    $oxygen1st = $patientDetails['pre_oxygen_saturation_1st_dose'];
+    $bloodPressure1st = $patientDetails['pre_vital_bpDiastolic_1st_dose']."/".$patientDetails['pre_vital_bpSystolic_1st_dose'];
     
-    $pulseRate2nd = 80;
-    $tempRate2nd = 35.2;
-    $oxygen2nd = 90;
-    $bloodPressure2nd = '120/80';
+    $pulseRate2nd = $patientDetails['pre_vital_pulse_rate_2nd_dose'];
+    $tempRate2nd = $patientDetails['pre_vital_temp_rate_2nd_dose'];
+    $oxygen2nd = $patientDetails['pre_oxygen_saturation_2nd_dose'];
+    $bloodPressure2nd = $patientDetails['pre_vital_bpDiastolic_2nd_dose']."/".$patientDetails['pre_vital_bpSystolic_2nd_dose'];
+
+    $sortPatientVaccine = sortPatientVaccineDetails($patientID);
+        
+   
 
     //Vaccination Information
-    $sched1st = "10/06/2021";
-    $site1st = "SM B1 Parking Lot";
-    $vaccine1st = "Pfizer";
-    $lot1st = "1231233";
+    $sched1st = $sortPatientVaccine[0]['vaccDate'];
+    $site1st = $sortPatientVaccine[0]['location'];
+    $vaccineN1st = $sortPatientVaccine[0]['vaccName'];
+    $vaccineM1st = $sortPatientVaccine[0]['vaccManufacturer'];
+    $lot1st = $sortPatientVaccine[0]['lotID'];
 
-    $sched2nd = "10/25/2021";
-    $site2nd = "UB Gym";
-    $vaccine2nd = "Pfizer";
-    $lot2nd = "3423235";
+    $sched2nd = $sortPatientVaccine[1]['vaccDate'];
+    $site2nd = $sortPatientVaccine[1]['location'];
+    $vaccineN2nd = $sortPatientVaccine[1]['vaccName'];
+    $vaccineM2nd = $sortPatientVaccine[1]['vaccManufacturer'];
+    $lot2nd = $sortPatientVaccine[1]['lotID'];
 
-    $vaccineStatus = "Fully Vaccinated";
+    $vaccineStatus = 'Not vaccinated';
+
+    if($patientDetails['first_dose_vaccination'] == 1 && $patientDetails['second_dose_vaccination'] == 1) {
+        $vaccineStatus = 'Fully vaccinated';
+    } else if($patientDetails['first_dose_vaccination'] == 1 && $patientDetails['second_dose_vaccination'] == 0) {
+        $vaccineStatus = 'Partially vaccinated';
+    }
 
     echo "<h3>$fullName</h3>
     <hr>
@@ -137,7 +169,6 @@ if (isset($_POST['modalScreening'])) {
         
         <h6>Allergies:</h6><br>
         $allergyToVaccine
-
 
         <h6>Commorbidities:</h6><br>
         <div class='row'>
@@ -205,7 +236,7 @@ if (isset($_POST['modalScreening'])) {
                 <h6>Vax Site:</h6>
                 <p>$site1st</p>
                 <h6>Vaccine:</h6>
-                <p>$vaccine1st</p>
+                <p>$vaccineM1st ($vaccineN1st)</p>
                 <h6>Lot No.:</h6>
                 <p>$lot1st</p>
             </div>
@@ -217,7 +248,7 @@ if (isset($_POST['modalScreening'])) {
                 <h6>Vax Site:</h6>
                 <p>$site2nd</p>
                 <h6>Vaccine:</h6>
-                <p>$vaccine2nd</p>
+                <p>$vaccineM2nd ($vaccineN2nd)</p>
                 <h6>Lot No.:</h6>
                 <p>$lot2nd</p>
             </div>
@@ -310,6 +341,53 @@ function checkAllergy($allergy) {
 }
 
 function otherCommorbidity($commorbidity) {
-        return "<label for='other'>Other Commorbidity: </label>
-        <input type='text' name='other' value=$commorbidity><br>";
+    return "<label for='other'>Other Commorbidity: </label>
+    <input type='text' name='other' value=$commorbidity><br>";
+}
+
+function sortPatientVaccineDetails($patientID) {
+    require('../includes/database.php');
+    $query = 
+    "SELECT
+    patient_drive.vaccine_lot_id,
+    vaccination_drive.vaccination_date,
+    vaccination_sites.location,
+    vaccine.vaccine_name,
+    vaccine_information.vaccine_manufacturer
+from 
+    patient_drive
+JOIN
+    vaccine_lot
+ON
+    vaccine_lot.vaccine_lot_id = patient_drive.vaccine_lot_id
+JOIN
+    vaccination_drive
+ON
+    vaccination_drive.drive_id = patient_drive.drive_id 
+JOIN
+    vaccination_sites
+ON
+    vaccination_sites.vaccination_site_id = vaccination_drive.vaccination_site_id
+JOIN
+    vaccine
+ON
+    vaccine.vaccine_id = vaccine_lot.vaccine_id
+JOIN
+    vaccine_information
+ON
+    vaccine_information.vaccine_id = vaccine_lot.vaccine_id
+WHERE
+    patient_drive.patient_id = $patientID
+
+    ";
+    $stmt = $database->stmt_init();
+    $stmt->prepare($query);
+    $stmt->execute();
+    $stmt->bind_result($vaccine_lot_id, $vaccination_date, $location, $vaccine_name, $vaccine_manufacturer);
+
+    $vaccineDetails = [];
+    while($stmt->fetch()){
+        array_push($vaccineDetails ,array('lotID' => $vaccine_lot_id, 'vaccDate' => $vaccination_date, 'location' => $location, 'vaccName' => $vaccine_name, 'vaccManufacturer' => $vaccine_manufacturer));
+    }
+    return $vaccineDetails;
 }
