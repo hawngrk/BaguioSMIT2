@@ -147,7 +147,6 @@ if (isset($_POST['editVaccine'])) {
 //edit date Deployment
 if (isset($_POST['editDeployment'])) {
     require "../require/getVaccinationSites.php";
-    $drive = $_POST['editDeployment'];
     $driveId = $_POST['editDeployment'];
     $location = $_POST['site'];
     $date = $_POST['date'];
@@ -208,7 +207,7 @@ if (isset($_POST['editDeployment'])) {
                                      
         <div class='modal-footer'>
             <button type='button' class='btn btn-danger float-right' onclick='closeModal(\"editModal\")'>Cancel</button>
-            <button type='button' class='btn btn-success float-right' onclick='editDrive($driveId)'> Save </button>
+            <button type='button' class='btn btn-success float-right' onclick='edit(editDrive, $driveId)'> Save </button>
         </div>
     </div>";
 }
@@ -219,5 +218,62 @@ if (isset($_POST['editedDate'])){
     $newDate = $_POST['editedDate'];
 
     $query = "UPDATE vaccination_drive SET vaccination_site_id =  $newLoc, vaccination_date = '$newDate' WHERE drive_id = $editedDrive ";
+    $database->query($query);
+}
+
+if (isset($_POST['editedDistrict'])) {
+    $districtId = $_POST['editedDistrict'];
+    $name = $_POST['newDistName'];
+    $contact = $_POST['newContact'];
+
+    echo "
+    <div class='content-modal'>
+        <div class='modal-header'>
+            <h4 class='modal-title'> Health District </h4>
+            <button type='button' class='close' data-dismiss='modal' onclick='closeModal(\"editDistrictModal\")'>
+                <i class='fas fa-window-close'></i>
+            </button>
+        </div>
+        <div class='modal-body'>
+            <div class='deploymentInfo'>
+                <div class='row'>
+                    <h4 class='ml-3'> Please Edit Health District</h4>
+                </div>
+                <div class='row'>
+                    <div class='col'>
+                        <h7 class='ml-5 font-weight-bold'> Health District Name </h7>
+                    </div>
+                    <div class='col' contenteditable='true'>
+                        <input type='text' value='$name' class='w-75' style='outline-color:blue' id='editDistName'>
+                    </div>
+                </div>
+                <br>
+                <div class='row'>
+                    <h5 class='ml-3'> Please Edit Contact Number</h5>
+                </div>
+                 <div class='row'>
+                    <div class='col'>
+                        <h7 class='ml-5 font-weight-bold'> Contact Number </h7>
+                    </div>
+                    <div class='col' contenteditable='true'>
+                        <input type='text' value='$contact' class='w-75' style='outline-color:blue' id='editDistContact'>
+                    </div>
+                </div>                        
+            </div>
+        </div>
+                                     
+        <div class='modal-footer'>
+            <button type='button' class='btn btn-danger float-right' onclick='closeModal(\"editDistrictModal\")'>Cancel</button>
+            <button type='button' class='btn btn-success float-right' onclick='edit(editDist, $districtId )'> Save </button>
+        </div>
+    </div>";
+}
+
+if (isset($_POST['editedDistName'])) {
+    $newName = $_POST['editedDistName'];
+    $newContact = $_POST['editedDistContact'];
+    $district = $_POST['editedDist'];
+
+    $query = "UPDATE `health_district` SET `health_district_name`='$newName',`hd_contact_number`='$newContact' WHERE health_district_id = '$district'";
     $database->query($query);
 }

@@ -690,6 +690,7 @@ if (isset($_POST['distArchive'])){
                                     <td style= 'vertical-align: middle;'>
                                         <div class='d-flex justify-content-center'>
                                            <button class='btn btn-sm bg-none' onclick='event.stopPropagation(); archive(1,archiveDistrict, $districtId)'><i class='fa fa-archive'></i></button>
+                                             <button class='btn btn-sm bg-none' onclick='event.stopPropagation(); editDistrict(\"$districtId\", \"$districtName\", \"$number\")' style='float: right'><i class='far fa-edit'></i></button><br>
                                         </div>
                                     </td>
                                   </tr>";
@@ -809,6 +810,7 @@ if (isset($_POST['showUpdatedDist'])){
                                     <td style= 'vertical-align: middle;'>
                                         <div class='d-flex justify-content-center'>
                                            <button class='btn btn-sm bg-none' onclick='event.stopPropagation(); archive(1,archiveDistrict, $districtId)'><i class='fa fa-archive'></i></button>
+                                             <button class='btn btn-sm bg-none' onclick='event.stopPropagation(); editDistrict(\"$districtId\", \"$districtName\", \"$number\")' style='float: right'><i class='far fa-edit'></i></button><br>
                                         </div>
                                     </td>
                                   </tr>";

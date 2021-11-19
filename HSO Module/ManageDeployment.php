@@ -467,6 +467,7 @@ include_once("../includes/database.php") ?>
                                     <td style= 'vertical-align: middle;'>
                                         <div class='d-flex justify-content-center'>
                                            <button class='btn btn-sm bg-none' onclick='event.stopPropagation(); archive(1,archiveDistrict, $districtId)'><i class='fa fa-archive'></i></button>
+                                           <button class='btn btn-sm bg-none' onclick='event.stopPropagation(); editDistrict(\"$districtId\", \"$districtName\", \"$number\")' style='float: right'><i class='far fa-edit'></i></button><br>
                                         </div>
                                     </td>
                                   </tr>";
@@ -489,6 +490,9 @@ include_once("../includes/database.php") ?>
 
 <!--Edit Modal-->
 <div id="editModal" class="modal-window">
+</div>
+
+<div id="editDistrictModal" class="modal-window">
 </div>
 
 
@@ -530,6 +534,7 @@ include_once("../includes/database.php") ?>
                                     <td style= 'vertical-align: middle;'>
                                         <div style='text-align: left;'>
                                             <button class='btn btn-warning' onclick='event.stopPropagation(); archive(0, archiveDistrict, $districtId )'>unarchive <i class='fas fa-box-open'></i></button>
+                                            
                                          </div>
                                     </td>
                                   </tr>";
@@ -811,10 +816,6 @@ include_once("../includes/database.php") ?>
         document.getElementById(idle1).style.color = "#000000";
     }
 
-    function filterDeployment(filter) {
-        //filterDeployment
-    }
-
     //clear search text field
     $('#searchDeploymentInput').on('input', function (e) {
         if ('' == this.value) {
@@ -1013,6 +1014,18 @@ include_once("../includes/database.php") ?>
         })
     }
 
+    function editDistrict(districtId, name, contact) {
+        $.ajax({
+            url: '../includes/editProcessor.php',
+            type: 'POST',
+            data: {"editedDistrict": districtId, newDistName: name, newContact: contact},
+            success: function (result) {
+                document.getElementById("editDistrictModal").innerHTML = result;
+                document.getElementById("editDistrictModal").style.display = "block";
+            }
+        })
+    }
+
     function editDeployment(deploymentId, site, date) {
         $.ajax({
             url: '../includes/editProcessor.php',
@@ -1025,38 +1038,49 @@ include_once("../includes/database.php") ?>
         })
     }
 
+    function editDist(district) {
+        var newDistName = document.getElementById('editDistName').value;
+        var newDistContact = document.getElementById('editDistContact').value;
+        $.ajax({
+            url: '../includes/editProcessor.php',
+            type: 'POST',
+            data: {"editedDistName": newDistName, editedDistContact: newDistContact, editedDist: district},
+            success: function () {
+                closeModal('editDistrictModal');
+            }
+        })
+
+        $.ajax({
+            url: 'ManageDeploymentProcessor.php',
+            method: 'POST',
+            data: {showUpdatedDist: ""},
+            success: function (result) {
+                document.getElementById('distContent').innerHTML = result;
+            }
+        })
+    }
+
+
     function editDrive(drive){
         var newDate = document.getElementById('editDate').value;
         var newSite = document.getElementById('editSite').value;
-        Swal.fire({
-            icon: 'info',
-            title: 'Are you sure you want to edit this deployment?',
-            showDenyButton: true,
-            confirmButtonText: 'Yes',
-            denyButtonText: `No`,
-        }).then((result) => {
-            if (result.isConfirmed) {
-                $.ajax({
-                    url: '../includes/editProcessor.php',
-                    type: 'POST',
-                    data: {"editedDate": newDate, editedSite: newSite, editedDrive: drive},
-                    success: function (result) {
-                        closeModal('editModal');
-                    }
-                })
-                $.ajax({
-                    url: 'ManageDeploymentProcessor.php',
-                    method: 'POST',
-                    data: {showUpdatedDrive: ""},
-                    success: function (result) {
-                        document.getElementById('mainDrive').innerHTML = result;
-                    }
-                })
-                Swal.fire('Saved!', '', 'success')
-            } else if (result.isDenied) {
-                Swal.fire('Changes are not saved', '', 'info')
+        $.ajax({
+            url: '../includes/editProcessor.php',
+            type: 'POST',
+            data: {"editedDate": newDate, editedSite: newSite, editedDrive: drive},
+            success: function (result) {
+                closeModal('editModal');
             }
         })
+        $.ajax({
+            url: 'ManageDeploymentProcessor.php',
+            method: 'POST',
+            data: {showUpdatedDrive: ""},
+            success: function (result) {
+                document.getElementById('mainDrive').innerHTML = result;
+            }
+        })
+
     }
 
     function showDistrict(val) {
@@ -1225,6 +1249,23 @@ include_once("../includes/database.php") ?>
         }).then((result) => {
             if (result.isConfirmed) {
                 action();
+                Swal.fire('Saved!', '', 'success')
+            } else if (result.isDenied) {
+                Swal.fire('Changes are not saved', '', 'info')
+            }
+        })
+    }
+
+    async function edit(action, item) {
+        Swal.fire({
+            icon: 'info',
+            title: 'Are you sure you want to edit this Deployment?',
+            showDenyButton: true,
+            confirmButtonText: 'Yes',
+            denyButtonText: `No`,
+        }).then((result) => {
+            if (result.isConfirmed) {
+                action(item);
                 Swal.fire('Saved!', '', 'success')
             } else if (result.isDenied) {
                 Swal.fire('Changes are not saved', '', 'info')
