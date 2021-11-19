@@ -509,7 +509,7 @@ if (isset($_POST['archive'])){
         $query = "UPDATE `vaccination_drive` SET `Archived`= 1 WHERE `drive_id` = '$archivedId'";
         $database->query($query);
 
-        echo'   <table class="table table-hover tableDep table-fixed" id="driveTable">
+        echo'     <table class="table table-hover tableDep table-fixed" id="driveTable">
                             <thead>
                             <tr class="tableCenterCont">
                                 <th scope="col">Drive Id</th>
@@ -524,7 +524,7 @@ if (isset($_POST['archive'])){
         $dbase->prepare($query);
         $dbase->execute();
         $dbase->bind_result($driveId, $date, $vaccinationSite);
-        while($dbase->fetch()){
+        while ($dbase->fetch()) {
 
             echo "<tr class='table-row tableCenterCont' onclick='showDrive(this)'>
 
@@ -534,8 +534,7 @@ if (isset($_POST['archive'])){
                         <td>
                             <div class='d-flex justify-content-center'>
                                 <button class='btn btn-sm bg-none' onclick='event.stopPropagation(); archive(1, clickArchive, $driveId)'><i class='fa fa-archive'></i></button>
-                                <button class='btn btn-sm bg-none' onclick='event.stopPropagation(); editDeployment(\"$driveId\", \"$vaccinationSite\", \"$date\")' style='float: right'><i class='far fa-edit'></i></button><br>
-
+                                 <button class='btn btn-sm bg-none' onclick='event.stopPropagation(); editDeployment(\"$driveId\", \"$vaccinationSite\", \"$date\")' style='float: right'><i class='far fa-edit'></i></button><br>
                             </div>
                         </td>
 
@@ -543,7 +542,7 @@ if (isset($_POST['archive'])){
 
         }
 
-                        echo"</table>";
+        echo"</table>";
 
     } else if ($option == "UnArchive") {
         $query = "UPDATE `vaccination_drive` SET `Archived`= 0 WHERE `drive_id` = '$archivedId'";
@@ -587,7 +586,7 @@ if (isset($_POST['archive'])){
 }
 
 if (isset($_POST['showUpdatedDrive'])){
-    echo'   <table class="table table-hover tableDep table-fixed" id="driveTable">
+    echo'     <table class="table table-hover tableDep table-fixed" id="driveTable">
                             <thead>
                             <tr class="tableCenterCont">
                                 <th scope="col">Drive Id</th>
@@ -602,7 +601,7 @@ if (isset($_POST['showUpdatedDrive'])){
     $dbase->prepare($query);
     $dbase->execute();
     $dbase->bind_result($driveId, $date, $vaccinationSite);
-    while($dbase->fetch()){
+    while ($dbase->fetch()) {
 
         echo "<tr class='table-row tableCenterCont' onclick='showDrive(this)'>
 
@@ -612,8 +611,7 @@ if (isset($_POST['showUpdatedDrive'])){
                         <td>
                             <div class='d-flex justify-content-center'>
                                 <button class='btn btn-sm bg-none' onclick='event.stopPropagation(); archive(1, clickArchive, $driveId)'><i class='fa fa-archive'></i></button>
-                                 <button class='btn btn-sm bg-none' onclick='event.stopPropagation(); editDeployment(\"$driveId\", \"$vaccinationSite\", \"$date\")' style='float: right'><i class='far fa-edit'></i></button>
-
+                                 <button class='btn btn-sm bg-none' onclick='event.stopPropagation(); editDeployment(\"$driveId\", \"$vaccinationSite\", \"$date\")' style='float: right'><i class='far fa-edit'></i></button><br>
                             </div>
                         </td>
 
