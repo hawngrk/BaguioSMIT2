@@ -268,7 +268,7 @@ if (isset($_POST['patientId'])) {
     echo "      
                 <img style='width:150px;' src='../img/SMIT+.png' alt='Baguio Logo'><br>
                 
-                <h1> <center>REGISTERED <i class='far fa-check-circle' style='color: green'></i></center></h1><br><br>
+                <h1> <center>REGISTERED <i class='far fa-check-circle' style='color: green'></i></center></h1><br>
                 
                  <div class='border border-dark rounded p-2 m-1'>
                 <div class='col'>
@@ -288,8 +288,7 @@ if (isset($_POST['patientId'])) {
                 <h7> $age </h7>
                 </div>
                 </div>
-                <br>
-                <br>
+                
                 
                 <div class='row ml-5 mt-2'>
                 <div class='col'>
@@ -301,7 +300,8 @@ if (isset($_POST['patientId'])) {
                 <h7> $pOccupation </h7>
                 </div>
                 </div>
- 
+                <br>
+                <hr>
                 <br>
                 <div class='col'>
                 <h4 class='ml-2'> Category Information </h4>
@@ -312,8 +312,11 @@ if (isset($_POST['patientId'])) {
                 <h7> $group </h7>
                 </div>
                 </div>
-                
-                <button id='postVac' class='btn btn-success' type='submit' style='float: right' onclick='queuePatient($patId)'>Confirm Registration</button>";
+                </div>
+                <div class='modal-footer'>
+                <button onclick=closeModal('qrView') type='button' class='btn btn-danger'> Cancel</button>            
+                <button id='postVac' class='btn btn-success' type='submit' style='float: right' onclick='queuePatient($patId)'>Confirm Registration</button>
+    </div>";
 
 }
 
