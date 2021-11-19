@@ -178,36 +178,38 @@
         })
     }
 
-    function btnViewPostVac(param) {
+    function btnViewPostVac() {
 
-            var id = document.getElementById('addButtonId').value;
-            var pulse = document.getElementById('pulseR').value;
-            var temp = document.getElementById('tempR').value;
-            var bpDias = document.getElementById('bpRDias').value;
-            var bpSys = document.getElementById('bpRSys').value;
+        var id = document.getElementById('addButtonId').value;
+        var pulse = document.getElementById('pulseR').value;
+        var temp = document.getElementById('tempR').value;
+        var oxygen = document.getElementById('oxygenSat').value;
+        var bpDias = document.getElementById('bpRDias').value;
+        var bpSys = document.getElementById('bpRSys').value;
 
-            Swal.fire({
-                    title: 'Add these vitals?',
-                    showDenyButton: true,
-                    confirmButtonText: 'Yes',
-                    denyButtonText: `No`,
-                    }).then((result) => {
-                    if (result.isConfirmed) {
-                        $.ajax({
-                        url: 'monitoringSearchProcessor.php',
-                        type: 'POST',
-                        data: {'pulse':pulse, 'temp':temp, 'diastolic':bpDias, 'systolic': bpSys, 'id': id},
-                        success: function(postVat) {
-                            document.getElementById('postVacView').style.display = 'none';
-                        }
-                        });
-                        Swal.fire('Saved!', '', 'success')
-                    } else if (result.isDenied) {
-                    Swal.fire('Changes are not saved', '', 'info')
+        Swal.fire({
+            title: 'Add these vitals?',
+            showDenyButton: true,
+            confirmButtonText: 'Yes',
+            denyButtonText: `No`,
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: 'monitoringSearchProcessor.php',
+                    type: 'POST',
+                    data: {'pulse': pulse, 'temp': temp, 'oxygen': oxygen ,'diastolic': bpDias, 'systolic': bpSys, 'id': id},
+                    success: function (postVat) {
+                        console.log(postVat)
+                        document.getElementById('postVacView').style.display = 'none';
                     }
-            });
-        
+                });
+                Swal.fire('Saved!', '', 'success');
+            } else if (result.isDenied) {
+                Swal.fire('Changes are not saved', '', 'info')
+            }
+        })
     }
+
     function allergy(checkbox){
         var checkboxes = document.getElementsByName('allergy');
         checkboxes.forEach((item) =>  {
