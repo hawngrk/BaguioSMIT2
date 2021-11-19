@@ -27,12 +27,14 @@ if (isset($_POST['search'])) {
 
     while ($stmt->fetch()) {
         echo "<tr class='tableCenterCont'>
-                <td>$patientID</td>
-                <td>$fullname</td>
-                <td>$category</td>
-                <td>$patientAddress</td>
-                <td>$contactNum</td>
-                <td><button id='postVac' class='viewReportBtn btn-success' type='submit' onclick='clickModalRow($patientID)'>Add Vitals</button></td></td>
+                <td class='columnName'>$patientID</td>
+                <td class='columnName'>$fullname</td>
+                <td class='columnName'>$category</td>
+                <td class='columnName'>$patientAddress</td>
+                <td class='columnName'>$contactNum</td>
+                <td class='columnName'>
+                <button class='addVitals btn-success btn-sm' type='submit' onclick='clickModalRow($patientID)'>Add Vitals</button>
+                </td>
                 </tr>";
     }
 }
