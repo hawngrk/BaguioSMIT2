@@ -2,6 +2,9 @@
 include_once("../includes/database.php");
 require_once('../includes/sessionHandling.php');
 checkRole('Barangay');
+
+$accountDetails = $_SESSION['account'];
+$barangay_id = $accountDetails['barangay_id'];
 ?>
 
 <head>
@@ -142,17 +145,17 @@ checkRole('Barangay');
             <div class="row">
                 <div class="col patientQueueButtons">
                     <div class="patientQCounter" id="numberAvailable">
-                        <h6 class="fontColor">Number of Available Stubs</h6>
+                        <h6 class="fontColor">Number of Available First Dose Stubs</h6>
                         <?php
-                        $query = "SELECT drive_id, A1_stubs, A2_stubs, A3_stubs, A4_stubs, A5_stubs, A6_stubs FROM barangay_stubs WHERE drive_id =(SELECT drive_id FROM vaccination_drive WHERE vaccination_date = (SELECT min(vaccination_date) FROM vaccination_drive WHERE vaccination_date >= CURDATE())) AND barangay_id = '113';";
+                        $query = "SELECT A1_stubs, A2_stubs, A3_stubs, A4_stubs, A5_stubs, ROAP, A3_Pedia, ROPP FROM barangay_stubs WHERE drive_id =(SELECT drive_id FROM vaccination_drive WHERE vaccination_date = (SELECT min(vaccination_date) FROM vaccination_drive WHERE vaccination_date >= CURDATE())) AND barangay_id = '$barangay_id';";
                         $stmt = $database->stmt_init();
                         $stmt->prepare($query);
                         $stmt->execute();
-                        $stmt->bind_result($drive, $A1, $A2, $A3, $A4, $A5, $A6);
+                        $stmt->bind_result($A1, $A2, $A3, $A4, $A5, $roap, $A3P, $ROPP);
                         $stmt->fetch();
                         $stmt->close();
 
-                        $stubs = $A1 + $A2 + $A3 + $A4 + $A5 + $A6;
+                        $stubs = $A1 + $A2 + $A3 + $A4 + $A5 + $roap + $A3P + $ROPP;
 
                         echo "<p class='fontColor'>$stubs</p>";
 
@@ -162,25 +165,39 @@ checkRole('Barangay');
 
                 <div class="col patientQueueButtons">
                     <div class="patientQCounter" id="numberSent">
-                        <h6 class="fontColor">Number of Sent Confirmation</h6>
-                        <p class="fontColor">0</p>
+                        <h6 class="fontColor">Number of Available Second Dose Stubs</h6>
+                        <?php
+                        $query = "SELECT second_dose FROM barangay_stubs WHERE drive_id =(SELECT drive_id FROM vaccination_drive WHERE vaccination_date = (SELECT min(vaccination_date) FROM vaccination_drive WHERE vaccination_date >= CURDATE())) AND barangay_id = '$barangay_id';";
+                        $stmt = $database->stmt_init();
+                        $stmt->prepare($query);
+                        $stmt->execute();
+                        $stmt->bind_result($second_dose);
+                        $stmt->fetch();
+                        $stmt->close();
+
+                        if($second_dose == null){
+                            $second_dose = 0;
+                        }
+
+                        echo "<p class='fontColor'>$second_dose</p>";
+                        ?>
                     </div>
                 </div>
 
-                <div class="col patientQueueButtons">
-                    <div class="patientQCounter" id="claimedStubs">
-                        <h6 class="fontColor">Number of Claimed Stub</h6>
-                        <p class="fontColor">0</p>
-                    </div>
-                </div>
-                <div class="col patientQueueButtons">
-                    <div class="patientQCounter" id="redirectStub">
-                        <h6 class="fontColor">Number of Redirected Stub</h6>
-                        <p class="fontColor">0</p>
-                    </div>
-                </div>
-                <div class="col">
-                    <button id="confirmationNotif" onclick="confirmSending()">
+<!--                <div class="col patientQueueButtons">-->
+<!--                    <div class="patientQCounter" id="claimedStubs">-->
+<!--                        <h6 class="fontColor">Number of Claimed Stub</h6>-->
+<!--                        <p class="fontColor">0</p>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div class="col patientQueueButtons">-->
+<!--                    <div class="patientQCounter" id="redirectStub">-->
+<!--                        <h6 class="fontColor">Number of Redirected Stub</h6>-->
+<!--                        <p class="fontColor">0</p>-->
+<!--                    </div>-->
+<!--                </div>-->
+                <div>
+                    <button id="confirmationNotif" onclick="confirmSending(<?php echo"$barangay_id" ?>)">
                         Send<br>
                         Confirmation
                         <br>Notification
@@ -228,7 +245,7 @@ checkRole('Barangay');
         });
     }
 
-    async function confirmSending() {
+    async function confirmSending(id) {
         Swal.fire({
             icon: 'info',
             title: 'Send Notification?',
@@ -238,7 +255,7 @@ checkRole('Barangay');
             denyButtonText: `No`
         }).then((result) => {
             if (result.isConfirmed) {
-                sendNotification();
+                sendNotification(id);
                 Swal.fire({icon: 'success', title: 'Notification Sent!', confirmButtonText: 'OK', confirmButtonColor: '#007bff'})
             } else if (result.isDenied) {
                 Swal.fire({icon: 'info', title: 'Notification Cancelled', confirmButtonText: 'OK', confirmButtonColor: '#007bff'})
@@ -246,11 +263,12 @@ checkRole('Barangay');
         })
     }
 
-    function sendNotification() {
+    function sendNotification(id) {
+        console.log(id);
         $.ajax({
             url: 'Sendnotification.php',
             type: 'POST',
-            data: {"type": "many"},
+            data: {"type": "many", barangayId: id},
             success: function (result) {
                 console.log(result);
             }

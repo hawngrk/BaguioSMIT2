@@ -202,88 +202,51 @@ $barangay_id = $accountDetails['barangay_id'];
         <nav class="float-right mr-4">
             <div class="dropdown">
                 <button class="btn btn-lg dropdown-toggle bg-none" type="button" id="dropdownMenuButton"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <span class="marker" id="marker"></span>
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onclick="openNotif()">
+                    <span class="marker" id="marker"><i class="fas fa-circle"></i></span>
                     <i class="fas fa-bell"></i>
                 </button>
-                <div class="dropdown-menu mr-4 border border-dark" aria-labelledby="dropdownMenuButton">
+                <div id="notifications" class="dropdown-menu mr-4 border border-dark" style="width: 352px" aria-labelledby="dropdownMenuButton">
                     <?php
-                    $query = "SELECT barangay_stubs.drive_id, barangay_stubs.A1_stubs, barangay_stubs.A2_stubs, barangay_stubs.A3_stubs, barangay_stubs.A4_stubs, barangay_stubs.A5_stubs, barangay_stubs.A6_stubs, barangay_stubs.notif_opened, vaccination_sites.location, vaccination_drive.vaccination_date FROM barangay_stubs JOIN vaccination_drive ON vaccination_drive.drive_id = barangay_stubs.drive_id JOIN vaccination_sites ON vaccination_sites.vaccination_site_id = vaccination_drive.vaccination_site_id WHERE barangay_id = '$barangay_id';";
+                    $query = "SELECT barangay_stubs.drive_id, barangay_stubs.A1_stubs, barangay_stubs.A2_stubs, barangay_stubs.A3_stubs, barangay_stubs.A4_stubs, barangay_stubs.A5_stubs, barangay_stubs.ROAP, barangay_stubs.A3_Pedia, barangay_stubs.ROPP, barangay_stubs.second_dose, barangay_stubs.notif_opened, vaccination_sites.location, vaccination_drive.vaccination_date FROM barangay_stubs JOIN vaccination_drive ON vaccination_drive.drive_id = barangay_stubs.drive_id JOIN vaccination_sites ON vaccination_sites.vaccination_site_id = vaccination_drive.vaccination_site_id WHERE barangay_id = '$barangay_id';";
                     $stmt = $database->stmt_init();
                     $stmt->prepare($query);
                     $stmt->execute();
-                    $stmt->bind_result($driveId,$A1, $A2, $A3, $A4, $A5, $A6, $opened, $locName, $date);
+                    $stmt->bind_result($driveId, $A1, $A2, $A3, $A4, $A5, $roap, $secondStubs, $A3P, $ROPP, $opened, $locName, $date);
                     echo "<table class='tableScroll7 px-4 py-2'>
                                         <tr><td><h4>Notifications<hr></h4></td></tr>";
                     while ($stmt->fetch()) {
 
-                                        $availableStubs = [$A1, $A2, $A3, $A4, $A5, $A6];
-                                        $priorityStub = [];
-                                        $values = [];
+                        $totalStubs = $A1 + $A2 + $A3 + $A4 + $A5 + $roap + $A3P + $ROPP;
 
-                                        for ($i = 0; $i < 6; $i++) {
-                                            if ($availableStubs[$i] != 0) {
-                                                $priorityStub[] = "A" . ($i + 1);
-                                                $values[] = $availableStubs[$i];
-                                            }
-                                        }
 
-                                        if ($opened == 1) {
-                                            echo " <tr>
-                                                                            <td>
-                                                                                Stubs:<br>";
-                                            foreach ($priorityStub as $ps) {
-                                                foreach ($values as $value)
-                                                    echo " $ps: $value";
-                                            }
-
-                                            echo "
-                                                                                Vaccination Location: $locName<br>
-                                                                                   Date: $date <br>
-                    
-                    
-                                                                          <hr>
-                                                                         </td>
-                                                                          </tr>
-                                                                          ";
-                                        } else {
-
-                                            echo "<tr onclick='updateBarangayHome($driveId); ; closeModal(\"notificationModal\")'>
-                                                                       <script>document.getElementById('marker').setAttribute('style', 'color:#c10d0d!important');</script>
-                    
-                                                                            <td style='background: lightgray'>
-                                                                                 Stubs:";
-
-                                            foreach ($priorityStub as $ps) {
-                                                foreach ($values as $value)
-                                                    echo "$ps: $value<br>";
-                                            }
-
-                                            echo "
-                                                                                Vaccination Location: $locName<br>
-                                                                                   Date: $date <br>
-                    
-                    
-                                                                          <hr style='width: 100%; background: azure'>
-                                                                          </td>
-                                                                          </tr>
+                        if ($opened == 1) {
+                            echo " <tr>
+                                                       <td> First Dose Stubs: $totalStubs<br>
+                                                            Second Dose Stubs: $secondStubs<br>
+                                                            Vaccination Location: $locName<br>
+                                                            Date: $date <br><hr>
+                                                       </td>
+                                                   </tr>";
+                        } else {
+                            echo "<tr onclick='updateBarangayHome($driveId, $barangay_id); closeModal(\"notificationModal\")'>
+                                                       <script>document.getElementById('marker').setAttribute('style', 'color:#c10d0d!important');</script>
+                                                       <td style='background: lightgray'>
+                                                            First Dose Stubs: $totalStubs<br>
+                                                            Second Dose Stubs: $secondStubs<br>
+                                                            Vaccination Location: $locName<br>
+                                                            Date: $date <br><hr>
+                                                       </td>
+                                                  </tr>
                                                                          ";
-                                        }
-                                    }
+                        }
+                    }
+                    echo "</table>";
+                    ?>
 
-                                                                          echo "</table>";
-                                    ?>
                 </div>
             </div>
         </nav>
-<!--        <div class="topNav row">-->
-<!--            <div class="container-fluid">-->
-<!--                <button id="buttonMarker" class="notif float-right" onclick="openNotif('notificationModal')">-->
-<!--                    <span class="marker" id="marker"><i class="fas fa-circle"></i></span>-->
-<!--                    <i class="fas fa-bell"></i>-->
-<!--                </button>-->
-<!--            </div>-->
-<!--        </div>-->
         <br>
         <br>
         <!--Page Content-->
@@ -291,7 +254,7 @@ $barangay_id = $accountDetails['barangay_id'];
            <div class="row">
                <div id="selectDeployment" class="col-sm-auto">
                    <select class="form-select" id="selectHealthDistrict"
-                       onchange="updateBarangayHome(this.value)">
+                       onchange="updateBarangayHome(this.value, <?php echo "$barangay_id" ?>)">
                        <option value='' disabled selected hidden> Select Deployment</option>
                        <?php
                        require_once("../require/getVaccinationDrive.php");
@@ -355,7 +318,15 @@ $barangay_id = $accountDetails['barangay_id'];
                         <p>0</p>
                     </div>
                     <div class="priorityGroup">
-                        <h5>A6</h5>
+                        <h5>ROAP</h5>
+                        <p>0</p>
+                    </div>
+                    <div class="priorityGroup">
+                        <h5>A3 Pedia</h5>
+                        <p>0</p>
+                    </div>
+                    <div class="priorityGroup">
+                        <h5>ROPP</h5>
                         <p>0</p>
                     </div>
                     <div class="priorityGroup">
@@ -364,39 +335,41 @@ $barangay_id = $accountDetails['barangay_id'];
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="counterCl">
-                    <div class="col colCount">
-                        <h5>CLAIMED</h5>
-                        <?php
-                        $query = "SELECT COUNT(notification) FROM patient WHERE notification = 1";
-                        $stmt = $database->stmt_init();
-                        $stmt->prepare($query);
-                        $stmt->execute();
-                        $stmt->bind_result($claimed);
-                        $stmt->fetch();
-                        echo "<h5>$claimed</h5>"
-                        ?>
-                    </div>
-                    <div class="col colCount">
-                        <h5>UNCLAIMED</h5>
-                        <?php
-                        $query = "SELECT COUNT(notification) FROM patient WHERE notification = 0";
-                        $stmt = $database->stmt_init();
-                        $stmt->prepare($query);
-                        $stmt->execute();
-                        $stmt->bind_result($unclaimed);
-                        $stmt->fetch();
-                        echo "<h5>$unclaimed</h5>"
-                        ?>
-                    </div>
-                </div>
-            </div>
+<!--            <div class="row">-->
+<!--                <div class="counterCl">-->
+<!--                    <div class="col colCount">-->
+<!--                        <h5>CLAIMED</h5>-->
+<!--                        --><?php
+//                        $query = "SELECT COUNT(notification) FROM patient WHERE notification = 1";
+//                        $stmt = $database->stmt_init();
+//                        $stmt->prepare($query);
+//                        $stmt->execute();
+//                        $stmt->bind_result($claimed);
+//                        $stmt->fetch();
+//                        echo "<h5>$claimed</h5>"
+//                        ?>
+<!--                    </div>-->
+<!--                    <div class="col colCount">-->
+<!--                        <h5>UNCLAIMED</h5>-->
+<!--                        --><?php
+//                        $query = "SELECT COUNT(notification) FROM patient WHERE notification = 0";
+//                        $stmt = $database->stmt_init();
+//                        $stmt->prepare($query);
+//                        $stmt->execute();
+//                        $stmt->bind_result($unclaimed);
+//                        $stmt->fetch();
+//                        echo "<h5>$unclaimed</h5>"
+//                        ?>
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
         </div>
     </div>
 </body>
 </html>
 <script type="text/javascript">
+
+
     var clicked = false;
 
     var pusher = new Pusher('8bde1d2aef3f7c91d16a', {
@@ -409,21 +382,20 @@ $barangay_id = $accountDetails['barangay_id'];
         toastr.info('You Have Received a New Set Of Stubs!');
 
         document.getElementById('marker').setAttribute('style', 'color:#c10d0d!important');
-        document.getElementById("notificationContent").innerHTML = "";
 
+    });
 
+    function openNotif() {
+        document.getElementById('notifications').innerHTML = "";
         $.ajax({
             url: 'ManagePatientProcessor.php',
             type: 'POST',
-            data: {"notifStubs": ""},
+            data: {"notification": ""},
             success: function (result) {
-                document.getElementById("notificationContent").innerHTML = result;
+                document.getElementById('notifications').innerHTML = result;
             }
         });
-    });
 
-    function openNotif(modal) {
-        document.getElementById(modal).style.display = "block";
         $.ajax({
             url: 'ManagePatientProcessor.php',
             type: 'POST',
@@ -432,7 +404,7 @@ $barangay_id = $accountDetails['barangay_id'];
                 setTimeout(function () {
                     document.getElementById('marker').setAttribute('style', 'color:transparent!important');
                 }, 2000);
-                console.log(result)
+
             }
         });
     }
@@ -454,16 +426,17 @@ $barangay_id = $accountDetails['barangay_id'];
 
     }
 
-    function updateBarangayHome(driveId){
+    function updateBarangayHome(driveId, barangay_id){
         $.ajax({
             url: 'ManagePatientProcessor.php',
             type: 'POST',
-            data: {"delegations": driveId},
+            data: {"delegations": driveId, barangayId: barangay_id},
             success: function (result) {
                 document.getElementById("barangayHomeContent").innerHTML = result;
             }
         });
     }
+
 </script>
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="../javascript/logout.js"></script>

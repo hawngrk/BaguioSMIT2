@@ -146,48 +146,18 @@ if (isset($_POST['editVaccine'])) {
 
 //edit date Deployment
 if (isset($_POST['editDeployment'])) {
+    require "../require/getVaccinationSites.php";
     $drive = $_POST['editDeployment'];
-
-    require_once '../require/getVaccinationDrive.php';
-    require_once '../require/getVaccine.php';
-    require_once '../require/getVaccineDrive1.php';
-    require_once '../require/getVaccinationSites.php';
-    require_once '../require/getHealthDistrictDrives.php';
-    require_once '../require/getHealthDistrict.php';
-
-    foreach ($vaccination_drive as $vd) {
-        if ($drive == $vd->getDriveId()) {
-            $name = $vd->getDriveId();
-            $first_dose_stubs = $vd->getFirstDoseStubs();
-            $second_dose_stubs = $vd->getSecondDoseStubs();
-            $siteId = $vd->getVaccDriveVaccSiteId();
-            $date = $vd->getVaccDate();
-        }
-    }
-
+    $driveId = $_POST['editDeployment'];
+    $location = $_POST['site'];
+    $date = $_POST['date'];
 
     foreach ($vaccinationSites as $vs) {
-        if ($vs->getVaccinationSiteId() == $siteId) {
-            $siteName = $vs->getVaccinationSiteLocation();
+        if ($vs->getVaccinationSiteLocation() == $location) {
+            $locationId = $vs->getVaccinationSiteId();
         }
     }
 
-    $healthDistricts = [];
-    foreach ($healthDistrictDrives as $hdd) {
-        if ($drive == $hdd->getDriveId()) {
-            $healthDistricts[] = $hdd->getDistrictId();
-
-        }
-    }
-
-    $distNames = [];
-    foreach ($healthDistricts as $hd) {
-        foreach ($health_district as $dist) {
-            if ($hd == $dist->getHealthDistrictId()) {
-                $distNames[] = $dist->getHealthDistrictName();
-            }
-        }
-    }
     echo "
     <div class='content-modal'>
         <div class='modal-header'>
@@ -195,9 +165,7 @@ if (isset($_POST['editDeployment'])) {
             <button type='button' class='close' data-dismiss='modal' onclick='closeModal(\"editModal\")'>
                 <i class='fas fa-window-close'></i>
             </button>
-        </div>";
-
-    echo "
+        </div>
         <div class='modal-body'>
             <div class='deploymentInfo'>
                 <div class='row'>
@@ -213,74 +181,43 @@ if (isset($_POST['editDeployment'])) {
                 </div>
                 <br>
                 <div class='row'>
-                    <h5 class='ml-3'> Deployment Details </h5>
+                    <h5 class='ml-3'> Please Edit Vaccination Site</h5>
                 </div>
                 <div class='row'>
                     <div class='col'>
                         <h7 class='ml-5 font-weight-bold'> Vaccination Site </h7>
                     </div>
-                    <div class='col'>
-                       <h7> $siteName </h7>
-                    </div>
-                </div>
-                <div class='row'>
-                    <div class='col'>
-                        <h7 class='ml-5 font-weight-bold'> Vaccination Brand/s </h7>
-                    </div> 
-                                        ";
-    foreach ($vaccineDrive1 as $drive1) {
-        if ($drive == $drive1->getDriveId()) {
-            foreach ($vaccines as $vac) {
-                if ($drive1->getVaccineId() == $vac->getVaccId()) {
-                    $firstDbrand = $vac->getVaccName();
+                   <div class='form-group'>
+                                        <label for='site'><h6>Select Vaccination Site: </h6></label>
+                                        <select name='editSite' id='editSite'>
+                                        <option value=$locationId>$location</option>";
 
-                    echo "
-                    <div class='col'>
-                        $firstDbrand
-                    </div>
-            </div>   
-    ";
-                }
-            }
-        }
-    }
+                                            require '../require/getVaccinationSites.php';
+                                            foreach ($vaccinationSites as $vs) {
+                                                if($vs->getVaccinationSiteId() != $locationId) {
+                                                    $vacSite = $vs->getVaccinationSiteLocation();
+                                                    $id = $vs->getVaccinationSiteId();
+                                                    echo "<option value =$id>$vacSite</option>";
+                                                }
+                                            }
 
-    echo "
-            <div class='row'>
-                <div class='col'>
-                    <h7 class='font-weight-bold' style='margin-left: 12%'> Stub for First Dose </h7>
+                                            echo"
+                                        </select>
+                                    </div>
                 </div>
-                <div class='col'>
-                    $first_dose_stubs
-                </div>
-            </div>
-             <div class='row'>
-                <div class='col'>
-                    <h7 class='font-weight-bold' style='margin-left: 12%'> Stub for Second Dose </h7>
-                </div>
-                <div class='col'>
-                   $second_dose_stubs
-                </div>
-            </div>
-            <div class='row'>
-                <div class='col'>
-                    <h7 class='font-weight-bold' style='margin-left: 12%'> Covered Health Districts </h7>
-                </div>
-                ";
-
-
-    foreach ($distNames as $dn) {
-        echo "  <div class='col'>
-                    $dn
-                </div>
-         <!--End of deployment Info div-->
-            </div> 
-        <!--End of modal-body div-->
-        </div>
+                                     
         <div class='modal-footer'>
             <button type='button' class='btn btn-danger float-right' onclick='closeModal(\"editModal\")'>Cancel</button>
-            <button type='button' class='btn btn-success float-right' onclick=''> Save </button>
+            <button type='button' class='btn btn-success float-right' onclick='editDrive($driveId)'> Save </button>
         </div>
     </div>";
-    }
+}
+
+if (isset($_POST['editedDate'])){
+    $editedDrive = $_POST['editedDrive'];
+    $newLoc = $_POST['editedSite'];
+    $newDate = $_POST['editedDate'];
+
+    $query = "UPDATE vaccination_drive SET vaccination_site_id =  $newLoc, vaccination_date = '$newDate' WHERE drive_id = $editedDrive ";
+    $database->query($query);
 }

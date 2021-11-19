@@ -187,8 +187,7 @@ include_once("../includes/database.php") ?>
                         <td>
                             <div class='d-flex justify-content-center'>
                                 <button class='btn btn-sm bg-none' onclick='event.stopPropagation(); archive(1, clickArchive, $driveId)'><i class='fa fa-archive'></i></button>
-                                <button class='btn btn-sm bg-none' onclick='event.stopPropagation(); editDeployment($driveId)'><i class='far fa-edit'></i></button>
-
+                                 <button class='btn btn-sm bg-none' onclick='event.stopPropagation(); editDeployment(\"$driveId\", \"$vaccinationSite\", \"$date\")' style='float: right'><i class='far fa-edit'></i></button>
                             </div>
                         </td>
 
@@ -1014,17 +1013,48 @@ include_once("../includes/database.php") ?>
         })
     }
 
-
-
-    var editDeploymentModal = document.getElementById("editModal");
-    function editDeployment(deploymentId) {
+    function editDeployment(deploymentId, site, date) {
         $.ajax({
             url: '../includes/editProcessor.php',
             type: 'POST',
-            data: {"editDeployment": deploymentId},
+            data: {"editDeployment": deploymentId, site: site, date: date},
             success: function (result) {
                 document.getElementById("editModal").innerHTML = result;
-                editDeploymentModal.style.display = "block";
+                document.getElementById("editModal").style.display = "block";
+            }
+        })
+    }
+
+    function editDrive(drive){
+        var newDate = document.getElementById('editDate').value;
+        var newSite = document.getElementById('editSite').value;
+        Swal.fire({
+            icon: 'info',
+            title: 'Are you sure you want to edit this deployment?',
+            showDenyButton: true,
+            confirmButtonText: 'Yes',
+            denyButtonText: `No`,
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: '../includes/editProcessor.php',
+                    type: 'POST',
+                    data: {"editedDate": newDate, editedSite: newSite, editedDrive: drive},
+                    success: function (result) {
+                        closeModal('editModal');
+                    }
+                })
+                $.ajax({
+                    url: 'ManageDeploymentProcessor.php',
+                    method: 'POST',
+                    data: {showUpdatedDrive: ""},
+                    success: function (result) {
+                        document.getElementById('mainDrive').innerHTML = result;
+                    }
+                })
+                Swal.fire('Saved!', '', 'success')
+            } else if (result.isDenied) {
+                Swal.fire('Changes are not saved', '', 'info')
             }
         })
     }
