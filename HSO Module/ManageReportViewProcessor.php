@@ -197,7 +197,7 @@ if (isset($_POST['report'])) {
     $vaccineSymptoms = explode(',', $vaccineSymptoms);
     $covid19Symptoms = explode(',', $covid19Symptoms);
 
-    $query1 = "SELECT patient.patient_full_name, CONCAT(patient_details.patient_house_address, ' ', barangay.barangay_name, ' ', patient_details.patient_CM_address, ' ', patient_details.patient_province) AS full_address, patient_details.patient_contact_number FROM patient_details JOIN patient ON patient.patient_id = patient_details.patient_id JOIN barangay ON patient_details.barangay_id = barangay.barangay_id WHERE patient_details.patient_id = $patientId ;";
+    $query1 = "SELECT patient.patient_full_name, CONCAT(patient_details.patient_house_address, ' ', barangay.barangay_name, ' ', barangay.city, ' ', barangay.province) AS full_address, patient_details.patient_contact_number FROM patient_details JOIN patient ON patient.patient_id = patient_details.patient_id JOIN barangay ON patient_details.barangay_id = barangay.barangay_id WHERE patient_details.patient_id = $patientId ;";
     $dbase = $database->stmt_init();
     $dbase->prepare($query1);
     $dbase->execute();

@@ -1265,6 +1265,23 @@ include_once("../includes/database.php") ?>
         }
     }
 
+    async function edit(action, item) {
+        Swal.fire({
+            icon: 'info',
+            title: 'Are you sure you want to edit this Deployment?',
+            showDenyButton: true,
+            confirmButtonText: 'Yes',
+            denyButtonText: `No`,
+        }).then((result) => {
+            if (result.isConfirmed) {
+                action(item);
+                Swal.fire('Saved!', '', 'success')
+            } else if (result.isDenied) {
+                Swal.fire('Changes are not saved', '', 'info')
+            }
+        })
+    }
+
     async function del(item, action) {
         Swal.fire({
             icon: 'error',
