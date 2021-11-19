@@ -63,7 +63,7 @@ checkRole('Barangay');
             <img src="../img/logoo.png" style="width: 104%; margin-bottom:-19%; margin-top:-5%;" alt="Baguio Logo">
             </div>
         </div>
-
+        <br>
         <ul class="list-unstyled components">
             <hr>
             <?php
@@ -106,7 +106,6 @@ checkRole('Barangay');
     </nav>
 
     <!-- Top Nav Bar -->
-
     <div id="content">
 
     <nav class="brgyNav navbar-light bg-light rounded-lg">

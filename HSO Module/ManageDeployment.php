@@ -308,11 +308,19 @@ include_once("../includes/database.php") ?>
                         <div class="row">
                             <div class="col">
                                 <div class="form-group">
-                                    <h6 style="float: left">Select Vaccine Brand/s: </h6>
-                                    <input id="noStubsFirst" class = 'checkboxes p-4' type='checkbox' onclick="disableCheck(this, 'firstDoseStubs', 'first')">
-                                    <label>No Stubs</label>
+                                    <div class="row">
+                                    <h6 class="ml-3">Select Vaccine Brand/s: </h6>
+                                        <div class="col ml-4">
+                                            <input id="noStubsFirst" class = 'checkboxes mr-auto' type='checkbox' onclick="disableCheck(this, 'firstDoseStubs', 'first')">
+                                            <label>No Stubs</label>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+
+                                    </div>
+
                                     <div class="border border-dark tableScroll3 rounded" id = "firstDoseStubs"
-                                         style="columns:3; padding: 2%; list-style-type: none; height: auto!important">
+                                         style="columns:2; padding: 2%; list-style-type: none; height: auto!important">
                                         <?php
                                         require '../require/getVaccine.php';
                                         foreach ($vaccines as $vac) {
@@ -320,11 +328,11 @@ include_once("../includes/database.php") ?>
                                             $vacId = $vac->getVaccId();
                                             echo "<li>
                                                                    <input class = 'checkboxes' type='checkbox' onclick='showStubs(this, $vacId)' value='$vacId'>
-                                                                   <label>$vacName</label><br>
-                                                                   <div></div>
+                                                                   <label>$vacName</label>
+                                                                   
                                                                </li> ";
                                         }
-                                        //                                                    ?>
+                                                                                          ?>
 
                                     </div>
                                 </div>
@@ -868,9 +876,12 @@ include_once("../includes/database.php") ?>
     function showStubs(div, vacId){
         console.log(vacId);
         if (div.checked == true) {
-            div.parentNode.children[3].innerHTML = '<input type="input" placeholder="Number of Stubs">'
+            div.parentNode.children[1].innerHTML += '<input type="input" class="ml-2" placeholder="Number of Stubs">'
         } else{
-            div.parentNode.children[3].innerHTML = "";
+            var label = div.parentNode.children[1];
+            console.log(label.children[0]);
+            label.children[0].outerHTML = "";
+
         }
     }
 

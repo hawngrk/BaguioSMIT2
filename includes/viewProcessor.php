@@ -78,7 +78,7 @@ if (isset($_POST['viewPatient'])) {
                 <div col-10>
                 <h3 class='ml-4'> $patient_full_name </h3>
                 </div>
-                <div class='border border-dark rounded p-2 m-1'>
+                <div class='border border-dark rounded px-3 py-2 m-1'>
                 <div class='col'>
                     <h4 class='ml-2'> Personal Information </h4>
                 </div>
@@ -401,9 +401,10 @@ if (isset($_POST['viewVaccine'])) {
     $vaccine_maximum_temperature 
     </div>
     </div>
-    
+    <br>
     
     <div class='row'>
+    
     <h7 class='ml-5 mb-1 font-weight-bold'>Vaccine Description</h7>
     <div class='text-justify border border-secondary rounded mx-5 p-2 mb-3' style='overflow: auto;'>
     <h7> $vaccine_description </h7>

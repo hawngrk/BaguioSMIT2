@@ -65,7 +65,7 @@ $barangay_id = $accountDetails['barangay_id'];
                 <img src="../img/logoo.png" style="width: 104%; margin-bottom:-19%; margin-top:-5%;" alt="Baguio Logo">
             </div>
         </div>
-
+        <br>
         <ul class="list-unstyled components">
             <hr>
             <?php
@@ -197,7 +197,7 @@ $barangay_id = $accountDetails['barangay_id'];
 <!--                    </div>-->
 <!--                </div>-->
                 <div>
-                    <button id="confirmationNotif" onclick="confirmSending(<?php echo"$barangay_id" ?>)">
+                    <button class="btn btn-success " id="confirmationNotif" onclick="confirmSending(<?php echo"$barangay_id" ?>)">
                         Send<br>
                         Confirmation
                         <br>Notification

@@ -43,7 +43,7 @@
                 <img src="../img/logoo.png" style="width: 104%; margin-bottom:-19%; margin-top:-5%;" alt="Baguio Logo">
                 </div>
             </div>
-
+            <br>
             <ul class="list-unstyled components">
                 <hr>
                 <h4 id="headingNav1">Monitoring</h4>
