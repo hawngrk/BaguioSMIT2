@@ -268,14 +268,50 @@ if (isset($_POST['patientId'])) {
     echo "      
                 <img style='width:150px;' src='../img/SMIT+.png' alt='Baguio Logo'><br>
                 
-                <h1> REGISTERED <i class='far fa-check-circle' style='color: green'></i></h1><br><br>
+                <h1> <center>REGISTERED <i class='far fa-check-circle' style='color: green'></i></center></h1><br><br>
                 
-                <h5><b>Full Name: </b> $name</h5><br>
-                <h5><b>Gender: </b> $gender</h5><br>
-                <h5><b>Age: </b> $age</h5><br>
-                <h5><b>Contact Number: </b> $contact</h5><br>
-                <h5><b>Occupation: </b> $pOccupation</h5><br>
-                <h5><b>Priority Group: </b> $group</h5><br>
+                 <div class='border border-dark rounded p-2 m-1'>
+                <div class='col'>
+                    <h4 class='ml-2'> Personal Information </h4>
+                </div>
+                <div class='row ml-5'>
+                <div class='col'>
+                <h7 class='font-weight-bold'> Complete Name: </h7><br>
+                <h7> $name </h7>
+                </div> 
+                <div class='col'>
+                <h7 class='font-weight-bold'> Gender: </h7><br>
+                <h7> $gender </h7>
+                </div>
+                <div class='col'>
+                <h7 class='font-weight-bold'> Age: </h7><br>
+                <h7> $age </h7>
+                </div>
+                </div>
+                <br>
+                <br>
+                
+                <div class='row ml-5 mt-2'>
+                <div class='col'>
+                <h7 class='font-weight-bold'> Contact Number </h7><br>
+                <h7 class='ml-2'> $contact </h7>
+                </div>
+                <div class='col'>
+                <h7 class='font-weight-bold'> Occupation </h7><br>
+                <h7> $pOccupation </h7>
+                </div>
+                </div>
+ 
+                <br>
+                <div class='col'>
+                <h4 class='ml-2'> Category Information </h4>
+                </div>
+                <div class='row ml-5'>
+                <div class='col'>
+                <h7 class='font-weight-bold'> Priority Group: </h7><br>
+                <h7> $group </h7>
+                </div>
+                </div>
                 
                 <button id='postVac' class='btn btn-success' type='submit' style='float: right' onclick='queuePatient($patId)'>Confirm Registration</button>";
 
