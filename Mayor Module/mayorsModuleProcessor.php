@@ -12,6 +12,7 @@ if (isset($_POST['empDeets'])){
     $stmt->bind_result($empID, $empFName, $empLName, $empMName, $empSuffix, $empRole, $brgyID, $empContactNumber, $empAccID,  $empNumID, $empUserName, $empPW, $empType, $empPic, $disabled);
     $stmt->fetch();
     $stmt->close();
+
     echo "<h4> $empFName $empMName $empLName </h4>
         <hr>
         <div class='row mayorsCnt'>
@@ -30,26 +31,25 @@ if (isset($_POST['empDeets'])){
                 </div>
             </div>
             
-        </div>
+        </div>";
+    echo "
         <div class='row'>
         <div class='col-12'>
-            <div class='tablescroll4'>
-            <table class='table table-row table-hover tableModal'>
+            <div class='tablescroll1'>
+            <table class='table table-row table-hover'>
             <thead class='tableHeader'>
             <tr class='tableCenterCont'>
+                <th scope='col'> Log Entry Date </th>
                 <th scope='col'> Log Type </th>
                 <th scope='col'> Log Description </th>
             </tr>
-            </thead>
-            <tr class='tableCenterCont'>
-            <td>Log Type 1</td>
-            <td>Log Description 1</td>
+            </thead>";
+    getEmpLogs($empModal);
+    echo "
             </tr>
             </table>
             </div>
         </div>
-            
-            
         </div>
         ";
 }
@@ -225,6 +225,34 @@ if (isset($_POST['sort'])) {
                 <td> $logDescription</td>
               </tr>";
     }
+}
+
+function getEmpLogs($empID) {
+    require('../includes/database.php');
+    $query = 
+    "SELECT
+        activity_logs.log_entry_date,
+        activity_logs.log_type,
+        activity_logs.log_description
+    FROM
+        activity_logs
+    WHERE
+        activity_logs.employee_id = $empID;
+    ";
+    $stmt = $database->stmt_init();
+    $stmt->prepare($query);
+    $stmt->execute();
+    $stmt->bind_result($date, $type, $desc);
+
+    while($stmt->fetch()) {
+        echo
+        "<tr class='tableCenterCont'>
+        <td>$date</td>
+        <td>$type</td>
+        <td>$desc</td>
+        </tr>";
+    }
+
 }
 
 ?>
