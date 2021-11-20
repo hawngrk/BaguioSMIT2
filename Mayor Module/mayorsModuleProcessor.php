@@ -16,26 +16,24 @@ if (isset($_POST['empDeets'])){
     echo "<h4> $empFName $empMName $empLName </h4>
         <hr>
         <div class='row mayorsCnt'>
-            <div class='col-6'>
+            <div class='col-8'>
                 <div class='container'>
                     <dl class='row'>
-                         <dt class='col-sm-5'>Username:</dt>
-                         <dd class='col-sm-7'>$empUserName</dd>
-                         <dt class='col-sm-5'>Employee Role:</dt>
-                         <dd class='col-sm-7'>$empRole</dd> 
-                         <dt class='col-sm-5'>Contact Number:</dt>
-                         <dd class='col-sm-7'>$empContactNumber</dd>
-                         <dt class='col-sm-5'>Account Type:</dt>
-                         <dd class='col-sm-7'>$empType</dd>
+                         <dt class='col-6'>Username:</dt>
+                         <dd class='col-6'>$empUserName</dd>
+                         <dt class='col-6'>Employee Role:</dt>
+                         <dd class='col-6'>$empRole</dd> 
+                         <dt class='col-6'>Contact Number:</dt>
+                         <dd class='col-6'>$empContactNumber</dd>
+                         <dt class='col-6'>Account Type:</dt>
+                         <dd class='col-6'>$empType</dd>
                     </dl>
                 </div>
             </div>
             
         </div>";
     echo "
-        <div class='row'>
-        <div class='col-12'>
-            <div class='tablescroll1'>
+        <div class='tableScroll3 my-2 border border-dark rounded'>
             <table class='table table-row table-hover'>
             <thead class='tableHeader'>
             <tr class='tableCenterCont'>
@@ -43,13 +41,12 @@ if (isset($_POST['empDeets'])){
                 <th scope='col'> Log Type </th>
                 <th scope='col'> Log Description </th>
             </tr>
-            </thead>";
+            </thead>
+            ";
     getEmpLogs($empModal);
     echo "
             </tr>
             </table>
-            </div>
-        </div>
         </div>
         ";
 }
@@ -246,7 +243,7 @@ function getEmpLogs($empID) {
 
     while($stmt->fetch()) {
         echo
-        "<tr class='tableCenterCont'>
+        "<tr class='tableCenterCont class='tableScroll3''>
         <td>$date</td>
         <td>$type</td>
         <td>$desc</td>

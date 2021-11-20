@@ -284,10 +284,6 @@ input[type=text]{
     align-content: flex-end;
 }
 
-#postVac {
-    color: #070101 !important;
-}
-
 #tablePadding{
     padding: 2%;
 }
