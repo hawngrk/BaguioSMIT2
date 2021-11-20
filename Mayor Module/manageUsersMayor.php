@@ -1,7 +1,7 @@
-<?php 
-require_once('../includes/sessionHandling.php');
-checkRole("Mayor's Office");
-?>
+<?php //
+//require_once('../includes/sessionHandling.php');
+//checkRole("Mayor's Office");
+//?>
 <!DOCTYPE html>
 <html>
 
@@ -27,6 +27,9 @@ checkRole("Mayor's Office");
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <script src="../javascript/openModal.js"></script>
+    <script src="../javascript/closeModal.js"></script>
 </head>
 
 <body>
@@ -66,18 +69,30 @@ checkRole("Mayor's Office");
 
     <!-- Page Content  -->
     <div id="content">
+        <!--Top Nav-->
+        <div class="navbar navbar-expand-lg navbar-light bg-light shadow-sm p-3 mb-4 rounded-lg">
+            <div class="container-fluid">
+                <div>
+                    <button type="button" class="buttonTop3 float-left"
+                            onclick="openModal('uploadFileModal')"><i
+                                class="fas fa-upload"></i> Upload File
+
+                    </button>
+                    <button type="button" onclick="openModal('addEmployeeModal')"
+                            class="buttonTop3"><i class="fas fa-user-plus"></i> Add Employee Account
+                    </button>
+                </div>
+                <button type="button" class="btn btn-warning shadow-sm buttonTop3 float-right"
+                        onclick="openModal('disabledAccountsModal')"><i class="fas fa-inbox fa-lg"> </i> Disabled Accounts
+                </button>
+            </div>
+        </div>
 
         <!-- Table Part -->
         <div class="tableContainer">
             <div class="table-title">
                 <div class="row">
-                <button type="button" class="buttonTop3 float-left"
-                            onclick="openModal('uploadFileModal')"><i
-                                class="fas fa-upload"></i> Upload File
 
-                    </button>
-                <button type="button" onclick="openModal('addPatientModal')" class="buttonTop3"><svg class="svg-inline--fa fa-user-plus fa-w-20" aria-hidden="true" data-prefix="fas" data-icon="user-plus" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" data-fa-i2svg=""><path fill="currentColor" d="M624 208h-64v-64c0-8.8-7.2-16-16-16h-32c-8.8 0-16 7.2-16 16v64h-64c-8.8 0-16 7.2-16 16v32c0 8.8 7.2 16 16 16h64v64c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16v-64h64c8.8 0 16-7.2 16-16v-32c0-8.8-7.2-16-16-16zm-400 48c70.7 0 128-57.3 128-128S294.7 0 224 0 96 57.3 96 128s57.3 128 128 128zm89.6 32h-16.7c-22.2 10.2-46.9 16-72.9 16s-50.6-5.8-72.9-16h-16.7C60.2 288 0 348.2 0 422.4V464c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48v-41.6c0-74.2-60.2-134.4-134.4-134.4z"></path></svg><!-- <i class="fas fa-user-plus" aria-hidden="true"></i> --> Add User Account
-                    </button>
                 <div class="col">
 
                         <div class="input-group">
@@ -153,6 +168,183 @@ checkRole("Mayor's Office");
 
         </div>
     </div>
+
+    <!--Modal for uploading-->
+    <div id="uploadFileModal" class="modal-window">
+        <div class="content-modal">
+            <div class="modal-header">
+                <h4 class="modal-title">Upload files</h4>
+                <button type="button" onclick="closeModal('uploadFileModal')" class="close"><i
+                            class='fas fa-window-close'></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="row" id="upload-content">
+                    <div class="col">
+                        <form id="uploadForm">
+                            <div class="col-md-12 text-center form-group">
+                                <button class="shadow-sm" id="iconBrowse"
+                                        onclick="document.getElementById('fileUpload').click()">
+                                    <label for="fileUpload">Browse files
+                                </button>
+                                <br>
+                                <input id="fileUpload" type="file" style="display: none"
+                                       onchange="getUploadedFiles(this)" multiple/>
+                                <h6><br> Upload a list of patients (.csv) </h6>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="col">
+                        <h6> Uploaded Files </h6>
+                        <div id="uploadedFiles">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="uploadFileCancelBtn" class="btn btn-danger"
+                        onclick="closeModal('uploadFileModal')">
+                    Cancel
+                </button>
+                <button type="button" id="uploadFileConfirmBtn" class="btn btn-success"
+                        name="patientUploadFile" onclick="uploadFiles()">Add
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!--Modal for adding personnel-->
+    <div id="addEmployeeModal" class="modal-window">
+        <div class="content-modal">
+            <div class="modal-header">
+                <h4 class="modal-title">Add Employee Account</h4>
+                <button type="button" onclick="closeModal('addEmployeeModal')" class="close"><i
+                            class='fas fa-window-close'></i></button>
+            </div>
+            <div class="modal-body">
+                <form class="addEmployeeForm">
+                    <div class="employeeInfo">
+                        <h5> Employee Information </h5>
+                        <br>
+                        <div class="row ml-5">
+                            <div class="col-4">
+                                <label class="required" for="lname">Last Name:</label>
+                            </div>
+
+                            <div class="col">
+                                <input type="text3" id="lname" class='input form-control' name="lname"
+                                       placeholder="Input last name">
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row ml-5">
+                            <div class="col-4">
+                                <label class="required" for="fname">First Name:</label>
+                            </div>
+
+                            <div class="col">
+                                <input type="text3" id="fname" class='input form-control' name="fname"
+                                       placeholder="Input first name">
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row ml-5">
+                            <div class="col-4">
+                                <label class="required" for="mname">Middle Name:</label>
+                            </div>
+
+                            <div class="col">
+                                <input type="text3" id="mname" class='input form-control' name="mname"
+                                       placeholder="Input middle name">
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row ml-5">
+                            <div class="col-4">
+                                <label class="label1 required" for="suffix">Suffix: </label><br>
+                            </div>
+
+                            <div class="col">
+                                <select id="suffix" name="suffix" class="form-select form-select-lg">
+                                    <option value=""> Select Suffix...</option>
+                                    <option value="none">None</option>
+                                    <option value="sr">Sr</option>
+                                    <option value="jr">Jr</option>
+                                    <option value="I">I</option>
+                                    <option value="II">II</option>
+                                    <option value="III">III</option>
+                                </select>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row ml-5">
+                            <div class="col-4">
+                                <label class="required" for="contactNum">Contact Number:</label>
+                            </div>
+
+                            <div class="col">
+                                <input type="text3" id="contactNum" class='input form-control' name="contactNum"
+                                       placeholder="09XX-XXX-XXXX" pattern="09[0-9]{9}">
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row ml-5">
+                            <div class="col-4">
+                                <label class="label1 required" for="role">Account Type: </label><br>
+                            </div>
+
+                            <div class="col">
+                                <select id="role" name="role" class="form-select form-select-lg">
+                                    <option value=""> Select account type...</option>
+                                    <option value="Employee">Employee</option>
+                                    <option value="Admin">Admin</option>
+                                </select>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row ml-5">
+                            <div class="col-4">
+                                <label class="label1 required" for="role">Role: </label><br>
+                            </div>
+
+                            <div class="col">
+                                <select id="role" name="role" class="form-select form-select-lg" onchange="showBarangayInput(this);">
+                                    <option value=""> Select your Role...</option>
+                                    <option value="Barangay">Barangay</option>
+                                    <option value="HSO">HSO</option>
+                                    <option value="Monitoring">Monitoring</option>
+                                    <option value="Screening">Screening</option>
+                                    <option value="Mayor's Office">Mayor's Office</option>
+                                    <option value="EIR">EIR</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="button" onclick="closeModal('addEmployeeModal')"
+                               class="btn btn-danger shadow-sm" value="Cancel">
+                        <input type="submit" class="btn btn-success shadow-sm" value="Add">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!--Disabled Modal-->
+    <div id="disabledAccountsModal" class="modal-window">
+        <div class="content-modal">
+            <div class="modal-header">
+                <h4 class="modal-title">Disabled Employee Accounts</h4>
+                <button type="button" class="close" data-dismiss="modal" onclick="closeModal('disabledAccountsModal')">
+                    <i class='fas fa-window-close'></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
 </body>
 </html>
 

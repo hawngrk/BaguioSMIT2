@@ -226,7 +226,7 @@ if (isset($_POST['sort'])) {
 
 function getEmpLogs($empID) {
     require('../includes/database.php');
-    $query = 
+    $query =
     "SELECT
         activity_logs.log_entry_date,
         activity_logs.log_type,
@@ -251,8 +251,6 @@ function getEmpLogs($empID) {
     }
 
 }
-
-?>
 
 
 
