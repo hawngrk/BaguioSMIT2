@@ -291,32 +291,56 @@ if (isset($_POST['pulse'])) {
         echo $th->getMessage();
     }
 }
+
+if (isset($_POST['allergy'])) {
+    $allergy = $_POST['allergy'];
+    $hypertension = $_POST['hypertension'];
+    $heart = $_POST['heart'];
+    $kidney = $_POST['kidney'];    
+    $diabetes = $_POST['diabetes'];
+    $bronchial = $_POST['bronchial'];
+    $immunodeficiency = $_POST['immunodeficiency'];
+    $cancer = $_POST['cancer'];
+    $otherCommorbidity = $_POST['other$otherCommorbidity'];
+    $id = $_POST['id'];
+
+    $query = 
+    "UPDATE medical_background SET allergy_to_vaccine = $allergy, hypertension = $hypertension, heart_disease = $heart, kidney_disease = $kidney, diabetes_mellitus = $diabetes, bronchial_asthma = $bronchial, immunodeficiency = $immunodeficiency, cancer = $cancer, other_commorbidity = $otherCommorbidity WHERE medical_background.patient_id = $id
+    ";
+
+    $stmt = $database->stmt_init();
+    $stmt->prepare($query);
+    $stmt->execute();
+}
+
+//Returns checkbox based on the patient's commorbidity
 function checkbox($commorbidity, $commorbidityName) {
     $ls = trim(strtolower($commorbidityName));
     if($commorbidity == 0) {
         return "
-        <input type='checkbox' name='$ls' value='1'>
+        <input type='checkbox' id=$ls name='$ls' value='1'>
         <label for='$ls'>$commorbidityName</label><br>
         ";
     } else {
         return "
-        <input type='checkbox' name='$ls' value='1' checked>
+        <input type='checkbox' id=$ls name='$ls' value='1' checked>
         <label for='$ls'>$commorbidityName</label><br>
         ";
     }
 }
 
+//Returns checkbox based on the patient's allergy
 function checkAllergy($allergy) {
     if($allergy == 0) {
         return "
         <div class='row'>
         <div class='col-2'>
-        <input type='checkbox' name='allergy' value='1' onclick='allergy(this)'>
+        <input type='checkbox' id='allergy1' name='allergy' value='1' onclick='allergy(this)'>
         <label for='yes'>Yes</label><br>
         </div>
 
         <div class='col-2'>
-        <input type='checkbox' name='allergy' value='0' onclick='allergy(this)' checked>
+        <input type='checkbox' id='allergy2' name='allergy' value='0' onclick='allergy(this)' checked>
         <label for='no'>No</label><br>
         </div>
         </div>
@@ -325,12 +349,12 @@ function checkAllergy($allergy) {
         return "
         <div class='row'>
         <div class='col-2'>
-        <input type='checkbox' name='allergy' value='1' onclick='allergy(this)' checked>
+        <input type='checkbox' id='allergy1' name='allergy' value='1' onclick='allergy(this)' checked>
         <label for='yes'>Yes</label><br>
         </div>
 
         <div class='col-2'>
-        <input type='checkbox' name='allergy' value='0' onclick='allergy(this)'>
+        <input type='checkbox' id='allergy2' name='allergy' value='0' onclick='allergy(this)'>
         <label for='no'>No</label><br>
         </div>
         </div>
@@ -338,11 +362,13 @@ function checkAllergy($allergy) {
     }
 }
 
+//Creates an input field for other commorbidity
 function otherCommorbidity($commorbidity) {
     return "<label for='other'>Other Commorbidity: </label>
-    <input type='text' name='other' value=$commorbidity><br>";
+    <input id='otherCommorbidity' type='text' name='other' value=$commorbidity><br>";
 }
 
+//Fetches the vaccination details of a specific patient
 function sortPatientVaccineDetails($patientID) {
     require('../includes/database.php');
     $query = 

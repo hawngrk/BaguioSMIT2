@@ -221,7 +221,6 @@ checkRole('Screening');
     function clickModalRow(patientId) {
         openModal('preVacView');
 
-
         // Fetching Data from the Database Code
         $.ajax({
             url: 'screeningProcessor.php',
@@ -252,6 +251,7 @@ checkRole('Screening');
             denyButtonText: `No`,
         }).then((result) => {
             if (result.isConfirmed) {
+                editMedicalBackground(id);
                 $.ajax({
                     url: 'screeningProcessor.php',
                     type: 'POST',
@@ -263,7 +263,7 @@ checkRole('Screening');
                 });
                 Swal.fire('Saved!', '', 'success');
             } else if (result.isDenied) {
-                Swal.fire('Changes are not saved', '', 'info')
+                Swal.fire('Changes are not saved', '', 'info');
             }
         })
     }
@@ -274,6 +274,39 @@ checkRole('Screening');
             if (item !== checkbox) item.checked = false;
         });
     }
+
+    //Change unchecked commorbidity to 0
+    function verifyCommorbidity(commorbidity) {
+        return !commorbidity ? 0 : 1;
+    }
+
+    function editMedicalBackground(id) {
+        //Commorbidities and allergy
+        var allergyCheckBox1 = verifyCommorbidity($('#allergy1:checked').val());
+        var hypertension = verifyCommorbidity($('#hypertension:checked').val());
+        var heart = verifyCommorbidity($('#heart:checked').val());
+        var kidney = verifyCommorbidity($('#kidney:checked').val());
+        var diabetes = verifyCommorbidity($('#diabetes:checked').val());
+        var bronchial = verifyCommorbidity($('#bronchial:checked').val());
+        var immunodeficiency = verifyCommorbidity($('#immunodeficiency:checked').val());
+        var cancer = verifyCommorbidity($('#cancer:checked').val());
+        var otherCommorbidity = document.getElementById('otherCommorbidity').value;
+        
+        $.ajax({
+            url: 'screeningProcessor.php',
+            type: 'POST',
+            data: {'allergy' : allergy, 'hypertension' : hypertension , 'heart' : heart, 'kidney' : kidney, 'diabetes' : diabetes, 'bronchial' : bronchial, 'immunodeficiency' : immunodeficiency, 'cancer' : cancer, 'otherCommorbidity' : otherCommorbidity, 'id' : id},
+            success: function(preVat) {
+                console.log(preVat)
+            }
+        });
+    }
+
+    //Change unchecked commorbidity to 0
+    function verifyCommorbidity(commorbidity) {
+        return !commorbidity ? 0 : 1;
+    }
+
 </script>
 <!--Logout script-->
 <script src="../javascript/logout.js"></script>
