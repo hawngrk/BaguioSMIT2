@@ -60,12 +60,25 @@ if (isset($_POST['modalRes'])) {
         patient_vitals.pre_oxygen_saturation_2nd_dose,
         patient_vitals.pre_vital_bpDiastolic_2nd_dose,
         patient_vitals.pre_vital_bpSystolic_2nd_dose,
+        medical_background.allergy_to_vaccine,
+        medical_background.hypertension,
+        medical_background.heart_disease,
+        medical_background.kidney_disease,
+        medical_background.diabetes_mellitus,
+        medical_background.bronchial_asthma,
+        medical_background.immunodeficiency,
+        medical_background.cancer,
+        medical_background.other_commorbidity,
     CONCAT(
         patient_details.patient_house_address, ' ', barangay.barangay_name, ' ', barangay.city, ' ', barangay.province 
     ) AS full_address,
         priority_groups.priority_group
     FROM
         patient
+    JOIN
+        medical_background
+    ON  
+        medical_background.patient_id = $patientID
     JOIN
         patient_vitals
     ON
@@ -94,6 +107,17 @@ if (isset($_POST['modalRes'])) {
     $fullName = $patientDetails['patient_full_name'];
     $fullAddress = $patientDetails['full_address'];
     $category = $patientDetails['priority_group'];
+
+    //Medical Information
+    $allergyToVaccine = checkAllergy($patientDetails['allergy_to_vaccine']);
+    $hypertension = checkbox($patientDetails['hypertension'], "Hypertension");
+    $heartDisease = checkbox($patientDetails['heart_disease'], "Heart Disease");
+    $kidneyDisease = checkbox($patientDetails['kidney_disease'], "Kidney Disease");
+    $diabetesMellitus = checkbox($patientDetails['diabetes_mellitus'], "Diabetes Mellitus");
+    $bronchialAsthma = checkbox($patientDetails['bronchial_asthma'], "Bronchial Asthma");
+    $immunodeficiency = checkbox($patientDetails['immunodeficiency'], "immunodeficiency");
+    $cancer = checkbox($patientDetails['cancer'], "cancer");
+    $otherCommorbidity = otherCommorbidity($patientDetails['other_commorbidity']);
 
     //Pre vital information
     $pulseRate1st = trim($patientDetails['pre_vital_pulse_rate_1st_dose']) != "" ? $patientDetails['pre_vital_pulse_rate_1st_dose'] : 'N/A';
@@ -137,7 +161,23 @@ if (isset($_POST['modalRes'])) {
             <h4>Address: </h4><p>$fullAddress<p>
             <hr>
             <h4>Category:</h4><p>$category</p>
-            
+            <hr>
+            <h4>Medical Background</h4>
+            <h6>Allergies:</h6><br>
+            $allergyToVaccine
+            <h6>Commorbidities:</h6><br>
+            <div class='row'>
+                <div class='col' style='columns: 2;'> 
+                $hypertension
+                $heartDisease
+                $kidneyDisease
+                $diabetesMellitus
+                $bronchialAsthma
+                $immunodeficiency
+                $cancer
+                $otherCommorbidity 
+                </div>
+            </div>
         </div>
         <div class='col-md-6'>
             <h4>Pre-Vaccine Vitals:</h4>
@@ -297,4 +337,55 @@ WHERE
     }
 
     return $vaccineDetails;
+}
+
+function checkbox($commorbidity, $commorbidityName) {
+    $ls = trim(strtolower($commorbidityName));
+    if($commorbidity == 0) {
+        return "
+        <input type='checkbox' name='$ls' value='1'>
+        <label for='$ls'>$commorbidityName</label><br>
+        ";
+    } else {
+        return "
+        <input type='checkbox' name='$ls' value='1' checked>
+        <label for='$ls'>$commorbidityName</label><br>
+        ";
+    }
+}
+
+function checkAllergy($allergy) {
+    if($allergy == 0) {
+        return "
+        <div class='row'>
+        <div class='col-2'>
+        <input type='checkbox' name='allergy' value='1' onclick='allergy(this)'>
+        <label for='yes'>Yes</label><br>
+        </div>
+        <div class='col-2'>
+        <input type='checkbox' name='allergy' value='0' onclick='allergy(this)' checked>
+        <label for='no'>No</label><br>
+        </div>
+        </div>
+        ";
+    } else {
+        return 
+        "
+        <div class='row'>
+        <div class='col-2'>
+        <input type='checkbox' name='allergy' value='1' onclick='allergy(this)' checked>
+        <label for='yes'>Yes</label><br>
+        </div>
+        <div class='col-2'>
+        <input type='checkbox' name='allergy' value='0' onclick='allergy(this)'>
+        <label for='no'>No</label><br>
+        </div>
+        </div>
+        ";
+    }
+}
+
+function otherCommorbidity($commorbidity) {
+        return "<label for='other'>Other Commorbidity: </label>
+        <input type='text' name='other' value=$commorbidity><br>";
 }
