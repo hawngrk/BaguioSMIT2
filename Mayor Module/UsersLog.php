@@ -108,7 +108,7 @@ checkRole("Mayor's Office");
                 </div>
 
             </div>
-            <div class="tablePatient shadow tableScroll2">
+            <div class="tablePatient shadow tableScroll4">
                 <table class="table table-row table-hover mayorTable tableMonitoring" id="employeesTable">
                     <thead>
                     <tr class="tableCenterCont">
