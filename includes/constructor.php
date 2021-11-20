@@ -325,7 +325,7 @@ class patientDetails{
 
     public function getCivilStat() 
     {
-        return $this->$civilStat;
+        return $this->civilStat;
     }
 
     public function getContact()

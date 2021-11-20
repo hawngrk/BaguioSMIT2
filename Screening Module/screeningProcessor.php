@@ -122,32 +122,30 @@ if (isset($_POST['modalScreening'])) {
     $otherCommorbidity = otherCommorbidity($patientDetails['other_commorbidity']);
 
     //Pre vital information
-    $pulseRate1st = $patientDetails['pre_vital_pulse_rate_1st_dose'];
-    $tempRate1st = $patientDetails['pre_vital_temp_rate_1st_dose'];
-    $oxygen1st = $patientDetails['pre_oxygen_saturation_1st_dose'];
-    $bloodPressure1st = $patientDetails['pre_vital_bpDiastolic_1st_dose']."/".$patientDetails['pre_vital_bpSystolic_1st_dose'];
+    $pulseRate1st = trim($patientDetails['pre_vital_pulse_rate_1st_dose']) != "" ? $patientDetails['pre_vital_pulse_rate_1st_dose'] : 'N/A';
+    $tempRate1st = trim($patientDetails['pre_vital_temp_rate_1st_dose']) != "" ? $patientDetails['pre_vital_temp_rate_1st_dose'] : 'N/A';
+    $oxygen1st = trim($patientDetails['pre_oxygen_saturation_1st_dose']) != "" ? $patientDetails['pre_oxygen_saturation_1st_dose'] : 'N/A';
+    $bloodPressure1st = trim($patientDetails['pre_vital_bpDiastolic_1st_dose']) != "" ? $patientDetails['pre_vital_bpDiastolic_1st_dose']."/".$patientDetails['pre_vital_bpSystolic_1st_dose'] : 'N/A';
     
-    $pulseRate2nd = $patientDetails['pre_vital_pulse_rate_2nd_dose'];
-    $tempRate2nd = $patientDetails['pre_vital_temp_rate_2nd_dose'];
-    $oxygen2nd = $patientDetails['pre_oxygen_saturation_2nd_dose'];
-    $bloodPressure2nd = $patientDetails['pre_vital_bpDiastolic_2nd_dose']."/".$patientDetails['pre_vital_bpSystolic_2nd_dose'];
+    $pulseRate2nd = trim($patientDetails['pre_vital_pulse_rate_2nd_dose']) != "" ? $patientDetails['pre_vital_pulse_rate_2nd_dose'] : 'N/A';
+    $tempRate2nd = trim($patientDetails['pre_vital_temp_rate_2nd_dose']) != "" ? $patientDetails['pre_vital_temp_rate_2nd_dose'] : 'N/A';
+    $oxygen2nd = trim($patientDetails['pre_oxygen_saturation_2nd_dose']) != "" ? $patientDetails['pre_oxygen_saturation_2nd_dose'] : 'N/A';
+    $bloodPressure2nd = trim($patientDetails['pre_vital_bpDiastolic_2nd_dose']) != "" ? $patientDetails['pre_vital_bpDiastolic_2nd_dose']."/".$patientDetails['pre_vital_bpSystolic_2nd_dose'] : 'N/A';
 
     $sortPatientVaccine = sortPatientVaccineDetails($patientID);
         
-   
-
     //Vaccination Information
-    $sched1st = $sortPatientVaccine[0]['vaccDate'];
-    $site1st = $sortPatientVaccine[0]['location'];
-    $vaccineN1st = $sortPatientVaccine[0]['vaccName'];
-    $vaccineM1st = $sortPatientVaccine[0]['vaccManufacturer'];
-    $lot1st = $sortPatientVaccine[0]['lotID'];
+    $sched1st = $sortPatientVaccine[0] != "" ? $sortPatientVaccine[0]['vaccDate']: 'N/A';
+    $site1st = $sortPatientVaccine[0] != "" ? $sortPatientVaccine[0]['location'] : 'N/A';
+    $vaccineN1st = $sortPatientVaccine[0] != "" ? $sortPatientVaccine[0]['vaccName'] : 'N/A';
+    $vaccineM1st = $sortPatientVaccine[0] != "" ? $sortPatientVaccine[0]['vaccManufacturer'] : '' ;
+    $lot1st = $sortPatientVaccine[0] != "" ? $sortPatientVaccine[0]['lotID'] : 'N/A';
 
-    $sched2nd = $sortPatientVaccine[1]['vaccDate'];
-    $site2nd = $sortPatientVaccine[1]['location'];
-    $vaccineN2nd = $sortPatientVaccine[1]['vaccName'];
-    $vaccineM2nd = $sortPatientVaccine[1]['vaccManufacturer'];
-    $lot2nd = $sortPatientVaccine[1]['lotID'];
+    $sched2nd = $sortPatientVaccine[1] != "" ? $sortPatientVaccine[1]['vaccDate']: 'N/A';
+    $site2nd = $sortPatientVaccine[1] != "" ? $sortPatientVaccine[1]['location'] : 'N/A';
+    $vaccineN2nd = $sortPatientVaccine[1] != "" ? $sortPatientVaccine[1]['vaccName'] : 'N/A';
+    $vaccineM2nd = $sortPatientVaccine[1] != "" ? $sortPatientVaccine[1]['vaccManufacturer'] : '' ;
+    $lot2nd = $sortPatientVaccine[1] != "" ? $sortPatientVaccine[1]['lotID'] : 'N/A';
 
     $vaccineStatus = 'Not vaccinated';
 
@@ -378,7 +376,6 @@ ON
     vaccine_information.vaccine_id = vaccine_lot.vaccine_id
 WHERE
     patient_drive.patient_id = $patientID
-
     ";
     $stmt = $database->stmt_init();
     $stmt->prepare($query);
@@ -389,5 +386,11 @@ WHERE
     while($stmt->fetch()){
         array_push($vaccineDetails ,array('lotID' => $vaccine_lot_id, 'vaccDate' => $vaccination_date, 'location' => $location, 'vaccName' => $vaccine_name, 'vaccManufacturer' => $vaccine_manufacturer));
     }
+    
+    if (empty($vaccineDetails)) {
+        $vaccineDetails[0] = "";
+        $vaccineDetails[1] = "";
+    }
+
     return $vaccineDetails;
 }
