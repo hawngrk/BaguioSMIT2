@@ -201,18 +201,18 @@ if (isset($_POST['modalRes'])) {
             <h4>Post-Vaccine Vitals:</h4>
             <form>
             <strong>Pulse Rate:</strong>
-            <br><input class='textInp' id='pulseR' type='text' placeholder='Enter pulse rate' name='vitals'>
+            <br><input class='textInp' id='pulseR' placeholder='Enter pulse rate' name='vitals'>
             <br>
-            <strong>Temperature:</strong> <br> <input class='textInp' type='text' id='tempR' placeholder='Enter temperature' name='vitals'>
+            <strong>Temperature:</strong> <br> <input class='textInp' id='tempR' placeholder='Enter temperature' name='vitals'>
             <br>
-            <strong>Oxygen Saturation:</strong> <br> <input class='textInp' type='text' id='oxygenSat' placeholder='Enter oxygen saturation' name='vitals'>
+            <strong>Oxygen Saturation:</strong> <br> <input class='textInp'  id='oxygenSat' placeholder='Enter oxygen saturation' name='vitals'>
             <br>
             <br>
             <strong>Blood Pressure (Diastolic/Systolic e.g. 120/80)</strong>
             <br>
-            <strong>Diastolic:</strong> <br><input class='textInp' type='text' placeholder='millimetres of mercury' id='bpRDias' name='vitals'>
+            <strong>Diastolic:</strong> <br><input class='textInp' placeholder='millimetres of mercury' id='bpRDias' name='vitals'>
             <br>
-            <strong>Systolic:</strong> <br><input class='textInp' type='text' placeholder='millimetres of mercury' id='bpRSys' name='vitals'>
+            <strong>Systolic:</strong> <br><input class='textInp' placeholder='millimetres of mercury' id='bpRSys' name='vitals'>
             </form>
         </div>
     </div>
@@ -343,12 +343,12 @@ function checkbox($commorbidity, $commorbidityName) {
     $ls = trim(strtolower($commorbidityName));
     if($commorbidity == 0) {
         return "
-        <input type='checkbox' name='$ls' value='1'>
+        <input type='checkbox' name='$ls' value='1' disabled>
         <label for='$ls'>$commorbidityName</label><br>
         ";
     } else {
         return "
-        <input type='checkbox' name='$ls' value='1' checked>
+        <input type='checkbox' name='$ls' value='1' checked disabled>
         <label for='$ls'>$commorbidityName</label><br>
         ";
     }
@@ -359,11 +359,11 @@ function checkAllergy($allergy) {
         return "
         <div class='row'>
         <div class='col-2'>
-        <input type='checkbox' name='allergy' value='1' onclick='allergy(this)'>
+        <input type='checkbox' name='allergy' value='1' onclick='allergy(this)' disabled>
         <label for='yes'>Yes</label><br>
         </div>
         <div class='col-2'>
-        <input type='checkbox' name='allergy' value='0' onclick='allergy(this)' checked>
+        <input type='checkbox' name='allergy' value='0' onclick='allergy(this)' checked disabled>
         <label for='no'>No</label><br>
         </div>
         </div>
@@ -373,11 +373,11 @@ function checkAllergy($allergy) {
         "
         <div class='row'>
         <div class='col-2'>
-        <input type='checkbox' name='allergy' value='1' onclick='allergy(this)' checked>
+        <input type='checkbox' name='allergy' value='1' onclick='allergy(this)' checked disabled>
         <label for='yes'>Yes</label><br>
         </div>
         <div class='col-2'>
-        <input type='checkbox' name='allergy' value='0' onclick='allergy(this)'>
+        <input type='checkbox' name='allergy' value='0' onclick='allergy(this)' disabled>
         <label for='no'>No</label><br>
         </div>
         </div>
@@ -387,5 +387,5 @@ function checkAllergy($allergy) {
 
 function otherCommorbidity($commorbidity) {
         return "<label for='other'>Other Commorbidity: </label>
-        <input type='text' name='other' value=$commorbidity><br>";
+        <input type='text' name='other' value=$commorbidity disabled><br>";
 }

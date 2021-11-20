@@ -204,18 +204,18 @@ if (isset($_POST['modalScreening'])) {
     <h4>Pre-Vaccine Vitals:</h4>
     <form>
     <strong>Pulse Rate:</strong>
-    <br><input class='textInp' id='pulseR' type='text' placeholder='Enter pulse rate' name='vitals'>
+    <br><input class='textInp' id='pulseR' placeholder='Enter pulse rate' name='vitals'>
     <br>
-    <strong>Temperature:</strong> <br> <input class='textInp' type='text' id='tempR' placeholder='Enter temperature' name='vitals'>
+    <strong>Temperature:</strong> <br> <input class='textInp' id='tempR' placeholder='Enter temperature' name='vitals'>
     <br>
-    <strong>Oxygen Saturation:</strong> <br> <input class='textInp' type='text' id='oxygenSat' placeholder='Enter oxygen saturation' name='vitals'>
+    <strong>Oxygen Saturation:</strong> <br> <input class='textInp' id='oxygenSat' placeholder='Enter oxygen saturation' name='vitals'>
     <br>
     <br>
     <strong>Blood Pressure (Diastolic/Systolic e.g. 120/80)</strong>
     <br>
-    <strong>Diastolic:</strong> <br><input class='textInp' type='text' placeholder='millimetres of mercury' id='bpRDias' name='vitals'>
+    <strong>Diastolic:</strong> <br><input class='textInp' placeholder='millimetres of mercury' id='bpRDias' name='vitals'>
     <br>
-    <strong>Systolic:</strong> <br><input class='textInp' type='text' placeholder='millimetres of mercury' id='bpRSys' name='vitals'>
+    <strong>Systolic:</strong> <br><input class='textInp' placeholder='millimetres of mercury' id='bpRSys' name='vitals'>
     </form>
     </div>
     </div>
