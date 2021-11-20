@@ -50,7 +50,7 @@ checkRole('HSO');
                 <img src="../img/logoo.png" style="width: 104%; margin-bottom:-19%; margin-top:-5%;" alt="Baguio Logo">
             </div>
         </div>
-
+        <br>
         <ul class="list-unstyled components">
             <hr>
             <h4 id="headingNav1"> Health Service Office </h4>
@@ -100,9 +100,12 @@ checkRole('HSO');
             </div>
             <br>
             <div class="row">
-                <div class="dateContainer">
-                    Start Date: <input type="date" id="startDate"  class="w-25">
-                    End Date: <input type="date" id="endDate" class="w-25">
+                <div class="col-3">
+                    Start Date: <input type="date" id="startDate"  class="w-100">
+
+                </div>
+                <div class="col-3">
+                    End Date: <input type="date" id="endDate" class="w-100">
                 </div>
             </div>
             <div class="cardContainer">

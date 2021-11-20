@@ -1,7 +1,7 @@
 <?php
 include_once("../includes/database.php");
-//require_once('../includes/sessionHandling.php');
-//checkRole('HSO');
+require_once('../includes/sessionHandling.php');
+checkRole('HSO');
 ?>
 
 <head>
@@ -112,7 +112,7 @@ include_once("../includes/database.php");
                             <h5><center> Total Reports </center></h5>
                         </div>
                         <div class="card-body">
-                            <center> 5 </center>
+                            <h6><center> 5 </center></h6>
                         </div>
                     </div>
                 </div>
@@ -128,7 +128,7 @@ include_once("../includes/database.php");
                 </div>
                 <div class="col">
                     <div class="card text-white mb-3 shadow" id="totalVerified">
-                        <div class="card-header">
+                        <div class="card-header  my-auto">
                             <h5><center> Total Verified Reports </center></h5>
                         </div>
                         <div class="card-body">
@@ -138,7 +138,7 @@ include_once("../includes/database.php");
                 </div>
                 <div class="col">
                     <div class="card text-white mb-3 shadow" id="totalInvalidate">
-                        <div class="card-header">
+                        <div class="card-header  my-auto">
                             <h5><center> Total Invalidated Reports </center></h5>
                         </div>
                         <div class="card-body">
