@@ -5,49 +5,6 @@ $accountDetails = $_SESSION['account'];
 $employeeID = $accountDetails['empId'];
 $employeeRole = $accountDetails['role'];
 
-if (isset($_POST['search'])) {
-    require("../includes/database.php");
-    $searchPatient = $_POST['search'];
-    if ($searchPatient == "") {
-        $querySearchPatient = "SELECT patient.patient_id, CONCAT(patient_details.patient_last_name,', ',patient_details.patient_first_name,' ',COALESCE(patient_details.patient_middle_name,''),' ',COALESCE(patient_details.patient_suffix,'')) AS full_name, priority_groups.priority_group, CONCAT(patient_details.patient_house_address, ' ', barangay.barangay_name,' ',barangay.city,' ', barangay.province) AS full_address, patient_contact_number FROM patient JOIN patient_details ON patient.patient_id = patient_details.patient_id JOIN barangay ON barangay.barangay_id = patient_details.barangay_id JOIN priority_groups ON priority_groups.priority_group_id = patient_details.priority_group_id WHERE patient_details.Archived = 0;";
-    } else {
-        $querySearchPatient = "SELECT patient.patient_id, CONCAT(patient_details.patient_last_name,', ',patient_details.patient_first_name,' ',COALESCE(patient_details.patient_middle_name,''),' ',COALESCE(patient_details.patient_suffix,'')) AS full_name, priority_groups.priority_group, CONCAT(patient_details.patient_house_address, ' ', barangay.barangay_name,' ',barangay.city,' ', barangay.province) AS full_address, patient_contact_number FROM patient JOIN patient_details ON patient.patient_id = patient_details.patient_id JOIN barangay ON barangay.barangay_id = patient_details.barangay_id JOIN priority_groups ON priority_groups.priority_group_id = patient_details.priority_group_id WHERE patient_details.Archived = 0 AND patient_details.patient_id LIKE '$searchPatient%' OR barangay.barangay_name LIKE '$searchPatient%' OR patient_details.patient_first_name LIKE '$searchPatient%' OR patient_details.patient_last_name LIKE '$searchPatient%';";
-    }
-    echo "
-    <thead>
-            <tr class='tableCenterCont'>
-                <th>ID</th>
-                <th>Patient Name</th>
-                <th>Category</th>
-                <th>Complete Address</th>
-                <th>Contact Number</th>
-                <th>Action</th>
-            </tr>
-            </thead>";
-
-    $stmt = $database->stmt_init();
-    $stmt->prepare($querySearchPatient);
-    $stmt->execute();
-    $stmt->bind_result($patientID, $fullname, $category, $patientAddress, $contactNum);
-
-    while ($stmt->fetch()) {
-        echo "<tr class='tableCenterCont'>
-                <td class='columnName'>$patientID</td>
-                <td class='columnName'>$fullname</td>
-                <td class='columnName'>$category</td>
-                <td class='columnName'>$patientAddress</td>
-                <td class='columnName'>$contactNum</td>
-                <td class='columnName'>
-                <button class='addVitals btn-success btn-sm' type='submit' onclick='clickModalRow($patientID)'>Add Vitals</button>
-                </td>
-                </tr>";
-    }
-}
-
-//filter
-if (isset($_POST['filter'])) {
-    echo "passed";
-}
 
 if (isset($_POST['modalScreening'])) {
     $patientID = $_POST['modalScreening'];

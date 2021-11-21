@@ -40,7 +40,7 @@ $stmt->bind_result($patientID, $patientName, $category, $patientAddress, $contac
                 <td class='columnName'>$category</td>
                 <td class='columnName'>$patientAddress</td>
                 <td class='columnName'>$contactNum</td>
-                <td class='columnName'><button class='addVitals btn-success btn-sm' type='submit' onclick='clickModalRow($patientID)'>Add Vitals</button></td></td>
+                <td class='columnName'><button class='addVitals btn-info btn-sm' type='submit' onclick='clickModalRow($patientID)'>Add Vitals</button></td></td>
                 </tr>";
     }
    

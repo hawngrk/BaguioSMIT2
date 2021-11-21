@@ -91,17 +91,18 @@ checkRole('Screening');
                         <div class="row">
                             <div class="sfDiv col-md-1.5 my-auto">
                                 <select class="form-select filterButton" id="filterCat" name="filterCategory"
-                                        onchange="filterCategory(this)">
-                                    <option value="" selected disabled hidden>Filter By</option>
-                                    <option value="" disabled >Select Category Group</option>
-                                    <option value="None"> None </option>
-                                    <option value="A1"> A1 </option>
-                                    <option value="A2"> A2 </option>
-                                    <option value="A3"> A3 </option>
-                                    <option value="A4"> A4 </option>
-                                    <option value="A5"> A5 </option>
-                                    <option value="A6"> A6 </option>
-                                    <option value="A7"> A7 </option>
+                                        onchange="filterCategoryGroup(this.value)">
+                                    <option value='' selected disabled hidden>Filter By</option>
+                                    <option value='' disabled>Select Category Group</option>
+                                    <option value="All"> All</option>
+                                    <?php
+                                    require_once("../require/getPriorityGroup.php");
+                                    foreach ($priorityGroups as $pg) {
+                                        $id = $pg->getPriorityGroupId();
+                                        $category = $pg->getPriorityGroup();
+                                        echo "<option value=$id> $category </option>";
+                                    }
+                                    ?>
                                 </select>
                             </div>
                             <div class="sfDiv col-md-1.5 my-auto">
@@ -173,9 +174,9 @@ checkRole('Screening');
     function searchPatient() {
         var textSearch = document.getElementById("searchPatientVaxPer").value;
         $.ajax({
-            url: 'screeningProcessor.php',
+            url: '../includes/searchProcessor.php',
             type: 'POST',
-            data: {"search": textSearch},
+            data: {"searchScreeningPatient": textSearch},
             success: function (result) {
                 document.getElementById("patientTable").innerHTML = result;
             }
@@ -186,29 +187,29 @@ checkRole('Screening');
 
     }
 
-    function filterCategory(filter){
-        var selectedFilter = filter.value;
+    function filterCategoryGroup(filter){
         $.ajax({
-            url: 'screeningProcessor.php',
+            url: '../includes/filterProcessor.php',
             type: 'POST',
-            data: {"filter": selectedFilter},
+            data: {"filterScreeningPatient": filter},
             success: function (result) {
                 document.getElementById("patientTable").innerHTML = result;
             }
         })
     }
 
-    function sortByName(sort){
+    function sortByName(sort) {
         var selectedSort = sort.value;
         $.ajax({
-            url: 'screeningProcessor.php',
+            url: '../includes/sortingProcessor.php',
             type: 'POST',
-            data: {"sort": selectedSort},
+            data: {"sortScreeningPatient": selectedSort},
             success: function (result) {
                 document.getElementById("patientTable").innerHTML = result;
             }
         })
     }
+
     function closeModal(modal) {
         document.getElementById(modal).style.display = "none";
         document.body.classList.remove("scrollBody");
