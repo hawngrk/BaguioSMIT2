@@ -553,7 +553,9 @@ if (isset($_POST['sendStubs'])) {
     $A3 = $stubs['A3: Adult with Comorbidity'];
     $A4 = $stubs['A4: Frontline Personnel in Essential Sector'];
     $A5 = $stubs['A5: Indigent Population'];
-    $A6 = $stubs['Rest of Adult Population'];
+    $ROAP = $stubs['Rest of Adult Population'];
+    $A3Pedia = $stubs['A3. Pedia: 12-17 Years Old with Commorbidity'];
+    $ROPP = $stubs['Rest of Pedia Population'];
     $secondDose = $stubs['Second Dose'];
 
     $query = "SELECT barangay_id FROM barangay WHERE barangay_name = '$barangay';";
@@ -564,9 +566,7 @@ if (isset($_POST['sendStubs'])) {
     $stmt->fetch();
     $stmt->close();
 
-    //$query = "INSERT INTO barangay_stubs (barangay_id, drive_id, A1_stubs, A2_stubs, A3_stubs, A4_stubs, A5_stubs, ROAP, A3_Pedia, ROPP, second_dose, notif_opened, sent_stubs) VALUE ('$barangay', '$drive', '$stubs[0]', '$stubs[1]', '$stubs[2]', '$stubs[3]', '$stubs[4]', '$stubs[5]', '$stubs[6]', '$stubs[7]', '$stubs[8]', 0, 0)";
-
-    $query = "INSERT INTO barangay_stubs (barangay_id, drive_id, A1_stubs, A2_stubs, A3_stubs, A4_stubs, A5_stubs, A6_stubs, second_dose, notif_opened) VALUE ('$barangayId', '$drive', '$A1', '$A2', '$A3', '$A4', '$A5', '$A6', '$secondDose', 0);";
+    $query = "INSERT INTO barangay_stubs (barangay_id, drive_id, A1_stubs, A2_stubs, A3_stubs, A4_stubs, A5_stubs, ROAP, A3_Pedia, ROPP, second_dose, notif_opened, sent_stubs) VALUE ('$barangayId', '$drive', '$A1', '$A2', '$A3', '$A4', '$A5', '$ROAP', '$A3Pedia', '$ROPP' '$secondDose', 0, 0)";
     $database->query($query);
 
     /*
