@@ -470,7 +470,6 @@ checkRole("Mayor's Office");
             type: 'GET',
             data: {reload: " "},
             success: function (result) {
-                console.log(result);
                 document.getElementById("employeesTable").innerHTML = "";
                 document.getElementById("employeesTable").innerHTML = result;
             }

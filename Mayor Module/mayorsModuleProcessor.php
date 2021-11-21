@@ -1,7 +1,5 @@
 <?php
-include("../includes/database.php");
-
-require_once('../includes/recordActivityLog.php');
+require('../includes/recordActivityLog.php');
 session_start();
 $accountDetails = $_SESSION['account'];
 $employeeID = $accountDetails['empId'];
@@ -9,6 +7,7 @@ $employeeRole = $accountDetails['role'];
 
 
 if(isset($_GET['reload'])) {
+    require("../includes/database.php");
     echo "<thead>
     <tr class='tableCenterCont'>
         <th data-field='name'>Employee Name</th>
@@ -34,6 +33,7 @@ if(isset($_GET['reload'])) {
 }
 
 if (isset($_POST['empDeets'])){
+    require("../includes/database.php");
     $empModal = $_POST['empDeets'];
 
     $query = "SELECT * FROM `employee` JOIN employee_account ON employee.employee_id = employee_account.employee_id WHERE employee.employee_id = $empModal";
@@ -85,6 +85,7 @@ if (isset($_POST['empDeets'])){
 
 //search
 if (isset($_POST['searchLog'])) {
+    require("../includes/database.php");
     $search = $_POST['searchLog'];
     if ($search == "") {
         $querySearch = "SELECT activity_logs.log_id, activity_logs.log_entry_date, activity_logs.employee_id, activity_logs.employee_role, activity_logs.log_type, activity_logs.log_description FROM activity_logs;";
@@ -117,6 +118,7 @@ if (isset($_POST['searchLog'])) {
 
 //search
 if (isset($_POST['search'])) {
+    require("../includes/database.php");
     $search = $_POST['search'];
     if ($search == "") {
         $querySearch = "SELECT employee.employee_id, employee.employee_first_name, employee.employee_middle_name, employee.employee_last_name ,employee.employee_role, employee_account.employee_account_type FROM `employee` JOIN employee_account ON employee.employee_id = employee_account.employee_id;";
@@ -149,6 +151,7 @@ if (isset($_POST['search'])) {
 
 //filter
 if (isset($_POST['filter'])) {
+    require("../includes/database.php");
     $filter = $_POST['filter'];
     $queryFilter = '';
     echo "
@@ -184,6 +187,7 @@ if (isset($_POST['filter'])) {
 }
 
 if (isset($_POST['filterUser'])) {
+    require("../includes/database.php");
     $filter = $_POST['filterUser'];
     $queryFilter = '';
     echo "
@@ -223,6 +227,7 @@ if (isset($_POST['filterUser'])) {
 //sort
 //sort
 if (isset($_POST['sort'])) {
+    require("../includes/database.php");
     $querySort = '';
     $sort = $_POST['sort'];
     echo "
