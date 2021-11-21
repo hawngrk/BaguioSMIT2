@@ -2,10 +2,9 @@
 $accountDetails = $_SESSION['account'];
 $barangay_id = $accountDetails['barangay_id'];
 include("../includes/database.php");
-//include("../includes/recordActivityLog.php");
+include("../includes/recordActivityLog.php");
 require_once "../require/getPriorityGroup.php";
 require_once "../require/getBarangay.php";
-
 
 //Starting session to access SESSION data
 session_start();

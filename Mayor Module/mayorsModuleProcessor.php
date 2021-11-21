@@ -5,7 +5,6 @@ $accountDetails = $_SESSION['account'];
 $employeeID = $accountDetails['empId'];
 $employeeRole = $accountDetails['role'];
 
-
 if(isset($_GET['reload'])) {
     require("../includes/database.php");
     echo "<thead>
@@ -27,7 +26,9 @@ if(isset($_GET['reload'])) {
              <td>$empFName $empMName $empLName</td>
              <td>$empRole </td>
              <td>$empAccType</td>
-             <td><button class='buttonTransparentMayors' onclick='showEmployeeDeets($empID)'><i class='fas fa-eye'></i></button</td>
+             <td>
+             <button class='buttonTransparentMayors' onclick='event.stopPropagation();archive(1, clickArchive, $empID)'><i class='fas fa-archive'></i></button>
+             <button class='buttonTransparentMayors' onclick='showEmployeeDeets($empID)'><i class='fas fa-eye'></i></button</td>
              </tr>";
     }
 }

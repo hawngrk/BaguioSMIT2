@@ -152,7 +152,9 @@ checkRole("Mayor's Office");
                                  <td>$empFName $empMName $empLName</td>
                                  <td>$empRole </td>
                                  <td>$empAccType</td>
-                                 <td><button class='buttonTransparentMayors' onclick='showEmployeeDeets($empID)'><i class='fas fa-eye'></i></button</td>
+                                 <td>
+                                 <button class='buttonTransparentMayors' onclick='event.stopPropagation();archive(1, clickArchive, $empID)'><i class='fas fa-archive'></i></button>
+                                 <button class='buttonTransparentMayors' onclick='showEmployeeDeets($empID)'><i class='fas fa-eye'></i></button</td>
                                  </tr>";
                         }
                         ?>
@@ -185,13 +187,8 @@ checkRole("Mayor's Office");
                     <div class="col">
                         <form id="uploadForm">
                             <div class="col-md-12 text-center form-group">
-                                <button class="shadow-sm" id="iconBrowse"
-                                        onclick="document.getElementById('fileUpload').click()">
-                                    <label for="fileUpload">Browse files
-                                </button>
                                 <br>
-                                <input id="fileUpload" type="file" style="display: none"
-                                       onchange="getUploadedFiles(this)" multiple/>
+                                <input id="fileUpload" type="file" onchange="getUploadedFiles(this)" multiple/>
                                 <h6><br> Upload a list of patients (.csv) </h6>
                             </div>
                         </form>
@@ -363,6 +360,16 @@ checkRole("Mayor's Office");
                 <button type="button" class="close" data-dismiss="modal" onclick="closeModal('disabledAccountsModal')">
                     <i class='fas fa-window-close'></i>
                 </button>
+                <table class="table table-row table-hover tableModal" id="patientTable1">
+                    <thead>
+                    <tr class="tableCenterCont">
+                        <th scope="col">Employee Name/th>
+                        <th scope="col">Role</th>
+                        <th scope="col">Account Type</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                    </thead>
+                </table>
             </div>
         </div>
     </div>
@@ -496,6 +503,31 @@ checkRole("Mayor's Office");
         }
     }
 
+    function getUploadedFiles(item) {
+        for (var i = 0; i < item.files.length; i++) {
+            var element = document.createElement('li');
+            element.innerHTML = item.files[i].name;
+            document.getElementById("uploadedFiles").insertAdjacentElement("beforeend", element);
+        }
+    }
+
+    function uploadFiles() {
+        var files = document.getElementById("fileUpload").files;
+        var formData = new FormData();
+        formData.append('file', files[0]);
+        $.ajax({
+            url: 'UploadEmployee.php',
+            type: 'POST',
+            contentType: false,
+            processData: false,
+            data: formData,
+            success: function (result) {
+                console.log(result);
+                uploadFileModal.style.display = "none";
+                Swal.fire('Added Employee', '', 'success');
+            }
+        });
+    }
 
     function filterEmployee(filterEmp){
         var selectedFilter = filterEmp.value;
@@ -509,6 +541,61 @@ checkRole("Mayor's Office");
         })
     }
 
+    async function archive(archive, action, patient) {
+        if (archive == 1) {
+            archiveText = "Archive";
+        } else {
+            archiveText = "UnArchive";
+        }
+        Swal.fire({
+            icon: 'info',
+            title: 'Are You Sure you Want to ' + archiveText + ' this item?',
+            showDenyButton: true,
+            confirmButtonText: 'Yes',
+            denyButtonText: `No`,
+        }).then((result) => {
+            if (result.isConfirmed) {
+                action(patient, archiveText);
+                Swal.fire('Saved!', '', 'success')
+            } else if (result.isDenied) {
+                Swal.fire('Changes are not saved', '', 'info')
+            }
+        })
+    }
+
+    //click archive
+    function clickArchive(employee, option) {
+        $.ajax({
+            url: 'managePatientProcessor.php',
+            method: 'POST',
+            data: {archive: patient, option: option},
+            success: function (result) {
+
+                if (option == "Archive") {
+                    document.getElementById('mainPatient').innerHTML = result;
+                    $.ajax({
+                        url: 'mayorsModuleProcessor.php',
+                        method: 'POST',
+                        data: {showUpdatedArchive: ""},
+                        success: function (result) {
+                            document.getElementById('archivedContent').innerHTML = result;
+                        }
+                    })
+
+                } else if (option == "UnArchive") {
+                    document.getElementById("archivedContent").innerHTML = result;
+                    $.ajax({
+                        url: 'mayorsModuleProcessor.php',
+                        method: 'POST',
+                        data: {showUpdatedPatient: ""},
+                        success: function (result) {
+                            document.getElementById('mainPatient').innerHTML = result;
+                        }
+                    })
+                }
+            }
+        })
+    }
 
 </script>
 
