@@ -31,7 +31,10 @@
             integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY"
             crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script></head>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script src="../javascript/openModal.js"></script>
+    <script src="../javascript/closeModal.js"></script>
 </head>
 
 <body>
@@ -160,16 +163,6 @@
             })
         }
 
-        function closeModal(modal){
-            document.getElementById(modal).style.display = "none";
-            document.body.classList.remove("scrollBody");
-        }
-
-        function openModal(modal) {
-
-            document.getElementById(modal).style.display = "block";
-            document.body.classList.add("scrollBody");
-        }
     </script>
     <!--Logout script-->
 <script src="../javascript/logout.js"></script>

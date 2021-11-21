@@ -36,6 +36,8 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <!-- SWAL-->
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="../javascript/openModal.js"></script>
+    <script src="../javascript/closeModal.js"></script>
 </head>
 
 <body>
@@ -82,9 +84,6 @@
                     <div class="search-containerMonitoring col">
                         <div class="input-group">
                             <input id="searchPatientVaxPer" type="search" placeholder="Search" class="form-control" onkeyup="searchPatient()">
-<!--                            <button type="submit" class="buttonTop5" name="searchPatientBtn" onclick="searchPatient()">-->
-<!--                                <i class="fa fa-search"></i>-->
-<!--                            </button>-->
                         </div>
 
                     </div>
@@ -141,16 +140,6 @@
 </html>
 
 <script>
-    function closeModal(modal) {
-        document.getElementById(modal).style.display = "none";
-        document.body.classList.remove("scrollBody");
-    }
-
-    function openModal(modal) {
-
-        document.getElementById(modal).style.display = "block";
-        document.body.classList.add("scrollBody");
-    }
 
      function searchPatient() {
         var textSearch = document.getElementById("searchPatientVaxPer").value;

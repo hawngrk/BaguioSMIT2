@@ -145,114 +145,293 @@ if (isset($_POST['modalRes'])) {
     $vaccineM2nd = $sortPatientVaccine[1] != "" ? $sortPatientVaccine[1]['vaccManufacturer'] : '' ;
     $lot2nd = $sortPatientVaccine[1] != "" ? $sortPatientVaccine[1]['lotID'] : 'N/A';
 
-    $vaccineStatus = 'Not vaccinated';
-
-    if($patientDetails['first_dose_vaccination'] == 1 && $patientDetails['second_dose_vaccination'] == 1) {
-        $vaccineStatus = 'Fully vaccinated';
-    } else if($patientDetails['first_dose_vaccination'] == 1 && $patientDetails['second_dose_vaccination'] == 0) {
-        $vaccineStatus = 'Partially vaccinated';
-    }
 
 
-    echo "<h3>$fullName</h3>
+    echo "<h3 class='ml-3'>$fullName</h3>
     <hr>
     <div class='row'>
         <div class='col'>
-            <h4>Address: </h4><p>$fullAddress<p>
-            <hr>
-            <h4>Category:</h4><p>$category</p>
-            <hr>
-            <h4>Medical Background</h4>
-            <h6>Allergies:</h6><br>
-            $allergyToVaccine
-            <h6>Commorbidities:</h6><br>
-            <div class='row'>
-                <div class='col' style='columns: 2;'> 
-                $hypertension
-                $heartDisease
-                $kidneyDisease
-                $diabetesMellitus
-                $bronchialAsthma
-                $immunodeficiency
-                $cancer
-                $otherCommorbidity 
+            <div class='row ml-4'> <h5> Address: </h5> </div>
+            <div class='row ml-5'> <h7> $fullAddress </h7> </div>
+            <br>
+            <div class='row ml-4'> <h5> Category:</h5> </div>
+            <div class='row ml-5'> <h7> $category</h7> </div>
+            <br>
+        </div>
+    ";
+
+    $vaccineStatus = 'Not vaccinated';
+    if($patientDetails['first_dose_vaccination'] == 1 && $patientDetails['second_dose_vaccination'] == 1) {
+        $vaccineStatus = 'Fully vaccinated';
+        echo "
+            <div class='col'>
+                <h5>Medical Background</h5>
+                <h6>Allergies:</h6><br>
+                 <div class='ml-5'>$allergyToVaccine</div> 
+                     <h6>Commorbidities:</h6><br>
+                     <div class='row'>
+                         <div class='col ml-5' style='columns: 2;'> 
+                             $hypertension
+                             $heartDisease
+                             $kidneyDisease
+                             $diabetesMellitus
+                             $bronchialAsthma
+                             $immunodeficiency
+                             $cancer
+                             $otherCommorbidity 
+                         </div>
+                     </div>
+                 </div>
+            </div>
+        </div>
+        <br>
+        <h5 class='ml-4 mt-2'> Vaccination Details - &ensp; $vaccineStatus </h5> 
+        <div class='row'>
+            <div class='col'>
+                <h5 class='ml-4' style='color: #68A0B8'>First Dose Vaccination</h5>
+                <div class='row ml-5'>
+                    <h7><b> Schedule:  &ensp;</b> </h7> <p style='margin-left: 14%;'> $sched1st </p> 
+                </div>
+                <div class='row ml-5'>
+                     <h7><b> Vax Site:  &ensp;</b> </h7> <p style='margin-left: 15%;'> $site1st </p> 
+                </div>
+                <div class='row ml-5'>
+                     <h7><b> Vaccine Brand:  &ensp;</b> </h7> <p style='margin-left: 7%'> $vaccineN1st ($vaccineM1st) </p> 
+                </div>
+                <div class='row ml-5'>
+                      <h7><b> Vaccine Lot:  &ensp;</b> </h7> <p style='margin-left: 11%;'> $lot1st </p> 
+                </div>
+            </div>
+            
+            <div class='col'>
+                <h5 class='ml-4' style='color: #68A0B8'>Second Dose Vaccination</h5>
+                <div class='row ml-5'>
+                    <h7><b> Schedule:  &ensp;</b> </h7> <p style='margin-left: 14%;'> $sched2nd </p> 
+                </div>
+                <div class='row ml-5'>
+                     <h7><b> Vax Site:  &ensp;</b> </h7> <p style='margin-left: 15%;'> $site2nd </p> 
+                </div>
+                <div class='row ml-5'>
+                     <h7><b> Vaccine Brand:  &ensp;</b> </h7> <p style='margin-left: 7%;'> $vaccineM2nd ($vaccineN2nd)</p> 
+                </div>
+                <div class='row ml-5'>
+                      <h7><b> Vaccine Lot:  &ensp;</b> </h7> <p style='margin-left: 11%;'> $lot2nd</p> 
                 </div>
             </div>
         </div>
-        <div class='col-md-6'>
-            <h4>Pre-Vaccine Vitals:</h4>
+        <div class='modal-footer'>
+            <button onclick=closeModal('qrView') type='button' class='btn btn-danger'> Close </button>   
+        </div>
+        </form>
+        ";
+    } else if($patientDetails['first_dose_vaccination'] == 1 && $patientDetails['second_dose_vaccination'] == 0) {
+        $vaccineStatus = 'Partially vaccinated';
+
+        echo "
+                <div class='col border' style='padding:1%; margin-right:3%'>
+                    <div class='row'> <h5 class='ml-3' style='color: #68A0B8'> Vaccination Details - $vaccineStatus </h5> </div>
+                    <div class='row'>
+                        <h6 class='ml-4'> <b> <u>Post-Vaccine Vitals</u></b></h6>
+                    </div>
+                    <div class='row'>
+                        <h7 class='ml-5'><b> Pulse Rate:  &ensp;</b> </h7> <p style='margine-left:13%'> $pulseRate1st </p>
+                    </div>
+                    <div class='row'>
+                        <h7  class='ml-5'><b> Temperature Rate:  &ensp;</b> </h7> <p style='margine-left:4%'> $tempRate1st </p> 
+                    </div>
+                    <div class='row'>
+                         <h7  class='ml-5'><b>Oxygen saturation:  &ensp;</b> </h7> <p style='margine-left:2%'> $oxygen1st </p> 
+                    </div>
+                    <div class='row'>
+                          <h7  class='ml-5'><b> Blood Presure Rate:  &ensp;</b> </h7> <p style='margine-left:1%'> $bloodPressure1st </p> 
+                    </div>
+                    <!--End of div for vaccination details-->
+                </div>
+                <!--End div for the address, name and others-->
+            </div>
+            <br>
             <div class='row'>
-            <div class='col'>
-            <h5>1st Dose vitals</h5>
-            <h6>Pulse Rate:</h6><p>$pulseRate1st</p>
-            <h6>Temperature Rate:</h6><p>$tempRate1st</p>
-            <h6>Oxygen saturation:</h6><p>$oxygen1st</p>
-            <h6>Blood Presure Rate:</h6><p>$bloodPressure1st</p>
+                <div class='col'>
+                    <h5 class='ml-4'>Medical Background</h5>
+                    <h6 class='ml-4'>Allergies:</h6><br>
+                     <div class='ml-5'>$allergyToVaccine</div> 
+                         <h6 class='ml-4'>Commorbidities:</h6><br>
+                         <div class='row'>
+                             <div class='col ml-5' style='columns: 2;'> 
+                                 $hypertension
+                                 $heartDisease
+                                 $kidneyDisease
+                                 $diabetesMellitus
+                                 $bronchialAsthma
+                                 $immunodeficiency
+                                 $cancer
+                                 $otherCommorbidity 
+                             </div>
+                         </div>
+                 </div>
+                
+                <div class='col ml-3'>
+                    <div class='row'><h5>Post-Vaccine Vitals:</h5></div>
+                    <div class='row'>
+                        <div class='col-4'>
+                            <label for='pulseR'> <strong>Pulse Rate:</strong> </label>
+                        </div>
+                        <div class='col'>
+                         <input class='textInp vitalsInput w-75' id='pulseR' placeholder='Enter pulse rate' name='pulseR'>
+                        </div>   
+                    </div>
+                    <br>
+                    <div class='row'>
+                        <div class='col-4'>
+                            <label for='tempR'> <strong>Temperature:</strong> </label>
+                        </div>
+                        <div class='col'>
+                           <input class='textInp vitalsInput w-75 id='tempR' placeholder='Enter temperature' name='tempR'>
+                        </div>   
+                    </div>
+                    <br>
+                    <div class='row'>
+                        <div class='col-4'>
+                            <label for='oxygenSat'> <strong>Oxygen Saturation:</strong> </label>
+                        </div>
+                        <div class='col'>
+                            <input class='textInp vitalsInput w-75' id='oxygenSat' placeholder='Enter oxygen saturation' name='vitoxygenSatals'>
+                        </div>   
+                    </div>
+                    <br>
+                    <strong>Blood Pressure (Diastolic/Systolic e.g. 120/80)</strong>
+                    <br>
+                    <div class='row'>
+                        <div class='col-4'>
+                            <label for='bpRDias'> <strong>Diastolic:</strong> </label>
+                        </div>
+                        <div class='col'>
+                            <input class='textInp vitalsInput w-75' placeholder='millimetres of mercury' id='bpRDias' name='bpRDias'>
+                        </div>   
+                    </div>
+                    <br>
+                    <div class='row'>
+                        <div class='col-4'>
+                            <label for='bpRSys'> <strong>Systolic:</strong> </label>
+                        </div>
+                        <div class='col'>
+                            <input class='textInp vitalsInput w-75' placeholder='millimetres of mercury' id='bpRSys' name='bpRSys'>
+                        </div>   
+                    </div>
+                </div>
+               
             </div>
-            <div class='col'>
-            <h5>2nd Dose vitals</h5>
-            <h6>Pulse Rate:</h6><p>$pulseRate2nd</p>
-            <h6>Temperature Rate:</h6><p>$tempRate2nd</p>
-            <h6>Oxygen saturation:</h6><p>$oxygen2nd</p>
-            <h6>Blood Presure Rate:</h6><p>$bloodPressure2nd</p>
             </div>
+            <div class='modal-footer'>
+                <button onclick=closeModal('preVacView') type='button' class='btn btn-danger'> Cancel</button>            
+                <button onclick=btnViewPostVac() id='addButtonId' type='button' class='btn btn-success' value=$patientID> Save</button>
             </div>
-            <hr>
-            <h4>Post-Vaccine Vitals:</h4>
-            <form>
-            <strong>Pulse Rate:</strong>
-            <br><input class='textInp' id='pulseR' placeholder='Enter pulse rate' name='vitals'>
-            <br>
-            <strong>Temperature:</strong> <br> <input class='textInp' id='tempR' placeholder='Enter temperature' name='vitals'>
-            <br>
-            <strong>Oxygen Saturation:</strong> <br> <input class='textInp'  id='oxygenSat' placeholder='Enter oxygen saturation' name='vitals'>
-            <br>
-            <br>
-            <strong>Blood Pressure (Diastolic/Systolic e.g. 120/80)</strong>
-            <br>
-            <strong>Diastolic:</strong> <br><input class='textInp' placeholder='millimetres of mercury' id='bpRDias' name='vitals'>
-            <br>
-            <strong>Systolic:</strong> <br><input class='textInp' placeholder='millimetres of mercury' id='bpRSys' name='vitals'>
             </form>
-        </div>
-    </div>
+            ";
 
-    <div class='col'> 
-    <br>
-
-    <hr>
-    <h4>Vaccination Details - $vaccineStatus</h4>
-        <div class='row'>
-            <div class='col'>
-                <h5>1st dose vaccination</h5>
-                <h6>Schedule:</h6>
-                <p>$sched1st</p>
-                <h6>Vax Site:</h6>
-                <p>$site1st</p>
-                <h6>Vaccine:</h6>
-                <p>$vaccineN1st ($vaccineM1st)</p>
-                <h6>Lot No.:</h6>
-                <p>$lot1st</p>
+    } else {
+        $vaccineStatus = 'Pending';
+        echo "
+                <div class='col border' style='padding:1%; margin-right:3%'>
+                    <div class='row'> <h5 class='ml-3' style='color: #68A0B8'> Vaccination Details - $vaccineStatus </h5> </div>
+                    <div class='row'>
+                        <h5 class='ml-4' style='color: #68A0B8'>Pre-Vaccine Vitals</h5>
+                    </div>
+                    <div class='row'>
+                        <h7 class='ml-5'><b> Pulse Rate:  &ensp;</b> </h7> <p style='margine-left:13%'> $pulseRate1st </p>
+                    </div>
+                    <div class='row'>
+                        <h7  class='ml-5'><b> Temperature Rate:  &ensp;</b> </h7> <p style='margine-left:4%'> $tempRate1st </p> 
+                    </div>
+                    <div class='row'>
+                         <h7  class='ml-5'><b>Oxygen saturation:  &ensp;</b> </h7> <p style='margine-left:2%'> $oxygen1st </p> 
+                    </div>
+                    <div class='row'>
+                          <h7  class='ml-5'><b> Blood Presure Rate:  &ensp;</b> </h7> <p style='margine-left:1%'> $bloodPressure1st </p> 
+                    </div>
+                    <!--End of div for vaccination details-->
+                </div>
+                <!--End div for the address, name and others-->
             </div>
-
-            <div class='col'>
-                <h5>2nd dose vaccination</h5>
-                <h6>Schedule:</h6>
-                <p>$sched2nd</p>
-                <h6>Vax Site:</h6>
-                <p>$site2nd</p>
-                <h6>Vaccine:</h6>
-                <p>$vaccineN2nd ($vaccineM2nd)</p>
-                <h6>Lot No.:</h6>
-                <p>$lot2nd</p>
+            <br>
+            <div class='row'>
+                <div class='col'>
+                    <h5 class='ml-4'>Medical Background</h5>
+                    <h6 class='ml-4'>Allergies:</h6><br>
+                     <div class='ml-5'>$allergyToVaccine</div> 
+                         <h6 class='ml-4'>Commorbidities:</h6><br>
+                         <div class='row'>
+                             <div class='col ml-5' style='columns: 2;'>
+            $hypertension
+                                 $heartDisease
+                                 $kidneyDisease
+                                 $diabetesMellitus
+                                 $bronchialAsthma
+                                 $immunodeficiency
+                                 $cancer
+                                 $otherCommorbidity
+                                 </div>
+                         </div>
+                 </div>
+                
+                <div class='col ml-3'>
+                    <div class='row'><h5>Post-Vaccine Vitals:</h5></div>
+                    <div class='row'>
+                        <div class='col-4'>
+                            <label for='pulseR'> <strong>Pulse Rate:</strong> </label>
+                        </div>
+                        <div class='col'>
+                         <input class='textInp vitalsInput w-75' id='pulseR' placeholder='Enter pulse rate' name='pulseR'>
+                        </div>   
+                    </div>
+                    <br>
+                    <div class='row'>
+                        <div class='col-4'>
+                            <label for='tempR'> <strong>Temperature:</strong> </label>
+                        </div>
+                        <div class='col'>
+                           <input class='textInp vitalsInput w-75 id='tempR' placeholder='Enter temperature' name='tempR'>
+                        </div>   
+                    </div>
+                    <br>
+                    <div class='row'>
+                        <div class='col-4'>
+                            <label for='oxygenSat'> <strong>Oxygen Saturation:</strong> </label>
+                        </div>
+                        <div class='col'>
+                            <input class='textInp vitalsInput w-75' id='oxygenSat' placeholder='Enter oxygen saturation' name='vitoxygenSatals'>
+                        </div>   
+                    </div>
+                    <br>
+                    <strong>Blood Pressure (Diastolic/Systolic e.g. 120/80)</strong>
+                    <br>
+                    <div class='row'>
+                        <div class='col-4'>
+                            <label for='bpRDias'> <strong>Diastolic:</strong> </label>
+                        </div>
+                        <div class='col'>
+                            <input class='textInp vitalsInput w-75' placeholder='millimetres of mercury' id='bpRDias' name='bpRDias'>
+                        </div>   
+                    </div>
+                    <br>
+                    <div class='row'>
+                        <div class='col-4'>
+                            <label for='bpRSys'> <strong>Systolic:</strong> </label>
+                        </div>
+                        <div class='col'>
+                            <input class='textInp vitalsInput w-75' placeholder='millimetres of mercury' id='bpRSys' name='bpRSys'>
+                        </div>   
+                    </div>
+                </div>
+               
             </div>
-        </div>
-    </div>
-    <div class='modal-footer'>
-    <button onclick=closeModal('postVacView') type='button' class='btn btn-danger'> Cancel</button>            
-    <button onclick=btnViewPostVac() id='addButtonId' type='button' class='btn btn-success' value=$patientID> Save</button>
-    </div>
-    </div>";
+            </div>
+            <div class='modal-footer'>
+                <button onclick=closeModal('preVacView') type='button' class='btn btn-danger'> Cancel</button>            
+                <button onclick=btnViewPostVac() id='addButtonId' type='button' class='btn btn-success' value=$patientID> Save</button>
+            </div>
+            </form>";
+    }
 }
 
 if (isset($_POST['pulse'])) {

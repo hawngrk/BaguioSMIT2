@@ -26,15 +26,15 @@
     display: flex;
 }
 
-#patientRow h6, #qrView h6{
-    margin-left: 4%;
-}
+/*#patientRow h6, #qrView h6{*/
+/*    margin-left: 4%;*/
+/*}*/
 
-#patientRow p, #qrView p{
-    margin-left: 7%;
-    font-size: 90%;
-    color: black;
-}
+/*#patientRow p, #qrView p{*/
+/*    margin-left: 7%;*/
+/*    font-size: 90%;*/
+/*    color: black;*/
+/*}*/
 
 #patientRow form, #qrView form{
     margin-bottom: 3%;
