@@ -171,8 +171,14 @@ if (isset($_POST['sendButton'])) {
 
     $priorities = json_encode($priorities);
     echo "
-    <button id='sendStubs' type='button' class='btn btn-success' onclick='sendStubs($drive, $priorities)'>
+    <button id='sendStubs' type='button' class='btn btn-success' onclick='confirmSending($drive, $priorities)'>
                             <i class='fas fa-paper-plane'></i> Send Stubs </button>
+    ";
+}
+
+if (isset($_POST['okButton'])) {
+    echo "
+    <button id='okView' type='button' class='btn btn-success' onclick='closeModal(\"barangayModal\")'> OK </button>
     ";
 }
 
@@ -566,7 +572,8 @@ if (isset($_POST['sendStubs'])) {
     $stmt->fetch();
     $stmt->close();
 
-    $query = "INSERT INTO barangay_stubs (barangay_id, drive_id, A1_stubs, A2_stubs, A3_stubs, A4_stubs, A5_stubs, ROAP, A3_Pedia, ROPP, second_dose, notif_opened, sent_stubs) VALUE ('$barangayId', '$drive', '$A1', '$A2', '$A3', '$A4', '$A5', '$ROAP', '$A3Pedia', '$ROPP' '$secondDose', 0, 0)";
+
+    $query = "INSERT INTO barangay_stubs (barangay_id, drive_id, A1_stubs, A2_stubs, A3_stubs, A4_stubs, A5_stubs, ROAP, A3_Pedia, ROPP, second_dose, notif_opened, sent_stubs) VALUE ('$barangayId', '$drive', '$A1', '$A2', '$A3', '$A4', '$A5', '$ROAP', '$A3Pedia', '$ROPP', '$secondDose', 0, 0);";
     $database->query($query);
 
     /*
@@ -586,6 +593,37 @@ if (isset($_POST['sendStubs'])) {
     $data['message'] = $driveStubs;
     $pusher->trigger('barangay', 'my-event', $data);
     */
+}
+
+if (isset($_POST['saveAllocation'])) {
+    $drive = $_POST['saveAllocation'];
+    $barangay = $_POST['barangay'];
+    $content = $_POST['content'];
+
+    $query = "SELECT barangay_id FROM barangay WHERE barangay_name = '$barangay';";
+    $stmt = $database->stmt_init();
+    $stmt->prepare($query);
+    $stmt->execute();
+    $stmt->bind_result($barangayId);
+    $stmt->fetch();
+    $stmt->close();
+
+    $query = "INSERT INTO allocated_drive (drive_id, barangay_id, allocation) VALUE ('$drive', '$barangayId', '$content');";
+    $database->query($query);
+}
+
+if (isset($_POST['view'])) {
+    $drive = $_POST['view'];
+
+    $query = "SELECT allocation FROM allocate_drive WHERE drive_id = '$drive';";
+    $stmt = $database->stmt_init();
+    $stmt->prepare($query);
+    $stmt->execute();
+    $stmt->bind_result($content);
+    $stmt->fetch();
+    $stmt->close();
+
+    echo $content;
 }
 
 

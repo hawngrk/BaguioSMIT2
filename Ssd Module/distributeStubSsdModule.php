@@ -135,7 +135,7 @@ checkRole('SSD');
                                         if ($allocated == 0) {
                                             echo "<button type='button' id='allocateButton' class='btn btn-info' onclick='allocate($id)'> ALLOCATE </button>";
                                         } else {
-                                            echo "<button type='button' id='allocateButton' class='btn btn-info' onclick='allocate($id)'> VIEW </button>";
+                                            echo "<button type='button' id='allocateButton' class='btn btn-info' onclick='view($id)'> VIEW </button>";
                                         }
                                         echo "     
                                                 </th>
@@ -306,8 +306,6 @@ checkRole('SSD');
                 data: {"firstDose": id},
                 success: function (result) {
                     document.getElementById("firstDosePage").innerHTML = result;
-                    //document.getElementById("barangayModal").style.display = "block";
-
                 }
             });
 
@@ -362,6 +360,26 @@ checkRole('SSD');
                 success: function (result) {
                     console.log(result);
                     secondCounter = result;
+                }
+            });
+        }
+
+        function view(id) {
+            $.ajax({
+                url: 'selectDeployment.php',
+                type: 'POST',
+                data: {"okButton": id},
+                success: function (result) {
+                    document.getElementById("confirmStubs").innerHTML = result;
+                }
+            });
+
+            $.ajax({
+                url: 'selectDeployment.php',
+                type: 'POST',
+                data: {"view": id},
+                success: function (result) {
+                    document.getElementById("barangayModal").innerHTML = result;
                 }
             });
         }
@@ -537,6 +555,24 @@ checkRole('SSD');
             document.body.classList.add("scrollBody");
         }
 
+        function confirmSending(drive, priorities) {
+            Swal.fire({
+                icon: 'info',
+                title: 'Do you want to finalize stub distribution?',
+                showDenyButton: true,
+                confirmButtonText: 'Yes',
+                confirmButtonColor: '#28a745',
+                denyButtonText: `No`,
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    sendStubs(drive, priorities);
+                    Swal.fire({icon: 'success', title: 'Stubs successfully sent!', confirmButtonText: 'OK', confirmButtonColor: '#007bff'})
+                } else if (result.isDenied) {
+                    Swal.fire({icon: 'info', title: 'Cancelled', confirmButtonText: 'OK', confirmButtonColor: '#007bff'})
+                }
+            })
+        }
+
         function sendStubs(drive, priorities) {
             $.ajax({
                 url: 'selectDeployment.php',
@@ -551,6 +587,25 @@ checkRole('SSD');
 
                             var secondDose = document.getElementById(barangay.concat('', '2')).value;
                             var groups = {'A1: Health Care Workers':0, 'A2: Senior Citizens':0,  'A3: Adult with Comorbidity':0, 'A4: Frontline Personnel in Essential Sector':0, 'A5: Indigent Population':0, 'Rest of Adult Population':0, 'A3. Pedia: 12-17 Years Old with Commorbidity':0, 'Rest of Pedia Population':0, 'Second Dose': 0};
+
+                            var entered = document.getElementById(barangay).getElementsByTagName('input');
+                            for (var k = 0; k < entered.length; k++) {
+                                entered[k].setAttribute('disabled', true);
+                            }
+                            var content = document.getElementById(barangay).innerHTML;
+                            console.log(content);
+                            $.ajax({
+                                url: 'selectDeployment.php',
+                                type: 'POST',
+                                data: {"saveAllocation": drive, "barangay": barangay, "content": content},
+                                success: function (result) {
+                                    console.log(result);
+                                },
+                                fail: function(result) {
+                                    console.log('fail');
+                                }
+                            });
+
                             for (var j = 0; j < priorities.length; j++) {
                                 var inputs = barangays[i].getElementsByClassName(`${priorities[j]}`);
                                 var count = 0;
@@ -573,7 +628,6 @@ checkRole('SSD');
                             })
                         }
                     }
-                    Swal.fire({icon: 'info', title: 'Successfully Sent Stubs!', confirmButtonText: 'OK', confirmButtonColor: '#007bff'});
                 }
             });
         }
