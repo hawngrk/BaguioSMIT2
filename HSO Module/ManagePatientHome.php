@@ -87,7 +87,7 @@ include_once("../includes/database.php") ?>
         </ul>
     </nav>
 
-    <form id="content">
+    <div id="content">
         <!-- Page Content  -->
         <div class="navbar navbar-expand-lg navbar-light bg-light shadow-sm p-3 mb-4 rounded-lg">
             <div class="container-fluid">
@@ -112,8 +112,7 @@ include_once("../includes/database.php") ?>
                 <div class="row">
                     <div class="col">
                         <div class="input-group">
-                            <input id="searchPatientInput" type="search" name="searchPatient" class="form-control"
-                                   placeholder="Search" onkeyup="searchPatient(this.value)"/>
+                            <input id="searchPatientInput" type="search" name="searchPatient" class="form-control" placeholder="Search" onkeyup="searchPatient(this.value)"/>
                         </div>
                     </div>
                     <div class="col-sm-auto">

@@ -1,4 +1,6 @@
 <?php
+$accountDetails = $_SESSION['account'];
+$barangay_id = $accountDetails['barangay_id'];
 include("../includes/database.php");
 //include("../includes/recordActivityLog.php");
 require_once "../require/getPriorityGroup.php";
@@ -542,4 +544,85 @@ if (isset($_POST['notification'])){
     }
     echo "</table>";
 
+}
+
+if (isset($_POST['showFirstQueue'])){
+    require_once '../require/getPatientDetails.php';
+    require_once '../require/getPatient.php';
+    require_once '../require/getPriorityGroup.php';
+
+    echo"  <thead>
+                                <tr class='labelRow'>
+                                    <th scope='col'>Patient Name</th>
+                                    <th scope='col'>Contact Number</th>
+                                </tr>
+                                </thead>";
+
+
+    foreach($patients as $p) {
+        if ($p->getFirstDosage() == 0 && $p->getForQueue() == 1 && $p->getNotification() != 1) {
+            $id = $p->getPatientId();
+            foreach ($patient_details as $pd) {
+                if ($pd->getBarangayId() == $barangay_id && $pd->getPatientDeetPatId() == $id) {
+                    $contact = $pd->getContact();
+
+                    if ($pd->getPatientMName() == null && $pd->getPatientSuffix() == null) {
+                        $name = $pd->getPatientLName() . ", " . $pd->getPatientFName();
+                    } else if ($pd->getPatientSuffix() == null) {
+                        $name = $pd->getPatientLName() . ", " . $pd->getPatientFName() . " " . $pd->getPatientMName();
+                    } else if ($pd->getPatientMName() == null) {
+                        $name = $pd->getPatientLName() . ", " . $pd->getPatientFName() . " " . $pd->getPatientSuffix();
+                    } else {
+                        $name = $pd->getPatientLName() . ", " . $pd->getPatientFName() . " " . $pd->getPatientMName() . " " . $pd->getPatientSuffix();
+                    }
+
+                    echo "<tr>
+                <td>$name</td>
+                <td>$contact</td>
+                </tr>";
+                }
+            }
+        }
+    }
+}
+
+if (isset($_POST['showSecondQueue'])) {
+    require_once '../require/getPatientDetails.php';
+    require_once '../require/getPatient.php';
+    require_once '../require/getPriorityGroup.php';
+
+
+    echo"  <thead>
+                                <tr class='labelRow'>
+                                    <th scope='col'>Patient Name</th>
+                                    <th scope='col'>Contact Number</th>
+                                </tr>
+                                </thead>";
+
+
+    foreach($patients as $p) {
+        if ($p->getFirstDosage() == 1 && $p->getSecondDosage() == 0 && $p->getForQueue() == 1 && $p->getNotification() != 1) {
+            $id = $p->getPatientId();
+            foreach ($patient_details as $pd) {
+                if ($pd->getBarangayId() == $barangay_id && $pd->getPatientDeetPatId() == $id) {
+                    $contact = $pd->getContact();
+
+                    if ($pd->getPatientMName() == null && $pd->getPatientSuffix() == null) {
+                        $name = $pd->getPatientLName() . ", " . $pd->getPatientFName();
+                    } else if ($pd->getPatientSuffix() == null) {
+                        $name = $pd->getPatientLName() . ", " . $pd->getPatientFName() . " " . $pd->getPatientMName();
+                    } else if ($pd->getPatientMName() == null) {
+                        $name = $pd->getPatientLName() . ", " . $pd->getPatientFName() . " " . $pd->getPatientSuffix();
+                    } else {
+                        $name = $pd->getPatientLName() . ", " . $pd->getPatientFName() . " " . $pd->getPatientMName() . " " . $pd->getPatientSuffix();
+                    }
+
+                    echo "<tr>
+                <td>$name</td>
+                <td>$contact</td>
+                </tr>";
+                }
+            }
+        }
+    }
 }

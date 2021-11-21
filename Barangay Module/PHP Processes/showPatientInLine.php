@@ -7,7 +7,7 @@ require_once '../require/getPriorityGroup.php';
 
 
 foreach($patients as $p) {
-    if ($p->getForQueue() == 1) {
+    if ($p->getFirstDosage() == 0 && $p->getForQueue() == 1 && $p->getNotification() != 1) {
         $id = $p->getPatientId();
         foreach ($patient_details as $pd) {
             if ($pd->getBarangayId() == $barangay_id && $pd->getPatientDeetPatId() == $id) {

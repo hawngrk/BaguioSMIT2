@@ -678,6 +678,28 @@ include_once("../includes/database.php") ?>
         })
     }
 
+    function validateDate(date1, date2, type){
+        date1 = new Date(date1).getTime();
+        date2 = new Date(date1).getTime();
+        if (type == "stored"){
+            if(date1 >= date2){
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Stored Date can not be Later than the Expiration Date!'
+                })
+            }
+        }else{
+            if(date1 <= date2){
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Expiration Date can not be Sooner than the Stored Date!'
+                })
+            }
+        }
+    }
+
     //show vaccine - row
     function showVaccine(val) {
         var id = val.getElementsByTagName("td")[0].innerText;

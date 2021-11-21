@@ -97,11 +97,6 @@ $barangay_id = $accountDetails['barangay_id'];
                     <i class="fas fa-clipboard-list"></i>
                     Patient Queue</a>
             </li>
-            <li>
-                <a href="../Barangay Module/notificationSummaryBarangayModule.php">
-                    <i class="fas fa-envelope-open"></i>
-                    Notification Summary</a>
-            </li>
         </ul>
 
         <ul class="list-unstyled CTAs">
@@ -196,33 +191,108 @@ $barangay_id = $accountDetails['barangay_id'];
 <!--                        <p class="fontColor">0</p>-->
 <!--                    </div>-->
 <!--                </div>-->
-                <div>
-                    <button class="btn btn-success " id="confirmationNotif" onclick="confirmSending(<?php echo"$barangay_id" ?>)">
-                        Send<br>
-                        Confirmation
-                        <br>Notification
-                    </button>
+
+        </div>
+
+            <nav class="navbar navbar-expand-lg navbar-light navbarDep mb-4">
+                <div class="collapse navbar-collapse d-flex justify-content-center" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <div class ="row ">
+                            <div class="col-sm-auto">
+                                <li role="presentation" class="doseOption2 nav-item active">
+                                    <a class="nav-link" id="FirstDose" role="tab" data-toggle="tab"
+                                       href="#FirstDose"
+                                       onclick="shiftTab('FirstDose', 'SecondDose', 'FirstDosePage', 'SecondDosePage')">First Dose</a>
+                                </li>
+                            </div>
+                            <div class="col-sm-auto">
+                                <li role="presentation" class="doseOption3 nav-item">
+                                    <a class="nav-link" role="tab" id="SecondDose" data-toggle="tab"
+                                       href="#SecondDose"
+                                       onclick="shiftTab('SecondDose', 'FirstDose', 'SecondDosePage', 'FirstDosePage')">Second Dose</a>
+                                </li>
+                            </div>
+                        </div>
+                    </ul>
                 </div>
+            </nav>
 
-                <div class="w-100 d-none d-md-block"></div>
-
-                <div class="col">
-                    <div class="tablePatientQueue tableScroll4 shadow">
-                        <table class="table table-row table-hover tableBrgy" id="patientTable">
-                            <thead>
-                            <tr class="labelRow">
-                                <th scope="col">Patient Name</th>
-                                <th scope="col">Contact Number</th>
-                            </tr>
-                            </thead>
-                            <?php
-                            require_once "PHP Processes/showPatientInLine.php";
-                            ?>
-                        </table>
+            <div class="tab-content">
+                <div role="tabpanel" class="tab-pane" id="FirstDosePage">
+                    <div class="col">
+                        <div class="tablePatientQueue tableScroll4 shadow">
+                            <table class="table table-row table-hover tableBrgy" id="FirstQueue">
+                                <thead>
+                                <tr class="labelRow">
+                                    <th scope="col">Patient Name</th>
+                                    <th scope="col">Contact Number</th>
+                                </tr>
+                                </thead>
+                                <?php
+                                require_once "PHP Processes/showPatientInLine.php";
+                                ?>
+                            </table>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-success" onclick="confirmSending(<?php echo"$barangay_id" ?>, 'first')" style="float: right">
+                                Send Stubs Notification
+                            </button>
+                        </div>
                     </div>
                 </div>
+                <div role="tabpanel" class="tab-pane" id="SecondDosePage" >
+                    <div class="col">
+                        <div class="tablePatientQueue tableScroll4 shadow">
+                            <table class="table table-row table-hover tableBrgy" id="secondQueue">
+                                <thead>
+                                <tr class="labelRow">
+                                    <th scope="col">Patient Name</th>
+                                    <th scope="col">Contact Number</th>
+                                </tr>
+                                </thead>
+                                <?php
+                                require_once '../require/getPatientDetails.php';
+                                require_once '../require/getPatient.php';
+                                require_once '../require/getPriorityGroup.php';
 
+
+                                foreach($patients as $p) {
+                                    if ($p->getFirstDosage() == 1 && $p->getSecondDosage() == 0 && $p->getForQueue() == 1 && $p->getNotification() != 1) {
+                                        $id = $p->getPatientId();
+                                        foreach ($patient_details as $pd) {
+                                            if ($pd->getBarangayId() == $barangay_id && $pd->getPatientDeetPatId() == $id) {
+                                                $contact = $pd->getContact();
+
+                                                if ($pd->getPatientMName() == null && $pd->getPatientSuffix() == null) {
+                                                    $name = $pd->getPatientLName() . ", " . $pd->getPatientFName();
+                                                } else if ($pd->getPatientSuffix() == null) {
+                                                    $name = $pd->getPatientLName() . ", " . $pd->getPatientFName() . " " . $pd->getPatientMName();
+                                                } else if ($pd->getPatientMName() == null) {
+                                                    $name = $pd->getPatientLName() . ", " . $pd->getPatientFName() . " " . $pd->getPatientSuffix();
+                                                } else {
+                                                    $name = $pd->getPatientLName() . ", " . $pd->getPatientFName() . " " . $pd->getPatientMName() . " " . $pd->getPatientSuffix();
+                                                }
+
+                                                echo "<tr>
+                <td>$name</td>
+                <td>$contact</td>
+                </tr>";
+                                            }
+                                        }
+                                    }
+                                }
+                                ?>
+                            </table>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-success" onclick="confirmSending(<?php echo"$barangay_id" ?>, 'second')" style="float: right">
+                                Send Stubs Notification
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </div>
+
 
         </div>
 
@@ -233,6 +303,10 @@ $barangay_id = $accountDetails['barangay_id'];
 </body>
 </html>
 <script>
+
+    window.onload = (event) => {
+        shiftTab('FirstDose', 'SecondDose', 'FirstDosePage', 'SecondDosePage')
+    };
     function searchPatientQueue() {
         var textSearch = document.getElementById("searchPatientQueueInput").value;
         $.ajax({
@@ -245,7 +319,7 @@ $barangay_id = $accountDetails['barangay_id'];
         });
     }
 
-    async function confirmSending(id) {
+    async function confirmSending(id, category) {
         Swal.fire({
             icon: 'info',
             title: 'Send Notification?',
@@ -255,7 +329,7 @@ $barangay_id = $accountDetails['barangay_id'];
             denyButtonText: `No`
         }).then((result) => {
             if (result.isConfirmed) {
-                sendNotification(id);
+                sendNotification(id, category);
                 Swal.fire({icon: 'success', title: 'Notification Sent!', confirmButtonText: 'OK', confirmButtonColor: '#007bff'})
             } else if (result.isDenied) {
                 Swal.fire({icon: 'info', title: 'Notification Cancelled', confirmButtonText: 'OK', confirmButtonColor: '#007bff'})
@@ -263,16 +337,53 @@ $barangay_id = $accountDetails['barangay_id'];
         })
     }
 
-    function sendNotification(id) {
-        console.log(id);
-        $.ajax({
-            url: 'Sendnotification.php',
-            type: 'POST',
-            data: {"type": "many", barangayId: id},
-            success: function (result) {
-                console.log(result);
-            }
-        });
+    function sendNotification(id, categ) {
+        if(categ == "first") {
+            $.ajax({
+                url: 'Sendnotification.php',
+                type: 'POST',
+                data: {"first": "", "type": "many", barangayId: id},
+                success: function (result) {
+                    console.log(result);
+                    $.ajax({
+                        url: 'ManagePatientProcessor.php',
+                        type: 'POST',
+                        data: {"showFirstQueue": ""},
+                        success: function (result) {
+                            document.getElementById('FirstQueue').innerHTML = result
+                        }
+                    });
+                }
+            });
+        }else{
+            $.ajax({
+                url: 'Sendnotification.php',
+                type: 'POST',
+                data: {"second": "", "type": "many", barangayId: id, category: categ},
+                success: function (result) {
+                    console.log(result);
+                    $.ajax({
+                        url: 'ManagePatientProcessor.php',
+                        type: 'POST',
+                        data: {"showSecondQueue": ""},
+                        success: function (result) {
+                            document.getElementById('secondQueue').innerHTML = result
+                        }
+                    });
+                }
+            });
+        }
+    }
+
+    function shiftTab(active, idle1, pageBlock, pageNone1) {
+        document.getElementById(active).style.backgroundColor = "#1D7195";
+        document.getElementById(active).style.color = "#FFFFFFFF";
+        document.getElementById(active).style.borderRadius = "12px";
+        document.getElementById(idle1).style.backgroundColor = "rgba(49,51,53,0)";
+        document.getElementById(idle1).style.color = "#000000";
+        document.getElementById(pageBlock).style.display = "block";
+        document.getElementById(pageNone1).style.display = "none";
+        document.getElementById(idle1).style.color = "#000000";
     }
 
 </script>

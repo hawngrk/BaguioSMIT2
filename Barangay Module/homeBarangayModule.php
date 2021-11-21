@@ -104,11 +104,6 @@ $barangay_id = $accountDetails['barangay_id'];
                     <i class="fas fa-clipboard-list"></i>
                     Patient Queue</a>
             </li>
-            <li>
-                <a href="../Barangay Module/notificationSummaryBarangayModule.php">
-                    <i class="fas fa-envelope-open"></i>
-                    Notification Summary</a>
-            </li>
         </ul>
 
         <ul class="list-unstyled CTAs">

@@ -420,7 +420,7 @@ include_once("../includes/database.php") ?>
                 <div class="modal-footer">
                     <input type="button" class="btn btn-danger" onclick="closeModalForms('DeployModal','newDeploymentForm')" value="Cancel">
                     </input>
-                    <input type="submit" class="btn btn-success" onclick="add('Deployment', addDep, validationDeployment)" value="Add"> </input>
+                    <input type="submit" class="btn btn-success" onclick="event.preventDefault(); add('Deployment', addDep, validationDeployment)" value="Add"> </input>
 
                 </div>
 
@@ -847,15 +847,15 @@ include_once("../includes/database.php") ?>
 
     function disableCheck(checkbox, id, type) {
         if (type == 'first') {
-            var div = document.getElementById(id).getElementsByTagName('div');
+            var li = document.getElementById(id).getElementsByTagName('li');
             if (checkbox.checked == true) {
-                for (var index = 0; index < div.length; index++) {
-                    div[index].children[0].disabled = true;
-                    div[index].children[0].value = 0;
+                for (var index = 0; index < li.length; index++) {
+                    li[index].children[1].children[0].disabled = true;
+                    li[index].children[1].children[0].value = 0;
                 }
             } else {
-                for (var index = 0; index < div.length; index++) {
-                    div[index].children[0].disabled = false;
+                for (var index = 0; index < li.length; index++) {
+                    li[index].children[1].children[0].disabled = false;
                 }
             }
         }else{
@@ -874,7 +874,6 @@ include_once("../includes/database.php") ?>
     }
 
     function showStubs(div, vacId){
-        console.log(vacId);
         if (div.checked == true) {
             div.parentNode.children[1].innerHTML += '<input type="input" class="ml-2" placeholder="Number of Stubs">'
         } else{
@@ -1166,7 +1165,7 @@ include_once("../includes/database.php") ?>
             if(li[i].children[0].checked == true){
                 var vaccine = li[i].children[0].value;
                 firstDoseVaccineBrands[vaccine] = [];
-                firstDoseVaccineBrands[vaccine].push(li[i].children[3].children[0].value);
+                firstDoseVaccineBrands[vaccine].push(li[i].children[1].children[0].value);
             }
         }
 
