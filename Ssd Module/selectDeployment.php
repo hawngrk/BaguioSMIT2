@@ -455,7 +455,7 @@ if (isset($_POST['secondDose'])) {
 
                     <div class='stubNumbersContainer'>
                     <div class='tableAllocate'>
-                    <table class='table table-borderless tableModal'>
+                    <table class='table table-borderless tableModal' id='$inputId'>
                             <thead>
                                 <tr>
                                     <th> Vaccines </th>
@@ -468,7 +468,7 @@ if (isset($_POST['secondDose'])) {
                 foreach ($vaccines as $vaccine) {
                     echo "<tr>
                                 <th scope='row'> $vaccine</th>
-                                <td><input id='$inputId' type='text' onchange='countStubs2(this.value, this.oldValue, this, \"$vaccine\"); this.oldValue = this.value' oninput='this.value = this.value.replace(/[^0-9.\%]/g, \"\").replace(/(\..*)\./g, \"$1\");' size='1' value='0'><span id='percent' style='display: none'>%</span></td>
+                                <td><input type='text' onchange='countStubs2(this.value, this.oldValue, this, \"$vaccine\"); this.oldValue = this.value' oninput='this.value = this.value.replace(/[^0-9.\%]/g, \"\").replace(/(\..*)\./g, \"$1\");' size='1' value='0'><span id='percent' style='display: none'>%</span></td>
                          </tr>";
                 }
                 echo "             
@@ -595,10 +595,18 @@ if (isset($_POST['sendStubs'])) {
     */
 }
 
+if (isset($_POST['updateDrive'])) {
+    $drive = $_POST['updateDrive'];
+
+    $query = "UPDATE vaccination_drive SET allocated = 1 WHERE drive_id = '$drive';";
+    $database->query($query);
+}
+
 if (isset($_POST['saveAllocation'])) {
     $drive = $_POST['saveAllocation'];
     $barangay = $_POST['barangay'];
-    $content = $_POST['content'];
+    $content1 = $_POST['content1'];
+    $content2 = $_POST['content2'];
 
     $query = "SELECT barangay_id FROM barangay WHERE barangay_name = '$barangay';";
     $stmt = $database->stmt_init();
@@ -608,22 +616,288 @@ if (isset($_POST['saveAllocation'])) {
     $stmt->fetch();
     $stmt->close();
 
-    $query = "INSERT INTO allocated_drive (drive_id, barangay_id, allocation) VALUE ('$drive', '$barangayId', '$content');";
+    $query = "INSERT INTO allocated_drive (drive_id, barangay_id, allocation1, allocation2) VALUE ('$drive', '$barangayId', '$content1', '$content2');";
     $database->query($query);
 }
 
-if (isset($_POST['view'])) {
-    $drive = $_POST['view'];
+if (isset($_POST['viewFirst'])) {
+    $drive = $_POST['viewFirst'];
+    $healthDistrictTab = [];
+    $healthDistrictPage = [];
+    $vaccines = [];
+    $priorities = [];
+    $allocations = [];
 
-    $query = "SELECT allocation FROM allocate_drive WHERE drive_id = '$drive';";
+    echo "
+    <div class='bold counter'>
+        <h5 ><i class='fas fa-ticket-alt'></i> Number of Stubs Left</h5>
+        <ul id='vaccineStubCount'>";
+    $query = "SELECT vaccine_drive_1.stubs, vaccine.vaccine_name FROM vaccine JOIN vaccine_drive_1 ON vaccine.vaccine_id = vaccine_drive_1.vaccine_id WHERE vaccine_drive_1.drive_id = '$drive';";
     $stmt = $database->stmt_init();
     $stmt->prepare($query);
     $stmt->execute();
-    $stmt->bind_result($content);
-    $stmt->fetch();
-    $stmt->close();
+    $stmt->bind_result($stubs, $vaccine);
+    while ($stmt->fetch()) {
+        $vaccines[] = $vaccine;
+        $vacId = $vaccine.'1';
+        echo "<li id='$vacId'>$vaccine = $stubs</li>";
+    }
 
-    echo $content;
+    $query = "SELECT priority_groups.priority_group_id, priority_groups.priority_group FROM priority_groups JOIN priority_drive ON priority_groups.priority_group_id = priority_drive.priority_id JOIN vaccination_drive ON priority_drive.drive_id = vaccination_drive.drive_id WHERE vaccination_drive.drive_id = '$drive';";
+    $stmt->prepare($query);
+    $stmt->execute();
+    $stmt->bind_result($priorityId, $priority);
+    while ($stmt->fetch()) {
+        $priorities[] = $priority;
+    }
+
+    $query = "SELECT allocation1, barangay_id FROM allocated_drive WHERE drive_id = '$drive';";
+    $stmt->prepare($query);
+    $stmt->execute();
+    $stmt->bind_result($allocation, $barangayId);
+    while ($stmt->fetch()) {
+        $allocations[$barangayId] = $allocation;
+    }
+
+    $query = "SELECT health_district.health_district_id, health_district_name FROM health_district JOIN health_district_drives ON health_district.health_district_id = health_district_drives.health_district_id WHERE health_district_drives.drive_id = '$drive'";
+
+    $stmt->prepare($query);
+    $stmt->execute();
+    $stmt->bind_result($healthDistrictId, $healthDistrict);
+    while ($stmt->fetch()) {
+        $healthDistrictTab[] = $healthDistrict . '1';
+        $healthDistrictPage[] = $healthDistrict . '1Page';
+    }
+    $healthDistrictTabs = json_encode($healthDistrictTab);
+    $healthDistrictPages = json_encode($healthDistrictPage);
+    echo"
+    </ul>
+    </div>
+    <nav class=\"navbar navbar-expand-lg navbar-light navbarDep\">
+                            <div class=\"collapse navbar-collapse\" id=\"navbarNav\">
+                                <ul class=\"navbar-nav\">
+                                    <div class=\"row\">
+                     ";
+    $stmt->prepare($query);
+    $stmt->execute();
+    $stmt->bind_result($healthDistrictId, $healthDistrict);
+    while ($stmt->fetch()) {
+        $tab = $healthDistrict . '1';
+        $page = $healthDistrict . '1Page';
+        echo"<div class=\"col-sm-auto\">
+                                            <li role=\"presentation\" class=\"healthDistrict1 nav-item\">
+                                                <a class=\"nav-link\" role=\"tab\" id=\"$tab\" data-toggle=\"tab\"
+                                                   href=\"#$healthDistrict\"
+                                                   onclick='shiftHealthDistrict(\"$tab\", $healthDistrictTabs, \"$page\" , $healthDistrictPages)'>$healthDistrict</a>
+                                            </li>
+                                        </div>";
+    }
+
+    echo "
+    </div>
+
+
+                                </ul>
+                            </div>
+                        </nav>
+    <!-- Tab panes -->
+                        <div class=\"tab-content\">";
+
+    $stmt->prepare($query);
+    $stmt->execute();
+    $stmt->bind_result($healthDistrictId, $healthDistrict);
+    while ($stmt->fetch()) {
+        $page = $healthDistrict . '1Page';
+        echo"
+              <div role=\"tabpanel\" class=\"tab-pane tableScroll3\" id=\"$page\">";
+
+        foreach ($barangays as $barangay) {
+            if ($barangay->getBarangayHealthDistrictId() == $healthDistrictId) {
+                $name = $barangay->getBarangayName();
+                $id = $barangay->getBarangayId();
+                echo"
+                <hr>
+                <h2>$name</h2>
+                <hr><br>";
+
+                echo "
+
+                    <div class='stubNumbersContainer'>
+                    <div class='tableAllocate'>
+                    <table class='table table-borderless tableModal $healthDistrict' id='$name'>";
+                            echo $allocations[$id];
+             echo"
+             </table>
+             </div>
+             </div>";
+
+            }
+        }
+        echo "
+        <div class='modal-footer'>";
+        $tab = $healthDistrict . '1';
+        $page = $healthDistrict . '1Page';
+        if ($healthDistrict . '1' == reset($healthDistrictTab)) {
+            echo "<button id='sendStubs' type='button' class='btn btn-primary' onclick='nextHealthDistrict(\"$tab\", $healthDistrictTabs, \"$page\" , $healthDistrictPages)'>
+                 Next </button>";
+        } else if ($healthDistrict . '1' == end($healthDistrictTab)) {
+            echo "<button id='sendStubs' type='button' class='btn btn-primary' onclick='backHealthDistrict(\"$tab\", $healthDistrictTabs, \"$page\" , $healthDistrictPages)'>
+                 Back </button>";
+        } else {
+            echo "<button id='sendStubs' type='button' class='btn btn-primary' onclick='backHealthDistrict(\"$tab\", $healthDistrictTabs, \"$page\" , $healthDistrictPages)'>
+                 Back </button>";
+            echo "<button id='sendStubs' type='button' class='btn btn-primary' onclick='nextHealthDistrict(\"$tab\", $healthDistrictTabs, \"$page\" , $healthDistrictPages)'>
+                 Next </button>";
+        }
+        echo"
+                </div>
+        </div>";
+    }
+    $stmt->close();
+    echo "                        
+                        </div>
+    ";
 }
 
+if (isset($_POST['viewSecond'])) {
+    $drive = $_POST['viewSecond'];
+    $healthDistrictTab = [];
+    $healthDistrictPage = [];
+    $vaccines = [];
+    $priorities = [];
+    $allocations = [];
 
+    echo "
+    <div class='bold counter'>
+        <h5 ><i class='fas fa-ticket-alt'></i> Number of Stubs Left</h5>
+        <ul id='vaccineStubCount'>";
+    $query = "SELECT vaccine_drive_2.stubs, vaccine.vaccine_name FROM vaccine JOIN vaccine_drive_2 ON vaccine.vaccine_id = vaccine_drive_2.vaccine_id WHERE vaccine_drive_2.drive_id = '$drive';";
+    $stmt = $database->stmt_init();
+    $stmt->prepare($query);
+    $stmt->execute();
+    $stmt->bind_result($stubs, $vaccine);
+    while ($stmt->fetch()) {
+        $vaccines[] = $vaccine;
+        $vacId = $vaccine.'2';
+        echo "<li id='$vacId'>$vaccine = $stubs</li>";
+    }
+
+    $query = "SELECT priority_groups.priority_group_id, priority_groups.priority_group FROM priority_groups JOIN priority_drive ON priority_groups.priority_group_id = priority_drive.priority_id JOIN vaccination_drive ON priority_drive.drive_id = vaccination_drive.drive_id WHERE vaccination_drive.drive_id = '$drive';";
+    $stmt->prepare($query);
+    $stmt->execute();
+    $stmt->bind_result($priorityId, $priority);
+    while ($stmt->fetch()) {
+        $priorities[] = $priority;
+    }
+
+    $query = "SELECT allocation2, barangay_id FROM allocated_drive WHERE drive_id = '$drive';";
+    $stmt->prepare($query);
+    $stmt->execute();
+    $stmt->bind_result($allocation, $barangayId);
+    while ($stmt->fetch()) {
+        $allocations[$barangayId] = $allocation;
+    }
+
+    $query = "SELECT health_district.health_district_id, health_district_name FROM health_district JOIN health_district_drives ON health_district.health_district_id = health_district_drives.health_district_id WHERE health_district_drives.drive_id = '$drive'";
+
+    $stmt->prepare($query);
+    $stmt->execute();
+    $stmt->bind_result($healthDistrictId, $healthDistrict);
+    while ($stmt->fetch()) {
+        $healthDistrictTab[] = $healthDistrict . '2';
+        $healthDistrictPage[] = $healthDistrict . '2Page';
+    }
+
+    $healthDistrictTabs = json_encode($healthDistrictTab);
+    $healthDistrictPages = json_encode($healthDistrictPage);
+    echo"
+    </ul>
+    </div>
+    <nav class=\"navbar navbar-expand-lg navbar-light navbarDep\">
+                            <div class=\"collapse navbar-collapse\" id=\"navbarNav\">
+                                <ul class=\"navbar-nav\">
+                                    <div class=\"row\">
+                     ";
+    $stmt->prepare($query);
+    $stmt->execute();
+    $stmt->bind_result($healthDistrictId, $healthDistrict);
+    while ($stmt->fetch()) {
+        $tab = $healthDistrict . '2';
+        $page = $healthDistrict . '2Page';
+        echo"<div class=\"col-sm-auto\">
+                                            <li role=\"presentation\" class=\"healthDistrict1 nav-item\">
+                                                <a class=\"nav-link\" role=\"tab\" id=\"$tab\" data-toggle=\"tab\"
+                                                   href=\"#$healthDistrict\"
+                                                   onclick='shiftHealthDistrict(\"$tab\", $healthDistrictTabs, \"$page\" , $healthDistrictPages)'>$healthDistrict</a>
+                                            </li>
+                                        </div>";
+    }
+
+    echo "
+    </div>
+
+
+                                </ul>
+                            </div>
+                        </nav>
+    <!-- Tab panes -->
+                        <div class=\"tab-content\">";
+
+    $stmt->prepare($query);
+    $stmt->execute();
+    $stmt->bind_result($healthDistrictId, $healthDistrict);
+    while ($stmt->fetch()) {
+        $page = $healthDistrict . '2Page';
+        echo"
+              <div role=\"tabpanel\" class=\"tab-pane tableScroll3\" id=\"$page\">";
+
+        foreach ($barangays as $barangay) {
+            if ($barangay->getBarangayHealthDistrictId() == $healthDistrictId) {
+                $name = $barangay->getBarangayName();
+                $inputId = $name . '2';
+                $id = $barangay->getBarangayId();
+
+                echo"
+                <hr>
+                <h2>$name</h2>
+                <hr><br>";
+
+                echo "
+
+                    <div class='stubNumbersContainer'>
+                    <div class='tableAllocate'>
+                    <table class='table table-borderless tableModal' id='$inputId'>";
+                echo $allocations[$id];
+                echo"
+             </table>
+             </div>
+             </div>";
+
+            }
+
+        }
+        echo "
+        <div class='modal-footer'>";
+        $tab = $healthDistrict . '2';
+        $page = $healthDistrict . '2Page';
+        if ($healthDistrict . '2' == reset($healthDistrictTab)) {
+            echo "<button id='sendStubs' type='button' class='btn btn-primary' onclick='nextHealthDistrict(\"$tab\", $healthDistrictTabs, \"$page\" , $healthDistrictPages)'>
+                 Next </button>";
+        } else if ($healthDistrict . '2' == end($healthDistrictTab)) {
+            echo "<button id='sendStubs' type='button' class='btn btn-primary' onclick='backHealthDistrict(\"$tab\", $healthDistrictTabs, \"$page\" , $healthDistrictPages)'>
+                 Back </button>";
+        } else {
+            echo "<button id='sendStubs' type='button' class='btn btn-primary' onclick='backHealthDistrict(\"$tab\", $healthDistrictTabs, \"$page\" , $healthDistrictPages)'>
+                 Back </button>";
+            echo "<button id='sendStubs' type='button' class='btn btn-primary' onclick='nextHealthDistrict(\"$tab\", $healthDistrictTabs, \"$page\" , $healthDistrictPages)'>
+                 Next </button>";
+        }
+        echo"
+                </div>
+        </div>";
+    }
+    $stmt->close();
+    echo "                        
+                        </div>
+    ";
+}
