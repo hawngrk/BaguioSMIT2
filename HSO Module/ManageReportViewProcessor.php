@@ -336,6 +336,7 @@ if (isset($_POST['generate'])) {
 
 require '../vendor/autoload.php';
 use PhpOffice\PhpWord\PhpWord;
+use PhpOffice\PhpWord\TemplateProcessor;
 if (isset($_POST['download'])) {
     include '../includes/database.php';
     $stmt = $database->stmt_init();
@@ -343,13 +344,22 @@ if (isset($_POST['download'])) {
     mkdir('reports');
 
     foreach ($reports as $rep) {
-        $getReportsQuery = "SELECT report.report_id, report.report_type, report.report_details, report.report_status, CONCAT(patient_details.patient_first_name, ' ', patient_details.patient_middle_name, ' ', patient_details.patient_last_name) AS full_name, CONCAT(patient_details.patient_house_address, ' ', barangay.barangay_name,' ',barangay.city,' ', barangay.province) AS full_address, patient_details.patient_contact_number FROM report JOIN patient_details ON report.patient_id = patient_details.patient_id JOIN barangay ON barangay.barangay_id = patient_details.barangay_id WHERE report.report_id = $rep";
+        $getReportsQuery = "SELECT report.report_id, report.report_details, report.report_status, patient.patient_full_name, CONCAT(patient_details.patient_house_address, ' ', barangay.barangay_name,' ',barangay.city,' ', barangay.province) AS full_address, patient_details.patient_contact_number FROM report JOIN patient ON report.patient_id = patient.patient_id JOIN patient_details ON report.patient_id = patient_details.patient_id JOIN barangay ON barangay.barangay_id = patient_details.barangay_id WHERE report.report_id = $rep";
         $stmt->prepare($getReportsQuery);
         $stmt->execute();
-        $stmt->bind_result($reportId, $reportType, $reportDetails, $reportStatus, $patientName, $patientAddress, $patientNum);
+        $stmt->bind_result($reportId, $reportDetails, $reportStatus, $patientName, $patientAddress, $patientNum);
         $stmt->fetch();
 
-        $phpWord = new PhpWord();
+        //$phpWord = new PhpWord();
+
+        $template = new TemplateProcessor('ReportTemplate.docx');
+        $template->setValue('name', $patientName);
+        $template->setValue('id', $reportId);
+        $template->setValue('details', $reportDetails);
+        $template->setValue('address', $patientAddress);
+        $template->setValue('number', $patientNum);
+        $template->setValue('status', $reportStatus);
+        /*
         $phpWord->addFontStyle('titleFont', array('bold' => true, 'italic' => false, 'size' => 20));
         $phpWord->addParagraphStyle('title', array('align' => 'center', 'spaceAfter' => 100));
         $phpWord->addFontStyle('heading', array('bold' => true, 'italic' => false, 'size' => 12));
@@ -381,9 +391,12 @@ if (isset($_POST['download'])) {
         $body->addText('Vaccination Date: ', 'text');
         $body->addText('Current Dosage: ', 'text');
         $body->addText('Report Status: ' . $reportStatus, 'text');
+        */
 
-        $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
-        $objWriter->save('reports/' . $reportId . " - ". $patientName. '.docx');
+        $pathToSave = 'reports/' . $reportId . " - ". $patientName. '.docx';
+        $template->saveAs($pathToSave);
+        //$objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
+        //$objWriter->save('reports/' . $reportId . " - ". $patientName. '.docx');
     }
 }
 
