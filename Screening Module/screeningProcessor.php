@@ -110,15 +110,15 @@ if (isset($_POST['modalScreening'])) {
     $lot2nd = $sortPatientVaccine[1] != "" ? $sortPatientVaccine[1]['lotID'] : 'N/A';
 
 
-    echo "<h3 class='ml-3'>$fullName</h3>
+    echo "<h2 class='ml-3'>$fullName</h2>
     <hr>
     <div class='row'>
         <div class='col'>
-            <div class='row ml-4'> <h5> Address: </h5> </div>
-            <div class='row ml-5'> <h7> $fullAddress </h7> </div>
+            <div class='row ml-4'> <h3> Address: </h3> </div>
+            <div class='row ml-5'> <h5> $fullAddress </h5> </div>
             <br>
-            <div class='row ml-4'> <h5> Category:</h5> </div>
-            <div class='row ml-5'> <h7> $category</h7> </div>
+            <div class='row ml-4'> <h3> Category:</h3> </div>
+            <div class='row ml-5'> <h5> $category</h5> </div>
             <br>
         </div>
     ";
@@ -129,10 +129,10 @@ if (isset($_POST['modalScreening'])) {
         $vaccineStatus = 'Fully vaccinated';
         echo "
             <div class='col'>
-                <h5>Medical Background</h5>
-                <h6>Allergies:</h6><br>
+                <h3>Medical Background</h3>
+                <h5>Allergies:</h5><br>
                  <div class='ml-5'>$allergyToVaccine</div> 
-                     <h6>Commorbidities:</h6><br>
+                     <h3>Commorbidities:</h3><br>
                      <div class='row'>
                          <div class='col ml-5' style='columns: 2;'> 
                              $hypertension
@@ -192,7 +192,7 @@ if (isset($_POST['modalScreening'])) {
         $vaccineStatus = 'Partially vaccinated';
         echo "
                 <div class='col border' style='padding:1%; margin-right:3%'>
-                    <div class='row'> <h5 class='ml-3' style='color: #68A0B8'> Vaccination Details - $vaccineStatus </h5> </div>
+                    <div class='row'> <h5 class='ml-3' style='color: #4c8198'> Vaccination Details - $vaccineStatus </h5> </div>
                     <div class='row'>
                         <h6 class='ml-4'> <b> <u>First Dose Vaccination</u></b></h6>
                     </div>
@@ -215,12 +215,12 @@ if (isset($_POST['modalScreening'])) {
             <br>
             <div class='row'>
                 <div class='col'>
-                    <h5 class='ml-4'>Medical Background</h5>
+                    <h3 class='ml-4'>Medical Background</h3>
                     <h6 class='ml-4'>Allergies:</h6><br>
                      <div class='ml-5'>$allergyToVaccine</div> 
                          <h6 class='ml-4'>Commorbidities:</h6><br>
                          <div class='row'>
-                             <div class='col ml-5' style='columns: 2;'> 
+                             <div class='col ml-5 p-2 border rounded' style='columns: 2;'> 
                                  $hypertension
                                  $heartDisease
                                  $kidneyDisease
@@ -233,53 +233,38 @@ if (isset($_POST['modalScreening'])) {
                          </div>
                  </div>
                 
-                <div class='col ml-2'>
+               <div class='col ml-3'>
                     <div class='row'><h5>Pre-Vaccine Vitals:</h5></div>
-                    <div class='row'>
-                        <div class='col-4'>
+                    <div class='row ml-3'>
+                        <div class='col-6'>
                             <label for='pulseR'> <strong>Pulse Rate:</strong> </label>
+                            <input class='textInp vitalsInput w-100 ml-3' id='pulseR' placeholder='Enter pulse rate' name='pulseR'>
                         </div>
-                        <div class='col'>
-                         <input class='textInp vitalsInput w-75' id='pulseR' placeholder='Enter pulse rate' name='pulseR'>
-                        </div>   
                     </div>
-                    <br>
-                    <div class='row'>
-                        <div class='col-4'>
+                    <div class='row ml-3'>
+                        <div class='col-6'>
                             <label for='tempR'> <strong>Temperature:</strong> </label>
+                            <input class='textInp vitalsInput w-100 ml-3' id='tempR' placeholder='Enter temperature' name='tempR'>
                         </div>
-                        <div class='col'>
-                           <input class='textInp vitalsInput w-75 id='tempR' placeholder='Enter temperature' name='tempR'>
-                        </div>   
                     </div>
-                    <br>
-                    <div class='row'>
-                        <div class='col-4'>
+                    <div class='row ml-3'>
+                        <div class='col-6'>
                             <label for='oxygenSat'> <strong>Oxygen Saturation:</strong> </label>
+                            <input class='textInp vitalsInput w-100 ml-3' id='oxygenSat' placeholder='Enter oxygen saturation' name='vitoxygenSatals'>
                         </div>
-                        <div class='col'>
-                            <input class='textInp vitalsInput w-75' id='oxygenSat' placeholder='Enter oxygen saturation' name='vitoxygenSatals'>
-                        </div>   
                     </div>
-                    <br>
-                    <strong>Blood Pressure (Diastolic/Systolic e.g. 120/80)</strong>
-                    <br>
-                    <div class='row'>
-                        <div class='col-4'>
+                    <div class='row ml-3 mt-3'> <strong>Blood Pressure </strong>  (Diastolic/Systolic e.g. 120/80)</div>
+                        <div class='row ml-3 '>
+                        <div class='col-6'>
                             <label for='bpRDias'> <strong>Diastolic:</strong> </label>
+                            <input class='textInp vitalsInput w-100 ml-3' placeholder='millimetres of mercury' id='bpRDias' name='bpRDias'>
                         </div>
-                        <div class='col'>
-                            <input class='textInp vitalsInput w-75' placeholder='millimetres of mercury' id='bpRDias' name='bpRDias'>
-                        </div>   
-                    </div>
-                    <br>
-                    <div class='row'>
-                        <div class='col-4'>
+                        </div>
+                    <div class='row ml-3'>
+                        <div class='col-6'>
                             <label for='bpRSys'> <strong>Systolic:</strong> </label>
+                            <input class='textInp vitalsInput w-100 ml-3' placeholder='millimetres of mercury' id='bpRSys' name='bpRSys'>
                         </div>
-                        <div class='col'>
-                            <input class='textInp vitalsInput w-75' placeholder='millimetres of mercury' id='bpRSys' name='bpRSys'>
-                        </div>   
                     </div>
                 </div>
                
@@ -292,7 +277,7 @@ if (isset($_POST['modalScreening'])) {
             </form>
         ";
     } else {
-        $vaccineStatus = 'Pending';
+        $vaccineStatus = 'Ongoing';
         echo "
                 <div class='col'>
                     <div class='row'> <h5 class='ml-2' style='color: #68A0B8'> Vaccination Details - $vaccineStatus </h5> </div>
@@ -302,12 +287,12 @@ if (isset($_POST['modalScreening'])) {
             </div>
             <div class='row'>
                 <div class='col'>
-                    <h5 class='ml-4'>Medical Background</h5>
+                    <h3 class='ml-4'>Medical Background</h3>
                     <h6 class='ml-4'>Allergies:</h6><br>
                      <div class='ml-5'>$allergyToVaccine</div> 
                          <h6 class='ml-4'>Commorbidities:</h6><br>
                          <div class='row'>
-                             <div class='col ml-5' style='columns: 2;'> 
+                             <div class='col ml-5 p-2 border rounded' style='columns: 2;'> 
                                  $hypertension
                                  $heartDisease
                                  $kidneyDisease
@@ -322,51 +307,36 @@ if (isset($_POST['modalScreening'])) {
                 
                 <div class='col ml-3'>
                     <div class='row'><h5>Pre-Vaccine Vitals:</h5></div>
-                    <div class='row'>
-                        <div class='col-4'>
+                    <div class='row ml-3'>
+                        <div class='col-6'>
                             <label for='pulseR'> <strong>Pulse Rate:</strong> </label>
+                            <input class='textInp vitalsInput w-100 ml-3' id='pulseR' placeholder='Enter pulse rate' name='pulseR'>
                         </div>
-                        <div class='col'>
-                         <input class='textInp vitalsInput w-75' id='pulseR' placeholder='Enter pulse rate' name='pulseR'>
-                        </div>   
                     </div>
-                    <br>
-                    <div class='row'>
-                        <div class='col-4'>
+                    <div class='row ml-3'>
+                        <div class='col-6'>
                             <label for='tempR'> <strong>Temperature:</strong> </label>
+                            <input class='textInp vitalsInput w-100 ml-3' id='tempR' placeholder='Enter temperature' name='tempR'>
                         </div>
-                        <div class='col'>
-                           <input class='textInp vitalsInput w-75 id='tempR' placeholder='Enter temperature' name='tempR'>
-                        </div>   
                     </div>
-                    <br>
-                    <div class='row'>
-                        <div class='col-4'>
+                    <div class='row ml-3'>
+                        <div class='col-6'>
                             <label for='oxygenSat'> <strong>Oxygen Saturation:</strong> </label>
+                            <input class='textInp vitalsInput w-100 ml-3' id='oxygenSat' placeholder='Enter oxygen saturation' name='vitoxygenSatals'>
                         </div>
-                        <div class='col'>
-                            <input class='textInp vitalsInput w-75' id='oxygenSat' placeholder='Enter oxygen saturation' name='vitoxygenSatals'>
-                        </div>   
                     </div>
-                    <br>
-                    <strong>Blood Pressure (Diastolic/Systolic e.g. 120/80)</strong>
-                    <br>
-                    <div class='row'>
-                        <div class='col-4'>
+                    <div class='row ml-3 mt-3'> <strong>Blood Pressure </strong> (Diastolic/Systolic e.g. 120/80)</div>
+                        <div class='row ml-3 '>
+                        <div class='col-6'>
                             <label for='bpRDias'> <strong>Diastolic:</strong> </label>
+                            <input class='textInp vitalsInput w-100 ml-3' placeholder='millimetres of mercury' id='bpRDias' name='bpRDias'>
                         </div>
-                        <div class='col'>
-                            <input class='textInp vitalsInput w-75' placeholder='millimetres of mercury' id='bpRDias' name='bpRDias'>
-                        </div>   
-                    </div>
-                    <br>
-                    <div class='row'>
-                        <div class='col-4'>
+                        </div>
+                    <div class='row ml-3'>
+                        <div class='col-6'>
                             <label for='bpRSys'> <strong>Systolic:</strong> </label>
+                            <input class='textInp vitalsInput w-100 ml-3' placeholder='millimetres of mercury' id='bpRSys' name='bpRSys'>
                         </div>
-                        <div class='col'>
-                            <input class='textInp vitalsInput w-75' placeholder='millimetres of mercury' id='bpRSys' name='bpRSys'>
-                        </div>   
                     </div>
                 </div>
                
@@ -429,7 +399,7 @@ if (isset($_POST['allergy'])) {
 
     $log = "Updated the following medical information: Allergy($allergy), Hypertension($hypertension), Heart Disease($heart), Kidney Disease($kidney), Diabetes Mellitus($diabetes), Bronchial Asthma($bronchial), Immunodeficiency($immunodeficiency), Cancer($cancer), Other Commorbidity: $otherCommorbidity from patient ID: $id";
 
-    $query = 
+    $query =
     "UPDATE medical_background SET allergy_to_vaccine = ?, hypertension = ?, heart_disease = ?, kidney_disease = ?, diabetes_mellitus = ?, bronchial_asthma = ?, immunodeficiency = ?, cancer = ?, other_commorbidity = ? WHERE patient_id = ?";
     try {
         $stmt = $database->prepare($query);
