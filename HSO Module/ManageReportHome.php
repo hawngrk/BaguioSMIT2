@@ -112,7 +112,17 @@ checkRole('HSO');
                             <h5><center> Total Reports </center></h5>
                         </div>
                         <div class="card-body">
-                            <h6><center> 5 </center></h6>
+                            <?php
+                            $query = "SELECT COUNT(report_id) FROM `report`";
+                            $stmt = $database->stmt_init();
+                            $stmt->prepare($query);
+                            $stmt->execute();
+                            $stmt->bind_result($total);
+                            $stmt->fetch();
+                            $stmt->close();
+                            echo " <h6><center> $total </center></h6>";
+                            ?>
+
                         </div>
                     </div>
                 </div>
@@ -122,7 +132,16 @@ checkRole('HSO');
                             <h5><center> Total Pending Reports </center></h5>
                         </div>
                         <div class="card-body">
-                            <center> 2 </center>
+                            <?php
+                            $query = "SELECT COUNT(report_id) FROM `report` where report_status = 'Pending';";
+                            $stmt = $database->stmt_init();
+                            $stmt->prepare($query);
+                            $stmt->execute();
+                            $stmt->bind_result($pending);
+                            $stmt->fetch();
+                            $stmt->close();
+                            echo " <center> $pending</center>";
+                            ?>
                         </div>
                     </div>
                 </div>
@@ -132,7 +151,16 @@ checkRole('HSO');
                             <h5><center> Total Verified Reports </center></h5>
                         </div>
                         <div class="card-body">
-                            <center> 3 </center>
+                            <?php
+                            $query = "SELECT COUNT(report_id) FROM `report` where report_status = 'Verified';";
+                            $stmt = $database->stmt_init();
+                            $stmt->prepare($query);
+                            $stmt->execute();
+                            $stmt->bind_result($verified);
+                            $stmt->fetch();
+                            $stmt->close();
+                            echo " <center> $verified</center>";
+                            ?>
                         </div>
                     </div>
                 </div>
@@ -142,7 +170,16 @@ checkRole('HSO');
                             <h5><center> Total Invalidated Reports </center></h5>
                         </div>
                         <div class="card-body">
-                            <center> 2 </center>
+                            <?php
+                            $query = "SELECT COUNT(report_id) FROM `report` where report_status = 'Invalidated';";
+                            $stmt = $database->stmt_init();
+                            $stmt->prepare($query);
+                            $stmt->execute();
+                            $stmt->bind_result($invalidated);
+                            $stmt->fetch();
+                            $stmt->close();
+                            echo " <center> $invalidated</center>";
+                            ?>
                         </div>
                     </div>
                 </div>

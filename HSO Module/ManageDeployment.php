@@ -142,7 +142,7 @@ include_once("../includes/database.php") ?>
                                     foreach ($vaccinationSites as $vaccinationSite) {
                                         $id = $vaccinationSite->getVaccinationSiteId();
                                         $location = $vaccinationSite->getVaccinationSiteLocation();
-                                        echo "<option value=$location> $location </option>";
+                                        echo "<option value=$id> $location </option>";
                                     }
                                     ?>
                                 </select>
@@ -309,7 +309,7 @@ include_once("../includes/database.php") ?>
                             <div class="col">
                                 <div class="form-group">
                                     <div class="row">
-                                    <h6 class="ml-3">Select Vaccine Brand/s: </h6>
+                                        <h6 class="ml-3">Select Vaccine Brand/s: </h6>
                                         <div class="col ml-4">
                                             <input id="noStubsFirst" class = 'checkboxes mr-auto' type='checkbox' onclick="disableCheck(this, 'firstDoseStubs', 'first')">
                                             <label>No Stubs</label>
@@ -317,7 +317,6 @@ include_once("../includes/database.php") ?>
                                     </div>
                                     <div class="row">
 
-                                    </div>
                                     </div>
 
                                     <div class="border border-dark tableScroll3 rounded" id = "firstDoseStubs"
@@ -333,7 +332,7 @@ include_once("../includes/database.php") ?>
                                                                    
                                                                </li> ";
                                         }
-                                                                                          ?>
+                                        ?>
 
                                     </div>
                                 </div>
@@ -378,6 +377,7 @@ include_once("../includes/database.php") ?>
                                     <td style="width: 35%">
                                         <label for="VaccineBr"><h6>Select First Dose Vaccine Brand:</h6></label>
                                         <select style="width: 72%" name="vaccineBrand" id="VaccineBr">
+                                            <option value="" disabled selected> Select First Dose Brand</option>
                                             <?php
                                             require '../require/getVaccine.php';
                                             foreach ($vaccines as $vac) {
@@ -407,7 +407,7 @@ include_once("../includes/database.php") ?>
 
                                 </tr>
                             </table>
-                            <button class="hyperlink add_another" style="font-size: 15px; background-color: transparent; border-color: transparent">+Add New Classification</button>
+                            <button class="hyperlink add_another" style="font-size: 15px; background-color: transparent; border-color: transparent" onclick="event.preventDefault();">+Add New Classification</button>
                         </div>
 
                         <div class="modal-footer">
@@ -420,14 +420,14 @@ include_once("../includes/database.php") ?>
                 </div>
                 <div class="modal-footer">
                     <input type="button" class="btn btn-danger" onclick="closeModalForms('DeployModal','newDeploymentForm')" value="Cancel">
-                    </input>
-                    <input type="submit" class="btn btn-success" onclick="event.preventDefault(); add('Deployment', addDep, validationDeployment)" value="Add"> </input>
+                    <input type="submit" class="btn btn-success" onclick="event.preventDefault(); add('Deployment', addDep, validationDeployment)" value="Add">
+
 
                 </div>
-
             </div>
 
         </div>
+
 </div>
 </form>
 
@@ -556,6 +556,7 @@ include_once("../includes/database.php") ?>
 </div>
 
 <!--Add Health district Modal-->
+
 <div id="HealthDModal" class="modal-window">
     <div class="content-modal">
         <div class="modal-header">
@@ -564,8 +565,9 @@ include_once("../includes/database.php") ?>
                 <i class='fas fa-window-close'></i>
             </button>
         </div>
-        <form id="healthDistrictForm">
+
         <div class="modal-body" style="padding: 4%">
+            <form id="healthDistrictForm" name="healthDistrictForm"  method="post" enctype="multipart/form-data" class="form">
             <div class="row mb-4">
                 <div class="col-8">
                     <label>Name of Health District:</label>
@@ -578,6 +580,12 @@ include_once("../includes/database.php") ?>
                     <input class="contactWidth float-right" type="text" id="contactNumber" name="contactNumber">
                 </div>
             </div>
+            <div class="row">
+                <div class="col">
+                    <label for="optionBrgy">Select Barangay/s: </label>
+                </div>
+            </div>
+
 
             <div class="AddHealthD-option border border-dark rounded">
                 <div class="tableScroll2">
@@ -597,19 +605,22 @@ include_once("../includes/database.php") ?>
                     </ul>
 
                 </div>
+        </form>
+
             </div>
+
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger" onclick="closeModal('HealthDModal')"> Cancel
+                <button type="button" class="btn btn-danger" onclick="closeModalForms('HealthDModal')"> Cancel
                 </button>
-                <button type="button" class="btn btn-success" onclick="add('Health District', addDistrict,validationHealthDistrict)">
+                <button type="button" class="btn btn-success" onclick="add('Health District', addDistrict, validationHealthDistrict)">
                     Add
                 </button>
 
             </div>
         </div>
-        </form>
     </div>
 </div>
+
 
 <!--View Health district modal-->
 <div id="HealthDView" class="modal-window">
@@ -721,7 +732,7 @@ include_once("../includes/database.php") ?>
                     <input type="button" class="btn btn-danger" onclick="closeModalForms('addVaccSite','addVaccinationSiteForm')" value="Cancel">
                     </input>
                     <input type="submit" class="btn btn-success"
-                           onclick="event.stopPropagation(); add('Vaccination Site', addSite, validationSite)" value="Add">
+                           onclick="add('Vaccination Site', addSite, validationSite)" value="Add">
                     </input>
                 </div>
             </form>
@@ -790,8 +801,7 @@ include_once("../includes/database.php") ?>
 
     $(document).ready(function () {
         $('.add_another').click(function (event) {
-            event.preventDefault();
-            $("#secondDoseTable").append('<tr><td style="width: 35%"><label for="VaccineBr"><h6>Select First Dose Vaccine Brand: </h6></label> <select style="width: 72%" name="vaccineBrand" id="VaccineBr"> <?php require '../require/getVaccine.php'; foreach ($vaccines as $vac) { $vacName = $vac->getVaccName(); $vacId = $vac->getVaccId(); echo "<option value = $vacId>$vacName</option>";}?> </select></td> <td><label><h6>Select First Dose Date: </h6></label><div class="form-inline"> <input type="date" id="secondDoseDate" name="secondDoseDate" class="dateForm form-control"></div> <td><label><h6>Number of Stubs: </h6></label>  <div class="form-inline"> <input type="input" placeholder="Number of Stubs" class="dateForm form-control"> <button class="buttonTransparent delButt" onclick="event.preventDefault(); removeRow(this)"><i class="fas fa-trash"></i></button></div></td></tr>');
+            $("#secondDoseTable").append('<tr><td style="width: 35%"><label for="VaccineBr"><h6>Select First Dose Vaccine Brand: </h6></label> <select style="width: 72%" name="vaccineBrand" id="VaccineBr">  <option value="" disabled selected> Select First Dose Brand</option> <?php require '../require/getVaccine.php'; foreach ($vaccines as $vac) { $vacName = $vac->getVaccName(); $vacId = $vac->getVaccId(); echo "<option value = $vacId>$vacName</option>";}?> </select></td> <td><label><h6>Select First Dose Date: </h6></label><div class="form-inline"> <input type="date" id="secondDoseDate" name="secondDoseDate" class="dateForm form-control"></div> <td><label><h6>Number of Stubs: </h6></label>  <div class="form-inline"> <input type="input" placeholder="Number of Stubs" class="dateForm form-control"> <button class="buttonTransparent delButt" onclick="event.preventDefault(); removeRow(this)"><i class="fas fa-trash"></i></button></div></td></tr>');
         });
 
     });
@@ -1126,6 +1136,7 @@ include_once("../includes/database.php") ?>
                     success: function (result) {
                         document.getElementById("HealthDBarangay").style.display = "none";
                         document.getElementById("barangayList").innerHTML = result;
+                        barangays = [];
 
                     }
                 })
@@ -1140,6 +1151,7 @@ include_once("../includes/database.php") ?>
         var secondDoseBrands = {};
 
         var firstDoseVaccineBrands = {};
+
         var trs = document.getElementById('secondDoseTable').getElementsByTagName("tr");
         var li = document.getElementById('firstDoseStubs').getElementsByTagName("li");
 
@@ -1174,8 +1186,17 @@ include_once("../includes/database.php") ?>
             },
             success: function (result) {
                 closeModal('DeployModal');
-                document.getElementById('newDeploymentForm').reset();
                 document.getElementById('mainDrive').innerHTML = result;
+                healthDistricts = [];
+                priorityGroups = [];
+                $.ajax({
+                    url: 'ManageDeploymentProcessor.php',
+                    method: 'POST',
+                    data: {reset: ""},
+                    success: function (result) {
+                        document.getElementById("DeployModal").innerHTML = result;
+                    }
+                })
             }
         })
 
@@ -1191,21 +1212,30 @@ include_once("../includes/database.php") ?>
             success: function (result) {
                 closeModal('HealthDModal');
                 document.getElementById("distContent").innerHTML = result;
+                document.getElementById('healthDistrictForm').reset();
+                barangays = [];
+            }
+        })
+        $.ajax({
+            url: 'ManageDeploymentProcessor.php',
+            method: 'POST',
+            data: {showUpdatedDist: ""},
+            success: function (result) {
+                document.getElementById('distContent').innerHTML = result;
             }
         })
     }
 
     function addSite() {
-        var siteName = document.getElementById("newVaccinationSite").value;
+        var siteName = document.getElementById("vaccinationLoc").value;
         $.ajax({
             url: 'ManageDeploymentProcessor.php',
             method: 'POST',
             data: {site: siteName},
             success: function (result) {
+                document.getElementById('addVaccSite').style.display = "none";
                 document.getElementById('siteContent').innerHTML = result;
                 document.getElementById('addVaccinationSiteForm').reset();
-                document.getElementById('addVaccSite').style.display = "none";
-
 
             }
         })

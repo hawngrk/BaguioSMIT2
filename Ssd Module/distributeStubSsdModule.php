@@ -1,7 +1,7 @@
 <?php
 include "../includes/database.php";
-require_once('../includes/sessionHandling.php');
-checkRole('SSD');
+//require_once('../includes/sessionHandling.php');
+//checkRole('SSD');
 ?>
 
 <html lang="en">
@@ -218,6 +218,21 @@ checkRole('SSD');
                     </div>
                 </div>
             </div>
+
+            <div>
+                <div id="barangayViewModal" class="modal-window">
+                    <div id='stubsModal' class='content-modal tableModal'>
+                        <div class='modal-header'>
+                            <h3 style='padding-right:50%' id="header"></h3>
+                            <button id='closeModal' class='close' onclick='closeModal("barangayViewModal")'><i
+                                        class='fas fa-window-close'></i></button>
+                        </div>
+                        <div class='modal-body' id='view'>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
         </div>
     </div>
     <script>
@@ -379,7 +394,9 @@ checkRole('SSD');
                 type: 'POST',
                 data: {"view": id},
                 success: function (result) {
-                    document.getElementById("barangayModal").innerHTML = result;
+                    document.getElementById("view").innerHTML = result;
+                    openModal('barangayViewModal');
+                    console.log(result)
                 }
             });
         }
@@ -475,23 +492,6 @@ checkRole('SSD');
             document.getElementById(`${vac}`).innerHTML = "";
             document.getElementById(`${vac}`).innerHTML = vaccine.concat(" = ", secondCounter[`${vac}`]);
         }
-
-        /*
-        function checkZero(item, type) {
-            if (type == 'first') {
-                var counter = firstCounter;
-            } else {
-                var counter = secondCounter
-            }
-
-            if (counter == 0) {
-                Swal.fire({icon: 'warning', title: 'No more stubs left!', confirmButtonText: 'OK', confirmButtonColor: '#007bff'});
-                //alert('No more stubs');
-                item.value = 0;
-            }
-        }
-
-         */
 
         function shiftTab(active, idle1, pageBlock, pageNone1) {
             document.getElementById(active).style.backgroundColor = "#1D7195";

@@ -110,19 +110,19 @@ if (isset($_POST['sortVaccine'])) {
             </thead>";
 
     if ($sort == 'dateAsc') {
-        $querySort = "SELECT vaccine_lot.vaccine_lot_id, vaccine.vaccine_name, vaccine_lot.source, vaccine_lot.date_stored, vaccine_lot.vaccine_expiration, vaccine_lot.total_vaccine_vial_quantity FROM vaccine_lot JOIN vaccine ON vaccine_lot.vaccine_id = vaccine.vaccine_id ORDER BY vaccine_lot.date_stored ASC;";
+        $querySort = "SELECT vaccine_lot.vaccine_lot_id, vaccine.vaccine_name, vaccine_lot.source, vaccine_lot.date_stored, vaccine_lot.vaccine_expiration, vaccine_lot.total_vaccine_vial_quantity FROM vaccine_lot JOIN vaccine ON vaccine_lot.vaccine_id = vaccine.vaccine_id WHERE vaccine_lot.Archived != 1 ORDER BY vaccine_lot.date_stored ASC;";
     } else if ($sort == 'dateDesc'){
-        $querySort = "SELECT vaccine_lot.vaccine_lot_id, vaccine.vaccine_name, vaccine_lot.source, vaccine_lot.date_stored, vaccine_lot.vaccine_expiration, vaccine_lot.total_vaccine_vial_quantity FROM vaccine_lot JOIN vaccine ON vaccine_lot.vaccine_id = vaccine.vaccine_id ORDER BY vaccine_lot.date_stored DESC;";
+        $querySort = "SELECT vaccine_lot.vaccine_lot_id, vaccine.vaccine_name, vaccine_lot.source, vaccine_lot.date_stored, vaccine_lot.vaccine_expiration, vaccine_lot.total_vaccine_vial_quantity FROM vaccine_lot JOIN vaccine ON vaccine_lot.vaccine_id = vaccine.vaccine_id WHERE vaccine_lot.Archived != 1 ORDER BY vaccine_lot.date_stored DESC;";
     } else if ($sort == 'expirationAsc'){
-        $querySort = "SELECT vaccine_lot.vaccine_lot_id, vaccine.vaccine_name, vaccine_lot.source, vaccine_lot.date_stored, vaccine_lot.vaccine_expiration, vaccine_lot.total_vaccine_vial_quantity FROM vaccine_lot JOIN vaccine ON vaccine_lot.vaccine_id = vaccine.vaccine_id ORDER BY vaccine_lot.vaccine_expiration ASC;";
+        $querySort = "SELECT vaccine_lot.vaccine_lot_id, vaccine.vaccine_name, vaccine_lot.source, vaccine_lot.date_stored, vaccine_lot.vaccine_expiration, vaccine_lot.total_vaccine_vial_quantity FROM vaccine_lot JOIN vaccine ON vaccine_lot.vaccine_id = vaccine.vaccine_id WHERE vaccine_lot.Archived != 1 ORDER BY vaccine_lot.vaccine_expiration ASC;";
     } else if ($sort == 'expirationDesc'){
-        $querySort = "SELECT vaccine_lot.vaccine_lot_id, vaccine.vaccine_name, vaccine_lot.source, vaccine_lot.date_stored, vaccine_lot.vaccine_expiration, vaccine_lot.total_vaccine_vial_quantity FROM vaccine_lot JOIN vaccine ON vaccine_lot.vaccine_id = vaccine.vaccine_id ORDER BY vaccine_lot.vaccine_expiration DESC;";
+        $querySort = "SELECT vaccine_lot.vaccine_lot_id, vaccine.vaccine_name, vaccine_lot.source, vaccine_lot.date_stored, vaccine_lot.vaccine_expiration, vaccine_lot.total_vaccine_vial_quantity FROM vaccine_lot JOIN vaccine ON vaccine_lot.vaccine_id = vaccine.vaccine_id WHERE vaccine_lot.Archived != 1 ORDER BY vaccine_lot.vaccine_expiration DESC;";
     } else if ($sort == 'bottleQAsc'){
-        $querySort = "SELECT vaccine_lot.vaccine_lot_id, vaccine.vaccine_name, vaccine_lot.source, vaccine_lot.date_stored, vaccine_lot.vaccine_expiration, vaccine_lot.total_vaccine_vial_quantity FROM vaccine_lot JOIN vaccine ON vaccine_lot.vaccine_id = vaccine.vaccine_id ORDER BY vaccine_lot.total_vaccine_vial_quantity ASC;";
+        $querySort = "SELECT vaccine_lot.vaccine_lot_id, vaccine.vaccine_name, vaccine_lot.source, vaccine_lot.date_stored, vaccine_lot.vaccine_expiration, vaccine_lot.total_vaccine_vial_quantity FROM vaccine_lot JOIN vaccine ON vaccine_lot.vaccine_id = vaccine.vaccine_id WHERE vaccine_lot.Archived != 1 ORDER BY vaccine_lot.total_vaccine_vial_quantity ASC;";
     } else if ($sort == 'bottleQDesc'){
-        $querySort = "SELECT vaccine_lot.vaccine_lot_id, vaccine.vaccine_name, vaccine_lot.source, vaccine_lot.date_stored, vaccine_lot.vaccine_expiration, vaccine_lot.total_vaccine_vial_quantity FROM vaccine_lot JOIN vaccine ON vaccine_lot.vaccine_id = vaccine.vaccine_id ORDER BY vaccine_lot.total_vaccine_vial_quantity DESC;";
+        $querySort = "SELECT vaccine_lot.vaccine_lot_id, vaccine.vaccine_name, vaccine_lot.source, vaccine_lot.date_stored, vaccine_lot.vaccine_expiration, vaccine_lot.total_vaccine_vial_quantity FROM vaccine_lot JOIN vaccine ON vaccine_lot.vaccine_id = vaccine.vaccine_id WHERE vaccine_lot.Archived != 1 ORDER BY vaccine_lot.total_vaccine_vial_quantity DESC;";
     } else {
-        $querySort = "SELECT vaccine_lot.vaccine_lot_id, vaccine.vaccine_name, vaccine_lot.source, vaccine_lot.date_stored, vaccine_lot.vaccine_expiration, vaccine_lot.total_vaccine_vial_quantity FROM vaccine_lot JOIN vaccine ON vaccine_lot.vaccine_id = vaccine.vaccine_id";
+        $querySort = "SELECT vaccine_lot.vaccine_lot_id, vaccine.vaccine_name, vaccine_lot.source, vaccine_lot.date_stored, vaccine_lot.vaccine_expiration, vaccine_lot.total_vaccine_vial_quantity FROM vaccine_lot JOIN vaccine ON vaccine_lot.vaccine_id = vaccine.vaccine_id WHERE vaccine_lot.Archived != 1";
     }
 
     $stmt = $database->stmt_init();
@@ -131,18 +131,20 @@ if (isset($_POST['sortVaccine'])) {
     $stmt->bind_result($vaccineLotId, $vaccineName, $vaccineSource, $dateReceived, $expirationDate, $totalQuantity);
 
     while ($stmt->fetch()) {
-        echo "<tr class='tableCenterCont' onclick='showVaccine(this)'>
-                <td>$vaccineLotId</td>
-                <td>$vaccineName</td>
-                <td>$vaccineSource</td>
-                <td>$dateReceived</td>
-                <td>$expirationDate</td>
-                <td>$totalQuantity</td>
-                <td>   <div class='d-flex justify-content-center'>
+        echo "<tr class='table-row tableCenterCont' onclick='showVaccine(this)'>
+                            <td>$vaccineLotId</td>
+                            <td>$vaccineName</td>
+                            <td>$vaccineSource</td>
+                            <td>$dateReceived</td>
+                            <td>$expirationDate</td>
+                            <td>$totalQuantity</td>
+                            <td>
+                                <div class='d-flex justify-content-center'>
                                       <button type='button' class='btn btn-sm bg-none' onclick='event.stopPropagation();archive(1, clickArchive, $vaccineLotId)'><i class='fa fa-archive'></i></button>
                                       <button type='button' class='btn btn-sm bg-none' id='viewButton' onclick='viewVaccineDetails($vaccineLotId)'><i class='fas fa-eye'></i></button>
-                                </div> </td>
-                </tr>";
+                                </div>
+                            </td>
+                            </tr>";
     }
 }
 
@@ -162,11 +164,11 @@ if (isset($_POST['sortDeployment'])) {
      </thead>";
 
     if ($sort == 'Asc') {
-        $querySort = "SELECT vaccination_drive.drive_id, vaccination_sites.location, vaccination_drive.vaccination_date FROM vaccination_drive JOIN vaccination_sites ON vaccination_drive.vaccination_site_id = vaccination_sites.vaccination_site_id ORDER BY vaccination_drive.vaccination_date ASC;";
+        $querySort = "SELECT vaccination_drive.drive_id, vaccination_sites.location, vaccination_drive.vaccination_date FROM vaccination_drive JOIN vaccination_sites ON vaccination_drive.vaccination_site_id = vaccination_sites.vaccination_site_id WHERE vaccination_drive.Archived != 1 ORDER BY vaccination_drive.vaccination_date ASC;";
     } else if ($sort == 'Desc'){
-        $querySort = "SELECT vaccination_drive.drive_id, vaccination_sites.location, vaccination_drive.vaccination_date FROM vaccination_drive JOIN vaccination_sites ON vaccination_drive.vaccination_site_id = vaccination_sites.vaccination_site_id ORDER BY vaccination_drive.vaccination_date DESC;";
+        $querySort = "SELECT vaccination_drive.drive_id, vaccination_sites.location, vaccination_drive.vaccination_date FROM vaccination_drive JOIN vaccination_sites ON vaccination_drive.vaccination_site_id = vaccination_sites.vaccination_site_id WHERE vaccination_drive.Archived != 1 ORDER BY vaccination_drive.vaccination_date DESC;";
     } else {
-        $querySort = "SELECT vaccination_drive.drive_id, vaccination_sites.location, vaccination_drive.vaccination_date FROM vaccination_drive JOIN vaccination_sites ON vaccination_drive.vaccination_site_id = vaccination_sites.vaccination_site_id;";
+        $querySort = "SELECT vaccination_drive.drive_id, vaccination_sites.location, vaccination_drive.vaccination_date FROM vaccination_drive JOIN vaccination_sites ON vaccination_drive.vaccination_site_id = vaccination_sites.vaccination_site_id WHERE vaccination_drive.Archived != 1;";
     }
 
     $stmt = $database->stmt_init();
@@ -175,17 +177,17 @@ if (isset($_POST['sortDeployment'])) {
     $stmt->bind_result($driveId, $vaccinationSite, $date);
     while ($stmt->fetch()) {
         echo "<tr class='table-row tableCenterCont' onclick='showDrive(this)'>
+
                         <td>$driveId</td>
                         <td>$vaccinationSite</td>
                         <td>$date</td>
                         <td>
                             <div class='d-flex justify-content-center'>
                                 <button class='btn btn-sm bg-none' onclick='event.stopPropagation(); archive(1, clickArchive, $driveId)'><i class='fa fa-archive'></i></button>
-                                <button class='btn btn-sm bg-none' onclick=''><i class='far fa-edit'></i></button>
-                           
+                                 <button class='btn btn-sm bg-none' onclick='event.stopPropagation(); editDeployment(\"$driveId\", \"$vaccinationSite\", \"$date\")' style='float: right'><i class='far fa-edit'></i></button><br>
                             </div>
                         </td>
-             
+
                       </tr>";
     }
 }
@@ -194,28 +196,28 @@ if (isset($_POST['sortDeployment'])) {
 if (isset($_POST['sortReport'])) {
     $querySort = '';
     $sort = $_POST['sortReport'];
-    echo "
+    echo '
       <thead>
-            <tr class='tableCenterCont'>
-                <th>Report ID</th>
-                <th>Name of Reporter</th>
-                <th>Date Reported</th>
-                <th>Report Verified</th>
-                <th>Action</th>
-            </tr>
-            </thead>
-            ";
+                        <tr class="tableCenterCont">
+                            <th scope="col">Report ID</th>
+                            <th scope="col">Name of Reporter</th>
+                            <th scope="col">Date Reported</th>
+                            <th scope="col">Report Verified</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                        </thead>
+            ';
 
     if ($sort == 'nameAsc') {
-        $querySort = "SELECT report.report_id, patient.patient_full_name, report.date_reported, report.report_status FROM report JOIN patient ON report.report_id = patient.patient_id JOIN patient_details ON patient.patient_id = patient_details.patient_id ORDER BY patient_details.patient_last_name ASC;";
+        $querySort = "SELECT report.report_id, patient.patient_full_name, report.date_reported, report.report_status FROM report JOIN patient ON report.report_id = patient.patient_id JOIN patient_details ON patient.patient_id = patient_details.patient_id WHERE report.Archived != 1 ORDER BY patient_details.patient_last_name ASC;";
     } else if ($sort == 'nameDesc') {
-        $querySort = "SELECT report.report_id, patient.patient_full_name, report.date_reported, report.report_status FROM report JOIN patient ON report.report_id = patient.patient_id JOIN patient_details ON patient.patient_id = patient_details.patient_id ORDER BY patient_details.patient_last_name DESC;";
+        $querySort = "SELECT report.report_id, patient.patient_full_name, report.date_reported, report.report_status FROM report JOIN patient ON report.report_id = patient.patient_id JOIN patient_details ON patient.patient_id = patient_details.patient_id WHERE report.Archived != 1 ORDER BY patient_details.patient_last_name DESC;";
     } else if ($sort == 'dateAsc') {
-        $querySort = "SELECT report.report_id, patient.patient_full_name, report.date_reported, report.report_status FROM report JOIN patient ON report.report_id = patient.patient_id JOIN patient_details ON patient.patient_id = patient_details.patient_id ORDER BY report.date_reported ASC;";
+        $querySort = "SELECT report.report_id, patient.patient_full_name, report.date_reported, report.report_status FROM report JOIN patient ON report.report_id = patient.patient_id JOIN patient_details ON patient.patient_id = patient_details.patient_id WHERE report.Archived != 1 ORDER BY report.date_reported ASC;";
     } else if ($sort == 'dateDesc') {
-        $querySort = "SELECT report.report_id, patient.patient_full_name, report.date_reported, report.report_status FROM report JOIN patient ON report.report_id = patient.patient_id JOIN patient_details ON patient.patient_id = patient_details.patient_id ORDER BY report.date_reported DESC;";
+        $querySort = "SELECT report.report_id, patient.patient_full_name, report.date_reported, report.report_status FROM report JOIN patient ON report.report_id = patient.patient_id JOIN patient_details ON patient.patient_id = patient_details.patient_id WHERE report.Archived != 1 ORDER BY report.date_reported DESC;";
     } else{
-        $querySort = "SELECT report.report_id, patient.patient_full_name, report.date_reported, report.report_status FROM report JOIN patient ON report.report_id = patient.patient_id JOIN patient_details ON patient.patient_id = patient_details.patient_id;";
+        $querySort = "SELECT report.report_id, patient.patient_full_name, report.date_reported, report.report_status FROM report JOIN patient ON report.report_id = patient.patient_id JOIN patient_details ON patient.patient_id = patient_details.patient_id WHERE report.Archived != 1;";
 
     }
     $stmt = $database->stmt_init();
@@ -231,12 +233,15 @@ if (isset($_POST['sortReport'])) {
                 }
             }
             echo "<tr class='tableCenterCont' onclick='viewReport($reportId)'>
-                                         
                                           <td>$reportId</td>
                                           <td>$reporter</td>
                                           <td>$dateReported</td>
                                           <td>$status</td>
-                                          <td><button class='btn btn-sm bg-none' type='submit' value='$reportId' onclick='viewReport($reportId)'><i class='fas fa-eye'></i></button></td></tr>";
+                                          <td>
+                                          <div class='d-flex justify-content-center'>
+                                          <button class='btn btn-sm bg-none' type='submit' value='$reportId' onclick='event.stopPropagation(); viewReport($reportId)'><i class='fas fa-eye'></i></button>
+                                          <button class='btn btn-sm bg-none' onclick='event.stopPropagation(); archive(1, clickArchive, $reportId)'><i class='fa fa-archive'></i></button>
+                                          </div></td></tr>";
         }
     }
 }

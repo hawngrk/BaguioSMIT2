@@ -20,15 +20,11 @@ if (isset($_POST['notifListDrives'])){
 
 if (isset($_POST['open'])){
     $query = "UPDATE vaccination_drive SET notif_opened = '1' WHERE notif_opened = '0'";
-    $stmt = $database->stmt_init();
-    $stmt->prepare($query);
-    $stmt->execute();
-    $stmt->fetch();
-    $stmt->close();
+    $database->query($query);
 }
 
 if (isset($_POST['showUpdatedNotif'])){
-    $query = "SELECT vaccination_drive.drive_id, vaccination_sites.location, vaccination_drive.vaccination_date, vaccination_drive.first_dose_stubs, vaccination_drive.second_dose_stubs, vaccination_drive.notif_opened FROM vaccination_sites JOIN vaccination_drive ON vaccination_sites.vaccination_site_id = vaccination_drive.vaccination_site_id ORDER BY vaccination_drive.drive_id desc;";
+    $query = "SELECT vaccination_drive.drive_id, vaccination_sites.location, vaccination_drive.vaccination_date, SUM(vaccine_drive_1.stubs), SUM(vaccine_drive_2.stubs), vaccination_drive.notif_opened FROM vaccination_sites JOIN vaccination_drive ON vaccination_sites.vaccination_site_id = vaccination_drive.vaccination_site_id JOIN vaccine_drive_1 ON vaccine_drive_1.drive_id = vaccination_drive.drive_id JOIN vaccine_drive_2 ON vaccine_drive_2.drive_id = vaccination_drive.drive_id GROUP BY drive_id ORDER BY vaccination_drive.drive_id desc;";
 
     $stmt = $database->stmt_init();
     $stmt->prepare($query);
@@ -69,6 +65,9 @@ if (isset($_POST['showUpdatedNotif'])){
 if (isset($_POST['deploymentId'])) {
     require "../require/getHealthDistrictDrives.php";
     require "../require/getHealthDistrict.php";
+    require_once '../require/getVaccine.php';
+    require_once '../require/getVaccineDrive1.php';
+    require_once '../require/getVaccineDrive2.php';
     $driveId = $_POST['deploymentId'];
 
     $query = "SELECT vaccination_drive.vaccination_date, vaccination_sites.location FROM vaccination_drive JOIN vaccination_sites ON vaccination_drive.vaccination_site_id = vaccination_sites.vaccination_site_id WHERE vaccination_drive.drive_id = $driveId ";
@@ -93,49 +92,40 @@ if (isset($_POST['deploymentId'])) {
     $stmt->execute();
     $stmt->bind_result($group);
     while ($stmt->fetch()) {
-        echo"<li>
-                  <label>$group</label>
-             </li>";;
+        echo"
+                  <p>$group</p>
+             ";;
     }
+    $stmt->close();
 
     echo"<h5> First Dose Number Of Stubs: </h5>";
+    foreach ($vaccineDrive1 as $drive1) {
+        if ( $drive1->getDriveId() == $driveId) {
+            foreach ($vaccines as $vac) {
+                if ($drive1->getVaccineId() == $vac->getVaccId()) {
+                    $firstDbrand = $vac->getVaccName();
+                    $fBrandStubs = $drive1->getStubs();
 
-    $query3 = "SELECT vaccine_name, stubs FROM vaccine_drive_1 JOIN vaccine ON vaccine_drive_1.vaccine_id = vaccine.vaccine_id WHERE drive_id = $driveId";
-
-    $stmt = $database->stmt_init();
-    $stmt->prepare($query3);
-    $stmt->execute();
-    $stmt->bind_result($vaccine, $stub);
-    if ($stmt->num_rows()) {
-        while ($stmt->fetch()) {
-            echo "<li>
-                  <label>$vaccine - $stub</label>
-             </li>";
+                    echo"<p>$firstDbrand: $fBrandStubs stubs</p>";
+                }
+            }
         }
-    } else {
-        echo "<li>
-                  <label>None</label>
-             </li>";
     }
 
     echo"<h5> Second Dose Number of Stubs: </h5>";
 
-    $query3 = "SELECT vaccine_name, stubs FROM vaccine_drive_2 JOIN vaccine ON vaccine_drive_2.vaccine_id = vaccine.vaccine_id WHERE drive_id = $driveId";
+    foreach ($vaccineDrive2 as $drive2) {
+        if ( $drive2->getDriveId() == $driveId) {
+            $sDate = $drive2->getFirstDoseDate();
+            foreach ($vaccines as $vac) {
+                if ($drive1->getVaccineId() == $vac->getVaccId()) {
+                    $secondDbrand = $vac->getVaccName();
+                    $sBrandStubs = $drive2->getStubs();
 
-    $stmt = $database->stmt_init();
-    $stmt->prepare($query3);
-    $stmt->execute();
-    $stmt->bind_result($vaccine, $stub);
-    if ($stmt->num_rows()) {
-        while ($stmt->fetch()) {
-                echo "<li>
-                  <label>$vaccine - $stub</label>
-             </li>";
+                    echo"<p>$secondDbrand - $sDate - $sBrandStubs stubs</p>";
+                }
+            }
         }
-    } else {
-        echo "<li>
-                  <label>None</label>
-             </li>";
     }
 
     echo"<h5> Health Districts: </h5>";
@@ -354,9 +344,7 @@ if (isset($_POST['firstDose'])) {
         </div>";
     }
     $stmt->close();
-    echo "                        
-                        </div>
-    ";
+    echo "</div>";
 }
 
 if (isset($_POST['secondDose'])) {
@@ -545,7 +533,6 @@ if (isset($_POST['healthDistricts'])) {
     while ($stmt->fetch()) {
         $healthDistricts[] = $healthDistrict;
     }
-
     echo json_encode($healthDistricts);
 }
 

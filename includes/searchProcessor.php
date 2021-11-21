@@ -92,9 +92,9 @@ if (isset($_POST['searchPatient'])) {
 if (isset($_POST['searchVaccine'])) {
     $search = $_POST['searchVaccine'];
     if ($search == "") {
-        $querySearch = "SELECT vaccine_lot.vaccine_lot_id, vaccine.vaccine_name, vaccine_lot.source, vaccine_lot.date_stored, vaccine_lot.vaccine_expiration, vaccine_lot.total_vaccine_vial_quantity FROM vaccine_lot JOIN vaccine ON vaccine_lot.vaccine_id = vaccine.vaccine_id;";
+        $querySearch = "SELECT vaccine_lot.vaccine_lot_id, vaccine.vaccine_name, vaccine_lot.source, vaccine_lot.date_stored, vaccine_lot.vaccine_expiration, vaccine_lot.total_vaccine_vial_quantity FROM vaccine_lot JOIN vaccine ON vaccine_lot.vaccine_id = vaccine.vaccine_id WHERE vaccine_lot.Archived != 1;";
     } else {
-        $querySearch = "SELECT vaccine_lot.vaccine_lot_id, vaccine.vaccine_name, vaccine_lot.source, vaccine_lot.date_stored, vaccine_lot.vaccine_expiration, vaccine_lot.total_vaccine_vial_quantity FROM vaccine_lot JOIN vaccine ON vaccine_lot.vaccine_id = vaccine.vaccine_id WHERE vaccine_lot.vaccine_lot_id LIKE '$search%' OR vaccine.vaccine_name LIKE '$search%';";
+        $querySearch = "SELECT vaccine_lot.vaccine_lot_id, vaccine.vaccine_name, vaccine_lot.source, vaccine_lot.date_stored, vaccine_lot.vaccine_expiration, vaccine_lot.total_vaccine_vial_quantity FROM vaccine_lot JOIN vaccine ON vaccine_lot.vaccine_id = vaccine.vaccine_id WHERE vaccine_lot.Archived != 1 AND vaccine_lot.vaccine_lot_id LIKE '$search%' OR vaccine.vaccine_name LIKE '$search%';";
     }
 
     echo "
@@ -115,18 +115,20 @@ if (isset($_POST['searchVaccine'])) {
     $stmt->execute();
     $stmt->bind_result($vaccineLotId, $vaccineName, $vaccineSource, $dateReceived, $expirationDate, $totalQuantity);
     while ($stmt->fetch()) {
-        echo "<tr class='tableCenterCont' onclick='showVaccine(this)'>
-                <td>$vaccineLotId</td>
-                <td>$vaccineName</td>
-                <td>$vaccineSource</td>
-                <td>$dateReceived</td>
-                <td>$expirationDate</td>
-                <td>$totalQuantity</td>
-                <td>   <div>
-                                      <button type='button' class='buttonTransparent actionButt' onclick='event.stopPropagation();archive(1, clickArchive, $vaccineLotId)'><i class='fa fa-archive'></i></button>
-                                      <button type='button' class='viewReportBtn buttonTransparent actionButt' id='viewButton' onclick='viewVaccineDetails($vaccineLotId)'><i class='fas fa-eye'></i></button>
-                                </div> </td>
-                </tr>";
+        echo "<tr class='table-row tableCenterCont' onclick='showVaccine(this)'>
+                            <td>$vaccineLotId</td>
+                            <td>$vaccineName</td>
+                            <td>$vaccineSource</td>
+                            <td>$dateReceived</td>
+                            <td>$expirationDate</td>
+                            <td>$totalQuantity</td>
+                            <td>
+                                <div class='d-flex justify-content-center'>
+                                      <button type='button' class='btn btn-sm bg-none' onclick='event.stopPropagation();archive(1, clickArchive, $vaccineLotId)'><i class='fa fa-archive'></i></button>
+                                      <button type='button' class='btn btn-sm bg-none' id='viewButton' onclick='viewVaccineDetails($vaccineLotId)'><i class='fas fa-eye'></i></button>
+                                </div>
+                            </td>
+                            </tr>";
     }
 }
 
@@ -134,9 +136,9 @@ if (isset($_POST['searchVaccine'])) {
 if (isset($_POST['searchDeployment'])) {
     $search = $_POST['searchDeployment'];
     if ($search == "") {
-        $querySearch = "SELECT vaccination_drive.drive_id, vaccination_sites.location, vaccination_drive.vaccination_date FROM vaccination_drive JOIN vaccination_sites ON vaccination_drive.vaccination_site_id = vaccination_sites.vaccination_site_id;";
+        $querySearch = "SELECT vaccination_drive.drive_id, vaccination_sites.location, vaccination_drive.vaccination_date FROM vaccination_drive JOIN vaccination_sites ON vaccination_drive.vaccination_site_id = vaccination_sites.vaccination_site_id WHERE vaccination_drive.Archived != 1;";
     } else {
-        $querySearch = "SELECT vaccination_drive.drive_id, vaccination_sites.location, vaccination_drive.vaccination_date FROM vaccination_drive JOIN vaccination_sites ON vaccination_drive.vaccination_site_id = vaccination_sites.vaccination_site_id WHERE vaccination_drive.drive_id LIKE '$search%';";
+        $querySearch = "SELECT vaccination_drive.drive_id, vaccination_sites.location, vaccination_drive.vaccination_date FROM vaccination_drive JOIN vaccination_sites ON vaccination_drive.vaccination_site_id = vaccination_sites.vaccination_site_id WHERE vaccination_drive.Archived != 1 AND vaccination_drive.drive_id LIKE '$search%';";
     }
 
     echo "
@@ -155,17 +157,17 @@ if (isset($_POST['searchDeployment'])) {
     $stmt->bind_result($driveId, $vaccinationSite, $date);
     while ($stmt->fetch()) {
         echo "<tr class='table-row tableCenterCont' onclick='showDrive(this)'>
+
                         <td>$driveId</td>
                         <td>$vaccinationSite</td>
                         <td>$date</td>
                         <td>
-                            <div>
-                                <button class='buttonTransparent actionButt' onclick='event.stopPropagation(); archive(1, clickArchive, $driveId)'><i class='fa fa-archive'></i></button>
-                                <button class='buttonTransparent actionButt' onclick=''><i class='far fa-edit'></i></button>
-                           
+                            <div class='d-flex justify-content-center'>
+                                <button class='btn btn-sm bg-none' onclick='event.stopPropagation(); archive(1, clickArchive, $driveId)'><i class='fa fa-archive'></i></button>
+                                 <button class='btn btn-sm bg-none' onclick='event.stopPropagation(); editDeployment(\"$driveId\", \"$vaccinationSite\", \"$date\")' style='float: right'><i class='far fa-edit'></i></button><br>
                             </div>
                         </td>
-             
+
                       </tr>";
     }
 }
@@ -173,21 +175,21 @@ if (isset($_POST['searchDeployment'])) {
 //search for reports
 if (isset($_POST['searchReport'])) {
     $search = $_POST['searchReport'];
-    echo "
+    echo '
       <thead>
-            <tr class='tableCenterCont'>
-                <th>Report ID</th>
-                <th>Name of Reporter</th>
-                <th>Date Reported</th>
-                <th>Report Verified</th>
-                <th>Action</th>
-            </tr>
-            </thead>
-            ";
+                        <tr class="tableCenterCont">
+                            <th scope="col">Report ID</th>
+                            <th scope="col">Name of Reporter</th>
+                            <th scope="col">Date Reported</th>
+                            <th scope="col">Report Verified</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                        </thead>
+            ';
     if (empty($search)) {
-        $querySearch = "SELECT report.report_id, patient.patient_full_name, report.date_reported, report.report_status FROM report JOIN patient ON report.report_id = patient.patient_id JOIN patient_details ON patient.patient_id = patient_details.patient_id;";
+        $querySearch = "SELECT report.report_id, patient.patient_full_name, report.date_reported, report.report_status FROM report JOIN patient ON report.report_id = patient.patient_id JOIN patient_details ON patient.patient_id = patient_details.patient_id WHERE report.Archived != 1 AND report.report_status != 'Invalidated';";
     } else {
-        $querySearch = "SELECT report.report_id, patient.patient_full_name, report.date_reported, report.report_status FROM report JOIN patient ON report.report_id = patient.patient_id JOIN patient_details ON patient.patient_id = patient_details.patient_id WHERE report.report_id LIKE '$search%' OR patient_details.patient_last_name LIKE '$search%' OR patient_details.patient_first_name LIKE '$search%' OR patient_details.patient_middle_name LIKE '$search%';";
+        $querySearch = "SELECT report.report_id, patient.patient_full_name, report.date_reported, report.report_status FROM report JOIN patient ON report.report_id = patient.patient_id JOIN patient_details ON patient.patient_id = patient_details.patient_id WHERE report.Archived != 1 AND report.report_status != 'Invalidated' AND report.report_id LIKE '$search%' OR patient_details.patient_last_name LIKE '$search%' OR patient_details.patient_first_name LIKE '$search%' OR patient_details.patient_middle_name LIKE '$search%';";
     }
     $stmt = $database->stmt_init();
     $stmt->prepare($querySearch);
@@ -196,11 +198,14 @@ if (isset($_POST['searchReport'])) {
 
     while ($stmt->fetch()) {
         echo "<tr class='tableCenterCont' onclick='viewReport($reportId)'>
-                <td>$reportId</td>
-                <td>$reporter</td>
-                <td>$dateReported</td>
-                <td>$status</td>
-                <td><button class='btn btn-success btn-sm' type='submit' value='$reportId' onclick='viewReport($reportId)'>Review Report</button></td>
-                </tr>";
+                                          <td>$reportId</td>
+                                          <td>$reporter</td>
+                                          <td>$dateReported</td>
+                                          <td>$status</td>
+                                          <td>
+                                          <div class='d-flex justify-content-center'>
+                                          <button class='btn btn-sm bg-none' type='submit' value='$reportId' onclick='event.stopPropagation(); viewReport($reportId)'><i class='fas fa-eye'></i></button>
+                                          <button class='btn btn-sm bg-none' onclick='event.stopPropagation(); archive(1, clickArchive, $reportId)'><i class='fa fa-archive'></i></button>
+                                          </div></td></tr>";
     }
 }

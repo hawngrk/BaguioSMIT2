@@ -360,7 +360,6 @@ class patientDetails{
 class reports{
     private $reportId;
     private $reportPatientId;
-    private $reportType;
     private $reportDetails;
     private $vaccineSymptomsReported;
     private $covid19SymptomsReported;
@@ -369,11 +368,10 @@ class reports{
     private $reportStatus;
     private $archived;
 
-    public function __construct($repId, $repPatId, $repType, $repDetails, $vaccSymRep, $covSymRep,$dateLastOut, $dateRep, $repStat, $archived)
+    public function __construct($repId, $repPatId, $repDetails, $vaccSymRep, $covSymRep,$dateLastOut, $dateRep, $repStat, $archived)
     {
         $this->reportId = $repId;
         $this->reportPatientId = $repPatId;
-        $this->reportType = $repType;
         $this->reportDetails = $repDetails;
         $this->vaccineSymptomsReported = $vaccSymRep;
         $this->covid19SymptomsReported = $covSymRep;
@@ -391,11 +389,6 @@ class reports{
     public function getReportPatientId()
     {
         return $this->reportPatientId;
-    }
-
-    public function getReportType()
-    {
-        return $this->reportType;
     }
 
     public function getReportDetails()

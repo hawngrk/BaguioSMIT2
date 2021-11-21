@@ -53,7 +53,6 @@ if (isset($_POST['report'])) {
     $reportId = $_POST['report'];
     $view = $_POST['view'];
     $patientId = '';
-    $reportType = '';
     $dateRecentTravel = '';
     $vaccineSymptoms = '';
     $covid19Symptoms = '';
@@ -69,7 +68,6 @@ if (isset($_POST['report'])) {
     foreach ($reports as $rep) {
         if ($rep->getReportId() == $reportId) {
             $patientId = $rep->getReportPatientId();
-            $reportType = $rep->getReportType();
             $dateRecentTravel = $rep->getLastOut();
             $vaccineSymptoms = $rep->getVaccineSymptomsReported();
             $covid19Symptoms = $rep->getCovid19SymptomsReported();
@@ -105,8 +103,6 @@ if (isset($_POST['report'])) {
         <div class='col'>
             <h5 class='reviewReport'><b>Report Information</b></h5>
             <h7 class='paddingLeft'><b>Report ID:</b> $reportId</h7>
-            <br>
-            <h7 class='paddingLeft'><b>Report Type:</b> $reportType</h7>
             <br>
             <h7 class='paddingLeft'><b>Date of recent travel:</b> $dateRecentTravel</h7>
             <br>
@@ -343,10 +339,10 @@ if (isset($_POST['download'])) {
     mkdir('reports');
 
     foreach ($reports as $rep) {
-        $getReportsQuery = "SELECT report.report_id, report.report_type, report.report_details, report.report_status, CONCAT(patient_details.patient_first_name, ' ', patient_details.patient_middle_name, ' ', patient_details.patient_last_name) AS full_name, CONCAT(patient_details.patient_house_address, ' ', barangay.barangay_name,' ',barangay.city,' ', barangay.province) AS full_address, patient_details.patient_contact_number FROM report JOIN patient_details ON report.patient_id = patient_details.patient_id JOIN barangay ON barangay.barangay_id = patient_details.barangay_id WHERE report.report_id = $rep";
+        $getReportsQuery = "SELECT report.report_id, report.report_details, report.report_status, CONCAT(patient_details.patient_first_name, ' ', patient_details.patient_middle_name, ' ', patient_details.patient_last_name) AS full_name, CONCAT(patient_details.patient_house_address, ' ', barangay.barangay_name,' ',barangay.city,' ', barangay.province) AS full_address, patient_details.patient_contact_number FROM report JOIN patient_details ON report.patient_id = patient_details.patient_id JOIN barangay ON barangay.barangay_id = patient_details.barangay_id WHERE report.report_id = $rep";
         $stmt->prepare($getReportsQuery);
         $stmt->execute();
-        $stmt->bind_result($reportId, $reportType, $reportDetails, $reportStatus, $patientName, $patientAddress, $patientNum);
+        $stmt->bind_result($reportId, $reportDetails, $reportStatus, $patientName, $patientAddress, $patientNum);
         $stmt->fetch();
 
         $phpWord = new PhpWord();
@@ -359,7 +355,6 @@ if (isset($_POST['download'])) {
         $body->addText('');
         $body->addText('Report Information', 'heading');
         $body->addText('Report ID: ' . $reportId, 'text');
-        $body->addText('Report Type: ' . $reportType, 'text');
         $body->addText('Report Details:', 'text');
         $textbox = $body->addTextBox(
             array(
