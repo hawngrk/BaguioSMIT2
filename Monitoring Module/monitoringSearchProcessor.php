@@ -228,7 +228,7 @@ if (isset($_POST['modalRes'])) {
         $vaccineStatus = 'Partially vaccinated';
 
         echo "
-                <div class='col border' style='padding:1%; margin-right:3%'>
+                <div class='col border rounded' style='padding:1%; margin-right:3%'>
                     <div class='row'> <h5 class='ml-3' style='color: #68A0B8'> Vaccination Details - $vaccineStatus </h5> </div>
                     <div class='row'>
                         <h6 class='ml-4'> <b> <u>Post-Vaccine Vitals</u></b></h6>
@@ -332,7 +332,7 @@ if (isset($_POST['modalRes'])) {
     } else {
         $vaccineStatus = 'Pending';
         echo "
-                <div class='col border' style='padding:1%; margin-right:3%'>
+                <div class='col border rounded' style='padding:1%; margin-right:3%'>
                     <div class='row'> <h5 class='ml-3' style='color: #68A0B8'> Vaccination Details - $vaccineStatus </h5> </div>
                     <div class='row'>
                         <h5 class='ml-4' style='color: #68A0B8'>Pre-Vaccine Vitals</h5>
@@ -376,51 +376,39 @@ if (isset($_POST['modalRes'])) {
                 
                 <div class='col ml-3'>
                     <div class='row'><h5>Post-Vaccine Vitals:</h5></div>
-                    <div class='row'>
-                        <div class='col-4'>
+                    <div class='row ml-3'>
+                        <div class='col-6'>
                             <label for='pulseR'> <strong>Pulse Rate:</strong> </label>
+                            <input class='textInp vitalsInput w-100 ml-3' id='pulseR' placeholder='Enter pulse rate' name='pulseR'>
+                        
                         </div>
-                        <div class='col'>
-                         <input class='textInp vitalsInput w-75' id='pulseR' placeholder='Enter pulse rate' name='pulseR'>
-                        </div>   
                     </div>
-                    <br>
-                    <div class='row'>
-                        <div class='col-4'>
+                    <div class='row ml-3'>
+                        <div class='col-6'>
                             <label for='tempR'> <strong>Temperature:</strong> </label>
+                            <input class='textInp vitalsInput w-100 ml-3' id='tempR' placeholder='Enter temperature' name='tempR'>
                         </div>
-                        <div class='col'>
-                           <input class='textInp vitalsInput w-75 id='tempR' placeholder='Enter temperature' name='tempR'>
-                        </div>   
                     </div>
-                    <br>
-                    <div class='row'>
-                        <div class='col-4'>
+                    <div class='row ml-3'>
+                        <div class='col-6'>
                             <label for='oxygenSat'> <strong>Oxygen Saturation:</strong> </label>
+                            <input class='textInp vitalsInput w-100 ml-3' id='oxygenSat' placeholder='Enter oxygen saturation' name='vitoxygenSatals'>
+                       
                         </div>
-                        <div class='col'>
-                            <input class='textInp vitalsInput w-75' id='oxygenSat' placeholder='Enter oxygen saturation' name='vitoxygenSatals'>
-                        </div>   
                     </div>
-                    <br>
-                    <strong>Blood Pressure (Diastolic/Systolic e.g. 120/80)</strong>
-                    <br>
-                    <div class='row'>
-                        <div class='col-4'>
+                    <div class='row ml-3 mt-3'> <strong>Blood Pressure </strong>  (Diastolic/Systolic e.g. 120/80)</div>
+                      <div class='row ml-3'>
+                        <div class='col-6'>
                             <label for='bpRDias'> <strong>Diastolic:</strong> </label>
+                            <input class='textInp vitalsInput w-100 ml-3' placeholder='millimetres of mercury' id='bpRDias' name='bpRDias'>
+                        
                         </div>
-                        <div class='col'>
-                            <input class='textInp vitalsInput w-75' placeholder='millimetres of mercury' id='bpRDias' name='bpRDias'>
-                        </div>   
                     </div>
-                    <br>
-                    <div class='row'>
-                        <div class='col-4'>
+                    <div class='row ml-3'>
+                        <div class='col-6'>
                             <label for='bpRSys'> <strong>Systolic:</strong> </label>
+                            <input class='textInp vitalsInput w-100 ml-3' placeholder='millimetres of mercury' id='bpRSys' name='bpRSys'>
                         </div>
-                        <div class='col'>
-                            <input class='textInp vitalsInput w-75' placeholder='millimetres of mercury' id='bpRSys' name='bpRSys'>
-                        </div>   
                     </div>
                 </div>
                

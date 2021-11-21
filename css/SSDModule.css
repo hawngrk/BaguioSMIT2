@@ -5,7 +5,7 @@
     align-content: center;
 }
 
-#hDistrictContainer{ /*ssd*/
+#hDistrictContainer{
     margin-top: 5%;
     margin-left: 7%;
     padding-top: 2%;
@@ -15,10 +15,10 @@
     display: inline-block;
 }
 
-#hDistrictContainer h2 {/*ssd*/
+#hDistrictContainer h2 {
     margin-left: 2%;
 }
-#vaccineDeployments{ /*ssd*/
+#vaccineDeployments{
     padding-top: 2%;
     width: 95%;
     border-radius: 12px;
@@ -28,7 +28,7 @@
     background-color: #f6f6f6;
 }
 
-#totalPopulation,#totalPopulationPerHD{ /*ssd*/
+#totalPopulation,#totalPopulationPerHD{
     padding: 2%;
     background-color: #f6f6f6;
     width: 100%;
@@ -38,15 +38,15 @@
     margin-right: 7%;
 }
 
-#totalPopulation{ /*ssd*/
+#totalPopulation{
     margin-bottom: 2%;
 }
 
-#vaccineDeploymentContent{ /*ssd*/
+#vaccineDeploymentContent{
     margin: 5%;
 }
 
-#labelling{ /*ssd*/
+#labelling{
     margin-left: 3%;
 }
 

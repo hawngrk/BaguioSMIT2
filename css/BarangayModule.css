@@ -7,7 +7,7 @@
     margin-right: 5%;
 }
 
-.patientQCounter { /*barangay*/
+.patientQCounter {
     background-color: white;
     width: 100%;
     height: 100%;
@@ -16,7 +16,7 @@
 
 }
 
-.patientQueueButtons p, /*Barangay*/
+.patientQueueButtons p,
 h6 {
     text-align: center;
 }
@@ -25,35 +25,35 @@ h6 {
     padding-top: 10%;
 }
 
-#confirmationNotif{ /*barangay*/
+#confirmationNotif{
     border-radius: 12px;
     font-size: 25px;
     text-align: left;
     width: 100%;
 }
 
-.fontColor{ /*barangay*/
+.fontColor{
     color: #ffffff;
 }
 
-#numberAvailable{ /*barangay*/
+#numberAvailable{
     background: #68A0B8;
 }
 
-#numberSent{ /*barangay*/
+#numberSent{
     background: #4F91AD;
 }
 
-#claimedStubs{ /*barangay*/
+#claimedStubs{
     padding: 5%;
     background: #3681A1;
 }
 
-#redirectStub{ /*barangay*/
+#redirectStub{
     background: #1D7195;
 }
 
-.notif { /*barangay*/
+.notif {
     border-radius: 12px;
     border: #000 solid 1px;
     margin-right: auto;

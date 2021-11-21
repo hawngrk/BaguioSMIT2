@@ -1,7 +1,7 @@
 <?php
 include "../includes/database.php";
-//require_once('../includes/sessionHandling.php');
-//checkRole('SSD');
+require_once('../includes/sessionHandling.php');
+checkRole('SSD');
 ?>
 
 <html lang="en">
@@ -218,21 +218,6 @@ include "../includes/database.php";
                     </div>
                 </div>
             </div>
-
-            <div>
-                <div id="barangayViewModal" class="modal-window">
-                    <div id='stubsModal' class='content-modal tableModal'>
-                        <div class='modal-header'>
-                            <h3 style='padding-right:50%' id="header"></h3>
-                            <button id='closeModal' class='close' onclick='closeModal("barangayViewModal")'><i
-                                        class='fas fa-window-close'></i></button>
-                        </div>
-                        <div class='modal-body' id='view'>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
         </div>
     </div>
     <script>
@@ -392,11 +377,19 @@ include "../includes/database.php";
             $.ajax({
                 url: 'selectDeployment.php',
                 type: 'POST',
-                data: {"view": id},
+                data: {"viewFirst": id},
                 success: function (result) {
-                    document.getElementById("view").innerHTML = result;
-                    openModal('barangayViewModal');
-                    console.log(result)
+                    document.getElementById("firstDosePage").innerHTML = result;
+                }
+            });
+
+            $.ajax({
+                url: 'selectDeployment.php',
+                type: 'POST',
+                data: {"viewSecond": id},
+                success: function (result) {
+                    document.getElementById("secondDosePage").innerHTML = result;
+                    document.getElementById("barangayModal").style.display = "block";
                 }
             });
         }
@@ -565,10 +558,61 @@ include "../includes/database.php";
                 denyButtonText: `No`,
             }).then((result) => {
                 if (result.isConfirmed) {
+                    archiveAllocation(drive);
                     sendStubs(drive, priorities);
                     Swal.fire({icon: 'success', title: 'Stubs successfully sent!', confirmButtonText: 'OK', confirmButtonColor: '#007bff'})
                 } else if (result.isDenied) {
                     Swal.fire({icon: 'info', title: 'Cancelled', confirmButtonText: 'OK', confirmButtonColor: '#007bff'})
+                }
+            })
+        }
+
+        function archiveAllocation(drive) {
+            $.ajax({
+                url: 'selectDeployment.php',
+                type: 'POST',
+                data: {"healthDistricts": drive},
+                dataType: "JSON",
+                success: function (result) {
+                    for (var key in result) {
+                        var barangays = document.getElementsByClassName(`${result[key]}`);
+                        for (var i = 0; i < barangays.length; i++) {
+                            var barangay = barangays[i].id;
+
+                            var first = document.getElementById(barangay).getElementsByTagName('input');
+                            for (var k = 0; k < first.length; k++) {
+                                first[k].setAttribute('value', first[k].value);
+                                first[k].setAttribute('disabled', true);
+                            }
+                            var second = document.getElementById(barangay.concat('', '2')).getElementsByTagName("input");
+                            for (var m = 0; m < first.length; m++) {
+                                second[m].setAttribute('value', second[m].value);
+                                second[m].setAttribute('disabled', true);
+                            }
+                            var content1 = document.getElementById(barangay).innerHTML;
+                            var content2 = document.getElementById(barangay.concat('', '2')).innerHTML;
+
+                            console.log(content1);
+                            console.log(content2);
+
+                            $.ajax({
+                                url: 'selectDeployment.php',
+                                type: 'POST',
+                                data: {
+                                    "saveAllocation": drive,
+                                    "barangay": barangay,
+                                    "content1": content1,
+                                    "content2": content2
+                                },
+                                success: function (result) {
+                                    console.log(result);
+                                },
+                                fail: function (result) {
+                                    console.log('fail');
+                                }
+                            });
+                        }
+                    }
                 }
             })
         }
@@ -585,26 +629,13 @@ include "../includes/database.php";
                         for (var i = 0; i < barangays.length; i++) {
                             var barangay = barangays[i].id;
 
-                            var secondDose = document.getElementById(barangay.concat('', '2')).value;
                             var groups = {'A1: Health Care Workers':0, 'A2: Senior Citizens':0,  'A3: Adult with Comorbidity':0, 'A4: Frontline Personnel in Essential Sector':0, 'A5: Indigent Population':0, 'Rest of Adult Population':0, 'A3. Pedia: 12-17 Years Old with Commorbidity':0, 'Rest of Pedia Population':0, 'Second Dose': 0};
 
-                            var entered = document.getElementById(barangay).getElementsByTagName('input');
-                            for (var k = 0; k < entered.length; k++) {
-                                entered[k].setAttribute('disabled', true);
+                            var secondDoses = document.getElementById(barangay.concat('', '2')).getElementsByTagName("input");
+                            var count2 = 0;
+                            for (var n = 0; n < secondDoses.length; n++) {
+                                count2 += secondDoses[n].value;
                             }
-                            var content = document.getElementById(barangay).innerHTML;
-                            console.log(content);
-                            $.ajax({
-                                url: 'selectDeployment.php',
-                                type: 'POST',
-                                data: {"saveAllocation": drive, "barangay": barangay, "content": content},
-                                success: function (result) {
-                                    console.log(result);
-                                },
-                                fail: function(result) {
-                                    console.log('fail');
-                                }
-                            });
 
                             for (var j = 0; j < priorities.length; j++) {
                                 var inputs = barangays[i].getElementsByClassName(`${priorities[j]}`);
@@ -614,7 +645,7 @@ include "../includes/database.php";
                                 }
                                 groups[`${priorities[j]}`] = count;
                             }
-                            groups['Second Dose'] = secondDose;
+                            groups['Second Dose'] = count2;
                             $.ajax({
                                 url: 'selectDeployment.php',
                                 type: 'POST',
@@ -628,9 +659,22 @@ include "../includes/database.php";
                             })
                         }
                     }
+
+                    $.ajax({
+                        url: 'selectDeployment.php',
+                        type: 'POST',
+                        data: {"updateDrive": drive},
+                        success: function (result) {
+                            console.log(result);
+                        },
+                        fail: function(result) {
+                            console.log('fail');
+                        }
+                    })
                 }
             });
         }
     </script>
 </body>
 </html>
+

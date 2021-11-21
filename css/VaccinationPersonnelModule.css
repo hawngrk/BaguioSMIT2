@@ -12,7 +12,7 @@
     border-radius: 12px;
 }
 
-.paddingLeft{ /*HSO*/
+.paddingLeft{
     padding-left: 3%;
 }
 
@@ -20,21 +20,12 @@
     margin-bottom: 1%!important;
 }
 
-.search-containerScreening { /*personnel*/
+.search-containerScreening {
     margin-bottom: 0%!important;
     width: 205%;
     display: flex;
 }
 
-/*#patientRow h6, #qrView h6{*/
-/*    margin-left: 4%;*/
-/*}*/
-
-/*#patientRow p, #qrView p{*/
-/*    margin-left: 7%;*/
-/*    font-size: 90%;*/
-/*    color: black;*/
-/*}*/
 
 #patientRow form, #qrView form{
     margin-bottom: 3%;
