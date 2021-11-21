@@ -1,7 +1,12 @@
 <?php
-include("../includes/database.php");
+require('../includes/recordActivityLog.php');
+session_start();
+$accountDetails = $_SESSION['account'];
+$employeeID = $accountDetails['empId'];
+$employeeRole = $accountDetails['role'];
 
 if (isset($_POST['search'])) {
+    require("../includes/database.php");
     $searchPatient = $_POST['search'];
     if ($searchPatient == "") {
         $querySearchPatient = "SELECT patient.patient_id, CONCAT(patient_details.patient_last_name,', ',patient_details.patient_first_name,' ',COALESCE(patient_details.patient_middle_name,''),' ',COALESCE(patient_details.patient_suffix,'')) AS full_name, priority_groups.priority_group, CONCAT(patient_details.patient_house_address, ' ', barangay.barangay_name,' ',barangay.city,' ', barangay.province) AS full_address, patient_contact_number FROM patient JOIN patient_details ON patient.patient_id = patient_details.patient_id JOIN barangay ON barangay.barangay_id = patient_details.barangay_id JOIN priority_groups ON priority_groups.priority_group_id = patient_details.priority_group_id WHERE patient_details.Archived = 0;";
@@ -420,16 +425,16 @@ if (isset($_POST['modalScreening'])) {
 }
 
 if (isset($_POST['pulse'])) {
-    require_once('../includes/configure.php');
+    require('../includes/configure.php');
     $pulseRR = $_POST['pulse'];
     $tempRR = $_POST['temp'];
     $oxygen = $_POST['oxygen'];
     $bpDiastolic = $_POST['diastolic'];
     $bpSystolic = $_POST['systolic'];
     $id = $_POST['id'];
-
+    
     //Log purposes
-    $logMessage = "Added the following pre vitals: Pulse rate ($pulseRR), Temperature rate = $tempRR, Oxygen saturation ($oxygen), Blood Pressure ($bpDiastolic/$bpSystolic) for patient ID: $id";
+    $log = "Added the following pre vitals: Pulse rate ($pulseRR), Temperature rate = $tempRR, Oxygen saturation ($oxygen), Blood Pressure ($bpDiastolic/$bpSystolic) for patient ID: $id";
 
     try {
         $querySelect = "SELECT * FROM patient WHERE patient_id = ?";
@@ -446,30 +451,36 @@ if (isset($_POST['pulse'])) {
             $stmtinsert = $database->prepare($query);
             $stmtinsert->execute([$pulseRR, $tempRR, $oxygen, $bpDiastolic, $bpSystolic, $id]);
         }
+        insertLogs($employeeID, $employeeRole, 'Add', $log);
     } catch (Exception $th) {
         echo $th->getMessage();
     }
 }
 
 if (isset($_POST['allergy'])) {
+    require('../includes/configure.php');
     $allergy = $_POST['allergy'];
     $hypertension = $_POST['hypertension'];
     $heart = $_POST['heart'];
-    $kidney = $_POST['kidney'];
+    $kidney = $_POST['kidney'];    
     $diabetes = $_POST['diabetes'];
     $bronchial = $_POST['bronchial'];
     $immunodeficiency = $_POST['immunodeficiency'];
     $cancer = $_POST['cancer'];
-    $otherCommorbidity = $_POST['other$otherCommorbidity'];
+    $otherCommorbidity = $_POST['otherCommorbidity'];
     $id = $_POST['id'];
 
-    $query =
-        "UPDATE medical_background SET allergy_to_vaccine = $allergy, hypertension = $hypertension, heart_disease = $heart, kidney_disease = $kidney, diabetes_mellitus = $diabetes, bronchial_asthma = $bronchial, immunodeficiency = $immunodeficiency, cancer = $cancer, other_commorbidity = $otherCommorbidity WHERE medical_background.patient_id = $id
-    ";
+    $log = "Updated the following medical information: Allergy($allergy), Hypertension($hypertension), Heart Disease($heart), Kidney Disease($kidney), Diabetes Mellitus($diabetes), Bronchial Asthma($bronchial), Immunodeficiency($immunodeficiency), Cancer($cancer), Other Commorbidity: $otherCommorbidity from patient ID: $id";
 
-    $stmt = $database->stmt_init();
-    $stmt->prepare($query);
-    $stmt->execute();
+    $query = 
+    "UPDATE medical_background SET allergy_to_vaccine = ?, hypertension = ?, heart_disease = ?, kidney_disease = ?, diabetes_mellitus = ?, bronchial_asthma = ?, immunodeficiency = ?, cancer = ?, other_commorbidity = ? WHERE patient_id = ?";
+    try {
+        $stmt = $database->prepare($query);
+        $stmt->execute([$allergy, $hypertension, $heart, $kidney, $diabetes, $bronchial, $immunodeficiency, $cancer, $otherCommorbidity, $id]);
+    } catch (Exception $e) {
+        echo $e->getMessage();
+    }
+    insertLogs($employeeID, $employeeRole, 'Update', $log);
 }
 
 //Returns checkbox based on the patient's commorbidity

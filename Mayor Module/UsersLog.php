@@ -91,7 +91,7 @@ checkRole("Mayor's Office");
                                     <option value="Monitoring"> Monitoring</option>
                                     <option value="Vaccinator"> Vaccinator</option>
                                     <option value="Barangay"> Barangay</option>
-                                    <option value="Mayor's"> Mayor's Office</option>
+                                    <option value="Mayor"> Mayor's Office</option>
                                 </select>
                             </div>
                             <div class="sfDiv col-md-1.5 my-auto">

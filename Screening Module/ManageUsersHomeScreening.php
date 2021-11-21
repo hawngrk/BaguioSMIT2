@@ -282,7 +282,7 @@ checkRole('Screening');
 
     function editMedicalBackground(id) {
         //Commorbidities and allergy
-        var allergyCheckBox1 = verifyCommorbidity($('#allergy1:checked').val());
+        var allergy = verifyCommorbidity($('#allergy1:checked').val());
         var hypertension = verifyCommorbidity($('#hypertension:checked').val());
         var heart = verifyCommorbidity($('#heart:checked').val());
         var kidney = verifyCommorbidity($('#kidney:checked').val());
@@ -292,12 +292,14 @@ checkRole('Screening');
         var cancer = verifyCommorbidity($('#cancer:checked').val());
         var otherCommorbidity = document.getElementById('otherCommorbidity').value;
         
+        //Log purposes
+        $logMessage = "Updated the following medical information: Allergy($allergy), Hypertension($hypertension), Heart Disease($heart), Kidney Disease($kidney), Bronchial Asthma($bronchial), Immunodeficiency($immunodeficiency), Cancer($cancer), and Other Commorbiditiy($otherCommorbidity) from patient ID: $id";
+
         $.ajax({
             url: 'screeningProcessor.php',
             type: 'POST',
             data: {'allergy' : allergy, 'hypertension' : hypertension , 'heart' : heart, 'kidney' : kidney, 'diabetes' : diabetes, 'bronchial' : bronchial, 'immunodeficiency' : immunodeficiency, 'cancer' : cancer, 'otherCommorbidity' : otherCommorbidity, 'id' : id},
             success: function(preVat) {
-                console.log(preVat)
             }
         });
     }
