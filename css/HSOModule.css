@@ -52,23 +52,23 @@ input[type=text1] {
     margin-top: 10%;
 }
 
-.editRepBtn{ /*HSO*/
+.editRepBtn{
     margin-top: 2%;
 }
-.counter-box { /*HSO*/
+.counter-box {
     display: block;
     background: #f6f6f6;
     padding: 40px 20px 37px;
 }
 
-.counter-box p { /*HSO*/
+.counter-box p {
     padding: 0;
     color: #ffffff;
     font-size: 18px;
     font-weight: 500
 }
 
-.counter-box i { /*HSO*/
+.counter-box i {
     font-size: 60px;
     margin: 0 0 15px;
     color: #d2d2d2
@@ -137,7 +137,7 @@ input[type=text1] {
     color: #fff
 }
 
-.counter-box p, .counter-box span { /*HSO*/
+.counter-box p, .counter-box span {
     padding: 0;
     color: #ffffff;
     font-size: 20px;
@@ -166,8 +166,6 @@ input[type=text1] {
     padding: 2%;
 }
 
-
-
 .content-modal-table{
     background-color: #fefefe;
     margin: 5% auto;
@@ -195,18 +193,18 @@ img{
     width: 20%;
 }
 
-.counterColumn{ /*HSO*/
+.counterColumn{
     float: right;
     width: 100%;
     margin: 2%;
     margin-top: 4%;
 }
 
-.counterRow { /*HSO*/
+.counterRow { /
     width: 100%;
 }
 
-.contactWidth, .districtWidth{ /*HSO*/
+.contactWidth, .districtWidth{
     width: 100%;
     margin: 1%;
 }
@@ -222,10 +220,6 @@ img{
     margin: 2%;
 }
 
-
-
-
-/*HSO*/
 #addVaccineModal{
     margin-left: 4%;
     margin-right: -10%;
@@ -247,7 +241,7 @@ img{
     padding: 2%;
 }
 
-.tablePatient,.tableVaccine { /*HSO*/
+.tablePatient,.tableVaccine {
     width: 100%!important;
     background-color: white;
 }
@@ -277,7 +271,7 @@ img{
     border-color: transparent transparent #343A40 transparent;
 }
 
-.depSummary { /*HSO*/
+.depSummary {
     float: right;
     border-radius: 10px;
     width: 100%;
@@ -294,7 +288,7 @@ img{
     font-weight: 800!important;
 }
 
-.listPatient-box h3{ /*HSO*/
+.listPatient-box h3{
     color: white;
 }
 
@@ -328,14 +322,14 @@ img{
     margin-top: 1%;
 }
 
-#searchReportHSO{ /*HSO*/
+#searchReportHSO{
     width: 100%;
 }
 #searchVaccineHSO{
     width: 65%;
 }
 
-#searchpatientHSO{ /*HSO*/
+#searchpatientHSO{
     width: 100%;
 }
 
@@ -360,8 +354,7 @@ img{
     margin-right: 3%;
 }
 
-
-#siteModal{ /*hso*/
+#siteModal{
     margin-left: 3%;
     margin-right: 3%;
     margin-top: 1%;
@@ -371,13 +364,13 @@ img{
     background-color: #034E6E;
     color: #fafafa;
 }
-.portionDash{ /*hso*/
+.portionDash{
     border-radius: 12px;
     background-color: white;
     margin: .3em;
     padding: 3%;
 }
-/*HSO MODULE*/
+
 #deploymentModal{
     margin-left: 3%;
     margin-right: 3%;
@@ -442,8 +435,6 @@ h7~h8{
     padding: 2%;
 }
 
-
-
 .position{
     width: 95%;
     position: absolute;
@@ -460,8 +451,6 @@ h7~h8{
     cursor: pointer;
     margin-bottom: 3%;
 }
-
-
 
 .location{
     margin-left: 1%;
@@ -489,18 +478,17 @@ h7~h8{
     margin-left: 2%;
 }
 
-
 .sortWidth{
     width: auto;
     height: auto;
 }
 
 
-.sortButton{ /*HSO*/
+.sortButton{
     margin-right: 1%;
 }
 
-.sortButton, .filterButton{ /*hso*/
+.sortButton, .filterButton{
     width: 90%;
 }
 
