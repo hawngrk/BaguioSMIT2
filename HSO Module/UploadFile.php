@@ -236,9 +236,8 @@ function createAccount($patientID, $firstName, $lastName, $email) {
 
 //Generate login credentials using entered details of the patient
 function generateCredentials($patientID, $firstName, $lastName) {
-    $username = $firstName.$lastName;
-    $toShuffle = $firstName.$lastName.$patientID;
-    $password = str_shuffle($toShuffle);
+    $username = 'patient'.$firstName;
+    $password = 'patient'.$patientID.$lastName;
     $credentials = array('username' => $username, 'password' => $password);
     return $credentials;
 }
