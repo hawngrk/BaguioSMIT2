@@ -24,7 +24,7 @@ function checkRole($currentPage) {
         }
         
         if ($empRole['role'] == 'Screening') {
-            header("Location:../Barangay Module/homeBarangayModule.php");
+            header("Location:../Barangay Module/scanQRScreening.php");
         }
 
         if ($empRole['role'] == 'HSO') {

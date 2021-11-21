@@ -132,7 +132,6 @@ Description: Login HTML Elements for receiving credentials from the users
                 url: '../AdminBackEnd/EmployeeLoginAuthentication.php',
                 data: {username: userN, password: passW},
                 success: function (results) {
-                    console.log(results);
                     if ($.trim(results) == 'Barangay') {
                         success();
                         setTimeout("window.location.href = '../Barangay Module/homeBarangayModule.php'", 500);
@@ -163,14 +162,14 @@ Description: Login HTML Elements for receiving credentials from the users
                     }
                 },
                 error: function (results) {
-                    console.log('There was an error');
+                    error();
                 }
             });
         }
 
         function success() {
             Swal.fire({
-                icon: 'info',
+                icon: 'success',
                 title: 'Successfully Logged in',
                 showConfirmButton: false,
                 timer: 1500

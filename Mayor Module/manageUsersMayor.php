@@ -1,7 +1,10 @@
-<?php //
-//require_once('../includes/sessionHandling.php');
-//checkRole("Mayor's Office");
-//?>
+<?php
+ 
+require_once('../includes/sessionHandling.php');
+checkRole("Mayor's Office");
+
+?>
+
 <!DOCTYPE html>
 <html>
 
@@ -118,7 +121,7 @@
                                     <option value="Monitoring"> Monitoring </option>
                                     <option value="Vaccinator"> Vaccinator </option>
                                     <option value="Barangay"> Barangay </option>
-                                    <option value="Mayor"> Mayor's Office </option>
+                                    <option value="Mayor's Office"> Mayor's Office </option>
                                 </select>
                             </div>
                         </div>
@@ -219,11 +222,11 @@
         <div class="content-modal">
             <div class="modal-header">
                 <h4 class="modal-title">Add Employee Account</h4>
-                <button type="button" onclick="closeModal('addEmployeeModal')" class="close"><i
+                <button type="button" onclick="closeModalForms('addEmployeeModal','addEmployeeForm')" class="close"><i
                             class='fas fa-window-close'></i></button>
             </div>
             <div class="modal-body">
-                <form class="addEmployeeForm">
+                <form id="addEmployeeForm" class="addEmployeeForm">
                     <div class="employeeInfo">
                         <h5> Employee Information </h5>
                         <br>
@@ -251,7 +254,7 @@
                         <br>
                         <div class="row ml-5">
                             <div class="col-4">
-                                <label class="required" for="mname">Middle Name:</label>
+                                <label class="labe1" for="mname">Middle Name:</label>
                             </div>
 
                             <div class="col">
@@ -262,12 +265,12 @@
                         <br>
                         <div class="row ml-5">
                             <div class="col-4">
-                                <label class="label1 required" for="suffix">Suffix: </label><br>
+                                <label class="label1" for="suffix">Suffix: </label><br>
                             </div>
 
                             <div class="col">
                                 <select id="suffix" name="suffix" class="form-select form-select-lg">
-                                    <option value=""> Select Suffix...</option>
+                                    <option value="" disabled selected> Select Suffix...</option>
                                     <option value="none">None</option>
                                     <option value="sr">Sr</option>
                                     <option value="jr">Jr</option>
@@ -291,12 +294,12 @@
                         <br>
                         <div class="row ml-5">
                             <div class="col-4">
-                                <label class="label1 required" for="role">Account Type: </label><br>
+                                <label class="label1 required" for="type">Account Type: </label><br>
                             </div>
 
                             <div class="col">
-                                <select id="role" name="role" class="form-select form-select-lg">
-                                    <option value=""> Select account type...</option>
+                                <select id="type" name="type" class="form-select form-select-lg">
+                                    <option value="" disabled selected> Select account type...</option>
                                     <option value="Employee">Employee</option>
                                     <option value="Admin">Admin</option>
                                 </select>
@@ -309,29 +312,48 @@
                             </div>
 
                             <div class="col">
-                                <select id="role" name="role" class="form-select form-select-lg" onchange="showBarangayInput(this);">
-                                    <option value=""> Select your Role...</option>
+                                <select id="role" name="role" class="form-select form-select-lg">
+                                    <option value="" disabled selected> Select your Role...</option>
                                     <option value="Barangay">Barangay</option>
                                     <option value="HSO">HSO</option>
+                                    <option value="SSD">SSD</option>
                                     <option value="Monitoring">Monitoring</option>
                                     <option value="Screening">Screening</option>
+                                    <option value="Vaccinator">Vaccinator</option>
                                     <option value="Mayor's Office">Mayor's Office</option>
                                     <option value="EIR">EIR</option>
                                 </select>
                             </div>
                         </div>
+                        
+                        <br>
+                        <div class="row ml-5">
+                            <div class="col-4">
+                                <label class="label1 required" for="barangay"> Barangay: </label>
+                            </div>
+                            <div class="col">
+                                <select id="barangay" name="barangay" class="form-select form-selet-lg">
+                                    <option value="" disabled selected> Select Barangay</option>
+                                    <?php
+                                    require_once("../require/getBarangay.php");
+                                    foreach ($barangays as $barangay) {
+                                        $id = $barangay->getBarangayId();
+                                        $name = $barangay->getBarangayName();
+                                        echo "<option value=$id>$name</option>";
+                                    }
+                                    ?>
+                                </select>
+                            </div>
+                        </div>
                     </div>
                     <div class="modal-footer">
-                        <input type="button" onclick="closeModal('addEmployeeModal')"
-                               class="btn btn-danger shadow-sm" value="Cancel">
-                        <input type="submit" class="btn btn-success shadow-sm" value="Add">
+                        <input type="button" onclick="closeModalForms('addEmployeeModal','addEmployeeForm')" class="btn btn-danger shadow-sm" value="Cancel">
+                        <input type="submit" onclick="event.preventDefault(); confMessage('employee', addEmployee, validation)" class="btn btn-success shadow-sm" value="Add">
                     </div>
                 </form>
             </div>
         </div>
     </div>
-
-
 
     <!--Disabled Modal-->
     <div id="disabledAccountsModal" class="modal-window">
@@ -348,9 +370,28 @@
 </body>
 </html>
 
-<!--<script src="https://unpkg.com/bootstrap-table@1.18.3/dist/bootstrap-table.min.js"></script>-->
+<!-- Validation -->
+<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.js"></script>
+
+<script src="../javascript/inputValidations.js"></script>
 
 <script>
+    function validation() {
+        var form = $('#addEmployeeForm');
+        form.validate({
+                rules: {
+                    lname: "required",
+                    fname: "required",
+                    suffix: "required",
+                    type: "required",
+                    role: "required",
+                    contactNum: "required",
+                    barangay: "required"
+                }
+            });
+        return form.valid();
+    }
+
     function showEmployeeDeets(empID) {
         document.getElementById("employeeView").style.display = "block";
         empClose.onclick = function () {
@@ -392,10 +433,69 @@
         });
     }
 
-    // $(document).on("change",'#filterEmp',function () {
-    //     var filterAlgorithm = $(this).val()
-    //     $('#table').bootstrapTable('filterBy',{role: filterAlgorithm})
-    // })
+    function addEmployee() {
+        var last = $.trim(document.getElementById("lname").value);
+        var first = $.trim(document.getElementById("fname").value);
+        var middle = $.trim(document.getElementById("mname").value);
+        var suffix = $.trim(document.getElementById("suffix").value);
+        var brgyId = $.trim(document.getElementById("barangay").value);
+
+        var contact = $.trim(document.getElementById("contactNum").value);
+        var type = document.getElementById("type").value;
+        var role = document.getElementById("role").value;
+
+        $.ajax({
+            url: 'mayorsModuleProcessor',
+            type: 'POST',
+            data: {
+                last: last,
+                first: first,
+                middle: middle,
+                suffix: suffix,
+                brgyId: brgyId,
+                contact: contact,
+                type: type,
+                role: role
+            },
+            success: function(result) {
+                reloadEmployee();
+                closeModal('addEmployeeModal');
+            }
+        });
+    }
+
+    function reloadEmployee() {
+        $.ajax({
+            url: 'mayorsModuleProcessor.php',
+            type: 'GET',
+            data: {reload: " "},
+            success: function (result) {
+                console.log(result);
+                document.getElementById("employeesTable").innerHTML = "";
+                document.getElementById("employeesTable").innerHTML = result;
+            }
+        })
+    }
+
+    function confMessage(employee, action, validationMethod) {
+        var formValidation = validationMethod();
+        if (formValidation) {
+            Swal.fire({
+                icon: 'info',
+                title: 'Are You Sure you Want to add this ' + employee + '?',
+                showDenyButton: true,
+                confirmButtonText: 'Yes',
+                denyButtonText: `No`
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    action();
+                    Swal.fire('Saved!', '', 'success')
+                } else if (result.isDenied) {
+                    Swal.fire('Changes are not saved', '', 'info')
+                }
+            })
+        }
+    }
 
 
     function filterEmployee(filterEmp){
@@ -409,6 +509,8 @@
             }
         })
     }
+
+
 </script>
 
 <!--Logout script-->
