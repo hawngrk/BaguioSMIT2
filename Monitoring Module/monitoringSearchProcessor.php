@@ -46,6 +46,20 @@ if (isset($_POST['modalRes'])) {
     $queryDetails = 
     "SELECT 
         patient.patient_full_name,
+        patient.date_of_first_dosage,
+        patient.date_of_second_dosage,
+        patient.first_dose_vaccination,
+        patient.second_dose_vaccination,
+        patient_vitals.pre_vital_pulse_rate_1st_dose,
+        patient_vitals.pre_vital_temp_rate_1st_dose,
+        patient_vitals.pre_oxygen_saturation_1st_dose,
+        patient_vitals.pre_vital_bpDiastolic_1st_dose,
+        patient_vitals.pre_vital_bpSystolic_1st_dose,
+        patient_vitals.pre_vital_pulse_rate_2nd_dose,
+        patient_vitals.pre_vital_temp_rate_2nd_dose,
+        patient_vitals.pre_oxygen_saturation_2nd_dose,
+        patient_vitals.pre_vital_bpDiastolic_2nd_dose,
+        patient_vitals.pre_vital_bpSystolic_2nd_dose,
         medical_background.allergy_to_vaccine,
         medical_background.hypertension,
         medical_background.heart_disease,
@@ -65,11 +79,14 @@ if (isset($_POST['modalRes'])) {
         medical_background
     ON  
         medical_background.patient_id = $patientID
+    JOIN
+        patient_vitals
+    ON
+        patient_vitals.patient_id = $patientID
     JOIN 
         patient_details 
     ON 
         patient_details.patient_id = $patientID
-
     JOIN
         barangay
     ON 
@@ -90,7 +107,7 @@ if (isset($_POST['modalRes'])) {
     $fullName = $patientDetails['patient_full_name'];
     $fullAddress = $patientDetails['full_address'];
     $category = $patientDetails['priority_group'];
-    
+
     //Medical Information
     $allergyToVaccine = checkAllergy($patientDetails['allergy_to_vaccine']);
     $hypertension = checkbox($patientDetails['hypertension'], "Hypertension");
@@ -103,28 +120,40 @@ if (isset($_POST['modalRes'])) {
     $otherCommorbidity = otherCommorbidity($patientDetails['other_commorbidity']);
 
     //Pre vital information
-    $pulseRate1st = 80;
-    $tempRate1st = 35.2;
-    $oxygen1st = 90;
-    $bloodPressure1st = '119/83';
+    $pulseRate1st = trim($patientDetails['pre_vital_pulse_rate_1st_dose']) != "" ? $patientDetails['pre_vital_pulse_rate_1st_dose'] : 'N/A';
+    $tempRate1st = trim($patientDetails['pre_vital_temp_rate_1st_dose']) != "" ? $patientDetails['pre_vital_temp_rate_1st_dose'] : 'N/A';
+    $oxygen1st = trim($patientDetails['pre_oxygen_saturation_1st_dose']) != "" ? $patientDetails['pre_oxygen_saturation_1st_dose'] : 'N/A';
+    $bloodPressure1st = trim($patientDetails['pre_vital_bpDiastolic_1st_dose']) != "" ? $patientDetails['pre_vital_bpDiastolic_1st_dose']."/".$patientDetails['pre_vital_bpSystolic_1st_dose'] : 'N/A';
     
-    $pulseRate2nd = 80;
-    $tempRate2nd = 35.2;
-    $oxygen2nd = 90;
-    $bloodPressure2nd = '120/80';
+    $pulseRate2nd = trim($patientDetails['pre_vital_pulse_rate_2nd_dose']) != "" ? $patientDetails['pre_vital_pulse_rate_2nd_dose'] : 'N/A';
+    $tempRate2nd = trim($patientDetails['pre_vital_temp_rate_2nd_dose']) != "" ? $patientDetails['pre_vital_temp_rate_2nd_dose'] : 'N/A';
+    $oxygen2nd = trim($patientDetails['pre_oxygen_saturation_2nd_dose']) != "" ? $patientDetails['pre_oxygen_saturation_2nd_dose'] : 'N/A';
+    $bloodPressure2nd = trim($patientDetails['pre_vital_bpDiastolic_2nd_dose']) != "" ? $patientDetails['pre_vital_bpDiastolic_2nd_dose']."/".$patientDetails['pre_vital_bpSystolic_2nd_dose'] : 'N/A';
 
+    $sortPatientVaccine = sortPatientVaccineDetails($patientID);
+        
     //Vaccination Information
-    $sched1st = "10/06/2021";
-    $site1st = "SM B1 Parking Lot";
-    $vaccine1st = "Pfizer";
-    $lot1st = "1231233";
+    $sched1st = $sortPatientVaccine[0] != "" ? $sortPatientVaccine[0]['vaccDate']: 'N/A';
+    $site1st = $sortPatientVaccine[0] != "" ? $sortPatientVaccine[0]['location'] : 'N/A';
+    $vaccineN1st = $sortPatientVaccine[0] != "" ? $sortPatientVaccine[0]['vaccName'] : 'N/A';
+    $vaccineM1st = $sortPatientVaccine[0] != "" ? $sortPatientVaccine[0]['vaccManufacturer'] : '' ;
+    $lot1st = $sortPatientVaccine[0] != "" ? $sortPatientVaccine[0]['lotID'] : 'N/A';
 
-    $sched2nd = "10/25/2021";
-    $site2nd = "UB Gym";
-    $vaccine2nd = "Pfizer";
-    $lot2nd = "3423235";
+    $sched2nd = $sortPatientVaccine[1] != "" ? $sortPatientVaccine[1]['vaccDate']: 'N/A';
+    $site2nd = $sortPatientVaccine[1] != "" ? $sortPatientVaccine[1]['location'] : 'N/A';
+    $vaccineN2nd = $sortPatientVaccine[1] != "" ? $sortPatientVaccine[1]['vaccName'] : 'N/A';
+    $vaccineM2nd = $sortPatientVaccine[1] != "" ? $sortPatientVaccine[1]['vaccManufacturer'] : '' ;
+    $lot2nd = $sortPatientVaccine[1] != "" ? $sortPatientVaccine[1]['lotID'] : 'N/A';
 
-    $vaccineStatus = "Fully Vaccinated";
+    $vaccineStatus = 'Not vaccinated';
+
+    if($patientDetails['first_dose_vaccination'] == 1 && $patientDetails['second_dose_vaccination'] == 1) {
+        $vaccineStatus = 'Fully vaccinated';
+    } else if($patientDetails['first_dose_vaccination'] == 1 && $patientDetails['second_dose_vaccination'] == 0) {
+        $vaccineStatus = 'Partially vaccinated';
+    }
+
+
     echo "<h3>$fullName</h3>
     <hr>
     <div class='row'>
@@ -136,7 +165,6 @@ if (isset($_POST['modalRes'])) {
             <h4>Medical Background</h4>
             <h6>Allergies:</h6><br>
             $allergyToVaccine
-
             <h6>Commorbidities:</h6><br>
             <div class='row'>
                 <div class='col' style='columns: 2;'> 
@@ -173,18 +201,18 @@ if (isset($_POST['modalRes'])) {
             <h4>Post-Vaccine Vitals:</h4>
             <form>
             <strong>Pulse Rate:</strong>
-            <br><input class='textInp' id='pulseR' type='text' placeholder='Enter pulse rate' name='vitals'>
+            <br><input class='textInp' id='pulseR' placeholder='Enter pulse rate' name='vitals'>
             <br>
-            <strong>Temperature:</strong> <br> <input class='textInp' type='text' id='tempR' placeholder='Enter temperature' name='vitals'>
+            <strong>Temperature:</strong> <br> <input class='textInp' id='tempR' placeholder='Enter temperature' name='vitals'>
             <br>
-            <strong>Oxygen Saturation:</strong> <br> <input class='textInp' type='text' id='oxygenSat' placeholder='Enter oxygen saturation' name='vitals'>
+            <strong>Oxygen Saturation:</strong> <br> <input class='textInp'  id='oxygenSat' placeholder='Enter oxygen saturation' name='vitals'>
             <br>
             <br>
             <strong>Blood Pressure (Diastolic/Systolic e.g. 120/80)</strong>
             <br>
-            <strong>Diastolic:</strong> <br><input class='textInp' type='text' placeholder='millimetres of mercury' id='bpRDias' name='vitals'>
+            <strong>Diastolic:</strong> <br><input class='textInp' placeholder='millimetres of mercury' id='bpRDias' name='vitals'>
             <br>
-            <strong>Systolic:</strong> <br><input class='textInp' type='text' placeholder='millimetres of mercury' id='bpRSys' name='vitals'>
+            <strong>Systolic:</strong> <br><input class='textInp' placeholder='millimetres of mercury' id='bpRSys' name='vitals'>
             </form>
         </div>
     </div>
@@ -202,7 +230,7 @@ if (isset($_POST['modalRes'])) {
                 <h6>Vax Site:</h6>
                 <p>$site1st</p>
                 <h6>Vaccine:</h6>
-                <p>$vaccine1st</p>
+                <p>$vaccineN1st ($vaccineM1st)</p>
                 <h6>Lot No.:</h6>
                 <p>$lot1st</p>
             </div>
@@ -214,14 +242,14 @@ if (isset($_POST['modalRes'])) {
                 <h6>Vax Site:</h6>
                 <p>$site2nd</p>
                 <h6>Vaccine:</h6>
-                <p>$vaccine2nd</p>
+                <p>$vaccineN2nd ($vaccineM2nd)</p>
                 <h6>Lot No.:</h6>
                 <p>$lot2nd</p>
             </div>
         </div>
     </div>
     <div class='modal-footer'>
-    <button onclick=closeModal('preVacView') type='button' class='btn btn-danger'> Cancel</button>            
+    <button onclick=closeModal('postVacView') type='button' class='btn btn-danger'> Cancel</button>            
     <button onclick=btnViewPostVac() id='addButtonId' type='button' class='btn btn-success' value=$patientID> Save</button>
     </div>
     </div>";
@@ -259,16 +287,68 @@ if (isset($_POST['pulse'])) {
     }
 }
 
+function sortPatientVaccineDetails($patientID) {
+    require('../includes/database.php');
+    $query = 
+    "SELECT
+    patient_drive.vaccine_lot_id,
+    vaccination_drive.vaccination_date,
+    vaccination_sites.location,
+    vaccine.vaccine_name,
+    vaccine_information.vaccine_manufacturer
+from 
+    patient_drive
+JOIN
+    vaccine_lot
+ON
+    vaccine_lot.vaccine_lot_id = patient_drive.vaccine_lot_id
+JOIN
+    vaccination_drive
+ON
+    vaccination_drive.drive_id = patient_drive.drive_id 
+JOIN
+    vaccination_sites
+ON
+    vaccination_sites.vaccination_site_id = vaccination_drive.vaccination_site_id
+JOIN
+    vaccine
+ON
+    vaccine.vaccine_id = vaccine_lot.vaccine_id
+JOIN
+    vaccine_information
+ON
+    vaccine_information.vaccine_id = vaccine_lot.vaccine_id
+WHERE
+    patient_drive.patient_id = $patientID
+    ";
+    $stmt = $database->stmt_init();
+    $stmt->prepare($query);
+    $stmt->execute();
+    $stmt->bind_result($vaccine_lot_id, $vaccination_date, $location, $vaccine_name, $vaccine_manufacturer);
+
+    $vaccineDetails = [];
+    while($stmt->fetch()){
+        array_push($vaccineDetails ,array('lotID' => $vaccine_lot_id, 'vaccDate' => $vaccination_date, 'location' => $location, 'vaccName' => $vaccine_name, 'vaccManufacturer' => $vaccine_manufacturer));
+    }
+    
+    if (empty($vaccineDetails)) {
+        $vaccineDetails[0] = "";
+        $vaccineDetails[1] = "";
+    }
+
+    return $vaccineDetails;
+}
+
 function checkbox($commorbidity, $commorbidityName) {
     $ls = trim(strtolower($commorbidityName));
     if($commorbidity == 0) {
         return "
-        <input type='checkbox' name='$ls' value='1'>
+        <input type='checkbox' name='$ls' value='1' disabled>
         <label for='$ls'>$commorbidityName</label><br>
         ";
     } else {
         return "
-        <input type='checkbox' name='$ls' value='1' checked>
+        <input type='checkbox' name='$ls' value='1' checked disabled>
         <label for='$ls'>$commorbidityName</label><br>
         ";
     }
@@ -279,12 +359,11 @@ function checkAllergy($allergy) {
         return "
         <div class='row'>
         <div class='col-2'>
-        <input type='checkbox' name='allergy' value='1' onclick='allergy(this)'>
+        <input type='checkbox' name='allergy' value='1' onclick='allergy(this)' disabled>
         <label for='yes'>Yes</label><br>
         </div>
-
         <div class='col-2'>
-        <input type='checkbox' name='allergy' value='0' onclick='allergy(this)' checked>
+        <input type='checkbox' name='allergy' value='0' onclick='allergy(this)' checked disabled>
         <label for='no'>No</label><br>
         </div>
         </div>
@@ -294,12 +373,11 @@ function checkAllergy($allergy) {
         "
         <div class='row'>
         <div class='col-2'>
-        <input type='checkbox' name='allergy' value='1' onclick='allergy(this)' checked>
+        <input type='checkbox' name='allergy' value='1' onclick='allergy(this)' checked disabled>
         <label for='yes'>Yes</label><br>
         </div>
-
         <div class='col-2'>
-        <input type='checkbox' name='allergy' value='0' onclick='allergy(this)'>
+        <input type='checkbox' name='allergy' value='0' onclick='allergy(this)' disabled>
         <label for='no'>No</label><br>
         </div>
         </div>
@@ -309,5 +387,5 @@ function checkAllergy($allergy) {
 
 function otherCommorbidity($commorbidity) {
         return "<label for='other'>Other Commorbidity: </label>
-        <input type='text' name='other' value=$commorbidity><br>";
+        <input type='text' name='other' value=$commorbidity disabled><br>";
 }

@@ -52,7 +52,10 @@
         insertMedicalBackground($patientID['patient_id'], $allergyToVaccine, $hypertension, $heartDisease, $kidneyDisease, $diabetesMellitus, $bronchialAsthma, $immunodeficiency, $cancer, $otherCommorbidity);
         $accountDetails = createAccount($patientID['patient_id'], $firstname, $lastname, $email);
         insertPatientVitals($patientID['patient_id']);
-        insertLogs($employeeID, $employeeRole, 'Add', 'Added patient ID: '.$patientID['patient_id']);
+
+        $id = $patientID['patient_id'];
+        $log = "Added patient ID: $id in the database";
+        insertLogs($employeeID, $employeeRole, 'Add', $log);
    }
 
 //Inserts full name in the patient table

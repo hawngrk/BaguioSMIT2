@@ -48,7 +48,13 @@
 input[name=vitals]{
     border-radius: 5px;
     border: solid black 1px;
-    width: 70%;
+    width: 50%;
+}
+
+.vitalsInput{
+    border-radius: 5px;
+    border: solid black 1px;
+    width: 50%;
 }
 
 #patientRow h5, #qrView h5 {

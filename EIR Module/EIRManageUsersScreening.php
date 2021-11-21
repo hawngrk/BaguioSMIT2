@@ -160,7 +160,6 @@ checkRole('EIR');
                     </tr>
                     </thead>
                     <?php
-                    require_once '../require/getPatientDetails.php';
                     $query = "SELECT patient.patient_id, CONCAT(patient_details.patient_last_name,', ',patient_details.patient_first_name,' ',COALESCE(patient_details.patient_middle_name,''),' ',COALESCE(patient_details.patient_suffix,'')) AS full_name, priority_groups.priority_group, CONCAT(patient_details.patient_house_address, ' ', barangay.barangay_name,' ',barangay.city,' ', barangay.province) AS full_address, patient_contact_number FROM patient JOIN patient_details ON patient.patient_id = patient_details.patient_id JOIN barangay ON barangay.barangay_id = patient_details.barangay_id JOIN priority_groups ON priority_groups.priority_group_id = patient_details.priority_group_id WHERE patient_details.Archived = 0;";
                     $stmt = $database->stmt_init();
                     $stmt->prepare($query);
@@ -197,6 +196,7 @@ checkRole('EIR');
 </div>
 
 <!--Patient Add User Modal-->
+
 <div id="addPatientModal" class="modal-window">
     <div class="content-modal">
         <div class="modal-header">
@@ -245,7 +245,7 @@ checkRole('EIR');
 
                         <div class="col">
                             <label class="label1 required" for="date"> Birthdate </label>
-                            <input type="date" id="date" name="birthdate" class="form-control" required>
+                            <input type="date" id="date" name="birthdate" class="form-control">
                         </div>
                         <div class="col">
                             <label class="label1 required" for="gender"> Sex </label>
@@ -269,20 +269,20 @@ checkRole('EIR');
                         </div>
                         <div class="col">
                             <label class="label1 required" for="occupation">Occupation </label>
-                            <input type="text3" id="occupation" class='input form-control'
-                                   placeholder="Input Answer Here" required>
+                            <input type="text3" id="occupation" class='input form-control' name="occupation"
+                                   placeholder="Input Answer Here">
                         </div>
                     </div>
                     <div class="row">
                         <div class="col">
                             <label class="label1 required" for="contactNum">Contact Number </label>
                             <input type="text3" id="contactNum" class='input form-control' name="contactNum"
-                                   placeholder="09XX-XXX-XXXX" required>
+                                   placeholder="09XX-XXX-XXXX" pattern="09[0-9]{9}">
                         </div>
                         <div class="col">
                             <label class="label1 required" for="email"> Email Address </label>
-                            <input type="text3" id="email" class='input form-control' name="email"
-                                   placeholder="email@example.org" required>
+                            <input type="email" id="email" class='input form-control' name="email"
+                                   placeholder="email@example.org">
                         </div>
                     </div>
                 </div>
@@ -309,10 +309,12 @@ checkRole('EIR');
                             <label class="required" for="categoryID">Category ID</label><br>
                             <select id="categoryID" name="categoryID" class="form-select" required>
                                 <option disabled selected>Select a Category ID...</option>
-                                <option value="Professional Regulation Comission Id">Professional Regulation Commission
+                                <option value="Professional Regulation Comission Id">Professional Regulation
+                                    Commission
                                     ID
                                 </option>
-                                <option value="Office of Senior Citizen Affairs Id">Office of Senior Citizen Affairs
+                                <option value="Office of Senior Citizen Affairs Id">Office of Senior Citizen
+                                    Affairs
                                     ID
                                 </option>
                                 <option value="Facility Id"> Facility ID</option>
@@ -352,7 +354,8 @@ checkRole('EIR');
                         <div class="col-4">
                             <div id="barangayList">
                                 <label class="required" for="barangay"> Barangay </label>
-                                <select id="barangay" name="barangay" onchange="updateBarangayDetails(this.value)"
+                                <select id="barangay" name="barangay"
+                                        onchange="updateBarangayDetails(this.value)"
                                         class="form-select" required>
                                     <option value="" disabled selected> Select Barangay</option>
                                     <?php
@@ -370,7 +373,8 @@ checkRole('EIR');
                     <div class="row" id="barangayDetails">
                         <div class="col">
                             <label class="label1" for="city">City/Municipality</label>
-                            <input type="text3" id="city" class='input form-control' name="city" disabled="disabled">
+                            <input type="text3" id="city" class='input form-control' name="city"
+                                   disabled="disabled">
                         </div>
                         <div class="col">
                             <label class="label1" for="province">Province</label>
@@ -403,7 +407,7 @@ checkRole('EIR');
                             <select class="form-select" id="comorbidity" name="comorbidity" required>
                                 <option value="">Select Answer...</option>
                                 <option value="none"> None</option>
-                                <option value="yes" required> Yes</option>
+                                <option value="yes"> Yes</option>
                             </select>
                         </div>
                     </div>
@@ -411,6 +415,8 @@ checkRole('EIR');
                 <div id="comorbidityList">
                     <h5> Comorbidity Information</h5>
                     <div class="listOfComorbidity">
+                        </select>
+
                         <div class="row">
                             <div class="col">
                                 <input type="checkbox" name="hypertension" value="hypertension"
@@ -434,7 +440,8 @@ checkRole('EIR');
                                 <label> Diabetes Mellitus </label>
                             </div>
                             <div class="col">
-                                <input type="checkbox" name="asthma" value="asthma" id="asthma" class="form-select">
+                                <input type="checkbox" name="asthma" value="asthma" id="asthma"
+                                       class="form-select">
                                 <label> Bronchial Asthma </label>
                             </div>
                             <div class="col">
@@ -445,7 +452,8 @@ checkRole('EIR');
                         </div>
                         <div class="row">
                             <div class="col-4">
-                                <input type="checkbox" name="cancer" value="cancer" id="cancer" class="form-select">
+                                <input type="checkbox" name="cancer" value="cancer" id="cancer"
+                                       class="form-select">
                                 <label> Cancer </label>
                             </div>
                             <div class="col">
@@ -465,9 +473,9 @@ checkRole('EIR');
                 <div class="modal-footer">
                     <input type="button" onclick="closeModalForms('addPatientModal','registrationForm')"
                            class="btn btn-danger shadow-sm" value="Cancel">
-                    <input type="submit" class="btn btn-success shadow-sm" value="Add">
+                    <input type="submit" class="btn btn-success shadow-sm" value="Add"
+                           onclick="event.preventDefault(); confMessage('patient', addPatient, validationPatient)">
                 </div>
-
             </form>
         </div>
     </div>
@@ -759,21 +767,24 @@ checkRole('EIR');
         });
     }
 
-    function confMessage(item, action) {
-        Swal.fire({
-            icon: 'info',
-            title: 'Are You Sure you Want to add this' + item,
-            showDenyButton: true,
-            confirmButtonText: 'Yes',
-            denyButtonText: `No`,
-        }).then((result) => {
-            if (result.isConfirmed) {
-                action();
-                Swal.fire('Saved!', '', 'success')
-            } else if (result.isDenied) {
-                Swal.fire('Changes are not saved', '', 'info')
-            }
-        })
+    function confMessage(item, action,validationMethod) {
+        var formValidation = validationMethod();
+        if (formValidation) {
+            Swal.fire({
+                icon: 'info',
+                title: 'Are You Sure you Want to add this' + item,
+                showDenyButton: true,
+                confirmButtonText: 'Yes',
+                denyButtonText: `No`,
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    action();
+                    Swal.fire('Saved!', '', 'success')
+                } else if (result.isDenied) {
+                    Swal.fire('Changes are not saved', '', 'info')
+                }
+            })
+        }
     }
 
 

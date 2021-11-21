@@ -27,6 +27,9 @@ checkRole('Screening');
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <script src="../javascript/openModal.js"></script>
+    <script src="../javascript/closeModal.js"></script>
 </head>
 
 <body>
@@ -66,11 +69,11 @@ checkRole('Screening');
     <!-- Page Content  -->
     <div id="content">
 
-        <div id="qrView" class="modal-window">
+        <div id="preVacView" class="modal-window">
             <div class="content-modal">
                 <div class="modal-header">
                     <h3 class="modal-title"> Pre-Vaccine Vitals</h3>
-                    <button type="button" class="close" data-dismiss="modal" onclick="closeModal('qrView')"><i class='fas fa-window-close'></i></button>
+                    <button type="button" class="close" data-dismiss="modal" onclick="closeModal('preVacView')"><i class='fas fa-window-close'></i></button>
                 </div>
                 <div class="modal-body" id="qr"></div>
             </div>
@@ -130,14 +133,14 @@ checkRole('Screening');
             butt.innerHTML = "<i class='fas fa-angle-left'></i> Menu";
         }
     }
-
+    
     function qr(content){
         $.ajax({
             url: 'screeningProcessor.php',
             method: 'POST',
             data: {modalScreening: content},
             success: function (result) {
-                document.getElementById('qrView').style.display = "block";
+                document.getElementById('preVacView').style.display = "block";
                 document.getElementById('qr').innerHTML = result;
             }
         })
@@ -150,14 +153,43 @@ checkRole('Screening');
             data: {modalScreening: passportId},
             success: function (result) {
                 console.log(result);
-                document.getElementById('qrView').style.display = "block";
+                document.getElementById('preVacView').style.display = "block";
                 document.getElementById('qr').innerHTML = result;
             }
         })
     }
 
-    function closeModal(modal){
-        document.getElementById(modal).style.display = "none";
+
+    function btnViewPostVac() {
+        console.log("passed");
+        var id = document.getElementById('addButtonId').value;
+        var pulse = document.getElementById('pulseR').value;
+        var temp = document.getElementById('tempR').value;
+        var oxygen = document.getElementById('oxygenSat').value;
+        var bpDias = document.getElementById('bpRDias').value;
+        var bpSys = document.getElementById('bpRSys').value;
+
+        Swal.fire({
+            title: 'Add these vitals?',
+            showDenyButton: true,
+            confirmButtonText: 'Yes',
+            denyButtonText: `No`,
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: 'screeningProcessor.php',
+                    type: 'POST',
+                    data: {'pulse': pulse, 'temp': temp, 'oxygen': oxygen ,'diastolic': bpDias, 'systolic': bpSys, 'id': id},
+                    success: function (preVat) {
+                        console.log(preVat)
+                        document.getElementById('preVacView').style.display = 'none';
+                    }
+                });
+                Swal.fire('Saved!', '', 'success');
+            } else if (result.isDenied) {
+                Swal.fire('Changes are not saved', '', 'info')
+            }
+        })
     }
 
     function allergy(checkbox){
@@ -166,8 +198,37 @@ checkRole('Screening');
             if (item !== checkbox) item.checked = false;
         });
     }
+
+    function editMedicalBackground(id) {
+        //Commorbidities and allergy
+        var allergyCheckBox1 = verifyCommorbidity($('#allergy1:checked').val());
+        var hypertension = verifyCommorbidity($('#hypertension:checked').val());
+        var heart = verifyCommorbidity($('#heart:checked').val());
+        var kidney = verifyCommorbidity($('#kidney:checked').val());
+        var diabetes = verifyCommorbidity($('#diabetes:checked').val());
+        var bronchial = verifyCommorbidity($('#bronchial:checked').val());
+        var immunodeficiency = verifyCommorbidity($('#immunodeficiency:checked').val());
+        var cancer = verifyCommorbidity($('#cancer:checked').val());
+        var otherCommorbidity = document.getElementById('otherCommorbidity').value;
+        
+        $.ajax({
+            url: 'screeningProcessor.php',
+            type: 'POST',
+            data: {'allergy' : allergy, 'hypertension' : hypertension , 'heart' : heart, 'kidney' : kidney, 'diabetes' : diabetes, 'bronchial' : bronchial, 'immunodeficiency' : immunodeficiency, 'cancer' : cancer, 'otherCommorbidity' : otherCommorbidity, 'id' : id},
+            success: function(preVat) {
+                console.log(preVat)
+            }
+        });
+    }
+
+    //Change unchecked commorbidity to 0
+    function verifyCommorbidity(commorbidity) {
+        return !commorbidity ? 0 : 1;
+    }
+
 </script>
 <!--Logout script-->
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="../javascript/logout.js"></script>
 </body>
 

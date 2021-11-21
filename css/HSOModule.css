@@ -305,6 +305,19 @@ img{
     margin-top: 1%;
 }
 
+.cardContainer{
+    height: fit-content;
+}
+
+.cardContainer .card{
+    height: 150px;
+}
+
+.card .card-header{
+    height: 50%;
+
+}
+
 .closeModal{
     background-color: rgb(0, 0, 0);
     background-color: rgba(0, 0, 0, 0);

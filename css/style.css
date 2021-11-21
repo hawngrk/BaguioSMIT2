@@ -276,16 +276,18 @@ input[type=text]{
     width: fit-content;
 }
 
+#qrView .content-modal {
+    padding: 0%;
+    width: fit-content;
+}
+
+
 #postVacView h6, #preVacView h6, #qrView h6{
     display: inline;
 }
 
 #postVacView button, #preVacView button, #qrView h6{
     align-content: flex-end;
-}
-
-#postVac {
-    color: #070101 !important;
 }
 
 #tablePadding{

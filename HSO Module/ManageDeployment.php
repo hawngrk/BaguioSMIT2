@@ -318,6 +318,7 @@ include_once("../includes/database.php") ?>
                                     <div class="row">
 
                                     </div>
+                                    </div>
 
                                     <div class="border border-dark tableScroll3 rounded" id = "firstDoseStubs"
                                          style="columns:2; padding: 2%; list-style-type: none; height: auto!important">
