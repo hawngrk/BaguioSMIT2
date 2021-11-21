@@ -9,7 +9,8 @@ function closeModalForms(modal,form) {
         showDenyButton: true,
         confirmButtonText: 'Yes',
         denyButtonText: `No`,
-        confirmButtonColor: '#007bff'
+        confirmButtonColor: '#28a745',
+        denyButtonColor: '#dc3545',
     }).then((result) => {
         if (result.isConfirmed) {
             validator.resetForm();

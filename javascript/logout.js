@@ -2,12 +2,13 @@
 function logout() {
     Swal.fire({
         icon: 'warning',
-        title: 'Logging out',
+        title: 'Logging Out',
         text: "Are you sure to sign out?",
         showDenyButton: true,
         confirmButtonText: 'Yes',
         denyButtonText: `No`,
-        confirmButtonColor: '#3085d6'
+        confirmButtonColor: '#28a745',
+        denyButtonColor: '#dc3545',
     }).then((result) => {
         if (result.isConfirmed) {
             $.ajax({

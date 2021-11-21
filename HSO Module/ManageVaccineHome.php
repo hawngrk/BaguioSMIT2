@@ -267,7 +267,7 @@ include_once("../includes/database.php") ?>
                         <input type="button" onclick="closeModalForms('vaccineModal','addVaccineLotForm')" class="btn btn-danger shadow-sm"
                                 value="Cancel">
                         </input>
-                        <input  type="submit" class="btn btn-success" value="Add" onclick="event.preventDefault(); confMessage('Vaccine Lot', addVaccine, validationVaccineLot)">
+                        <input  type="submit" class="btn btn-success" value="Add" onclick="event.preventDefault(); confMessage('vaccine lot', addVaccine, validationVaccineLot)">
                         </input>
                     </div>
                 </form>
@@ -337,7 +337,7 @@ include_once("../includes/database.php") ?>
                         <input type="button" onclick="closeModalForms('newVaccineModal','newVaccineBrandForm')" class="btn btn-danger shadow-sm"
                                value="Cancel">
                         </input>
-                        <input  type="submit" class="btn btn-success" value="Add" onclick="event.preventDefault(); confMessage('Vaccine Brand', addNewVaccine, validationNewVaccineBrand)">
+                        <input  type="submit" class="btn btn-success" value="Add" onclick="event.preventDefault(); confMessage('vaccine brand', addNewVaccine, validationNewVaccineBrand)">
                         </input>
                     </div>
                 </form>
@@ -537,16 +537,33 @@ include_once("../includes/database.php") ?>
         if (formValidation) {
             Swal.fire({
                 icon: 'info',
-                title: 'Are You Sure you Want to add this ' + vax + '?',
+                title: 'Add this ' + vax + '?',
+                text: 'This ' + vax + ' will be added to the list.',
                 showDenyButton: true,
                 confirmButtonText: 'Yes',
-                denyButtonText: `No`
+                denyButtonText: `No`,
+                confirmButtonColor: '#28a745',
+                denyButtonColor: '#dc3545',
             }).then((result) => {
                 if (result.isConfirmed) {
                     action();
-                    Swal.fire('Saved!', '', 'success')
+                    Swal.fire({
+                        icon: 'success',
+                        text: 'Saved!',
+                        focusConfirmButton: false,
+                        showDenyButton: false,
+                        confirmButtonText: 'Ok',
+                        confirmButtonColor: '#808080',
+                    })
                 } else if(result.isDenied) {
-                    Swal.fire('Changes are not saved', '', 'info')
+                    Swal.fire({
+                        icon: 'warning',
+                        text: 'Changes you made will not be saved.',
+                        showDenyButton: false,
+                        focusConfirmButton: false,
+                        confirmButtonText: 'OK',
+                        confirmButtonColor: '#808080',
+                    })
                 }
             })
         }
@@ -583,6 +600,7 @@ include_once("../includes/database.php") ?>
             success: function (result) {
                 document.getElementById('selectedVaccine').innerHTML = result;
                 closeModal('newVaccineModal');
+                document.getElementById('newVaccineModal').reset();
             }
         });
 
@@ -596,17 +614,32 @@ include_once("../includes/database.php") ?>
             archiveText = "UnArchive";
         }
         Swal.fire({
-            icon: 'info',
-            title: 'Are You Sure you Want to ' + archiveText + ' this item?',
+            icon: 'question',
+            title: 'Archive Item',
+            text: 'Are you sure you want to ' + archiveText + ' this item?',
             showDenyButton: true,
             confirmButtonText: 'Yes',
             denyButtonText: `No`,
+            confirmButtonColor: '#28a745',
+            denyButtonColor: '#dc3545',
         }).then((result) => {
             if (result.isConfirmed) {
                 action(drive, archiveText);
-                Swal.fire('Saved!', '', 'success')
+                Swal.fire({
+                    icon: 'success',
+                    text: 'Saved!',
+                    showDenyButton: false,
+                    confirmButtonText: 'Ok',
+                    confirmButtonColor: '#28a745',
+                })
             } else if (result.isDenied) {
-                Swal.fire('Changes are not saved', '', 'info')
+                Swal.fire({
+                    icon: 'info',
+                    text: 'Changes you made will not be saved.',
+                    showDenyButton: false,
+                    confirmButtonText: 'Ok',
+                    confirmButtonColor: '#28a745',
+                })
             }
         })
     }

@@ -52,7 +52,7 @@ $barangay_id = $accountDetails['barangay_id'];
             crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script defer src="../javascript/showDateAndTime.js"> </script>
+    <script defer src="../javascript/showDateAndTime.js"></script>
 
 </head>
 
@@ -75,7 +75,8 @@ $barangay_id = $accountDetails['barangay_id'];
             ?>
             <hr>
             <div class="timeBox">
-                <p id="time"></p>  <p id="datee"></p>
+                <p id="time"></p>
+                <p id="datee"></p>
                 <script src="../javascript/detailedDateAndTime.js"></script>
             </div>
 
@@ -112,26 +113,44 @@ $barangay_id = $accountDetails['barangay_id'];
         <nav class="brgyNav navbar-light bg-light rounded-lg">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col my-auto">
+                    <div class="col">
                         <div class="input-group">
-                            <input id="searchPatientQueueInput" type="search" placeholder="Search" class="form-control" name="searchPatient" onkeyup="searchPatientQueue()">
-                            <button type="submit" class="buttonTop5" name="searchPatientBtn" onclick="search()">
-                                <i class="fa fa-search"></i>
-                            </button>
+                            <input id="searchPatientInput" type="search" name="searchPatient" class="form-control"
+                                   placeholder="Search" onkeyup="searchPatient(this.value)"/>
                         </div>
-
                     </div>
+
                     <div class="col-sm-auto">
-                        <button type="button" class="btn btn-outline-dark buttonTop3 float-right">
-                            <i class="fas fa-sort-amount-down"></i>
-                        </button>
-                        <button type="button" class="btn btn-outline-dark buttonTop3 float-right">
-                            <i class="fas fa-filter"></i>
-                        </button>
+                        <div class="row">
+                            <div class="sfDiv col-md-1.5 my-auto">
+                                <select class="form-select filterButton" id="filterCat" name="filterCategory"
+                                        onchange="filterCategoryGroup(this.value)">
+                                    <option value='' selected disabled hidden>Filter By</option>
+                                    <option value='' disabled>Select Category Group</option>
+                                    <option value="All"> All</option>
+                                    <?php
+                                    require_once("../require/getPriorityGroup.php");
+                                    foreach ($priorityGroups as $pg) {
+                                        $id = $pg->getPriorityGroupId();
+                                        $category = $pg->getPriorityGroup();
+                                        echo "<option value=$id> $category </option>";
+                                    }
+                                    ?>
+                                </select>
+                            </div>
+                            <div class="sfDiv col-md-1.5 my-auto">
+                                <select class="form-select sortButton" id="sortPatientName" name="sortPatient"
+                                        onchange="sortByName(this)">
+                                    <option value="" selected disabled hidden>Sort By</option>
+                                    <option value="" disabled>Select Name Sort</option>
+                                    <option value="None"> None</option>
+                                    <option value="Asc">Name ↑</option>
+                                    <option value="Desc">Name ↓</option>
+                                </select>
+                            </div>
+                        </div>
                     </div>
                 </div>
-
-            </div>
         </nav>
         <br>
 
@@ -170,7 +189,7 @@ $barangay_id = $accountDetails['barangay_id'];
                         $stmt->fetch();
                         $stmt->close();
 
-                        if($second_dose == null){
+                        if ($second_dose == null) {
                             $second_dose = 0;
                         }
 
@@ -178,38 +197,26 @@ $barangay_id = $accountDetails['barangay_id'];
                         ?>
                     </div>
                 </div>
-
-<!--                <div class="col patientQueueButtons">-->
-<!--                    <div class="patientQCounter" id="claimedStubs">-->
-<!--                        <h6 class="fontColor">Number of Claimed Stub</h6>-->
-<!--                        <p class="fontColor">0</p>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--                <div class="col patientQueueButtons">-->
-<!--                    <div class="patientQCounter" id="redirectStub">-->
-<!--                        <h6 class="fontColor">Number of Redirected Stub</h6>-->
-<!--                        <p class="fontColor">0</p>-->
-<!--                    </div>-->
-<!--                </div>-->
-
-        </div>
+            </div>
 
             <nav class="navbar navbar-expand-lg navbar-light navbarDep mb-4">
                 <div class="collapse navbar-collapse d-flex justify-content-center" id="navbarNav">
                     <ul class="navbar-nav">
-                        <div class ="row ">
+                        <div class="row ">
                             <div class="col-sm-auto">
                                 <li role="presentation" class="doseOption2 nav-item active">
                                     <a class="nav-link" id="FirstDose" role="tab" data-toggle="tab"
                                        href="#FirstDose"
-                                       onclick="shiftTab('FirstDose', 'SecondDose', 'FirstDosePage', 'SecondDosePage')">First Dose</a>
+                                       onclick="shiftTab('FirstDose', 'SecondDose', 'FirstDosePage', 'SecondDosePage')">First
+                                        Dose</a>
                                 </li>
                             </div>
                             <div class="col-sm-auto">
                                 <li role="presentation" class="doseOption3 nav-item">
                                     <a class="nav-link" role="tab" id="SecondDose" data-toggle="tab"
                                        href="#SecondDose"
-                                       onclick="shiftTab('SecondDose', 'FirstDose', 'SecondDosePage', 'FirstDosePage')">Second Dose</a>
+                                       onclick="shiftTab('SecondDose', 'FirstDose', 'SecondDosePage', 'FirstDosePage')">Second
+                                        Dose</a>
                                 </li>
                             </div>
                         </div>
@@ -223,7 +230,7 @@ $barangay_id = $accountDetails['barangay_id'];
                         <div class="tablePatientQueue tableScroll4 shadow">
                             <table class="table table-row table-hover tableBrgy" id="FirstQueue">
                                 <thead>
-                                <tr class="labelRow">
+                                <tr class="labelRow text-center">
                                     <th scope="col">Patient Name</th>
                                     <th scope="col">Contact Number</th>
                                 </tr>
@@ -234,18 +241,20 @@ $barangay_id = $accountDetails['barangay_id'];
                             </table>
                         </div>
                         <div class="modal-footer">
-                            <button class="btn btn-success" onclick="confirmSending(<?php echo"$barangay_id" ?>, 'first')" style="float: right">
+                            <button class="btn btn-success"
+                                    onclick="confirmSending(<?php echo "$barangay_id" ?>, 'first')"
+                                    style="float: right">
                                 Send Stubs Notification
                             </button>
                         </div>
                     </div>
                 </div>
-                <div role="tabpanel" class="tab-pane" id="SecondDosePage" >
+                <div role="tabpanel" class="tab-pane" id="SecondDosePage">
                     <div class="col">
                         <div class="tablePatientQueue tableScroll4 shadow">
                             <table class="table table-row table-hover tableBrgy" id="secondQueue">
                                 <thead>
-                                <tr class="labelRow">
+                                <tr class="labelRow text-center">
                                     <th scope="col">Patient Name</th>
                                     <th scope="col">Contact Number</th>
                                 </tr>
@@ -256,7 +265,7 @@ $barangay_id = $accountDetails['barangay_id'];
                                 require_once '../require/getPriorityGroup.php';
 
 
-                                foreach($patients as $p) {
+                                foreach ($patients as $p) {
                                     if ($p->getFirstDosage() == 1 && $p->getSecondDosage() == 0 && $p->getForQueue() == 1 && $p->getNotification() != 1) {
                                         $id = $p->getPatientId();
                                         foreach ($patient_details as $pd) {
@@ -285,7 +294,9 @@ $barangay_id = $accountDetails['barangay_id'];
                             </table>
                         </div>
                         <div class="modal-footer">
-                            <button class="btn btn-success" onclick="confirmSending(<?php echo"$barangay_id" ?>, 'second')" style="float: right">
+                            <button class="btn btn-success"
+                                    onclick="confirmSending(<?php echo "$barangay_id" ?>, 'second')"
+                                    style="float: right">
                                 Send Stubs Notification
                             </button>
                         </div>
@@ -297,7 +308,6 @@ $barangay_id = $accountDetails['barangay_id'];
         </div>
 
 
-
     </div>
 </div>
 </body>
@@ -307,6 +317,7 @@ $barangay_id = $accountDetails['barangay_id'];
     window.onload = (event) => {
         shiftTab('FirstDose', 'SecondDose', 'FirstDosePage', 'SecondDosePage')
     };
+
     function searchPatientQueue() {
         var textSearch = document.getElementById("searchPatientQueueInput").value;
         $.ajax({
@@ -330,15 +341,25 @@ $barangay_id = $accountDetails['barangay_id'];
         }).then((result) => {
             if (result.isConfirmed) {
                 sendNotification(id, category);
-                Swal.fire({icon: 'success', title: 'Notification Sent!', confirmButtonText: 'OK', confirmButtonColor: '#007bff'})
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Notification Sent!',
+                    confirmButtonText: 'OK',
+                    confirmButtonColor: '#007bff'
+                })
             } else if (result.isDenied) {
-                Swal.fire({icon: 'info', title: 'Notification Cancelled', confirmButtonText: 'OK', confirmButtonColor: '#007bff'})
+                Swal.fire({
+                    icon: 'info',
+                    title: 'Notification Cancelled',
+                    confirmButtonText: 'OK',
+                    confirmButtonColor: '#007bff'
+                })
             }
         })
     }
 
     function sendNotification(id, categ) {
-        if(categ == "first") {
+        if (categ == "first") {
             $.ajax({
                 url: 'Sendnotification.php',
                 type: 'POST',
@@ -355,7 +376,7 @@ $barangay_id = $accountDetails['barangay_id'];
                     });
                 }
             });
-        }else{
+        } else {
             $.ajax({
                 url: 'Sendnotification.php',
                 type: 'POST',

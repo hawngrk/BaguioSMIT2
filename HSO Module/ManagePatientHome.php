@@ -198,7 +198,7 @@ include_once("../includes/database.php") ?>
         </div>
 
         <!--Modal for uploading patient csv-->
-        <<div id="uploadFileModal" class="modal-window">
+        <div id="uploadFileModal" class="modal-window">
             <div class="content-modal">
                 <div class="modal-header">
                     <h3> Upload File/s </h3>
@@ -275,7 +275,7 @@ include_once("../includes/database.php") ?>
 
                                 <div class="col">
                                     <label class="label1 required" for="suffix">Suffix </label><br>
-                                    <select id="suffix" name="suffix" class="form-select form-select-lg" required>
+                                    <select id="suffix" name="suffix" class="form-select form-select-lg">
                                         <option value=""> Select Suffix...</option>
                                         <option value="none">None</option>
                                         <option value="sr">Sr</option>
@@ -289,19 +289,19 @@ include_once("../includes/database.php") ?>
                             <div class="row">
 
                                 <div class="col">
-                                    <label class="label1 required" for="date"> Birthdate </label>
+                                    <label class="label1 required" for="birthdate"> Birthdate </label>
                                     <input type="date" id="date" name="birthdate" class="form-control">
                                 </div>
                                 <div class="col">
                                     <label class="label1 required" for="gender"> Sex </label>
-                                    <select class="form-select" id="gender" name="gender" required>
+                                    <select class="form-select" id="gender" name="gender">
                                         <option value="">Select a Sex...</option>
                                         <option value="male">Male</option>
                                         <option value="female">Female</option>
                                     </select>
                                 </div>
                                 <div class="col">
-                                    <label class="label1 required" for="civilStatus"> Civil Status </label>
+                                    <label class="label1" for="civilStatus"> Civil Status </label>
                                     <select class="form-select" id="civilStatus" name="civilStatus">
                                         <option value="">Please Select...</option>
                                         <option value="Not Applicable">Not Applicable</option>
@@ -338,8 +338,8 @@ include_once("../includes/database.php") ?>
                             <div class="row">
                                 <div class="col">
                                     <label class="required" for="priorityGroup">Priority Group </label>
-                                    <select class="form-select" id="priorityGroup" name="priorityGroup" required>
-                                        <option disabled selected>Select a Category Group...</option>
+                                    <select class="form-select" id="priorityGroup" name="priorityGroup">
+                                        <option value="" disabled selected>Select a Category Group...</option>
                                         <?php
                                         require_once("../require/getPriorityGroup.php");
                                         foreach ($priorityGroups as $priority) {
@@ -352,8 +352,8 @@ include_once("../includes/database.php") ?>
                                 </div>
                                 <div class="col">
                                     <label class="required" for="categoryID">Category ID</label><br>
-                                    <select id="categoryID" name="categoryID" class="form-select" required>
-                                        <option disabled selected>Select a Category ID...</option>
+                                    <select id="categoryID" name="categoryID" class="form-select">
+                                        <option value="" disabled selected>Select a Category ID...</option>
                                         <option value="Professional Regulation Comission Id">Professional Regulation
                                             Commission
                                             ID
@@ -369,7 +369,7 @@ include_once("../includes/database.php") ?>
                                 <div class="col">
                                     <label class="required" for="categoryNo"> Category ID No.</label>
                                     <input type="text3" id="categoryNo" class='input' name="categoryNo"
-                                           placeholder="Input Answer Here" required>
+                                           placeholder="Input Answer Here">
                                 </div>
                             </div>
                             <div class="row">
@@ -401,7 +401,7 @@ include_once("../includes/database.php") ?>
                                         <label class="required" for="barangay"> Barangay </label>
                                         <select id="barangay" name="barangay"
                                                 onchange="updateBarangayDetails(this.value)"
-                                                class="form-select" required>
+                                                class="form-select">
                                             <option value="" disabled selected> Select Barangay</option>
                                             <?php
                                             require_once("../require/getBarangay.php");
@@ -441,7 +441,7 @@ include_once("../includes/database.php") ?>
                             <div class="row">
                                 <div class="col-4">
                                     <label class="required" for="allergy"> Allergy with Vaccine?</label>
-                                    <select class="form-select" id="allergy" name="allergy" required>
+                                    <select class="form-select" id="allergy" name="allergy">
                                         <option value="">Select Answer...</option>
                                         <option value="none">None</option>
                                         <option value="yes" required>Yes</option>
@@ -449,7 +449,7 @@ include_once("../includes/database.php") ?>
                                 </div>
                                 <div class="col-4">
                                     <label class="required" for="comorbidity"> With Comorbidity? </label>
-                                    <select class="form-select" id="comorbidity" name="comorbidity" required>
+                                    <select class="form-select" id="comorbidity" name="comorbidity">
                                         <option value="">Select Answer...</option>
                                         <option value="none"> None</option>
                                         <option value="yes"> Yes</option>
@@ -757,16 +757,31 @@ include_once("../includes/database.php") ?>
         if (formValidation) {
             Swal.fire({
                 icon: 'info',
-                title: 'Are You Sure you Want to add this ' + vax + '?',
+                title: 'Add this ' + vax + ' ?',
+                text: 'This ' + vax + ' will be added to the list.',
                 showDenyButton: true,
                 confirmButtonText: 'Yes',
-                denyButtonText: `No`
+                denyButtonText: `No`,
+                confirmButtonColor: '#28a745',
+                denyButtonColor: '#dc3545',
             }).then((result) => {
                 if (result.isConfirmed) {
                     action();
-                    Swal.fire('Saved!', '', 'success')
+                    Swal.fire({
+                        icon: 'success',
+                        text: 'Saved!',
+                        showDenyButton: false,
+                        confirmButtonText: 'Ok',
+                        confirmButtonColor: '#808080',
+                    })
                 } else if (result.isDenied) {
-                    Swal.fire('Changes are not saved', '', 'info')
+                    Swal.fire({
+                        icon: 'info',
+                        text: 'Changes you made will not be saved.',
+                        showDenyButton: false,
+                        confirmButtonText: 'Ok',
+                        confirmButtonColor: '#808080',
+                    })
                 }
             })
         }
@@ -906,17 +921,32 @@ include_once("../includes/database.php") ?>
             archiveText = "UnArchive";
         }
         Swal.fire({
-            icon: 'info',
-            title: 'Are You Sure you Want to ' + archiveText + ' this item?',
+            icon: 'question',
+            title: 'Archive Item',
+            text: 'Are you sure you want to ' + archiveText + ' this item?',
             showDenyButton: true,
             confirmButtonText: 'Yes',
             denyButtonText: `No`,
+            confirmButtonColor: '#28a745',
+            denyButtonColor: '#dc3545',
         }).then((result) => {
             if (result.isConfirmed) {
-                action(patient, archiveText);
-                Swal.fire('Saved!', '', 'success')
+                action(drive, archiveText);
+                Swal.fire({
+                    icon: 'success',
+                    text: 'Saved!',
+                    showDenyButton: false,
+                    confirmButtonText: 'Ok',
+                    confirmButtonColor: '#28a745',
+                })
             } else if (result.isDenied) {
-                Swal.fire('Changes are not saved', '', 'info')
+                Swal.fire({
+                    icon: 'info',
+                    text: 'Changes you made will not be saved.',
+                    showDenyButton: false,
+                    confirmButtonText: 'Ok',
+                    confirmButtonColor: '#28a745',
+                })
             }
         })
     }

@@ -73,21 +73,60 @@ function validationPatient(){
     var form = $('#registrationForm')
     form.validate({
             rules: {
-                lname: "required",
-                fname: "required",
-                suffix: "required",
-                birthdate: "required",
-                gender: "required",
-                occupation: "required",
-                contactNum: "required",
-                email: "required",
-                priorityGroup: "required",
-                categoryNo: "required",
-                houseAddress: "required",
-                barangay: "required",
-                allergy: "required",
-                comorbidity: "required",
-                otherCom: "required"
+                lname: {
+                    required: true
+                },
+                fname: {
+                    required: true
+                },
+                suffix: {
+                    required: true
+                },
+                birthdate: {
+                    required: true,
+                    date: true
+                },
+                gender: {
+                    required: true
+                },
+                occupation: {
+                    required: true
+                },
+                contactNum: {
+                    required: true
+                },
+                email: {
+                    required: true,
+                    email: true
+                },
+                priorityGroup: {
+                    required: true
+                },
+                categoryID: {
+                    required: true
+                },
+
+                categoryNo: {
+                    required: true,
+                    number: true
+                },
+
+                houseAddress: {
+                    required: true,
+                },
+
+                barangay: {
+                    required: true,
+                },
+
+                allergy: {
+                    required: true,
+                },
+
+                comorbidity: {
+                    required: true,
+                },
+
             }
         });
     return form.valid();

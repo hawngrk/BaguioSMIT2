@@ -112,7 +112,7 @@ Description: Login HTML Elements for receiving credentials from the users
             if (forms.checkValidity() && passW.value.trim() != "") {
                 login();
             } else {
-                Swal.fire('Please fill the required fields');
+                Swal.fire('Please enter your username and password');
                 !userN.value.trim() ? errorBorder(userN) : userN.style.border = null;
                 !passW.value.trim() ? errorBorder(passW) : passW.style.border = null;
             }
@@ -170,16 +170,18 @@ Description: Login HTML Elements for receiving credentials from the users
         function success() {
             Swal.fire({
                 icon: 'success',
-                title: 'Successfully Logged in',
+                title: 'Success!',
+                title: "You've successfully logged in",
                 showConfirmButton: false,
-                timer: 1500
+                timer: 2000
             });
         }
 
         function error() {
             Swal.fire({
                 icon: 'error',
-                title: 'Invalid username or password',
+                title: 'Try Again!',
+                text: "You've entered an invalid username or password",
                 showConfirmButton: false,
                 timer: 1500
             });

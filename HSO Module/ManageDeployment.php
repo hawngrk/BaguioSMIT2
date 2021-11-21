@@ -564,6 +564,7 @@ include_once("../includes/database.php") ?>
                 <i class='fas fa-window-close'></i>
             </button>
         </div>
+        <form id="healthDistrictForm">
         <div class="modal-body" style="padding: 4%">
             <div class="row mb-4">
                 <div class="col-8">
@@ -577,19 +578,6 @@ include_once("../includes/database.php") ?>
                     <input class="contactWidth float-right" type="text" id="contactNumber" name="contactNumber">
                 </div>
             </div>
-            <div class="row">
-                <div class="col">
-                    <label for="optionBrgy">Select Barangay/s: </label>
-                    <a href="#" class="w3-bar-item w3-button">All</a>
-                    <a href="#" class="w3-bar-item w3-button">None</a>
-
-                    <label class="sortPosition">Sort By:</label>
-                    <select class="sortWidth" id="sort">
-                        <option value="brgy1">None</option>
-                    </select>
-                </div>
-            </div>
-
 
             <div class="AddHealthD-option border border-dark rounded">
                 <div class="tableScroll2">
@@ -601,25 +589,25 @@ include_once("../includes/database.php") ?>
                             $id = $b->getBarangayId();
                             $name = $b->getBarangayName();
                             echo " <li>
-                                    <input class = 'checkboxes' type='checkbox' onclick='selected(\"barangay\", $id)'>
-                                    <label>$name</label><br>
+                                    <input name='barangay' class ='checkboxes' type='checkbox' onclick='selected(\"barangay\", $id)'>
+                                    <label for='barangay'>$name</label><br>
                                 </li> ";
                         }
                         ?>
                     </ul>
 
                 </div>
-
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger" onclick="closeModal('HealthDModal')"> Cancel
                 </button>
-                <button type="button" class="btn btn-success" onclick="add('Health District', addDistrict)">
+                <button type="button" class="btn btn-success" onclick="add('Health District', addDistrict,validationHealthDistrict)">
                     Add
                 </button>
 
             </div>
         </div>
+        </form>
     </div>
 </div>
 
@@ -733,7 +721,7 @@ include_once("../includes/database.php") ?>
                     <input type="button" class="btn btn-danger" onclick="closeModalForms('addVaccSite','addVaccinationSiteForm')" value="Cancel">
                     </input>
                     <input type="submit" class="btn btn-success"
-                           onclick="add('Vaccination Site', addSite, validationSite)" value="Add">
+                           onclick="event.stopPropagation(); add('Vaccination Site', addSite, validationSite)" value="Add">
                     </input>
                 </div>
             </form>
@@ -1214,8 +1202,10 @@ include_once("../includes/database.php") ?>
             method: 'POST',
             data: {site: siteName},
             success: function (result) {
-                document.getElementById('addVaccSite').style.display = "none";
                 document.getElementById('siteContent').innerHTML = result;
+                document.getElementById('addVaccinationSiteForm').reset();
+                document.getElementById('addVaccSite').style.display = "none";
+
 
             }
         })
@@ -1261,16 +1251,30 @@ include_once("../includes/database.php") ?>
         if(formValidation){
             Swal.fire({
                 icon: 'info',
-                title: 'Do you want to add this ' + item + '?',
+                text: 'Do you want to add this ' + item + '?',
                 showDenyButton: true,
                 confirmButtonText: 'Yes',
                 denyButtonText: `No`,
+                confirmButtonColor: '#28a745',
+                denyButtonColor: '#dc3545',
             }).then((result) => {
                 if (result.isConfirmed) {
                     action();
-                    Swal.fire('Saved!', '', 'success')
+                    Swal.fire({
+                        icon: 'success',
+                        text: 'Saved!',
+                        showDenyButton: false,
+                        confirmButtonText: 'Ok',
+                        confirmButtonColor: '#28a745',
+                    })
                 } else if (result.isDenied) {
-                    Swal.fire('Changes are not saved', '', 'info')
+                    Swal.fire({
+                        icon: 'warning',
+                        text: 'Changes you made will not be saved.',
+                        showDenyButton: false,
+                        confirmButtonText: 'OK',
+                        confirmButtonColor: '#28a745',
+                    })
                 }
             })
         }
@@ -1317,17 +1321,32 @@ include_once("../includes/database.php") ?>
             archiveText = "UnArchive";
         }
         Swal.fire({
-            icon: 'info',
-            title: 'Are you sure you want to ' + archiveText + ' this item?',
+            icon: 'question',
+            title: 'Archive Item',
+            text: 'Are you sure you want to ' + archiveText + ' this item?',
             showDenyButton: true,
             confirmButtonText: 'Yes',
             denyButtonText: `No`,
+            confirmButtonColor: '#28a745',
+            denyButtonColor: '#dc3545',
         }).then((result) => {
             if (result.isConfirmed) {
                 action(drive, archiveText);
-                Swal.fire('Saved!', '', 'success')
+                Swal.fire({
+                    icon: 'success',
+                    text: 'Saved!',
+                    showDenyButton: false,
+                    confirmButtonText: 'Ok',
+                    confirmButtonColor: '#28a745',
+                })
             } else if (result.isDenied) {
-                Swal.fire('Changes are not saved', '', 'info')
+                Swal.fire({
+                    icon: 'info',
+                    text: 'Changes you made will not be saved.',
+                    showDenyButton: false,
+                    confirmButtonText: 'Ok',
+                    confirmButtonColor: '#28a745',
+                })
             }
         })
     }

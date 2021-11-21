@@ -23,7 +23,7 @@ if (isset($_POST['search'])) {
     }
     echo "
     <thead>
-            <tr>
+            <tr class='text-center'>
                 <th scope='col'>Patient Name</th>
                 <th scope='col'>Contact Number</th>
             </tr>
