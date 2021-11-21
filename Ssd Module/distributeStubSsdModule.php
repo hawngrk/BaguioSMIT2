@@ -111,34 +111,39 @@ checkRole('SSD');
         <!--            </div>-->
         <br>
         <div class="row">
-            <div id="selectDeployment">
-                <select class="form-select" id="selectHealthDistrict" onchange="updateDeploymentDetails(this.value)">
-                    <option value='' disabled selected hidden> Select Deployment</option>
-                    <?php
-                    require_once("../require/getVaccinationDrive.php");
-                    require_once("../require/getVaccinationSites.php");
-                    foreach ($vaccination_drive as $vaccinationDrive) {
-                        $id = $vaccinationDrive->getDriveId();
-                        $location = $vaccinationDrive->getVaccDriveVaccSiteId();
-                        $date = date("d-m-Y", strtotime($vaccinationDrive->getVaccDate()));
-                        foreach ($vaccinationSites as $site) {
-                            if ($site->getVaccinationSiteId() == $location) {
-                                $locName = $site->getVaccinationSiteLocation();
-
-
-                                echo "<option value=$id> $date - $locName </option>";
-                            }
-                        }
-                    }
-                    ?>
-                </select>
-            </div>
             <div class="col">
                 <div class="row">
                     <div id="hDistrictContainer">
-                        <h2> Health Center Districts </h2>
+                        <h2> Vaccination Deployments </h2>
 
                         <table class="table table-hover" id="healthDistrictTable">
+                            <?php
+                            require_once("../require/getVaccinationDrive.php");
+                            require_once("../require/getVaccinationSites.php");
+                            foreach ($vaccination_drive as $vaccinationDrive) {
+                                $id = $vaccinationDrive->getDriveId();
+                                $location = $vaccinationDrive->getVaccDriveVaccSiteId();
+                                $date = date("d-m-Y", strtotime($vaccinationDrive->getVaccDate()));
+                                $allocated = $vaccinationDrive->getAllocated();
+                                foreach ($vaccinationSites as $site) {
+                                    if ($site->getVaccinationSiteId() == $location) {
+                                        $locName = $site->getVaccinationSiteLocation();
+                                        //echo "<option value=$id> $date - $locName </option>";
+                                        echo "<tr onclick=\"updateDeploymentDetails($id)\">
+                                                <th scope='col' class='barangay'> $date - $locName </th>
+                                                <th scope='col-sm-auto' class='float-right'>";
+                                        if ($allocated == 0) {
+                                            echo "<button type='button' id='allocateButton' class='btn btn-info' onclick='allocate($id)'> ALLOCATE </button>";
+                                        } else {
+                                            echo "<button type='button' id='allocateButton' class='btn btn-info' onclick='allocate($id)'> VIEW </button>";
+                                        }
+                                        echo "     
+                                                </th>
+                                             </tr>";
+                                    }
+                                }
+                            }
+                            ?>
                         </table>
                     </div>
                 </div>
@@ -168,7 +173,7 @@ checkRole('SSD');
             </div>
 
             <div id="barangayModal" class="modal-window">
-                <div id='stubsModal' class='content-modal'>
+                <div id='stubsModal' class='content-modal tableModal'>
                     <div class='modal-header'>
                         <h3 style='padding-right:50%' id="header"></h3>
                         <button id='closeModal' class='close' onclick='closeModal("barangayModal")'><i
@@ -183,7 +188,7 @@ checkRole('SSD');
                                             <li role="presentation" class="doseOption1 nav-item">
                                                 <a class="nav-link" role="tab" id="firstDose" data-toggle="tab"
                                                    href="#firstDose"
-                                                   onclick="shiftTab(firstDose, secondDose,'firstDosePage', 'secondDosePage')">First
+                                                   onclick="shiftTab('firstDose', 'secondDose','firstDosePage', 'secondDosePage')">First
                                                     Dose</a>
                                             </li>
                                         </div>
@@ -191,13 +196,11 @@ checkRole('SSD');
                                             <li role="presentation" class="doseOption2 nav-item">
                                                 <a class="nav-link" id="secondDose" role="tab" data-toggle="tab"
                                                    href="#secondDose"
-                                                   onclick="shiftTab(secondDose, firstDose, 'secondDosePage', 'firstDosePage')">Second
+                                                   onclick="shiftTab('secondDose', 'firstDose', 'secondDosePage', 'firstDosePage')">Second
                                                     Dose</a>
                                             </li>
                                         </div>
                                     </div>
-
-
                                 </ul>
                             </div>
                         </nav>
@@ -209,6 +212,9 @@ checkRole('SSD');
                             <div role="tabpanel" class="tab-pane" id="secondDosePage">
                             </div>
                         </div>
+                    </div>
+                    <div class='modal-footer' id="confirmStubs">
+
                     </div>
                 </div>
             </div>
@@ -260,45 +266,124 @@ checkRole('SSD');
             });
         }
 
-        function sendStubs(drive) {
-            var result1 = {};
-            var trs = document.getElementById('firstDosePage').getElementsByTagName("tr");
-            for (var idx = 1; idx < trs.length; idx++) {
-                var tds = trs[idx].getElementsByTagName("td");
-                result1[trs[idx].id] = [];
-                for (var index = 0; index < tds.length; index++) {
-                    var val = tds[index].firstChild.value;
-                    result1[trs[idx].id].push(val);
-                }
-            }
-            var result2 = [];
-            var trs2 = document.getElementById('secondDosePage').getElementsByTagName("tr");
-            for (var i = 1; i < trs2.length; i++) {
-                var tds2 = trs2[i].getElementsByTagName("td");
-                for (var ind = 0; ind < tds2.length; ind++) {
-                    var val2 = tds2[ind].firstChild.value;
-                    result2.push(val2);
-                }
-            }
-            console.log(result2);
+        function updateDeploymentDetails(val) {
             $.ajax({
                 url: 'selectDeployment.php',
                 type: 'POST',
-                data: {"sendStubs": result1, "stubsDrive": drive, "second_dose": result2},
-                success: function () {
-                    closeModal('barangayModal');
+                data: {"deploymentId": val},
+                success: function (result) {
+                    document.getElementById("labelling").innerHTML = result;
+                }
+            });
+        }
+
+        function openModal(modal) {
+            document.getElementById(modal).style.display = "block";
+            document.body.classList.add("scrollBody");
+        }
+
+        function closeModal(modal) {
+            document.getElementById(modal).style.display = "none";
+        }
+
+        var firstStubs = 0;
+        var firstCounter = 0;
+        var secondStubs = 0;
+        var secondCounter = 0;
+        function allocate(id) {
+            $.ajax({
+                url: 'selectDeployment.php',
+                type: 'POST',
+                data: {"sendButton": id},
+                success: function (result) {
+                    document.getElementById("confirmStubs").innerHTML = result;
                 }
             });
 
+            $.ajax({
+                url: 'selectDeployment.php',
+                type: 'POST',
+                data: {"firstDose": id},
+                success: function (result) {
+                    document.getElementById("firstDosePage").innerHTML = result;
+                    //document.getElementById("barangayModal").style.display = "block";
+
+                }
+            });
+
+            $.ajax({
+                url: 'selectDeployment.php',
+                type: 'POST',
+                data: {"secondDose": id},
+                success: function (result) {
+                    document.getElementById("secondDosePage").innerHTML = result;
+                    document.getElementById("barangayModal").style.display = "block";
+                }
+            });
+
+            $.ajax({
+                url: 'selectDeployment.php',
+                type: 'POST',
+                data: {"vaccineStubs": id, "type": "firstDose"},
+                dataType:"JSON",
+                success: function (result) {
+                    console.log(result);
+                    firstStubs = result;
+                }
+            });
+
+            $.ajax({
+                url: 'selectDeployment.php',
+                type: 'POST',
+                data: {"vaccineStubs": id, "type": "firstDose"},
+                dataType:"JSON",
+                success: function (result) {
+                    console.log(result);
+                    firstCounter = result;
+                }
+            });
+
+            $.ajax({
+                url: 'selectDeployment.php',
+                type: 'POST',
+                data: {"vaccineStubs": id, "type": "secondDose"},
+                dataType:"JSON",
+                success: function (result) {
+                    console.log(result);
+                    secondStubs = result;
+                }
+            });
+
+            $.ajax({
+                url: 'selectDeployment.php',
+                type: 'POST',
+                data: {"vaccineStubs": id, "type": "secondDose"},
+                dataType:"JSON",
+                success: function (result) {
+                    console.log(result);
+                    secondCounter = result;
+                }
+            });
         }
 
-        var firstCounter = 0;
+        function countStubs(num, oldnum, item, vaccine) {
+            console.log(vaccine);
+            console.log(firstStubs);
+            console.log(firstCounter);
+            var vac = vaccine.concat("", "1");
 
-        function countStubs(num, oldnum, item) {
+            if (oldnum == null) {
+                oldnum = '';
+            }
 
             if (num.includes("%")) {
                 num = num.replace(/%/g, '');
-                num = (firstCounter / 100) * num;
+                num = (firstStubs[`${vac}`] / 100) * num;
+            }
+
+            if (oldnum.includes("%")) {
+                oldnum = oldnum.replace(/%/g, '');
+                oldnum = (firstStubs[`${vac}`] / 100) * oldnum;
             }
 
             if (num == undefined || num == "") {
@@ -310,28 +395,41 @@ checkRole('SSD');
                 oldnum = 0;
             }
 
-
-            if (num > firstCounter) {
+            firstCounter[`${vac}`] = firstCounter[`${vac}`] + parseInt(oldnum);
+            if (num > firstCounter[`${vac}`]) {
                 Swal.fire({icon: 'warning', title: 'Number exceeds number of left stubs!', confirmButtonText: 'OK', confirmButtonColor: '#007bff'});
                 //alert('Number Exceeds Number Of Left Stubs!');
-                firstCounter += parseInt(oldnum);
+                firstCounter[`${vac}`] += parseInt(oldnum);
                 item.value = 0;
             } else {
-                firstCounter = firstCounter + parseInt(oldnum);
-                firstCounter = firstCounter - parseInt(num);
+                firstCounter[`${vac}`] = firstCounter[`${vac}`] - parseInt(num);
             }
 
-            document.getElementById('firstCounter').innerHTML = "";
-            document.getElementById('firstCounter').innerHTML = "<h5 ><i class='fas fa-ticket-alt'></i> Number of Stubs Left: " + firstCounter +"</h5>";
+            console.log(firstStubs[`${vac}`]);
+            console.log(firstCounter[`${vac}`]);
+
+            document.getElementById(`${vac}`).innerHTML = "";
+            document.getElementById(`${vac}`).innerHTML = vaccine.concat(" = ", firstCounter[`${vac}`]);
         }
 
-        var secondCounter = 0;
+        function countStubs2(num, oldnum, item, vaccine) {
+            console.log(vaccine);
+            console.log(firstStubs);
+            console.log(firstCounter);
+            var vac = vaccine.concat("", "2");
 
-        function countStubs2(num, oldnum, item) {
+            if (oldnum == null) {
+                oldnum = '';
+            }
 
             if (num.includes("%")) {
                 num = num.replace(/%/g, '');
-                num = (secondCounter / 100) * num;
+                num = (secondStubs[`${vac}`] / 100) * num;
+            }
+
+            if (oldnum.includes("%")) {
+                oldnum = oldnum.replace(/%/g, '');
+                oldnum = (secondStubs[`${vac}`] / 100) * oldnum;
             }
 
             if (num == undefined || num == "") {
@@ -343,20 +441,24 @@ checkRole('SSD');
                 oldnum = 0;
             }
 
-
-            if (num > secondCounter) {
+            secondCounter[`${vac}`] = secondCounter[`${vac}`] + parseInt(oldnum);
+            if (num > secondCounter[`${vac}`]) {
                 Swal.fire({icon: 'warning', title: 'Number exceeds number of left stubs!', confirmButtonText: 'OK', confirmButtonColor: '#007bff'});
-               // alert('Number Exceeds Number Of Left Stubs!');
-                secondCounter += parseInt(oldnum);
+                //alert('Number Exceeds Number Of Left Stubs!');
+                secondCounter[`${vac}`] += parseInt(oldnum);
                 item.value = 0;
             } else {
-                secondCounter = secondCounter + parseInt(oldnum);
-                secondCounter = secondCounter - parseInt(num);
+                secondCounter[`${vac}`] = secondCounter[`${vac}`] - parseInt(num);
             }
 
-            document.getElementById('secondCounter').innerHTML = " <h5><i class='fas fa-ticket-alt'></i> Number of Stubs Left:" + secondCounter + "</h5>";
+            console.log(secondStubs[`${vac}`]);
+            console.log(secondCounter[`${vac}`]);
+
+            document.getElementById(`${vac}`).innerHTML = "";
+            document.getElementById(`${vac}`).innerHTML = vaccine.concat(" = ", secondCounter[`${vac}`]);
         }
 
+        /*
         function checkZero(item, type) {
             if (type == 'first') {
                 var counter = firstCounter;
@@ -371,99 +473,110 @@ checkRole('SSD');
             }
         }
 
-
-        function updateDeploymentDetails(val) {
-            $.ajax({
-                url: 'selectDeployment.php',
-                type: 'POST',
-                data: {"deploymentId": val},
-                success: function (result) {
-                    document.getElementById("labelling").innerHTML = result;
-                }
-            });
-
-            $.ajax({
-                url: 'selectDeployment.php',
-                type: 'POST',
-                data: {"healthDistrict": val},
-                success: function (result) {
-                    document.getElementById("healthDistrictTable").innerHTML = result;
-                }
-            });
-        }
-
-        function viewBarangays(id, district, driveId, priorities, firstDoseStubs, secondDoseStubs) {
-            firstCounter = firstDoseStubs;
-            secondCounter = secondDoseStubs;
-
-            document.getElementById('header').innerText = district;
-            $.ajax({
-                url: 'selectDeployment.php',
-                type: 'POST',
-                data: {"viewBarangays": id, "drive": driveId, "firstStubs": firstDoseStubs},
-                success: function (result) {
-                    document.getElementById("firstDosePage").innerHTML = result;
-                    disable(priorities);
-
-                }
-            });
-            $.ajax({
-                url: 'selectDeployment.php',
-                type: 'POST',
-                data: {"viewBarangays2": id, "drive": driveId, "secondStubs": secondDoseStubs},
-                success: function (result) {
-                    document.getElementById("secondDosePage").innerHTML = result;
-                    document.getElementById("barangayModal").style.display = "block";
-                }
-            });
-        }
-
-        function disable(group) {
-            for (var idx = 0; idx < group.length; idx++) {
-                var input = document.getElementsByClassName(group[idx]);
-                for (var i = 0; i < input.length; i++) {
-                    input[i].disabled = false;
-                }
-            }
-        }
-
-        function chooseInput(type) {
-            console.log('In')
-            if (type.value == 'percentage') {
-                console.log('passed');
-                var trs = document.getElementById('healthDStubs').getElementsByTagName("tr");
-                for (var idx = 1; idx < trs.length; idx++) {
-                    var tds = trs[idx].getElementsByTagName("td");
-                    for (var index = 0; index < tds.length; index++) {
-                        tds[index].children[2].style.display = "block";
-                    }
-
-                }
-            }
-        }
-
-        function closeModal(modal) {
-            document.getElementById(modal).style.display = "none";
-        }
-
-        function openModal(modal) {
-            document.getElementById(modal).style.display = "block";
-            document.body.classList.add("scrollBody");
-        }
+         */
 
         function shiftTab(active, idle1, pageBlock, pageNone1) {
-            active.style.backgroundColor = "#1D7195";
-            active.style.color = "#ffffff";
-            active.style.borderRadius = "12px";
-            idle1.style.backgroundColor = "rgba(162,176,162,0)";
-            idle1.style.color = "#000000";
+            document.getElementById(active).style.backgroundColor = "#1D7195";
+            document.getElementById(active).style.color = "#ffffff";
+            document.getElementById(active).style.borderRadius = "12px";
+            document.getElementById(idle1).style.backgroundColor = "rgba(162,176,162,0)";
+            document.getElementById(idle1).style.color = "#000000";
             document.getElementById(pageBlock).style.display = "block";
             document.getElementById(pageNone1).style.display = "none";
             document.body.classList.add("scrollBody");
         }
 
+        function shiftHealthDistrict(active, idles, pageBlock, pageNone) {
+            document.getElementById(active).style.backgroundColor = "#1D7195";
+            document.getElementById(active).style.color = "#ffffff";
+            document.getElementById(active).style.borderRadius = "12px";
+
+            for (var i = 0; i < idles.length; i++) {
+                if (idles[i] != active) {
+                    console.log(idles[i]);
+                    document.getElementById(idles[i]).style.backgroundColor = "rgba(162,176,162,0)";
+                    document.getElementById(idles[i]).style.color = "#000000";
+                    document.getElementById(pageNone[i]).style.display = "none";
+                }
+            }
+            document.getElementById(pageBlock).style.display = "block";
+            document.body.classList.add("scrollBody");
+        }
+
+        function nextHealthDistrict(active, idles, pageBlock, pageNone) {
+            document.getElementById(active).style.backgroundColor = "rgba(162,176,162,0)";
+            document.getElementById(active).style.color = "#000000";
+            document.getElementById(pageBlock).style.display = "none";
+
+            for (var i = 0; i < idles.length; i++) {
+                if (idles[i] == active) {
+                    console.log(idles[i]);
+                    document.getElementById(idles[i + 1]).style.backgroundColor = "#1D7195";
+                    document.getElementById(idles[i + 1]).style.color = "#ffffff";
+                    document.getElementById(idles[i + 1]).style.borderRadius = "12px";
+                    document.getElementById(pageNone[i + 1]).style.display = "block";
+                }
+            }
+            document.body.classList.add("scrollBody");
+        }
+
+        function backHealthDistrict(active, idles, pageBlock, pageNone) {
+            document.getElementById(active).style.backgroundColor = "rgba(162,176,162,0)";
+            document.getElementById(active).style.color = "#000000";
+            document.getElementById(pageBlock).style.display = "none";
+
+            for (var i = 0; i < idles.length; i++) {
+                if (idles[i] == active) {
+                    console.log(idles[i]);
+                    document.getElementById(idles[i - 1]).style.backgroundColor = "#1D7195";
+                    document.getElementById(idles[i - 1]).style.color = "#ffffff";
+                    document.getElementById(idles[i - 1]).style.borderRadius = "12px";
+                    document.getElementById(pageNone[i - 1]).style.display = "block";
+                }
+            }
+            document.body.classList.add("scrollBody");
+        }
+
+        function sendStubs(drive, priorities) {
+            $.ajax({
+                url: 'selectDeployment.php',
+                type: 'POST',
+                data: {"healthDistricts": drive},
+                dataType: "JSON",
+                success: function (result) {
+                    for (var key in result) {
+                        var barangays = document.getElementsByClassName(`${result[key]}`);
+                        for (var i = 0; i < barangays.length; i++) {
+                            var barangay = barangays[i].id;
+
+                            var secondDose = document.getElementById(barangay.concat('', '2')).value;
+                            var groups = {'A1: Health Care Workers':0, 'A2: Senior Citizens':0,  'A3: Adult with Comorbidity':0, 'A4: Frontline Personnel in Essential Sector':0, 'A5: Indigent Population':0, 'Rest of Adult Population':0, 'A3. Pedia: 12-17 Years Old with Commorbidity':0, 'Rest of Pedia Population':0, 'Second Dose': 0};
+                            for (var j = 0; j < priorities.length; j++) {
+                                var inputs = barangays[i].getElementsByClassName(`${priorities[j]}`);
+                                var count = 0;
+                                for (var x = 0; x < inputs.length; x++) {
+                                    count += parseInt(inputs[x].value);
+                                }
+                                groups[`${priorities[j]}`] = count;
+                            }
+                            groups['Second Dose'] = secondDose;
+                            $.ajax({
+                                url: 'selectDeployment.php',
+                                type: 'POST',
+                                data: {"sendStubs": drive, "barangay": barangay, "stubs": JSON.stringify(groups)},
+                                success: function (result) {
+                                    console.log(result);
+                                },
+                                fail: function(result) {
+                                    console.log('fail');
+                                }
+                            })
+                        }
+                    }
+                    Swal.fire({icon: 'info', title: 'Successfully Sent Stubs!', confirmButtonText: 'OK', confirmButtonColor: '#007bff'});
+                }
+            });
+        }
     </script>
-
-
 </body>
 </html>
