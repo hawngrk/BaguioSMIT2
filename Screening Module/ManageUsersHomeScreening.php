@@ -146,6 +146,7 @@ checkRole('Screening');
             <h3 class="modal-title">Pre-Vaccine Vitals</h3>
             <span id="newVaccineClose" class="close" onclick="closeModal('preVacView')" ><i class='fas fa-window-close'></i></span>
         </div>
+        <form id='preVitals'>
         <div class="modal-body" id="patientRow"></div>
     </div>
 </div>
@@ -219,14 +220,13 @@ checkRole('Screening');
     }
 
     function clickModalRow(patientId) {
-        openModal('preVacView');
-
         // Fetching Data from the Database Code
         $.ajax({
             url: 'screeningProcessor.php',
             type: 'POST',
             data: {"modalScreening": patientId},
             success: function (data) {
+                openModal('preVacView');
                 console.log(data);
                 document.getElementById('patientRow').innerHTML = data;
             },

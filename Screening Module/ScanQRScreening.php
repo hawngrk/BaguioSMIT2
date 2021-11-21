@@ -27,6 +27,9 @@ checkRole('Screening');
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <script src="../javascript/openModal.js"></script>
+    <script src="../javascript/closeModal.js"></script>
 </head>
 
 <body>
@@ -156,16 +159,9 @@ checkRole('Screening');
         })
     }
 
-    function closeModal(modal){
-        document.getElementById(modal).style.display = "none";
-    }
 
-    function closeModal(modal) {
-        document.getElementById(modal).style.display = "none";
-        document.body.classList.remove("scrollBody");
-    }
-
-    function btnViewPostVac() {  
+    function btnViewPostVac() {
+        console.log("passed");
         var id = document.getElementById('addButtonId').value;
         var pulse = document.getElementById('pulseR').value;
         var temp = document.getElementById('tempR').value;

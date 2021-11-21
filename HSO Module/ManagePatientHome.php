@@ -461,19 +461,6 @@ include_once("../includes/database.php") ?>
                         <div id="comorbidityList">
                             <h5> Comorbidity Information</h5>
                             <div class="listOfComorbidity">
-                                <label class="required" for="comorbidities"> Select that blessed </label>
-                                <select id="comorbidities" name="comorbidities" class="form-select" required>
-                                    <option value="" disabled selected> Select Barangay</option>
-                                    <?php
-                                    require_once("../require/getBarangay.php");
-                                    foreach ($barangays as $barangay) {
-                                        $id = $barangay->getBarangayId();
-                                        $name = $barangay->getBarangayName();
-                                        echo "<option value=$id>$name</option>";
-                                    }
-                                    ?>
-                                </select>
-
                                 <div class="row">
                                     <div class="col">
                                         <input type="checkbox" name="hypertension" value="hypertension"
