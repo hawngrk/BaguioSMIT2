@@ -271,9 +271,9 @@ input[type=text]{
     width: fit-content;
 }
 
-#preVacView .content-modal /*EIR, BARANGAY, HSO, personnel*/{
+#preVacView .content-modal, #postVacView .content-modal /*EIR, BARANGAY, HSO, personnel*/{
     padding: 0%;
-    width: fit-content;
+    width: 90%;
 }
 
 #qrView .content-modal {
