@@ -9,6 +9,8 @@ $password = $_POST['password'];
 // $password = "patient1";
 // $username = "patientArtbog";
 // $password = "patient1";
+// $username = "TedMosby";
+// $password = "patient1";
 
 $query = "SELECT * FROM patient_account WHERE patient_username = ? LIMIT 1";
 
@@ -112,14 +114,13 @@ WHERE
     $stmt->execute();
     $vaccineDetails = [];
     $row = $stmt->rowCount();
+    $count = 0;
     while ($row != 0) {
         $row-=1;    
         $queriedVaccine = $stmt->fetch(PDO::FETCH_ASSOC);
         array_push($vaccineDetails, array('lotID' => $queriedVaccine['vaccine_lot_id'], 'vaccDate' => $queriedVaccine['vaccination_date'], 'location' => $queriedVaccine['location'], 'vaccName' => $queriedVaccine['vaccine_name']));
+        $count++;
     }
-    if (empty($vaccineDetails[0])) {
-        $vaccineDetails[0] = "";
-        $vaccineDetails[1] = "";
-    }
+    $vaccineDetails[$count] = "";
     return $vaccineDetails;
 }
