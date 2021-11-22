@@ -177,7 +177,7 @@ if (isset($_POST['districts'])){
                         <td>
                             <div class='d-flex justify-content-center'>
                                 <button class='btn btn-sm bg-none' onclick='event.stopPropagation(); archive(1, clickArchive, $driveId)'><i class='fa fa-archive'></i></button>
-                                <button class='btn btn-sm bg-none' onclick=''><i class='far fa-edit'></i></button>
+                                <button class='btn btn-sm bg-none' onclick='event.stopPropagation(); editDeployment(\"$driveId\", \"$vaccinationSite\", \"$date\")'><i class='far fa-edit'></i></button>
 
                             </div>
                         </td>
@@ -1028,7 +1028,7 @@ if (isset($_POST['reset'])){
 
                                 </tr>
                             </table>
-                            <button class="hyperlink add_another" style="font-size: 15px; background-color: transparent; border-color: transparent" onclick="event.preventDefault();">+Add New Classification</button>
+                            <button class="hyperlink add_another" style="font-size: 15px; background-color: transparent; border-color: transparent" onclick="event.preventDefault(); insertNewRow(this)">+Add New Classification</button>
                         </div>
 
                         <div class="modal-footer">

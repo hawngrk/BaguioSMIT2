@@ -407,7 +407,7 @@ include_once("../includes/database.php") ?>
 
                                 </tr>
                             </table>
-                            <button class="hyperlink add_another" style="font-size: 15px; background-color: transparent; border-color: transparent" onclick="event.preventDefault();">+Add New Classification</button>
+                            <button class="hyperlink add_another" style="font-size: 15px; background-color: transparent; border-color: transparent" onclick="event.preventDefault();insertNewRow(this)">+Add New Classification</button>
                         </div>
 
                         <div class="modal-footer">
@@ -799,12 +799,13 @@ include_once("../includes/database.php") ?>
     var id = "";
     var clicked = false;
 
-    $(document).ready(function () {
-        $('.add_another').click(function (event) {
-            $("#secondDoseTable").append('<tr><td style="width: 35%"><label for="VaccineBr"><h6>Select First Dose Vaccine Brand: </h6></label> <select style="width: 72%" name="vaccineBrand" id="VaccineBr">  <option value="" disabled selected> Select First Dose Brand</option> <?php require '../require/getVaccine.php'; foreach ($vaccines as $vac) { $vacName = $vac->getVaccName(); $vacId = $vac->getVaccId(); echo "<option value = $vacId>$vacName</option>";}?> </select></td> <td><label><h6>Select First Dose Date: </h6></label><div class="form-inline"> <input type="date" id="secondDoseDate" name="secondDoseDate" class="dateForm form-control"></div> <td><label><h6>Number of Stubs: </h6></label>  <div class="form-inline"> <input type="input" placeholder="Number of Stubs" class="dateForm form-control"> <button class="buttonTransparent delButt" onclick="event.preventDefault(); removeRow(this)"><i class="fas fa-trash"></i></button></div></td></tr>');
-        });
 
-    });
+    function insertNewRow(event){
+        var table = document.getElementById('secondDoseTable');
+        var row = table.insertRow();
+        row.innerHTML = '<td style="width: 35%"><label for="VaccineBr"><h6>Select First Dose Vaccine Brand: </h6></label> <select style="width: 72%" name="vaccineBrand" id="VaccineBr">  <option value="" disabled selected> Select First Dose Brand</option> <?php require '../require/getVaccine.php'; foreach ($vaccines as $vac) { $vacName = $vac->getVaccName(); $vacId = $vac->getVaccId(); echo "<option value = $vacId>$vacName</option>";}?> </select></td> <td><label><h6>Select First Dose Date: </h6></label><div class="form-inline"> <input type="date" id="secondDoseDate" name="secondDoseDate" class="dateForm form-control"></div> <td><label><h6>Number of Stubs: </h6></label>  <div class="form-inline"> <input type="input" placeholder="Number of Stubs" class="dateForm form-control"> <button class="buttonTransparent delButt" onclick="event.preventDefault(); removeRow(this)"><i class="fas fa-trash"></i></button></div></td>'
+
+    }
 
 
     window.onclick = function (event) {

@@ -97,7 +97,44 @@ checkRole('SSD');
                         </button>
 
                         <div id = "notifications" class="dropdown-menu mr-4 border border-dark" style="width: 352px" aria-labelledby="dropdownMenuButton">
+                            <?php
+                            $query = "SELECT vaccination_drive.drive_id, vaccination_sites.location, vaccination_drive.vaccination_date, SUM(vaccine_drive_1.stubs), SUM(vaccine_drive_2.stubs), vaccination_drive.notif_opened FROM vaccination_sites JOIN vaccination_drive ON vaccination_sites.vaccination_site_id = vaccination_drive.vaccination_site_id JOIN vaccine_drive_1 ON vaccine_drive_1.drive_id = vaccination_drive.drive_id JOIN vaccine_drive_2 ON vaccine_drive_2.drive_id = vaccination_drive.drive_id GROUP BY drive_id ORDER BY vaccination_drive.drive_id desc;";
 
+                            $stmt = $database->stmt_init();
+                            $stmt->prepare($query);
+                            $stmt->execute();
+                            $stmt->bind_result($driveId, $locName, $date, $firstStubs, $secondStubs, $opened);
+                            echo "<table class='tableScroll7 px-4 py-2'>
+                                <tr><td><h4>Notifications<hr></h4></td></tr>";
+                                while ($stmt->fetch()) {
+                                if ($opened == 1) {
+                                echo "<tr onclick='updateDeploymentDetails($driveId)'>
+
+                                    <td>
+                                        Location: $locName <br>
+                                        Date: $date <br>
+                                        Number of First Stubs: $firstStubs <br>
+                                        Number of Second Stubs: $secondStubs <br>
+                                        <br>
+                                        <hr>
+                                    </td>
+                                </tr>
+                                ";
+                                } else {
+                                echo "<tr onclick='updateDeploymentDetails($driveId)'>
+                                    <script>document.getElementById('marker').setAttribute('style', 'color:#c10d0d!important');</script>
+                                    <td  style='background: lightgray!important'>New!<br>Vaccination Location: $locName<br>
+                                        Date: $date<br>
+                                        Number of First Stubs: $firstStubs <br>
+                                        Number of Second Stubs: $secondStubs<br>
+                                        <hr>
+                                    </td>
+                                </tr>
+                                ";
+                                }
+                                }
+                                ?>
+                            </table>
                         </div>
                     </div>
                 </nav>
@@ -118,30 +155,23 @@ checkRole('SSD');
 
                         <table class="table table-hover" id="healthDistrictTable">
                             <?php
-                            require_once("../require/getVaccinationDrive.php");
-                            require_once("../require/getVaccinationSites.php");
-                            foreach ($vaccination_drive as $vaccinationDrive) {
-                                $id = $vaccinationDrive->getDriveId();
-                                $location = $vaccinationDrive->getVaccDriveVaccSiteId();
-                                $date = date("d-m-Y", strtotime($vaccinationDrive->getVaccDate()));
-                                $allocated = $vaccinationDrive->getAllocated();
-                                foreach ($vaccinationSites as $site) {
-                                    if ($site->getVaccinationSiteId() == $location) {
-                                        $locName = $site->getVaccinationSiteLocation();
-                                        //echo "<option value=$id> $date - $locName </option>";
-                                        echo "<tr onclick=\"updateDeploymentDetails($id)\">
+                            $query = "SELECT drive_id, vaccination_date, vaccination_sites.location, allocated FROM vaccination_drive JOIN vaccination_sites ON vaccination_drive.vaccination_site_id = vaccination_sites.vaccination_site_id ORDER BY drive_id DESC";
+                            $stmt = $database->stmt_init();
+                            $stmt->prepare($query);
+                            $stmt->execute();
+                            $stmt->bind_result($id, $date, $locName, $allocated);
+                            while ($stmt->fetch()){
+                                echo "<tr onclick=\"updateDeploymentDetails($id)\">
                                                 <th scope='col' class='barangay'> $date - $locName </th>
                                                 <th scope='col-sm-auto' class='float-right'>";
-                                        if ($allocated == 0) {
-                                            echo "<button type='button' id='allocateButton' class='btn btn-info' onclick='allocate($id)'> ALLOCATE </button>";
-                                        } else {
-                                            echo "<button type='button' id='allocateButton' class='btn btn-info' onclick='view($id)'> VIEW </button>";
-                                        }
-                                        echo "     
+                                if ($allocated == 0) {
+                                    echo "<button type='button' id='allocateButton' class='btn btn-info' onclick='allocate($id)'> ALLOCATE </button>";
+                                } else {
+                                    echo "<button type='button' id='allocateButton' class='btn btn-info' onclick='view($id)'> VIEW </button>";
+                                }
+                                echo "     
                                                 </th>
                                              </tr>";
-                                    }
-                                }
                             }
                             ?>
                         </table>
@@ -624,6 +654,15 @@ checkRole('SSD');
                 data: {"healthDistricts": drive},
                 dataType: "JSON",
                 success: function (result) {
+                    closeModal('barangayModal')
+                    $.ajax({
+                        url: 'selectDeployment.php',
+                        type: 'POST',
+                        data: {"list": id},
+                        success: function (result) {
+                            document.getElementById("healthDistrictTable").innerHTML = result;
+                        }
+                    });
                     for (var key in result) {
                         var barangays = document.getElementsByClassName(`${result[key]}`);
                         for (var i = 0; i < barangays.length; i++) {

@@ -9,9 +9,6 @@ $barangay_id = $accountDetails['barangay_id'];
 
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -59,6 +56,8 @@ $barangay_id = $accountDetails['barangay_id'];
     <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet"/>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="../javascript/logout.js"></script>
 
 </head>
 
@@ -113,86 +112,6 @@ $barangay_id = $accountDetails['barangay_id'];
         </ul>
     </nav>
 
-    <!-- Top Nav Bar -->
-
-
-<!--    <div id="notificationModal" class="modal-window">-->
-<!--        <div class="content-modal">-->
-<!--            <div class="modal-header">-->
-<!--                <h4 class="modal-title">Notifications</h4>-->
-<!--                <button type="button" class="close" data-dismiss="modal"-->
-<!--                        onclick="closeModal('notificationModal')">-->
-<!--                    &times;-->
-<!--                </button>-->
-<!--            </div>-->
-<!--            <table>-->
-<!--            <div class="modal-body" id="notificationContent">-->
-<!--                --><?php
-//                $query = "SELECT barangay_stubs.drive_id, barangay_stubs.A1_stubs, barangay_stubs.A2_stubs, barangay_stubs.A3_stubs, barangay_stubs.A4_stubs, barangay_stubs.A5_stubs, barangay_stubs.A6_stubs, barangay_stubs.notif_opened, vaccination_sites.location, vaccination_drive.vaccination_date FROM barangay_stubs JOIN vaccination_drive ON vaccination_drive.drive_id = barangay_stubs.drive_id JOIN vaccination_sites ON vaccination_sites.vaccination_site_id = vaccination_drive.vaccination_site_id WHERE barangay_id = '113';";
-//                $stmt = $database->stmt_init();
-//                $stmt->prepare($query);
-//                $stmt->execute();
-//                $stmt->bind_result($driveId,$A1, $A2, $A3, $A4, $A5, $A6, $opened, $locName, $date);
-//                while ($stmt->fetch()) {
-//
-//                    $availableStubs = [$A1, $A2, $A3, $A4, $A5, $A6];
-//                    $priorityStub = [];
-//                    $values = [];
-//
-//                    for ($i = 0; $i < 6; $i++) {
-//                        if ($availableStubs[$i] != 0) {
-//                            $priorityStub[] = "A" . ($i + 1);
-//                            $values[] = $availableStubs[$i];
-//                        }
-//                    }
-//
-//                    if ($opened == 1) {
-//                        echo "<tr>
-//                                                        <td style='color: #9C9C9C'>
-//                                                            Stubs:<br>";
-//                        foreach ($priorityStub as $ps) {
-//                            foreach ($values as $value)
-//                                echo " $ps: $value";
-//                        }
-//
-//                        echo "
-//                                                            Vaccination Location: $locName<br>
-//                                                               Date: $date <br>
-//
-//
-//                                                      <hr style='width: 100%; background: azure'>
-//                                                     </td>
-//                                                      </tr>
-//                                                      ";
-//                    } else {
-//
-//                        echo "<tr onclick='updateBarangayHome($driveId); ; closeModal(\"notificationModal\")'>
-//                                                   <script>document.getElementById('marker').setAttribute('style', 'color:#c10d0d!important');</script>
-//
-//                                                        <td style='background: lightgray'>
-//                                                             Stubs:";
-//
-//                        foreach ($priorityStub as $ps) {
-//                            foreach ($values as $value)
-//                                echo "$ps: $value<br>";
-//                        }
-//
-//                        echo "
-//                                                            Vaccination Location: $locName<br>
-//                                                               Date: $date <br>
-//
-//
-//                                                      <hr style='width: 100%; background: azure'>
-//                                                      </td>
-//                                                      </tr>";
-//                    }
-//                }
-//                ?>
-<!--            </div>-->
-<!--            </table>-->
-<!--        </div>-->
-<!--    </div>-->
-
     <div id="content">
         <nav class="float-right mr-4">
             <div class="dropdown">
@@ -203,7 +122,7 @@ $barangay_id = $accountDetails['barangay_id'];
                 </button>
                 <div id="notifications" class="dropdown-menu mr-4 border border-dark" style="width: 352px" aria-labelledby="dropdownMenuButton">
                     <?php
-                    $query = "SELECT barangay_stubs.drive_id, barangay_stubs.A1_stubs, barangay_stubs.A2_stubs, barangay_stubs.A3_stubs, barangay_stubs.A4_stubs, barangay_stubs.A5_stubs, barangay_stubs.ROAP, barangay_stubs.A3_Pedia, barangay_stubs.ROPP, barangay_stubs.second_dose, barangay_stubs.notif_opened, vaccination_sites.location, vaccination_drive.vaccination_date FROM barangay_stubs JOIN vaccination_drive ON vaccination_drive.drive_id = barangay_stubs.drive_id JOIN vaccination_sites ON vaccination_sites.vaccination_site_id = vaccination_drive.vaccination_site_id WHERE barangay_id = '$barangay_id';";
+                    $query = "SELECT barangay_stubs.drive_id, barangay_stubs.A1_stubs, barangay_stubs.A2_stubs, barangay_stubs.A3_stubs, barangay_stubs.A4_stubs, barangay_stubs.A5_stubs, barangay_stubs.ROAP, barangay_stubs.A3_Pedia, barangay_stubs.ROPP, barangay_stubs.second_dose, barangay_stubs.notif_opened, vaccination_sites.location, vaccination_drive.vaccination_date FROM barangay_stubs JOIN vaccination_drive ON vaccination_drive.drive_id = barangay_stubs.drive_id JOIN vaccination_sites ON vaccination_sites.vaccination_site_id = vaccination_drive.vaccination_site_id WHERE barangay_id = '$barangay_id' ORDER BY vaccination_date DESC;";
                     $stmt = $database->stmt_init();
                     $stmt->prepare($query);
                     $stmt->execute();
@@ -216,7 +135,7 @@ $barangay_id = $accountDetails['barangay_id'];
 
 
                         if ($opened == 1) {
-                            echo " <tr>
+                            echo " <tr onclick='updateBarangayHome($driveId, $barangay_id)'>
                                                        <td> First Dose Stubs: $totalStubs<br>
                                                             Second Dose Stubs: $secondStubs<br>
                                                             Vaccination Location: $locName<br>
@@ -224,7 +143,7 @@ $barangay_id = $accountDetails['barangay_id'];
                                                        </td>
                                                    </tr>";
                         } else {
-                            echo "<tr onclick='updateBarangayHome($driveId, $barangay_id); closeModal(\"notificationModal\")'>
+                            echo "<tr onclick='updateBarangayHome($driveId, $barangay_id)'>
                                                        <script>document.getElementById('marker').setAttribute('style', 'color:#c10d0d!important');</script>
                                                        <td style='background: lightgray'>
                                                             First Dose Stubs: $totalStubs<br>
@@ -236,9 +155,8 @@ $barangay_id = $accountDetails['barangay_id'];
                                                                          ";
                         }
                     }
-                    echo "</table>";
                     ?>
-
+                </table>
                 </div>
             </div>
         </nav>
@@ -330,38 +248,9 @@ $barangay_id = $accountDetails['barangay_id'];
                     </div>
                 </div>
             </div>
-<!--            <div class="row">-->
-<!--                <div class="counterCl">-->
-<!--                    <div class="col colCount">-->
-<!--                        <h5>CLAIMED</h5>-->
-<!--                        --><?php
-//                        $query = "SELECT COUNT(notification) FROM patient WHERE notification = 1";
-//                        $stmt = $database->stmt_init();
-//                        $stmt->prepare($query);
-//                        $stmt->execute();
-//                        $stmt->bind_result($claimed);
-//                        $stmt->fetch();
-//                        echo "<h5>$claimed</h5>"
-//                        ?>
-<!--                    </div>-->
-<!--                    <div class="col colCount">-->
-<!--                        <h5>UNCLAIMED</h5>-->
-<!--                        --><?php
-//                        $query = "SELECT COUNT(notification) FROM patient WHERE notification = 0";
-//                        $stmt = $database->stmt_init();
-//                        $stmt->prepare($query);
-//                        $stmt->execute();
-//                        $stmt->bind_result($unclaimed);
-//                        $stmt->fetch();
-//                        echo "<h5>$unclaimed</h5>"
-//                        ?>
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
         </div>
     </div>
 </body>
-</html>
 <script type="text/javascript">
 
 
@@ -381,45 +270,28 @@ $barangay_id = $accountDetails['barangay_id'];
     });
 
     function openNotif() {
-        document.getElementById('notifications').innerHTML = "";
         $.ajax({
             url: 'ManagePatientProcessor.php',
             type: 'POST',
-            data: {"notification": ""},
+            data: {"notificationUpdate": ""},
             success: function (result) {
-                document.getElementById('notifications').innerHTML = result;
+                document.getElementById("notifications").innerHTML = result;
             }
         });
 
         $.ajax({
             url: 'ManagePatientProcessor.php',
             type: 'POST',
-            data: {"open": "opened"},
-            success: function (result) {
+            data: {"openNotif": ""},
+            success: function () {
                 setTimeout(function () {
                     document.getElementById('marker').setAttribute('style', 'color:transparent!important');
-                }, 2000);
+                }, 1000);
 
             }
         });
     }
 
-    function closeModal(modal) {
-        document.getElementById("notificationContent").innerHTML = "";
-        document.getElementById(modal).style.display = "none";
-        document.body.classList.remove("scrollBody");
-
-        $.ajax({
-            url: 'ManagePatientProcessor.php',
-            type: 'POST',
-            data: {"notifStubs": ""},
-            success: function (result) {
-                document.getElementById("notificationContent").innerHTML = result;
-
-            }
-        });
-
-    }
 
     function updateBarangayHome(driveId, barangay_id){
         $.ajax({
@@ -433,8 +305,6 @@ $barangay_id = $accountDetails['barangay_id'];
     }
 
 </script>
-<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script src="../javascript/logout.js"></script>
 <style>
 
     #stubsLeft {

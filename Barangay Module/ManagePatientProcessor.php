@@ -1,8 +1,6 @@
 <?php
-$accountDetails = $_SESSION['account'];
-$barangay_id = $accountDetails['barangay_id'];
 include("../includes/database.php");
-include("../includes/recordActivityLog.php");
+//include("../includes/recordActivityLog.php");
 require_once "../require/getPriorityGroup.php";
 require_once "../require/getBarangay.php";
 
@@ -375,64 +373,6 @@ if (isset($_POST['queue'])){
 
 }
 
-if (isset($_POST['notifStubs'])) {
-    $query = "SELECT barangay_stubs.A1_stubs, barangay_stubs.A2_stubs, barangay_stubs.A3_stubs, barangay_stubs.A4_stubs, barangay_stubs.A5_stubs, barangay_stubs.A6_stubs, barangay_stubs.notif_opened, vaccination_sites.location, vaccination_drive.vaccination_date FROM barangay_stubs JOIN vaccination_drive ON vaccination_drive.drive_id = barangay_stubs.drive_id JOIN vaccination_sites ON vaccination_sites.vaccination_site_id = vaccination_drive.vaccination_site_id WHERE barangay_id = '113';";
-    $stmt = $database->stmt_init();
-    $stmt->prepare($query);
-    $stmt->execute();
-    $stmt->bind_result($A1, $A2, $A3, $A4, $A5, $A6, $opened, $locName, $date);
-    while ($stmt->fetch()) {
-
-        $availableStubs = [$A1, $A2, $A3, $A4, $A5, $A6];
-        $priorityStub = [];
-        $values = [];
-
-        for ($i = 0; $i < 5; $i++) {
-            if ($availableStubs[$i] != 0) {
-                $priorityStub[] = "A" . $i + 1;
-                $values[] = $availableStubs[$i];
-            }
-        }
-
-        if ($opened == 1) {
-            echo "
-                                                        <div style='color: #9C9C9C'>
-                                                            <p>Stubs:<br>";
-            foreach ($priorityStub as $ps) {
-                foreach ($values as $value)
-                    echo " $ps: $value </p>";
-            }
-
-            echo "
-                                                            <p>Vaccination Location: $locName<br>
-                                                               Date: $date <br>
-                                                            </p>
-                                                        </div>
-                                                      <hr style='width: 100%; background: azure'>
-                                                      ";
-        } else {
-
-            echo "
-                                                   <script>document.getElementById('marker').setAttribute('style', 'color:#c10d0d!important');</script>
-
-                                                        <div style='background: lightgray'>
-                                                             <h4>Stubs:</h4>";
-
-            foreach ($priorityStub as $ps) {
-                foreach ($values as $value)
-                    echo " <h3>$ps: $value </h3> <br>";
-            }
-
-            echo "
-                                                            <p>Vaccination Location: $locName<br>
-                                                               Date: $date <br>
-                                                            </p>
-                                                        </div>
-                                                      <hr style='width: 100%; background: azure'>";
-        }
-    }
-}
-
 if (isset($_POST['delegations'])){
     $drId = $_POST['delegations'];
     $barangay_Id = $_POST['barangayId'];
@@ -501,14 +441,15 @@ if (isset($_POST['delegations'])){
         </div>";
 }
 
-if (isset($_POST['open'])){
+if (isset($_POST['openNotif'])){
+    include_once "../includes/database.php";
     $query = "UPDATE barangay_stubs SET notif_opened = '1' WHERE notif_opened = '0'";
     $database->query($query);
 }
 
-if (isset($_POST['notification'])){
+if (isset($_POST['notificationUpdate'])){
 
-    $query = "SELECT barangay_stubs.drive_id, barangay_stubs.A1_stubs, barangay_stubs.A2_stubs, barangay_stubs.A3_stubs, barangay_stubs.A4_stubs, barangay_stubs.A5_stubs, barangay_stubs.ROAP, barangay_stubs.A3_Pedia, barangay_stubs.ROPP, barangay_stubs.second_dose, barangay_stubs.notif_opened, vaccination_sites.location, vaccination_drive.vaccination_date FROM barangay_stubs JOIN vaccination_drive ON vaccination_drive.drive_id = barangay_stubs.drive_id JOIN vaccination_sites ON vaccination_sites.vaccination_site_id = vaccination_drive.vaccination_site_id WHERE barangay_id = '$barangay_id';";
+    $query = "SELECT barangay_stubs.drive_id, barangay_stubs.A1_stubs, barangay_stubs.A2_stubs, barangay_stubs.A3_stubs, barangay_stubs.A4_stubs, barangay_stubs.A5_stubs, barangay_stubs.ROAP, barangay_stubs.A3_Pedia, barangay_stubs.ROPP, barangay_stubs.second_dose, barangay_stubs.notif_opened, vaccination_sites.location, vaccination_drive.vaccination_date FROM barangay_stubs JOIN vaccination_drive ON vaccination_drive.drive_id = barangay_stubs.drive_id JOIN vaccination_sites ON vaccination_sites.vaccination_site_id = vaccination_drive.vaccination_site_id WHERE barangay_id = '$barangay_id' ORDER BY vaccination_date DESC;";
     $stmt = $database->stmt_init();
     $stmt->prepare($query);
     $stmt->execute();
@@ -542,7 +483,6 @@ if (isset($_POST['notification'])){
         }
     }
     echo "</table>";
-
 }
 
 if (isset($_POST['showFirstQueue'])){
