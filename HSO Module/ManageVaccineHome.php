@@ -349,7 +349,7 @@ include_once("../includes/database.php") ?>
     <div id="archived" class="modal-window">
         <div class="content-modal-table">
             <div class="modal-header">
-                <h4 class="modal-title">Archived Vaccination Drives</h4>
+                <h4 class="modal-title">Archived Vaccine Lots</h4>
                 <button type="button" class="close" data-dismiss="modal" onclick="closeModal('archived')">
                     <i class='fas fa-window-close'></i>
                 </button>

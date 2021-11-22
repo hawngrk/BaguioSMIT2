@@ -931,7 +931,7 @@ include_once("../includes/database.php") ?>
             denyButtonColor: '#dc3545',
         }).then((result) => {
             if (result.isConfirmed) {
-                action(drive, archiveText);
+                action(patient, archiveText);
                 Swal.fire({
                     icon: 'success',
                     text: 'Saved!',
