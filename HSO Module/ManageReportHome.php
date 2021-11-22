@@ -565,7 +565,6 @@ checkRole('HSO');
                 data: {"download": reportsIds},
                 success: function (result) {
                     window.location.href = "DownloadFile.php";
-                    //generateReport(2)
                     console.log('ok');
                     console.log(result);
                 }
@@ -651,5 +650,3 @@ checkRole('HSO');
     <!--Logout script-->
     <script src="../javascript/logout.js"></script>
 </body>
-
-

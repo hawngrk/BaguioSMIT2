@@ -492,10 +492,13 @@ checkRole('EIR');
                 <div class="col">
                     <form id="uploadForm">
                         <div class="col-md-12 text-center form-group">
-                            <button class="shadow-sm" id="iconBrowse"
+                        <button type="button" class="shadow-sm" onclick="openModal('uploadFileModal')">
+                        <label for="fileUpload">Browse files</button>
+
+                            <!-- <button class="shadow-sm" id="iconBrowse"
                                     onclick="document.getElementById('fileUpload').click()">
                                 <label for="fileUpload">Browse files
-                            </button>
+                            </button> -->
                             <br>
                             <input id="fileUpload" type="file" style="display: none"
                                    onchange="getUploadedFiles(this)" multiple/>

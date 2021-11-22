@@ -16,8 +16,11 @@ if ($zipFile->open($zipName, ZipArchive::CREATE) === True) {
     echo "Download Failed!";
 }
 
-if ($zipFile->close()) {
+try {
+    $zipFile->close();
     if (file_exists($zipName)) {
+        $fh = fopen($zipName, 'r');
+
         header('Content-Description: File Transfer');
         header('Content-Type: application/octet-stream');
         header('Content-Disposition: attachment; filename="' . basename($zipName) . '"');
@@ -25,8 +28,9 @@ if ($zipFile->close()) {
         header('Cache-Control: must-revalidate');
         header('Pragma: public');
         header('Content-Length: ' . filesize($zipName));
-        readfile($zipName);
-        unlink($zipName);
+        while (!feof($fh)) {
+            echo fread($fh, 1024*8);
+        }
 
         $files = array_slice(scandir($directory), 2);
         foreach ($files as $file) {
@@ -35,7 +39,8 @@ if ($zipFile->close()) {
             }
         }
         rmdir($directory);
+        unlink($zipName);
+        die();
     }
-} else {
-    echo "Download Failed!";
+} catch (Exception $e) {
 }
