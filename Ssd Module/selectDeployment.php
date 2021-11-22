@@ -563,22 +563,22 @@ if (isset($_POST['sendStubs'])) {
     $query = "INSERT INTO barangay_stubs (barangay_id, drive_id, A1_stubs, A2_stubs, A3_stubs, A4_stubs, A5_stubs, ROAP, A3_Pedia, ROPP, second_dose, notif_opened, sent_stubs) VALUE ('$barangayId', '$drive', '$A1', '$A2', '$A3', '$A4', '$A5', '$ROAP', '$A3Pedia', '$ROPP', '$secondDose', 0, 0);";
     $database->query($query);
 
-
-    require '../vendor/autoload.php';
-
-    $options = array(
-        'cluster' => 'ap1',
-    );
-
-    $pusher = new Pusher\Pusher(
-        '8bde1d2aef3f7c91d16a',
-        '5a55c8609c4d84200725',
-        '1273036',
-        $options
-    );
-
-    $data['message'] = $drive;
-    $pusher->trigger('barangay', 'my-event', $data);
+//
+//    require '../vendor/autoload.php';
+//
+//    $options = array(
+//        'cluster' => 'ap1',
+//    );
+//
+//    $pusher = new Pusher\Pusher(
+//        '8bde1d2aef3f7c91d16a',
+//        '5a55c8609c4d84200725',
+//        '1273036',
+//        $options
+//    );
+//
+//    $data['message'] = $drive;
+//    $pusher->trigger('barangay', 'my-event', $data);
 
 }
 
@@ -904,6 +904,42 @@ if(isset($_POST['list'])){
         } else {
             echo "<button type='button' id='allocateButton' class='btn btn-info' onclick='view($id)'> VIEW </button>";
         }
+        echo "     
+                                                </th>
+                                             </tr>";
+    }
+}
+
+if(isset($_POST['showUpdatedDrive'])){
+    $query = "SELECT drive_id, vaccination_date, vaccination_sites.location, allocated FROM vaccination_drive JOIN vaccination_sites ON vaccination_drive.vaccination_site_id = vaccination_sites.vaccination_site_id WHERE allocated = 0 ORDER BY drive_id DESC";
+    $stmt = $database->stmt_init();
+    $stmt->prepare($query);
+    $stmt->execute();
+    $stmt->bind_result($id, $date, $locName, $allocated);
+    while ($stmt->fetch()){
+        echo "<tr onclick=\"updateDeploymentDetails($id)\">
+                                                <th scope='col' class='barangay'> $date - $locName </th>
+                                                <th scope='col-sm-auto' class='float-right'>";
+
+        echo "<button type='button' id='allocateButton' class='btn btn-info' onclick='allocate($id)'> ALLOCATE </button>";
+
+        echo "     
+                                                </th>
+                                             </tr>";
+    }
+}
+
+if(isset($_POST['showUpdatedAllocated'])){
+    $query = "SELECT drive_id, vaccination_date, vaccination_sites.location, allocated FROM vaccination_drive JOIN vaccination_sites ON vaccination_drive.vaccination_site_id = vaccination_sites.vaccination_site_id WHERE allocated = 1 ORDER BY drive_id DESC";
+    $stmt = $database->stmt_init();
+    $stmt->prepare($query);
+    $stmt->execute();
+    $stmt->bind_result($id, $date, $locName, $allocated);
+    while ($stmt->fetch()){
+        echo "<tr onclick=\"updateDeploymentDetails($id)\">
+                                                <th scope='col' class='barangay'> $date - $locName </th>
+                                                <th scope='col-sm-auto' class='float-right'>";
+        echo "<button type='button' id='allocateButton' class='btn btn-info' onclick='view($id)'> VIEW </button>";
         echo "     
                                                 </th>
                                              </tr>";

@@ -1,7 +1,7 @@
 <?php
 include "../includes/database.php";
-require_once('../includes/sessionHandling.php');
-checkRole('SSD');
+//require_once('../includes/sessionHandling.php');
+//checkRole('SSD');
 ?>
 
 <html lang="en">
@@ -140,6 +140,7 @@ checkRole('SSD');
                 </nav>
             </div>
         </div>
+
         <!--            <div class="float-right">-->
         <!--                <button id="buttonMarker" class="btn btn-lg bg-none" onclick="openNotif('notificationModal')">-->
         <!--                    <span class="markerid="marker"" ></span>-->
@@ -152,10 +153,10 @@ checkRole('SSD');
                 <div class="row">
                     <div id="hDistrictContainer">
                         <h2> Vaccination Deployments </h2>
-
+                        <div class="tableScroll2">
                         <table class="table table-hover" id="healthDistrictTable">
                             <?php
-                            $query = "SELECT drive_id, vaccination_date, vaccination_sites.location, allocated FROM vaccination_drive JOIN vaccination_sites ON vaccination_drive.vaccination_site_id = vaccination_sites.vaccination_site_id ORDER BY drive_id DESC";
+                            $query = "SELECT drive_id, vaccination_date, vaccination_sites.location, allocated FROM vaccination_drive JOIN vaccination_sites ON vaccination_drive.vaccination_site_id = vaccination_sites.vaccination_site_id WHERE allocated = 0 ORDER BY drive_id DESC";
                             $stmt = $database->stmt_init();
                             $stmt->prepare($query);
                             $stmt->execute();
@@ -164,17 +165,43 @@ checkRole('SSD');
                                 echo "<tr onclick=\"updateDeploymentDetails($id)\">
                                                 <th scope='col' class='barangay'> $date - $locName </th>
                                                 <th scope='col-sm-auto' class='float-right'>";
-                                if ($allocated == 0) {
+
                                     echo "<button type='button' id='allocateButton' class='btn btn-info' onclick='allocate($id)'> ALLOCATE </button>";
-                                } else {
-                                    echo "<button type='button' id='allocateButton' class='btn btn-info' onclick='view($id)'> VIEW </button>";
-                                }
+
                                 echo "     
                                                 </th>
                                              </tr>";
                             }
                             ?>
                         </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="row">
+                    <div id="hDistrictContainer">
+                        <h2> Allocated Vaccination Deployments </h2>
+                        <div class="tableScroll2">
+                        <table class="table table-hover" id="allocatedTable">
+                            <?php
+                            $query = "SELECT drive_id, vaccination_date, vaccination_sites.location, allocated FROM vaccination_drive JOIN vaccination_sites ON vaccination_drive.vaccination_site_id = vaccination_sites.vaccination_site_id WHERE allocated = 1 ORDER BY drive_id DESC";
+                            $stmt = $database->stmt_init();
+                            $stmt->prepare($query);
+                            $stmt->execute();
+                            $stmt->bind_result($id, $date, $locName, $allocated);
+                            while ($stmt->fetch()){
+                                echo "<tr onclick=\"updateDeploymentDetails($id)\">
+                                                <th scope='col' class='barangay'> $date - $locName </th>
+                                                <th scope='col-sm-auto' class='float-right'>";
+                                    echo "<button type='button' id='allocateButton' class='btn btn-info' onclick='view($id)'> VIEW </button>";
+                                echo "     
+                                                </th>
+                                             </tr>";
+                            }
+                            ?>
+                        </table>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -269,9 +296,9 @@ checkRole('SSD');
             $.ajax({
                 url: 'selectDeployment.php',
                 type: 'POST',
-                data: {"notifListDrives": "list"},
+                data: {"showUpdatedDrive": ""},
                 success: function (result) {
-                    document.getElementById("selectDeployment").innerHTML = result;
+                    document.getElementById('healthDistrictTable').innerHTML = result
                 }
             });
         });
@@ -655,14 +682,6 @@ checkRole('SSD');
                 dataType: "JSON",
                 success: function (result) {
                     closeModal('barangayModal')
-                    $.ajax({
-                        url: 'selectDeployment.php',
-                        type: 'POST',
-                        data: {"list": id},
-                        success: function (result) {
-                            document.getElementById("healthDistrictTable").innerHTML = result;
-                        }
-                    });
                     for (var key in result) {
                         var barangays = document.getElementsByClassName(`${result[key]}`);
                         for (var i = 0; i < barangays.length; i++) {
@@ -703,8 +722,23 @@ checkRole('SSD');
                         url: 'selectDeployment.php',
                         type: 'POST',
                         data: {"updateDrive": drive},
-                        success: function (result) {
-                            console.log(result);
+                        success: function () {
+                            $.ajax({
+                                url: 'selectDeployment.php',
+                                type: 'POST',
+                                data: {"showUpdatedDrive": ""},
+                                success: function (result) {
+                                    document.getElementById('healthDistrictTable').innerHTML = result
+                                }
+                            });
+                            $.ajax({
+                                url: 'selectDeployment.php',
+                                type: 'POST',
+                                data: {"showUpdatedAllocated": ""},
+                                success: function (result) {
+                                    document.getElementById('allocatedTable').innerHTML = result
+                                }
+                            });
                         },
                         fail: function(result) {
                             console.log('fail');
