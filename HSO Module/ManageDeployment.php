@@ -1050,6 +1050,7 @@ include_once("../includes/database.php") ?>
             success: function (result) {
                 document.getElementById("editModal").innerHTML = result;
                 document.getElementById("editModal").style.display = "block";
+                document.body.classList.add("scrollBody");
             }
         })
     }

@@ -160,15 +160,17 @@ if (isset($_POST['editDeployment'])) {
     echo "
     <div class='content-modal'>
         <div class='modal-header'>
-            <h4 class='modal-title'> Deployment Summary </h4>
+            <h4 class='modal-title'> Deployment Summary</h4>
             <button type='button' class='close' data-dismiss='modal' onclick='closeModal(\"editModal\")'>
                 <i class='fas fa-window-close'></i>
             </button>
         </div>
         <div class='modal-body'>
             <div class='deploymentInfo'>
+                    <h4 class='ml-3'> Deployment ID: $driveId</h4>
+                    <hr>
                 <div class='row'>
-                    <h5 class='ml-3'> Edit the following information of the deployment</h5>
+                    <h5 class='ml-5'> Edit the following information of the deployment</h5><br>
                 </div>
                 <br>
                 <div class='row'>
