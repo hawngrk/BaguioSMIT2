@@ -732,7 +732,7 @@ include_once("../includes/database.php") ?>
                     <input type="button" class="btn btn-danger" onclick="closeModalForms('addVaccSite','addVaccinationSiteForm')" value="Cancel">
                     </input>
                     <input type="submit" class="btn btn-success"
-                           onclick="add('Vaccination Site', addSite, validationSite)" value="Add">
+                           onclick="event.preventDefault(); add('Vaccination Site', addSite, validationSite)" value="Add">
                     </input>
                 </div>
             </form>
