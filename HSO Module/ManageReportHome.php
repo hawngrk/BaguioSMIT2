@@ -73,9 +73,8 @@ checkRole('HSO');
             <li class="active">
                 <a href="ManageReportHome.php" class="active"><i class="fas fa-sticky-note"></i> Reports</a>
             </li>
-            <li>
-                <a href="aboutAdmin.html"><i class="fas fa-question"></i> About</a>
-            </li>
+
+
         </ul>
 
         <ul class="list-unstyled CTAs">
