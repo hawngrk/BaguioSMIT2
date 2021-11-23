@@ -21,7 +21,7 @@ if ($answer == 'no') {
         $database->query("UPDATE patient_barangay_queue SET second_dose_queue = ('$queue' + 1) WHERE barangay_id = '$barangay' AND patient_id = '$patient';");
     }
 
-    $database->query("UPDATE patient SET notification = 0 WHERE patient_id = '2';");
+    $database->query("UPDATE patient SET notification = 0 WHERE patient_id = '1';");
 } else {
     $database->query("INSERT INTO patient_drive (patient_id, drive_id) VALUES ('$drive', '$patient';");
 }
