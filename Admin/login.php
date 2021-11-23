@@ -13,7 +13,7 @@ if (isset($_SESSION['account'])) {
     }
 
     if ($accountDetails['role'] == 'Screening') {
-        header("Location: ../Barangay Module/homeBarangayModule.php");
+        header("Location: ../Screening Module/ScanQRScreening.php");
     }
 
     if ($accountDetails['role'] == 'HSO') {

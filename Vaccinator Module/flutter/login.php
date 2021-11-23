@@ -18,9 +18,6 @@ try {
     $accountDetails = $stmtacc->fetch(PDO::FETCH_ASSOC);
     $employeeID = $accountDetails['employee_id']; 
 
-    //echo $accountDetails['employee_username'];
-    echo password_verify($password, $accountDetails['employee_password']);
-
     if(password_verify($password, $accountDetails['employee_password'])) {
         //Get employee data
         $employeeData = "SELECT * FROM employee WHERE employee_id = ?";
@@ -37,10 +34,10 @@ try {
         $logType = 'Login';
         $logDescription = 'Successfully logged in';
 
-        insertLogs($accountInformation['empId'], $accountInformation['role'], $logType, $logDescription);
+        insertLogs($accountInformation['employee']['empId'], $accountInformation['employee']['role'], $logType, $logDescription);
         //Returns the role of the employee for redirection to its designated page
-        echo json_encode($accountInformation);
-        //var_dump($accountInformation);
+        //echo json_encode($accountInformation);
+        var_dump($accountInformation);
 
     } else {
         echo "Invalid username or password";
@@ -50,7 +47,9 @@ try {
 }
 
 function empToArray($empData) {
-    $fullName = $empData['employee_first_name']." ".$empData['employee_last_name'];  
-    $account = array('empId' => $empData['employee_id'], 'name' => $fullName, 'role' => $empData['employee_role']);
+    $fullName = $empData['employee_first_name']." ".$empData['employee_last_name'];
+    $account = [];
+    $empArray = array('empId' => $empData['employee_id'], 'name' => $fullName, 'role' => $empData['employee_role']);
+    $account['employee'] = $empArray;
     return $account;
 }

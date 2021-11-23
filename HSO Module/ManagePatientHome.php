@@ -1,7 +1,6 @@
 <?php
 require_once('../includes/sessionHandling.php');
 checkRole('HSO');
-//include ("../AdminbackEnd/sessionHandling.php");
 include_once("../includes/database.php") ?>
 
 <head>
@@ -52,12 +51,14 @@ include_once("../includes/database.php") ?>
         </div>
 
         <ul class="list-unstyled components">
+        <hr>
+            <h4 id="headingNav1">Health Service Office</h4>
             <hr>
-            <h4 id="headingNav1"> Health Service Office </h4>
-            <hr>
-            <h5 id="headingNav2">
-                <script src="../javascript/showDateAndTime.js"></script>
-            </h5>
+            <div class="timeBox">
+                <p id="time"></p>
+                <p id="datee"></p>
+                <script src="../javascript/detailedDateAndTime.js"></script>
+            </div>
             <hr>
 
             <li>
@@ -231,7 +232,7 @@ include_once("../includes/database.php") ?>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" onclick="closeModal('uploadFileModal')">
+                    <button type="button" class="btn btn-danger" onclick="closeModalForms('uploadFileModal', 'uploadForm')">
                         Cancel
                     </button>
                     <button type="button" id="uploadFileConfirmBtn" class="btn btn-primary"
