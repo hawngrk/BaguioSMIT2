@@ -162,38 +162,7 @@ checkRole('EIR');
                 </div>
             </div>
             <br>
-            <div class="row">
-                <div class="col-4">
-                    <div class="card text-white bg-success mb-3" id="adultVaccinated">
-                        <div class="card-header">
-                            <h5>Total Vaccines for the Day (Adult Population)</h5>
-                        </div>
-                        <div class="card-body">
-                            604
-                        </div>
-                    </div>
-                </div>
-                <div class="col-4">
-                    <div class="card text-white bg-warning mb-3" id="pediaVaccinated">
-                        <div class="card-header">
-                            <h5>Total Vaccines for the Day (Pediatic Population)</h5>
-                        </div>
-                        <div class="card-body">
-                            1,319
-                        </div>
-                    </div>
-                </div>
-                <div class="col-4">
-                    <div class="card text-white bg-danger mb-3" id="totalVaccinated">
-                        <div class="card-header">
-                            <h5>Total Vaccine Administered </h5>
-                        </div>
-                        <div class="card-body">
-                            429, 423
-                        </div>
-                    </div>
-                </div>
-            </div>
+        
             <br>
                 </div>
             </div>
@@ -206,6 +175,7 @@ checkRole('EIR');
 </body>
 <!--jQuery-->
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <!--Logout script-->
 <script src="../javascript/logout.js"></script>
 
@@ -317,36 +287,9 @@ checkRole('EIR');
             }
         });
 
-        var sum1 = 0;
-        var sum2 = 0;
-        $.ajax({
-            url: '../HSO Module/HSOdashProcessor.php',
-            type: 'POST',
-            data: {"barAdult": 1, "startDate": startDate, "endDate": endDate},
-            success: function (result) {
-                var values = $.parseJSON(result);
-                for (var i = 0; i < values.length; i++) {
-                    sum1 += values[i];
-                }
-                document.getElementById("adultVaccinated").children[1].innerHTML = sum1;
-
-                $.ajax({
-                    url: 'HSOdashProcessor.php',
-                    type: 'POST',
-                    data: {"barAdult": 1, "startDate": startDate, "endDate": endDate},
-                    success: function (result) {
-                        var values = $.parseJSON(result);
-                        for (var i = 0; i < values.length; i++) {
-                            sum2 += values[i];
-                        }
-                        document.getElementById("pediaVaccinated").children[1].innerHTML = sum2;
-                        document.getElementById("totalVaccinated").children[1].innerHTML = parseInt(sum1) + parseInt(sum2);
-                    }
-                });
-            }
-        });
 
     }
 </script>
 </body>
 </html>
+`
