@@ -76,9 +76,7 @@ include_once("../includes/database.php") ?>
             <li>
                 <a href="ManageReportHome.php"><i class="fas fa-sticky-note"></i> Reports</a>
             </li>
-            <li>
-                <a href="aboutAdmin.html"><i class="fas fa-question"></i> About</a>
-            </li>
+
         </ul>
 
         <ul class="list-unstyled CTAs">

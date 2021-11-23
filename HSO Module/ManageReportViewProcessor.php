@@ -101,17 +101,54 @@ if (isset($_POST['report'])) {
     <div class='container-fluid'>
     <div class='row'>
         <div class='col'>
-            <h5 class='reviewReport'><b>Report Information</b></h5>
-            <h7 class='paddingLeft'><b>Report ID:</b> $reportId</h7>
+            <h5>Patient Information</h5>
+            <h7 class='ml-4'><b> Address: </b> &nbsp; $patientAddress</h7>
             <br>
-            <h7 class='paddingLeft'><b>Date of recent travel:</b> $dateRecentTravel</h7>
             <br>
+            <h5>Vaccination Information</h5>
+            <h7 class='paddingLeft ml-4'> <b> First Dose Date: &nbsp; </b>
+            ";
+    if ($firstDate != ""){
+        echo "$firstDate</h7>";
+    }else {
+        echo "Not Vaccinated </h7>";
+    }
+    echo" <br>
+    <h7 class='paddingLeft ml-4'> <b> Second Dose Date: &nbsp; </b>";
+
+    if ($secondDate != ""){
+        echo "$secondDate</h7>";
+    }else {
+        echo "Not Vaccinated </h7>";
+    }
+
+    echo"
+            <h5><br>Report Information</h5>
+            <h7 class='ml-4'><b>Report ID:</b> &nbsp; $reportId</h7>
+            <br>
+            <h7 class='ml-4'><b>Date of recent travel:</b> &nbsp;$dateRecentTravel</h7>
+            <br>
+            <h7 class='ml-4'><b> Report Status: </b> &nbsp; $reportStatus</h7>
             </div>
         <div class='col'>
+        <h5>Applicable COVID-19 Symptoms:</h5>
+        <div id='covidSymp'>
+        <ul>";
+    if ($covid19Symptoms[0] === "") {
+        echo "<li>None</li>";
+    } else {
+        foreach ($covid19Symptoms as $covSymp) {
+            echo "<li>$covSymp</li>";
+        }
+    }
+
+    echo "
+    </ul>
+    </div>
         <h5 class='reviewReport'>Symptoms Experienced</h5>
-        <h7 class='ml-2'> <b> Vaccine Side Effect: </b></h7>
-        <ul class='ml-2'>
-        ";
+        <h7 class='ml-4'> <b> Vaccine Side Effect: </b></h7>
+        <ul class='ml-5'>
+          ";
         if ($vaccineSymptoms[0] === "") {
             echo "<li>None</li>";
         } else {
@@ -119,63 +156,21 @@ if (isset($_POST['report'])) {
                 echo "<li>$vacSymp</li>";
             }
         }
-
         echo "
         </ul>
         </div>
         </div>
         <br>
-    <div class='row'>
-    <div class='col'>
-        <h5>Applicable COVID-19 Symptoms:</h5>
-        <div id='covidSymp'>
-        <ul>";
-        if ($covid19Symptoms[0] === "") {
-            echo "<li>None</li>";
-        } else {
-            foreach ($covid19Symptoms as $covSymp) {
-                echo "<li>$covSymp</li>";
-            }
-        }
+        <div class='row'>
+         <div class='text-justify border border-secondary rounded p-3 mx-2 w-100'>
+            <h5 class='reviewReport'>Additional Details:</h5>
+            <h7 class='ml-2'> $reportDetails</h7>
+           </div>
+           </div>
+        </div>
+ 
+        ";
 
-        echo "
-    </ul>
-    </div>
-    </div>
-    
-    <div class='col'>
-        <h5>Additional Details:</h5>
-        <h7 class='ml-4'>$reportDetails</h7>
-    </div>
-    </div>
-    <br>
-    <div class='row'>
-    <div class='col-12'>
-    <h5 class='reviewReportH3 padd'>Patient Information</h5>
-    <h7 class='paddingLeft'><b> Patient Address: </b>   $patientAddress</h7>
-    <br>
-    <h7 class='paddingLeft'> <b> Date of First Dose Vaccination: </b>";
-
-        if ($firstDate != ""){
-            echo "$firstDate</h7>";
-        }else {
-            echo "Not Vaccinated </h7>";
-        }
-        echo" <br>
-    <h7 class='paddingLeft'> <b> Date of Second Dose Vaccination: </b>";
-
-            if ($secondDate != ""){
-                echo "$secondDate</h7>";
-            }else {
-                echo "Not Vaccinated </h7>";
-            }
-
-            echo"
-    <br>
-    <h7 class='paddingLeft'><b> Report Status: </b>  $reportStatus</h7>
-    </div> 
-    </div>
-    ";
     if ($view == 1) {
         if ($reportStatus === 'Invalidated') {
             echo "
