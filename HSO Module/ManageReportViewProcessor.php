@@ -78,11 +78,11 @@ if (isset($_POST['report'])) {
     $vaccineSymptoms = explode(',', $vaccineSymptoms);
     $covid19Symptoms = explode(',', $covid19Symptoms);
 
-    $query1 = "SELECT patient.patient_full_name, CONCAT(patient_details.patient_house_address, ' ', barangay.barangay_name, ' ', barangay.city, ' ', barangay.province) AS full_address, patient_details.patient_contact_number FROM patient_details JOIN patient ON patient.patient_id = patient_details.patient_id JOIN barangay ON patient_details.barangay_id = barangay.barangay_id WHERE patient_details.patient_id = $patientId ;";
+    $query1 = "SELECT patient.patient_full_name, CONCAT(patient_details.patient_house_address, ' ', barangay.barangay_name, ' ', barangay.city, ' ', barangay.province) AS full_address, patient_details.patient_contact_number, patient.date_of_first_dosage, date_of_second_dosage FROM patient_details JOIN patient ON patient.patient_id = patient_details.patient_id JOIN barangay ON patient_details.barangay_id = barangay.barangay_id WHERE patient_details.patient_id = $patientId ;";
     $dbase = $database->stmt_init();
     $dbase->prepare($query1);
     $dbase->execute();
-    $dbase->bind_result($patientName, $patientAddress, $patientNum);
+    $dbase->bind_result($patientName, $patientAddress, $patientNum, $firstDate, $secondDate);
     $dbase->fetch();
     $dbase->close();
 
@@ -154,7 +154,23 @@ if (isset($_POST['report'])) {
     <h5 class='reviewReportH3 padd'>Patient Information</h5>
     <h7 class='paddingLeft'><b> Patient Address: </b>   $patientAddress</h7>
     <br>
-    <h7 class='paddingLeft'> <b> Contact Number: </b>  $patientNum</h7>
+    <h7 class='paddingLeft'> <b> Date of First Dose Vaccination: </b>";
+
+        if ($firstDate != ""){
+            echo "$firstDate</h7>";
+        }else {
+            echo "Not Vaccinated </h7>";
+        }
+        echo" <br>
+    <h7 class='paddingLeft'> <b> Date of Second Dose Vaccination: </b>";
+
+            if ($secondDate != ""){
+                echo "$secondDate</h7>";
+            }else {
+                echo "Not Vaccinated </h7>";
+            }
+
+            echo"
     <br>
     <h7 class='paddingLeft'><b> Report Status: </b>  $reportStatus</h7>
     </div> 

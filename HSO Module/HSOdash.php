@@ -1,6 +1,6 @@
 <?php
-//require_once('../includes/sessionHandling.php');
-//checkRole('HSO');
+require_once('../includes/sessionHandling.php');
+checkRole('HSO');
 ?>
 <!DOCTYPE html>
 <html>
