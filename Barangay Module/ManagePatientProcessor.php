@@ -290,22 +290,21 @@ if (isset($_POST['patientId'])) {
                 
                 
                 <div class='row ml-5 mt-2'>
-                <div class='col'>
+                <div class='col-4'>
                 <h7 class='font-weight-bold'> Contact Number </h7><br>
                 <h7 class='ml-2'> $contact </h7>
                 </div>
-                <div class='col'>
+                <div class='col-4'>
                 <h7 class='font-weight-bold'> Occupation </h7><br>
                 <h7> $pOccupation </h7>
                 </div>
                 </div>
                 <br>
                 <hr>
-                <br>
                 <div class='col'>
                 <h4 class='ml-2'> Category Information </h4>
                 </div>
-                <div class='row ml-5'>
+                <div class='row ml-5 mb-2'>
                 <div class='col'>
                 <h7 class='font-weight-bold'> Priority Group: </h7><br>
                 <h7> $group </h7>
@@ -313,7 +312,7 @@ if (isset($_POST['patientId'])) {
                 </div>
                 </div>
                 <div class='modal-footer'>
-                <button onclick=closeModal('qrView') type='button' class='btn btn-danger'> Cancel</button>            
+                <button onclick=closeModal('qrView1') type='button' class='btn btn-danger'> Cancel</button>            
                 <button id='postVac' class='btn btn-success' type='submit' style='float: right' onclick='queuePatient($patId)'>Confirm Registration</button>
     </div>";
 
