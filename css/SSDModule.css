@@ -19,18 +19,15 @@
     margin-left: 2%;
 }
 #vaccineDeployments{
-    padding-top: 2%;
     width: 95%;
     border-radius: 12px;
     display: inline-block;
     margin-right: 7%;
-    padding: 2%;
-    background-color: #f6f6f6;
+
 }
 
 #totalPopulation,#totalPopulationPerHD{
     padding: 2%;
-    background-color: #f6f6f6;
     width: 100%;
     border-radius: 12px;
     display: inline-block;
