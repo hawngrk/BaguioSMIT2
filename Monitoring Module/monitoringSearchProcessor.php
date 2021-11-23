@@ -492,17 +492,13 @@ WHERE
     $stmt->prepare($query);
     $stmt->execute();
     $stmt->bind_result($vaccine_lot_id, $vaccination_date, $location, $vaccine_name, $vaccine_manufacturer);
-
     $vaccineDetails = [];
-    while($stmt->fetch()){
-        array_push($vaccineDetails ,array('lotID' => $vaccine_lot_id, 'vaccDate' => $vaccination_date, 'location' => $location, 'vaccName' => $vaccine_name, 'vaccManufacturer' => $vaccine_manufacturer));
-    }
-    
-    if (empty($vaccineDetails)) {
-        $vaccineDetails[0] = "";
-        $vaccineDetails[1] = "";
-    }
 
+    $vaccineDetails[0] = "";
+    $vaccineDetails[1] = "";
+    while ($stmt->fetch()) {
+        array_push($vaccineDetails, array('lotID' => $vaccine_lot_id, 'vaccDate' => $vaccination_date, 'location' => $location, 'vaccName' => $vaccine_name, 'vaccManufacturer' => $vaccine_manufacturer));
+    }
     return $vaccineDetails;
 }
 

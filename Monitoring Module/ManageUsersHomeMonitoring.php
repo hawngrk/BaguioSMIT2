@@ -74,48 +74,60 @@
                 </button>
             </ul>
         </nav>
-
-        <!-- Page Content  -->
-        <div id="content">
-            <div class="tableContainer">
-
-            <div class="row">
-                    <!--Search Input and Button-->
-                    <div class="search-containerMonitoring col">
+    <!-- Page Content  -->
+    <div id="content">
+        <div class="tableContainer">
+            <div class="table-title">
+                <div class="row">
+                    <div class="col">
                         <div class="input-group">
-                            <input id="searchPatientVaxPer" type="search" placeholder="Search" class="form-control" onkeyup="searchPatient()">
+                            <input  id="searchPatientVaxPer" type="search" name="searchPatient" class="form-control" placeholder="Search" onkeyup="searchPatient()"/>
+                            <!--                            <button type="submit" class="buttonTop5" name="managePatientBtn" onclick="searchPatient()">  <i class="fas fa-search"></i> </button>-->
                         </div>
-
                     </div>
-                    <div class="sfDiv col-md-1.5 my-auto">
-                        <select class="form-select filterButton" id="FilterPat">
-                            <option value='' selected disabled hidden>Filter By</option>
-                            <option value='' disabled>S</option>
-                            <option value='All'>All </option>
-                        </select>
+                    <div class="col-sm-auto">
+                        <div class="row">
+                            <div class="sfDiv col-md-1.5 my-auto">
+                                <select class="form-select filterButton" id="filterCat" name="filterCategory"
+                                        onchange="filterCategoryGroup(this.value)">
+                                    <option value='' selected disabled hidden>Filter By</option>
+                                    <option value='' disabled>Select Category Group</option>
+                                    <option value="All"> All</option>
+                                    <?php
+                                    require_once("../require/getPriorityGroup.php");
+                                    foreach ($priorityGroups as $pg) {
+                                        $id = $pg->getPriorityGroupId();
+                                        $category = $pg->getPriorityGroup();
+                                        echo "<option value=$id> $category </option>";
+                                    }
+                                    ?>
+                                </select>
+                            </div>
+                            <div class="sfDiv col-md-1.5 my-auto">
+                                <select class="form-select sortButton" id="sortPatientName" name="sortPatient"
+                                        onchange="sortByName(this)">
+                                    <option value="" selected disabled hidden>Sort By</option>
+                                    <option value="" disabled >Select Category Group</option>
+                                    <option value="None"> None </option>
+                                    <option value="Asc">Name Asc</option>
+                                    <option value="Desc">Name Desc</option>
+                                </select>
+                            </div>
+                        </div>
                     </div>
-                    <div class="sfDiv col-md-1.5 my-auto">
-                        <select class="form-select sortButton" id="SortPat">
-                            <option value='' selected disabled hidden>Sort By</option>
-                            <option value='' disabled>S</option>
-                            <option value='All'>All </option>
-                        </select>
-                    </div>
-
                 </div>
-
-
-            <div class = "tableMonitoring shadow tableScroll4">
-                <!--Table Part-->
-                <table class="table table table-hover" id="patientTable">
+            </div>
+            <!--Table Part-->
+            <div class="tableScreening shadow tableScroll4">
+                <table class="table table-row table-hover" id="patientTable">
                     <thead>
-                    <tr class="labelRow">
-                        <th class="columnName" scope="col">ID</th>
-                        <th class="columnName" scope="col">Patient Name</th>
-                        <th class="columnName" scope="col">Category</th>
-                        <th class="columnName" scope="col">Complete Address</th>
-                        <th class="columnName " scope="col">Contact Number</th>
-                        <th class="columnName" scope="col">Action</th>
+                    <tr class="table">
+                        <th class="columnName">ID</th>
+                        <th class="columnName">Patient Name</th>
+                        <th class="columnName">Category</th>
+                        <th class="columnName">Complete Address</th>
+                        <th class="columnName">Contact Number</th>
+                        <th class="columnName">Action</th>
                     </tr>
                     </thead>
                     <?php
@@ -123,7 +135,9 @@
                     ?>
                 </table>
             </div>
-            </div>
+        </div>
+    </div>
+</div>
             <div id="postVacView" class="modal-window">
                 <div class="content-modal">
                 <div class="modal-header">
@@ -140,6 +154,28 @@
 </html>
 
 <script>
+    function filterCategoryGroup(filter){
+        $.ajax({
+            url: '../includes/filterProcessor.php',
+            type: 'POST',
+            data: {"filterScreeningPatient": filter},
+            success: function (result) {
+                document.getElementById("patientTable").innerHTML = result;
+            }
+        })
+    }
+
+    function sortByName(sort) {
+        var selectedSort = sort.value;
+        $.ajax({
+            url: '../includes/sortingProcessor.php',
+            type: 'POST',
+            data: {"sortScreeningPatient": selectedSort},
+            success: function (result) {
+                document.getElementById("patientTable").innerHTML = result;
+            }
+        })
+    }
 
      function searchPatient() {
         var textSearch = document.getElementById("searchPatientVaxPer").value;
