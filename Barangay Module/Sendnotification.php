@@ -81,33 +81,38 @@ if (isset($_POST['first'])) {
             if ($token != "") {
                 define('API_ACCESS_KEY', 'AAAA4wnYuAw:APA91bFoXYprkrD3724XRTWKxgVJq3myfGR0Bwr1AahSylx0FEcg6smPbGN3dtrnqQ-vfZOAZfZbcEIcfIZorldnX03dp-l8IYL4x3vswyrOA0UCUpGWQ6A033l3mdzuWArPDm_qFr1g');
 
+                if ($sum == 0){
+                    $title = 'First Dose Vaccination - No Stubs';
+                } else {
+                    $title = 'First Dose Vaccination';
+                }
                 $msg = array
                 (
                     'body' => 'You have been assigned to a vaccination on ' . $date . ' on ' . $location . '',
-                    'title' => 'First Dose Vaccination',
-                    'icon' => 'myicon',/*Default Icon*/
-                    'sound' => 'mySound'/*Default sound*/
+                    'title' => $title,
+                    'icon' => 'myicon',
+                    'sound' => 'mySound'
                 );
 
-                if($sum == 0){
+                if ($sum == 0) {
                     $data = array(
                         'driveId' => $drive,
                         'barangayId' => $barangay_id,
-                        'token' => $token,
                         'location' => $location,
                         'date' => $date,
                         'vaccines' => $vaccines,
-                        'type' => 'noStubsFirst'
+                        'type' => 'noAnswer',
+                        'dose' => 'firstDose'
                     );
-                }else {
-
+                } else {
                     $data = array(
                         'driveId' => $drive,
                         'barangayId' => $barangay_id,
-                        'token' => $token,
                         'location' => $location,
                         'date' => $date,
-                        'vaccines' => $vaccines
+                        'vaccines' => $vaccines,
+                        'type' => 'unAnswered',
+                        'dose' => 'firstDose'
                     );
                 }
 
@@ -188,6 +193,11 @@ if (isset($_POST['second'])) {
             if ($token2 != "") {
                 define('API_ACCESS_KEY', 'AAAA4wnYuAw:APA91bFoXYprkrD3724XRTWKxgVJq3myfGR0Bwr1AahSylx0FEcg6smPbGN3dtrnqQ-vfZOAZfZbcEIcfIZorldnX03dp-l8IYL4x3vswyrOA0UCUpGWQ6A033l3mdzuWArPDm_qFr1g');
 
+                if ($sum == 0){
+                    $title = 'Second Dose Vaccination - No Stubs';
+                } else {
+                    $title = 'Second Dose Vaccination';
+                }
                 $msg = array
                 (
                     'body' => 'You have been assigned to your second dose vaccination on ' . $date . ' on ' . $location . '',
@@ -196,24 +206,25 @@ if (isset($_POST['second'])) {
                     'sound' => 'mySound'/*Default sound*/
                 );
 
-                if ($second == 0){
+                if ($second == 0) {
                     $data = array(
                         'driveId' => $drive,
                         'barangayId' => $barangay_id,
-                        'token' => $token2,
                         'location' => $location,
                         'date' => $date,
                         'vaccines' => $vaccines2,
-                        'type'=> 'noStubsSecond'
+                        'type' => 'noAnswer',
+                        'dose' => 'secondDose'
                     );
-                }else {
+                } else {
                     $data = array(
                         'driveId' => $drive,
                         'barangayId' => $barangay_id,
-                        'token' => $token2,
                         'location' => $location,
                         'date' => $date,
-                        'vaccines' => $vaccines2
+                        'vaccines' => $vaccines2,
+                        'type' => 'unAnswered',
+                        'dose' => 'secondDose'
                     );
                 }
 
