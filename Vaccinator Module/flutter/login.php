@@ -3,12 +3,12 @@ session_start();
 require("../../includes/configure.php");
 require("../../includes/recordActivityLog.php");
 
-// $username = $_POST["username"];
-// $password = $_POST["password"];
+$username = $_POST["username"];
+$password = $_POST["password"];
 
 //Test data
-$username = "employeeJecelito";
-$password = "employeeBatac";
+// $username = "employeeJecelito";
+// $password = "employeeBatac";
 
 $accountData = "SELECT * FROM employee_account JOIN employee ON employee.employee_id = employee_account.employee_id WHERE employee_username = ? ";
 
@@ -28,16 +28,14 @@ try {
         //Get barangay name if employee is a barangay official
 
         $accountInformation = empToArray($employeeDetails);
-
-        $_SESSION['account'] = $accountInformation;
         
         $logType = 'Login';
         $logDescription = 'Successfully logged in';
 
-        insertLogs($accountInformation['employee']['empId'], $accountInformation['employee']['role'], $logType, $logDescription);
+        //insertLogs($accountInformation['employee']['empId'], $accountInformation['employee']['role'], $logType, $logDescription);
         //Returns the role of the employee for redirection to its designated page
-        //echo json_encode($accountInformation);
-        var_dump($accountInformation);
+        echo json_encode($accountInformation);
+        //var_dump($accountInformation);
 
     } else {
         echo "Invalid username or password";

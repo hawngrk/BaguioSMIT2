@@ -265,8 +265,8 @@ if (isset($_POST['sort'])) {
 if(isset($_POST['last'])) {
     $last = $_POST['last'];
     $first = $_POST['first'];
-    $middle = $_POST['middle'];
-    $suffix = $_POST['suffix'];
+    $middle = trim($_POST['middle']) == "" ? "": trim($_POST['middle']);
+    $suffix = $_POST['suffix'] == "none" ? "": $_POST['suffix'];
     $brgyId = $_POST['brgyId'];
     $contact = $_POST['contact'];
     $type = $_POST['type'];
@@ -275,10 +275,9 @@ if(isset($_POST['last'])) {
     
     insertEmployee($first, $last, $middle, $suffix, $role, $brgyId, $contact);
     $id = getEmployeeId($first, $last, $contact);
-    echo $id;
     insertCredentials($id['employee_id'], $first, $last, $type);
-    
-    $log = "Added employee: $last, $first - $id, Account type: $type, Role: $role in the database";
+    $idLog = $id['employee_id'];
+    $log = "Added employee: $last, $first - $idLog, Account type: $type, Role: $role in the database";
     insertLogs($employeeID, $employeeRole, 'Add', $log);
 }
 
@@ -323,7 +322,7 @@ function insertCredentials($id, $firstName, $lastName, $type) {
     $query = 
     "INSERT INTO employee_account(employee_id, employee_username, employee_password, employee_account_type) VALUES(?,?,?,?)";
     try {
-        $username = "employee$id"."$firstName";
+        $username = "employee"."$firstName";
         $password = "employee$id"."$lastName";
         $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 

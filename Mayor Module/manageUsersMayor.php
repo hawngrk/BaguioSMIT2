@@ -113,7 +113,6 @@ checkRole("Mayor's Office");
                                         onchange="filterEmployee(this)">
                                     <option value="" selected disabled hidden>Filter By</option>
                                     <option value="" disabled>Select Role Category</option>
-                                    <option value="None"> None</option>
                                     <option value="HSO"> HSO </option>
                                     <option value="EIR"> EIR </option>
                                     <option value="SSD"> SSD </option>
@@ -204,7 +203,7 @@ checkRole("Mayor's Office");
             </div>
             <div class="modal-footer">
                 <button type="button" id="uploadFileCancelBtn" class="btn btn-danger"
-                        onclick="closeModal('uploadFileModal')">
+                        onclick="closeModalForms('uploadFileModal', 'uploadForm')">
                     Cancel
                 </button>
                 <button type="button" id="uploadFileConfirmBtn" class="btn btn-success"
@@ -219,7 +218,7 @@ checkRole("Mayor's Office");
         <div class="content-modal">
             <div class="modal-header">
                 <h4 class="modal-title">Add Employee Account</h4>
-                <button type="button" onclick="closeModalForms('addEmployeeModal','addEmployeeForm')" class="close"><i
+                <button type="button" onclick="closeModal('addEmployeeModal')" class="close"><i
                             class='fas fa-window-close'></i></button>
             </div>
             <div class="modal-body">
@@ -268,7 +267,7 @@ checkRole("Mayor's Office");
                             <div class="col">
                                 <select id="suffix" name="suffix" class="form-select form-select-lg">
                                     <option value="" disabled selected> Select Suffix...</option>
-                                    <option value="none">None</option>
+                                    <option value="none">Not Applicable</option>
                                     <option value="sr">Sr</option>
                                     <option value="jr">Jr</option>
                                     <option value="I">I</option>
@@ -317,6 +316,7 @@ checkRole("Mayor's Office");
                                     <option value="Monitoring">Monitoring</option>
                                     <option value="Screening">Screening</option>
                                     <option value="Vaccinator">Vaccinator</option>
+                                    <option value="Border Control">Border Control</option>
                                     <option value="Mayor's Office">Mayor's Office</option>
                                     <option value="EIR">EIR</option>
                                 </select>
@@ -465,6 +465,7 @@ checkRole("Mayor's Office");
                 role: role
             },
             success: function(result) {
+                console.log(result);
                 reloadEmployee();
                 closeModal('addEmployeeModal');
             }

@@ -22,6 +22,8 @@ checkRole('EIR');
     <script crossorigin="anonymous" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script crossorigin="anonymous" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" rel="stylesheet">
+
+
     <!-- Font Awesome JS -->
     <script src="https://kit.fontawesome.com/fcdb0fe9f3.js" crossorigin="anonymous"></script>
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
@@ -62,46 +64,201 @@ checkRole('EIR');
         </ul>
     </nav>
 
-    <!-- Page Content  -->
+<!-- Page Content  -->
     <div id="content">
-        <!--Top Nav-->
-        <div class="navbar navbar-expand-lg navbar-light bg-light shadow-sm p-3 mb-4 rounded-lg">
-            <div class="container-fluid">
-                <div>
-                    <button type="button" id="filter" class=" btn btn-primary btn-default shadow-lg rounded buttonTop3 float-right"> Filter </button>
-                    <!--Filter by population, date of registration, per barangay-->
+        <div class="container-fluid" style="padding:3%;">
+            <div>
+                <center>
+                    <h2> BAGUIO COVID-19 VACCINATION STATUS <br></h2>
+                    <!--To include the word "As of Now"-->
+                    <h3 id="dashBoardDate">
+                        <script src="../javascript/showDateAndTime.js"></script>
+                    </h3>
+                </center>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-3">
+                    Start Date: <input type="date" id="startDate"  class="w-100">
+
+                </div>
+                <div class="col-3">
+                    End Date: <input type="date" id="endDate" class="w-100">
                 </div>
             </div>
+            <div class="cardContainer">
+                <div class="row">
+                    <div class="col">
+                        <div class="row">
+                            <h4 class="ml-3 mt-3 mb-3 text-center">ADULT POPULATION</h4>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="card text-white bg-secondary mb-3 shadow" id="adultWithOneDose">
+                                    <div class="card-header">
+                                        <h5>With One Dose</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        250,170
+                                    </div>
+                                </div>
+                            </div>
 
-        </div>
+                            <div class="col-6">
+                                <div class="card text-white bg-primary mb-3 shadow" id="adultWithOneDose">
+                                    <div class="card-header">
+                                        <h5>Fully Vaccinated</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        200,025
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="col">
+                        <div class="row">
+                            <h4 class=" ml-3 mt-3 mb-3 text-center">PEDIATIC POPULATION</h4>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="card bg-light mb-3 shadow" id="adultWithOneDose">
+                                    <div class="card-header">
+                                        <h5>With One Dose</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        10,996
+                                    </div>
+                                </div>
+                            </div>
 
-        <div class="row dash">
-            <div class="vaccination">
-                <h5>Vaccinated/Total Population</h5>
-                <hr>
+                            <div class="col-6">
+                                <div class="card text-white bg-dark mb-3 shadow" id="adultWithOneDose">
+                                    <div class="card-header">
+                                        <h5>Fully Vaccinated</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        0
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col" style="background-color: #fafafa">
+                        <div class="row">
+                            <canvas id="barGraphAdult" style="width:100%;max-width:500px; padding: 3%"></canvas>
+                        </div>
+                    </div>
+                    <div class="col" style="background-color: #fafafa">
+                        <div class="row">
+                            <canvas id="barGraphPedia"  style="width:100%;max-width:500px; padding: 3%"></canvas>
+                        </div>
+                    </div>
+
+                </div>
             </div>
-            <div class="deployments">
-                <h5>Vaccine Deployments</h5>
-                <hr>
-            </div>
-        </div>
-        <div class="row dash">
-            <div class="perBarangay">
-                <h5>Vaccinated / Total Population per Baranagay</h5>
-                <hr>
+            <br>
+        
             </div>
         </div>
     </div>
 </div>
-
-<!-- JQuery with Ajax-->
+</div>
+</div>
+</body>
+<!--jQuery-->
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-<!-- Popper.JS -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
-<!-- Bootstrap JS -->
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
-</script>
-<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<!--Logout script-->
 <script src="../javascript/logout.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+<script>
+    var xValues = ["A1", "A2", "A3", "A4", "A5", "A6"];
+    var yValues = [28, 13, 46, 262, 55, 200];
+    var barColors = ["red", "green", "blue", "orange", "brown", "pink"];
+
+    new Chart("barGraphAdult", {
+        type: "bar",
+        data: {
+            labels: xValues,
+            datasets: [{
+                backgroundColor: barColors,
+                data: yValues
+            }]
+        },
+        options: {
+            legend: {display: false},
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            },
+            title: {
+                display: true,
+                text : "Number of Adult Vaccinees for the Day by Priority Groups"
+            }
+        }
+    });
+
+    var one = ["A3:Pedia", "ROPP"];
+    var two = [415, 904];
+    var three = ["red", "green"];
+
+    new Chart("barGraphPedia", {
+        type: "bar",
+        data: {
+            labels: one,
+            datasets: [{
+                backgroundColor: three,
+                data: two
+            }]
+        },
+        options: {
+            legend: {display: false},
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            },
+            title: {
+                display: true,
+                text : "Number of Pediatic Population Group"
+            }
+        }
+    });
+
+    var a = ["A1", "A2", "A3", "A4", "A5", "ROAP", "A3.PEDIA", "ROPP"];
+    var b = [48508, 60896, 102421, 192349, 31124, 12897, 1912, 9084];
+    var c = [
+        "#b91d47",
+        "#00aba9",
+        "#2b5797",
+        "#e8c3b9",
+        "#1e7145",
+        "#1e7146",
+        "#1e7148",
+        "#1e7150",
+
+    ];
+
+    new Chart("pieChart", {
+        type: "pie",
+        data: {
+            labels: a,
+            datasets: [{
+                backgroundColor: c,
+                data: b
+            }]
+        }
+    });
+</script>
 </body>
 </html>
