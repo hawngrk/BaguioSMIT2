@@ -64,8 +64,8 @@ checkRole('EIR');
         </ul>
     </nav>
 
-<!-- Page Content  -->
-    <div id="content">
+ <!-- Page Content  -->
+ <div id="content">
         <div class="container-fluid" style="padding:3%;">
             <div>
                 <center>
@@ -79,11 +79,11 @@ checkRole('EIR');
             <br>
             <div class="row">
                 <div class="col-3">
-                    Start Date: <input type="date" id="startDate"  class="w-100">
+                    Start Date: <input type="date" id="startDate"  class="w-100" onchange="updateDashboard()" value="<?php echo date('Y-m-d'); ?>">
 
                 </div>
                 <div class="col-3">
-                    End Date: <input type="date" id="endDate" class="w-100">
+                    End Date: <input type="date" id="endDate" class="w-100" onchange="updateDashboard()" value="<?php echo date('Y-m-d'); ?>">
                 </div>
             </div>
             <div class="cardContainer">
@@ -105,7 +105,7 @@ checkRole('EIR');
                             </div>
 
                             <div class="col-6">
-                                <div class="card text-white bg-primary mb-3 shadow" id="adultWithOneDose">
+                                <div class="card text-white bg-primary mb-3 shadow" id="adultWithFullDose">
                                     <div class="card-header">
                                         <h5>Fully Vaccinated</h5>
                                     </div>
@@ -123,7 +123,7 @@ checkRole('EIR');
                         </div>
                         <div class="row">
                             <div class="col-6">
-                                <div class="card bg-light mb-3 shadow" id="adultWithOneDose">
+                                <div class="card bg-light mb-3 shadow" id="pediaWithOneDose">
                                     <div class="card-header">
                                         <h5>With One Dose</h5>
                                     </div>
@@ -134,7 +134,7 @@ checkRole('EIR');
                             </div>
 
                             <div class="col-6">
-                                <div class="card text-white bg-dark mb-3 shadow" id="adultWithOneDose">
+                                <div class="card text-white bg-dark mb-3 shadow" id="pediaWithFullDose">
                                     <div class="card-header">
                                         <h5>Fully Vaccinated</h5>
                                     </div>
@@ -162,11 +162,45 @@ checkRole('EIR');
                 </div>
             </div>
             <br>
-        
+            <div class="row">
+                <div class="col-4">
+                    <div class="card text-white bg-success mb-3" id="adultVaccinated">
+                        <div class="card-header">
+                            <h5>Total Vaccines for the Day (Adult Population)</h5>
+                        </div>
+                        <div class="card-body">
+                            604
+                        </div>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="card text-white bg-warning mb-3" id="pediaVaccinated">
+                        <div class="card-header">
+                            <h5>Total Vaccines for the Day (Pediatic Population)</h5>
+                        </div>
+                        <div class="card-body">
+                            1,319
+                        </div>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="card text-white bg-danger mb-3" id="totalVaccinated">
+                        <div class="card-header">
+                            <h5>Total Vaccine Administered </h5>
+                        </div>
+                        <div class="card-body">
+                            429, 423
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+                </div>
             </div>
         </div>
     </div>
 </div>
+
 </div>
 </div>
 </body>
@@ -177,17 +211,17 @@ checkRole('EIR');
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
 <script>
-    var xValues = ["A1", "A2", "A3", "A4", "A5", "A6"];
-    var yValues = [28, 13, 46, 262, 55, 200];
-    var barColors = ["red", "green", "blue", "orange", "brown", "pink"];
+    var barAdultLabels = ["A1", "A2", "A3", "A4", "A5", "A6"];
+    var barAdultValues = [28, 13, 46, 262, 55, 200];
+    var barAdultColors = ["red", "green", "blue", "orange", "brown", "pink"];
 
-    new Chart("barGraphAdult", {
+    const barGraphAdult = new Chart("barGraphAdult", {
         type: "bar",
         data: {
-            labels: xValues,
+            labels: barAdultLabels,
             datasets: [{
-                backgroundColor: barColors,
-                data: yValues
+                backgroundColor: barAdultColors,
+                data: barAdultValues
             }]
         },
         options: {
@@ -206,17 +240,17 @@ checkRole('EIR');
         }
     });
 
-    var one = ["A3:Pedia", "ROPP"];
-    var two = [415, 904];
-    var three = ["red", "green"];
+    var barPediaLabels = ["A3:Pedia", "ROPP"];
+    var barPediaValues = [415, 904];
+    var barPediaColors = ["red", "green"];
 
-    new Chart("barGraphPedia", {
+    const barGraphPedia = new Chart("barGraphPedia", {
         type: "bar",
         data: {
-            labels: one,
+            labels: barPediaLabels,
             datasets: [{
-                backgroundColor: three,
-                data: two
+                backgroundColor: barPediaColors,
+                data: barPediaValues
             }]
         },
         options: {
@@ -235,30 +269,84 @@ checkRole('EIR');
         }
     });
 
-    var a = ["A1", "A2", "A3", "A4", "A5", "ROAP", "A3.PEDIA", "ROPP"];
-    var b = [48508, 60896, 102421, 192349, 31124, 12897, 1912, 9084];
-    var c = [
-        "#b91d47",
-        "#00aba9",
-        "#2b5797",
-        "#e8c3b9",
-        "#1e7145",
-        "#1e7146",
-        "#1e7148",
-        "#1e7150",
 
-    ];
+    function updateDashboard() {
+        var startDate = document.getElementById('startDate').value;
+        var endDate = document.getElementById('endDate').value;
 
-    new Chart("pieChart", {
-        type: "pie",
-        data: {
-            labels: a,
-            datasets: [{
-                backgroundColor: c,
-                data: b
-            }]
-        }
-    });
+        $.ajax({
+            url: '../HSO Module/HSOdashProcessor.php',
+            type: 'POST',
+            data: {"adult": 1, "startDate": startDate, "endDate": endDate},
+            success: function (result) {
+                document.getElementById("adultWithOneDose").children[1].innerHTML = result.split(',')[0];
+                document.getElementById("adultWithFullDose").children[1].innerHTML = result.split(',')[1];
+            }
+        });
+
+        $.ajax({
+            url: '../HSO Module/HSOdashProcessor.php',
+            type: 'POST',
+            data: {"pedia": 1, "startDate": startDate, "endDate": endDate},
+            success: function (result) {
+                document.getElementById("pediaWithOneDose").children[1].innerHTML = result.split(',')[0];
+                document.getElementById("pediaWithFullDose").children[1].innerHTML = result.split(',')[1];
+            }
+        });
+
+        $.ajax({
+            url: '../HSO Module/HSOdashProcessor.php',
+            type: 'POST',
+            data: {"barAdult": 1, "startDate": startDate, "endDate": endDate},
+            success: function (result) {
+                barAdultValues = $.parseJSON(result);
+                barGraphAdult.data.datasets[0].data = barAdultValues;
+                barGraphAdult.update();
+            }
+        });
+
+        $.ajax({
+            url: '../HSO Module/HSOdashProcessor.php',
+            type: 'POST',
+            data: {"barPedia": 1, "startDate": startDate, "endDate": endDate},
+            success: function (result) {
+                barPediaValues = $.parseJSON(result);
+                console.log(barPediaValues);
+                barGraphPedia.data.datasets[0].data = barPediaValues;
+                barGraphPedia.update();
+            }
+        });
+
+        var sum1 = 0;
+        var sum2 = 0;
+        $.ajax({
+            url: '../HSO Module/HSOdashProcessor.php',
+            type: 'POST',
+            data: {"barAdult": 1, "startDate": startDate, "endDate": endDate},
+            success: function (result) {
+                var values = $.parseJSON(result);
+                for (var i = 0; i < values.length; i++) {
+                    sum1 += values[i];
+                }
+                document.getElementById("adultVaccinated").children[1].innerHTML = sum1;
+
+                $.ajax({
+                    url: 'HSOdashProcessor.php',
+                    type: 'POST',
+                    data: {"barAdult": 1, "startDate": startDate, "endDate": endDate},
+                    success: function (result) {
+                        var values = $.parseJSON(result);
+                        for (var i = 0; i < values.length; i++) {
+                            sum2 += values[i];
+                        }
+                        document.getElementById("pediaVaccinated").children[1].innerHTML = sum2;
+                        document.getElementById("totalVaccinated").children[1].innerHTML = parseInt(sum1) + parseInt(sum2);
+                    }
+                });
+            }
+        });
+
+    }
 </script>
 </body>
 </html>

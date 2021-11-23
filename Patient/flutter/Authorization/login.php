@@ -26,8 +26,8 @@ try {
         $patientDetails['patient_details'] = $credentials;
         $patientDetails['vaccine_details'] = $vaccineDetails;
 
-        //var_dump($patientDetails);
         echo json_encode($patientDetails);
+        
     } else {
         echo 'Invalid username or password';
     }

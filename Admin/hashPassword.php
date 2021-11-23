@@ -41,9 +41,9 @@
     $stmtupdate = $database->prepare($updateQuery);
     $stmtupdate->execute();
 
-    $id = 6;
-    $username = 'employeeRegina';
-    $newPassword = password_hash("employee1", PASSWORD_DEFAULT);
+    $id = 9;
+    $username = 'employeeJecelito';
+    $newPassword = password_hash("employee9Batac", PASSWORD_DEFAULT);
     $updateQuery = "UPDATE employee_account SET employee_username = '$username', employee_password = '$newPassword' WHERE employee_account_id = '$id'";
 
     $stmtupdate = $database->prepare($updateQuery);
