@@ -1,7 +1,8 @@
 <?php
 include_once("../includes/database.php");
-//require_once('../includes/sessionHandling.php');
-//checkRole('SSD');
+$currentDate = date("Y-m-d", time());
+require_once('../includes/sessionHandling.php');
+checkRole('SSD');
 ?>
 
 <head>
@@ -26,7 +27,6 @@ include_once("../includes/database.php");
             src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" rel="stylesheet">
-
     <!-- Font Awesome JS -->
     <script src="https://kit.fontawesome.com/fcdb0fe9f3.js" crossorigin="anonymous"></script>
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js"
@@ -36,14 +36,14 @@ include_once("../includes/database.php");
             integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY"
             crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script defer src="../javascript/showDateAndTime.js"> </script>
     <script src="https://js.pusher.com/7.0/pusher.min.js"></script>
     <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet"/>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
+    <script defer src="../javascript/showDateAndTime.js"></script>
     <script defer src="../javascript/logout.js"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
 </head>
 
 <body>
@@ -140,54 +140,156 @@ include_once("../includes/database.php");
             <div class="col">
                 <div class="row">
                     <div id="totalPopulation">
-                        <center><h3> Total Vaccinated Population </h3></center>
-                        <center>
-                            <h8> As of September 16, 2021</h8>
-                        </center>
-                        <hr>
-                        <p>
-                        <center>96,815 / 281,000</center>
-                        </p>
+                        <div class="card bg-light mb-3 shadow" id="adultWithOneDose">
+                            <div class="card-header">
+                                <center><h3> Total Vaccinated Population </h3></center>
+                                <center>
+                                    <h8> As of <?php $currDate = date("F j, Y", time()); echo "$currDate";?></h8>
+                                </center>
+                            </div>
+                            <div class="card-body" id="totalVaccinated">
+                                <?php
+                                $query = "SELECT COUNT(patient . patient_id) as count FROM patient JOIN patient_details ON patient . patient_id = patient_details . patient_id JOIN priority_groups ON patient_details . priority_group_id = priority_groups . priority_group_id WHERE first_dose_vaccination = 1 and second_dose_vaccination = 1 and date_of_second_dosage <= '$currentDate';";
+                                $stmt=$database->stmt_init();
+                                $stmt->prepare($query);
+                                $stmt->execute();
+                                $stmt->bind_result($total);
+                                $stmt->fetch();
+                                $stmt->close();
+
+                                echo "<center>$total</center>";
+                                ?>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <div class="row healthDistrict">
-                    <div id="totalPopulationPerHD">
-                        <center><h3> Total Vaccinated Population per Health District</h3></center>
-                        <center>
-                            <h8> As of September 16, 2021</h8>
-                        </center>
-                        <hr>
-                        <div class="row">
-                            <div class="col healthDistrict">
-                                Asin Health District
+                <div class="row">
+                    <div id="totalPopulation">
+                            <div id="totalVaccinated">
+                                <div style="background-color: white">
+                                    <div>
+                                        <!--TABLE PART - DASHBOARD-->
+                                        <table class="table border shadow" id="dashboardTable">
+                                            <?php
+                                            $values1 = [];
+                                            $values2 = [];
+
+                                            $groups = ['A1: Health Care Workers', 'A2: Senior Citizens', 'A3: Adult with Comorbidity', 'A4: Frontline Personnel in Essential Sector', 'A5: Indigent Population', 'Rest of Adult Population', 'A7: 12-17 Years Old', 'Rest of Pedia Population'];
+
+                                            $dbase = $database->stmt_init();
+                                            $dbase->prepare("SELECT COUNT(patient.patient_id) AS count FROM patient JOIN patient_details ON patient.patient_id = patient_details.patient_id JOIN priority_groups ON patient_details.priority_group_id = priority_groups.priority_group_id WHERE priority_groups.priority_group = ? AND first_dose_vaccination = 1 AND second_dose_vaccination = 0 AND date_of_first_dosage <= '$currentDate';");
+
+                                            for ($i = 0; $i < sizeof($groups); $i++) {
+                                                $dbase->bind_param('s', $groups[$i]);
+                                                $dbase->execute();
+                                                $dbase->bind_result($val);
+                                                $dbase->fetch();
+
+                                                array_push($values1, $val);
+                                            }
+
+                                            $dbase->prepare("SELECT COUNT(patient.patient_id) AS count FROM patient JOIN patient_details ON patient.patient_id = patient_details.patient_id JOIN priority_groups ON patient_details.priority_group_id = priority_groups.priority_group_id WHERE priority_groups.priority_group = ? AND first_dose_vaccination = 1 AND second_dose_vaccination = 1 AND date_of_second_dosage <= '$currentDate';");
+
+                                            for ($i = 0; $i < sizeof($groups); $i++) {
+                                                $dbase->bind_param('s', $groups[$i]);
+                                                $dbase->execute();
+                                                $dbase->bind_result($val);
+                                                $dbase->fetch();
+
+                                                array_push($values2, $val);
+                                            }
+
+                                            $dbase->close();
+                                            echo "
+    <thead class=\"text-center thead-dark\">
+                        <tr>
+                            <th scope=\"col\"> Priority Groups</th>
+                            <th scope=\"col\"> With at least One Dose</th>
+                            <th scope=\"col\"> Fully Vaccinated</th>
+                            <th scope=\"col\"> Total</th>
+                        </tr>
+                        </thead>
+                        <tbody class=\"text-center\">
+    ";
+                                            for ($i = 0; $i < sizeof($values1); $i++) {
+                                                $priority = "A" . ($i + 1);
+                                                $total = $values1[$i] + $values2[$i];
+                                                echo "
+        <tr>
+                            <th scope=\"row\"> $priority</th>
+                            <th scope=\"row\"> $values1[$i]</th>
+                            <th scope=\"row\"> $values2[$i]</th>
+                            <th scope=\"row\"> $total</th>
+                        </tr>
+        ";
+                                            }
+                                            echo "
+    </tbody>
+    ";
+                                            ?>
+                                        </table>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="col healthDistrict">
-                                1000
+                    </div>
+                </div>
+
+
+
+            </div>
+
+            <div class="row healthDistrict">
+                <div id="totalPopulationPerHD">
+                    <div class="card bg-light mb-3 shadow" id="adultWithOneDose">
+                        <div class="card-header">
+                            <center><h3> Total Vaccinated Population per Health District</h3></center>
+                            <center>
+                                <h8> As of <?php $currDate = date("F j, Y", time()); echo "$currDate";?></h8>
+                            </center>
+                        </div>
+                        <div>
+                            <div class="tableScroll2">
+                            <table class="table border shadow" id="dashboardTable">
+                                <thead class="text-left thead-light">
+                                <th scope="col"> Health Districts</th>
+                                <th scope="col"> Total Vaccinated</th>
+
+                                </thead>
+
+                                <tbody class="text-center">
+
+                                <?php
+                                require '../require/getHealthDistrict.php';
+                                foreach ($health_district as $hd) {
+                                    $id = $hd->getHealthDistrictId();
+                                    $query = "SELECT health_district_name, COUNT(patient . patient_id) as count FROM patient JOIN patient_details ON patient . patient_id = patient_details . patient_id JOIN barangay ON patient_details.barangay_id = barangay.barangay_id JOIN health_district ON barangay.health_district_id = health_district.health_district_id WHERE first_dose_vaccination = 1 and second_dose_vaccination = 1 and date_of_second_dosage <= '$currentDate' AND health_district.health_district_id = '$id'";
+                                    $stmt = $database->stmt_init();
+                                    $stmt->prepare($query);
+                                    $stmt->execute();
+                                    $stmt->bind_result($hName, $distCount);
+                                    while($stmt->fetch()) {
+                                        echo "
+                                            <tr>
+                                                <th scope='row'> $hName</th>
+                                                <th scope='row'> $distCount</th>
+                                              
+                                            </tr>";
+                                    }
+                                    $stmt->close();
+                                }
+                                ?>
+                                </tbody>
+                            </table>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-
-            <div class="col">
-                <div id="vaccineDeployments">
-                    <h3> <center> Vaccine Deployments </center> </h3>
-                    <hr>
-                    <div id="vaccineDeploymentContent">
-                        <h4> September 21 , 2021 </h4>
-                        <p> Dose: First Dose </p>
-                        <p> Site: SLU Gym, UB Gym, Country Club </p>
-                        <p> Brand: SINOVAC </p>
-                        <p> Priority Group per site: </p>
-                        <ul>
-                            <li> A4 : 600 stubs</li>
-                            <li> A5 : 400 stubs </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
         </div>
+
+
+
     </div>
 
 </body>
@@ -266,5 +368,7 @@ include_once("../includes/database.php");
             }
         });
     }
+
+
 
 </script>

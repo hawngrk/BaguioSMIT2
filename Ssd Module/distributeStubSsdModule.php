@@ -43,6 +43,7 @@ checkRole('SSD');
     <script defer src="../javascript/showDateAndTime.js"></script>
     <script defer src="../javascript/logout.js"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
 
 </head>
 
