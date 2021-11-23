@@ -105,11 +105,11 @@ $barangay_id = $accountDetails['barangay_id'];
 
     <!-- Top Nav Bar -->
     <div id="content">
-        <div id="qrView" class="modal-window">
+        <div id="qrView1" class="modal-window">
             <div class="content-modal">
                 <div class="modal-header">
                     <h3 class="modal-title">Patient Information</h3>
-                    <button type="button" class="close" data-dismiss="modal" onclick="closeModal('qrView')"><i class='fas fa-window-close'></i></button>
+                    <button type="button" class="close" data-dismiss="modal" onclick="closeModal('qrView1')"><i class='fas fa-window-close'></i></button>
                 </div>
                 <div class="modal-body" id="qr"></div>
             </div>
@@ -160,7 +160,7 @@ $barangay_id = $accountDetails['barangay_id'];
             method: 'POST',
             data: {patientId: content},
             success: function (result) {
-                document.getElementById('qrView').style.display = "block";
+                document.getElementById('qrView1').style.display = "block";
                 document.getElementById('qr').innerHTML = result;
                 document.body.classList.add("scrollBody");
             }
@@ -173,7 +173,7 @@ $barangay_id = $accountDetails['barangay_id'];
             method: 'POST',
             data: {passport: passportId},
             success: function (result) {
-                document.getElementById('qrView').style.display = "block";
+                document.getElementById('qrView1').style.display = "block";
                 document.getElementById('qr').innerHTML = result;
                 document.body.classList.add("scrollBody");
             }
@@ -186,7 +186,7 @@ $barangay_id = $accountDetails['barangay_id'];
             method: 'POST',
             data: {queue: id},
             success: function (result) {
-                closeModal('qrView');
+                closeModal('qrView1');
             }
         })
     }
