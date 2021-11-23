@@ -1,7 +1,7 @@
 <?php
 include "../includes/database.php";
-//require_once('../includes/sessionHandling.php');
-//checkRole('SSD');
+require_once('../includes/sessionHandling.php');
+checkRole('SSD');
 ?>
 
 <html lang="en">
@@ -141,13 +141,6 @@ include "../includes/database.php";
             </div>
         </div>
 
-        <!--            <div class="float-right">-->
-        <!--                <button id="buttonMarker" class="btn btn-lg bg-none" onclick="openNotif('notificationModal')">-->
-        <!--                    <span class="markerid="marker"" ></span>-->
-        <!--                    <i class="fas fa-bell"></i>-->
-        <!--                </button>-->
-        <!--            </div>-->
-        <br>
         <div class="row">
             <div class="col">
                 <div class="row">
@@ -208,6 +201,7 @@ include "../includes/database.php";
             <div class="col">
                 <div class="row">
                     <div id="deploymentSummary">
+                        <div class="tableScroll2">
                         <h2>Vaccination Deployment Summary</h2>
                         <hr>
                         <div id="labelling">
@@ -223,7 +217,7 @@ include "../includes/database.php";
                             <br>
                             <h5> Health Districts: </h5>
                             <br>
-
+                        </div>
                         </div>
                     </div>
                 </div>

@@ -279,17 +279,17 @@ $barangay_id = $accountDetails['barangay_id'];
             }
         });
 
+        setTimeout(function () {
         $.ajax({
             url: 'ManagePatientProcessor.php',
             type: 'POST',
             data: {"openNotif": ""},
             success: function () {
-                setTimeout(function () {
-                    document.getElementById('marker').setAttribute('style', 'color:transparent!important');
-                }, 1000);
 
+                document.getElementById('marker').setAttribute('style', 'color:transparent!important');
             }
         });
+        },1000);
     }
 
 

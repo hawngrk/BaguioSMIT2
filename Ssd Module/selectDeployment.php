@@ -563,22 +563,22 @@ if (isset($_POST['sendStubs'])) {
     $query = "INSERT INTO barangay_stubs (barangay_id, drive_id, A1_stubs, A2_stubs, A3_stubs, A4_stubs, A5_stubs, ROAP, A3_Pedia, ROPP, second_dose, notif_opened, sent_stubs) VALUE ('$barangayId', '$drive', '$A1', '$A2', '$A3', '$A4', '$A5', '$ROAP', '$A3Pedia', '$ROPP', '$secondDose', 0, 0);";
     $database->query($query);
 
-//
-//    require '../vendor/autoload.php';
-//
-//    $options = array(
-//        'cluster' => 'ap1',
-//    );
-//
-//    $pusher = new Pusher\Pusher(
-//        '8bde1d2aef3f7c91d16a',
-//        '5a55c8609c4d84200725',
-//        '1273036',
-//        $options
-//    );
-//
-//    $data['message'] = $drive;
-//    $pusher->trigger('barangay', 'my-event', $data);
+
+    require '../vendor/autoload.php';
+
+    $options = array(
+        'cluster' => 'ap1',
+    );
+
+    $pusher = new Pusher\Pusher(
+        '8bde1d2aef3f7c91d16a',
+        '5a55c8609c4d84200725',
+        '1273036',
+        $options
+    );
+
+    $data['message'] = $drive;
+    $pusher->trigger('barangay', 'my-event', $data);
 
 }
 
