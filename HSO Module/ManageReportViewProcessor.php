@@ -289,7 +289,7 @@ if (isset($_POST['generate'])) {
             </div>
     
     
-        <div class='modal-body'>
+        <div class='modal-body tableScroll3'>
             <table class='table table-row table-hover'>
             <thead class='tableHeader'>
             <tr class='tableCenterCont'>
