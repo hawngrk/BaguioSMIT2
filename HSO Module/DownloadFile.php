@@ -40,7 +40,6 @@ try {
         }
         rmdir($directory);
         unlink($zipName);
-        die();
     }
 } catch (Exception $e) {
 }

@@ -516,11 +516,18 @@ checkRole('HSO');
                 console.log(reportid);
                 console.log(selectedStatus);
                 $.ajax({
-                    url: '../includes/searchProcessor.php',
+                    url: 'ManageReportViewProcessor.php',
                     type: 'POST',
                     data: {"changeStatus": selectedStatus, "reportid": reportid},
                     success: function (result) {
                         viewReportModal.style.display = "none";
+                        $.ajax({
+                            url: 'ManageReportViewProcessor.php',
+                            type: 'POST',
+                            data: {"showUpdatedReport": ""},
+                            success: function () {
+                            }
+                        });
                     }
                 });
             } else {
@@ -636,12 +643,26 @@ checkRole('HSO');
                 showDenyButton: true,
                 confirmButtonText: 'Yes',
                 denyButtonText: `No`,
+                confirmButtonColor: '#28a745',
+                denyButtonColor: '#dc3545',
             }).then((result) => {
                 if (result.isConfirmed) {
                     action(report, archiveText);
-                    Swal.fire('Saved!', '', 'success')
+                    Swal.fire({
+                        icon: 'success',
+                        text: 'Saved!',
+                        showDenyButton: false,
+                        confirmButtonText: 'OK',
+                        confirmButtonColor: '#077bff',
+                    })
                 } else if (result.isDenied) {
-                    Swal.fire('Changes are not saved', '', 'info')
+                    Swal.fire({
+                        icon: 'info',
+                        text: 'Changes you made will not be saved.',
+                        showDenyButton: false,
+                        confirmButtonText: 'OK',
+                        confirmButtonColor: '#077bff',
+                    })
                 }
             })
         }

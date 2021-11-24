@@ -228,7 +228,7 @@ include_once("../includes/database.php")
                     <button type="button" class="btn btn-danger" onclick="closeModalForms('uploadFileModal', 'uploadForm')">
                         Cancel
                     </button>
-                    <button type="button" id="uploadFileConfirmBtn" class="btn btn-primary"
+                    <button type="button" id="uploadFileConfirmBtn" class="btn btn-success"
                             name="patientUploadFile" onclick="uploadFiles()">Add
                     </button>
                 </div>
@@ -753,7 +753,7 @@ include_once("../includes/database.php")
                 icon: 'info',
                 title: 'Add this ' + vax + ' ?',
                 text: 'This ' + vax + ' will be added to the list.',
-                showDenyButton: true,
+                showDenyButton: true ,
                 confirmButtonText: 'Yes',
                 denyButtonText: `No`,
                 confirmButtonColor: '#28a745',
@@ -765,17 +765,17 @@ include_once("../includes/database.php")
                         icon: 'success',
                         text: 'Saved!',
                         showDenyButton: false,
-                        confirmButtonText: 'Ok',
-                        confirmButtonColor: '#808080',
-                    })
+                        confirmButtonText: 'OK',
+                        confirmButtonColor: '#007bff',
+                    });
                 } else if (result.isDenied) {
                     Swal.fire({
                         icon: 'info',
                         text: 'Changes you made will not be saved.',
                         showDenyButton: false,
-                        confirmButtonText: 'Ok',
-                        confirmButtonColor: '#808080',
-                    })
+                        confirmButtonText: 'OK',
+                        confirmButtonColor: '#007bff',
+                    });
                 }
             })
         }
@@ -930,17 +930,17 @@ include_once("../includes/database.php")
                     icon: 'success',
                     text: 'Saved!',
                     showDenyButton: false,
-                    confirmButtonText: 'Ok',
-                    confirmButtonColor: '#28a745',
-                })
+                    confirmButtonText: 'OK',
+                    confirmButtonColor: '#007bff',
+                });
             } else if (result.isDenied) {
                 Swal.fire({
                     icon: 'info',
                     text: 'Changes you made will not be saved.',
                     showDenyButton: false,
-                    confirmButtonText: 'Ok',
-                    confirmButtonColor: '#28a745',
-                })
+                    confirmButtonText: 'OK',
+                    confirmButtonColor: '#007bff',
+                });
             }
         })
     }
@@ -1000,7 +1000,15 @@ include_once("../includes/database.php")
             success: function (result) {
                 console.log(result);
                 uploadFileModal.style.display = "none";
-                Swal.fire('Added Patient', '', 'success');
+                Swal.fire({
+                    icon: 'question',
+                    text: 'Are you sure you want to upload this item?',
+                    showDenyButton: true,
+                    confirmButtonText: 'Yes',
+                    denyButtonText: `No`,
+                    confirmButtonColor: '#28a745',
+                    denyButtonColor: '#dc3545',
+                })
             }
         });
     }

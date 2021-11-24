@@ -178,7 +178,7 @@ $barangay_id = $accountDetails['barangay_id'];
         $.ajax({
             url: 'ManagePatientProcessor.php',
             method: 'POST',
-            data: {passport: passportId},
+            data: {patientId: passportId},
             success: function (result) {
                 document.getElementById('qrView1').style.display = "block";
                 document.getElementById('qr').innerHTML = result;

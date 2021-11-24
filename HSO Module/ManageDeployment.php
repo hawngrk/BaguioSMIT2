@@ -1124,6 +1124,8 @@ include_once("../includes/database.php") ?>
             showDenyButton: true,
             confirmButtonText: 'Yes',
             denyButtonText: `No`,
+            confirmButtonColor: '#28a745',
+            denyButtonColor: '#dc3545',
         }).then((result) => {
             if (result.isConfirmed) {
                 $.ajax({
@@ -1140,9 +1142,21 @@ include_once("../includes/database.php") ?>
 
                     }
                 })
-                Swal.fire('Saved!', '', 'success')
+                Swal.fire({
+                    icon: 'success',
+                    text: 'Saved!',
+                    showDenyButton: false,
+                    confirmButtonText: 'OK',
+                    confirmButtonColor: '#007bff',
+                })
             } else if (result.isDenied) {
-                Swal.fire('Changes are not saved', '', 'info')
+                Swal.fire({
+                    icon: 'info',
+                    text: 'Changes you made will not be saved.',
+                    showDenyButton: false,
+                    confirmButtonText: 'OK',
+                    confirmButtonColor: '#007bff',
+                })
             }
         })
     }
@@ -1294,8 +1308,8 @@ include_once("../includes/database.php") ?>
                         icon: 'success',
                         text: 'Saved!',
                         showDenyButton: false,
-                        confirmButtonText: 'Ok',
-                        confirmButtonColor: '#28a745',
+                        confirmButtonText: 'OK',
+                        confirmButtonColor: '#077bff',
                     })
                 } else if (result.isDenied) {
                     Swal.fire({
@@ -1303,7 +1317,7 @@ include_once("../includes/database.php") ?>
                         text: 'Changes you made will not be saved.',
                         showDenyButton: false,
                         confirmButtonText: 'OK',
-                        confirmButtonColor: '#28a745',
+                        confirmButtonColor: '#077bff',
                     })
                 }
             })
@@ -1312,17 +1326,31 @@ include_once("../includes/database.php") ?>
 
     async function edit(action, item) {
         Swal.fire({
-            icon: 'info',
+            icon: 'warning',
             title: 'Are you sure you want to edit this Deployment?',
             showDenyButton: true,
             confirmButtonText: 'Yes',
             denyButtonText: `No`,
+            confirmButtonColor: '#28a745',
+            denyButtonColor: '#dc3545',
         }).then((result) => {
             if (result.isConfirmed) {
                 action(item);
-                Swal.fire('Saved!', '', 'success')
+                Swal.fire({
+                    icon: 'success',
+                    text: 'Saved!',
+                    showDenyButton: false,
+                    confirmButtonText: 'OK',
+                    confirmButtonColor: '#007bff',
+                })
             } else if (result.isDenied) {
-                Swal.fire('Changes are not saved', '', 'info')
+                Swal.fire({
+                    icon: 'info',
+                    text: 'Changes you made will not be saved.',
+                    showDenyButton: false,
+                    confirmButtonText: 'OK',
+                    confirmButtonColor: '#077bff',
+                })
             }
         })
     }
@@ -1334,12 +1362,26 @@ include_once("../includes/database.php") ?>
             showDenyButton: true,
             confirmButtonText: 'Yes',
             denyButtonText: `No`,
+            confirmButtonColor: '#28a745',
+            denyButtonColor: '#dc3545',
         }).then((result) => {
             if (result.isConfirmed) {
                 action(item);
-                Swal.fire('Saved!', '', 'success')
+                Swal.fire({
+                    icon: 'success',
+                    text: 'Saved!',
+                    showDenyButton: false,
+                    confirmButtonText: 'OK',
+                    confirmButtonColor: '#007bff',
+                })
             } else if (result.isDenied) {
-                Swal.fire('Changes are not saved', '', 'info')
+                Swal.fire({
+                    icon: 'info',
+                    text: 'Changes you made will not be saved.',
+                    showDenyButton: false,
+                    confirmButtonText: 'OK',
+                    confirmButtonColor: '#007bff',
+                })
             }
         })
     }
@@ -1366,16 +1408,16 @@ include_once("../includes/database.php") ?>
                     icon: 'success',
                     text: 'Saved!',
                     showDenyButton: false,
-                    confirmButtonText: 'Ok',
-                    confirmButtonColor: '#28a745',
+                    confirmButtonText: 'OK',
+                    confirmButtonColor: '#077bff',
                 })
             } else if (result.isDenied) {
                 Swal.fire({
                     icon: 'info',
                     text: 'Changes you made will not be saved.',
                     showDenyButton: false,
-                    confirmButtonText: 'Ok',
-                    confirmButtonColor: '#28a745',
+                    confirmButtonText: 'OK',
+                    confirmButtonColor: '#077bff',
                 })
             }
         })

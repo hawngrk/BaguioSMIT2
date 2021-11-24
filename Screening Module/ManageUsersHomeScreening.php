@@ -251,6 +251,8 @@ checkRole('Screening');
             showDenyButton: true,
             confirmButtonText: 'Yes',
             denyButtonText: `No`,
+            confirmButtonColor: '#28a745',
+            denyButtonColor: '#dc3545',
         }).then((result) => {
             if (result.isConfirmed) {
                 editMedicalBackground(id);
@@ -263,9 +265,21 @@ checkRole('Screening');
                         document.getElementById('preVacView').style.display = 'none';
                     }
                 });
-                Swal.fire('Saved!', '', 'success');
+               Swal.fire({
+                   icon: 'success',
+                   text: 'Saved!',
+                   showDenyButton: false,
+                   confirmButtonText: 'OK',
+                   confirmButtonColor: '#077bff',
+                });
             } else if (result.isDenied) {
-                Swal.fire('Changes are not saved', '', 'info');
+                Swal.fire({
+                    icon: 'info',
+                    text: 'Changes you made will not be saved.',
+                    showDenyButton: false,
+                    confirmButtonText: 'OK',
+                    confirmButtonColor: '#077bff',
+                });
             }
         })
     }
@@ -295,7 +309,7 @@ checkRole('Screening');
         var otherCommorbidity = document.getElementById('otherCommorbidity').value;
         
         //Log purposes
-        $logMessage = "Updated the following medical information: Allergy($allergy), Hypertension($hypertension), Heart Disease($heart), Kidney Disease($kidney), Bronchial Asthma($bronchial), Immunodeficiency($immunodeficiency), Cancer($cancer), and Other Commorbiditiy($otherCommorbidity) from patient ID: $id";
+
 
         $.ajax({
             url: 'screeningProcessor.php',

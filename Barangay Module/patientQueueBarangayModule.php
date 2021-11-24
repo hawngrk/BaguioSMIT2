@@ -161,7 +161,7 @@ $barangay_id = $accountDetails['barangay_id'];
                     <ul class="navbar-nav">
                         <div class="row ">
                             <div class="col-sm-auto">
-                                <li role="presentation" class="doseOption2 nav-item active">
+                                <li role="presentation" class="doseOption2 nav-item active"><i role="presentation" class="doseOption2 nav-item active">
                                     <a class="nav-link" id="FirstDose" role="tab" data-toggle="tab"
                                        href="#FirstDose"
                                        onclick="shiftTab('FirstDose', 'SecondDose', 'FirstDosePage', 'SecondDosePage')">First

@@ -608,6 +608,7 @@ checkRole('SSD');
                 confirmButtonText: 'Yes',
                 confirmButtonColor: '#28a745',
                 denyButtonText: `No`,
+                denyButtonColor: '#dc3545',
             }).then((result) => {
                 if (result.isConfirmed) {
                     archiveAllocation(drive);

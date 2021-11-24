@@ -159,10 +159,10 @@ if (isset($_POST['report'])) {
         echo "
         </ul>
         </div>
-        </div>
         <br>
-        <div class='row'>
-         <div class='text-justify border border-secondary rounded p-3 mx-2 w-100'>
+        <br>
+        <div class='row mx-4 mt-3'>
+         <div class='text-justify border border-secondary rounded p-3 w-100'>
             <h5 class='reviewReport'>Additional Details:</h5>
             <h7 class='ml-2'> $reportDetails</h7>
            </div>

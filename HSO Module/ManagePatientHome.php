@@ -770,16 +770,16 @@ include_once("../includes/database.php") ?>
                         icon: 'success',
                         text: 'Saved!',
                         showDenyButton: false,
-                        confirmButtonText: 'Ok',
-                        confirmButtonColor: '#808080',
+                        confirmButtonText: 'OK',
+                        confirmButtonColor: '#077bff',
                     })
                 } else if (result.isDenied) {
                     Swal.fire({
                         icon: 'info',
                         text: 'Changes you made will not be saved.',
                         showDenyButton: false,
-                        confirmButtonText: 'Ok',
-                        confirmButtonColor: '#808080',
+                        confirmButtonText: 'OK',
+                        confirmButtonColor: '#077bff',
                     })
                 }
             })
@@ -936,15 +936,15 @@ include_once("../includes/database.php") ?>
                     text: 'Saved!',
                     showDenyButton: false,
                     confirmButtonText: 'Ok',
-                    confirmButtonColor: '#28a745',
+                    confirmButtonColor: '#077bff',
                 })
             } else if (result.isDenied) {
                 Swal.fire({
                     icon: 'info',
                     text: 'Changes you made will not be saved.',
                     showDenyButton: false,
-                    confirmButtonText: 'Ok',
-                    confirmButtonColor: '#28a745',
+                    confirmButtonText: 'OK',
+                    confirmButtonColor: '#077bff',
                 })
             }
         })
@@ -1005,7 +1005,15 @@ include_once("../includes/database.php") ?>
             success: function (result) {
                 console.log(result);
                 uploadFileModal.style.display = "none";
-                Swal.fire('Added Patient', '', 'success');
+                Swal.fire({
+                    icon: 'sucess',
+                    title: 'Add Patient',
+                    showDenyButton: true,
+                    confirmButtonText: 'Yes',
+                    denyButtonText: `No`,
+                    confirmButtonColor: '#28a745',
+                    denyButtonColor: '#dc3545',
+                })
             }
         });
     }

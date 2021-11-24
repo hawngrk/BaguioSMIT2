@@ -205,7 +205,6 @@ checkRole('Monitoring');
     }
 
     function btnViewPostVac() {
-
         var id = document.getElementById('addButtonId').value;
         var pulse = document.getElementById('pulseR').value;
         var temp = document.getElementById('tempR').value;
@@ -218,30 +217,39 @@ checkRole('Monitoring');
             showDenyButton: true,
             confirmButtonText: 'Yes',
             denyButtonText: `No`,
+            confirmButtonColor: '#28a745',
+            denyButtonColor: '#dc3545',
         }).then((result) => {
             if (result.isConfirmed) {
+
                 $.ajax({
-                    url: 'monitoringSearchProcessor.php',
+                    url: 'screeningProcessor.php',
                     type: 'POST',
                     data: {'pulse': pulse, 'temp': temp, 'oxygen': oxygen ,'diastolic': bpDias, 'systolic': bpSys, 'id': id},
-                    success: function (postVat) {
-                        console.log(postVat)
-                        document.getElementById('postVacView').style.display = 'none';
+                    success: function (preVat) {
+                        console.log(preVat)
+                        document.getElementById('preVacView').style.display = 'none';
                     }
                 });
-                Swal.fire('Saved!', '', 'success');
+                Swal.fire({
+                    icon: 'success',
+                    text: 'Saved!',
+                    showDenyButton: false,
+                    confirmButtonText: 'OK',
+                    confirmButtonColor: '#077bff',
+                });
             } else if (result.isDenied) {
-                Swal.fire('Changes are not saved', '', 'info')
+                Swal.fire({
+                    icon: 'info',
+                    text: 'Changes you made will not be saved.',
+                    showDenyButton: false,
+                    confirmButtonText: 'OK',
+                    confirmButtonColor: '#077bff',
+                });
             }
         })
     }
 
-    function allergy(checkbox){
-        var checkboxes = document.getElementsByName('allergy');
-        checkboxes.forEach((item) =>  {
-            if (item !== checkbox) item.checked = false;
-        });
-    }
 </script>
 <!--Logout script-->
 <script src="../javascript/logout.js"></script>

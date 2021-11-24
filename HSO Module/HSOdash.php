@@ -41,7 +41,7 @@ checkRole('HSO');
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
-<body>
+<body onload="updateDashboard()">
 <div class="wrapper">
     <!-- Sidebar  -->
     <nav id="sidebar">
@@ -98,7 +98,7 @@ checkRole('HSO');
             <br>
             <div class="row">
                 <div class="col-3">
-                    Start Date: <input type="date" id="startDate"  class="w-100" onchange="updateDashboard()" value="<?php echo date('Y-m-d'); ?>">
+                    Start Date: <input type="date" id="startDate"  class="w-100" onchange="updateDashboard()" value="2021-09-18">
 
                 </div>
                 <div class="col-3">

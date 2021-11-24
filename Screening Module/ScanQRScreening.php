@@ -172,9 +172,10 @@ checkRole('Screening');
             showDenyButton: true,
             confirmButtonText: 'Yes',
             denyButtonText: `No`,
+            confirmButtonColor: '#28a745',
+            denyButtonColor: '#dc3545',
         }).then((result) => {
             if (result.isConfirmed) {
-                editMedicalBackground(id);
                 $.ajax({
                     url: 'screeningProcessor.php',
                     type: 'POST',
@@ -184,47 +185,24 @@ checkRole('Screening');
                         document.getElementById('preVacView').style.display = 'none';
                     }
                 });
-                Swal.fire('Saved!', '', 'success');
+                Swal.fire({
+                    icon: 'success',
+                    text: 'Saved!',
+                    showDenyButton: false,
+                    confirmButtonText: 'OK',
+                    confirmButtonColor: '#077bff',
+                });
             } else if (result.isDenied) {
-                Swal.fire('Changes are not saved', '', 'info')
+                Swal.fire({
+                    icon: 'info',
+                    text: 'Changes you made will not be saved.',
+                    showDenyButton: false,
+                    confirmButtonText: 'OK',
+                    confirmButtonColor: '#077bff',
+                })
             }
         })
     }
-
-    function allergy(checkbox){
-        var checkboxes = document.getElementsByName('allergy');
-        checkboxes.forEach((item) =>  {
-            if (item !== checkbox) item.checked = false;
-        });
-    }
-
-    function editMedicalBackground(id) {
-        //Commorbidities and allergy
-        var allergyCheckBox1 = verifyCommorbidity($('#allergy1:checked').val());
-        var hypertension = verifyCommorbidity($('#hypertension:checked').val());
-        var heart = verifyCommorbidity($('#heart:checked').val());
-        var kidney = verifyCommorbidity($('#kidney:checked').val());
-        var diabetes = verifyCommorbidity($('#diabetes:checked').val());
-        var bronchial = verifyCommorbidity($('#bronchial:checked').val());
-        var immunodeficiency = verifyCommorbidity($('#immunodeficiency:checked').val());
-        var cancer = verifyCommorbidity($('#cancer:checked').val());
-        var otherCommorbidity = document.getElementById('otherCommorbidity').value;
-        
-        $.ajax({
-            url: 'screeningProcessor.php',
-            type: 'POST',
-            data: {'allergy' : allergy, 'hypertension' : hypertension , 'heart' : heart, 'kidney' : kidney, 'diabetes' : diabetes, 'bronchial' : bronchial, 'immunodeficiency' : immunodeficiency, 'cancer' : cancer, 'otherCommorbidity' : otherCommorbidity, 'id' : id},
-            success: function(preVat) {
-                console.log(preVat)
-            }
-        });
-    }
-
-    //Change unchecked commorbidity to 0
-    function verifyCommorbidity(commorbidity) {
-        return !commorbidity ? 0 : 1;
-    }
-
 </script>
 <!--Logout script-->
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>

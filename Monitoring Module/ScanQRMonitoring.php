@@ -1,7 +1,7 @@
- <?php //
-//require_once('../includes/sessionHandling.php');
-//checkRole('Monitoring');
-//?>
+ <?php
+require_once('../includes/sessionHandling.php');
+checkRole('Monitoring');
+?>
 <!DOCTYPE html>
 <html>
 
@@ -162,38 +162,53 @@
                 }
             })
         }
+        
 
         function btnViewPostVac() {
+            var id = document.getElementById('addButtonId').value;
+            var pulse = document.getElementById('pulseR').value;
+            var temp = document.getElementById('tempR').value;
+            var oxygen = document.getElementById('oxygenSat').value;
+            var bpDias = document.getElementById('bpRDias').value;
+            var bpSys = document.getElementById('bpRSys').value;
 
-var id = document.getElementById('addButtonId').value;
-var pulse = document.getElementById('pulseR').value;
-var temp = document.getElementById('tempR').value;
-var oxygen = document.getElementById('oxygenSat').value;
-var bpDias = document.getElementById('bpRDias').value;
-var bpSys = document.getElementById('bpRSys').value;
+            Swal.fire({
+                title: 'Add these vitals?',
+                showDenyButton: true,
+                confirmButtonText: 'Yes',
+                denyButtonText: `No`,
+                confirmButtonColor: '#28a745',
+                denyButtonColor: '#dc3545',
+            }).then((result) => {
+                if (result.isConfirmed) {
 
-Swal.fire({
-    title: 'Add these vitals?',
-    showDenyButton: true,
-    confirmButtonText: 'Yes',
-    denyButtonText: `No`,
-}).then((result) => {
-    if (result.isConfirmed) {
-        $.ajax({
-            url: 'monitoringSearchProcessor.php',
-            type: 'POST',
-            data: {'pulse': pulse, 'temp': temp, 'oxygen': oxygen ,'diastolic': bpDias, 'systolic': bpSys, 'id': id},
-            success: function (postVat) {
-                console.log(postVat)
-                document.getElementById('postVacView').style.display = 'none';
-            }
-        });
-        Swal.fire('Saved!', '', 'success');
-    } else if (result.isDenied) {
-        Swal.fire('Changes are not saved', '', 'info')
-    }
-})
-}
+                    $.ajax({
+                        url: 'screeningProcessor.php',
+                        type: 'POST',
+                        data: {'pulse': pulse, 'temp': temp, 'oxygen': oxygen ,'diastolic': bpDias, 'systolic': bpSys, 'id': id},
+                        success: function (preVat) {
+                            console.log(preVat)
+                            document.getElementById('preVacView').style.display = 'none';
+                        }
+                    });
+                    Swal.fire({
+                        icon: 'success',
+                        text: 'Saved!',
+                        showDenyButton: false,
+                        confirmButtonText: 'OK',
+                        confirmButtonColor: '#007bff',
+                    });
+                } else if (result.isDenied) {
+                    Swal.fire({
+                        icon: 'info',
+                        text: 'Changes you made will not be saved.',
+                        showDenyButton: false,
+                        confirmButtonText: 'OK',
+                        confirmButtonColor: '#007bff',
+                    });
+                }
+            })
+        }
 
     </script>
     <!--Logout script-->

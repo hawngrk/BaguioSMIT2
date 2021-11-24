@@ -518,17 +518,32 @@ checkRole("Mayor's Office");
         var formValidation = validationMethod();
         if (formValidation) {
             Swal.fire({
-                icon: 'info',
-                title: 'Are You Sure you Want to add this ' + employee + '?',
-                showDenyButton: true,
-                confirmButtonText: 'Yes',
-                denyButtonText: `No`
+                    icon: 'info',
+                    title: 'Add this ' + vax + ' ?',
+                    text: 'Are you sure you want to add this ' + employee + '?',
+                    showDenyButton: true,
+                    confirmButtonText: 'Yes',
+                    denyButtonText: `No`,
+                    confirmButtonColor: '#28a745',
+                    denyButtonColor: '#dc3545',
             }).then((result) => {
                 if (result.isConfirmed) {
                     action();
-                    Swal.fire('Saved!', '', 'success')
+                    Swal.fire({
+                        icon: 'success',
+                        text: 'Saved!',
+                        showDenyButton: false,
+                        confirmButtonText: 'OK',
+                        confirmButtonColor: '#007bff',
+                    })
                 } else if (result.isDenied) {
-                    Swal.fire('Changes are not saved', '', 'info')
+                    Swal.fire({
+                        icon: 'info',
+                        text: 'Changes you made will not be saved.',
+                        showDenyButton: false,
+                        confirmButtonText: 'OK',
+                        confirmButtonColor: '#007bff',
+                    })
                 }
             })
         }
@@ -555,7 +570,15 @@ checkRole("Mayor's Office");
             success: function (result) {
                 console.log(result);
                 uploadFileModal.style.display = "none";
-                Swal.fire('Added Employee', '', 'success');
+                Swal.fire({
+                    icon: 'question',
+                    text: 'Are you sure you want to upload this item?',
+                    showDenyButton: true,
+                    confirmButtonText: 'Yes',
+                    denyButtonText: `No`,
+                    confirmButtonColor: '#28a745',
+                    denyButtonColor: '#dc3545',
+                });
             }
         });
     }
