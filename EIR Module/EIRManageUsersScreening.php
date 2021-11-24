@@ -132,7 +132,7 @@ include_once("../includes/database.php")
                                         onchange="sortByName(this)">
                                     <option value="" selected disabled hidden>Sort By</option>
                                     <option value="" disabled>Select Name Sort</option>
-                                    <option value="None"> None</option>
+                                    <option value="none"> None</option>
                                     <option value="Asc">Name ↑</option>
                                     <option value="Desc">Name ↓</option>
                                 </select>
@@ -794,7 +794,7 @@ include_once("../includes/database.php")
         var last = document.getElementById("lname").value;
         var first = document.getElementById("fname").value;
         var middle = document.getElementById("mname").value;
-        var suffix = document.getElementById("suffix").value;
+        var suffix = document.getElementById("suffix").value == 'none' ? '' : document.getElementById("suffix").value;
         var occupation = document.getElementById("occupation").value;
         var gender = document.getElementById("gender").value;
         var civilStat = document.getElementById("civilStatus").value;
@@ -992,7 +992,7 @@ include_once("../includes/database.php")
         var formData = new FormData();
         formData.append('file', files[0]);
         $.ajax({
-            url: 'UploadFile.php',
+            url: '../HSO Module/UploadFile.php',
             type: 'POST',
             contentType: false,
             processData: false,

@@ -218,10 +218,65 @@ if (isset($_POST['modalRes'])) {
                       <h7><b> Vaccine Lot:  &ensp;</b> </h7> <p style='margin-left: 11%;'> $lot2nd</p> 
                 </div>
             </div>
+            <div class='col ml-3'>
+            <div class='row'><h5>Post-Vaccine Vitals:</h5></div>
+            <div class='row'>
+                <div class='col-4'>
+                    <label for='pulseR'> <strong>Pulse Rate:</strong> </label>
+                </div>
+                <div class='col'>
+                 <input class='textInp vitalsInput w-75' id='pulseR' placeholder='Enter pulse rate' name='pulseR'>
+                </div>   
+            </div>
+            <br>
+            <div class='row'>
+                <div class='col-4'>
+                    <label for='tempR'> <strong>Temperature:</strong> </label>
+                </div>
+                <div class='col'>
+                   <input class='textInp vitalsInput w-75' id='tempR' placeholder='Enter temperature' name='tempR'>
+                </div>   
+            </div>
+            <br>
+            <div class='row'>
+                <div class='col-4'>
+                    <label for='oxygenSat'> <strong>Oxygen Saturation:</strong> </label>
+                </div>
+                <div class='col'>
+                    <input class='textInp vitalsInput w-75' id='oxygenSat' placeholder='Enter oxygen saturation' name='vitoxygenSatals'>
+                </div>   
+            </div>
+            <br>
+            <strong>Blood Pressure (Diastolic/Systolic e.g. 120/80)</strong>
+            <br>
+            <div class='row'>
+                <div class='col-4'>
+                    <label for='bpRDias'> <strong>Diastolic:</strong> </label>
+                </div>
+                <div class='col'>
+                    <input class='textInp vitalsInput w-75' placeholder='millimetres of mercury' id='bpRDias' name='bpRDias'>
+                </div>   
+            </div>
+            <br>
+            <div class='row'>
+                <div class='col-4'>
+                    <label for='bpRSys'> <strong>Systolic:</strong> </label>
+                </div>
+                <div class='col'>
+                    <input class='textInp vitalsInput w-75' placeholder='millimetres of mercury' id='bpRSys' name='bpRSys'>
+                </div>   
+            </div>
         </div>
-        <div class='modal-footer'>
-            <button onclick=closeModal('qrView') type='button' class='btn btn-danger'> Close </button>   
         </div>
+
+   
+</div>
+</div>
+<div class='modal-footer'>
+    <button onclick=closeModal('postVacView') type='button' class='btn btn-danger'> Cancel</button>            
+    <button onclick=btnViewPostVac() id='addButtonId' type='button' class='btn btn-success' value=$patientID> Save</button>
+</div>
+</form>
         </form>
         ";
     } else if($patientDetails['first_dose_vaccination'] == 1 && $patientDetails['second_dose_vaccination'] == 0) {
@@ -231,7 +286,7 @@ if (isset($_POST['modalRes'])) {
                 <div class='col border rounded' style='padding:1%; margin-right:3%'>
                     <div class='row'> <h5 class='ml-3' style='color: #68A0B8'> Vaccination Details - $vaccineStatus </h5> </div>
                     <div class='row'>
-                        <h6 class='ml-4'> <b> <u>Post-Vaccine Vitals</u></b></h6>
+                        <h6 class='ml-4'> <b> <u>Pre-Vaccine Vitals</u></b></h6>
                     </div>
                     <div class='row'>
                         <h7 class='ml-5'><b> Pulse Rate:  &ensp;</b> </h7> <p style='margine-left:13%'> $pulseRate1st </p>
@@ -286,7 +341,7 @@ if (isset($_POST['modalRes'])) {
                             <label for='tempR'> <strong>Temperature:</strong> </label>
                         </div>
                         <div class='col'>
-                           <input class='textInp vitalsInput w-75 id='tempR' placeholder='Enter temperature' name='tempR'>
+                           <input class='textInp vitalsInput w-75' id='tempR' placeholder='Enter temperature' name='tempR'>
                         </div>   
                     </div>
                     <br>

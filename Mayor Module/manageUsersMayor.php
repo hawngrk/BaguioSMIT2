@@ -189,7 +189,7 @@ checkRole("Mayor's Office");
                             <div class="col-md-12 text-center form-group">
                                 <br>
                                 <input id="fileUpload" type="file" onchange="getUploadedFiles(this)" multiple/>
-                                <h6><br> Upload a list of patients (.csv) </h6>
+                                <h6><br> Upload a list of employees (.csv) </h6>
                             </div>
                         </form>
                     </div>

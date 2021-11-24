@@ -799,7 +799,7 @@ include_once("../includes/database.php") ?>
         var last = document.getElementById("lname").value;
         var first = document.getElementById("fname").value;
         var middle = document.getElementById("mname").value;
-        var suffix = document.getElementById("suffix").value;
+        var suffix = document.getElementById("suffix").value == 'none' ? '': document.getElementById("suffix").value;
         var occupation = document.getElementById("occupation").value;
         var gender = document.getElementById("gender").value;
         var civilStat = document.getElementById("civilStatus").value;
