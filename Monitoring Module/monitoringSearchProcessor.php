@@ -323,7 +323,7 @@ if (isset($_POST['modalRes'])) {
             </div>
             </div>
             <div class='modal-footer'>
-                <button onclick=closeModal('preVacView') type='button' class='btn btn-danger'> Cancel</button>            
+                <button onclick=closeModal('postVacView') type='button' class='btn btn-danger'> Cancel</button>            
                 <button onclick=btnViewPostVac() id='addButtonId' type='button' class='btn btn-success' value=$patientID> Save</button>
             </div>
             </form>
@@ -415,7 +415,7 @@ if (isset($_POST['modalRes'])) {
             </div>
             </div>
             <div class='modal-footer'>
-                <button onclick=closeModal('preVacView') type='button' class='btn btn-danger'> Cancel</button>            
+                <button onclick=closeModal('postVacView') type='button' class='btn btn-danger'> Cancel</button>            
                 <button onclick=btnViewPostVac() id='addButtonId' type='button' class='btn btn-success' value=$patientID> Save</button>
             </div>
             </form>";

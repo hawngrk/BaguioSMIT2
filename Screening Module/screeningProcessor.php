@@ -5,7 +5,6 @@ $accountDetails = $_SESSION['account'];
 $employeeID = $accountDetails['empId'];
 $employeeRole = $accountDetails['role'];
 
-
 if (isset($_POST['modalScreening'])) {
     $patientID = $_POST['modalScreening'];
     require('../includes/configure.php');

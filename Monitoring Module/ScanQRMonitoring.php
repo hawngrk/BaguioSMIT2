@@ -1,4 +1,4 @@
-<?php //
+ <?php //
 //require_once('../includes/sessionHandling.php');
 //checkRole('Monitoring');
 //?>
@@ -73,11 +73,11 @@
         <!-- Page Content  -->
         <div id="content">
 
-            <div id="qrView" class="modal-window">
+            <div id="postVacView" class="modal-window">
                 <div class="content-modal">
                     <div class="modal-header">
                         <h3 class="modal-title">Post-Vaccine Vitals</h3>
-                        <button type="button" class="close" data-dismiss="modal" onclick="closeModal('qrView')"><i class='fas fa-window-close'></i></button>
+                        <button type="button" class="close" data-dismiss="modal" onclick="closeModal('postVacView')"><i class='fas fa-window-close'></i></button>
                     </div>
                     <div class="modal-body" id="qr"></div>
                 </div>
@@ -142,7 +142,7 @@
                 method: 'POST',
                 data: {modalRes: content},
                 success: function (result) {
-                    openModal('qrView');
+                    openModal('postVacView');
                     document.getElementById('qr').innerHTML = result;
                      console.log(result);
                 }, error: function(result){
@@ -157,11 +157,43 @@
                 method: 'POST',
                 data: {modalRes: passportId},
                 success: function (result) {
-                    document.getElementById('qrView').style.display = "block";
+                    document.getElementById('postVacView').style.display = "block";
                     document.getElementById('qr').innerHTML = result;
                 }
             })
         }
+
+        function btnViewPostVac() {
+
+var id = document.getElementById('addButtonId').value;
+var pulse = document.getElementById('pulseR').value;
+var temp = document.getElementById('tempR').value;
+var oxygen = document.getElementById('oxygenSat').value;
+var bpDias = document.getElementById('bpRDias').value;
+var bpSys = document.getElementById('bpRSys').value;
+
+Swal.fire({
+    title: 'Add these vitals?',
+    showDenyButton: true,
+    confirmButtonText: 'Yes',
+    denyButtonText: `No`,
+}).then((result) => {
+    if (result.isConfirmed) {
+        $.ajax({
+            url: 'monitoringSearchProcessor.php',
+            type: 'POST',
+            data: {'pulse': pulse, 'temp': temp, 'oxygen': oxygen ,'diastolic': bpDias, 'systolic': bpSys, 'id': id},
+            success: function (postVat) {
+                console.log(postVat)
+                document.getElementById('postVacView').style.display = 'none';
+            }
+        });
+        Swal.fire('Saved!', '', 'success');
+    } else if (result.isDenied) {
+        Swal.fire('Changes are not saved', '', 'info')
+    }
+})
+}
 
     </script>
     <!--Logout script-->

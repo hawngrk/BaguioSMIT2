@@ -1,6 +1,6 @@
 <?php //
-//require_once('../includes/sessionHandling.php');
-//checkRole('Monitoring');
+require_once('../includes/sessionHandling.php');
+checkRole('Monitoring');
 //?>
 
 <!DOCTYPE html>

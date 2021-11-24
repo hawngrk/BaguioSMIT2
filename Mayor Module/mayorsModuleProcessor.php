@@ -145,7 +145,8 @@ if (isset($_POST['search'])) {
                 <td>$empFName $empMName $empLName</td>
                 <td>$empRole </td>
                 <td>$empAccType</td>
-                <td><button class='buttonTransparentMayors' onclick='showEmployeeDeets($empID)'><i class='fas fa-eye'></i></button</td>
+                <td><button class='buttonTransparentMayors' onclick='event.stopPropagation();archive(1, clickArchive, $empID)'><i class='fas fa-archive'></i></button>
+                <button class='buttonTransparentMayors' onclick='showEmployeeDeets($empID)'><i class='fas fa-eye'></i></button</td>
               </tr>";
     }
 }
@@ -182,7 +183,8 @@ if (isset($_POST['filter'])) {
                 <td>$empFName $empMName $empLName</td>
                 <td>$empRole </td>
                 <td>$empAccType</td>
-                <td><button class='buttonTransparentMayors' onclick='showEmployeeDeets($empID)'><i class='fas fa-eye'></i></button</td>
+                <td><button class='buttonTransparentMayors' onclick='event.stopPropagation();archive(1, clickArchive, $empID)'><i class='fas fa-archive'></i></button>
+                <button class='buttonTransparentMayors' onclick='showEmployeeDeets($empID)'><i class='fas fa-eye'></i></button</td>
               </tr>";
     }
 }

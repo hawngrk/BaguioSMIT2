@@ -176,6 +176,7 @@ checkRole('Screening');
             denyButtonText: `No`,
         }).then((result) => {
             if (result.isConfirmed) {
+                editMedicalBackground(id);
                 $.ajax({
                     url: 'screeningProcessor.php',
                     type: 'POST',

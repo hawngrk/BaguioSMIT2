@@ -19,6 +19,7 @@ checkRole("Mayor's Office");
     <link rel="icon" href="../img/FaviSMIT+.png" type="image/jpg">
     <link href="../css/style.css" rel="stylesheet">
     <link href="../css/MayorModule.css" rel="stylesheet">
+    <link href="../css/HSOModule.css" rel="stylesheet">
 
     <!-- Bootstrap-->
     <script crossorigin="anonymous" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXK`p4YfRvH+8abtTE1Pi6jizo" src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
@@ -86,7 +87,7 @@ checkRole("Mayor's Office");
                     </button>
                 </div>
                 <button type="button" class="btn btn-warning shadow-sm buttonTop3 float-right"
-                        onclick="openModal('disabledAccountsModal')"><i class="fas fa-inbox fa-lg"> </i> Disabled Accounts
+                        onclick="openModal('archived')"><i class="fas fa-inbox fa-lg"> </i> Disabled Accounts
                 </button>
             </div>
         </div>
@@ -128,7 +129,7 @@ checkRole("Mayor's Office");
                 </div>
             </div>
 
-                <div class="tablePatient shadow tableScroll4">
+                <div class="tablePatient shadow tableScroll4" id="mainEmployee">
                     <table class="table table-row table-hover mayorTable tableMonitoring" id="employeesTable">
                         <thead>
                         <tr class="tableCenterCont">
@@ -140,7 +141,7 @@ checkRole("Mayor's Office");
                         </thead>
                         <?php
                         include("../includes/database.php");
-                        $querySearch = "SELECT employee.employee_id, employee.employee_first_name, employee.employee_middle_name, employee.employee_last_name ,employee.employee_role, employee_account.employee_account_type FROM `employee` JOIN employee_account ON employee.employee_id = employee_account.employee_id";
+                        $querySearch = "SELECT employee.employee_id, employee.employee_first_name, employee.employee_middle_name, employee.employee_last_name ,employee.employee_role, employee_account.employee_account_type FROM `employee` JOIN employee_account ON employee.employee_id = employee_account.employee_id AND employee_account.disabled = 0";
 
                         $stmt = $database->stmt_init();
                         $stmt->prepare($querySearch);
@@ -353,27 +354,52 @@ checkRole("Mayor's Office");
     </div>
 
     <!--Disabled Modal-->
-    <div id="disabledAccountsModal" class="modal-window">
-        <div class="content-modal">
-            <div class="modal-header">
-                <h4 class="modal-title">Disabled Employee Accounts</h4>
-                <button type="button" class="close" data-dismiss="modal" onclick="closeModal('disabledAccountsModal')">
-                    <i class='fas fa-window-close'></i>
-                </button>
-                <table class="table table-row table-hover tableModal" id="patientTable1">
-                    <thead>
-                    <tr class="tableCenterCont">
-                        <th scope="col">Employee Name/th>
-                        <th scope="col">Role</th>
-                        <th scope="col">Account Type</th>
-                        <th scope="col">Action</th>
-                    </tr>
-                    </thead>
-                </table>
-            </div>
-        </div>
-    </div>
+    <div id="archived" class="modal-window">
+            <div class="content-modal-table">
+                <div class="modal-header">
+                    <h4 class="modal-title">Archived Patients</h4>
+                    <button type="button" class="close" data-dismiss="modal" onclick="closeModal('archived')">
+                        <i class='fas fa-window-close'></i>
+                    </button>
+                </div>
+                <div id='archivedContent' class="modal-body">
+                    <table class="table table-row table-hover tableModal" id="employeeTable">
+                        <thead>
+                        <tr class="tableCenterCont">
+                            <th scope="col">Employee Name</th>
+                            <th scope="col">Role</th>
+                            <th scope="col">Account Type</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                        </thead>
 
+                        <?php
+                        include("../includes/database.php");
+                        $querySearch = "SELECT employee.employee_id, employee.employee_first_name, employee.employee_middle_name, employee.employee_last_name, employee.employee_role, employee_account.employee_account_type FROM employee JOIN employee_account ON employee.employee_id = employee_account.employee_id AND employee_account.disabled = 1";
+
+                        $stmt = $database->stmt_init();
+                        $stmt->prepare($querySearch);
+                        $stmt->execute();
+                        $stmt->bind_result($id, $empFName, $empMName, $empLname, $empRole, $empType);
+                        while ($stmt->fetch()) {
+
+                        echo "<tr class='tableCenterCont'>
+                        <td>$empFName $empMName $empLname</td>
+                        <td>$empRole</td>
+                        <td>$empType</td>
+                        <td>
+                            <div>
+                                <button class='btn btn-warning' onclick='archive(0, clickArchive, $id)'><i class='fa fa-archive'></i> unarchive</button>
+                            </div>
+                        </td>
+                    </tr>";
+
+                        }
+                        ?>
+                    </table>
+                </div>
+            </div>
+    </div>
 </body>
 </html>
 
@@ -542,24 +568,39 @@ checkRole("Mayor's Office");
         })
     }
 
-    async function archive(archive, action, patient) {
+    async function archive(archive, action, employee) {
         if (archive == 1) {
             archiveText = "Archive";
         } else {
             archiveText = "UnArchive";
         }
         Swal.fire({
-            icon: 'info',
-            title: 'Are You Sure you Want to ' + archiveText + ' this item?',
+            icon: 'question',
+            title: 'Archive Item',
+            text: 'Are you sure you want to ' + archiveText + ' this item?',
             showDenyButton: true,
             confirmButtonText: 'Yes',
             denyButtonText: `No`,
+            confirmButtonColor: '#28a745',
+            denyButtonColor: '#dc3545',
         }).then((result) => {
             if (result.isConfirmed) {
-                action(patient, archiveText);
-                Swal.fire('Saved!', '', 'success')
+                action(employee, archiveText);
+                Swal.fire({
+                    icon: 'success',
+                    text: 'Saved!',
+                    showDenyButton: false,
+                    confirmButtonText: 'Ok',
+                    confirmButtonColor: '#28a745',
+                })
             } else if (result.isDenied) {
-                Swal.fire('Changes are not saved', '', 'info')
+                Swal.fire({
+                    icon: 'info',
+                    text: 'Changes you made will not be saved.',
+                    showDenyButton: false,
+                    confirmButtonText: 'Ok',
+                    confirmButtonColor: '#28a745',
+                })
             }
         })
     }
@@ -567,30 +608,30 @@ checkRole("Mayor's Office");
     //click archive
     function clickArchive(employee, option) {
         $.ajax({
-            url: 'managePatientProcessor.php',
+            url: 'archiveProcessor.php',
             method: 'POST',
-            data: {archive: patient, option: option},
+            data: {archive: employee, option: option},
             success: function (result) {
 
                 if (option == "Archive") {
-                    document.getElementById('mainPatient').innerHTML = result;
+                    document.getElementById('archivedContent').innerHTML = result;
                     $.ajax({
-                        url: 'mayorsModuleProcessor.php',
+                        url: 'archiveProcessor.php',
                         method: 'POST',
                         data: {showUpdatedArchive: ""},
                         success: function (result) {
-                            document.getElementById('archivedContent').innerHTML = result;
+                            document.getElementById('employeesTable').innerHTML = result;
                         }
                     })
 
                 } else if (option == "UnArchive") {
                     document.getElementById("archivedContent").innerHTML = result;
                     $.ajax({
-                        url: 'mayorsModuleProcessor.php',
+                        url: 'archiveProcessor.php',
                         method: 'POST',
-                        data: {showUpdatedPatient: ""},
+                        data: {showUpdatedArchive: ""},
                         success: function (result) {
-                            document.getElementById('mainPatient').innerHTML = result;
+                            document.getElementById('employeeTable').innerHTML = result;
                         }
                     })
                 }

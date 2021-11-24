@@ -245,6 +245,7 @@ checkRole('Screening');
         var bpDias = document.getElementById('bpRDias').value;
         var bpSys = document.getElementById('bpRSys').value;
 
+
         Swal.fire({
             title: 'Add these vitals?',
             showDenyButton: true,
