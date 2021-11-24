@@ -110,8 +110,6 @@ checkRole('Screening');
                 <button class="buttonTransparent" onclick="passport(document.getElementById('passportId').value)"><i class="fas fa-sign-in-alt"></i></button>
             </div>
         </div>
-
-
     </div>
 </div>
 

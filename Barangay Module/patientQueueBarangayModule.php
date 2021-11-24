@@ -109,50 +109,7 @@ $barangay_id = $accountDetails['barangay_id'];
 
     <!-- Top Nav Bar -->
     <div id="content">
-        <!--Search Input and Button-->
-        <nav class="brgyNav navbar-light bg-light rounded-lg">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col">
-                        <div class="input-group">
-                            <input id="searchPatientInput" type="search" name="searchPatient" class="form-control"
-                                   placeholder="Search" onkeyup="searchPatient(this.value)"/>
-                        </div>
-                    </div>
 
-                    <div class="col-sm-auto">
-                        <div class="row">
-                            <div class="sfDiv col-md-1.5 my-auto">
-                                <select class="form-select filterButton" id="filterCat" name="filterCategory"
-                                        onchange="filterCategoryGroup(this.value)">
-                                    <option value='' selected disabled hidden>Filter By</option>
-                                    <option value='' disabled>Select Category Group</option>
-                                    <option value="All"> All</option>
-                                    <?php
-                                    require_once("../require/getPriorityGroup.php");
-                                    foreach ($priorityGroups as $pg) {
-                                        $id = $pg->getPriorityGroupId();
-                                        $category = $pg->getPriorityGroup();
-                                        echo "<option value=$id> $category </option>";
-                                    }
-                                    ?>
-                                </select>
-                            </div>
-                            <div class="sfDiv col-md-1.5 my-auto">
-                                <select class="form-select sortButton" id="sortPatientName" name="sortPatient"
-                                        onchange="sortByName(this)">
-                                    <option value="" selected disabled hidden>Sort By</option>
-                                    <option value="" disabled>Select Name Sort</option>
-                                    <option value="None"> None</option>
-                                    <option value="Asc">Name ↑</option>
-                                    <option value="Desc">Name ↓</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-        </nav>
-        <br>
 
         <!--Page Content-->
         <div class="tableContainer">

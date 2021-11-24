@@ -612,26 +612,27 @@ checkRole("Mayor's Office");
             method: 'POST',
             data: {archive: employee, option: option},
             success: function (result) {
-
                 if (option == "Archive") {
-                    document.getElementById('archivedContent').innerHTML = result;
-                    $.ajax({
-                        url: 'archiveProcessor.php',
-                        method: 'POST',
-                        data: {showUpdatedArchive: ""},
-                        success: function (result) {
-                            document.getElementById('employeesTable').innerHTML = result;
-                        }
-                    })
-
-                } else if (option == "UnArchive") {
-                    document.getElementById("archivedContent").innerHTML = result;
+                    document.getElementById('employeesTable').innerHTML = result;
                     $.ajax({
                         url: 'archiveProcessor.php',
                         method: 'POST',
                         data: {showUpdatedArchive: ""},
                         success: function (result) {
                             document.getElementById('employeeTable').innerHTML = result;
+                            
+                        }
+                    })
+
+                } else if (option == "UnArchive") {
+                    document.getElementById("employeeTable").innerHTML = result;
+                    $.ajax({
+                        url: 'archiveProcessor.php',
+                        method: 'POST',
+                        data: {showUpdatedEmployee: ""},
+                        success: function (result) {
+                            document.getElementById('employeesTable').innerHTML = result;
+                        
                         }
                     })
                 }

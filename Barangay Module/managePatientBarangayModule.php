@@ -68,12 +68,19 @@ $barangay_id = $accountDetails['barangay_id'];
         </div>
         <br>
         <ul class="list-unstyled components">
-            <hr>
+        <hr>
             <?php
-                $accountDetails = $_SESSION['account'];
-                $barangay = $accountDetails['barangay'];
-                echo "<h4 id='headingNav1'>$barangay</h4>";
+            $accountDetails = $_SESSION['account'];
+            $barangay = $accountDetails['barangay'];
+            echo "<h4 id='headingNav1'>$barangay</h4>";
             ?>
+            <hr>
+            <div class="timeBox">
+                <p id="time"></p>
+                <p id="datee"></p>
+                <script src="../javascript/detailedDateAndTime.js"></script>
+            </div>
+
             <hr>
             <h5 id="headingNav2"></h5>
             <hr>
