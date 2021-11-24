@@ -1,5 +1,5 @@
 <?php
- 
+
 require_once('../includes/sessionHandling.php');
 checkRole("Mayor's Office");
 
@@ -429,6 +429,8 @@ checkRole("Mayor's Office");
         document.getElementById("employeeView").style.display = "block";
         empClose.onclick = function () {
             employeeView.style.display = "none";
+
+            document.body.classList.remove("scrollBody");
         }
         $.ajax({
             url: 'mayorsModuleProcessor.php',
@@ -436,6 +438,8 @@ checkRole("Mayor's Office");
             data: {"empDeets": empID},
             success: function (data) {
                 document.getElementById('employeeDeets').innerHTML = data;
+
+                document.body.classList.add("scrollBody");
             }
         })
     }
