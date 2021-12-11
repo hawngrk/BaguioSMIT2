@@ -266,8 +266,11 @@ include_once("../includes/database.php") ?>
                                            placeholder="Input Answer Here">
 
                                 </div>
+                            </div>
+
+                            <div class="row">
                                 <div class="col">
-                                    <label for="mname">Middle Name </label>
+                                    <label class="label1" for="mname">Middle Name </label>
                                     <input type="text3" id="mname" class='input form-control' name="middlename"
                                            placeholder="Input Answer Here">
                                 </div>
@@ -285,8 +288,8 @@ include_once("../includes/database.php") ?>
                                     </select>
                                 </div>
                             </div>
-                            <div class="row">
 
+                            <div class="row">
                                 <div class="col">
                                     <label class="label1 required" for="birthdate"> Birthdate </label>
                                     <input type="date" id="date" name="birthdate" class="form-control">
@@ -299,6 +302,9 @@ include_once("../includes/database.php") ?>
                                         <option value="female">Female</option>
                                     </select>
                                 </div>
+                            </div>
+
+                            <div class="row">
                                 <div class="col">
                                     <label class="label1" for="civilStatus"> Civil Status </label>
                                     <select class="form-select" id="civilStatus" name="civilStatus">
@@ -317,6 +323,7 @@ include_once("../includes/database.php") ?>
                                            placeholder="Input Answer Here">
                                 </div>
                             </div>
+
                             <div class="row">
                                 <div class="col">
                                     <label class="label1 required" for="contactNum">Contact Number </label>
@@ -391,7 +398,7 @@ include_once("../includes/database.php") ?>
                             <div class="row">
                                 <div class="col-8">
                                     <label class="required" for="houseAddress">House Address </label>
-                                    <input type="text3" id="houseAddress" class='input form-control' name="houseAddress"
+                                    <input type="text3" id="houseAddress" class='input form-control' style="width:98%;" name="houseAddress"
                                            placeholder="Input House Number/Lot/Block Number, Street, Alley etc."
                                            required>
                                 </div>
