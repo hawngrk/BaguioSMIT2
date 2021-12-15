@@ -1,4 +1,4 @@
 <?php
-  $database = new mysqli("localhost", "root", "", "smit+", 3306);
+  $database = new mysqli("localhost", "smit.project", "objectNotFound", "smit+", 3306);
 
 
