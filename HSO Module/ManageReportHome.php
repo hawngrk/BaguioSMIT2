@@ -73,7 +73,9 @@ checkRole('HSO');
             <li class="active">
                 <a href="ManageReportHome.php" class="active"><i class="fas fa-sticky-note"></i> Reports</a>
             </li>
-
+            <li>
+                    <a href="ManageInfographics.php"><i class="fas fa-file-alt"></i> Infographics</a>
+            </li>
 
         </ul>
 

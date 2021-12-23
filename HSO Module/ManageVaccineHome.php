@@ -72,6 +72,9 @@ include_once("../includes/database.php") ?>
             <li>
                 <a href="ManageReportHome.php"><i class="fas fa-sticky-note"></i> Reports</a>
             </li>
+            <li>
+                    <a href="ManageInfographics.php"><i class="fas fa-file-alt"></i> Infographics</a>
+            </li>
 
         </ul>
 

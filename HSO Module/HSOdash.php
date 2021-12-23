@@ -75,6 +75,9 @@ checkRole('HSO');
             <li>
                 <a href="ManageReportHome.php"><i class="fas fa-sticky-note"></i> Reports</a>
             </li>
+            <li>
+                <a href="ManageInfographics.php"><i class="fas fa-file-alt"></i> Infographics</a>
+            </li>
         </ul>
         <ul class="list-unstyled CTAs">
             <button type="button" class="btn btn-info signOutPersonnel" onclick='logout()'>

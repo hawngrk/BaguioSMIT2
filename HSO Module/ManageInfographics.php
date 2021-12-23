@@ -1,6 +1,7 @@
 <?php 
 require('../includes/configure.php');
-
+require('../includes/sessionHandling.php');
+checkRole('HSO');
 ?>
 <!DOCTYPE html>
 
@@ -11,7 +12,7 @@ require('../includes/configure.php');
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <title>HSO | Manage Reports</title>
+    <title>HSO | Manage Infographics</title>
     <!--Favicon-->
     <link rel="icon" href="../img/FaviSMIT+.png" type="image/jpg">
     <!-- Our Custom CSS -->
@@ -75,8 +76,11 @@ require('../includes/configure.php');
                 <li>
                     <a href="ManageDeployment.php"><i class="fas fa-truck"></i> Manage Deployment</a>
                 </li>
-                <li class="active">
+                <li>
                     <a href="ManageReportHome.php" class="active"><i class="fas fa-sticky-note"></i> Reports</a>
+                </li>
+                <li class="active">
+                    <a href="ManageInfographics.php"><i class="fas fa-file-alt"></i> Infographics</a>
                 </li>
 
             </ul>
