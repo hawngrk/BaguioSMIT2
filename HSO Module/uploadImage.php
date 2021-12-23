@@ -1,18 +1,20 @@
 <?php
 require('../includes/configure.php');
 
+
+
 if($_FILES) {
     
-    $imgName = ($_FILES["file"]["name"]);
+    $title = $_POST['title'];
     $imgData = file_get_contents($_FILES["file"]["tmp_name"]);
     $imgType = ($_FILES["file"]["type"]);    
-       
+    
     if (substr($imgType, 0, 5) == "image") {
         $query = "INSERT INTO infographic(info_name, info_image, mimetype) VALUES(?, ?, ?)";
 
         try {
             $stmtinsert = $database->prepare($query);
-            $stmtinsert->execute([$imgName, $imgData, $imgType]);
+            $stmtinsert->execute([$title, $imgData, $imgType]);
             echo "Image uploaded";
 
         } catch (PDOException $e) {
