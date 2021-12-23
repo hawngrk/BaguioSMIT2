@@ -447,9 +447,6 @@ checkRole('SSD');
         }
 
         function countStubs(num, oldnum, item, vaccine) {
-            console.log(vaccine);
-            console.log(firstStubs);
-            console.log(firstCounter);
             var vac = vaccine.concat("", "1");
 
             if (oldnum == null) {
@@ -478,24 +475,39 @@ checkRole('SSD');
             firstCounter[`${vac}`] = firstCounter[`${vac}`] + parseInt(oldnum);
             if (num > firstCounter[`${vac}`]) {
                 Swal.fire({icon: 'warning', title: 'Number exceeds number of left stubs!', confirmButtonText: 'OK', confirmButtonColor: '#007bff'});
-                //alert('Number Exceeds Number Of Left Stubs!');
                 firstCounter[`${vac}`] += parseInt(oldnum);
                 item.value = 0;
             } else {
                 firstCounter[`${vac}`] = firstCounter[`${vac}`] - parseInt(num);
             }
 
-            console.log(firstStubs[`${vac}`]);
-            console.log(firstCounter[`${vac}`]);
-
             document.getElementById(`${vac}`).innerHTML = "";
             document.getElementById(`${vac}`).innerHTML = vaccine.concat(" = ", firstCounter[`${vac}`]);
+
+            if (firstCounter[`${vac}`] == 0) {
+                var rows =  document.getElementsByClassName(vac);
+                for (var i = 0; i < rows.length; i++) {
+                    var inputs = rows[i].getElementsByTagName('input');
+                    for (var j = 0; j < inputs.length; j++) {
+                        if (inputs[j].value == 0) {
+                            inputs[j].disabled = true;
+                        }
+                    }
+                }
+            } else {
+                var rows =  document.getElementsByClassName(vac);
+                for (var i = 0; i < rows.length; i++) {
+                    var inputs = rows[i].getElementsByTagName('input');
+                    for (var j = 0; j < inputs.length; j++) {
+                        if (inputs[j].value == 0) {
+                            inputs[j].disabled = false;
+                        }
+                    }
+                }
+            }
         }
 
         function countStubs2(num, oldnum, item, vaccine) {
-            console.log(vaccine);
-            console.log(firstStubs);
-            console.log(firstCounter);
             var vac = vaccine.concat("", "2");
 
             if (oldnum == null) {
@@ -524,18 +536,36 @@ checkRole('SSD');
             secondCounter[`${vac}`] = secondCounter[`${vac}`] + parseInt(oldnum);
             if (num > secondCounter[`${vac}`]) {
                 Swal.fire({icon: 'warning', title: 'Number exceeds number of left stubs!', confirmButtonText: 'OK', confirmButtonColor: '#007bff'});
-                //alert('Number Exceeds Number Of Left Stubs!');
                 secondCounter[`${vac}`] += parseInt(oldnum);
                 item.value = 0;
             } else {
                 secondCounter[`${vac}`] = secondCounter[`${vac}`] - parseInt(num);
             }
 
-            console.log(secondStubs[`${vac}`]);
-            console.log(secondCounter[`${vac}`]);
-
             document.getElementById(`${vac}`).innerHTML = "";
             document.getElementById(`${vac}`).innerHTML = vaccine.concat(" = ", secondCounter[`${vac}`]);
+
+            if (secondCounter[`${vac}`] == 0) {
+                var rows =  document.getElementsByClassName(vac);
+                for (var i = 0; i < rows.length; i++) {
+                    var inputs = rows[i].getElementsByTagName('input');
+                    for (var j = 0; j < inputs.length; j++) {
+                        if (inputs[j].value == 0) {
+                            inputs[j].disabled = true;
+                        }
+                    }
+                }
+            } else {
+                var rows =  document.getElementsByClassName(vac);
+                for (var i = 0; i < rows.length; i++) {
+                    var inputs = rows[i].getElementsByTagName('input');
+                    for (var j = 0; j < inputs.length; j++) {
+                        if (inputs[j].value == 0) {
+                            inputs[j].disabled = false;
+                        }
+                    }
+                }
+            }
         }
 
         function shiftTab(active, idle1, pageBlock, pageNone1) {
@@ -677,7 +707,7 @@ checkRole('SSD');
                 data: {"healthDistricts": drive},
                 dataType: "JSON",
                 success: function (result) {
-                    closeModal('barangayModal')
+                    closeModal('barangayModal');
                     for (var key in result) {
                         var barangays = document.getElementsByClassName(`${result[key]}`);
                         for (var i = 0; i < barangays.length; i++) {

@@ -307,7 +307,8 @@ if (isset($_POST['firstDose'])) {
 
                 echo "<tbody>";
                 foreach ($vaccines as $vaccine) {
-                    echo "            <tr>
+                    $rowId = $vaccine . '1';
+                    echo "            <tr class='$rowId'>
                                 <th scope='row'> $vaccine</th>";
                     foreach ($priorities as $priority) {
                         echo "<td><input class='$priority' type='text' onchange='countStubs(this.value, this.oldValue, this, \"$vaccine\"); this.oldValue = this.value' oninput='this.value = this.value.replace(/[^0-9.\%]/g, \"\").replace(/(\..*)\./g, \"$1\");' size='1' value='0'><span id='percent' style='display: none'>%</span></td>";
@@ -454,7 +455,8 @@ if (isset($_POST['secondDose'])) {
 
                 echo "<tbody>";
                 foreach ($vaccines as $vaccine) {
-                    echo "<tr>
+                    $rowId = $vaccine . '2';
+                    echo "<tr class='$rowId'>
                                 <th scope='row'> $vaccine</th>
                                 <td><input type='text' onchange='countStubs2(this.value, this.oldValue, this, \"$vaccine\"); this.oldValue = this.value' oninput='this.value = this.value.replace(/[^0-9.\%]/g, \"\").replace(/(\..*)\./g, \"$1\");' size='1' value='0'><span id='percent' style='display: none'>%</span></td>
                          </tr>";
